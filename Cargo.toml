@@ -1,0 +1,13 @@
+[package]
+name = "terrars-hashicorp-aws"
+version = "0.1.0"
+edition = "2021"
+description = "Pre-generated Terrars AWS bindings"
+license = "ISC"
+readme = "readme.md"
+repository = "https://github.com/andrewbaxter/terrars-hashicorp-aws"
+
+[dependencies]
+serde = "1.0.151"
+serde_json = "1.0.91"
+terrars = "0.0.9"

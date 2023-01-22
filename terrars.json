@@ -6,5 +6,5 @@
 		"wafv2_rule_group",
 		"wafv2_web_acl"
 	],
-	"feature_gate": true
+	"feature_gate": "Cargo.toml"
 }

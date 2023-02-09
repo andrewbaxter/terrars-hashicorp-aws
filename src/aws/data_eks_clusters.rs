@@ -6,6 +6,8 @@ use super::provider::ProviderAws;
 
 #[derive(Serialize)]
 struct DataEksClustersData {
+    #[serde(skip_serializing_if = "Vec::is_empty")]
+    depends_on: Vec<String>,
     #[serde(skip_serializing_if = "SerdeSkipDefault::is_default")]
     provider: Option<String>,
     #[serde(skip_serializing_if = "Option::is_none")]
@@ -26,6 +28,11 @@ pub struct DataEksClusters(Rc<DataEksClusters_>);
 impl DataEksClusters {
     fn shared(&self) -> &StackShared {
         &self.0.shared
+    }
+
+    pub fn depends_on(self, dep: &impl Dependable) -> Self {
+        self.0.data.borrow_mut().depends_on.push(dep.extract_ref());
+        self
     }
 
     pub fn set_provider(&self, provider: &ProviderAws) -> &Self {
@@ -53,6 +60,12 @@ impl DataEksClusters {
 impl Datasource for DataEksClusters {
     fn extract_ref(&self) -> String {
         format!("data.{}.{}", self.0.extract_datasource_type(), self.0.extract_tf_id())
+    }
+}
+
+impl Dependable for DataEksClusters {
+    fn extract_ref(&self) -> String {
+        Datasource::extract_ref(self)
     }
 }
 
@@ -89,6 +102,7 @@ impl BuildDataEksClusters {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
             data: RefCell::new(DataEksClustersData {
+                depends_on: core::default::Default::default(),
                 provider: None,
                 for_each: None,
                 id: core::default::Default::default(),

@@ -6,6 +6,8 @@ use super::provider::ProviderAws;
 
 #[derive(Serialize)]
 struct DataImagebuilderDistributionConfigurationData {
+    #[serde(skip_serializing_if = "Vec::is_empty")]
+    depends_on: Vec<String>,
     #[serde(skip_serializing_if = "SerdeSkipDefault::is_default")]
     provider: Option<String>,
     #[serde(skip_serializing_if = "Option::is_none")]
@@ -29,6 +31,11 @@ pub struct DataImagebuilderDistributionConfiguration(Rc<DataImagebuilderDistribu
 impl DataImagebuilderDistributionConfiguration {
     fn shared(&self) -> &StackShared {
         &self.0.shared
+    }
+
+    pub fn depends_on(self, dep: &impl Dependable) -> Self {
+        self.0.data.borrow_mut().depends_on.push(dep.extract_ref());
+        self
     }
 
     pub fn set_provider(&self, provider: &ProviderAws) -> &Self {
@@ -95,6 +102,12 @@ impl Datasource for DataImagebuilderDistributionConfiguration {
     }
 }
 
+impl Dependable for DataImagebuilderDistributionConfiguration {
+    fn extract_ref(&self) -> String {
+        Datasource::extract_ref(self)
+    }
+}
+
 impl ToListMappable for DataImagebuilderDistributionConfiguration {
     type O = ListRef<DataImagebuilderDistributionConfigurationRef>;
 
@@ -130,6 +143,7 @@ impl BuildDataImagebuilderDistributionConfiguration {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
             data: RefCell::new(DataImagebuilderDistributionConfigurationData {
+                depends_on: core::default::Default::default(),
                 provider: None,
                 for_each: None,
                 arn: self.arn,
@@ -259,9 +273,7 @@ impl ToListMappable for DataImagebuilderDistributionConfigurationDistributionElA
     }
 }
 
-pub struct BuildDataImagebuilderDistributionConfigurationDistributionElAmiDistributionConfigurationElLaunchPermissionEl {
-
-}
+pub struct BuildDataImagebuilderDistributionConfigurationDistributionElAmiDistributionConfigurationElLaunchPermissionEl {}
 
 impl BuildDataImagebuilderDistributionConfigurationDistributionElAmiDistributionConfigurationElLaunchPermissionEl {
     pub fn build(
@@ -508,9 +520,7 @@ impl ToListMappable for DataImagebuilderDistributionConfigurationDistributionElC
     }
 }
 
-pub struct BuildDataImagebuilderDistributionConfigurationDistributionElContainerDistributionConfigurationElTargetRepositoryEl {
-
-}
+pub struct BuildDataImagebuilderDistributionConfigurationDistributionElContainerDistributionConfigurationElTargetRepositoryEl {}
 
 impl BuildDataImagebuilderDistributionConfigurationDistributionElContainerDistributionConfigurationElTargetRepositoryEl {
     pub fn build(
@@ -795,9 +805,7 @@ impl ToListMappable for DataImagebuilderDistributionConfigurationDistributionElF
     }
 }
 
-pub struct BuildDataImagebuilderDistributionConfigurationDistributionElFastLaunchConfigurationElSnapshotConfigurationEl {
-
-}
+pub struct BuildDataImagebuilderDistributionConfigurationDistributionElFastLaunchConfigurationElSnapshotConfigurationEl {}
 
 impl BuildDataImagebuilderDistributionConfigurationDistributionElFastLaunchConfigurationElSnapshotConfigurationEl {
     pub fn build(

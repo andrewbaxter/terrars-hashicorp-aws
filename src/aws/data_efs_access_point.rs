@@ -6,6 +6,8 @@ use super::provider::ProviderAws;
 
 #[derive(Serialize)]
 struct DataEfsAccessPointData {
+    #[serde(skip_serializing_if = "Vec::is_empty")]
+    depends_on: Vec<String>,
     #[serde(skip_serializing_if = "SerdeSkipDefault::is_default")]
     provider: Option<String>,
     #[serde(skip_serializing_if = "Option::is_none")]
@@ -29,6 +31,11 @@ pub struct DataEfsAccessPoint(Rc<DataEfsAccessPoint_>);
 impl DataEfsAccessPoint {
     fn shared(&self) -> &StackShared {
         &self.0.shared
+    }
+
+    pub fn depends_on(self, dep: &impl Dependable) -> Self {
+        self.0.data.borrow_mut().depends_on.push(dep.extract_ref());
+        self
     }
 
     pub fn set_provider(&self, provider: &ProviderAws) -> &Self {
@@ -100,6 +107,12 @@ impl Datasource for DataEfsAccessPoint {
     }
 }
 
+impl Dependable for DataEfsAccessPoint {
+    fn extract_ref(&self) -> String {
+        Datasource::extract_ref(self)
+    }
+}
+
 impl ToListMappable for DataEfsAccessPoint {
     type O = ListRef<DataEfsAccessPointRef>;
 
@@ -135,6 +148,7 @@ impl BuildDataEfsAccessPoint {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
             data: RefCell::new(DataEfsAccessPointData {
+                depends_on: core::default::Default::default(),
                 provider: None,
                 for_each: None,
                 access_point_id: self.access_point_id,

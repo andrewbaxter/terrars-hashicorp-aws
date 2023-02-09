@@ -6,6 +6,8 @@ use super::provider::ProviderAws;
 
 #[derive(Serialize)]
 struct DataElbHostedZoneIdData {
+    #[serde(skip_serializing_if = "Vec::is_empty")]
+    depends_on: Vec<String>,
     #[serde(skip_serializing_if = "SerdeSkipDefault::is_default")]
     provider: Option<String>,
     #[serde(skip_serializing_if = "Option::is_none")]
@@ -28,6 +30,11 @@ pub struct DataElbHostedZoneId(Rc<DataElbHostedZoneId_>);
 impl DataElbHostedZoneId {
     fn shared(&self) -> &StackShared {
         &self.0.shared
+    }
+
+    pub fn depends_on(self, dep: &impl Dependable) -> Self {
+        self.0.data.borrow_mut().depends_on.push(dep.extract_ref());
+        self
     }
 
     pub fn set_provider(&self, provider: &ProviderAws) -> &Self {
@@ -64,6 +71,12 @@ impl Datasource for DataElbHostedZoneId {
     }
 }
 
+impl Dependable for DataElbHostedZoneId {
+    fn extract_ref(&self) -> String {
+        Datasource::extract_ref(self)
+    }
+}
+
 impl ToListMappable for DataElbHostedZoneId {
     type O = ListRef<DataElbHostedZoneIdRef>;
 
@@ -97,6 +110,7 @@ impl BuildDataElbHostedZoneId {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
             data: RefCell::new(DataElbHostedZoneIdData {
+                depends_on: core::default::Default::default(),
                 provider: None,
                 for_each: None,
                 id: core::default::Default::default(),

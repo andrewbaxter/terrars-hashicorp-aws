@@ -6,6 +6,8 @@ use super::provider::ProviderAws;
 
 #[derive(Serialize)]
 struct DataRedshiftserverlessCredentialsData {
+    #[serde(skip_serializing_if = "Vec::is_empty")]
+    depends_on: Vec<String>,
     #[serde(skip_serializing_if = "SerdeSkipDefault::is_default")]
     provider: Option<String>,
     #[serde(skip_serializing_if = "Option::is_none")]
@@ -31,6 +33,11 @@ pub struct DataRedshiftserverlessCredentials(Rc<DataRedshiftserverlessCredential
 impl DataRedshiftserverlessCredentials {
     fn shared(&self) -> &StackShared {
         &self.0.shared
+    }
+
+    pub fn depends_on(self, dep: &impl Dependable) -> Self {
+        self.0.data.borrow_mut().depends_on.push(dep.extract_ref());
+        self
     }
 
     pub fn set_provider(&self, provider: &ProviderAws) -> &Self {
@@ -98,6 +105,12 @@ impl Datasource for DataRedshiftserverlessCredentials {
     }
 }
 
+impl Dependable for DataRedshiftserverlessCredentials {
+    fn extract_ref(&self) -> String {
+        Datasource::extract_ref(self)
+    }
+}
+
 impl ToListMappable for DataRedshiftserverlessCredentials {
     type O = ListRef<DataRedshiftserverlessCredentialsRef>;
 
@@ -133,6 +146,7 @@ impl BuildDataRedshiftserverlessCredentials {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
             data: RefCell::new(DataRedshiftserverlessCredentialsData {
+                depends_on: core::default::Default::default(),
                 provider: None,
                 for_each: None,
                 db_name: core::default::Default::default(),

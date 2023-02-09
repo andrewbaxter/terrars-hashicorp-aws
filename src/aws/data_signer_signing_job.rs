@@ -6,6 +6,8 @@ use super::provider::ProviderAws;
 
 #[derive(Serialize)]
 struct DataSignerSigningJobData {
+    #[serde(skip_serializing_if = "Vec::is_empty")]
+    depends_on: Vec<String>,
     #[serde(skip_serializing_if = "SerdeSkipDefault::is_default")]
     provider: Option<String>,
     #[serde(skip_serializing_if = "Option::is_none")]
@@ -27,6 +29,11 @@ pub struct DataSignerSigningJob(Rc<DataSignerSigningJob_>);
 impl DataSignerSigningJob {
     fn shared(&self) -> &StackShared {
         &self.0.shared
+    }
+
+    pub fn depends_on(self, dep: &impl Dependable) -> Self {
+        self.0.data.borrow_mut().depends_on.push(dep.extract_ref());
+        self
     }
 
     pub fn set_provider(&self, provider: &ProviderAws) -> &Self {
@@ -132,6 +139,12 @@ impl Datasource for DataSignerSigningJob {
     }
 }
 
+impl Dependable for DataSignerSigningJob {
+    fn extract_ref(&self) -> String {
+        Datasource::extract_ref(self)
+    }
+}
+
 impl ToListMappable for DataSignerSigningJob {
     type O = ListRef<DataSignerSigningJobRef>;
 
@@ -167,6 +180,7 @@ impl BuildDataSignerSigningJob {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
             data: RefCell::new(DataSignerSigningJobData {
+                depends_on: core::default::Default::default(),
                 provider: None,
                 for_each: None,
                 id: core::default::Default::default(),

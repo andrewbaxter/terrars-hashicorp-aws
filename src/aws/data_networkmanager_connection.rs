@@ -6,6 +6,8 @@ use super::provider::ProviderAws;
 
 #[derive(Serialize)]
 struct DataNetworkmanagerConnectionData {
+    #[serde(skip_serializing_if = "Vec::is_empty")]
+    depends_on: Vec<String>,
     #[serde(skip_serializing_if = "SerdeSkipDefault::is_default")]
     provider: Option<String>,
     #[serde(skip_serializing_if = "Option::is_none")]
@@ -30,6 +32,11 @@ pub struct DataNetworkmanagerConnection(Rc<DataNetworkmanagerConnection_>);
 impl DataNetworkmanagerConnection {
     fn shared(&self) -> &StackShared {
         &self.0.shared
+    }
+
+    pub fn depends_on(self, dep: &impl Dependable) -> Self {
+        self.0.data.borrow_mut().depends_on.push(dep.extract_ref());
+        self
     }
 
     pub fn set_provider(&self, provider: &ProviderAws) -> &Self {
@@ -106,6 +113,12 @@ impl Datasource for DataNetworkmanagerConnection {
     }
 }
 
+impl Dependable for DataNetworkmanagerConnection {
+    fn extract_ref(&self) -> String {
+        Datasource::extract_ref(self)
+    }
+}
+
 impl ToListMappable for DataNetworkmanagerConnection {
     type O = ListRef<DataNetworkmanagerConnectionRef>;
 
@@ -143,6 +156,7 @@ impl BuildDataNetworkmanagerConnection {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
             data: RefCell::new(DataNetworkmanagerConnectionData {
+                depends_on: core::default::Default::default(),
                 provider: None,
                 for_each: None,
                 connection_id: self.connection_id,

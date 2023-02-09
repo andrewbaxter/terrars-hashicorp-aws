@@ -6,6 +6,8 @@ use super::provider::ProviderAws;
 
 #[derive(Serialize)]
 struct DataBatchSchedulingPolicyData {
+    #[serde(skip_serializing_if = "Vec::is_empty")]
+    depends_on: Vec<String>,
     #[serde(skip_serializing_if = "SerdeSkipDefault::is_default")]
     provider: Option<String>,
     #[serde(skip_serializing_if = "Option::is_none")]
@@ -29,6 +31,11 @@ pub struct DataBatchSchedulingPolicy(Rc<DataBatchSchedulingPolicy_>);
 impl DataBatchSchedulingPolicy {
     fn shared(&self) -> &StackShared {
         &self.0.shared
+    }
+
+    pub fn depends_on(self, dep: &impl Dependable) -> Self {
+        self.0.data.borrow_mut().depends_on.push(dep.extract_ref());
+        self
     }
 
     pub fn set_provider(&self, provider: &ProviderAws) -> &Self {
@@ -80,6 +87,12 @@ impl Datasource for DataBatchSchedulingPolicy {
     }
 }
 
+impl Dependable for DataBatchSchedulingPolicy {
+    fn extract_ref(&self) -> String {
+        Datasource::extract_ref(self)
+    }
+}
+
 impl ToListMappable for DataBatchSchedulingPolicy {
     type O = ListRef<DataBatchSchedulingPolicyRef>;
 
@@ -115,6 +128,7 @@ impl BuildDataBatchSchedulingPolicy {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
             data: RefCell::new(DataBatchSchedulingPolicyData {
+                depends_on: core::default::Default::default(),
                 provider: None,
                 for_each: None,
                 arn: self.arn,

@@ -44,7 +44,7 @@ impl SnsSmsPreferences {
         &self.0.shared
     }
 
-    pub fn depends_on(self, dep: &impl Resource) -> Self {
+    pub fn depends_on(self, dep: &impl Dependable) -> Self {
         self.0.data.borrow_mut().depends_on.push(dep.extract_ref());
         self
     }
@@ -181,6 +181,12 @@ impl SnsSmsPreferences {
 impl Resource for SnsSmsPreferences {
     fn extract_ref(&self) -> String {
         format!("{}.{}", self.0.extract_resource_type(), self.0.extract_tf_id())
+    }
+}
+
+impl Dependable for SnsSmsPreferences {
+    fn extract_ref(&self) -> String {
+        Resource::extract_ref(self)
     }
 }
 

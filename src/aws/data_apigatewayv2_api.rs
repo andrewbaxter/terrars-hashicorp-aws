@@ -6,6 +6,8 @@ use super::provider::ProviderAws;
 
 #[derive(Serialize)]
 struct DataApigatewayv2ApiData {
+    #[serde(skip_serializing_if = "Vec::is_empty")]
+    depends_on: Vec<String>,
     #[serde(skip_serializing_if = "SerdeSkipDefault::is_default")]
     provider: Option<String>,
     #[serde(skip_serializing_if = "Option::is_none")]
@@ -29,6 +31,11 @@ pub struct DataApigatewayv2Api(Rc<DataApigatewayv2Api_>);
 impl DataApigatewayv2Api {
     fn shared(&self) -> &StackShared {
         &self.0.shared
+    }
+
+    pub fn depends_on(self, dep: &impl Dependable) -> Self {
+        self.0.data.borrow_mut().depends_on.push(dep.extract_ref());
+        self
     }
 
     pub fn set_provider(&self, provider: &ProviderAws) -> &Self {
@@ -125,6 +132,12 @@ impl Datasource for DataApigatewayv2Api {
     }
 }
 
+impl Dependable for DataApigatewayv2Api {
+    fn extract_ref(&self) -> String {
+        Datasource::extract_ref(self)
+    }
+}
+
 impl ToListMappable for DataApigatewayv2Api {
     type O = ListRef<DataApigatewayv2ApiRef>;
 
@@ -160,6 +173,7 @@ impl BuildDataApigatewayv2Api {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
             data: RefCell::new(DataApigatewayv2ApiData {
+                depends_on: core::default::Default::default(),
                 provider: None,
                 for_each: None,
                 api_id: self.api_id,

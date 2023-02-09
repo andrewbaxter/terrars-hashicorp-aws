@@ -6,6 +6,8 @@ use super::provider::ProviderAws;
 
 #[derive(Serialize)]
 struct DataS3AccountPublicAccessBlockData {
+    #[serde(skip_serializing_if = "Vec::is_empty")]
+    depends_on: Vec<String>,
     #[serde(skip_serializing_if = "SerdeSkipDefault::is_default")]
     provider: Option<String>,
     #[serde(skip_serializing_if = "Option::is_none")]
@@ -28,6 +30,11 @@ pub struct DataS3AccountPublicAccessBlock(Rc<DataS3AccountPublicAccessBlock_>);
 impl DataS3AccountPublicAccessBlock {
     fn shared(&self) -> &StackShared {
         &self.0.shared
+    }
+
+    pub fn depends_on(self, dep: &impl Dependable) -> Self {
+        self.0.data.borrow_mut().depends_on.push(dep.extract_ref());
+        self
     }
 
     pub fn set_provider(&self, provider: &ProviderAws) -> &Self {
@@ -84,6 +91,12 @@ impl Datasource for DataS3AccountPublicAccessBlock {
     }
 }
 
+impl Dependable for DataS3AccountPublicAccessBlock {
+    fn extract_ref(&self) -> String {
+        Datasource::extract_ref(self)
+    }
+}
+
 impl ToListMappable for DataS3AccountPublicAccessBlock {
     type O = ListRef<DataS3AccountPublicAccessBlockRef>;
 
@@ -117,6 +130,7 @@ impl BuildDataS3AccountPublicAccessBlock {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
             data: RefCell::new(DataS3AccountPublicAccessBlockData {
+                depends_on: core::default::Default::default(),
                 provider: None,
                 for_each: None,
                 account_id: core::default::Default::default(),

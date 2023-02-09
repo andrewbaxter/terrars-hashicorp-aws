@@ -6,6 +6,8 @@ use super::provider::ProviderAws;
 
 #[derive(Serialize)]
 struct DataInstanceData {
+    #[serde(skip_serializing_if = "Vec::is_empty")]
+    depends_on: Vec<String>,
     #[serde(skip_serializing_if = "SerdeSkipDefault::is_default")]
     provider: Option<String>,
     #[serde(skip_serializing_if = "Option::is_none")]
@@ -41,6 +43,11 @@ pub struct DataInstance(Rc<DataInstance_>);
 impl DataInstance {
     fn shared(&self) -> &StackShared {
         &self.0.shared
+    }
+
+    pub fn depends_on(self, dep: &impl Dependable) -> Self {
+        self.0.data.borrow_mut().depends_on.push(dep.extract_ref());
+        self
     }
 
     pub fn set_provider(&self, provider: &ProviderAws) -> &Self {
@@ -345,6 +352,12 @@ impl Datasource for DataInstance {
     }
 }
 
+impl Dependable for DataInstance {
+    fn extract_ref(&self) -> String {
+        Datasource::extract_ref(self)
+    }
+}
+
 impl ToListMappable for DataInstance {
     type O = ListRef<DataInstanceRef>;
 
@@ -378,6 +391,7 @@ impl BuildDataInstance {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
             data: RefCell::new(DataInstanceData {
+                depends_on: core::default::Default::default(),
                 provider: None,
                 for_each: None,
                 get_password_data: core::default::Default::default(),

@@ -6,6 +6,8 @@ use super::provider::ProviderAws;
 
 #[derive(Serialize)]
 struct DataKmsKeyData {
+    #[serde(skip_serializing_if = "Vec::is_empty")]
+    depends_on: Vec<String>,
     #[serde(skip_serializing_if = "SerdeSkipDefault::is_default")]
     provider: Option<String>,
     #[serde(skip_serializing_if = "Option::is_none")]
@@ -29,6 +31,11 @@ pub struct DataKmsKey(Rc<DataKmsKey_>);
 impl DataKmsKey {
     fn shared(&self) -> &StackShared {
         &self.0.shared
+    }
+
+    pub fn depends_on(self, dep: &impl Dependable) -> Self {
+        self.0.data.borrow_mut().depends_on.push(dep.extract_ref());
+        self
     }
 
     pub fn set_provider(&self, provider: &ProviderAws) -> &Self {
@@ -145,6 +152,12 @@ impl Datasource for DataKmsKey {
     }
 }
 
+impl Dependable for DataKmsKey {
+    fn extract_ref(&self) -> String {
+        Datasource::extract_ref(self)
+    }
+}
+
 impl ToListMappable for DataKmsKey {
     type O = ListRef<DataKmsKeyRef>;
 
@@ -180,6 +193,7 @@ impl BuildDataKmsKey {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
             data: RefCell::new(DataKmsKeyData {
+                depends_on: core::default::Default::default(),
                 provider: None,
                 for_each: None,
                 grant_tokens: core::default::Default::default(),

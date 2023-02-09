@@ -6,6 +6,8 @@ use super::provider::ProviderAws;
 
 #[derive(Serialize)]
 struct DataEc2TransitGatewayData {
+    #[serde(skip_serializing_if = "Vec::is_empty")]
+    depends_on: Vec<String>,
     #[serde(skip_serializing_if = "SerdeSkipDefault::is_default")]
     provider: Option<String>,
     #[serde(skip_serializing_if = "Option::is_none")]
@@ -33,6 +35,11 @@ pub struct DataEc2TransitGateway(Rc<DataEc2TransitGateway_>);
 impl DataEc2TransitGateway {
     fn shared(&self) -> &StackShared {
         &self.0.shared
+    }
+
+    pub fn depends_on(self, dep: &impl Dependable) -> Self {
+        self.0.data.borrow_mut().depends_on.push(dep.extract_ref());
+        self
     }
 
     pub fn set_provider(&self, provider: &ProviderAws) -> &Self {
@@ -158,6 +165,12 @@ impl Datasource for DataEc2TransitGateway {
     }
 }
 
+impl Dependable for DataEc2TransitGateway {
+    fn extract_ref(&self) -> String {
+        Datasource::extract_ref(self)
+    }
+}
+
 impl ToListMappable for DataEc2TransitGateway {
     type O = ListRef<DataEc2TransitGatewayRef>;
 
@@ -191,6 +204,7 @@ impl BuildDataEc2TransitGateway {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
             data: RefCell::new(DataEc2TransitGatewayData {
+                depends_on: core::default::Default::default(),
                 provider: None,
                 for_each: None,
                 id: core::default::Default::default(),

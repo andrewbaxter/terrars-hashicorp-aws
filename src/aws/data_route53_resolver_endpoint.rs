@@ -6,6 +6,8 @@ use super::provider::ProviderAws;
 
 #[derive(Serialize)]
 struct DataRoute53ResolverEndpointData {
+    #[serde(skip_serializing_if = "Vec::is_empty")]
+    depends_on: Vec<String>,
     #[serde(skip_serializing_if = "SerdeSkipDefault::is_default")]
     provider: Option<String>,
     #[serde(skip_serializing_if = "Option::is_none")]
@@ -31,6 +33,11 @@ pub struct DataRoute53ResolverEndpoint(Rc<DataRoute53ResolverEndpoint_>);
 impl DataRoute53ResolverEndpoint {
     fn shared(&self) -> &StackShared {
         &self.0.shared
+    }
+
+    pub fn depends_on(self, dep: &impl Dependable) -> Self {
+        self.0.data.borrow_mut().depends_on.push(dep.extract_ref());
+        self
     }
 
     pub fn set_provider(&self, provider: &ProviderAws) -> &Self {
@@ -110,6 +117,12 @@ impl Datasource for DataRoute53ResolverEndpoint {
     }
 }
 
+impl Dependable for DataRoute53ResolverEndpoint {
+    fn extract_ref(&self) -> String {
+        Datasource::extract_ref(self)
+    }
+}
+
 impl ToListMappable for DataRoute53ResolverEndpoint {
     type O = ListRef<DataRoute53ResolverEndpointRef>;
 
@@ -143,6 +156,7 @@ impl BuildDataRoute53ResolverEndpoint {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
             data: RefCell::new(DataRoute53ResolverEndpointData {
+                depends_on: core::default::Default::default(),
                 provider: None,
                 for_each: None,
                 id: core::default::Default::default(),

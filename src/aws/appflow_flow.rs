@@ -50,7 +50,7 @@ impl AppflowFlow {
         &self.0.shared
     }
 
-    pub fn depends_on(self, dep: &impl Resource) -> Self {
+    pub fn depends_on(self, dep: &impl Dependable) -> Self {
         self.0.data.borrow_mut().depends_on.push(dep.extract_ref());
         self
     }
@@ -240,6 +240,12 @@ impl Resource for AppflowFlow {
     }
 }
 
+impl Dependable for AppflowFlow {
+    fn extract_ref(&self) -> String {
+        Resource::extract_ref(self)
+    }
+}
+
 impl ToListMappable for AppflowFlow {
     type O = ListRef<AppflowFlowRef>;
 
@@ -411,9 +417,7 @@ impl ToListMappable for AppflowFlowDestinationFlowConfigElDestinationConnectorPr
     }
 }
 
-pub struct BuildAppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElCustomConnectorElErrorHandlingConfigEl {
-
-}
+pub struct BuildAppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElCustomConnectorElErrorHandlingConfigEl {}
 
 impl BuildAppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElCustomConnectorElErrorHandlingConfigEl {
     pub fn build(
@@ -1605,9 +1609,7 @@ impl ToListMappable for AppflowFlowDestinationFlowConfigElDestinationConnectorPr
     }
 }
 
-pub struct BuildAppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElS3ElS3OutputFormatConfigElAggregationConfigEl {
-
-}
+pub struct BuildAppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElS3ElS3OutputFormatConfigElAggregationConfigEl {}
 
 impl BuildAppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElS3ElS3OutputFormatConfigElAggregationConfigEl {
     pub fn build(
@@ -1684,9 +1686,7 @@ impl ToListMappable for AppflowFlowDestinationFlowConfigElDestinationConnectorPr
     }
 }
 
-pub struct BuildAppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElS3ElS3OutputFormatConfigElPrefixConfigEl {
-
-}
+pub struct BuildAppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElS3ElS3OutputFormatConfigElPrefixConfigEl {}
 
 impl BuildAppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElS3ElS3OutputFormatConfigElPrefixConfigEl {
     pub fn build(
@@ -2380,9 +2380,7 @@ impl ToListMappable for AppflowFlowDestinationFlowConfigElDestinationConnectorPr
     }
 }
 
-pub struct BuildAppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElSapoDataElSuccessResponseHandlingConfigEl {
-
-}
+pub struct BuildAppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElSapoDataElSuccessResponseHandlingConfigEl {}
 
 impl BuildAppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElSapoDataElSuccessResponseHandlingConfigEl {
     pub fn build(
@@ -2865,9 +2863,7 @@ impl ToListMappable for AppflowFlowDestinationFlowConfigElDestinationConnectorPr
     }
 }
 
-pub struct BuildAppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElUpsolverElS3OutputFormatConfigElAggregationConfigEl {
-
-}
+pub struct BuildAppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElUpsolverElS3OutputFormatConfigElAggregationConfigEl {}
 
 impl BuildAppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElUpsolverElS3OutputFormatConfigElAggregationConfigEl {
     pub fn build(

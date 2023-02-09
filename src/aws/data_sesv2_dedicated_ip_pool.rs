@@ -6,6 +6,8 @@ use super::provider::ProviderAws;
 
 #[derive(Serialize)]
 struct DataSesv2DedicatedIpPoolData {
+    #[serde(skip_serializing_if = "Vec::is_empty")]
+    depends_on: Vec<String>,
     #[serde(skip_serializing_if = "SerdeSkipDefault::is_default")]
     provider: Option<String>,
     #[serde(skip_serializing_if = "Option::is_none")]
@@ -29,6 +31,11 @@ pub struct DataSesv2DedicatedIpPool(Rc<DataSesv2DedicatedIpPool_>);
 impl DataSesv2DedicatedIpPool {
     fn shared(&self) -> &StackShared {
         &self.0.shared
+    }
+
+    pub fn depends_on(self, dep: &impl Dependable) -> Self {
+        self.0.data.borrow_mut().depends_on.push(dep.extract_ref());
+        self
     }
 
     pub fn set_provider(&self, provider: &ProviderAws) -> &Self {
@@ -85,6 +92,12 @@ impl Datasource for DataSesv2DedicatedIpPool {
     }
 }
 
+impl Dependable for DataSesv2DedicatedIpPool {
+    fn extract_ref(&self) -> String {
+        Datasource::extract_ref(self)
+    }
+}
+
 impl ToListMappable for DataSesv2DedicatedIpPool {
     type O = ListRef<DataSesv2DedicatedIpPoolRef>;
 
@@ -120,6 +133,7 @@ impl BuildDataSesv2DedicatedIpPool {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
             data: RefCell::new(DataSesv2DedicatedIpPoolData {
+                depends_on: core::default::Default::default(),
                 provider: None,
                 for_each: None,
                 id: core::default::Default::default(),

@@ -6,6 +6,8 @@ use super::provider::ProviderAws;
 
 #[derive(Serialize)]
 struct DataRedshiftClusterData {
+    #[serde(skip_serializing_if = "Vec::is_empty")]
+    depends_on: Vec<String>,
     #[serde(skip_serializing_if = "SerdeSkipDefault::is_default")]
     provider: Option<String>,
     #[serde(skip_serializing_if = "Option::is_none")]
@@ -29,6 +31,11 @@ pub struct DataRedshiftCluster(Rc<DataRedshiftCluster_>);
 impl DataRedshiftCluster {
     fn shared(&self) -> &StackShared {
         &self.0.shared
+    }
+
+    pub fn depends_on(self, dep: &impl Dependable) -> Self {
+        self.0.data.borrow_mut().depends_on.push(dep.extract_ref());
+        self
     }
 
     pub fn set_provider(&self, provider: &ProviderAws) -> &Self {
@@ -255,6 +262,12 @@ impl Datasource for DataRedshiftCluster {
     }
 }
 
+impl Dependable for DataRedshiftCluster {
+    fn extract_ref(&self) -> String {
+        Datasource::extract_ref(self)
+    }
+}
+
 impl ToListMappable for DataRedshiftCluster {
     type O = ListRef<DataRedshiftClusterRef>;
 
@@ -290,6 +303,7 @@ impl BuildDataRedshiftCluster {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
             data: RefCell::new(DataRedshiftClusterData {
+                depends_on: core::default::Default::default(),
                 provider: None,
                 for_each: None,
                 cluster_identifier: self.cluster_identifier,

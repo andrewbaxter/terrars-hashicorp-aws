@@ -6,6 +6,8 @@ use super::provider::ProviderAws;
 
 #[derive(Serialize)]
 struct DataWafv2WebAclData {
+    #[serde(skip_serializing_if = "Vec::is_empty")]
+    depends_on: Vec<String>,
     #[serde(skip_serializing_if = "SerdeSkipDefault::is_default")]
     provider: Option<String>,
     #[serde(skip_serializing_if = "Option::is_none")]
@@ -28,6 +30,11 @@ pub struct DataWafv2WebAcl(Rc<DataWafv2WebAcl_>);
 impl DataWafv2WebAcl {
     fn shared(&self) -> &StackShared {
         &self.0.shared
+    }
+
+    pub fn depends_on(self, dep: &impl Dependable) -> Self {
+        self.0.data.borrow_mut().depends_on.push(dep.extract_ref());
+        self
     }
 
     pub fn set_provider(&self, provider: &ProviderAws) -> &Self {
@@ -73,6 +80,12 @@ impl Datasource for DataWafv2WebAcl {
     }
 }
 
+impl Dependable for DataWafv2WebAcl {
+    fn extract_ref(&self) -> String {
+        Datasource::extract_ref(self)
+    }
+}
+
 impl ToListMappable for DataWafv2WebAcl {
     type O = ListRef<DataWafv2WebAclRef>;
 
@@ -110,6 +123,7 @@ impl BuildDataWafv2WebAcl {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
             data: RefCell::new(DataWafv2WebAclData {
+                depends_on: core::default::Default::default(),
                 provider: None,
                 for_each: None,
                 id: core::default::Default::default(),

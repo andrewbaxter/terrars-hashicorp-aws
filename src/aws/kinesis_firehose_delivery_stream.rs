@@ -61,7 +61,7 @@ impl KinesisFirehoseDeliveryStream {
         &self.0.shared
     }
 
-    pub fn depends_on(self, dep: &impl Resource) -> Self {
+    pub fn depends_on(self, dep: &impl Dependable) -> Self {
         self.0.data.borrow_mut().depends_on.push(dep.extract_ref());
         self
     }
@@ -365,6 +365,12 @@ impl KinesisFirehoseDeliveryStream {
 impl Resource for KinesisFirehoseDeliveryStream {
     fn extract_ref(&self) -> String {
         format!("{}.{}", self.0.extract_resource_type(), self.0.extract_tf_id())
+    }
+}
+
+impl Dependable for KinesisFirehoseDeliveryStream {
+    fn extract_ref(&self) -> String {
+        Resource::extract_ref(self)
     }
 }
 
@@ -1416,9 +1422,7 @@ impl ToListMappable for KinesisFirehoseDeliveryStreamExtendedS3ConfigurationElDa
     }
 }
 
-pub struct BuildKinesisFirehoseDeliveryStreamExtendedS3ConfigurationElDataFormatConversionConfigurationElInputFormatConfigurationElDeserializerElHiveJsonSerDeEl {
-
-}
+pub struct BuildKinesisFirehoseDeliveryStreamExtendedS3ConfigurationElDataFormatConversionConfigurationElInputFormatConfigurationElDeserializerElHiveJsonSerDeEl {}
 
 impl BuildKinesisFirehoseDeliveryStreamExtendedS3ConfigurationElDataFormatConversionConfigurationElInputFormatConfigurationElDeserializerElHiveJsonSerDeEl {
     pub fn build(
@@ -1503,9 +1507,7 @@ impl ToListMappable for KinesisFirehoseDeliveryStreamExtendedS3ConfigurationElDa
     }
 }
 
-pub struct BuildKinesisFirehoseDeliveryStreamExtendedS3ConfigurationElDataFormatConversionConfigurationElInputFormatConfigurationElDeserializerElOpenXJsonSerDeEl {
-
-}
+pub struct BuildKinesisFirehoseDeliveryStreamExtendedS3ConfigurationElDataFormatConversionConfigurationElInputFormatConfigurationElDeserializerElOpenXJsonSerDeEl {}
 
 impl BuildKinesisFirehoseDeliveryStreamExtendedS3ConfigurationElDataFormatConversionConfigurationElInputFormatConfigurationElDeserializerElOpenXJsonSerDeEl {
     pub fn build(
@@ -1651,9 +1653,7 @@ impl ToListMappable for KinesisFirehoseDeliveryStreamExtendedS3ConfigurationElDa
     }
 }
 
-pub struct BuildKinesisFirehoseDeliveryStreamExtendedS3ConfigurationElDataFormatConversionConfigurationElInputFormatConfigurationElDeserializerEl {
-
-}
+pub struct BuildKinesisFirehoseDeliveryStreamExtendedS3ConfigurationElDataFormatConversionConfigurationElInputFormatConfigurationElDeserializerEl {}
 
 impl BuildKinesisFirehoseDeliveryStreamExtendedS3ConfigurationElDataFormatConversionConfigurationElInputFormatConfigurationElDeserializerEl {
     pub fn build(
@@ -1768,9 +1768,7 @@ impl ToListMappable for KinesisFirehoseDeliveryStreamExtendedS3ConfigurationElDa
     }
 }
 
-pub struct BuildKinesisFirehoseDeliveryStreamExtendedS3ConfigurationElDataFormatConversionConfigurationElInputFormatConfigurationEl {
-
-}
+pub struct BuildKinesisFirehoseDeliveryStreamExtendedS3ConfigurationElDataFormatConversionConfigurationElInputFormatConfigurationEl {}
 
 impl BuildKinesisFirehoseDeliveryStreamExtendedS3ConfigurationElDataFormatConversionConfigurationElInputFormatConfigurationEl {
     pub fn build(
@@ -1916,9 +1914,7 @@ impl ToListMappable for KinesisFirehoseDeliveryStreamExtendedS3ConfigurationElDa
     }
 }
 
-pub struct BuildKinesisFirehoseDeliveryStreamExtendedS3ConfigurationElDataFormatConversionConfigurationElOutputFormatConfigurationElSerializerElOrcSerDeEl {
-
-}
+pub struct BuildKinesisFirehoseDeliveryStreamExtendedS3ConfigurationElDataFormatConversionConfigurationElOutputFormatConfigurationElSerializerElOrcSerDeEl {}
 
 impl BuildKinesisFirehoseDeliveryStreamExtendedS3ConfigurationElDataFormatConversionConfigurationElOutputFormatConfigurationElSerializerElOrcSerDeEl {
     pub fn build(
@@ -2081,9 +2077,7 @@ impl ToListMappable for KinesisFirehoseDeliveryStreamExtendedS3ConfigurationElDa
     }
 }
 
-pub struct BuildKinesisFirehoseDeliveryStreamExtendedS3ConfigurationElDataFormatConversionConfigurationElOutputFormatConfigurationElSerializerElParquetSerDeEl {
-
-}
+pub struct BuildKinesisFirehoseDeliveryStreamExtendedS3ConfigurationElDataFormatConversionConfigurationElOutputFormatConfigurationElSerializerElParquetSerDeEl {}
 
 impl BuildKinesisFirehoseDeliveryStreamExtendedS3ConfigurationElDataFormatConversionConfigurationElOutputFormatConfigurationElSerializerElParquetSerDeEl {
     pub fn build(
@@ -2247,9 +2241,7 @@ impl ToListMappable for KinesisFirehoseDeliveryStreamExtendedS3ConfigurationElDa
     }
 }
 
-pub struct BuildKinesisFirehoseDeliveryStreamExtendedS3ConfigurationElDataFormatConversionConfigurationElOutputFormatConfigurationElSerializerEl {
-
-}
+pub struct BuildKinesisFirehoseDeliveryStreamExtendedS3ConfigurationElDataFormatConversionConfigurationElOutputFormatConfigurationElSerializerEl {}
 
 impl BuildKinesisFirehoseDeliveryStreamExtendedS3ConfigurationElDataFormatConversionConfigurationElOutputFormatConfigurationElSerializerEl {
     pub fn build(
@@ -2364,9 +2356,7 @@ impl ToListMappable for KinesisFirehoseDeliveryStreamExtendedS3ConfigurationElDa
     }
 }
 
-pub struct BuildKinesisFirehoseDeliveryStreamExtendedS3ConfigurationElDataFormatConversionConfigurationElOutputFormatConfigurationEl {
-
-}
+pub struct BuildKinesisFirehoseDeliveryStreamExtendedS3ConfigurationElDataFormatConversionConfigurationElOutputFormatConfigurationEl {}
 
 impl BuildKinesisFirehoseDeliveryStreamExtendedS3ConfigurationElDataFormatConversionConfigurationElOutputFormatConfigurationEl {
     pub fn build(
@@ -3155,9 +3145,7 @@ impl ToListMappable for KinesisFirehoseDeliveryStreamExtendedS3ConfigurationElS3
     }
 }
 
-pub struct BuildKinesisFirehoseDeliveryStreamExtendedS3ConfigurationElS3BackupConfigurationElCloudwatchLoggingOptionsEl {
-
-}
+pub struct BuildKinesisFirehoseDeliveryStreamExtendedS3ConfigurationElS3BackupConfigurationElCloudwatchLoggingOptionsEl {}
 
 impl BuildKinesisFirehoseDeliveryStreamExtendedS3ConfigurationElS3BackupConfigurationElCloudwatchLoggingOptionsEl {
     pub fn build(
@@ -5097,9 +5085,7 @@ impl ToListMappable for KinesisFirehoseDeliveryStreamRedshiftConfigurationElS3Ba
     }
 }
 
-pub struct BuildKinesisFirehoseDeliveryStreamRedshiftConfigurationElS3BackupConfigurationElCloudwatchLoggingOptionsEl {
-
-}
+pub struct BuildKinesisFirehoseDeliveryStreamRedshiftConfigurationElS3BackupConfigurationElCloudwatchLoggingOptionsEl {}
 
 impl BuildKinesisFirehoseDeliveryStreamRedshiftConfigurationElS3BackupConfigurationElCloudwatchLoggingOptionsEl {
     pub fn build(

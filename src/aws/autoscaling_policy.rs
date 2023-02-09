@@ -57,7 +57,7 @@ impl AutoscalingPolicy {
         &self.0.shared
     }
 
-    pub fn depends_on(self, dep: &impl Resource) -> Self {
+    pub fn depends_on(self, dep: &impl Dependable) -> Self {
         self.0.data.borrow_mut().depends_on.push(dep.extract_ref());
         self
     }
@@ -286,6 +286,12 @@ impl AutoscalingPolicy {
 impl Resource for AutoscalingPolicy {
     fn extract_ref(&self) -> String {
         format!("{}.{}", self.0.extract_resource_type(), self.0.extract_tf_id())
+    }
+}
+
+impl Dependable for AutoscalingPolicy {
+    fn extract_ref(&self) -> String {
+        Resource::extract_ref(self)
     }
 }
 
@@ -983,9 +989,7 @@ impl ToListMappable for AutoscalingPolicyPredictiveScalingConfigurationElMetricS
     }
 }
 
-pub struct BuildAutoscalingPolicyPredictiveScalingConfigurationElMetricSpecificationElCustomizedCapacityMetricSpecificationEl {
-
-}
+pub struct BuildAutoscalingPolicyPredictiveScalingConfigurationElMetricSpecificationElCustomizedCapacityMetricSpecificationEl {}
 
 impl BuildAutoscalingPolicyPredictiveScalingConfigurationElMetricSpecificationElCustomizedCapacityMetricSpecificationEl {
     pub fn build(
@@ -1567,9 +1571,7 @@ impl ToListMappable for AutoscalingPolicyPredictiveScalingConfigurationElMetricS
     }
 }
 
-pub struct BuildAutoscalingPolicyPredictiveScalingConfigurationElMetricSpecificationElCustomizedLoadMetricSpecificationEl {
-
-}
+pub struct BuildAutoscalingPolicyPredictiveScalingConfigurationElMetricSpecificationElCustomizedLoadMetricSpecificationEl {}
 
 impl BuildAutoscalingPolicyPredictiveScalingConfigurationElMetricSpecificationElCustomizedLoadMetricSpecificationEl {
     pub fn build(
@@ -2151,9 +2153,7 @@ impl ToListMappable for AutoscalingPolicyPredictiveScalingConfigurationElMetricS
     }
 }
 
-pub struct BuildAutoscalingPolicyPredictiveScalingConfigurationElMetricSpecificationElCustomizedScalingMetricSpecificationEl {
-
-}
+pub struct BuildAutoscalingPolicyPredictiveScalingConfigurationElMetricSpecificationElCustomizedScalingMetricSpecificationEl {}
 
 impl BuildAutoscalingPolicyPredictiveScalingConfigurationElMetricSpecificationElCustomizedScalingMetricSpecificationEl {
     pub fn build(

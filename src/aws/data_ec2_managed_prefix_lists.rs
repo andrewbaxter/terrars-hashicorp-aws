@@ -6,6 +6,8 @@ use super::provider::ProviderAws;
 
 #[derive(Serialize)]
 struct DataEc2ManagedPrefixListsData {
+    #[serde(skip_serializing_if = "Vec::is_empty")]
+    depends_on: Vec<String>,
     #[serde(skip_serializing_if = "SerdeSkipDefault::is_default")]
     provider: Option<String>,
     #[serde(skip_serializing_if = "Option::is_none")]
@@ -31,6 +33,11 @@ pub struct DataEc2ManagedPrefixLists(Rc<DataEc2ManagedPrefixLists_>);
 impl DataEc2ManagedPrefixLists {
     fn shared(&self) -> &StackShared {
         &self.0.shared
+    }
+
+    pub fn depends_on(self, dep: &impl Dependable) -> Self {
+        self.0.data.borrow_mut().depends_on.push(dep.extract_ref());
+        self
     }
 
     pub fn set_provider(&self, provider: &ProviderAws) -> &Self {
@@ -85,6 +92,12 @@ impl Datasource for DataEc2ManagedPrefixLists {
     }
 }
 
+impl Dependable for DataEc2ManagedPrefixLists {
+    fn extract_ref(&self) -> String {
+        Datasource::extract_ref(self)
+    }
+}
+
 impl ToListMappable for DataEc2ManagedPrefixLists {
     type O = ListRef<DataEc2ManagedPrefixListsRef>;
 
@@ -118,6 +131,7 @@ impl BuildDataEc2ManagedPrefixLists {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
             data: RefCell::new(DataEc2ManagedPrefixListsData {
+                depends_on: core::default::Default::default(),
                 provider: None,
                 for_each: None,
                 id: core::default::Default::default(),

@@ -107,7 +107,7 @@ impl AutoscalingGroup {
         &self.0.shared
     }
 
-    pub fn depends_on(self, dep: &impl Resource) -> Self {
+    pub fn depends_on(self, dep: &impl Dependable) -> Self {
         self.0.data.borrow_mut().depends_on.push(dep.extract_ref());
         self
     }
@@ -627,6 +627,12 @@ impl AutoscalingGroup {
 impl Resource for AutoscalingGroup {
     fn extract_ref(&self) -> String {
         format!("{}.{}", self.0.extract_resource_type(), self.0.extract_tf_id())
+    }
+}
+
+impl Dependable for AutoscalingGroup {
+    fn extract_ref(&self) -> String {
+        Resource::extract_ref(self)
     }
 }
 
@@ -1636,9 +1642,7 @@ impl ToListMappable for AutoscalingGroupMixedInstancesPolicyElLaunchTemplateElOv
     }
 }
 
-pub struct BuildAutoscalingGroupMixedInstancesPolicyElLaunchTemplateElOverrideElInstanceRequirementsElAcceleratorCountEl {
-
-}
+pub struct BuildAutoscalingGroupMixedInstancesPolicyElLaunchTemplateElOverrideElInstanceRequirementsElAcceleratorCountEl {}
 
 impl BuildAutoscalingGroupMixedInstancesPolicyElLaunchTemplateElOverrideElInstanceRequirementsElAcceleratorCountEl {
     pub fn build(
@@ -1721,9 +1725,7 @@ impl ToListMappable for AutoscalingGroupMixedInstancesPolicyElLaunchTemplateElOv
     }
 }
 
-pub struct BuildAutoscalingGroupMixedInstancesPolicyElLaunchTemplateElOverrideElInstanceRequirementsElAcceleratorTotalMemoryMibEl {
-
-}
+pub struct BuildAutoscalingGroupMixedInstancesPolicyElLaunchTemplateElOverrideElInstanceRequirementsElAcceleratorTotalMemoryMibEl {}
 
 impl BuildAutoscalingGroupMixedInstancesPolicyElLaunchTemplateElOverrideElInstanceRequirementsElAcceleratorTotalMemoryMibEl {
     pub fn build(
@@ -1806,9 +1808,7 @@ impl ToListMappable for AutoscalingGroupMixedInstancesPolicyElLaunchTemplateElOv
     }
 }
 
-pub struct BuildAutoscalingGroupMixedInstancesPolicyElLaunchTemplateElOverrideElInstanceRequirementsElBaselineEbsBandwidthMbpsEl {
-
-}
+pub struct BuildAutoscalingGroupMixedInstancesPolicyElLaunchTemplateElOverrideElInstanceRequirementsElBaselineEbsBandwidthMbpsEl {}
 
 impl BuildAutoscalingGroupMixedInstancesPolicyElLaunchTemplateElOverrideElInstanceRequirementsElBaselineEbsBandwidthMbpsEl {
     pub fn build(
@@ -1891,9 +1891,7 @@ impl ToListMappable for AutoscalingGroupMixedInstancesPolicyElLaunchTemplateElOv
     }
 }
 
-pub struct BuildAutoscalingGroupMixedInstancesPolicyElLaunchTemplateElOverrideElInstanceRequirementsElMemoryGibPerVcpuEl {
-
-}
+pub struct BuildAutoscalingGroupMixedInstancesPolicyElLaunchTemplateElOverrideElInstanceRequirementsElMemoryGibPerVcpuEl {}
 
 impl BuildAutoscalingGroupMixedInstancesPolicyElLaunchTemplateElOverrideElInstanceRequirementsElMemoryGibPerVcpuEl {
     pub fn build(
@@ -2059,9 +2057,7 @@ impl ToListMappable for AutoscalingGroupMixedInstancesPolicyElLaunchTemplateElOv
     }
 }
 
-pub struct BuildAutoscalingGroupMixedInstancesPolicyElLaunchTemplateElOverrideElInstanceRequirementsElNetworkInterfaceCountEl {
-
-}
+pub struct BuildAutoscalingGroupMixedInstancesPolicyElLaunchTemplateElOverrideElInstanceRequirementsElNetworkInterfaceCountEl {}
 
 impl BuildAutoscalingGroupMixedInstancesPolicyElLaunchTemplateElOverrideElInstanceRequirementsElNetworkInterfaceCountEl {
     pub fn build(
@@ -2144,9 +2140,7 @@ impl ToListMappable for AutoscalingGroupMixedInstancesPolicyElLaunchTemplateElOv
     }
 }
 
-pub struct BuildAutoscalingGroupMixedInstancesPolicyElLaunchTemplateElOverrideElInstanceRequirementsElTotalLocalStorageGbEl {
-
-}
+pub struct BuildAutoscalingGroupMixedInstancesPolicyElLaunchTemplateElOverrideElInstanceRequirementsElTotalLocalStorageGbEl {}
 
 impl BuildAutoscalingGroupMixedInstancesPolicyElLaunchTemplateElOverrideElInstanceRequirementsElTotalLocalStorageGbEl {
     pub fn build(

@@ -6,6 +6,8 @@ use super::provider::ProviderAws;
 
 #[derive(Serialize)]
 struct DataWafv2IpSetData {
+    #[serde(skip_serializing_if = "Vec::is_empty")]
+    depends_on: Vec<String>,
     #[serde(skip_serializing_if = "SerdeSkipDefault::is_default")]
     provider: Option<String>,
     #[serde(skip_serializing_if = "Option::is_none")]
@@ -28,6 +30,11 @@ pub struct DataWafv2IpSet(Rc<DataWafv2IpSet_>);
 impl DataWafv2IpSet {
     fn shared(&self) -> &StackShared {
         &self.0.shared
+    }
+
+    pub fn depends_on(self, dep: &impl Dependable) -> Self {
+        self.0.data.borrow_mut().depends_on.push(dep.extract_ref());
+        self
     }
 
     pub fn set_provider(&self, provider: &ProviderAws) -> &Self {
@@ -83,6 +90,12 @@ impl Datasource for DataWafv2IpSet {
     }
 }
 
+impl Dependable for DataWafv2IpSet {
+    fn extract_ref(&self) -> String {
+        Datasource::extract_ref(self)
+    }
+}
+
 impl ToListMappable for DataWafv2IpSet {
     type O = ListRef<DataWafv2IpSetRef>;
 
@@ -120,6 +133,7 @@ impl BuildDataWafv2IpSet {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
             data: RefCell::new(DataWafv2IpSetData {
+                depends_on: core::default::Default::default(),
                 provider: None,
                 for_each: None,
                 id: core::default::Default::default(),

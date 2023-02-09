@@ -6,6 +6,8 @@ use super::provider::ProviderAws;
 
 #[derive(Serialize)]
 struct DataEc2TransitGatewayVpnAttachmentData {
+    #[serde(skip_serializing_if = "Vec::is_empty")]
+    depends_on: Vec<String>,
     #[serde(skip_serializing_if = "SerdeSkipDefault::is_default")]
     provider: Option<String>,
     #[serde(skip_serializing_if = "Option::is_none")]
@@ -37,6 +39,11 @@ pub struct DataEc2TransitGatewayVpnAttachment(Rc<DataEc2TransitGatewayVpnAttachm
 impl DataEc2TransitGatewayVpnAttachment {
     fn shared(&self) -> &StackShared {
         &self.0.shared
+    }
+
+    pub fn depends_on(self, dep: &impl Dependable) -> Self {
+        self.0.data.borrow_mut().depends_on.push(dep.extract_ref());
+        self
     }
 
     pub fn set_provider(&self, provider: &ProviderAws) -> &Self {
@@ -122,6 +129,12 @@ impl Datasource for DataEc2TransitGatewayVpnAttachment {
     }
 }
 
+impl Dependable for DataEc2TransitGatewayVpnAttachment {
+    fn extract_ref(&self) -> String {
+        Datasource::extract_ref(self)
+    }
+}
+
 impl ToListMappable for DataEc2TransitGatewayVpnAttachment {
     type O = ListRef<DataEc2TransitGatewayVpnAttachmentRef>;
 
@@ -155,6 +168,7 @@ impl BuildDataEc2TransitGatewayVpnAttachment {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
             data: RefCell::new(DataEc2TransitGatewayVpnAttachmentData {
+                depends_on: core::default::Default::default(),
                 provider: None,
                 for_each: None,
                 id: core::default::Default::default(),

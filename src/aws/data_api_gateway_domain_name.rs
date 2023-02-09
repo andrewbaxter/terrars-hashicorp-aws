@@ -6,6 +6,8 @@ use super::provider::ProviderAws;
 
 #[derive(Serialize)]
 struct DataApiGatewayDomainNameData {
+    #[serde(skip_serializing_if = "Vec::is_empty")]
+    depends_on: Vec<String>,
     #[serde(skip_serializing_if = "SerdeSkipDefault::is_default")]
     provider: Option<String>,
     #[serde(skip_serializing_if = "Option::is_none")]
@@ -29,6 +31,11 @@ pub struct DataApiGatewayDomainName(Rc<DataApiGatewayDomainName_>);
 impl DataApiGatewayDomainName {
     fn shared(&self) -> &StackShared {
         &self.0.shared
+    }
+
+    pub fn depends_on(self, dep: &impl Dependable) -> Self {
+        self.0.data.borrow_mut().depends_on.push(dep.extract_ref());
+        self
     }
 
     pub fn set_provider(&self, provider: &ProviderAws) -> &Self {
@@ -130,6 +137,12 @@ impl Datasource for DataApiGatewayDomainName {
     }
 }
 
+impl Dependable for DataApiGatewayDomainName {
+    fn extract_ref(&self) -> String {
+        Datasource::extract_ref(self)
+    }
+}
+
 impl ToListMappable for DataApiGatewayDomainName {
     type O = ListRef<DataApiGatewayDomainNameRef>;
 
@@ -165,6 +178,7 @@ impl BuildDataApiGatewayDomainName {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
             data: RefCell::new(DataApiGatewayDomainNameData {
+                depends_on: core::default::Default::default(),
                 provider: None,
                 for_each: None,
                 domain_name: self.domain_name,

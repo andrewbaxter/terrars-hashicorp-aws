@@ -55,7 +55,7 @@ impl KendraDataSource {
         &self.0.shared
     }
 
-    pub fn depends_on(self, dep: &impl Resource) -> Self {
+    pub fn depends_on(self, dep: &impl Dependable) -> Self {
         self.0.data.borrow_mut().depends_on.push(dep.extract_ref());
         self
     }
@@ -292,6 +292,12 @@ impl KendraDataSource {
 impl Resource for KendraDataSource {
     fn extract_ref(&self) -> String {
         format!("{}.{}", self.0.extract_resource_type(), self.0.extract_tf_id())
+    }
+}
+
+impl Dependable for KendraDataSource {
+    fn extract_ref(&self) -> String {
+        Resource::extract_ref(self)
     }
 }
 
@@ -1697,9 +1703,7 @@ impl ToListMappable for KendraDataSourceCustomDocumentEnrichmentConfigurationElI
     }
 }
 
-pub struct BuildKendraDataSourceCustomDocumentEnrichmentConfigurationElInlineConfigurationsElConditionElConditionOnValueEl {
-
-}
+pub struct BuildKendraDataSourceCustomDocumentEnrichmentConfigurationElInlineConfigurationsElConditionElConditionOnValueEl {}
 
 impl BuildKendraDataSourceCustomDocumentEnrichmentConfigurationElInlineConfigurationsElConditionElConditionOnValueEl {
     pub fn build(
@@ -1930,9 +1934,7 @@ impl ToListMappable for KendraDataSourceCustomDocumentEnrichmentConfigurationElI
     }
 }
 
-pub struct BuildKendraDataSourceCustomDocumentEnrichmentConfigurationElInlineConfigurationsElTargetElTargetDocumentAttributeValueEl {
-
-}
+pub struct BuildKendraDataSourceCustomDocumentEnrichmentConfigurationElInlineConfigurationsElTargetElTargetDocumentAttributeValueEl {}
 
 impl BuildKendraDataSourceCustomDocumentEnrichmentConfigurationElInlineConfigurationsElTargetElTargetDocumentAttributeValueEl {
     pub fn build(
@@ -2313,9 +2315,7 @@ impl ToListMappable for KendraDataSourceCustomDocumentEnrichmentConfigurationElP
     }
 }
 
-pub struct BuildKendraDataSourceCustomDocumentEnrichmentConfigurationElPostExtractionHookConfigurationElInvocationConditionElConditionOnValueEl {
-
-}
+pub struct BuildKendraDataSourceCustomDocumentEnrichmentConfigurationElPostExtractionHookConfigurationElInvocationConditionElConditionOnValueEl {}
 
 impl BuildKendraDataSourceCustomDocumentEnrichmentConfigurationElPostExtractionHookConfigurationElInvocationConditionElConditionOnValueEl {
     pub fn build(
@@ -2670,9 +2670,7 @@ impl ToListMappable for KendraDataSourceCustomDocumentEnrichmentConfigurationElP
     }
 }
 
-pub struct BuildKendraDataSourceCustomDocumentEnrichmentConfigurationElPreExtractionHookConfigurationElInvocationConditionElConditionOnValueEl {
-
-}
+pub struct BuildKendraDataSourceCustomDocumentEnrichmentConfigurationElPreExtractionHookConfigurationElInvocationConditionElConditionOnValueEl {}
 
 impl BuildKendraDataSourceCustomDocumentEnrichmentConfigurationElPreExtractionHookConfigurationElInvocationConditionElConditionOnValueEl {
     pub fn build(

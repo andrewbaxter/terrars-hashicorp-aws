@@ -6,6 +6,8 @@ use super::provider::ProviderAws;
 
 #[derive(Serialize)]
 struct DataVpcEndpointData {
+    #[serde(skip_serializing_if = "Vec::is_empty")]
+    depends_on: Vec<String>,
     #[serde(skip_serializing_if = "SerdeSkipDefault::is_default")]
     provider: Option<String>,
     #[serde(skip_serializing_if = "Option::is_none")]
@@ -39,6 +41,11 @@ pub struct DataVpcEndpoint(Rc<DataVpcEndpoint_>);
 impl DataVpcEndpoint {
     fn shared(&self) -> &StackShared {
         &self.0.shared
+    }
+
+    pub fn depends_on(self, dep: &impl Dependable) -> Self {
+        self.0.data.borrow_mut().depends_on.push(dep.extract_ref());
+        self
     }
 
     pub fn set_provider(&self, provider: &ProviderAws) -> &Self {
@@ -207,6 +214,12 @@ impl Datasource for DataVpcEndpoint {
     }
 }
 
+impl Dependable for DataVpcEndpoint {
+    fn extract_ref(&self) -> String {
+        Datasource::extract_ref(self)
+    }
+}
+
 impl ToListMappable for DataVpcEndpoint {
     type O = ListRef<DataVpcEndpointRef>;
 
@@ -240,6 +253,7 @@ impl BuildDataVpcEndpoint {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
             data: RefCell::new(DataVpcEndpointData {
+                depends_on: core::default::Default::default(),
                 provider: None,
                 for_each: None,
                 id: core::default::Default::default(),

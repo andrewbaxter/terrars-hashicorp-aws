@@ -6,6 +6,8 @@ use super::provider::ProviderAws;
 
 #[derive(Serialize)]
 struct DataServiceData {
+    #[serde(skip_serializing_if = "Vec::is_empty")]
+    depends_on: Vec<String>,
     #[serde(skip_serializing_if = "SerdeSkipDefault::is_default")]
     provider: Option<String>,
     #[serde(skip_serializing_if = "Option::is_none")]
@@ -36,6 +38,11 @@ pub struct DataService(Rc<DataService_>);
 impl DataService {
     fn shared(&self) -> &StackShared {
         &self.0.shared
+    }
+
+    pub fn depends_on(self, dep: &impl Dependable) -> Self {
+        self.0.data.borrow_mut().depends_on.push(dep.extract_ref());
+        self
     }
 
     pub fn set_provider(&self, provider: &ProviderAws) -> &Self {
@@ -126,6 +133,12 @@ impl Datasource for DataService {
     }
 }
 
+impl Dependable for DataService {
+    fn extract_ref(&self) -> String {
+        Datasource::extract_ref(self)
+    }
+}
+
 impl ToListMappable for DataService {
     type O = ListRef<DataServiceRef>;
 
@@ -159,6 +172,7 @@ impl BuildDataService {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
             data: RefCell::new(DataServiceData {
+                depends_on: core::default::Default::default(),
                 provider: None,
                 for_each: None,
                 dns_name: core::default::Default::default(),

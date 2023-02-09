@@ -61,7 +61,7 @@ impl MedialiveChannel {
         &self.0.shared
     }
 
-    pub fn depends_on(self, dep: &impl Resource) -> Self {
+    pub fn depends_on(self, dep: &impl Dependable) -> Self {
         self.0.data.borrow_mut().depends_on.push(dep.extract_ref());
         self
     }
@@ -337,6 +337,12 @@ impl MedialiveChannel {
 impl Resource for MedialiveChannel {
     fn extract_ref(&self) -> String {
         format!("{}.{}", self.0.extract_resource_type(), self.0.extract_tf_id())
+    }
+}
+
+impl Dependable for MedialiveChannel {
+    fn extract_ref(&self) -> String {
+        Resource::extract_ref(self)
     }
 }
 
@@ -1268,9 +1274,7 @@ impl ToListMappable for MedialiveChannelEncoderSettingsElAudioDescriptionsElAudi
     }
 }
 
-pub struct BuildMedialiveChannelEncoderSettingsElAudioDescriptionsElAudioWatermarkSettingsElNielsenWatermarksSettingsEl {
-
-}
+pub struct BuildMedialiveChannelEncoderSettingsElAudioDescriptionsElAudioWatermarkSettingsElNielsenWatermarksSettingsEl {}
 
 impl BuildMedialiveChannelEncoderSettingsElAudioDescriptionsElAudioWatermarkSettingsElNielsenWatermarksSettingsEl {
     pub fn build(
@@ -3518,9 +3522,7 @@ impl ToListMappable for MedialiveChannelEncoderSettingsElOutputGroupsElOutputGro
     }
 }
 
-pub struct BuildMedialiveChannelEncoderSettingsElOutputGroupsElOutputGroupSettingsElArchiveGroupSettingsElArchiveCdnSettingsElArchiveS3SettingsEl {
-
-}
+pub struct BuildMedialiveChannelEncoderSettingsElOutputGroupsElOutputGroupSettingsElArchiveGroupSettingsElArchiveCdnSettingsElArchiveS3SettingsEl {}
 
 impl BuildMedialiveChannelEncoderSettingsElOutputGroupsElOutputGroupSettingsElArchiveGroupSettingsElArchiveCdnSettingsElArchiveS3SettingsEl {
     pub fn build(
@@ -3620,9 +3622,7 @@ impl ToListMappable for MedialiveChannelEncoderSettingsElOutputGroupsElOutputGro
     }
 }
 
-pub struct BuildMedialiveChannelEncoderSettingsElOutputGroupsElOutputGroupSettingsElArchiveGroupSettingsElArchiveCdnSettingsEl {
-
-}
+pub struct BuildMedialiveChannelEncoderSettingsElOutputGroupsElOutputGroupSettingsElArchiveGroupSettingsElArchiveCdnSettingsEl {}
 
 impl BuildMedialiveChannelEncoderSettingsElOutputGroupsElOutputGroupSettingsElArchiveGroupSettingsElArchiveCdnSettingsEl {
     pub fn build(
@@ -3983,9 +3983,7 @@ impl ToListMappable for MedialiveChannelEncoderSettingsElOutputGroupsElOutputGro
     }
 }
 
-pub struct BuildMedialiveChannelEncoderSettingsElOutputGroupsElOutputGroupSettingsElFrameCaptureGroupSettingsElFrameCaptureCdnSettingsElFrameCaptureS3SettingsEl {
-
-}
+pub struct BuildMedialiveChannelEncoderSettingsElOutputGroupsElOutputGroupSettingsElFrameCaptureGroupSettingsElFrameCaptureCdnSettingsElFrameCaptureS3SettingsEl {}
 
 impl BuildMedialiveChannelEncoderSettingsElOutputGroupsElOutputGroupSettingsElFrameCaptureGroupSettingsElFrameCaptureCdnSettingsElFrameCaptureS3SettingsEl {
     pub fn build(
@@ -4085,9 +4083,7 @@ impl ToListMappable for MedialiveChannelEncoderSettingsElOutputGroupsElOutputGro
     }
 }
 
-pub struct BuildMedialiveChannelEncoderSettingsElOutputGroupsElOutputGroupSettingsElFrameCaptureGroupSettingsElFrameCaptureCdnSettingsEl {
-
-}
+pub struct BuildMedialiveChannelEncoderSettingsElOutputGroupsElOutputGroupSettingsElFrameCaptureGroupSettingsElFrameCaptureCdnSettingsEl {}
 
 impl BuildMedialiveChannelEncoderSettingsElOutputGroupsElOutputGroupSettingsElFrameCaptureGroupSettingsElFrameCaptureCdnSettingsEl {
     pub fn build(
@@ -4508,9 +4504,7 @@ impl ToListMappable for MedialiveChannelEncoderSettingsElOutputGroupsElOutputGro
     }
 }
 
-pub struct BuildMedialiveChannelEncoderSettingsElOutputGroupsElOutputGroupSettingsElHlsGroupSettingsElHlsCdnSettingsElHlsAkamaiSettingsEl {
-
-}
+pub struct BuildMedialiveChannelEncoderSettingsElOutputGroupsElOutputGroupSettingsElHlsGroupSettingsElHlsCdnSettingsElHlsAkamaiSettingsEl {}
 
 impl BuildMedialiveChannelEncoderSettingsElOutputGroupsElOutputGroupSettingsElHlsGroupSettingsElHlsCdnSettingsElHlsAkamaiSettingsEl {
     pub fn build(
@@ -4639,9 +4633,7 @@ impl ToListMappable for MedialiveChannelEncoderSettingsElOutputGroupsElOutputGro
     }
 }
 
-pub struct BuildMedialiveChannelEncoderSettingsElOutputGroupsElOutputGroupSettingsElHlsGroupSettingsElHlsCdnSettingsElHlsBasicPutSettingsEl {
-
-}
+pub struct BuildMedialiveChannelEncoderSettingsElOutputGroupsElOutputGroupSettingsElHlsGroupSettingsElHlsCdnSettingsElHlsBasicPutSettingsEl {}
 
 impl BuildMedialiveChannelEncoderSettingsElOutputGroupsElOutputGroupSettingsElHlsGroupSettingsElHlsCdnSettingsElHlsBasicPutSettingsEl {
     pub fn build(
@@ -4760,9 +4752,7 @@ impl ToListMappable for MedialiveChannelEncoderSettingsElOutputGroupsElOutputGro
     }
 }
 
-pub struct BuildMedialiveChannelEncoderSettingsElOutputGroupsElOutputGroupSettingsElHlsGroupSettingsElHlsCdnSettingsElHlsMediaStoreSettingsEl {
-
-}
+pub struct BuildMedialiveChannelEncoderSettingsElOutputGroupsElOutputGroupSettingsElHlsGroupSettingsElHlsCdnSettingsElHlsMediaStoreSettingsEl {}
 
 impl BuildMedialiveChannelEncoderSettingsElOutputGroupsElOutputGroupSettingsElHlsGroupSettingsElHlsCdnSettingsElHlsMediaStoreSettingsEl {
     pub fn build(
@@ -4855,9 +4845,7 @@ impl ToListMappable for MedialiveChannelEncoderSettingsElOutputGroupsElOutputGro
     }
 }
 
-pub struct BuildMedialiveChannelEncoderSettingsElOutputGroupsElOutputGroupSettingsElHlsGroupSettingsElHlsCdnSettingsElHlsS3SettingsEl {
-
-}
+pub struct BuildMedialiveChannelEncoderSettingsElOutputGroupsElOutputGroupSettingsElHlsGroupSettingsElHlsCdnSettingsElHlsS3SettingsEl {}
 
 impl BuildMedialiveChannelEncoderSettingsElOutputGroupsElOutputGroupSettingsElHlsGroupSettingsElHlsCdnSettingsElHlsS3SettingsEl {
     pub fn build(
@@ -4958,9 +4946,7 @@ impl ToListMappable for MedialiveChannelEncoderSettingsElOutputGroupsElOutputGro
     }
 }
 
-pub struct BuildMedialiveChannelEncoderSettingsElOutputGroupsElOutputGroupSettingsElHlsGroupSettingsElHlsCdnSettingsElHlsWebdavSettingsEl {
-
-}
+pub struct BuildMedialiveChannelEncoderSettingsElOutputGroupsElOutputGroupSettingsElHlsGroupSettingsElHlsCdnSettingsElHlsWebdavSettingsEl {}
 
 impl BuildMedialiveChannelEncoderSettingsElOutputGroupsElOutputGroupSettingsElHlsGroupSettingsElHlsCdnSettingsElHlsWebdavSettingsEl {
     pub fn build(
@@ -5220,9 +5206,7 @@ impl ToListMappable for MedialiveChannelEncoderSettingsElOutputGroupsElOutputGro
     }
 }
 
-pub struct BuildMedialiveChannelEncoderSettingsElOutputGroupsElOutputGroupSettingsElHlsGroupSettingsElHlsCdnSettingsEl {
-
-}
+pub struct BuildMedialiveChannelEncoderSettingsElOutputGroupsElOutputGroupSettingsElHlsGroupSettingsElHlsCdnSettingsEl {}
 
 impl BuildMedialiveChannelEncoderSettingsElOutputGroupsElOutputGroupSettingsElHlsGroupSettingsElHlsCdnSettingsEl {
     pub fn build(
@@ -5575,9 +5559,7 @@ impl ToListMappable for MedialiveChannelEncoderSettingsElOutputGroupsElOutputGro
     }
 }
 
-pub struct BuildMedialiveChannelEncoderSettingsElOutputGroupsElOutputGroupSettingsElHlsGroupSettingsElKeyProviderSettingsEl {
-
-}
+pub struct BuildMedialiveChannelEncoderSettingsElOutputGroupsElOutputGroupSettingsElHlsGroupSettingsElKeyProviderSettingsEl {}
 
 impl BuildMedialiveChannelEncoderSettingsElOutputGroupsElOutputGroupSettingsElHlsGroupSettingsElKeyProviderSettingsEl {
     pub fn build(
@@ -7756,9 +7738,7 @@ impl ToListMappable for MedialiveChannelEncoderSettingsElOutputGroupsElOutputsEl
     }
 }
 
-pub struct BuildMedialiveChannelEncoderSettingsElOutputGroupsElOutputsElOutputSettingsElArchiveOutputSettingsElContainerSettingsElM2tsSettingsElDvbSdtSettingsEl {
-
-}
+pub struct BuildMedialiveChannelEncoderSettingsElOutputGroupsElOutputsElOutputSettingsElArchiveOutputSettingsElContainerSettingsElM2tsSettingsElDvbSdtSettingsEl {}
 
 impl BuildMedialiveChannelEncoderSettingsElOutputGroupsElOutputsElOutputSettingsElArchiveOutputSettingsElContainerSettingsElM2tsSettingsElDvbSdtSettingsEl {
     pub fn build(
@@ -7845,9 +7825,7 @@ impl ToListMappable for MedialiveChannelEncoderSettingsElOutputGroupsElOutputsEl
     }
 }
 
-pub struct BuildMedialiveChannelEncoderSettingsElOutputGroupsElOutputsElOutputSettingsElArchiveOutputSettingsElContainerSettingsElM2tsSettingsElDvbTdtSettingsEl {
-
-}
+pub struct BuildMedialiveChannelEncoderSettingsElOutputGroupsElOutputsElOutputSettingsElArchiveOutputSettingsElContainerSettingsElM2tsSettingsElDvbTdtSettingsEl {}
 
 impl BuildMedialiveChannelEncoderSettingsElOutputGroupsElOutputsElOutputSettingsElArchiveOutputSettingsElContainerSettingsElM2tsSettingsElDvbTdtSettingsEl {
     pub fn build(
@@ -8367,9 +8345,7 @@ impl ToListMappable for MedialiveChannelEncoderSettingsElOutputGroupsElOutputsEl
     }
 }
 
-pub struct BuildMedialiveChannelEncoderSettingsElOutputGroupsElOutputsElOutputSettingsElArchiveOutputSettingsElContainerSettingsElM2tsSettingsEl {
-
-}
+pub struct BuildMedialiveChannelEncoderSettingsElOutputGroupsElOutputsElOutputSettingsElArchiveOutputSettingsElContainerSettingsElM2tsSettingsEl {}
 
 impl BuildMedialiveChannelEncoderSettingsElOutputGroupsElOutputsElOutputSettingsElArchiveOutputSettingsElContainerSettingsElM2tsSettingsEl {
     pub fn build(
@@ -8699,9 +8675,7 @@ impl MedialiveChannelEncoderSettingsElOutputGroupsElOutputsElOutputSettingsElArc
 }
 
 #[derive(Serialize)]
-pub struct MedialiveChannelEncoderSettingsElOutputGroupsElOutputsElOutputSettingsElArchiveOutputSettingsElContainerSettingsElRawSettingsEl {
-
-}
+pub struct MedialiveChannelEncoderSettingsElOutputGroupsElOutputsElOutputSettingsElArchiveOutputSettingsElContainerSettingsElRawSettingsEl {}
 
 impl MedialiveChannelEncoderSettingsElOutputGroupsElOutputsElOutputSettingsElArchiveOutputSettingsElContainerSettingsElRawSettingsEl {
 
@@ -8722,17 +8696,13 @@ impl ToListMappable for MedialiveChannelEncoderSettingsElOutputGroupsElOutputsEl
     }
 }
 
-pub struct BuildMedialiveChannelEncoderSettingsElOutputGroupsElOutputsElOutputSettingsElArchiveOutputSettingsElContainerSettingsElRawSettingsEl {
-
-}
+pub struct BuildMedialiveChannelEncoderSettingsElOutputGroupsElOutputsElOutputSettingsElArchiveOutputSettingsElContainerSettingsElRawSettingsEl {}
 
 impl BuildMedialiveChannelEncoderSettingsElOutputGroupsElOutputsElOutputSettingsElArchiveOutputSettingsElContainerSettingsElRawSettingsEl {
     pub fn build(
         self,
     ) -> MedialiveChannelEncoderSettingsElOutputGroupsElOutputsElOutputSettingsElArchiveOutputSettingsElContainerSettingsElRawSettingsEl {
-        MedialiveChannelEncoderSettingsElOutputGroupsElOutputsElOutputSettingsElArchiveOutputSettingsElContainerSettingsElRawSettingsEl {
-
-        }
+        MedialiveChannelEncoderSettingsElOutputGroupsElOutputsElOutputSettingsElArchiveOutputSettingsElContainerSettingsElRawSettingsEl {}
     }
 }
 
@@ -8853,9 +8823,7 @@ impl ToListMappable for MedialiveChannelEncoderSettingsElOutputGroupsElOutputsEl
     }
 }
 
-pub struct BuildMedialiveChannelEncoderSettingsElOutputGroupsElOutputsElOutputSettingsElArchiveOutputSettingsElContainerSettingsEl {
-
-}
+pub struct BuildMedialiveChannelEncoderSettingsElOutputGroupsElOutputsElOutputSettingsElArchiveOutputSettingsElContainerSettingsEl {}
 
 impl BuildMedialiveChannelEncoderSettingsElOutputGroupsElOutputsElOutputSettingsElArchiveOutputSettingsElContainerSettingsEl {
     pub fn build(
@@ -9289,9 +9257,7 @@ impl ToListMappable for MedialiveChannelEncoderSettingsElOutputGroupsElOutputsEl
     }
 }
 
-pub struct BuildMedialiveChannelEncoderSettingsElOutputGroupsElOutputsElOutputSettingsElHlsOutputSettingsElHlsSettingsElAudioOnlyHlsSettingsEl {
-
-}
+pub struct BuildMedialiveChannelEncoderSettingsElOutputGroupsElOutputsElOutputSettingsElHlsOutputSettingsElHlsSettingsElAudioOnlyHlsSettingsEl {}
 
 impl BuildMedialiveChannelEncoderSettingsElOutputGroupsElOutputsElOutputSettingsElHlsOutputSettingsElHlsSettingsElAudioOnlyHlsSettingsEl {
     pub fn build(
@@ -9399,9 +9365,7 @@ impl ToListMappable for MedialiveChannelEncoderSettingsElOutputGroupsElOutputsEl
     }
 }
 
-pub struct BuildMedialiveChannelEncoderSettingsElOutputGroupsElOutputsElOutputSettingsElHlsOutputSettingsElHlsSettingsElFmp4HlsSettingsEl {
-
-}
+pub struct BuildMedialiveChannelEncoderSettingsElOutputGroupsElOutputsElOutputSettingsElHlsOutputSettingsElHlsSettingsElFmp4HlsSettingsEl {}
 
 impl BuildMedialiveChannelEncoderSettingsElOutputGroupsElOutputsElOutputSettingsElHlsOutputSettingsElHlsSettingsElFmp4HlsSettingsEl {
     pub fn build(
@@ -9454,9 +9418,7 @@ impl MedialiveChannelEncoderSettingsElOutputGroupsElOutputsElOutputSettingsElHls
 }
 
 #[derive(Serialize)]
-pub struct MedialiveChannelEncoderSettingsElOutputGroupsElOutputsElOutputSettingsElHlsOutputSettingsElHlsSettingsElFrameCaptureHlsSettingsEl {
-
-}
+pub struct MedialiveChannelEncoderSettingsElOutputGroupsElOutputsElOutputSettingsElHlsOutputSettingsElHlsSettingsElFrameCaptureHlsSettingsEl {}
 
 impl MedialiveChannelEncoderSettingsElOutputGroupsElOutputsElOutputSettingsElHlsOutputSettingsElHlsSettingsElFrameCaptureHlsSettingsEl {
 
@@ -9477,17 +9439,13 @@ impl ToListMappable for MedialiveChannelEncoderSettingsElOutputGroupsElOutputsEl
     }
 }
 
-pub struct BuildMedialiveChannelEncoderSettingsElOutputGroupsElOutputsElOutputSettingsElHlsOutputSettingsElHlsSettingsElFrameCaptureHlsSettingsEl {
-
-}
+pub struct BuildMedialiveChannelEncoderSettingsElOutputGroupsElOutputsElOutputSettingsElHlsOutputSettingsElHlsSettingsElFrameCaptureHlsSettingsEl {}
 
 impl BuildMedialiveChannelEncoderSettingsElOutputGroupsElOutputsElOutputSettingsElHlsOutputSettingsElHlsSettingsElFrameCaptureHlsSettingsEl {
     pub fn build(
         self,
     ) -> MedialiveChannelEncoderSettingsElOutputGroupsElOutputsElOutputSettingsElHlsOutputSettingsElHlsSettingsElFrameCaptureHlsSettingsEl {
-        MedialiveChannelEncoderSettingsElOutputGroupsElOutputsElOutputSettingsElHlsOutputSettingsElHlsSettingsElFrameCaptureHlsSettingsEl {
-
-        }
+        MedialiveChannelEncoderSettingsElOutputGroupsElOutputsElOutputSettingsElHlsOutputSettingsElHlsSettingsElFrameCaptureHlsSettingsEl {}
     }
 }
 
@@ -9671,9 +9629,7 @@ impl ToListMappable for MedialiveChannelEncoderSettingsElOutputGroupsElOutputsEl
     }
 }
 
-pub struct BuildMedialiveChannelEncoderSettingsElOutputGroupsElOutputsElOutputSettingsElHlsOutputSettingsElHlsSettingsElStandardHlsSettingsElM3u8SettingsEl {
-
-}
+pub struct BuildMedialiveChannelEncoderSettingsElOutputGroupsElOutputsElOutputSettingsElHlsOutputSettingsElHlsSettingsElStandardHlsSettingsElM3u8SettingsEl {}
 
 impl BuildMedialiveChannelEncoderSettingsElOutputGroupsElOutputsElOutputSettingsElHlsOutputSettingsElHlsSettingsElStandardHlsSettingsElM3u8SettingsEl {
     pub fn build(
@@ -9877,9 +9833,7 @@ impl ToListMappable for MedialiveChannelEncoderSettingsElOutputGroupsElOutputsEl
     }
 }
 
-pub struct BuildMedialiveChannelEncoderSettingsElOutputGroupsElOutputsElOutputSettingsElHlsOutputSettingsElHlsSettingsElStandardHlsSettingsEl {
-
-}
+pub struct BuildMedialiveChannelEncoderSettingsElOutputGroupsElOutputsElOutputSettingsElHlsOutputSettingsElHlsSettingsElStandardHlsSettingsEl {}
 
 impl BuildMedialiveChannelEncoderSettingsElOutputGroupsElOutputsElOutputSettingsElHlsOutputSettingsElHlsSettingsElStandardHlsSettingsEl {
     pub fn build(
@@ -10092,9 +10046,7 @@ impl ToListMappable for MedialiveChannelEncoderSettingsElOutputGroupsElOutputsEl
     }
 }
 
-pub struct BuildMedialiveChannelEncoderSettingsElOutputGroupsElOutputsElOutputSettingsElHlsOutputSettingsElHlsSettingsEl {
-
-}
+pub struct BuildMedialiveChannelEncoderSettingsElOutputGroupsElOutputsElOutputSettingsElHlsOutputSettingsElHlsSettingsEl {}
 
 impl BuildMedialiveChannelEncoderSettingsElOutputGroupsElOutputsElOutputSettingsElHlsOutputSettingsElHlsSettingsEl {
     pub fn build(
@@ -10969,9 +10921,7 @@ impl ToListMappable for MedialiveChannelEncoderSettingsElOutputGroupsElOutputsEl
     }
 }
 
-pub struct BuildMedialiveChannelEncoderSettingsElOutputGroupsElOutputsElOutputSettingsElUdpOutputSettingsElContainerSettingsElM2tsSettingsElDvbSdtSettingsEl {
-
-}
+pub struct BuildMedialiveChannelEncoderSettingsElOutputGroupsElOutputsElOutputSettingsElUdpOutputSettingsElContainerSettingsElM2tsSettingsElDvbSdtSettingsEl {}
 
 impl BuildMedialiveChannelEncoderSettingsElOutputGroupsElOutputsElOutputSettingsElUdpOutputSettingsElContainerSettingsElM2tsSettingsElDvbSdtSettingsEl {
     pub fn build(
@@ -11058,9 +11008,7 @@ impl ToListMappable for MedialiveChannelEncoderSettingsElOutputGroupsElOutputsEl
     }
 }
 
-pub struct BuildMedialiveChannelEncoderSettingsElOutputGroupsElOutputsElOutputSettingsElUdpOutputSettingsElContainerSettingsElM2tsSettingsElDvbTdtSettingsEl {
-
-}
+pub struct BuildMedialiveChannelEncoderSettingsElOutputGroupsElOutputsElOutputSettingsElUdpOutputSettingsElContainerSettingsElM2tsSettingsElDvbTdtSettingsEl {}
 
 impl BuildMedialiveChannelEncoderSettingsElOutputGroupsElOutputsElOutputSettingsElUdpOutputSettingsElContainerSettingsElM2tsSettingsElDvbTdtSettingsEl {
     pub fn build(
@@ -11580,9 +11528,7 @@ impl ToListMappable for MedialiveChannelEncoderSettingsElOutputGroupsElOutputsEl
     }
 }
 
-pub struct BuildMedialiveChannelEncoderSettingsElOutputGroupsElOutputsElOutputSettingsElUdpOutputSettingsElContainerSettingsElM2tsSettingsEl {
-
-}
+pub struct BuildMedialiveChannelEncoderSettingsElOutputGroupsElOutputsElOutputSettingsElUdpOutputSettingsElContainerSettingsElM2tsSettingsEl {}
 
 impl BuildMedialiveChannelEncoderSettingsElOutputGroupsElOutputsElOutputSettingsElUdpOutputSettingsElContainerSettingsElM2tsSettingsEl {
     pub fn build(
@@ -11971,9 +11917,7 @@ impl ToListMappable for MedialiveChannelEncoderSettingsElOutputGroupsElOutputsEl
     }
 }
 
-pub struct BuildMedialiveChannelEncoderSettingsElOutputGroupsElOutputsElOutputSettingsElUdpOutputSettingsElContainerSettingsEl {
-
-}
+pub struct BuildMedialiveChannelEncoderSettingsElOutputGroupsElOutputsElOutputSettingsElUdpOutputSettingsElContainerSettingsEl {}
 
 impl BuildMedialiveChannelEncoderSettingsElOutputGroupsElOutputsElOutputSettingsElUdpOutputSettingsElContainerSettingsEl {
     pub fn build(
@@ -12128,9 +12072,7 @@ impl ToListMappable for MedialiveChannelEncoderSettingsElOutputGroupsElOutputsEl
     }
 }
 
-pub struct BuildMedialiveChannelEncoderSettingsElOutputGroupsElOutputsElOutputSettingsElUdpOutputSettingsElFecOutputSettingsEl {
-
-}
+pub struct BuildMedialiveChannelEncoderSettingsElOutputGroupsElOutputsElOutputSettingsElUdpOutputSettingsElFecOutputSettingsEl {}
 
 impl BuildMedialiveChannelEncoderSettingsElOutputGroupsElOutputsElOutputSettingsElUdpOutputSettingsElFecOutputSettingsEl {
     pub fn build(
@@ -13199,9 +13141,7 @@ impl ToListMappable for MedialiveChannelEncoderSettingsElVideoDescriptionsElCode
     }
 }
 
-pub struct BuildMedialiveChannelEncoderSettingsElVideoDescriptionsElCodecSettingsElH264SettingsElFilterSettingsElTemporalFilterSettingsEl {
-
-}
+pub struct BuildMedialiveChannelEncoderSettingsElVideoDescriptionsElCodecSettingsElH264SettingsElFilterSettingsElTemporalFilterSettingsEl {}
 
 impl BuildMedialiveChannelEncoderSettingsElVideoDescriptionsElCodecSettingsElH264SettingsElFilterSettingsElTemporalFilterSettingsEl {
     pub fn build(
@@ -14560,9 +14500,7 @@ impl ToListMappable for MedialiveChannelInputAttachmentsElAutomaticInputFailover
     }
 }
 
-pub struct BuildMedialiveChannelInputAttachmentsElAutomaticInputFailoverSettingsElFailoverConditionElFailoverConditionSettingsElInputLossSettingsEl {
-
-}
+pub struct BuildMedialiveChannelInputAttachmentsElAutomaticInputFailoverSettingsElFailoverConditionElFailoverConditionSettingsElInputLossSettingsEl {}
 
 impl BuildMedialiveChannelInputAttachmentsElAutomaticInputFailoverSettingsElFailoverConditionElFailoverConditionSettingsElInputLossSettingsEl {
     pub fn build(
@@ -14639,9 +14577,7 @@ impl ToListMappable for MedialiveChannelInputAttachmentsElAutomaticInputFailover
     }
 }
 
-pub struct BuildMedialiveChannelInputAttachmentsElAutomaticInputFailoverSettingsElFailoverConditionElFailoverConditionSettingsElVideoBlackSettingsEl {
-
-}
+pub struct BuildMedialiveChannelInputAttachmentsElAutomaticInputFailoverSettingsElFailoverConditionElFailoverConditionSettingsElVideoBlackSettingsEl {}
 
 impl BuildMedialiveChannelInputAttachmentsElAutomaticInputFailoverSettingsElFailoverConditionElFailoverConditionSettingsElVideoBlackSettingsEl {
     pub fn build(
@@ -14815,9 +14751,7 @@ impl ToListMappable for MedialiveChannelInputAttachmentsElAutomaticInputFailover
     }
 }
 
-pub struct BuildMedialiveChannelInputAttachmentsElAutomaticInputFailoverSettingsElFailoverConditionElFailoverConditionSettingsEl {
-
-}
+pub struct BuildMedialiveChannelInputAttachmentsElAutomaticInputFailoverSettingsElFailoverConditionElFailoverConditionSettingsEl {}
 
 impl BuildMedialiveChannelInputAttachmentsElAutomaticInputFailoverSettingsElFailoverConditionElFailoverConditionSettingsEl {
     pub fn build(
@@ -15450,9 +15384,7 @@ impl ToListMappable for MedialiveChannelInputAttachmentsElInputSettingsElAudioSe
     }
 }
 
-pub struct BuildMedialiveChannelInputAttachmentsElInputSettingsElAudioSelectorElSelectorSettingsElAudioTrackSelectionEl {
-
-}
+pub struct BuildMedialiveChannelInputAttachmentsElInputSettingsElAudioSelectorElSelectorSettingsElAudioTrackSelectionEl {}
 
 impl BuildMedialiveChannelInputAttachmentsElInputSettingsElAudioSelectorElSelectorSettingsElAudioTrackSelectionEl {
     pub fn build(
@@ -15844,9 +15776,7 @@ impl ToListMappable for MedialiveChannelInputAttachmentsElInputSettingsElCaption
     }
 }
 
-pub struct BuildMedialiveChannelInputAttachmentsElInputSettingsElCaptionSelectorElSelectorSettingsElAncillarySourceSettingsEl {
-
-}
+pub struct BuildMedialiveChannelInputAttachmentsElInputSettingsElCaptionSelectorElSelectorSettingsElAncillarySourceSettingsEl {}
 
 impl BuildMedialiveChannelInputAttachmentsElInputSettingsElCaptionSelectorElSelectorSettingsElAncillarySourceSettingsEl {
     pub fn build(
@@ -16022,9 +15952,7 @@ impl ToListMappable for MedialiveChannelInputAttachmentsElInputSettingsElCaption
     }
 }
 
-pub struct BuildMedialiveChannelInputAttachmentsElInputSettingsElCaptionSelectorElSelectorSettingsElEmbeddedSourceSettingsEl {
-
-}
+pub struct BuildMedialiveChannelInputAttachmentsElInputSettingsElCaptionSelectorElSelectorSettingsElEmbeddedSourceSettingsEl {}
 
 impl BuildMedialiveChannelInputAttachmentsElInputSettingsElCaptionSelectorElSelectorSettingsElEmbeddedSourceSettingsEl {
     pub fn build(
@@ -16119,9 +16047,7 @@ impl ToListMappable for MedialiveChannelInputAttachmentsElInputSettingsElCaption
     }
 }
 
-pub struct BuildMedialiveChannelInputAttachmentsElInputSettingsElCaptionSelectorElSelectorSettingsElScte20SourceSettingsEl {
-
-}
+pub struct BuildMedialiveChannelInputAttachmentsElInputSettingsElCaptionSelectorElSelectorSettingsElScte20SourceSettingsEl {}
 
 impl BuildMedialiveChannelInputAttachmentsElInputSettingsElCaptionSelectorElSelectorSettingsElScte20SourceSettingsEl {
     pub fn build(
@@ -16204,9 +16130,7 @@ impl ToListMappable for MedialiveChannelInputAttachmentsElInputSettingsElCaption
     }
 }
 
-pub struct BuildMedialiveChannelInputAttachmentsElInputSettingsElCaptionSelectorElSelectorSettingsElScte27SourceSettingsEl {
-
-}
+pub struct BuildMedialiveChannelInputAttachmentsElInputSettingsElCaptionSelectorElSelectorSettingsElScte27SourceSettingsEl {}
 
 impl BuildMedialiveChannelInputAttachmentsElInputSettingsElCaptionSelectorElSelectorSettingsElScte27SourceSettingsEl {
     pub fn build(
@@ -16414,9 +16338,7 @@ impl ToListMappable for MedialiveChannelInputAttachmentsElInputSettingsElCaption
     }
 }
 
-pub struct BuildMedialiveChannelInputAttachmentsElInputSettingsElCaptionSelectorElSelectorSettingsElTeletextSourceSettingsEl {
-
-}
+pub struct BuildMedialiveChannelInputAttachmentsElInputSettingsElCaptionSelectorElSelectorSettingsElTeletextSourceSettingsEl {}
 
 impl BuildMedialiveChannelInputAttachmentsElInputSettingsElCaptionSelectorElSelectorSettingsElTeletextSourceSettingsEl {
     pub fn build(

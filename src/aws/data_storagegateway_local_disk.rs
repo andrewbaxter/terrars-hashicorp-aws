@@ -6,6 +6,8 @@ use super::provider::ProviderAws;
 
 #[derive(Serialize)]
 struct DataStoragegatewayLocalDiskData {
+    #[serde(skip_serializing_if = "Vec::is_empty")]
+    depends_on: Vec<String>,
     #[serde(skip_serializing_if = "SerdeSkipDefault::is_default")]
     provider: Option<String>,
     #[serde(skip_serializing_if = "Option::is_none")]
@@ -31,6 +33,11 @@ pub struct DataStoragegatewayLocalDisk(Rc<DataStoragegatewayLocalDisk_>);
 impl DataStoragegatewayLocalDisk {
     fn shared(&self) -> &StackShared {
         &self.0.shared
+    }
+
+    pub fn depends_on(self, dep: &impl Dependable) -> Self {
+        self.0.data.borrow_mut().depends_on.push(dep.extract_ref());
+        self
     }
 
     pub fn set_provider(&self, provider: &ProviderAws) -> &Self {
@@ -88,6 +95,12 @@ impl Datasource for DataStoragegatewayLocalDisk {
     }
 }
 
+impl Dependable for DataStoragegatewayLocalDisk {
+    fn extract_ref(&self) -> String {
+        Datasource::extract_ref(self)
+    }
+}
+
 impl ToListMappable for DataStoragegatewayLocalDisk {
     type O = ListRef<DataStoragegatewayLocalDiskRef>;
 
@@ -123,6 +136,7 @@ impl BuildDataStoragegatewayLocalDisk {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
             data: RefCell::new(DataStoragegatewayLocalDiskData {
+                depends_on: core::default::Default::default(),
                 provider: None,
                 for_each: None,
                 disk_node: core::default::Default::default(),

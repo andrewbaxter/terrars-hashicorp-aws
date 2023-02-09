@@ -6,6 +6,8 @@ use super::provider::ProviderAws;
 
 #[derive(Serialize)]
 struct DataCloudfrontCachePolicyData {
+    #[serde(skip_serializing_if = "Vec::is_empty")]
+    depends_on: Vec<String>,
     #[serde(skip_serializing_if = "SerdeSkipDefault::is_default")]
     provider: Option<String>,
     #[serde(skip_serializing_if = "Option::is_none")]
@@ -28,6 +30,11 @@ pub struct DataCloudfrontCachePolicy(Rc<DataCloudfrontCachePolicy_>);
 impl DataCloudfrontCachePolicy {
     fn shared(&self) -> &StackShared {
         &self.0.shared
+    }
+
+    pub fn depends_on(self, dep: &impl Dependable) -> Self {
+        self.0.data.borrow_mut().depends_on.push(dep.extract_ref());
+        self
     }
 
     pub fn set_provider(&self, provider: &ProviderAws) -> &Self {
@@ -99,6 +106,12 @@ impl Datasource for DataCloudfrontCachePolicy {
     }
 }
 
+impl Dependable for DataCloudfrontCachePolicy {
+    fn extract_ref(&self) -> String {
+        Datasource::extract_ref(self)
+    }
+}
+
 impl ToListMappable for DataCloudfrontCachePolicy {
     type O = ListRef<DataCloudfrontCachePolicyRef>;
 
@@ -132,6 +145,7 @@ impl BuildDataCloudfrontCachePolicy {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
             data: RefCell::new(DataCloudfrontCachePolicyData {
+                depends_on: core::default::Default::default(),
                 provider: None,
                 for_each: None,
                 id: core::default::Default::default(),
@@ -559,9 +573,7 @@ impl ToListMappable for DataCloudfrontCachePolicyParametersInCacheKeyAndForwarde
     }
 }
 
-pub struct BuildDataCloudfrontCachePolicyParametersInCacheKeyAndForwardedToOriginElQueryStringsConfigElQueryStringsEl {
-
-}
+pub struct BuildDataCloudfrontCachePolicyParametersInCacheKeyAndForwardedToOriginElQueryStringsConfigElQueryStringsEl {}
 
 impl BuildDataCloudfrontCachePolicyParametersInCacheKeyAndForwardedToOriginElQueryStringsConfigElQueryStringsEl {
     pub fn build(

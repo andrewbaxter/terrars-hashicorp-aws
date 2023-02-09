@@ -6,6 +6,8 @@ use super::provider::ProviderAws;
 
 #[derive(Serialize)]
 struct DataEc2SpotPriceData {
+    #[serde(skip_serializing_if = "Vec::is_empty")]
+    depends_on: Vec<String>,
     #[serde(skip_serializing_if = "SerdeSkipDefault::is_default")]
     provider: Option<String>,
     #[serde(skip_serializing_if = "Option::is_none")]
@@ -35,6 +37,11 @@ pub struct DataEc2SpotPrice(Rc<DataEc2SpotPrice_>);
 impl DataEc2SpotPrice {
     fn shared(&self) -> &StackShared {
         &self.0.shared
+    }
+
+    pub fn depends_on(self, dep: &impl Dependable) -> Self {
+        self.0.data.borrow_mut().depends_on.push(dep.extract_ref());
+        self
     }
 
     pub fn set_provider(&self, provider: &ProviderAws) -> &Self {
@@ -116,6 +123,12 @@ impl Datasource for DataEc2SpotPrice {
     }
 }
 
+impl Dependable for DataEc2SpotPrice {
+    fn extract_ref(&self) -> String {
+        Datasource::extract_ref(self)
+    }
+}
+
 impl ToListMappable for DataEc2SpotPrice {
     type O = ListRef<DataEc2SpotPriceRef>;
 
@@ -149,6 +162,7 @@ impl BuildDataEc2SpotPrice {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
             data: RefCell::new(DataEc2SpotPriceData {
+                depends_on: core::default::Default::default(),
                 provider: None,
                 for_each: None,
                 availability_zone: core::default::Default::default(),

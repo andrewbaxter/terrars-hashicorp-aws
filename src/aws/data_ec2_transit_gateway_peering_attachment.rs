@@ -6,6 +6,8 @@ use super::provider::ProviderAws;
 
 #[derive(Serialize)]
 struct DataEc2TransitGatewayPeeringAttachmentData {
+    #[serde(skip_serializing_if = "Vec::is_empty")]
+    depends_on: Vec<String>,
     #[serde(skip_serializing_if = "SerdeSkipDefault::is_default")]
     provider: Option<String>,
     #[serde(skip_serializing_if = "Option::is_none")]
@@ -33,6 +35,11 @@ pub struct DataEc2TransitGatewayPeeringAttachment(Rc<DataEc2TransitGatewayPeerin
 impl DataEc2TransitGatewayPeeringAttachment {
     fn shared(&self) -> &StackShared {
         &self.0.shared
+    }
+
+    pub fn depends_on(self, dep: &impl Dependable) -> Self {
+        self.0.data.borrow_mut().depends_on.push(dep.extract_ref());
+        self
     }
 
     pub fn set_provider(&self, provider: &ProviderAws) -> &Self {
@@ -116,6 +123,12 @@ impl Datasource for DataEc2TransitGatewayPeeringAttachment {
     }
 }
 
+impl Dependable for DataEc2TransitGatewayPeeringAttachment {
+    fn extract_ref(&self) -> String {
+        Datasource::extract_ref(self)
+    }
+}
+
 impl ToListMappable for DataEc2TransitGatewayPeeringAttachment {
     type O = ListRef<DataEc2TransitGatewayPeeringAttachmentRef>;
 
@@ -149,6 +162,7 @@ impl BuildDataEc2TransitGatewayPeeringAttachment {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
             data: RefCell::new(DataEc2TransitGatewayPeeringAttachmentData {
+                depends_on: core::default::Default::default(),
                 provider: None,
                 for_each: None,
                 id: core::default::Default::default(),

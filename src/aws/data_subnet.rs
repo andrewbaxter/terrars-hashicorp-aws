@@ -6,6 +6,8 @@ use super::provider::ProviderAws;
 
 #[derive(Serialize)]
 struct DataSubnetData {
+    #[serde(skip_serializing_if = "Vec::is_empty")]
+    depends_on: Vec<String>,
     #[serde(skip_serializing_if = "SerdeSkipDefault::is_default")]
     provider: Option<String>,
     #[serde(skip_serializing_if = "Option::is_none")]
@@ -47,6 +49,11 @@ pub struct DataSubnet(Rc<DataSubnet_>);
 impl DataSubnet {
     fn shared(&self) -> &StackShared {
         &self.0.shared
+    }
+
+    pub fn depends_on(self, dep: &impl Dependable) -> Self {
+        self.0.data.borrow_mut().depends_on.push(dep.extract_ref());
+        self
     }
 
     pub fn set_provider(&self, provider: &ProviderAws) -> &Self {
@@ -260,6 +267,12 @@ impl Datasource for DataSubnet {
     }
 }
 
+impl Dependable for DataSubnet {
+    fn extract_ref(&self) -> String {
+        Datasource::extract_ref(self)
+    }
+}
+
 impl ToListMappable for DataSubnet {
     type O = ListRef<DataSubnetRef>;
 
@@ -293,6 +306,7 @@ impl BuildDataSubnet {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
             data: RefCell::new(DataSubnetData {
+                depends_on: core::default::Default::default(),
                 provider: None,
                 for_each: None,
                 availability_zone: core::default::Default::default(),

@@ -6,6 +6,8 @@ use super::provider::ProviderAws;
 
 #[derive(Serialize)]
 struct DataEc2LocalGatewayRouteTablesData {
+    #[serde(skip_serializing_if = "Vec::is_empty")]
+    depends_on: Vec<String>,
     #[serde(skip_serializing_if = "SerdeSkipDefault::is_default")]
     provider: Option<String>,
     #[serde(skip_serializing_if = "Option::is_none")]
@@ -33,6 +35,11 @@ pub struct DataEc2LocalGatewayRouteTables(Rc<DataEc2LocalGatewayRouteTables_>);
 impl DataEc2LocalGatewayRouteTables {
     fn shared(&self) -> &StackShared {
         &self.0.shared
+    }
+
+    pub fn depends_on(self, dep: &impl Dependable) -> Self {
+        self.0.data.borrow_mut().depends_on.push(dep.extract_ref());
+        self
     }
 
     pub fn set_provider(&self, provider: &ProviderAws) -> &Self {
@@ -101,6 +108,12 @@ impl Datasource for DataEc2LocalGatewayRouteTables {
     }
 }
 
+impl Dependable for DataEc2LocalGatewayRouteTables {
+    fn extract_ref(&self) -> String {
+        Datasource::extract_ref(self)
+    }
+}
+
 impl ToListMappable for DataEc2LocalGatewayRouteTables {
     type O = ListRef<DataEc2LocalGatewayRouteTablesRef>;
 
@@ -134,6 +147,7 @@ impl BuildDataEc2LocalGatewayRouteTables {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
             data: RefCell::new(DataEc2LocalGatewayRouteTablesData {
+                depends_on: core::default::Default::default(),
                 provider: None,
                 for_each: None,
                 id: core::default::Default::default(),

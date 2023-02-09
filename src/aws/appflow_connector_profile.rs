@@ -42,7 +42,7 @@ impl AppflowConnectorProfile {
         &self.0.shared
     }
 
-    pub fn depends_on(self, dep: &impl Resource) -> Self {
+    pub fn depends_on(self, dep: &impl Dependable) -> Self {
         self.0.data.borrow_mut().depends_on.push(dep.extract_ref());
         self
     }
@@ -181,6 +181,12 @@ impl AppflowConnectorProfile {
 impl Resource for AppflowConnectorProfile {
     fn extract_ref(&self) -> String {
         format!("{}.{}", self.0.extract_resource_type(), self.0.extract_tf_id())
+    }
+}
+
+impl Dependable for AppflowConnectorProfile {
+    fn extract_ref(&self) -> String {
+        Resource::extract_ref(self)
     }
 }
 
@@ -650,9 +656,7 @@ impl ToListMappable for AppflowConnectorProfileConnectorProfileConfigElConnector
     }
 }
 
-pub struct BuildAppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElCustomConnectorElOauth2ElOauthRequestEl {
-
-}
+pub struct BuildAppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElCustomConnectorElOauth2ElOauthRequestEl {}
 
 impl BuildAppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElCustomConnectorElOauth2ElOauthRequestEl {
     pub fn build(
@@ -790,9 +794,7 @@ impl ToListMappable for AppflowConnectorProfileConnectorProfileConfigElConnector
     }
 }
 
-pub struct BuildAppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElCustomConnectorElOauth2El {
-
-}
+pub struct BuildAppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElCustomConnectorElOauth2El {}
 
 impl BuildAppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElCustomConnectorElOauth2El {
     pub fn build(
@@ -1267,9 +1269,7 @@ impl ToListMappable for AppflowConnectorProfileConnectorProfileConfigElConnector
     }
 }
 
-pub struct BuildAppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElGoogleAnalyticsElOauthRequestEl {
-
-}
+pub struct BuildAppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElGoogleAnalyticsElOauthRequestEl {}
 
 impl BuildAppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElGoogleAnalyticsElOauthRequestEl {
     pub fn build(
@@ -1504,9 +1504,7 @@ impl ToListMappable for AppflowConnectorProfileConnectorProfileConfigElConnector
     }
 }
 
-pub struct BuildAppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElHoneycodeElOauthRequestEl {
-
-}
+pub struct BuildAppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElHoneycodeElOauthRequestEl {}
 
 impl BuildAppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElHoneycodeElOauthRequestEl {
     pub fn build(
@@ -2087,9 +2085,7 @@ impl ToListMappable for AppflowConnectorProfileConnectorProfileConfigElConnector
     }
 }
 
-pub struct BuildAppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElSalesforceElOauthRequestEl {
-
-}
+pub struct BuildAppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElSalesforceElOauthRequestEl {}
 
 impl BuildAppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElSalesforceElOauthRequestEl {
     pub fn build(
@@ -2387,9 +2383,7 @@ impl ToListMappable for AppflowConnectorProfileConnectorProfileConfigElConnector
     }
 }
 
-pub struct BuildAppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElSapoDataElOauthCredentialsElOauthRequestEl {
-
-}
+pub struct BuildAppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElSapoDataElOauthCredentialsElOauthRequestEl {}
 
 impl BuildAppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElSapoDataElOauthCredentialsElOauthRequestEl {
     pub fn build(

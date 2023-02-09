@@ -6,6 +6,8 @@ use super::provider::ProviderAws;
 
 #[derive(Serialize)]
 struct DataEc2TransitGatewayDxGatewayAttachmentData {
+    #[serde(skip_serializing_if = "Vec::is_empty")]
+    depends_on: Vec<String>,
     #[serde(skip_serializing_if = "SerdeSkipDefault::is_default")]
     provider: Option<String>,
     #[serde(skip_serializing_if = "Option::is_none")]
@@ -37,6 +39,11 @@ pub struct DataEc2TransitGatewayDxGatewayAttachment(Rc<DataEc2TransitGatewayDxGa
 impl DataEc2TransitGatewayDxGatewayAttachment {
     fn shared(&self) -> &StackShared {
         &self.0.shared
+    }
+
+    pub fn depends_on(self, dep: &impl Dependable) -> Self {
+        self.0.data.borrow_mut().depends_on.push(dep.extract_ref());
+        self
     }
 
     pub fn set_provider(&self, provider: &ProviderAws) -> &Self {
@@ -122,6 +129,12 @@ impl Datasource for DataEc2TransitGatewayDxGatewayAttachment {
     }
 }
 
+impl Dependable for DataEc2TransitGatewayDxGatewayAttachment {
+    fn extract_ref(&self) -> String {
+        Datasource::extract_ref(self)
+    }
+}
+
 impl ToListMappable for DataEc2TransitGatewayDxGatewayAttachment {
     type O = ListRef<DataEc2TransitGatewayDxGatewayAttachmentRef>;
 
@@ -155,6 +168,7 @@ impl BuildDataEc2TransitGatewayDxGatewayAttachment {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
             data: RefCell::new(DataEc2TransitGatewayDxGatewayAttachmentData {
+                depends_on: core::default::Default::default(),
                 provider: None,
                 for_each: None,
                 dx_gateway_id: core::default::Default::default(),

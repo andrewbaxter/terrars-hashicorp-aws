@@ -6,6 +6,8 @@ use super::provider::ProviderAws;
 
 #[derive(Serialize)]
 struct DataEc2LocalGatewaysData {
+    #[serde(skip_serializing_if = "Vec::is_empty")]
+    depends_on: Vec<String>,
     #[serde(skip_serializing_if = "SerdeSkipDefault::is_default")]
     provider: Option<String>,
     #[serde(skip_serializing_if = "Option::is_none")]
@@ -33,6 +35,11 @@ pub struct DataEc2LocalGateways(Rc<DataEc2LocalGateways_>);
 impl DataEc2LocalGateways {
     fn shared(&self) -> &StackShared {
         &self.0.shared
+    }
+
+    pub fn depends_on(self, dep: &impl Dependable) -> Self {
+        self.0.data.borrow_mut().depends_on.push(dep.extract_ref());
+        self
     }
 
     pub fn set_provider(&self, provider: &ProviderAws) -> &Self {
@@ -98,6 +105,12 @@ impl Datasource for DataEc2LocalGateways {
     }
 }
 
+impl Dependable for DataEc2LocalGateways {
+    fn extract_ref(&self) -> String {
+        Datasource::extract_ref(self)
+    }
+}
+
 impl ToListMappable for DataEc2LocalGateways {
     type O = ListRef<DataEc2LocalGatewaysRef>;
 
@@ -131,6 +144,7 @@ impl BuildDataEc2LocalGateways {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
             data: RefCell::new(DataEc2LocalGatewaysData {
+                depends_on: core::default::Default::default(),
                 provider: None,
                 for_each: None,
                 id: core::default::Default::default(),

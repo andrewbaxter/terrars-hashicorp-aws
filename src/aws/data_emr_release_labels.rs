@@ -6,6 +6,8 @@ use super::provider::ProviderAws;
 
 #[derive(Serialize)]
 struct DataEmrReleaseLabelsData {
+    #[serde(skip_serializing_if = "Vec::is_empty")]
+    depends_on: Vec<String>,
     #[serde(skip_serializing_if = "SerdeSkipDefault::is_default")]
     provider: Option<String>,
     #[serde(skip_serializing_if = "Option::is_none")]
@@ -29,6 +31,11 @@ pub struct DataEmrReleaseLabels(Rc<DataEmrReleaseLabels_>);
 impl DataEmrReleaseLabels {
     fn shared(&self) -> &StackShared {
         &self.0.shared
+    }
+
+    pub fn depends_on(self, dep: &impl Dependable) -> Self {
+        self.0.data.borrow_mut().depends_on.push(dep.extract_ref());
+        self
     }
 
     pub fn set_provider(&self, provider: &ProviderAws) -> &Self {
@@ -77,6 +84,12 @@ impl Datasource for DataEmrReleaseLabels {
     }
 }
 
+impl Dependable for DataEmrReleaseLabels {
+    fn extract_ref(&self) -> String {
+        Datasource::extract_ref(self)
+    }
+}
+
 impl ToListMappable for DataEmrReleaseLabels {
     type O = ListRef<DataEmrReleaseLabelsRef>;
 
@@ -110,6 +123,7 @@ impl BuildDataEmrReleaseLabels {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
             data: RefCell::new(DataEmrReleaseLabelsData {
+                depends_on: core::default::Default::default(),
                 provider: None,
                 for_each: None,
                 id: core::default::Default::default(),

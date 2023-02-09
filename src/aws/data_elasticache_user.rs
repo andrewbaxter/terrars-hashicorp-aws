@@ -6,6 +6,8 @@ use super::provider::ProviderAws;
 
 #[derive(Serialize)]
 struct DataElasticacheUserData {
+    #[serde(skip_serializing_if = "Vec::is_empty")]
+    depends_on: Vec<String>,
     #[serde(skip_serializing_if = "SerdeSkipDefault::is_default")]
     provider: Option<String>,
     #[serde(skip_serializing_if = "Option::is_none")]
@@ -37,6 +39,11 @@ pub struct DataElasticacheUser(Rc<DataElasticacheUser_>);
 impl DataElasticacheUser {
     fn shared(&self) -> &StackShared {
         &self.0.shared
+    }
+
+    pub fn depends_on(self, dep: &impl Dependable) -> Self {
+        self.0.data.borrow_mut().depends_on.push(dep.extract_ref());
+        self
     }
 
     pub fn set_provider(&self, provider: &ProviderAws) -> &Self {
@@ -122,6 +129,12 @@ impl Datasource for DataElasticacheUser {
     }
 }
 
+impl Dependable for DataElasticacheUser {
+    fn extract_ref(&self) -> String {
+        Datasource::extract_ref(self)
+    }
+}
+
 impl ToListMappable for DataElasticacheUser {
     type O = ListRef<DataElasticacheUserRef>;
 
@@ -157,6 +170,7 @@ impl BuildDataElasticacheUser {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
             data: RefCell::new(DataElasticacheUserData {
+                depends_on: core::default::Default::default(),
                 provider: None,
                 for_each: None,
                 access_string: core::default::Default::default(),

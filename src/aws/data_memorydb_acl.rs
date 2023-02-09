@@ -6,6 +6,8 @@ use super::provider::ProviderAws;
 
 #[derive(Serialize)]
 struct DataMemorydbAclData {
+    #[serde(skip_serializing_if = "Vec::is_empty")]
+    depends_on: Vec<String>,
     #[serde(skip_serializing_if = "SerdeSkipDefault::is_default")]
     provider: Option<String>,
     #[serde(skip_serializing_if = "Option::is_none")]
@@ -29,6 +31,11 @@ pub struct DataMemorydbAcl(Rc<DataMemorydbAcl_>);
 impl DataMemorydbAcl {
     fn shared(&self) -> &StackShared {
         &self.0.shared
+    }
+
+    pub fn depends_on(self, dep: &impl Dependable) -> Self {
+        self.0.data.borrow_mut().depends_on.push(dep.extract_ref());
+        self
     }
 
     pub fn set_provider(&self, provider: &ProviderAws) -> &Self {
@@ -85,6 +92,12 @@ impl Datasource for DataMemorydbAcl {
     }
 }
 
+impl Dependable for DataMemorydbAcl {
+    fn extract_ref(&self) -> String {
+        Datasource::extract_ref(self)
+    }
+}
+
 impl ToListMappable for DataMemorydbAcl {
     type O = ListRef<DataMemorydbAclRef>;
 
@@ -120,6 +133,7 @@ impl BuildDataMemorydbAcl {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
             data: RefCell::new(DataMemorydbAclData {
+                depends_on: core::default::Default::default(),
                 provider: None,
                 for_each: None,
                 id: core::default::Default::default(),

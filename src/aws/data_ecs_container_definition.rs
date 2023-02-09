@@ -6,6 +6,8 @@ use super::provider::ProviderAws;
 
 #[derive(Serialize)]
 struct DataEcsContainerDefinitionData {
+    #[serde(skip_serializing_if = "Vec::is_empty")]
+    depends_on: Vec<String>,
     #[serde(skip_serializing_if = "SerdeSkipDefault::is_default")]
     provider: Option<String>,
     #[serde(skip_serializing_if = "Option::is_none")]
@@ -28,6 +30,11 @@ pub struct DataEcsContainerDefinition(Rc<DataEcsContainerDefinition_>);
 impl DataEcsContainerDefinition {
     fn shared(&self) -> &StackShared {
         &self.0.shared
+    }
+
+    pub fn depends_on(self, dep: &impl Dependable) -> Self {
+        self.0.data.borrow_mut().depends_on.push(dep.extract_ref());
+        self
     }
 
     pub fn set_provider(&self, provider: &ProviderAws) -> &Self {
@@ -103,6 +110,12 @@ impl Datasource for DataEcsContainerDefinition {
     }
 }
 
+impl Dependable for DataEcsContainerDefinition {
+    fn extract_ref(&self) -> String {
+        Datasource::extract_ref(self)
+    }
+}
+
 impl ToListMappable for DataEcsContainerDefinition {
     type O = ListRef<DataEcsContainerDefinitionRef>;
 
@@ -140,6 +153,7 @@ impl BuildDataEcsContainerDefinition {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
             data: RefCell::new(DataEcsContainerDefinitionData {
+                depends_on: core::default::Default::default(),
                 provider: None,
                 for_each: None,
                 container_name: self.container_name,

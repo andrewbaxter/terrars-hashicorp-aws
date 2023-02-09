@@ -6,6 +6,8 @@ use super::provider::ProviderAws;
 
 #[derive(Serialize)]
 struct DataVpcDhcpOptionsData {
+    #[serde(skip_serializing_if = "Vec::is_empty")]
+    depends_on: Vec<String>,
     #[serde(skip_serializing_if = "SerdeSkipDefault::is_default")]
     provider: Option<String>,
     #[serde(skip_serializing_if = "Option::is_none")]
@@ -35,6 +37,11 @@ pub struct DataVpcDhcpOptions(Rc<DataVpcDhcpOptions_>);
 impl DataVpcDhcpOptions {
     fn shared(&self) -> &StackShared {
         &self.0.shared
+    }
+
+    pub fn depends_on(self, dep: &impl Dependable) -> Self {
+        self.0.data.borrow_mut().depends_on.push(dep.extract_ref());
+        self
     }
 
     pub fn set_provider(&self, provider: &ProviderAws) -> &Self {
@@ -141,6 +148,12 @@ impl Datasource for DataVpcDhcpOptions {
     }
 }
 
+impl Dependable for DataVpcDhcpOptions {
+    fn extract_ref(&self) -> String {
+        Datasource::extract_ref(self)
+    }
+}
+
 impl ToListMappable for DataVpcDhcpOptions {
     type O = ListRef<DataVpcDhcpOptionsRef>;
 
@@ -174,6 +187,7 @@ impl BuildDataVpcDhcpOptions {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
             data: RefCell::new(DataVpcDhcpOptionsData {
+                depends_on: core::default::Default::default(),
                 provider: None,
                 for_each: None,
                 dhcp_options_id: core::default::Default::default(),

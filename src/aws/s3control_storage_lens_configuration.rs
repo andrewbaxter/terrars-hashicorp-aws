@@ -42,7 +42,7 @@ impl S3controlStorageLensConfiguration {
         &self.0.shared
     }
 
-    pub fn depends_on(self, dep: &impl Resource) -> Self {
+    pub fn depends_on(self, dep: &impl Dependable) -> Self {
         self.0.data.borrow_mut().depends_on.push(dep.extract_ref());
         self
     }
@@ -177,6 +177,12 @@ impl S3controlStorageLensConfiguration {
 impl Resource for S3controlStorageLensConfiguration {
     fn extract_ref(&self) -> String {
         format!("{}.{}", self.0.extract_resource_type(), self.0.extract_tf_id())
+    }
+}
+
+impl Dependable for S3controlStorageLensConfiguration {
+    fn extract_ref(&self) -> String {
+        Resource::extract_ref(self)
     }
 }
 
@@ -386,9 +392,7 @@ impl ToListMappable for S3controlStorageLensConfigurationStorageLensConfiguratio
     }
 }
 
-pub struct BuildS3controlStorageLensConfigurationStorageLensConfigurationElAccountLevelElAdvancedCostOptimizationMetricsEl {
-
-}
+pub struct BuildS3controlStorageLensConfigurationStorageLensConfigurationElAccountLevelElAdvancedCostOptimizationMetricsEl {}
 
 impl BuildS3controlStorageLensConfigurationStorageLensConfigurationElAccountLevelElAdvancedCostOptimizationMetricsEl {
     pub fn build(
@@ -457,9 +461,7 @@ impl ToListMappable for S3controlStorageLensConfigurationStorageLensConfiguratio
     }
 }
 
-pub struct BuildS3controlStorageLensConfigurationStorageLensConfigurationElAccountLevelElAdvancedDataProtectionMetricsEl {
-
-}
+pub struct BuildS3controlStorageLensConfigurationStorageLensConfigurationElAccountLevelElAdvancedDataProtectionMetricsEl {}
 
 impl BuildS3controlStorageLensConfigurationStorageLensConfigurationElAccountLevelElAdvancedDataProtectionMetricsEl {
     pub fn build(
@@ -528,9 +530,7 @@ impl ToListMappable for S3controlStorageLensConfigurationStorageLensConfiguratio
     }
 }
 
-pub struct BuildS3controlStorageLensConfigurationStorageLensConfigurationElAccountLevelElBucketLevelElActivityMetricsEl {
-
-}
+pub struct BuildS3controlStorageLensConfigurationStorageLensConfigurationElAccountLevelElBucketLevelElActivityMetricsEl {}
 
 impl BuildS3controlStorageLensConfigurationStorageLensConfigurationElAccountLevelElBucketLevelElActivityMetricsEl {
     pub fn build(
@@ -599,9 +599,7 @@ impl ToListMappable for S3controlStorageLensConfigurationStorageLensConfiguratio
     }
 }
 
-pub struct BuildS3controlStorageLensConfigurationStorageLensConfigurationElAccountLevelElBucketLevelElAdvancedCostOptimizationMetricsEl {
-
-}
+pub struct BuildS3controlStorageLensConfigurationStorageLensConfigurationElAccountLevelElBucketLevelElAdvancedCostOptimizationMetricsEl {}
 
 impl BuildS3controlStorageLensConfigurationStorageLensConfigurationElAccountLevelElBucketLevelElAdvancedCostOptimizationMetricsEl {
     pub fn build(
@@ -670,9 +668,7 @@ impl ToListMappable for S3controlStorageLensConfigurationStorageLensConfiguratio
     }
 }
 
-pub struct BuildS3controlStorageLensConfigurationStorageLensConfigurationElAccountLevelElBucketLevelElAdvancedDataProtectionMetricsEl {
-
-}
+pub struct BuildS3controlStorageLensConfigurationStorageLensConfigurationElAccountLevelElBucketLevelElAdvancedDataProtectionMetricsEl {}
 
 impl BuildS3controlStorageLensConfigurationStorageLensConfigurationElAccountLevelElBucketLevelElAdvancedDataProtectionMetricsEl {
     pub fn build(
@@ -741,9 +737,7 @@ impl ToListMappable for S3controlStorageLensConfigurationStorageLensConfiguratio
     }
 }
 
-pub struct BuildS3controlStorageLensConfigurationStorageLensConfigurationElAccountLevelElBucketLevelElDetailedStatusCodeMetricsEl {
-
-}
+pub struct BuildS3controlStorageLensConfigurationStorageLensConfigurationElAccountLevelElBucketLevelElDetailedStatusCodeMetricsEl {}
 
 impl BuildS3controlStorageLensConfigurationStorageLensConfigurationElAccountLevelElBucketLevelElDetailedStatusCodeMetricsEl {
     pub fn build(
@@ -828,9 +822,7 @@ impl ToListMappable for S3controlStorageLensConfigurationStorageLensConfiguratio
     }
 }
 
-pub struct BuildS3controlStorageLensConfigurationStorageLensConfigurationElAccountLevelElBucketLevelElPrefixLevelElStorageMetricsElSelectionCriteriaEl {
-
-}
+pub struct BuildS3controlStorageLensConfigurationStorageLensConfigurationElAccountLevelElBucketLevelElPrefixLevelElStorageMetricsElSelectionCriteriaEl {}
 
 impl BuildS3controlStorageLensConfigurationStorageLensConfigurationElAccountLevelElBucketLevelElPrefixLevelElStorageMetricsElSelectionCriteriaEl {
     pub fn build(
@@ -950,9 +942,7 @@ impl ToListMappable for S3controlStorageLensConfigurationStorageLensConfiguratio
     }
 }
 
-pub struct BuildS3controlStorageLensConfigurationStorageLensConfigurationElAccountLevelElBucketLevelElPrefixLevelElStorageMetricsEl {
-
-}
+pub struct BuildS3controlStorageLensConfigurationStorageLensConfigurationElAccountLevelElBucketLevelElPrefixLevelElStorageMetricsEl {}
 
 impl BuildS3controlStorageLensConfigurationStorageLensConfigurationElAccountLevelElBucketLevelElPrefixLevelElStorageMetricsEl {
     pub fn build(
@@ -1894,9 +1884,7 @@ impl S3controlStorageLensConfigurationStorageLensConfigurationElDataExportElS3Bu
 }
 
 #[derive(Serialize)]
-pub struct S3controlStorageLensConfigurationStorageLensConfigurationElDataExportElS3BucketDestinationElEncryptionElSseS3El {
-
-}
+pub struct S3controlStorageLensConfigurationStorageLensConfigurationElDataExportElS3BucketDestinationElEncryptionElSseS3El {}
 
 impl S3controlStorageLensConfigurationStorageLensConfigurationElDataExportElS3BucketDestinationElEncryptionElSseS3El {
 
@@ -1917,17 +1905,13 @@ impl ToListMappable for S3controlStorageLensConfigurationStorageLensConfiguratio
     }
 }
 
-pub struct BuildS3controlStorageLensConfigurationStorageLensConfigurationElDataExportElS3BucketDestinationElEncryptionElSseS3El {
-
-}
+pub struct BuildS3controlStorageLensConfigurationStorageLensConfigurationElDataExportElS3BucketDestinationElEncryptionElSseS3El {}
 
 impl BuildS3controlStorageLensConfigurationStorageLensConfigurationElDataExportElS3BucketDestinationElEncryptionElSseS3El {
     pub fn build(
         self,
     ) -> S3controlStorageLensConfigurationStorageLensConfigurationElDataExportElS3BucketDestinationElEncryptionElSseS3El {
-        S3controlStorageLensConfigurationStorageLensConfigurationElDataExportElS3BucketDestinationElEncryptionElSseS3El {
-
-        }
+        S3controlStorageLensConfigurationStorageLensConfigurationElDataExportElS3BucketDestinationElEncryptionElSseS3El {}
     }
 }
 
@@ -2048,9 +2032,7 @@ impl ToListMappable for S3controlStorageLensConfigurationStorageLensConfiguratio
     }
 }
 
-pub struct BuildS3controlStorageLensConfigurationStorageLensConfigurationElDataExportElS3BucketDestinationElEncryptionEl {
-
-}
+pub struct BuildS3controlStorageLensConfigurationStorageLensConfigurationElDataExportElS3BucketDestinationElEncryptionEl {}
 
 impl BuildS3controlStorageLensConfigurationStorageLensConfigurationElDataExportElS3BucketDestinationElEncryptionEl {
     pub fn build(

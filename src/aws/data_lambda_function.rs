@@ -6,6 +6,8 @@ use super::provider::ProviderAws;
 
 #[derive(Serialize)]
 struct DataLambdaFunctionData {
+    #[serde(skip_serializing_if = "Vec::is_empty")]
+    depends_on: Vec<String>,
     #[serde(skip_serializing_if = "SerdeSkipDefault::is_default")]
     provider: Option<String>,
     #[serde(skip_serializing_if = "Option::is_none")]
@@ -31,6 +33,11 @@ pub struct DataLambdaFunction(Rc<DataLambdaFunction_>);
 impl DataLambdaFunction {
     fn shared(&self) -> &StackShared {
         &self.0.shared
+    }
+
+    pub fn depends_on(self, dep: &impl Dependable) -> Self {
+        self.0.data.borrow_mut().depends_on.push(dep.extract_ref());
+        self
     }
 
     pub fn set_provider(&self, provider: &ProviderAws) -> &Self {
@@ -223,6 +230,12 @@ impl Datasource for DataLambdaFunction {
     }
 }
 
+impl Dependable for DataLambdaFunction {
+    fn extract_ref(&self) -> String {
+        Datasource::extract_ref(self)
+    }
+}
+
 impl ToListMappable for DataLambdaFunction {
     type O = ListRef<DataLambdaFunctionRef>;
 
@@ -258,6 +271,7 @@ impl BuildDataLambdaFunction {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
             data: RefCell::new(DataLambdaFunctionData {
+                depends_on: core::default::Default::default(),
                 provider: None,
                 for_each: None,
                 function_name: self.function_name,

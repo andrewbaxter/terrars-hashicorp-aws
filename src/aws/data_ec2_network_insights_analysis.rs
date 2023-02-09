@@ -6,6 +6,8 @@ use super::provider::ProviderAws;
 
 #[derive(Serialize)]
 struct DataEc2NetworkInsightsAnalysisData {
+    #[serde(skip_serializing_if = "Vec::is_empty")]
+    depends_on: Vec<String>,
     #[serde(skip_serializing_if = "SerdeSkipDefault::is_default")]
     provider: Option<String>,
     #[serde(skip_serializing_if = "Option::is_none")]
@@ -33,6 +35,11 @@ pub struct DataEc2NetworkInsightsAnalysis(Rc<DataEc2NetworkInsightsAnalysis_>);
 impl DataEc2NetworkInsightsAnalysis {
     fn shared(&self) -> &StackShared {
         &self.0.shared
+    }
+
+    pub fn depends_on(self, dep: &impl Dependable) -> Self {
+        self.0.data.borrow_mut().depends_on.push(dep.extract_ref());
+        self
     }
 
     pub fn set_provider(&self, provider: &ProviderAws) -> &Self {
@@ -153,6 +160,12 @@ impl Datasource for DataEc2NetworkInsightsAnalysis {
     }
 }
 
+impl Dependable for DataEc2NetworkInsightsAnalysis {
+    fn extract_ref(&self) -> String {
+        Datasource::extract_ref(self)
+    }
+}
+
 impl ToListMappable for DataEc2NetworkInsightsAnalysis {
     type O = ListRef<DataEc2NetworkInsightsAnalysisRef>;
 
@@ -186,6 +199,7 @@ impl BuildDataEc2NetworkInsightsAnalysis {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
             data: RefCell::new(DataEc2NetworkInsightsAnalysisData {
+                depends_on: core::default::Default::default(),
                 provider: None,
                 for_each: None,
                 id: core::default::Default::default(),

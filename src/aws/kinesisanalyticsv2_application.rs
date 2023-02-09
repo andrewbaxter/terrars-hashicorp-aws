@@ -52,7 +52,7 @@ impl Kinesisanalyticsv2Application {
         &self.0.shared
     }
 
-    pub fn depends_on(self, dep: &impl Resource) -> Self {
+    pub fn depends_on(self, dep: &impl Dependable) -> Self {
         self.0.data.borrow_mut().depends_on.push(dep.extract_ref());
         self
     }
@@ -274,6 +274,12 @@ impl Kinesisanalyticsv2Application {
 impl Resource for Kinesisanalyticsv2Application {
     fn extract_ref(&self) -> String {
         format!("{}.{}", self.0.extract_resource_type(), self.0.extract_tf_id())
+    }
+}
+
+impl Dependable for Kinesisanalyticsv2Application {
+    fn extract_ref(&self) -> String {
+        Resource::extract_ref(self)
     }
 }
 
@@ -1521,9 +1527,7 @@ impl ToListMappable for Kinesisanalyticsv2ApplicationApplicationConfigurationElR
     }
 }
 
-pub struct BuildKinesisanalyticsv2ApplicationApplicationConfigurationElRunConfigurationElApplicationRestoreConfigurationEl {
-
-}
+pub struct BuildKinesisanalyticsv2ApplicationApplicationConfigurationElRunConfigurationElApplicationRestoreConfigurationEl {}
 
 impl BuildKinesisanalyticsv2ApplicationApplicationConfigurationElRunConfigurationElApplicationRestoreConfigurationEl {
     pub fn build(
@@ -1805,9 +1809,7 @@ impl ToListMappable for Kinesisanalyticsv2ApplicationApplicationConfigurationElS
     }
 }
 
-pub struct BuildKinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElInputElInputParallelismEl {
-
-}
+pub struct BuildKinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElInputElInputParallelismEl {}
 
 impl BuildKinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElInputElInputParallelismEl {
     pub fn build(
@@ -1974,9 +1976,7 @@ impl ToListMappable for Kinesisanalyticsv2ApplicationApplicationConfigurationElS
     }
 }
 
-pub struct BuildKinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElInputElInputProcessingConfigurationEl {
-
-}
+pub struct BuildKinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElInputElInputProcessingConfigurationEl {}
 
 impl BuildKinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElInputElInputProcessingConfigurationEl {
     pub fn build(
@@ -2346,9 +2346,7 @@ impl ToListMappable for Kinesisanalyticsv2ApplicationApplicationConfigurationElS
     }
 }
 
-pub struct BuildKinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElInputElInputSchemaElRecordFormatElMappingParametersEl {
-
-}
+pub struct BuildKinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElInputElInputSchemaElRecordFormatElMappingParametersEl {}
 
 impl BuildKinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElInputElInputSchemaElRecordFormatElMappingParametersEl {
     pub fn build(
@@ -2620,9 +2618,7 @@ impl ToListMappable for Kinesisanalyticsv2ApplicationApplicationConfigurationElS
     }
 }
 
-pub struct BuildKinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElInputElInputSchemaEl {
-
-}
+pub struct BuildKinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElInputElInputSchemaEl {}
 
 impl BuildKinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElInputElInputSchemaEl {
     pub fn build(
@@ -2712,9 +2708,7 @@ impl ToListMappable for Kinesisanalyticsv2ApplicationApplicationConfigurationElS
     }
 }
 
-pub struct BuildKinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElInputElInputStartingPositionConfigurationEl {
-
-}
+pub struct BuildKinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElInputElInputStartingPositionConfigurationEl {}
 
 impl BuildKinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElInputElInputStartingPositionConfigurationEl {
     pub fn build(
@@ -4072,9 +4066,7 @@ impl ToListMappable for Kinesisanalyticsv2ApplicationApplicationConfigurationElS
     }
 }
 
-pub struct BuildKinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElReferenceDataSourceElReferenceSchemaElRecordFormatElMappingParametersEl {
-
-}
+pub struct BuildKinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElReferenceDataSourceElReferenceSchemaElRecordFormatElMappingParametersEl {}
 
 impl BuildKinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElReferenceDataSourceElReferenceSchemaElRecordFormatElMappingParametersEl {
     pub fn build(
@@ -4346,9 +4338,7 @@ impl ToListMappable for Kinesisanalyticsv2ApplicationApplicationConfigurationElS
     }
 }
 
-pub struct BuildKinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElReferenceDataSourceElReferenceSchemaEl {
-
-}
+pub struct BuildKinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElReferenceDataSourceElReferenceSchemaEl {}
 
 impl BuildKinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElReferenceDataSourceElReferenceSchemaEl {
     pub fn build(

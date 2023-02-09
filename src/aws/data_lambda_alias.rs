@@ -6,6 +6,8 @@ use super::provider::ProviderAws;
 
 #[derive(Serialize)]
 struct DataLambdaAliasData {
+    #[serde(skip_serializing_if = "Vec::is_empty")]
+    depends_on: Vec<String>,
     #[serde(skip_serializing_if = "SerdeSkipDefault::is_default")]
     provider: Option<String>,
     #[serde(skip_serializing_if = "Option::is_none")]
@@ -28,6 +30,11 @@ pub struct DataLambdaAlias(Rc<DataLambdaAlias_>);
 impl DataLambdaAlias {
     fn shared(&self) -> &StackShared {
         &self.0.shared
+    }
+
+    pub fn depends_on(self, dep: &impl Dependable) -> Self {
+        self.0.data.borrow_mut().depends_on.push(dep.extract_ref());
+        self
     }
 
     pub fn set_provider(&self, provider: &ProviderAws) -> &Self {
@@ -83,6 +90,12 @@ impl Datasource for DataLambdaAlias {
     }
 }
 
+impl Dependable for DataLambdaAlias {
+    fn extract_ref(&self) -> String {
+        Datasource::extract_ref(self)
+    }
+}
+
 impl ToListMappable for DataLambdaAlias {
     type O = ListRef<DataLambdaAliasRef>;
 
@@ -120,6 +133,7 @@ impl BuildDataLambdaAlias {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
             data: RefCell::new(DataLambdaAliasData {
+                depends_on: core::default::Default::default(),
                 provider: None,
                 for_each: None,
                 function_name: self.function_name,

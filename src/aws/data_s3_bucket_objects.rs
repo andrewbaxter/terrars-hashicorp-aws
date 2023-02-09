@@ -6,6 +6,8 @@ use super::provider::ProviderAws;
 
 #[derive(Serialize)]
 struct DataS3BucketObjectsData {
+    #[serde(skip_serializing_if = "Vec::is_empty")]
+    depends_on: Vec<String>,
     #[serde(skip_serializing_if = "SerdeSkipDefault::is_default")]
     provider: Option<String>,
     #[serde(skip_serializing_if = "Option::is_none")]
@@ -39,6 +41,11 @@ pub struct DataS3BucketObjects(Rc<DataS3BucketObjects_>);
 impl DataS3BucketObjects {
     fn shared(&self) -> &StackShared {
         &self.0.shared
+    }
+
+    pub fn depends_on(self, dep: &impl Dependable) -> Self {
+        self.0.data.borrow_mut().depends_on.push(dep.extract_ref());
+        self
     }
 
     pub fn set_provider(&self, provider: &ProviderAws) -> &Self {
@@ -150,6 +157,12 @@ impl Datasource for DataS3BucketObjects {
     }
 }
 
+impl Dependable for DataS3BucketObjects {
+    fn extract_ref(&self) -> String {
+        Datasource::extract_ref(self)
+    }
+}
+
 impl ToListMappable for DataS3BucketObjects {
     type O = ListRef<DataS3BucketObjectsRef>;
 
@@ -185,6 +198,7 @@ impl BuildDataS3BucketObjects {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
             data: RefCell::new(DataS3BucketObjectsData {
+                depends_on: core::default::Default::default(),
                 provider: None,
                 for_each: None,
                 bucket: self.bucket,

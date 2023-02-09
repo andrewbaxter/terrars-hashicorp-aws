@@ -6,6 +6,8 @@ use super::provider::ProviderAws;
 
 #[derive(Serialize)]
 struct DataRouteTableData {
+    #[serde(skip_serializing_if = "Vec::is_empty")]
+    depends_on: Vec<String>,
     #[serde(skip_serializing_if = "SerdeSkipDefault::is_default")]
     provider: Option<String>,
     #[serde(skip_serializing_if = "Option::is_none")]
@@ -41,6 +43,11 @@ pub struct DataRouteTable(Rc<DataRouteTable_>);
 impl DataRouteTable {
     fn shared(&self) -> &StackShared {
         &self.0.shared
+    }
+
+    pub fn depends_on(self, dep: &impl Dependable) -> Self {
+        self.0.data.borrow_mut().depends_on.push(dep.extract_ref());
+        self
     }
 
     pub fn set_provider(&self, provider: &ProviderAws) -> &Self {
@@ -165,6 +172,12 @@ impl Datasource for DataRouteTable {
     }
 }
 
+impl Dependable for DataRouteTable {
+    fn extract_ref(&self) -> String {
+        Datasource::extract_ref(self)
+    }
+}
+
 impl ToListMappable for DataRouteTable {
     type O = ListRef<DataRouteTableRef>;
 
@@ -198,6 +211,7 @@ impl BuildDataRouteTable {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
             data: RefCell::new(DataRouteTableData {
+                depends_on: core::default::Default::default(),
                 provider: None,
                 for_each: None,
                 gateway_id: core::default::Default::default(),

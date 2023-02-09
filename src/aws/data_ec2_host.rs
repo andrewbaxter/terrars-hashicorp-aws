@@ -6,6 +6,8 @@ use super::provider::ProviderAws;
 
 #[derive(Serialize)]
 struct DataEc2HostData {
+    #[serde(skip_serializing_if = "Vec::is_empty")]
+    depends_on: Vec<String>,
     #[serde(skip_serializing_if = "SerdeSkipDefault::is_default")]
     provider: Option<String>,
     #[serde(skip_serializing_if = "Option::is_none")]
@@ -35,6 +37,11 @@ pub struct DataEc2Host(Rc<DataEc2Host_>);
 impl DataEc2Host {
     fn shared(&self) -> &StackShared {
         &self.0.shared
+    }
+
+    pub fn depends_on(self, dep: &impl Dependable) -> Self {
+        self.0.data.borrow_mut().depends_on.push(dep.extract_ref());
+        self
     }
 
     pub fn set_provider(&self, provider: &ProviderAws) -> &Self {
@@ -161,6 +168,12 @@ impl Datasource for DataEc2Host {
     }
 }
 
+impl Dependable for DataEc2Host {
+    fn extract_ref(&self) -> String {
+        Datasource::extract_ref(self)
+    }
+}
+
 impl ToListMappable for DataEc2Host {
     type O = ListRef<DataEc2HostRef>;
 
@@ -194,6 +207,7 @@ impl BuildDataEc2Host {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
             data: RefCell::new(DataEc2HostData {
+                depends_on: core::default::Default::default(),
                 provider: None,
                 for_each: None,
                 host_id: core::default::Default::default(),

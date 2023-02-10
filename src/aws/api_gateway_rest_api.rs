@@ -58,7 +58,7 @@ impl ApiGatewayRestApi {
         &self.0.shared
     }
 
-    pub fn depends_on(self, dep: &impl Dependable) -> Self {
+    pub fn depends_on(self, dep: &impl Referable) -> Self {
         self.0.data.borrow_mut().depends_on.push(dep.extract_ref());
         self
     }
@@ -293,24 +293,20 @@ impl ApiGatewayRestApi {
     }
 }
 
-impl Resource for ApiGatewayRestApi {
+impl Referable for ApiGatewayRestApi {
     fn extract_ref(&self) -> String {
         format!("{}.{}", self.0.extract_resource_type(), self.0.extract_tf_id())
     }
 }
 
-impl Dependable for ApiGatewayRestApi {
-    fn extract_ref(&self) -> String {
-        Resource::extract_ref(self)
-    }
-}
+impl Resource for ApiGatewayRestApi { }
 
 impl ToListMappable for ApiGatewayRestApi {
     type O = ListRef<ApiGatewayRestApiRef>;
 
     fn do_map(self, base: String) -> Self::O {
         self.0.data.borrow_mut().for_each = Some(format!("${{{}}}", base));
-        ListRef::new(self.0.shared.clone(), Resource::extract_ref(&self))
+        ListRef::new(self.0.shared.clone(), self.extract_ref())
     }
 }
 

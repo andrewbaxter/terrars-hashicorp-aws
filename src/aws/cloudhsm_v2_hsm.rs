@@ -41,7 +41,7 @@ impl CloudhsmV2Hsm {
         &self.0.shared
     }
 
-    pub fn depends_on(self, dep: &impl Dependable) -> Self {
+    pub fn depends_on(self, dep: &impl Referable) -> Self {
         self.0.data.borrow_mut().depends_on.push(dep.extract_ref());
         self
     }
@@ -173,24 +173,20 @@ impl CloudhsmV2Hsm {
     }
 }
 
-impl Resource for CloudhsmV2Hsm {
+impl Referable for CloudhsmV2Hsm {
     fn extract_ref(&self) -> String {
         format!("{}.{}", self.0.extract_resource_type(), self.0.extract_tf_id())
     }
 }
 
-impl Dependable for CloudhsmV2Hsm {
-    fn extract_ref(&self) -> String {
-        Resource::extract_ref(self)
-    }
-}
+impl Resource for CloudhsmV2Hsm { }
 
 impl ToListMappable for CloudhsmV2Hsm {
     type O = ListRef<CloudhsmV2HsmRef>;
 
     fn do_map(self, base: String) -> Self::O {
         self.0.data.borrow_mut().for_each = Some(format!("${{{}}}", base));
-        ListRef::new(self.0.shared.clone(), Resource::extract_ref(&self))
+        ListRef::new(self.0.shared.clone(), self.extract_ref())
     }
 }
 

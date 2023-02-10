@@ -34,7 +34,7 @@ impl DataDatapipelinePipelineDefinition {
         &self.0.shared
     }
 
-    pub fn depends_on(self, dep: &impl Dependable) -> Self {
+    pub fn depends_on(self, dep: &impl Referable) -> Self {
         self.0.data.borrow_mut().depends_on.push(dep.extract_ref());
         self
     }
@@ -87,24 +87,20 @@ impl DataDatapipelinePipelineDefinition {
     }
 }
 
-impl Datasource for DataDatapipelinePipelineDefinition {
+impl Referable for DataDatapipelinePipelineDefinition {
     fn extract_ref(&self) -> String {
         format!("data.{}.{}", self.0.extract_datasource_type(), self.0.extract_tf_id())
     }
 }
 
-impl Dependable for DataDatapipelinePipelineDefinition {
-    fn extract_ref(&self) -> String {
-        Datasource::extract_ref(self)
-    }
-}
+impl Datasource for DataDatapipelinePipelineDefinition { }
 
 impl ToListMappable for DataDatapipelinePipelineDefinition {
     type O = ListRef<DataDatapipelinePipelineDefinitionRef>;
 
     fn do_map(self, base: String) -> Self::O {
         self.0.data.borrow_mut().for_each = Some(format!("${{{}}}", base));
-        ListRef::new(self.0.shared.clone(), Datasource::extract_ref(&self))
+        ListRef::new(self.0.shared.clone(), self.extract_ref())
     }
 }
 

@@ -50,7 +50,7 @@ impl Cloud9EnvironmentEc2 {
         &self.0.shared
     }
 
-    pub fn depends_on(self, dep: &impl Dependable) -> Self {
+    pub fn depends_on(self, dep: &impl Referable) -> Self {
         self.0.data.borrow_mut().depends_on.push(dep.extract_ref());
         self
     }
@@ -226,24 +226,20 @@ impl Cloud9EnvironmentEc2 {
     }
 }
 
-impl Resource for Cloud9EnvironmentEc2 {
+impl Referable for Cloud9EnvironmentEc2 {
     fn extract_ref(&self) -> String {
         format!("{}.{}", self.0.extract_resource_type(), self.0.extract_tf_id())
     }
 }
 
-impl Dependable for Cloud9EnvironmentEc2 {
-    fn extract_ref(&self) -> String {
-        Resource::extract_ref(self)
-    }
-}
+impl Resource for Cloud9EnvironmentEc2 { }
 
 impl ToListMappable for Cloud9EnvironmentEc2 {
     type O = ListRef<Cloud9EnvironmentEc2Ref>;
 
     fn do_map(self, base: String) -> Self::O {
         self.0.data.borrow_mut().for_each = Some(format!("${{{}}}", base));
-        ListRef::new(self.0.shared.clone(), Resource::extract_ref(&self))
+        ListRef::new(self.0.shared.clone(), self.extract_ref())
     }
 }
 

@@ -59,7 +59,7 @@ impl VpcEndpoint {
         &self.0.shared
     }
 
-    pub fn depends_on(self, dep: &impl Dependable) -> Self {
+    pub fn depends_on(self, dep: &impl Referable) -> Self {
         self.0.data.borrow_mut().depends_on.push(dep.extract_ref());
         self
     }
@@ -316,24 +316,20 @@ impl VpcEndpoint {
     }
 }
 
-impl Resource for VpcEndpoint {
+impl Referable for VpcEndpoint {
     fn extract_ref(&self) -> String {
         format!("{}.{}", self.0.extract_resource_type(), self.0.extract_tf_id())
     }
 }
 
-impl Dependable for VpcEndpoint {
-    fn extract_ref(&self) -> String {
-        Resource::extract_ref(self)
-    }
-}
+impl Resource for VpcEndpoint { }
 
 impl ToListMappable for VpcEndpoint {
     type O = ListRef<VpcEndpointRef>;
 
     fn do_map(self, base: String) -> Self::O {
         self.0.data.borrow_mut().for_each = Some(format!("${{{}}}", base));
-        ListRef::new(self.0.shared.clone(), Resource::extract_ref(&self))
+        ListRef::new(self.0.shared.clone(), self.extract_ref())
     }
 }
 

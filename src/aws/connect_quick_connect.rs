@@ -43,7 +43,7 @@ impl ConnectQuickConnect {
         &self.0.shared
     }
 
-    pub fn depends_on(self, dep: &impl Dependable) -> Self {
+    pub fn depends_on(self, dep: &impl Referable) -> Self {
         self.0.data.borrow_mut().depends_on.push(dep.extract_ref());
         self
     }
@@ -185,24 +185,20 @@ impl ConnectQuickConnect {
     }
 }
 
-impl Resource for ConnectQuickConnect {
+impl Referable for ConnectQuickConnect {
     fn extract_ref(&self) -> String {
         format!("{}.{}", self.0.extract_resource_type(), self.0.extract_tf_id())
     }
 }
 
-impl Dependable for ConnectQuickConnect {
-    fn extract_ref(&self) -> String {
-        Resource::extract_ref(self)
-    }
-}
+impl Resource for ConnectQuickConnect { }
 
 impl ToListMappable for ConnectQuickConnect {
     type O = ListRef<ConnectQuickConnectRef>;
 
     fn do_map(self, base: String) -> Self::O {
         self.0.data.borrow_mut().for_each = Some(format!("${{{}}}", base));
-        ListRef::new(self.0.shared.clone(), Resource::extract_ref(&self))
+        ListRef::new(self.0.shared.clone(), self.extract_ref())
     }
 }
 

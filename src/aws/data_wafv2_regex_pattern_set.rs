@@ -32,7 +32,7 @@ impl DataWafv2RegexPatternSet {
         &self.0.shared
     }
 
-    pub fn depends_on(self, dep: &impl Dependable) -> Self {
+    pub fn depends_on(self, dep: &impl Referable) -> Self {
         self.0.data.borrow_mut().depends_on.push(dep.extract_ref());
         self
     }
@@ -79,24 +79,20 @@ impl DataWafv2RegexPatternSet {
     }
 }
 
-impl Datasource for DataWafv2RegexPatternSet {
+impl Referable for DataWafv2RegexPatternSet {
     fn extract_ref(&self) -> String {
         format!("data.{}.{}", self.0.extract_datasource_type(), self.0.extract_tf_id())
     }
 }
 
-impl Dependable for DataWafv2RegexPatternSet {
-    fn extract_ref(&self) -> String {
-        Datasource::extract_ref(self)
-    }
-}
+impl Datasource for DataWafv2RegexPatternSet { }
 
 impl ToListMappable for DataWafv2RegexPatternSet {
     type O = ListRef<DataWafv2RegexPatternSetRef>;
 
     fn do_map(self, base: String) -> Self::O {
         self.0.data.borrow_mut().for_each = Some(format!("${{{}}}", base));
-        ListRef::new(self.0.shared.clone(), Datasource::extract_ref(&self))
+        ListRef::new(self.0.shared.clone(), self.extract_ref())
     }
 }
 

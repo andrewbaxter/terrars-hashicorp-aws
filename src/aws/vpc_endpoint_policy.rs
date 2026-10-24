@@ -1,49 +1,53 @@
 use serde::Serialize;
-use std::cell::RefCell;
-use std::rc::Rc;
-use terrars::*;
+use terrars::{
+    Referable as _,
+    Resource_ as _,
+    Ref as _,
+};
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
 struct VpcEndpointPolicyData {
-    #[serde(skip_serializing_if = "Vec::is_empty")]
-    depends_on: Vec<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    provider: Option<String>,
-    #[serde(skip_serializing_if = "SerdeSkipDefault::is_default")]
-    lifecycle: ResourceLifecycle,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    for_each: Option<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    id: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    policy: Option<PrimField<String>>,
-    vpc_endpoint_id: PrimField<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    timeouts: Option<VpcEndpointPolicyTimeoutsEl>,
+    #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
+    depends_on: std::vec::Vec<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    provider: std::option::Option<std::string::String>,
+    #[serde(skip_serializing_if = "terrars::SerdeSkipDefault::is_default")]
+    lifecycle: terrars::ResourceLifecycle,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    for_each: std::option::Option<std::string::String>,
+    #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
+    provisioner: std::vec::Vec<terrars::Provisioner>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    id: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    policy: std::option::Option<terrars::PrimField<std::string::String>>,
+    vpc_endpoint_id: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    timeouts: std::option::Option<VpcEndpointPolicyTimeoutsEl>,
 }
 
 struct VpcEndpointPolicy_ {
-    shared: StackShared,
-    tf_id: String,
-    data: RefCell<VpcEndpointPolicyData>,
+    shared: terrars::StackShared,
+    tf_id: std::string::String,
+    data: std::cell::RefCell<VpcEndpointPolicyData>,
 }
 
 #[derive(Clone)]
-pub struct VpcEndpointPolicy(Rc<VpcEndpointPolicy_>);
+pub struct VpcEndpointPolicy(std::rc::Rc<VpcEndpointPolicy_>);
 
 impl VpcEndpointPolicy {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.0.shared
     }
 
-    pub fn depends_on(self, dep: &impl Referable) -> Self {
+    pub fn depends_on(self, dep: &impl terrars::Referable) -> Self {
         self.0.data.borrow_mut().depends_on.push(dep.extract_ref());
         self
     }
 
     pub fn set_provider(self, provider: &ProviderAws) -> Self {
-        self.0.data.borrow_mut().provider = Some(provider.provider_ref());
+        self.0.data.borrow_mut().provider = std::option::Option::Some(provider.provider_ref());
         self
     }
 
@@ -58,103 +62,136 @@ impl VpcEndpointPolicy {
     }
 
     pub fn ignore_changes_to_all(self) -> Self {
-        self.0.data.borrow_mut().lifecycle.ignore_changes = Some(IgnoreChanges::All(IgnoreChangesAll::All));
+        self.0.data.borrow_mut().lifecycle.ignore_changes =
+            std::option::Option::Some(terrars::IgnoreChanges::All(terrars::IgnoreChangesAll::All));
         self
     }
 
-    pub fn ignore_changes_to_attr(self, attr: impl ToString) -> Self {
+    pub fn ignore_changes_to_attr(self, attr: impl std::string::ToString) -> Self {
         {
             let mut d = self.0.data.borrow_mut();
             if match &mut d.lifecycle.ignore_changes {
-                Some(i) => match i {
-                    IgnoreChanges::All(_) => {
+                std::option::Option::Some(i) => match i {
+                    terrars::IgnoreChanges::All(_) => {
                         true
                     },
-                    IgnoreChanges::Refs(r) => {
+                    terrars::IgnoreChanges::Refs(r) => {
                         r.push(attr.to_string());
                         false
                     },
                 },
-                None => true,
+                std::option::Option::None => true,
             } {
-                d.lifecycle.ignore_changes = Some(IgnoreChanges::Refs(vec![attr.to_string()]));
+                d.lifecycle.ignore_changes =
+                    std::option::Option::Some(terrars::IgnoreChanges::Refs(vec![attr.to_string()]));
             }
         }
         self
     }
 
-    pub fn replace_triggered_by_resource(self, r: &impl Resource) -> Self {
+    pub fn replace_triggered_by_resource(self, r: &impl terrars::Resource) -> Self {
         self.0.data.borrow_mut().lifecycle.replace_triggered_by.push(r.extract_ref());
         self
     }
 
-    pub fn replace_triggered_by_attr(self, attr: impl ToString) -> Self {
+    pub fn replace_triggered_by_attr(self, attr: impl std::string::ToString) -> Self {
         self.0.data.borrow_mut().lifecycle.replace_triggered_by.push(attr.to_string());
         self
     }
 
-    #[doc= "Set the field `id`.\n"]
-    pub fn set_id(self, v: impl Into<PrimField<String>>) -> Self {
-        self.0.data.borrow_mut().id = Some(v.into());
+    #[doc = r" Add a provisioner (ex: `local-exec`, `remote-exec`, `file`) to this resource."]
+    #[doc = r" Provisioners run in the order they're added."]
+    pub fn add_provisioner(self, v: impl std::convert::Into<terrars::Provisioner>) -> Self {
+        self.0.data.borrow_mut().provisioner.push(v.into());
         self
     }
 
-    #[doc= "Set the field `policy`.\n"]
-    pub fn set_policy(self, v: impl Into<PrimField<String>>) -> Self {
-        self.0.data.borrow_mut().policy = Some(v.into());
+    pub fn add_lifecycle_precondition(
+        self,
+        condition: impl std::convert::Into<terrars::PrimField<bool>>,
+        error_message: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.0.data.borrow_mut().lifecycle.precondition.push(terrars::LifecycleCondition {
+            condition: condition.into(),
+            error_message: error_message.into(),
+        });
         self
     }
 
-    #[doc= "Set the field `timeouts`.\n"]
-    pub fn set_timeouts(self, v: impl Into<VpcEndpointPolicyTimeoutsEl>) -> Self {
-        self.0.data.borrow_mut().timeouts = Some(v.into());
+    pub fn add_lifecycle_postcondition(
+        self,
+        condition: impl std::convert::Into<terrars::PrimField<bool>>,
+        error_message: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.0.data.borrow_mut().lifecycle.postcondition.push(terrars::LifecycleCondition {
+            condition: condition.into(),
+            error_message: error_message.into(),
+        });
         self
     }
 
-    #[doc= "Get a reference to the value of field `id` after provisioning.\n"]
-    pub fn id(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
+    #[doc = "Set the field `id`.\n"]
+    pub fn set_id(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().id = std::option::Option::Some(v.into());
+        self
     }
 
-    #[doc= "Get a reference to the value of field `policy` after provisioning.\n"]
-    pub fn policy(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.policy", self.extract_ref()))
+    #[doc = "Set the field `policy`.\n"]
+    pub fn set_policy(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().policy = std::option::Option::Some(v.into());
+        self
     }
 
-    #[doc= "Get a reference to the value of field `vpc_endpoint_id` after provisioning.\n"]
-    pub fn vpc_endpoint_id(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.vpc_endpoint_id", self.extract_ref()))
+    #[doc = "Set the field `timeouts`.\n"]
+    pub fn set_timeouts(self, v: impl std::convert::Into<VpcEndpointPolicyTimeoutsEl>) -> Self {
+        self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
+        self
     }
 
-    #[doc= "Get a reference to the value of field `timeouts` after provisioning.\n"]
+    #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
+    pub fn id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `policy` after provisioning.\n"]
+    pub fn policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.policy", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `vpc_endpoint_id` after provisioning.\n"]
+    pub fn vpc_endpoint_id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.vpc_endpoint_id", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
     pub fn timeouts(&self) -> VpcEndpointPolicyTimeoutsElRef {
         VpcEndpointPolicyTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
-impl Referable for VpcEndpointPolicy {
-    fn extract_ref(&self) -> String {
+impl terrars::Referable for VpcEndpointPolicy {
+    fn extract_ref(&self) -> std::string::String {
         format!("{}.{}", self.0.extract_resource_type(), self.0.extract_tf_id())
     }
 }
 
-impl Resource for VpcEndpointPolicy { }
+impl terrars::Resource for VpcEndpointPolicy { }
 
-impl ToListMappable for VpcEndpointPolicy {
-    type O = ListRef<VpcEndpointPolicyRef>;
+impl terrars::ToListMappable for VpcEndpointPolicy {
+    type O = terrars::ListRef<VpcEndpointPolicyRef>;
 
-    fn do_map(self, base: String) -> Self::O {
-        self.0.data.borrow_mut().for_each = Some(format!("${{{}}}", base));
-        ListRef::new(self.0.shared.clone(), self.extract_ref())
+    fn do_map(self, base: std::string::String) -> Self::O {
+        self.0.data.borrow_mut().for_each = std::option::Option::Some(format!("${{{}}}", base));
+        terrars::ListRef::new(self.0.shared.clone(), self.extract_ref())
     }
 }
 
-impl Resource_ for VpcEndpointPolicy_ {
-    fn extract_resource_type(&self) -> String {
+impl terrars::Resource_ for VpcEndpointPolicy_ {
+    fn extract_resource_type(&self) -> std::string::String {
         "aws_vpc_endpoint_policy".into()
     }
 
-    fn extract_tf_id(&self) -> String {
+    fn extract_tf_id(&self) -> std::string::String {
         self.tf_id.clone()
     }
 
@@ -164,21 +201,22 @@ impl Resource_ for VpcEndpointPolicy_ {
 }
 
 pub struct BuildVpcEndpointPolicy {
-    pub tf_id: String,
-    #[doc= ""]
-    pub vpc_endpoint_id: PrimField<String>,
+    pub tf_id: std::string::String,
+    #[doc = ""]
+    pub vpc_endpoint_id: terrars::PrimField<std::string::String>,
 }
 
 impl BuildVpcEndpointPolicy {
-    pub fn build(self, stack: &mut Stack) -> VpcEndpointPolicy {
-        let out = VpcEndpointPolicy(Rc::new(VpcEndpointPolicy_ {
+    pub fn build(self, stack: &mut terrars::Stack) -> VpcEndpointPolicy {
+        let out = VpcEndpointPolicy(std::rc::Rc::new(VpcEndpointPolicy_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: RefCell::new(VpcEndpointPolicyData {
+            data: std::cell::RefCell::new(VpcEndpointPolicyData {
                 depends_on: core::default::Default::default(),
-                provider: None,
+                provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
-                for_each: None,
+                for_each: std::option::Option::None,
+                provisioner: core::default::Default::default(),
                 id: core::default::Default::default(),
                 policy: core::default::Default::default(),
                 vpc_endpoint_id: self.vpc_endpoint_id,
@@ -191,12 +229,12 @@ impl BuildVpcEndpointPolicy {
 }
 
 pub struct VpcEndpointPolicyRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for VpcEndpointPolicyRef {
-    fn new(shared: StackShared, base: String) -> Self {
+impl terrars::Ref for VpcEndpointPolicyRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> Self {
         Self {
             shared: shared,
             base: base,
@@ -205,30 +243,30 @@ impl Ref for VpcEndpointPolicyRef {
 }
 
 impl VpcEndpointPolicyRef {
-    fn extract_ref(&self) -> String {
+    fn extract_ref(&self) -> std::string::String {
         self.base.clone()
     }
 
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `id` after provisioning.\n"]
-    pub fn id(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
+    pub fn id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `policy` after provisioning.\n"]
-    pub fn policy(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.policy", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `policy` after provisioning.\n"]
+    pub fn policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.policy", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `vpc_endpoint_id` after provisioning.\n"]
-    pub fn vpc_endpoint_id(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.vpc_endpoint_id", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `vpc_endpoint_id` after provisioning.\n"]
+    pub fn vpc_endpoint_id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.vpc_endpoint_id", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `timeouts` after provisioning.\n"]
+    #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
     pub fn timeouts(&self) -> VpcEndpointPolicyTimeoutsElRef {
         VpcEndpointPolicyTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
@@ -236,31 +274,31 @@ impl VpcEndpointPolicyRef {
 
 #[derive(Serialize)]
 pub struct VpcEndpointPolicyTimeoutsEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    create: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    delete: Option<PrimField<String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    create: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    delete: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
 impl VpcEndpointPolicyTimeoutsEl {
-    #[doc= "Set the field `create`.\n"]
-    pub fn set_create(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.create = Some(v.into());
+    #[doc = "Set the field `create`.\n"]
+    pub fn set_create(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.create = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `delete`.\n"]
-    pub fn set_delete(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.delete = Some(v.into());
+    #[doc = "Set the field `delete`.\n"]
+    pub fn set_delete(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.delete = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl ToListMappable for VpcEndpointPolicyTimeoutsEl {
-    type O = BlockAssignable<VpcEndpointPolicyTimeoutsEl>;
+impl terrars::ToListMappable for VpcEndpointPolicyTimeoutsEl {
+    type O = terrars::BlockAssignable<VpcEndpointPolicyTimeoutsEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -280,12 +318,12 @@ impl BuildVpcEndpointPolicyTimeoutsEl {
 }
 
 pub struct VpcEndpointPolicyTimeoutsElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for VpcEndpointPolicyTimeoutsElRef {
-    fn new(shared: StackShared, base: String) -> VpcEndpointPolicyTimeoutsElRef {
+impl terrars::Ref for VpcEndpointPolicyTimeoutsElRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> VpcEndpointPolicyTimeoutsElRef {
         VpcEndpointPolicyTimeoutsElRef {
             shared: shared,
             base: base.to_string(),
@@ -294,17 +332,17 @@ impl Ref for VpcEndpointPolicyTimeoutsElRef {
 }
 
 impl VpcEndpointPolicyTimeoutsElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `create` after provisioning.\n"]
-    pub fn create(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.create", self.base))
+    #[doc = "Get a reference to the value of field `create` after provisioning.\n"]
+    pub fn create(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.create", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `delete` after provisioning.\n"]
-    pub fn delete(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.delete", self.base))
+    #[doc = "Get a reference to the value of field `delete` after provisioning.\n"]
+    pub fn delete(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.delete", self.base))
     }
 }

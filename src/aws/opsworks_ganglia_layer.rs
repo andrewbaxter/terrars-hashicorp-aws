@@ -1,97 +1,101 @@
 use serde::Serialize;
-use std::cell::RefCell;
-use std::rc::Rc;
-use terrars::*;
+use terrars::{
+    Referable as _,
+    Resource_ as _,
+    Ref as _,
+};
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
 struct OpsworksGangliaLayerData {
-    #[serde(skip_serializing_if = "Vec::is_empty")]
-    depends_on: Vec<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    provider: Option<String>,
-    #[serde(skip_serializing_if = "SerdeSkipDefault::is_default")]
-    lifecycle: ResourceLifecycle,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    for_each: Option<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    auto_assign_elastic_ips: Option<PrimField<bool>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    auto_assign_public_ips: Option<PrimField<bool>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    auto_healing: Option<PrimField<bool>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    custom_configure_recipes: Option<ListField<PrimField<String>>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    custom_deploy_recipes: Option<ListField<PrimField<String>>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    custom_instance_profile_arn: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    custom_json: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    custom_security_group_ids: Option<SetField<PrimField<String>>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    custom_setup_recipes: Option<ListField<PrimField<String>>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    custom_shutdown_recipes: Option<ListField<PrimField<String>>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    custom_undeploy_recipes: Option<ListField<PrimField<String>>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    drain_elb_on_shutdown: Option<PrimField<bool>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    elastic_load_balancer: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    id: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    install_updates_on_boot: Option<PrimField<bool>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    instance_shutdown_timeout: Option<PrimField<f64>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    name: Option<PrimField<String>>,
-    password: PrimField<String>,
-    stack_id: PrimField<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    system_packages: Option<SetField<PrimField<String>>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    tags: Option<RecField<PrimField<String>>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    tags_all: Option<RecField<PrimField<String>>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    url: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    use_ebs_optimized_instances: Option<PrimField<bool>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    username: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    cloudwatch_configuration: Option<Vec<OpsworksGangliaLayerCloudwatchConfigurationEl>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    ebs_volume: Option<Vec<OpsworksGangliaLayerEbsVolumeEl>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    load_based_auto_scaling: Option<Vec<OpsworksGangliaLayerLoadBasedAutoScalingEl>>,
+    #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
+    depends_on: std::vec::Vec<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    provider: std::option::Option<std::string::String>,
+    #[serde(skip_serializing_if = "terrars::SerdeSkipDefault::is_default")]
+    lifecycle: terrars::ResourceLifecycle,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    for_each: std::option::Option<std::string::String>,
+    #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
+    provisioner: std::vec::Vec<terrars::Provisioner>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    auto_assign_elastic_ips: std::option::Option<terrars::PrimField<bool>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    auto_assign_public_ips: std::option::Option<terrars::PrimField<bool>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    auto_healing: std::option::Option<terrars::PrimField<bool>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    custom_configure_recipes: std::option::Option<terrars::ListField<terrars::PrimField<std::string::String>>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    custom_deploy_recipes: std::option::Option<terrars::ListField<terrars::PrimField<std::string::String>>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    custom_instance_profile_arn: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    custom_json: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    custom_security_group_ids: std::option::Option<terrars::SetField<terrars::PrimField<std::string::String>>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    custom_setup_recipes: std::option::Option<terrars::ListField<terrars::PrimField<std::string::String>>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    custom_shutdown_recipes: std::option::Option<terrars::ListField<terrars::PrimField<std::string::String>>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    custom_undeploy_recipes: std::option::Option<terrars::ListField<terrars::PrimField<std::string::String>>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    drain_elb_on_shutdown: std::option::Option<terrars::PrimField<bool>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    elastic_load_balancer: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    id: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    install_updates_on_boot: std::option::Option<terrars::PrimField<bool>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    instance_shutdown_timeout: std::option::Option<terrars::PrimField<f64>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    name: std::option::Option<terrars::PrimField<std::string::String>>,
+    password: terrars::PrimField<std::string::String>,
+    stack_id: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    system_packages: std::option::Option<terrars::SetField<terrars::PrimField<std::string::String>>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    tags: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    tags_all: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    url: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    use_ebs_optimized_instances: std::option::Option<terrars::PrimField<bool>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    username: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    cloudwatch_configuration: std::option::Option<std::vec::Vec<OpsworksGangliaLayerCloudwatchConfigurationEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    ebs_volume: std::option::Option<std::vec::Vec<OpsworksGangliaLayerEbsVolumeEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    load_based_auto_scaling: std::option::Option<std::vec::Vec<OpsworksGangliaLayerLoadBasedAutoScalingEl>>,
     dynamic: OpsworksGangliaLayerDynamic,
 }
 
 struct OpsworksGangliaLayer_ {
-    shared: StackShared,
-    tf_id: String,
-    data: RefCell<OpsworksGangliaLayerData>,
+    shared: terrars::StackShared,
+    tf_id: std::string::String,
+    data: std::cell::RefCell<OpsworksGangliaLayerData>,
 }
 
 #[derive(Clone)]
-pub struct OpsworksGangliaLayer(Rc<OpsworksGangliaLayer_>);
+pub struct OpsworksGangliaLayer(std::rc::Rc<OpsworksGangliaLayer_>);
 
 impl OpsworksGangliaLayer {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.0.shared
     }
 
-    pub fn depends_on(self, dep: &impl Referable) -> Self {
+    pub fn depends_on(self, dep: &impl terrars::Referable) -> Self {
         self.0.data.borrow_mut().depends_on.push(dep.extract_ref());
         self
     }
 
     pub fn set_provider(self, provider: &ProviderAws) -> Self {
-        self.0.data.borrow_mut().provider = Some(provider.provider_ref());
+        self.0.data.borrow_mut().provider = std::option::Option::Some(provider.provider_ref());
         self
     }
 
@@ -106,388 +110,454 @@ impl OpsworksGangliaLayer {
     }
 
     pub fn ignore_changes_to_all(self) -> Self {
-        self.0.data.borrow_mut().lifecycle.ignore_changes = Some(IgnoreChanges::All(IgnoreChangesAll::All));
+        self.0.data.borrow_mut().lifecycle.ignore_changes =
+            std::option::Option::Some(terrars::IgnoreChanges::All(terrars::IgnoreChangesAll::All));
         self
     }
 
-    pub fn ignore_changes_to_attr(self, attr: impl ToString) -> Self {
+    pub fn ignore_changes_to_attr(self, attr: impl std::string::ToString) -> Self {
         {
             let mut d = self.0.data.borrow_mut();
             if match &mut d.lifecycle.ignore_changes {
-                Some(i) => match i {
-                    IgnoreChanges::All(_) => {
+                std::option::Option::Some(i) => match i {
+                    terrars::IgnoreChanges::All(_) => {
                         true
                     },
-                    IgnoreChanges::Refs(r) => {
+                    terrars::IgnoreChanges::Refs(r) => {
                         r.push(attr.to_string());
                         false
                     },
                 },
-                None => true,
+                std::option::Option::None => true,
             } {
-                d.lifecycle.ignore_changes = Some(IgnoreChanges::Refs(vec![attr.to_string()]));
+                d.lifecycle.ignore_changes =
+                    std::option::Option::Some(terrars::IgnoreChanges::Refs(vec![attr.to_string()]));
             }
         }
         self
     }
 
-    pub fn replace_triggered_by_resource(self, r: &impl Resource) -> Self {
+    pub fn replace_triggered_by_resource(self, r: &impl terrars::Resource) -> Self {
         self.0.data.borrow_mut().lifecycle.replace_triggered_by.push(r.extract_ref());
         self
     }
 
-    pub fn replace_triggered_by_attr(self, attr: impl ToString) -> Self {
+    pub fn replace_triggered_by_attr(self, attr: impl std::string::ToString) -> Self {
         self.0.data.borrow_mut().lifecycle.replace_triggered_by.push(attr.to_string());
         self
     }
 
-    #[doc= "Set the field `auto_assign_elastic_ips`.\n"]
-    pub fn set_auto_assign_elastic_ips(self, v: impl Into<PrimField<bool>>) -> Self {
-        self.0.data.borrow_mut().auto_assign_elastic_ips = Some(v.into());
+    #[doc = r" Add a provisioner (ex: `local-exec`, `remote-exec`, `file`) to this resource."]
+    #[doc = r" Provisioners run in the order they're added."]
+    pub fn add_provisioner(self, v: impl std::convert::Into<terrars::Provisioner>) -> Self {
+        self.0.data.borrow_mut().provisioner.push(v.into());
         self
     }
 
-    #[doc= "Set the field `auto_assign_public_ips`.\n"]
-    pub fn set_auto_assign_public_ips(self, v: impl Into<PrimField<bool>>) -> Self {
-        self.0.data.borrow_mut().auto_assign_public_ips = Some(v.into());
+    pub fn add_lifecycle_precondition(
+        self,
+        condition: impl std::convert::Into<terrars::PrimField<bool>>,
+        error_message: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.0.data.borrow_mut().lifecycle.precondition.push(terrars::LifecycleCondition {
+            condition: condition.into(),
+            error_message: error_message.into(),
+        });
         self
     }
 
-    #[doc= "Set the field `auto_healing`.\n"]
-    pub fn set_auto_healing(self, v: impl Into<PrimField<bool>>) -> Self {
-        self.0.data.borrow_mut().auto_healing = Some(v.into());
+    pub fn add_lifecycle_postcondition(
+        self,
+        condition: impl std::convert::Into<terrars::PrimField<bool>>,
+        error_message: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.0.data.borrow_mut().lifecycle.postcondition.push(terrars::LifecycleCondition {
+            condition: condition.into(),
+            error_message: error_message.into(),
+        });
         self
     }
 
-    #[doc= "Set the field `custom_configure_recipes`.\n"]
-    pub fn set_custom_configure_recipes(self, v: impl Into<ListField<PrimField<String>>>) -> Self {
-        self.0.data.borrow_mut().custom_configure_recipes = Some(v.into());
+    #[doc = "Set the field `auto_assign_elastic_ips`.\n"]
+    pub fn set_auto_assign_elastic_ips(self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
+        self.0.data.borrow_mut().auto_assign_elastic_ips = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `custom_deploy_recipes`.\n"]
-    pub fn set_custom_deploy_recipes(self, v: impl Into<ListField<PrimField<String>>>) -> Self {
-        self.0.data.borrow_mut().custom_deploy_recipes = Some(v.into());
+    #[doc = "Set the field `auto_assign_public_ips`.\n"]
+    pub fn set_auto_assign_public_ips(self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
+        self.0.data.borrow_mut().auto_assign_public_ips = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `custom_instance_profile_arn`.\n"]
-    pub fn set_custom_instance_profile_arn(self, v: impl Into<PrimField<String>>) -> Self {
-        self.0.data.borrow_mut().custom_instance_profile_arn = Some(v.into());
+    #[doc = "Set the field `auto_healing`.\n"]
+    pub fn set_auto_healing(self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
+        self.0.data.borrow_mut().auto_healing = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `custom_json`.\n"]
-    pub fn set_custom_json(self, v: impl Into<PrimField<String>>) -> Self {
-        self.0.data.borrow_mut().custom_json = Some(v.into());
+    #[doc = "Set the field `custom_configure_recipes`.\n"]
+    pub fn set_custom_configure_recipes(
+        self,
+        v: impl std::convert::Into<terrars::ListField<terrars::PrimField<std::string::String>>>,
+    ) -> Self {
+        self.0.data.borrow_mut().custom_configure_recipes = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `custom_security_group_ids`.\n"]
-    pub fn set_custom_security_group_ids(self, v: impl Into<SetField<PrimField<String>>>) -> Self {
-        self.0.data.borrow_mut().custom_security_group_ids = Some(v.into());
+    #[doc = "Set the field `custom_deploy_recipes`.\n"]
+    pub fn set_custom_deploy_recipes(
+        self,
+        v: impl std::convert::Into<terrars::ListField<terrars::PrimField<std::string::String>>>,
+    ) -> Self {
+        self.0.data.borrow_mut().custom_deploy_recipes = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `custom_setup_recipes`.\n"]
-    pub fn set_custom_setup_recipes(self, v: impl Into<ListField<PrimField<String>>>) -> Self {
-        self.0.data.borrow_mut().custom_setup_recipes = Some(v.into());
+    #[doc = "Set the field `custom_instance_profile_arn`.\n"]
+    pub fn set_custom_instance_profile_arn(
+        self,
+        v: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.0.data.borrow_mut().custom_instance_profile_arn = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `custom_shutdown_recipes`.\n"]
-    pub fn set_custom_shutdown_recipes(self, v: impl Into<ListField<PrimField<String>>>) -> Self {
-        self.0.data.borrow_mut().custom_shutdown_recipes = Some(v.into());
+    #[doc = "Set the field `custom_json`.\n"]
+    pub fn set_custom_json(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().custom_json = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `custom_undeploy_recipes`.\n"]
-    pub fn set_custom_undeploy_recipes(self, v: impl Into<ListField<PrimField<String>>>) -> Self {
-        self.0.data.borrow_mut().custom_undeploy_recipes = Some(v.into());
+    #[doc = "Set the field `custom_security_group_ids`.\n"]
+    pub fn set_custom_security_group_ids(
+        self,
+        v: impl std::convert::Into<terrars::SetField<terrars::PrimField<std::string::String>>>,
+    ) -> Self {
+        self.0.data.borrow_mut().custom_security_group_ids = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `drain_elb_on_shutdown`.\n"]
-    pub fn set_drain_elb_on_shutdown(self, v: impl Into<PrimField<bool>>) -> Self {
-        self.0.data.borrow_mut().drain_elb_on_shutdown = Some(v.into());
+    #[doc = "Set the field `custom_setup_recipes`.\n"]
+    pub fn set_custom_setup_recipes(
+        self,
+        v: impl std::convert::Into<terrars::ListField<terrars::PrimField<std::string::String>>>,
+    ) -> Self {
+        self.0.data.borrow_mut().custom_setup_recipes = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `elastic_load_balancer`.\n"]
-    pub fn set_elastic_load_balancer(self, v: impl Into<PrimField<String>>) -> Self {
-        self.0.data.borrow_mut().elastic_load_balancer = Some(v.into());
+    #[doc = "Set the field `custom_shutdown_recipes`.\n"]
+    pub fn set_custom_shutdown_recipes(
+        self,
+        v: impl std::convert::Into<terrars::ListField<terrars::PrimField<std::string::String>>>,
+    ) -> Self {
+        self.0.data.borrow_mut().custom_shutdown_recipes = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `id`.\n"]
-    pub fn set_id(self, v: impl Into<PrimField<String>>) -> Self {
-        self.0.data.borrow_mut().id = Some(v.into());
+    #[doc = "Set the field `custom_undeploy_recipes`.\n"]
+    pub fn set_custom_undeploy_recipes(
+        self,
+        v: impl std::convert::Into<terrars::ListField<terrars::PrimField<std::string::String>>>,
+    ) -> Self {
+        self.0.data.borrow_mut().custom_undeploy_recipes = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `install_updates_on_boot`.\n"]
-    pub fn set_install_updates_on_boot(self, v: impl Into<PrimField<bool>>) -> Self {
-        self.0.data.borrow_mut().install_updates_on_boot = Some(v.into());
+    #[doc = "Set the field `drain_elb_on_shutdown`.\n"]
+    pub fn set_drain_elb_on_shutdown(self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
+        self.0.data.borrow_mut().drain_elb_on_shutdown = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `instance_shutdown_timeout`.\n"]
-    pub fn set_instance_shutdown_timeout(self, v: impl Into<PrimField<f64>>) -> Self {
-        self.0.data.borrow_mut().instance_shutdown_timeout = Some(v.into());
+    #[doc = "Set the field `elastic_load_balancer`.\n"]
+    pub fn set_elastic_load_balancer(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().elastic_load_balancer = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `name`.\n"]
-    pub fn set_name(self, v: impl Into<PrimField<String>>) -> Self {
-        self.0.data.borrow_mut().name = Some(v.into());
+    #[doc = "Set the field `id`.\n"]
+    pub fn set_id(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().id = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `system_packages`.\n"]
-    pub fn set_system_packages(self, v: impl Into<SetField<PrimField<String>>>) -> Self {
-        self.0.data.borrow_mut().system_packages = Some(v.into());
+    #[doc = "Set the field `install_updates_on_boot`.\n"]
+    pub fn set_install_updates_on_boot(self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
+        self.0.data.borrow_mut().install_updates_on_boot = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `tags`.\n"]
-    pub fn set_tags(self, v: impl Into<RecField<PrimField<String>>>) -> Self {
-        self.0.data.borrow_mut().tags = Some(v.into());
+    #[doc = "Set the field `instance_shutdown_timeout`.\n"]
+    pub fn set_instance_shutdown_timeout(self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.0.data.borrow_mut().instance_shutdown_timeout = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `tags_all`.\n"]
-    pub fn set_tags_all(self, v: impl Into<RecField<PrimField<String>>>) -> Self {
-        self.0.data.borrow_mut().tags_all = Some(v.into());
+    #[doc = "Set the field `name`.\n"]
+    pub fn set_name(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().name = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `url`.\n"]
-    pub fn set_url(self, v: impl Into<PrimField<String>>) -> Self {
-        self.0.data.borrow_mut().url = Some(v.into());
+    #[doc = "Set the field `system_packages`.\n"]
+    pub fn set_system_packages(
+        self,
+        v: impl std::convert::Into<terrars::SetField<terrars::PrimField<std::string::String>>>,
+    ) -> Self {
+        self.0.data.borrow_mut().system_packages = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `use_ebs_optimized_instances`.\n"]
-    pub fn set_use_ebs_optimized_instances(self, v: impl Into<PrimField<bool>>) -> Self {
-        self.0.data.borrow_mut().use_ebs_optimized_instances = Some(v.into());
+    #[doc = "Set the field `tags`.\n"]
+    pub fn set_tags(
+        self,
+        v: impl std::convert::Into<terrars::RecField<terrars::PrimField<std::string::String>>>,
+    ) -> Self {
+        self.0.data.borrow_mut().tags = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `username`.\n"]
-    pub fn set_username(self, v: impl Into<PrimField<String>>) -> Self {
-        self.0.data.borrow_mut().username = Some(v.into());
+    #[doc = "Set the field `tags_all`.\n"]
+    pub fn set_tags_all(
+        self,
+        v: impl std::convert::Into<terrars::RecField<terrars::PrimField<std::string::String>>>,
+    ) -> Self {
+        self.0.data.borrow_mut().tags_all = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `cloudwatch_configuration`.\n"]
+    #[doc = "Set the field `url`.\n"]
+    pub fn set_url(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().url = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `use_ebs_optimized_instances`.\n"]
+    pub fn set_use_ebs_optimized_instances(self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
+        self.0.data.borrow_mut().use_ebs_optimized_instances = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `username`.\n"]
+    pub fn set_username(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().username = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `cloudwatch_configuration`.\n"]
     pub fn set_cloudwatch_configuration(
         self,
-        v: impl Into<BlockAssignable<OpsworksGangliaLayerCloudwatchConfigurationEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<OpsworksGangliaLayerCloudwatchConfigurationEl>>,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.0.data.borrow_mut().cloudwatch_configuration = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.0.data.borrow_mut().cloudwatch_configuration = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.0.data.borrow_mut().dynamic.cloudwatch_configuration = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.0.data.borrow_mut().dynamic.cloudwatch_configuration = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Set the field `ebs_volume`.\n"]
-    pub fn set_ebs_volume(self, v: impl Into<BlockAssignable<OpsworksGangliaLayerEbsVolumeEl>>) -> Self {
+    #[doc = "Set the field `ebs_volume`.\n"]
+    pub fn set_ebs_volume(
+        self,
+        v: impl std::convert::Into<terrars::BlockAssignable<OpsworksGangliaLayerEbsVolumeEl>>,
+    ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.0.data.borrow_mut().ebs_volume = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.0.data.borrow_mut().ebs_volume = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.0.data.borrow_mut().dynamic.ebs_volume = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.0.data.borrow_mut().dynamic.ebs_volume = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Set the field `load_based_auto_scaling`.\n"]
+    #[doc = "Set the field `load_based_auto_scaling`.\n"]
     pub fn set_load_based_auto_scaling(
         self,
-        v: impl Into<BlockAssignable<OpsworksGangliaLayerLoadBasedAutoScalingEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<OpsworksGangliaLayerLoadBasedAutoScalingEl>>,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.0.data.borrow_mut().load_based_auto_scaling = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.0.data.borrow_mut().load_based_auto_scaling = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.0.data.borrow_mut().dynamic.load_based_auto_scaling = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.0.data.borrow_mut().dynamic.load_based_auto_scaling = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Get a reference to the value of field `arn` after provisioning.\n"]
-    pub fn arn(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.arn", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `arn` after provisioning.\n"]
+    pub fn arn(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.arn", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `auto_assign_elastic_ips` after provisioning.\n"]
-    pub fn auto_assign_elastic_ips(&self) -> PrimExpr<bool> {
-        PrimExpr::new(self.shared().clone(), format!("{}.auto_assign_elastic_ips", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `auto_assign_elastic_ips` after provisioning.\n"]
+    pub fn auto_assign_elastic_ips(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.auto_assign_elastic_ips", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `auto_assign_public_ips` after provisioning.\n"]
-    pub fn auto_assign_public_ips(&self) -> PrimExpr<bool> {
-        PrimExpr::new(self.shared().clone(), format!("{}.auto_assign_public_ips", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `auto_assign_public_ips` after provisioning.\n"]
+    pub fn auto_assign_public_ips(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.auto_assign_public_ips", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `auto_healing` after provisioning.\n"]
-    pub fn auto_healing(&self) -> PrimExpr<bool> {
-        PrimExpr::new(self.shared().clone(), format!("{}.auto_healing", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `auto_healing` after provisioning.\n"]
+    pub fn auto_healing(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.auto_healing", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `custom_configure_recipes` after provisioning.\n"]
-    pub fn custom_configure_recipes(&self) -> ListRef<PrimExpr<String>> {
-        ListRef::new(self.shared().clone(), format!("{}.custom_configure_recipes", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `custom_configure_recipes` after provisioning.\n"]
+    pub fn custom_configure_recipes(&self) -> terrars::ListRef<terrars::PrimExpr<std::string::String>> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.custom_configure_recipes", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `custom_deploy_recipes` after provisioning.\n"]
-    pub fn custom_deploy_recipes(&self) -> ListRef<PrimExpr<String>> {
-        ListRef::new(self.shared().clone(), format!("{}.custom_deploy_recipes", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `custom_deploy_recipes` after provisioning.\n"]
+    pub fn custom_deploy_recipes(&self) -> terrars::ListRef<terrars::PrimExpr<std::string::String>> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.custom_deploy_recipes", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `custom_instance_profile_arn` after provisioning.\n"]
-    pub fn custom_instance_profile_arn(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.custom_instance_profile_arn", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `custom_instance_profile_arn` after provisioning.\n"]
+    pub fn custom_instance_profile_arn(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.custom_instance_profile_arn", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `custom_json` after provisioning.\n"]
-    pub fn custom_json(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.custom_json", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `custom_json` after provisioning.\n"]
+    pub fn custom_json(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.custom_json", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `custom_security_group_ids` after provisioning.\n"]
-    pub fn custom_security_group_ids(&self) -> SetRef<PrimExpr<String>> {
-        SetRef::new(self.shared().clone(), format!("{}.custom_security_group_ids", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `custom_security_group_ids` after provisioning.\n"]
+    pub fn custom_security_group_ids(&self) -> terrars::SetRef<terrars::PrimExpr<std::string::String>> {
+        terrars::SetRef::new(self.shared().clone(), format!("{}.custom_security_group_ids", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `custom_setup_recipes` after provisioning.\n"]
-    pub fn custom_setup_recipes(&self) -> ListRef<PrimExpr<String>> {
-        ListRef::new(self.shared().clone(), format!("{}.custom_setup_recipes", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `custom_setup_recipes` after provisioning.\n"]
+    pub fn custom_setup_recipes(&self) -> terrars::ListRef<terrars::PrimExpr<std::string::String>> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.custom_setup_recipes", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `custom_shutdown_recipes` after provisioning.\n"]
-    pub fn custom_shutdown_recipes(&self) -> ListRef<PrimExpr<String>> {
-        ListRef::new(self.shared().clone(), format!("{}.custom_shutdown_recipes", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `custom_shutdown_recipes` after provisioning.\n"]
+    pub fn custom_shutdown_recipes(&self) -> terrars::ListRef<terrars::PrimExpr<std::string::String>> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.custom_shutdown_recipes", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `custom_undeploy_recipes` after provisioning.\n"]
-    pub fn custom_undeploy_recipes(&self) -> ListRef<PrimExpr<String>> {
-        ListRef::new(self.shared().clone(), format!("{}.custom_undeploy_recipes", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `custom_undeploy_recipes` after provisioning.\n"]
+    pub fn custom_undeploy_recipes(&self) -> terrars::ListRef<terrars::PrimExpr<std::string::String>> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.custom_undeploy_recipes", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `drain_elb_on_shutdown` after provisioning.\n"]
-    pub fn drain_elb_on_shutdown(&self) -> PrimExpr<bool> {
-        PrimExpr::new(self.shared().clone(), format!("{}.drain_elb_on_shutdown", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `drain_elb_on_shutdown` after provisioning.\n"]
+    pub fn drain_elb_on_shutdown(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.drain_elb_on_shutdown", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `elastic_load_balancer` after provisioning.\n"]
-    pub fn elastic_load_balancer(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.elastic_load_balancer", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `elastic_load_balancer` after provisioning.\n"]
+    pub fn elastic_load_balancer(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.elastic_load_balancer", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `id` after provisioning.\n"]
-    pub fn id(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
+    pub fn id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `install_updates_on_boot` after provisioning.\n"]
-    pub fn install_updates_on_boot(&self) -> PrimExpr<bool> {
-        PrimExpr::new(self.shared().clone(), format!("{}.install_updates_on_boot", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `install_updates_on_boot` after provisioning.\n"]
+    pub fn install_updates_on_boot(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.install_updates_on_boot", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `instance_shutdown_timeout` after provisioning.\n"]
-    pub fn instance_shutdown_timeout(&self) -> PrimExpr<f64> {
-        PrimExpr::new(self.shared().clone(), format!("{}.instance_shutdown_timeout", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `instance_shutdown_timeout` after provisioning.\n"]
+    pub fn instance_shutdown_timeout(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.instance_shutdown_timeout", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `name` after provisioning.\n"]
-    pub fn name(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `name` after provisioning.\n"]
+    pub fn name(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `password` after provisioning.\n"]
-    pub fn password(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.password", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `password` after provisioning.\n"]
+    pub fn password(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.password", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `stack_id` after provisioning.\n"]
-    pub fn stack_id(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.stack_id", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `stack_id` after provisioning.\n"]
+    pub fn stack_id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.stack_id", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `system_packages` after provisioning.\n"]
-    pub fn system_packages(&self) -> SetRef<PrimExpr<String>> {
-        SetRef::new(self.shared().clone(), format!("{}.system_packages", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `system_packages` after provisioning.\n"]
+    pub fn system_packages(&self) -> terrars::SetRef<terrars::PrimExpr<std::string::String>> {
+        terrars::SetRef::new(self.shared().clone(), format!("{}.system_packages", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `tags` after provisioning.\n"]
-    pub fn tags(&self) -> RecRef<PrimExpr<String>> {
-        RecRef::new(self.shared().clone(), format!("{}.tags", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `tags` after provisioning.\n"]
+    pub fn tags(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
+        terrars::RecRef::new(self.shared().clone(), format!("{}.tags", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `tags_all` after provisioning.\n"]
-    pub fn tags_all(&self) -> RecRef<PrimExpr<String>> {
-        RecRef::new(self.shared().clone(), format!("{}.tags_all", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `tags_all` after provisioning.\n"]
+    pub fn tags_all(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
+        terrars::RecRef::new(self.shared().clone(), format!("{}.tags_all", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `url` after provisioning.\n"]
-    pub fn url(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.url", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `url` after provisioning.\n"]
+    pub fn url(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.url", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `use_ebs_optimized_instances` after provisioning.\n"]
-    pub fn use_ebs_optimized_instances(&self) -> PrimExpr<bool> {
-        PrimExpr::new(self.shared().clone(), format!("{}.use_ebs_optimized_instances", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `use_ebs_optimized_instances` after provisioning.\n"]
+    pub fn use_ebs_optimized_instances(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.use_ebs_optimized_instances", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `username` after provisioning.\n"]
-    pub fn username(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.username", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `username` after provisioning.\n"]
+    pub fn username(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.username", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `cloudwatch_configuration` after provisioning.\n"]
-    pub fn cloudwatch_configuration(&self) -> ListRef<OpsworksGangliaLayerCloudwatchConfigurationElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.cloudwatch_configuration", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `cloudwatch_configuration` after provisioning.\n"]
+    pub fn cloudwatch_configuration(&self) -> terrars::ListRef<OpsworksGangliaLayerCloudwatchConfigurationElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.cloudwatch_configuration", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `load_based_auto_scaling` after provisioning.\n"]
-    pub fn load_based_auto_scaling(&self) -> ListRef<OpsworksGangliaLayerLoadBasedAutoScalingElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.load_based_auto_scaling", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `load_based_auto_scaling` after provisioning.\n"]
+    pub fn load_based_auto_scaling(&self) -> terrars::ListRef<OpsworksGangliaLayerLoadBasedAutoScalingElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.load_based_auto_scaling", self.extract_ref()))
     }
 }
 
-impl Referable for OpsworksGangliaLayer {
-    fn extract_ref(&self) -> String {
+impl terrars::Referable for OpsworksGangliaLayer {
+    fn extract_ref(&self) -> std::string::String {
         format!("{}.{}", self.0.extract_resource_type(), self.0.extract_tf_id())
     }
 }
 
-impl Resource for OpsworksGangliaLayer { }
+impl terrars::Resource for OpsworksGangliaLayer { }
 
-impl ToListMappable for OpsworksGangliaLayer {
-    type O = ListRef<OpsworksGangliaLayerRef>;
+impl terrars::ToListMappable for OpsworksGangliaLayer {
+    type O = terrars::ListRef<OpsworksGangliaLayerRef>;
 
-    fn do_map(self, base: String) -> Self::O {
-        self.0.data.borrow_mut().for_each = Some(format!("${{{}}}", base));
-        ListRef::new(self.0.shared.clone(), self.extract_ref())
+    fn do_map(self, base: std::string::String) -> Self::O {
+        self.0.data.borrow_mut().for_each = std::option::Option::Some(format!("${{{}}}", base));
+        terrars::ListRef::new(self.0.shared.clone(), self.extract_ref())
     }
 }
 
-impl Resource_ for OpsworksGangliaLayer_ {
-    fn extract_resource_type(&self) -> String {
+impl terrars::Resource_ for OpsworksGangliaLayer_ {
+    fn extract_resource_type(&self) -> std::string::String {
         "aws_opsworks_ganglia_layer".into()
     }
 
-    fn extract_tf_id(&self) -> String {
+    fn extract_tf_id(&self) -> std::string::String {
         self.tf_id.clone()
     }
 
@@ -497,23 +567,24 @@ impl Resource_ for OpsworksGangliaLayer_ {
 }
 
 pub struct BuildOpsworksGangliaLayer {
-    pub tf_id: String,
-    #[doc= ""]
-    pub password: PrimField<String>,
-    #[doc= ""]
-    pub stack_id: PrimField<String>,
+    pub tf_id: std::string::String,
+    #[doc = ""]
+    pub password: terrars::PrimField<std::string::String>,
+    #[doc = ""]
+    pub stack_id: terrars::PrimField<std::string::String>,
 }
 
 impl BuildOpsworksGangliaLayer {
-    pub fn build(self, stack: &mut Stack) -> OpsworksGangliaLayer {
-        let out = OpsworksGangliaLayer(Rc::new(OpsworksGangliaLayer_ {
+    pub fn build(self, stack: &mut terrars::Stack) -> OpsworksGangliaLayer {
+        let out = OpsworksGangliaLayer(std::rc::Rc::new(OpsworksGangliaLayer_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: RefCell::new(OpsworksGangliaLayerData {
+            data: std::cell::RefCell::new(OpsworksGangliaLayerData {
                 depends_on: core::default::Default::default(),
-                provider: None,
+                provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
-                for_each: None,
+                for_each: std::option::Option::None,
+                provisioner: core::default::Default::default(),
                 auto_assign_elastic_ips: core::default::Default::default(),
                 auto_assign_public_ips: core::default::Default::default(),
                 auto_healing: core::default::Default::default(),
@@ -542,7 +613,7 @@ impl BuildOpsworksGangliaLayer {
                 cloudwatch_configuration: core::default::Default::default(),
                 ebs_volume: core::default::Default::default(),
                 load_based_auto_scaling: core::default::Default::default(),
-                dynamic: Default::default(),
+                dynamic: core::default::Default::default(),
             }),
         }));
         stack.add_resource(out.0.clone());
@@ -551,12 +622,12 @@ impl BuildOpsworksGangliaLayer {
 }
 
 pub struct OpsworksGangliaLayerRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for OpsworksGangliaLayerRef {
-    fn new(shared: StackShared, base: String) -> Self {
+impl terrars::Ref for OpsworksGangliaLayerRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> Self {
         Self {
             shared: shared,
             base: base,
@@ -565,240 +636,246 @@ impl Ref for OpsworksGangliaLayerRef {
 }
 
 impl OpsworksGangliaLayerRef {
-    fn extract_ref(&self) -> String {
+    fn extract_ref(&self) -> std::string::String {
         self.base.clone()
     }
 
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `arn` after provisioning.\n"]
-    pub fn arn(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.arn", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `arn` after provisioning.\n"]
+    pub fn arn(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.arn", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `auto_assign_elastic_ips` after provisioning.\n"]
-    pub fn auto_assign_elastic_ips(&self) -> PrimExpr<bool> {
-        PrimExpr::new(self.shared().clone(), format!("{}.auto_assign_elastic_ips", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `auto_assign_elastic_ips` after provisioning.\n"]
+    pub fn auto_assign_elastic_ips(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.auto_assign_elastic_ips", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `auto_assign_public_ips` after provisioning.\n"]
-    pub fn auto_assign_public_ips(&self) -> PrimExpr<bool> {
-        PrimExpr::new(self.shared().clone(), format!("{}.auto_assign_public_ips", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `auto_assign_public_ips` after provisioning.\n"]
+    pub fn auto_assign_public_ips(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.auto_assign_public_ips", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `auto_healing` after provisioning.\n"]
-    pub fn auto_healing(&self) -> PrimExpr<bool> {
-        PrimExpr::new(self.shared().clone(), format!("{}.auto_healing", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `auto_healing` after provisioning.\n"]
+    pub fn auto_healing(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.auto_healing", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `custom_configure_recipes` after provisioning.\n"]
-    pub fn custom_configure_recipes(&self) -> ListRef<PrimExpr<String>> {
-        ListRef::new(self.shared().clone(), format!("{}.custom_configure_recipes", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `custom_configure_recipes` after provisioning.\n"]
+    pub fn custom_configure_recipes(&self) -> terrars::ListRef<terrars::PrimExpr<std::string::String>> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.custom_configure_recipes", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `custom_deploy_recipes` after provisioning.\n"]
-    pub fn custom_deploy_recipes(&self) -> ListRef<PrimExpr<String>> {
-        ListRef::new(self.shared().clone(), format!("{}.custom_deploy_recipes", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `custom_deploy_recipes` after provisioning.\n"]
+    pub fn custom_deploy_recipes(&self) -> terrars::ListRef<terrars::PrimExpr<std::string::String>> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.custom_deploy_recipes", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `custom_instance_profile_arn` after provisioning.\n"]
-    pub fn custom_instance_profile_arn(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.custom_instance_profile_arn", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `custom_instance_profile_arn` after provisioning.\n"]
+    pub fn custom_instance_profile_arn(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.custom_instance_profile_arn", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `custom_json` after provisioning.\n"]
-    pub fn custom_json(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.custom_json", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `custom_json` after provisioning.\n"]
+    pub fn custom_json(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.custom_json", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `custom_security_group_ids` after provisioning.\n"]
-    pub fn custom_security_group_ids(&self) -> SetRef<PrimExpr<String>> {
-        SetRef::new(self.shared().clone(), format!("{}.custom_security_group_ids", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `custom_security_group_ids` after provisioning.\n"]
+    pub fn custom_security_group_ids(&self) -> terrars::SetRef<terrars::PrimExpr<std::string::String>> {
+        terrars::SetRef::new(self.shared().clone(), format!("{}.custom_security_group_ids", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `custom_setup_recipes` after provisioning.\n"]
-    pub fn custom_setup_recipes(&self) -> ListRef<PrimExpr<String>> {
-        ListRef::new(self.shared().clone(), format!("{}.custom_setup_recipes", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `custom_setup_recipes` after provisioning.\n"]
+    pub fn custom_setup_recipes(&self) -> terrars::ListRef<terrars::PrimExpr<std::string::String>> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.custom_setup_recipes", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `custom_shutdown_recipes` after provisioning.\n"]
-    pub fn custom_shutdown_recipes(&self) -> ListRef<PrimExpr<String>> {
-        ListRef::new(self.shared().clone(), format!("{}.custom_shutdown_recipes", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `custom_shutdown_recipes` after provisioning.\n"]
+    pub fn custom_shutdown_recipes(&self) -> terrars::ListRef<terrars::PrimExpr<std::string::String>> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.custom_shutdown_recipes", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `custom_undeploy_recipes` after provisioning.\n"]
-    pub fn custom_undeploy_recipes(&self) -> ListRef<PrimExpr<String>> {
-        ListRef::new(self.shared().clone(), format!("{}.custom_undeploy_recipes", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `custom_undeploy_recipes` after provisioning.\n"]
+    pub fn custom_undeploy_recipes(&self) -> terrars::ListRef<terrars::PrimExpr<std::string::String>> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.custom_undeploy_recipes", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `drain_elb_on_shutdown` after provisioning.\n"]
-    pub fn drain_elb_on_shutdown(&self) -> PrimExpr<bool> {
-        PrimExpr::new(self.shared().clone(), format!("{}.drain_elb_on_shutdown", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `drain_elb_on_shutdown` after provisioning.\n"]
+    pub fn drain_elb_on_shutdown(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.drain_elb_on_shutdown", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `elastic_load_balancer` after provisioning.\n"]
-    pub fn elastic_load_balancer(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.elastic_load_balancer", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `elastic_load_balancer` after provisioning.\n"]
+    pub fn elastic_load_balancer(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.elastic_load_balancer", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `id` after provisioning.\n"]
-    pub fn id(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
+    pub fn id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `install_updates_on_boot` after provisioning.\n"]
-    pub fn install_updates_on_boot(&self) -> PrimExpr<bool> {
-        PrimExpr::new(self.shared().clone(), format!("{}.install_updates_on_boot", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `install_updates_on_boot` after provisioning.\n"]
+    pub fn install_updates_on_boot(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.install_updates_on_boot", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `instance_shutdown_timeout` after provisioning.\n"]
-    pub fn instance_shutdown_timeout(&self) -> PrimExpr<f64> {
-        PrimExpr::new(self.shared().clone(), format!("{}.instance_shutdown_timeout", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `instance_shutdown_timeout` after provisioning.\n"]
+    pub fn instance_shutdown_timeout(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.instance_shutdown_timeout", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `name` after provisioning.\n"]
-    pub fn name(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `name` after provisioning.\n"]
+    pub fn name(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `password` after provisioning.\n"]
-    pub fn password(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.password", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `password` after provisioning.\n"]
+    pub fn password(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.password", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `stack_id` after provisioning.\n"]
-    pub fn stack_id(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.stack_id", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `stack_id` after provisioning.\n"]
+    pub fn stack_id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.stack_id", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `system_packages` after provisioning.\n"]
-    pub fn system_packages(&self) -> SetRef<PrimExpr<String>> {
-        SetRef::new(self.shared().clone(), format!("{}.system_packages", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `system_packages` after provisioning.\n"]
+    pub fn system_packages(&self) -> terrars::SetRef<terrars::PrimExpr<std::string::String>> {
+        terrars::SetRef::new(self.shared().clone(), format!("{}.system_packages", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `tags` after provisioning.\n"]
-    pub fn tags(&self) -> RecRef<PrimExpr<String>> {
-        RecRef::new(self.shared().clone(), format!("{}.tags", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `tags` after provisioning.\n"]
+    pub fn tags(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
+        terrars::RecRef::new(self.shared().clone(), format!("{}.tags", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `tags_all` after provisioning.\n"]
-    pub fn tags_all(&self) -> RecRef<PrimExpr<String>> {
-        RecRef::new(self.shared().clone(), format!("{}.tags_all", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `tags_all` after provisioning.\n"]
+    pub fn tags_all(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
+        terrars::RecRef::new(self.shared().clone(), format!("{}.tags_all", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `url` after provisioning.\n"]
-    pub fn url(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.url", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `url` after provisioning.\n"]
+    pub fn url(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.url", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `use_ebs_optimized_instances` after provisioning.\n"]
-    pub fn use_ebs_optimized_instances(&self) -> PrimExpr<bool> {
-        PrimExpr::new(self.shared().clone(), format!("{}.use_ebs_optimized_instances", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `use_ebs_optimized_instances` after provisioning.\n"]
+    pub fn use_ebs_optimized_instances(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.use_ebs_optimized_instances", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `username` after provisioning.\n"]
-    pub fn username(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.username", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `username` after provisioning.\n"]
+    pub fn username(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.username", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `cloudwatch_configuration` after provisioning.\n"]
-    pub fn cloudwatch_configuration(&self) -> ListRef<OpsworksGangliaLayerCloudwatchConfigurationElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.cloudwatch_configuration", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `cloudwatch_configuration` after provisioning.\n"]
+    pub fn cloudwatch_configuration(&self) -> terrars::ListRef<OpsworksGangliaLayerCloudwatchConfigurationElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.cloudwatch_configuration", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `load_based_auto_scaling` after provisioning.\n"]
-    pub fn load_based_auto_scaling(&self) -> ListRef<OpsworksGangliaLayerLoadBasedAutoScalingElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.load_based_auto_scaling", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `load_based_auto_scaling` after provisioning.\n"]
+    pub fn load_based_auto_scaling(&self) -> terrars::ListRef<OpsworksGangliaLayerLoadBasedAutoScalingElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.load_based_auto_scaling", self.extract_ref()))
     }
 }
 
 #[derive(Serialize)]
 pub struct OpsworksGangliaLayerCloudwatchConfigurationElLogStreamsEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    batch_count: Option<PrimField<f64>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    batch_size: Option<PrimField<f64>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    buffer_duration: Option<PrimField<f64>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    datetime_format: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    encoding: Option<PrimField<String>>,
-    file: PrimField<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    file_fingerprint_lines: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    initial_position: Option<PrimField<String>>,
-    log_group_name: PrimField<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    multiline_start_pattern: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    time_zone: Option<PrimField<String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    batch_count: std::option::Option<terrars::PrimField<f64>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    batch_size: std::option::Option<terrars::PrimField<f64>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    buffer_duration: std::option::Option<terrars::PrimField<f64>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    datetime_format: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    encoding: std::option::Option<terrars::PrimField<std::string::String>>,
+    file: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    file_fingerprint_lines: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    initial_position: std::option::Option<terrars::PrimField<std::string::String>>,
+    log_group_name: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    multiline_start_pattern: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    time_zone: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
 impl OpsworksGangliaLayerCloudwatchConfigurationElLogStreamsEl {
-    #[doc= "Set the field `batch_count`.\n"]
-    pub fn set_batch_count(mut self, v: impl Into<PrimField<f64>>) -> Self {
-        self.batch_count = Some(v.into());
+    #[doc = "Set the field `batch_count`.\n"]
+    pub fn set_batch_count(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.batch_count = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `batch_size`.\n"]
-    pub fn set_batch_size(mut self, v: impl Into<PrimField<f64>>) -> Self {
-        self.batch_size = Some(v.into());
+    #[doc = "Set the field `batch_size`.\n"]
+    pub fn set_batch_size(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.batch_size = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `buffer_duration`.\n"]
-    pub fn set_buffer_duration(mut self, v: impl Into<PrimField<f64>>) -> Self {
-        self.buffer_duration = Some(v.into());
+    #[doc = "Set the field `buffer_duration`.\n"]
+    pub fn set_buffer_duration(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.buffer_duration = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `datetime_format`.\n"]
-    pub fn set_datetime_format(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.datetime_format = Some(v.into());
+    #[doc = "Set the field `datetime_format`.\n"]
+    pub fn set_datetime_format(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.datetime_format = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `encoding`.\n"]
-    pub fn set_encoding(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.encoding = Some(v.into());
+    #[doc = "Set the field `encoding`.\n"]
+    pub fn set_encoding(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.encoding = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `file_fingerprint_lines`.\n"]
-    pub fn set_file_fingerprint_lines(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.file_fingerprint_lines = Some(v.into());
+    #[doc = "Set the field `file_fingerprint_lines`.\n"]
+    pub fn set_file_fingerprint_lines(
+        mut self,
+        v: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.file_fingerprint_lines = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `initial_position`.\n"]
-    pub fn set_initial_position(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.initial_position = Some(v.into());
+    #[doc = "Set the field `initial_position`.\n"]
+    pub fn set_initial_position(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.initial_position = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `multiline_start_pattern`.\n"]
-    pub fn set_multiline_start_pattern(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.multiline_start_pattern = Some(v.into());
+    #[doc = "Set the field `multiline_start_pattern`.\n"]
+    pub fn set_multiline_start_pattern(
+        mut self,
+        v: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.multiline_start_pattern = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `time_zone`.\n"]
-    pub fn set_time_zone(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.time_zone = Some(v.into());
+    #[doc = "Set the field `time_zone`.\n"]
+    pub fn set_time_zone(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.time_zone = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl ToListMappable for OpsworksGangliaLayerCloudwatchConfigurationElLogStreamsEl {
-    type O = BlockAssignable<OpsworksGangliaLayerCloudwatchConfigurationElLogStreamsEl>;
+impl terrars::ToListMappable for OpsworksGangliaLayerCloudwatchConfigurationElLogStreamsEl {
+    type O = terrars::BlockAssignable<OpsworksGangliaLayerCloudwatchConfigurationElLogStreamsEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -807,10 +884,10 @@ impl ToListMappable for OpsworksGangliaLayerCloudwatchConfigurationElLogStreamsE
 }
 
 pub struct BuildOpsworksGangliaLayerCloudwatchConfigurationElLogStreamsEl {
-    #[doc= ""]
-    pub file: PrimField<String>,
-    #[doc= ""]
-    pub log_group_name: PrimField<String>,
+    #[doc = ""]
+    pub file: terrars::PrimField<std::string::String>,
+    #[doc = ""]
+    pub log_group_name: terrars::PrimField<std::string::String>,
 }
 
 impl BuildOpsworksGangliaLayerCloudwatchConfigurationElLogStreamsEl {
@@ -832,12 +909,15 @@ impl BuildOpsworksGangliaLayerCloudwatchConfigurationElLogStreamsEl {
 }
 
 pub struct OpsworksGangliaLayerCloudwatchConfigurationElLogStreamsElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for OpsworksGangliaLayerCloudwatchConfigurationElLogStreamsElRef {
-    fn new(shared: StackShared, base: String) -> OpsworksGangliaLayerCloudwatchConfigurationElLogStreamsElRef {
+impl terrars::Ref for OpsworksGangliaLayerCloudwatchConfigurationElLogStreamsElRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> OpsworksGangliaLayerCloudwatchConfigurationElLogStreamsElRef {
         OpsworksGangliaLayerCloudwatchConfigurationElLogStreamsElRef {
             shared: shared,
             base: base.to_string(),
@@ -846,109 +926,116 @@ impl Ref for OpsworksGangliaLayerCloudwatchConfigurationElLogStreamsElRef {
 }
 
 impl OpsworksGangliaLayerCloudwatchConfigurationElLogStreamsElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `batch_count` after provisioning.\n"]
-    pub fn batch_count(&self) -> PrimExpr<f64> {
-        PrimExpr::new(self.shared().clone(), format!("{}.batch_count", self.base))
+    #[doc = "Get a reference to the value of field `batch_count` after provisioning.\n"]
+    pub fn batch_count(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.batch_count", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `batch_size` after provisioning.\n"]
-    pub fn batch_size(&self) -> PrimExpr<f64> {
-        PrimExpr::new(self.shared().clone(), format!("{}.batch_size", self.base))
+    #[doc = "Get a reference to the value of field `batch_size` after provisioning.\n"]
+    pub fn batch_size(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.batch_size", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `buffer_duration` after provisioning.\n"]
-    pub fn buffer_duration(&self) -> PrimExpr<f64> {
-        PrimExpr::new(self.shared().clone(), format!("{}.buffer_duration", self.base))
+    #[doc = "Get a reference to the value of field `buffer_duration` after provisioning.\n"]
+    pub fn buffer_duration(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.buffer_duration", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `datetime_format` after provisioning.\n"]
-    pub fn datetime_format(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.datetime_format", self.base))
+    #[doc = "Get a reference to the value of field `datetime_format` after provisioning.\n"]
+    pub fn datetime_format(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.datetime_format", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `encoding` after provisioning.\n"]
-    pub fn encoding(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.encoding", self.base))
+    #[doc = "Get a reference to the value of field `encoding` after provisioning.\n"]
+    pub fn encoding(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.encoding", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `file` after provisioning.\n"]
-    pub fn file(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.file", self.base))
+    #[doc = "Get a reference to the value of field `file` after provisioning.\n"]
+    pub fn file(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.file", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `file_fingerprint_lines` after provisioning.\n"]
-    pub fn file_fingerprint_lines(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.file_fingerprint_lines", self.base))
+    #[doc = "Get a reference to the value of field `file_fingerprint_lines` after provisioning.\n"]
+    pub fn file_fingerprint_lines(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.file_fingerprint_lines", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `initial_position` after provisioning.\n"]
-    pub fn initial_position(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.initial_position", self.base))
+    #[doc = "Get a reference to the value of field `initial_position` after provisioning.\n"]
+    pub fn initial_position(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.initial_position", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `log_group_name` after provisioning.\n"]
-    pub fn log_group_name(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.log_group_name", self.base))
+    #[doc = "Get a reference to the value of field `log_group_name` after provisioning.\n"]
+    pub fn log_group_name(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.log_group_name", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `multiline_start_pattern` after provisioning.\n"]
-    pub fn multiline_start_pattern(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.multiline_start_pattern", self.base))
+    #[doc = "Get a reference to the value of field `multiline_start_pattern` after provisioning.\n"]
+    pub fn multiline_start_pattern(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.multiline_start_pattern", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `time_zone` after provisioning.\n"]
-    pub fn time_zone(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.time_zone", self.base))
+    #[doc = "Get a reference to the value of field `time_zone` after provisioning.\n"]
+    pub fn time_zone(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.time_zone", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
 struct OpsworksGangliaLayerCloudwatchConfigurationElDynamic {
-    log_streams: Option<DynamicBlock<OpsworksGangliaLayerCloudwatchConfigurationElLogStreamsEl>>,
+    log_streams: std
+    ::option
+    ::Option<terrars::DynamicBlock<OpsworksGangliaLayerCloudwatchConfigurationElLogStreamsEl>>,
 }
 
 #[derive(Serialize)]
 pub struct OpsworksGangliaLayerCloudwatchConfigurationEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    enabled: Option<PrimField<bool>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    log_streams: Option<Vec<OpsworksGangliaLayerCloudwatchConfigurationElLogStreamsEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    enabled: std::option::Option<terrars::PrimField<bool>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    log_streams: std::option::Option<std::vec::Vec<OpsworksGangliaLayerCloudwatchConfigurationElLogStreamsEl>>,
     dynamic: OpsworksGangliaLayerCloudwatchConfigurationElDynamic,
 }
 
 impl OpsworksGangliaLayerCloudwatchConfigurationEl {
-    #[doc= "Set the field `enabled`.\n"]
-    pub fn set_enabled(mut self, v: impl Into<PrimField<bool>>) -> Self {
-        self.enabled = Some(v.into());
+    #[doc = "Set the field `enabled`.\n"]
+    pub fn set_enabled(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
+        self.enabled = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `log_streams`.\n"]
+    #[doc = "Set the field `log_streams`.\n"]
     pub fn set_log_streams(
         mut self,
-        v: impl Into<BlockAssignable<OpsworksGangliaLayerCloudwatchConfigurationElLogStreamsEl>>,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<terrars::BlockAssignable<OpsworksGangliaLayerCloudwatchConfigurationElLogStreamsEl>>,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.log_streams = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.log_streams = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.log_streams = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.log_streams = std::option::Option::Some(d);
             },
         }
         self
     }
 }
 
-impl ToListMappable for OpsworksGangliaLayerCloudwatchConfigurationEl {
-    type O = BlockAssignable<OpsworksGangliaLayerCloudwatchConfigurationEl>;
+impl terrars::ToListMappable for OpsworksGangliaLayerCloudwatchConfigurationEl {
+    type O = terrars::BlockAssignable<OpsworksGangliaLayerCloudwatchConfigurationEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -963,18 +1050,21 @@ impl BuildOpsworksGangliaLayerCloudwatchConfigurationEl {
         OpsworksGangliaLayerCloudwatchConfigurationEl {
             enabled: core::default::Default::default(),
             log_streams: core::default::Default::default(),
-            dynamic: Default::default(),
+            dynamic: core::default::Default::default(),
         }
     }
 }
 
 pub struct OpsworksGangliaLayerCloudwatchConfigurationElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for OpsworksGangliaLayerCloudwatchConfigurationElRef {
-    fn new(shared: StackShared, base: String) -> OpsworksGangliaLayerCloudwatchConfigurationElRef {
+impl terrars::Ref for OpsworksGangliaLayerCloudwatchConfigurationElRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> OpsworksGangliaLayerCloudwatchConfigurationElRef {
         OpsworksGangliaLayerCloudwatchConfigurationElRef {
             shared: shared,
             base: base.to_string(),
@@ -983,67 +1073,67 @@ impl Ref for OpsworksGangliaLayerCloudwatchConfigurationElRef {
 }
 
 impl OpsworksGangliaLayerCloudwatchConfigurationElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `enabled` after provisioning.\n"]
-    pub fn enabled(&self) -> PrimExpr<bool> {
-        PrimExpr::new(self.shared().clone(), format!("{}.enabled", self.base))
+    #[doc = "Get a reference to the value of field `enabled` after provisioning.\n"]
+    pub fn enabled(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.enabled", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `log_streams` after provisioning.\n"]
-    pub fn log_streams(&self) -> ListRef<OpsworksGangliaLayerCloudwatchConfigurationElLogStreamsElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.log_streams", self.base))
+    #[doc = "Get a reference to the value of field `log_streams` after provisioning.\n"]
+    pub fn log_streams(&self) -> terrars::ListRef<OpsworksGangliaLayerCloudwatchConfigurationElLogStreamsElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.log_streams", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct OpsworksGangliaLayerEbsVolumeEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    encrypted: Option<PrimField<bool>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    iops: Option<PrimField<f64>>,
-    mount_point: PrimField<String>,
-    number_of_disks: PrimField<f64>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    raid_level: Option<PrimField<String>>,
-    size: PrimField<f64>,
-    #[serde(rename = "type", skip_serializing_if = "Option::is_none")]
-    type_: Option<PrimField<String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    encrypted: std::option::Option<terrars::PrimField<bool>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    iops: std::option::Option<terrars::PrimField<f64>>,
+    mount_point: terrars::PrimField<std::string::String>,
+    number_of_disks: terrars::PrimField<f64>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    raid_level: std::option::Option<terrars::PrimField<std::string::String>>,
+    size: terrars::PrimField<f64>,
+    #[serde(rename = "type", skip_serializing_if = "std::option::Option::is_none")]
+    type_: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
 impl OpsworksGangliaLayerEbsVolumeEl {
-    #[doc= "Set the field `encrypted`.\n"]
-    pub fn set_encrypted(mut self, v: impl Into<PrimField<bool>>) -> Self {
-        self.encrypted = Some(v.into());
+    #[doc = "Set the field `encrypted`.\n"]
+    pub fn set_encrypted(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
+        self.encrypted = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `iops`.\n"]
-    pub fn set_iops(mut self, v: impl Into<PrimField<f64>>) -> Self {
-        self.iops = Some(v.into());
+    #[doc = "Set the field `iops`.\n"]
+    pub fn set_iops(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.iops = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `raid_level`.\n"]
-    pub fn set_raid_level(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.raid_level = Some(v.into());
+    #[doc = "Set the field `raid_level`.\n"]
+    pub fn set_raid_level(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.raid_level = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `type_`.\n"]
-    pub fn set_type(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.type_ = Some(v.into());
+    #[doc = "Set the field `type_`.\n"]
+    pub fn set_type(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.type_ = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl ToListMappable for OpsworksGangliaLayerEbsVolumeEl {
-    type O = BlockAssignable<OpsworksGangliaLayerEbsVolumeEl>;
+impl terrars::ToListMappable for OpsworksGangliaLayerEbsVolumeEl {
+    type O = terrars::BlockAssignable<OpsworksGangliaLayerEbsVolumeEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -1052,12 +1142,12 @@ impl ToListMappable for OpsworksGangliaLayerEbsVolumeEl {
 }
 
 pub struct BuildOpsworksGangliaLayerEbsVolumeEl {
-    #[doc= ""]
-    pub mount_point: PrimField<String>,
-    #[doc= ""]
-    pub number_of_disks: PrimField<f64>,
-    #[doc= ""]
-    pub size: PrimField<f64>,
+    #[doc = ""]
+    pub mount_point: terrars::PrimField<std::string::String>,
+    #[doc = ""]
+    pub number_of_disks: terrars::PrimField<f64>,
+    #[doc = ""]
+    pub size: terrars::PrimField<f64>,
 }
 
 impl BuildOpsworksGangliaLayerEbsVolumeEl {
@@ -1075,12 +1165,12 @@ impl BuildOpsworksGangliaLayerEbsVolumeEl {
 }
 
 pub struct OpsworksGangliaLayerEbsVolumeElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for OpsworksGangliaLayerEbsVolumeElRef {
-    fn new(shared: StackShared, base: String) -> OpsworksGangliaLayerEbsVolumeElRef {
+impl terrars::Ref for OpsworksGangliaLayerEbsVolumeElRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> OpsworksGangliaLayerEbsVolumeElRef {
         OpsworksGangliaLayerEbsVolumeElRef {
             shared: shared,
             base: base.to_string(),
@@ -1089,113 +1179,116 @@ impl Ref for OpsworksGangliaLayerEbsVolumeElRef {
 }
 
 impl OpsworksGangliaLayerEbsVolumeElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `encrypted` after provisioning.\n"]
-    pub fn encrypted(&self) -> PrimExpr<bool> {
-        PrimExpr::new(self.shared().clone(), format!("{}.encrypted", self.base))
+    #[doc = "Get a reference to the value of field `encrypted` after provisioning.\n"]
+    pub fn encrypted(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.encrypted", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `iops` after provisioning.\n"]
-    pub fn iops(&self) -> PrimExpr<f64> {
-        PrimExpr::new(self.shared().clone(), format!("{}.iops", self.base))
+    #[doc = "Get a reference to the value of field `iops` after provisioning.\n"]
+    pub fn iops(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.iops", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `mount_point` after provisioning.\n"]
-    pub fn mount_point(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.mount_point", self.base))
+    #[doc = "Get a reference to the value of field `mount_point` after provisioning.\n"]
+    pub fn mount_point(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.mount_point", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `number_of_disks` after provisioning.\n"]
-    pub fn number_of_disks(&self) -> PrimExpr<f64> {
-        PrimExpr::new(self.shared().clone(), format!("{}.number_of_disks", self.base))
+    #[doc = "Get a reference to the value of field `number_of_disks` after provisioning.\n"]
+    pub fn number_of_disks(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.number_of_disks", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `raid_level` after provisioning.\n"]
-    pub fn raid_level(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.raid_level", self.base))
+    #[doc = "Get a reference to the value of field `raid_level` after provisioning.\n"]
+    pub fn raid_level(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.raid_level", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `size` after provisioning.\n"]
-    pub fn size(&self) -> PrimExpr<f64> {
-        PrimExpr::new(self.shared().clone(), format!("{}.size", self.base))
+    #[doc = "Get a reference to the value of field `size` after provisioning.\n"]
+    pub fn size(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.size", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `type_` after provisioning.\n"]
-    pub fn type_(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.type", self.base))
+    #[doc = "Get a reference to the value of field `type_` after provisioning.\n"]
+    pub fn type_(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.type", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct OpsworksGangliaLayerLoadBasedAutoScalingElDownscalingEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    alarms: Option<ListField<PrimField<String>>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    cpu_threshold: Option<PrimField<f64>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    ignore_metrics_time: Option<PrimField<f64>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    instance_count: Option<PrimField<f64>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    load_threshold: Option<PrimField<f64>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    memory_threshold: Option<PrimField<f64>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    thresholds_wait_time: Option<PrimField<f64>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    alarms: std::option::Option<terrars::ListField<terrars::PrimField<std::string::String>>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    cpu_threshold: std::option::Option<terrars::PrimField<f64>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    ignore_metrics_time: std::option::Option<terrars::PrimField<f64>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    instance_count: std::option::Option<terrars::PrimField<f64>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    load_threshold: std::option::Option<terrars::PrimField<f64>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    memory_threshold: std::option::Option<terrars::PrimField<f64>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    thresholds_wait_time: std::option::Option<terrars::PrimField<f64>>,
 }
 
 impl OpsworksGangliaLayerLoadBasedAutoScalingElDownscalingEl {
-    #[doc= "Set the field `alarms`.\n"]
-    pub fn set_alarms(mut self, v: impl Into<ListField<PrimField<String>>>) -> Self {
-        self.alarms = Some(v.into());
+    #[doc = "Set the field `alarms`.\n"]
+    pub fn set_alarms(
+        mut self,
+        v: impl std::convert::Into<terrars::ListField<terrars::PrimField<std::string::String>>>,
+    ) -> Self {
+        self.alarms = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `cpu_threshold`.\n"]
-    pub fn set_cpu_threshold(mut self, v: impl Into<PrimField<f64>>) -> Self {
-        self.cpu_threshold = Some(v.into());
+    #[doc = "Set the field `cpu_threshold`.\n"]
+    pub fn set_cpu_threshold(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.cpu_threshold = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `ignore_metrics_time`.\n"]
-    pub fn set_ignore_metrics_time(mut self, v: impl Into<PrimField<f64>>) -> Self {
-        self.ignore_metrics_time = Some(v.into());
+    #[doc = "Set the field `ignore_metrics_time`.\n"]
+    pub fn set_ignore_metrics_time(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.ignore_metrics_time = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `instance_count`.\n"]
-    pub fn set_instance_count(mut self, v: impl Into<PrimField<f64>>) -> Self {
-        self.instance_count = Some(v.into());
+    #[doc = "Set the field `instance_count`.\n"]
+    pub fn set_instance_count(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.instance_count = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `load_threshold`.\n"]
-    pub fn set_load_threshold(mut self, v: impl Into<PrimField<f64>>) -> Self {
-        self.load_threshold = Some(v.into());
+    #[doc = "Set the field `load_threshold`.\n"]
+    pub fn set_load_threshold(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.load_threshold = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `memory_threshold`.\n"]
-    pub fn set_memory_threshold(mut self, v: impl Into<PrimField<f64>>) -> Self {
-        self.memory_threshold = Some(v.into());
+    #[doc = "Set the field `memory_threshold`.\n"]
+    pub fn set_memory_threshold(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.memory_threshold = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `thresholds_wait_time`.\n"]
-    pub fn set_thresholds_wait_time(mut self, v: impl Into<PrimField<f64>>) -> Self {
-        self.thresholds_wait_time = Some(v.into());
+    #[doc = "Set the field `thresholds_wait_time`.\n"]
+    pub fn set_thresholds_wait_time(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.thresholds_wait_time = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl ToListMappable for OpsworksGangliaLayerLoadBasedAutoScalingElDownscalingEl {
-    type O = BlockAssignable<OpsworksGangliaLayerLoadBasedAutoScalingElDownscalingEl>;
+impl terrars::ToListMappable for OpsworksGangliaLayerLoadBasedAutoScalingElDownscalingEl {
+    type O = terrars::BlockAssignable<OpsworksGangliaLayerLoadBasedAutoScalingElDownscalingEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -1220,12 +1313,15 @@ impl BuildOpsworksGangliaLayerLoadBasedAutoScalingElDownscalingEl {
 }
 
 pub struct OpsworksGangliaLayerLoadBasedAutoScalingElDownscalingElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for OpsworksGangliaLayerLoadBasedAutoScalingElDownscalingElRef {
-    fn new(shared: StackShared, base: String) -> OpsworksGangliaLayerLoadBasedAutoScalingElDownscalingElRef {
+impl terrars::Ref for OpsworksGangliaLayerLoadBasedAutoScalingElDownscalingElRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> OpsworksGangliaLayerLoadBasedAutoScalingElDownscalingElRef {
         OpsworksGangliaLayerLoadBasedAutoScalingElDownscalingElRef {
             shared: shared,
             base: base.to_string(),
@@ -1234,113 +1330,116 @@ impl Ref for OpsworksGangliaLayerLoadBasedAutoScalingElDownscalingElRef {
 }
 
 impl OpsworksGangliaLayerLoadBasedAutoScalingElDownscalingElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `alarms` after provisioning.\n"]
-    pub fn alarms(&self) -> ListRef<PrimExpr<String>> {
-        ListRef::new(self.shared().clone(), format!("{}.alarms", self.base))
+    #[doc = "Get a reference to the value of field `alarms` after provisioning.\n"]
+    pub fn alarms(&self) -> terrars::ListRef<terrars::PrimExpr<std::string::String>> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.alarms", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `cpu_threshold` after provisioning.\n"]
-    pub fn cpu_threshold(&self) -> PrimExpr<f64> {
-        PrimExpr::new(self.shared().clone(), format!("{}.cpu_threshold", self.base))
+    #[doc = "Get a reference to the value of field `cpu_threshold` after provisioning.\n"]
+    pub fn cpu_threshold(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.cpu_threshold", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `ignore_metrics_time` after provisioning.\n"]
-    pub fn ignore_metrics_time(&self) -> PrimExpr<f64> {
-        PrimExpr::new(self.shared().clone(), format!("{}.ignore_metrics_time", self.base))
+    #[doc = "Get a reference to the value of field `ignore_metrics_time` after provisioning.\n"]
+    pub fn ignore_metrics_time(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.ignore_metrics_time", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `instance_count` after provisioning.\n"]
-    pub fn instance_count(&self) -> PrimExpr<f64> {
-        PrimExpr::new(self.shared().clone(), format!("{}.instance_count", self.base))
+    #[doc = "Get a reference to the value of field `instance_count` after provisioning.\n"]
+    pub fn instance_count(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.instance_count", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `load_threshold` after provisioning.\n"]
-    pub fn load_threshold(&self) -> PrimExpr<f64> {
-        PrimExpr::new(self.shared().clone(), format!("{}.load_threshold", self.base))
+    #[doc = "Get a reference to the value of field `load_threshold` after provisioning.\n"]
+    pub fn load_threshold(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.load_threshold", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `memory_threshold` after provisioning.\n"]
-    pub fn memory_threshold(&self) -> PrimExpr<f64> {
-        PrimExpr::new(self.shared().clone(), format!("{}.memory_threshold", self.base))
+    #[doc = "Get a reference to the value of field `memory_threshold` after provisioning.\n"]
+    pub fn memory_threshold(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.memory_threshold", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `thresholds_wait_time` after provisioning.\n"]
-    pub fn thresholds_wait_time(&self) -> PrimExpr<f64> {
-        PrimExpr::new(self.shared().clone(), format!("{}.thresholds_wait_time", self.base))
+    #[doc = "Get a reference to the value of field `thresholds_wait_time` after provisioning.\n"]
+    pub fn thresholds_wait_time(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.thresholds_wait_time", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct OpsworksGangliaLayerLoadBasedAutoScalingElUpscalingEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    alarms: Option<ListField<PrimField<String>>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    cpu_threshold: Option<PrimField<f64>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    ignore_metrics_time: Option<PrimField<f64>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    instance_count: Option<PrimField<f64>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    load_threshold: Option<PrimField<f64>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    memory_threshold: Option<PrimField<f64>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    thresholds_wait_time: Option<PrimField<f64>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    alarms: std::option::Option<terrars::ListField<terrars::PrimField<std::string::String>>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    cpu_threshold: std::option::Option<terrars::PrimField<f64>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    ignore_metrics_time: std::option::Option<terrars::PrimField<f64>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    instance_count: std::option::Option<terrars::PrimField<f64>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    load_threshold: std::option::Option<terrars::PrimField<f64>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    memory_threshold: std::option::Option<terrars::PrimField<f64>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    thresholds_wait_time: std::option::Option<terrars::PrimField<f64>>,
 }
 
 impl OpsworksGangliaLayerLoadBasedAutoScalingElUpscalingEl {
-    #[doc= "Set the field `alarms`.\n"]
-    pub fn set_alarms(mut self, v: impl Into<ListField<PrimField<String>>>) -> Self {
-        self.alarms = Some(v.into());
+    #[doc = "Set the field `alarms`.\n"]
+    pub fn set_alarms(
+        mut self,
+        v: impl std::convert::Into<terrars::ListField<terrars::PrimField<std::string::String>>>,
+    ) -> Self {
+        self.alarms = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `cpu_threshold`.\n"]
-    pub fn set_cpu_threshold(mut self, v: impl Into<PrimField<f64>>) -> Self {
-        self.cpu_threshold = Some(v.into());
+    #[doc = "Set the field `cpu_threshold`.\n"]
+    pub fn set_cpu_threshold(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.cpu_threshold = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `ignore_metrics_time`.\n"]
-    pub fn set_ignore_metrics_time(mut self, v: impl Into<PrimField<f64>>) -> Self {
-        self.ignore_metrics_time = Some(v.into());
+    #[doc = "Set the field `ignore_metrics_time`.\n"]
+    pub fn set_ignore_metrics_time(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.ignore_metrics_time = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `instance_count`.\n"]
-    pub fn set_instance_count(mut self, v: impl Into<PrimField<f64>>) -> Self {
-        self.instance_count = Some(v.into());
+    #[doc = "Set the field `instance_count`.\n"]
+    pub fn set_instance_count(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.instance_count = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `load_threshold`.\n"]
-    pub fn set_load_threshold(mut self, v: impl Into<PrimField<f64>>) -> Self {
-        self.load_threshold = Some(v.into());
+    #[doc = "Set the field `load_threshold`.\n"]
+    pub fn set_load_threshold(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.load_threshold = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `memory_threshold`.\n"]
-    pub fn set_memory_threshold(mut self, v: impl Into<PrimField<f64>>) -> Self {
-        self.memory_threshold = Some(v.into());
+    #[doc = "Set the field `memory_threshold`.\n"]
+    pub fn set_memory_threshold(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.memory_threshold = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `thresholds_wait_time`.\n"]
-    pub fn set_thresholds_wait_time(mut self, v: impl Into<PrimField<f64>>) -> Self {
-        self.thresholds_wait_time = Some(v.into());
+    #[doc = "Set the field `thresholds_wait_time`.\n"]
+    pub fn set_thresholds_wait_time(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.thresholds_wait_time = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl ToListMappable for OpsworksGangliaLayerLoadBasedAutoScalingElUpscalingEl {
-    type O = BlockAssignable<OpsworksGangliaLayerLoadBasedAutoScalingElUpscalingEl>;
+impl terrars::ToListMappable for OpsworksGangliaLayerLoadBasedAutoScalingElUpscalingEl {
+    type O = terrars::BlockAssignable<OpsworksGangliaLayerLoadBasedAutoScalingElUpscalingEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -1365,12 +1464,15 @@ impl BuildOpsworksGangliaLayerLoadBasedAutoScalingElUpscalingEl {
 }
 
 pub struct OpsworksGangliaLayerLoadBasedAutoScalingElUpscalingElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for OpsworksGangliaLayerLoadBasedAutoScalingElUpscalingElRef {
-    fn new(shared: StackShared, base: String) -> OpsworksGangliaLayerLoadBasedAutoScalingElUpscalingElRef {
+impl terrars::Ref for OpsworksGangliaLayerLoadBasedAutoScalingElUpscalingElRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> OpsworksGangliaLayerLoadBasedAutoScalingElUpscalingElRef {
         OpsworksGangliaLayerLoadBasedAutoScalingElUpscalingElRef {
             shared: shared,
             base: base.to_string(),
@@ -1379,108 +1481,113 @@ impl Ref for OpsworksGangliaLayerLoadBasedAutoScalingElUpscalingElRef {
 }
 
 impl OpsworksGangliaLayerLoadBasedAutoScalingElUpscalingElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `alarms` after provisioning.\n"]
-    pub fn alarms(&self) -> ListRef<PrimExpr<String>> {
-        ListRef::new(self.shared().clone(), format!("{}.alarms", self.base))
+    #[doc = "Get a reference to the value of field `alarms` after provisioning.\n"]
+    pub fn alarms(&self) -> terrars::ListRef<terrars::PrimExpr<std::string::String>> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.alarms", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `cpu_threshold` after provisioning.\n"]
-    pub fn cpu_threshold(&self) -> PrimExpr<f64> {
-        PrimExpr::new(self.shared().clone(), format!("{}.cpu_threshold", self.base))
+    #[doc = "Get a reference to the value of field `cpu_threshold` after provisioning.\n"]
+    pub fn cpu_threshold(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.cpu_threshold", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `ignore_metrics_time` after provisioning.\n"]
-    pub fn ignore_metrics_time(&self) -> PrimExpr<f64> {
-        PrimExpr::new(self.shared().clone(), format!("{}.ignore_metrics_time", self.base))
+    #[doc = "Get a reference to the value of field `ignore_metrics_time` after provisioning.\n"]
+    pub fn ignore_metrics_time(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.ignore_metrics_time", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `instance_count` after provisioning.\n"]
-    pub fn instance_count(&self) -> PrimExpr<f64> {
-        PrimExpr::new(self.shared().clone(), format!("{}.instance_count", self.base))
+    #[doc = "Get a reference to the value of field `instance_count` after provisioning.\n"]
+    pub fn instance_count(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.instance_count", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `load_threshold` after provisioning.\n"]
-    pub fn load_threshold(&self) -> PrimExpr<f64> {
-        PrimExpr::new(self.shared().clone(), format!("{}.load_threshold", self.base))
+    #[doc = "Get a reference to the value of field `load_threshold` after provisioning.\n"]
+    pub fn load_threshold(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.load_threshold", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `memory_threshold` after provisioning.\n"]
-    pub fn memory_threshold(&self) -> PrimExpr<f64> {
-        PrimExpr::new(self.shared().clone(), format!("{}.memory_threshold", self.base))
+    #[doc = "Get a reference to the value of field `memory_threshold` after provisioning.\n"]
+    pub fn memory_threshold(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.memory_threshold", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `thresholds_wait_time` after provisioning.\n"]
-    pub fn thresholds_wait_time(&self) -> PrimExpr<f64> {
-        PrimExpr::new(self.shared().clone(), format!("{}.thresholds_wait_time", self.base))
+    #[doc = "Get a reference to the value of field `thresholds_wait_time` after provisioning.\n"]
+    pub fn thresholds_wait_time(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.thresholds_wait_time", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
 struct OpsworksGangliaLayerLoadBasedAutoScalingElDynamic {
-    downscaling: Option<DynamicBlock<OpsworksGangliaLayerLoadBasedAutoScalingElDownscalingEl>>,
-    upscaling: Option<DynamicBlock<OpsworksGangliaLayerLoadBasedAutoScalingElUpscalingEl>>,
+    downscaling: std::option::Option<terrars::DynamicBlock<OpsworksGangliaLayerLoadBasedAutoScalingElDownscalingEl>>,
+    upscaling: std::option::Option<terrars::DynamicBlock<OpsworksGangliaLayerLoadBasedAutoScalingElUpscalingEl>>,
 }
 
 #[derive(Serialize)]
 pub struct OpsworksGangliaLayerLoadBasedAutoScalingEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    enable: Option<PrimField<bool>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    downscaling: Option<Vec<OpsworksGangliaLayerLoadBasedAutoScalingElDownscalingEl>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    upscaling: Option<Vec<OpsworksGangliaLayerLoadBasedAutoScalingElUpscalingEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    enable: std::option::Option<terrars::PrimField<bool>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    downscaling: std::option::Option<std::vec::Vec<OpsworksGangliaLayerLoadBasedAutoScalingElDownscalingEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    upscaling: std::option::Option<std::vec::Vec<OpsworksGangliaLayerLoadBasedAutoScalingElUpscalingEl>>,
     dynamic: OpsworksGangliaLayerLoadBasedAutoScalingElDynamic,
 }
 
 impl OpsworksGangliaLayerLoadBasedAutoScalingEl {
-    #[doc= "Set the field `enable`.\n"]
-    pub fn set_enable(mut self, v: impl Into<PrimField<bool>>) -> Self {
-        self.enable = Some(v.into());
+    #[doc = "Set the field `enable`.\n"]
+    pub fn set_enable(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
+        self.enable = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `downscaling`.\n"]
+    #[doc = "Set the field `downscaling`.\n"]
     pub fn set_downscaling(
         mut self,
-        v: impl Into<BlockAssignable<OpsworksGangliaLayerLoadBasedAutoScalingElDownscalingEl>>,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<terrars::BlockAssignable<OpsworksGangliaLayerLoadBasedAutoScalingElDownscalingEl>>,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.downscaling = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.downscaling = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.downscaling = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.downscaling = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Set the field `upscaling`.\n"]
+    #[doc = "Set the field `upscaling`.\n"]
     pub fn set_upscaling(
         mut self,
-        v: impl Into<BlockAssignable<OpsworksGangliaLayerLoadBasedAutoScalingElUpscalingEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<OpsworksGangliaLayerLoadBasedAutoScalingElUpscalingEl>>,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.upscaling = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.upscaling = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.upscaling = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.upscaling = std::option::Option::Some(d);
             },
         }
         self
     }
 }
 
-impl ToListMappable for OpsworksGangliaLayerLoadBasedAutoScalingEl {
-    type O = BlockAssignable<OpsworksGangliaLayerLoadBasedAutoScalingEl>;
+impl terrars::ToListMappable for OpsworksGangliaLayerLoadBasedAutoScalingEl {
+    type O = terrars::BlockAssignable<OpsworksGangliaLayerLoadBasedAutoScalingEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -1496,18 +1603,18 @@ impl BuildOpsworksGangliaLayerLoadBasedAutoScalingEl {
             enable: core::default::Default::default(),
             downscaling: core::default::Default::default(),
             upscaling: core::default::Default::default(),
-            dynamic: Default::default(),
+            dynamic: core::default::Default::default(),
         }
     }
 }
 
 pub struct OpsworksGangliaLayerLoadBasedAutoScalingElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for OpsworksGangliaLayerLoadBasedAutoScalingElRef {
-    fn new(shared: StackShared, base: String) -> OpsworksGangliaLayerLoadBasedAutoScalingElRef {
+impl terrars::Ref for OpsworksGangliaLayerLoadBasedAutoScalingElRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> OpsworksGangliaLayerLoadBasedAutoScalingElRef {
         OpsworksGangliaLayerLoadBasedAutoScalingElRef {
             shared: shared,
             base: base.to_string(),
@@ -1516,29 +1623,31 @@ impl Ref for OpsworksGangliaLayerLoadBasedAutoScalingElRef {
 }
 
 impl OpsworksGangliaLayerLoadBasedAutoScalingElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `enable` after provisioning.\n"]
-    pub fn enable(&self) -> PrimExpr<bool> {
-        PrimExpr::new(self.shared().clone(), format!("{}.enable", self.base))
+    #[doc = "Get a reference to the value of field `enable` after provisioning.\n"]
+    pub fn enable(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.enable", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `downscaling` after provisioning.\n"]
-    pub fn downscaling(&self) -> ListRef<OpsworksGangliaLayerLoadBasedAutoScalingElDownscalingElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.downscaling", self.base))
+    #[doc = "Get a reference to the value of field `downscaling` after provisioning.\n"]
+    pub fn downscaling(&self) -> terrars::ListRef<OpsworksGangliaLayerLoadBasedAutoScalingElDownscalingElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.downscaling", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `upscaling` after provisioning.\n"]
-    pub fn upscaling(&self) -> ListRef<OpsworksGangliaLayerLoadBasedAutoScalingElUpscalingElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.upscaling", self.base))
+    #[doc = "Get a reference to the value of field `upscaling` after provisioning.\n"]
+    pub fn upscaling(&self) -> terrars::ListRef<OpsworksGangliaLayerLoadBasedAutoScalingElUpscalingElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.upscaling", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
 struct OpsworksGangliaLayerDynamic {
-    cloudwatch_configuration: Option<DynamicBlock<OpsworksGangliaLayerCloudwatchConfigurationEl>>,
-    ebs_volume: Option<DynamicBlock<OpsworksGangliaLayerEbsVolumeEl>>,
-    load_based_auto_scaling: Option<DynamicBlock<OpsworksGangliaLayerLoadBasedAutoScalingEl>>,
+    cloudwatch_configuration: std
+    ::option
+    ::Option<terrars::DynamicBlock<OpsworksGangliaLayerCloudwatchConfigurationEl>>,
+    ebs_volume: std::option::Option<terrars::DynamicBlock<OpsworksGangliaLayerEbsVolumeEl>>,
+    load_based_auto_scaling: std::option::Option<terrars::DynamicBlock<OpsworksGangliaLayerLoadBasedAutoScalingEl>>,
 }

@@ -1,106 +1,137 @@
 use serde::Serialize;
-use std::cell::RefCell;
-use std::rc::Rc;
-use terrars::*;
+use terrars::{
+    Referable as _,
+    Datasource_ as _,
+    Ref as _,
+};
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
 struct DataEmrReleaseLabelsData {
-    #[serde(skip_serializing_if = "Vec::is_empty")]
-    depends_on: Vec<String>,
-    #[serde(skip_serializing_if = "SerdeSkipDefault::is_default")]
-    provider: Option<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    for_each: Option<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    id: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    filters: Option<Vec<DataEmrReleaseLabelsFiltersEl>>,
+    #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
+    depends_on: std::vec::Vec<std::string::String>,
+    #[serde(skip_serializing_if = "terrars::SerdeSkipDefault::is_default")]
+    provider: std::option::Option<std::string::String>,
+    #[serde(skip_serializing_if = "terrars::SerdeSkipDefault::is_default")]
+    lifecycle: terrars::DatasourceLifecycle,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    for_each: std::option::Option<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    id: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    filters: std::option::Option<std::vec::Vec<DataEmrReleaseLabelsFiltersEl>>,
     dynamic: DataEmrReleaseLabelsDynamic,
 }
 
 struct DataEmrReleaseLabels_ {
-    shared: StackShared,
-    tf_id: String,
-    data: RefCell<DataEmrReleaseLabelsData>,
+    shared: terrars::StackShared,
+    tf_id: std::string::String,
+    data: std::cell::RefCell<DataEmrReleaseLabelsData>,
 }
 
 #[derive(Clone)]
-pub struct DataEmrReleaseLabels(Rc<DataEmrReleaseLabels_>);
+pub struct DataEmrReleaseLabels(std::rc::Rc<DataEmrReleaseLabels_>);
 
 impl DataEmrReleaseLabels {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.0.shared
     }
 
-    pub fn depends_on(self, dep: &impl Referable) -> Self {
+    pub fn depends_on(self, dep: &impl terrars::Referable) -> Self {
         self.0.data.borrow_mut().depends_on.push(dep.extract_ref());
         self
     }
 
     pub fn set_provider(&self, provider: &ProviderAws) -> &Self {
-        self.0.data.borrow_mut().provider = Some(provider.provider_ref());
+        self.0.data.borrow_mut().provider = std::option::Option::Some(provider.provider_ref());
         self
     }
 
-    #[doc= "Set the field `id`.\n"]
-    pub fn set_id(self, v: impl Into<PrimField<String>>) -> Self {
-        self.0.data.borrow_mut().id = Some(v.into());
+    pub fn add_lifecycle_precondition(
+        self,
+        condition: impl std::convert::Into<terrars::PrimField<bool>>,
+        error_message: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.0.data.borrow_mut().lifecycle.precondition.push(terrars::LifecycleCondition {
+            condition: condition.into(),
+            error_message: error_message.into(),
+        });
         self
     }
 
-    #[doc= "Set the field `filters`.\n"]
-    pub fn set_filters(self, v: impl Into<BlockAssignable<DataEmrReleaseLabelsFiltersEl>>) -> Self {
+    pub fn add_lifecycle_postcondition(
+        self,
+        condition: impl std::convert::Into<terrars::PrimField<bool>>,
+        error_message: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.0.data.borrow_mut().lifecycle.postcondition.push(terrars::LifecycleCondition {
+            condition: condition.into(),
+            error_message: error_message.into(),
+        });
+        self
+    }
+
+    #[doc = "Set the field `id`.\n"]
+    pub fn set_id(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().id = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `filters`.\n"]
+    pub fn set_filters(
+        self,
+        v: impl std::convert::Into<terrars::BlockAssignable<DataEmrReleaseLabelsFiltersEl>>,
+    ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.0.data.borrow_mut().filters = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.0.data.borrow_mut().filters = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.0.data.borrow_mut().dynamic.filters = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.0.data.borrow_mut().dynamic.filters = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Get a reference to the value of field `id` after provisioning.\n"]
-    pub fn id(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
+    pub fn id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `release_labels` after provisioning.\n"]
-    pub fn release_labels(&self) -> ListRef<PrimExpr<String>> {
-        ListRef::new(self.shared().clone(), format!("{}.release_labels", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `release_labels` after provisioning.\n"]
+    pub fn release_labels(&self) -> terrars::ListRef<terrars::PrimExpr<std::string::String>> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.release_labels", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `filters` after provisioning.\n"]
-    pub fn filters(&self) -> ListRef<DataEmrReleaseLabelsFiltersElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.filters", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `filters` after provisioning.\n"]
+    pub fn filters(&self) -> terrars::ListRef<DataEmrReleaseLabelsFiltersElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.filters", self.extract_ref()))
     }
 }
 
-impl Referable for DataEmrReleaseLabels {
-    fn extract_ref(&self) -> String {
+impl terrars::Referable for DataEmrReleaseLabels {
+    fn extract_ref(&self) -> std::string::String {
         format!("data.{}.{}", self.0.extract_datasource_type(), self.0.extract_tf_id())
     }
 }
 
-impl Datasource for DataEmrReleaseLabels { }
+impl terrars::Datasource for DataEmrReleaseLabels { }
 
-impl ToListMappable for DataEmrReleaseLabels {
-    type O = ListRef<DataEmrReleaseLabelsRef>;
+impl terrars::ToListMappable for DataEmrReleaseLabels {
+    type O = terrars::ListRef<DataEmrReleaseLabelsRef>;
 
-    fn do_map(self, base: String) -> Self::O {
-        self.0.data.borrow_mut().for_each = Some(format!("${{{}}}", base));
-        ListRef::new(self.0.shared.clone(), self.extract_ref())
+    fn do_map(self, base: std::string::String) -> Self::O {
+        self.0.data.borrow_mut().for_each = std::option::Option::Some(format!("${{{}}}", base));
+        terrars::ListRef::new(self.0.shared.clone(), self.extract_ref())
     }
 }
 
-impl Datasource_ for DataEmrReleaseLabels_ {
-    fn extract_datasource_type(&self) -> String {
+impl terrars::Datasource_ for DataEmrReleaseLabels_ {
+    fn extract_datasource_type(&self) -> std::string::String {
         "aws_emr_release_labels".into()
     }
 
-    fn extract_tf_id(&self) -> String {
+    fn extract_tf_id(&self) -> std::string::String {
         self.tf_id.clone()
     }
 
@@ -110,21 +141,22 @@ impl Datasource_ for DataEmrReleaseLabels_ {
 }
 
 pub struct BuildDataEmrReleaseLabels {
-    pub tf_id: String,
+    pub tf_id: std::string::String,
 }
 
 impl BuildDataEmrReleaseLabels {
-    pub fn build(self, stack: &mut Stack) -> DataEmrReleaseLabels {
-        let out = DataEmrReleaseLabels(Rc::new(DataEmrReleaseLabels_ {
+    pub fn build(self, stack: &mut terrars::Stack) -> DataEmrReleaseLabels {
+        let out = DataEmrReleaseLabels(std::rc::Rc::new(DataEmrReleaseLabels_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: RefCell::new(DataEmrReleaseLabelsData {
+            data: std::cell::RefCell::new(DataEmrReleaseLabelsData {
                 depends_on: core::default::Default::default(),
-                provider: None,
-                for_each: None,
+                provider: std::option::Option::None,
+                lifecycle: core::default::Default::default(),
+                for_each: std::option::Option::None,
                 id: core::default::Default::default(),
                 filters: core::default::Default::default(),
-                dynamic: Default::default(),
+                dynamic: core::default::Default::default(),
             }),
         }));
         stack.add_datasource(out.0.clone());
@@ -133,12 +165,12 @@ impl BuildDataEmrReleaseLabels {
 }
 
 pub struct DataEmrReleaseLabelsRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for DataEmrReleaseLabelsRef {
-    fn new(shared: StackShared, base: String) -> Self {
+impl terrars::Ref for DataEmrReleaseLabelsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> Self {
         Self {
             shared: shared,
             base: base,
@@ -147,57 +179,57 @@ impl Ref for DataEmrReleaseLabelsRef {
 }
 
 impl DataEmrReleaseLabelsRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    fn extract_ref(&self) -> String {
+    fn extract_ref(&self) -> std::string::String {
         self.base.clone()
     }
 
-    #[doc= "Get a reference to the value of field `id` after provisioning.\n"]
-    pub fn id(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
+    pub fn id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `release_labels` after provisioning.\n"]
-    pub fn release_labels(&self) -> ListRef<PrimExpr<String>> {
-        ListRef::new(self.shared().clone(), format!("{}.release_labels", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `release_labels` after provisioning.\n"]
+    pub fn release_labels(&self) -> terrars::ListRef<terrars::PrimExpr<std::string::String>> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.release_labels", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `filters` after provisioning.\n"]
-    pub fn filters(&self) -> ListRef<DataEmrReleaseLabelsFiltersElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.filters", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `filters` after provisioning.\n"]
+    pub fn filters(&self) -> terrars::ListRef<DataEmrReleaseLabelsFiltersElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.filters", self.extract_ref()))
     }
 }
 
 #[derive(Serialize)]
 pub struct DataEmrReleaseLabelsFiltersEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    application: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    prefix: Option<PrimField<String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    application: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    prefix: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
 impl DataEmrReleaseLabelsFiltersEl {
-    #[doc= "Set the field `application`.\n"]
-    pub fn set_application(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.application = Some(v.into());
+    #[doc = "Set the field `application`.\n"]
+    pub fn set_application(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.application = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `prefix`.\n"]
-    pub fn set_prefix(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.prefix = Some(v.into());
+    #[doc = "Set the field `prefix`.\n"]
+    pub fn set_prefix(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.prefix = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl ToListMappable for DataEmrReleaseLabelsFiltersEl {
-    type O = BlockAssignable<DataEmrReleaseLabelsFiltersEl>;
+impl terrars::ToListMappable for DataEmrReleaseLabelsFiltersEl {
+    type O = terrars::BlockAssignable<DataEmrReleaseLabelsFiltersEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -217,12 +249,12 @@ impl BuildDataEmrReleaseLabelsFiltersEl {
 }
 
 pub struct DataEmrReleaseLabelsFiltersElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for DataEmrReleaseLabelsFiltersElRef {
-    fn new(shared: StackShared, base: String) -> DataEmrReleaseLabelsFiltersElRef {
+impl terrars::Ref for DataEmrReleaseLabelsFiltersElRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataEmrReleaseLabelsFiltersElRef {
         DataEmrReleaseLabelsFiltersElRef {
             shared: shared,
             base: base.to_string(),
@@ -231,22 +263,22 @@ impl Ref for DataEmrReleaseLabelsFiltersElRef {
 }
 
 impl DataEmrReleaseLabelsFiltersElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `application` after provisioning.\n"]
-    pub fn application(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.application", self.base))
+    #[doc = "Get a reference to the value of field `application` after provisioning.\n"]
+    pub fn application(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.application", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `prefix` after provisioning.\n"]
-    pub fn prefix(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.prefix", self.base))
+    #[doc = "Get a reference to the value of field `prefix` after provisioning.\n"]
+    pub fn prefix(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.prefix", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
 struct DataEmrReleaseLabelsDynamic {
-    filters: Option<DynamicBlock<DataEmrReleaseLabelsFiltersEl>>,
+    filters: std::option::Option<terrars::DynamicBlock<DataEmrReleaseLabelsFiltersEl>>,
 }

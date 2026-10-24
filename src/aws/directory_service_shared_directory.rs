@@ -1,54 +1,58 @@
 use serde::Serialize;
-use std::cell::RefCell;
-use std::rc::Rc;
-use terrars::*;
+use terrars::{
+    Referable as _,
+    Resource_ as _,
+    Ref as _,
+};
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
 struct DirectoryServiceSharedDirectoryData {
-    #[serde(skip_serializing_if = "Vec::is_empty")]
-    depends_on: Vec<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    provider: Option<String>,
-    #[serde(skip_serializing_if = "SerdeSkipDefault::is_default")]
-    lifecycle: ResourceLifecycle,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    for_each: Option<String>,
-    directory_id: PrimField<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    id: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    method: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    notes: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    target: Option<Vec<DirectoryServiceSharedDirectoryTargetEl>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    timeouts: Option<DirectoryServiceSharedDirectoryTimeoutsEl>,
+    #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
+    depends_on: std::vec::Vec<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    provider: std::option::Option<std::string::String>,
+    #[serde(skip_serializing_if = "terrars::SerdeSkipDefault::is_default")]
+    lifecycle: terrars::ResourceLifecycle,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    for_each: std::option::Option<std::string::String>,
+    #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
+    provisioner: std::vec::Vec<terrars::Provisioner>,
+    directory_id: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    id: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    method: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    notes: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    target: std::option::Option<std::vec::Vec<DirectoryServiceSharedDirectoryTargetEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    timeouts: std::option::Option<DirectoryServiceSharedDirectoryTimeoutsEl>,
     dynamic: DirectoryServiceSharedDirectoryDynamic,
 }
 
 struct DirectoryServiceSharedDirectory_ {
-    shared: StackShared,
-    tf_id: String,
-    data: RefCell<DirectoryServiceSharedDirectoryData>,
+    shared: terrars::StackShared,
+    tf_id: std::string::String,
+    data: std::cell::RefCell<DirectoryServiceSharedDirectoryData>,
 }
 
 #[derive(Clone)]
-pub struct DirectoryServiceSharedDirectory(Rc<DirectoryServiceSharedDirectory_>);
+pub struct DirectoryServiceSharedDirectory(std::rc::Rc<DirectoryServiceSharedDirectory_>);
 
 impl DirectoryServiceSharedDirectory {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.0.shared
     }
 
-    pub fn depends_on(self, dep: &impl Referable) -> Self {
+    pub fn depends_on(self, dep: &impl terrars::Referable) -> Self {
         self.0.data.borrow_mut().depends_on.push(dep.extract_ref());
         self
     }
 
     pub fn set_provider(self, provider: &ProviderAws) -> Self {
-        self.0.data.borrow_mut().provider = Some(provider.provider_ref());
+        self.0.data.borrow_mut().provider = std::option::Option::Some(provider.provider_ref());
         self
     }
 
@@ -63,109 +67,145 @@ impl DirectoryServiceSharedDirectory {
     }
 
     pub fn ignore_changes_to_all(self) -> Self {
-        self.0.data.borrow_mut().lifecycle.ignore_changes = Some(IgnoreChanges::All(IgnoreChangesAll::All));
+        self.0.data.borrow_mut().lifecycle.ignore_changes =
+            std::option::Option::Some(terrars::IgnoreChanges::All(terrars::IgnoreChangesAll::All));
         self
     }
 
-    pub fn ignore_changes_to_attr(self, attr: impl ToString) -> Self {
+    pub fn ignore_changes_to_attr(self, attr: impl std::string::ToString) -> Self {
         {
             let mut d = self.0.data.borrow_mut();
             if match &mut d.lifecycle.ignore_changes {
-                Some(i) => match i {
-                    IgnoreChanges::All(_) => {
+                std::option::Option::Some(i) => match i {
+                    terrars::IgnoreChanges::All(_) => {
                         true
                     },
-                    IgnoreChanges::Refs(r) => {
+                    terrars::IgnoreChanges::Refs(r) => {
                         r.push(attr.to_string());
                         false
                     },
                 },
-                None => true,
+                std::option::Option::None => true,
             } {
-                d.lifecycle.ignore_changes = Some(IgnoreChanges::Refs(vec![attr.to_string()]));
+                d.lifecycle.ignore_changes =
+                    std::option::Option::Some(terrars::IgnoreChanges::Refs(vec![attr.to_string()]));
             }
         }
         self
     }
 
-    pub fn replace_triggered_by_resource(self, r: &impl Resource) -> Self {
+    pub fn replace_triggered_by_resource(self, r: &impl terrars::Resource) -> Self {
         self.0.data.borrow_mut().lifecycle.replace_triggered_by.push(r.extract_ref());
         self
     }
 
-    pub fn replace_triggered_by_attr(self, attr: impl ToString) -> Self {
+    pub fn replace_triggered_by_attr(self, attr: impl std::string::ToString) -> Self {
         self.0.data.borrow_mut().lifecycle.replace_triggered_by.push(attr.to_string());
         self
     }
 
-    #[doc= "Set the field `id`.\n"]
-    pub fn set_id(self, v: impl Into<PrimField<String>>) -> Self {
-        self.0.data.borrow_mut().id = Some(v.into());
+    #[doc = r" Add a provisioner (ex: `local-exec`, `remote-exec`, `file`) to this resource."]
+    #[doc = r" Provisioners run in the order they're added."]
+    pub fn add_provisioner(self, v: impl std::convert::Into<terrars::Provisioner>) -> Self {
+        self.0.data.borrow_mut().provisioner.push(v.into());
         self
     }
 
-    #[doc= "Set the field `method`.\n"]
-    pub fn set_method(self, v: impl Into<PrimField<String>>) -> Self {
-        self.0.data.borrow_mut().method = Some(v.into());
+    pub fn add_lifecycle_precondition(
+        self,
+        condition: impl std::convert::Into<terrars::PrimField<bool>>,
+        error_message: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.0.data.borrow_mut().lifecycle.precondition.push(terrars::LifecycleCondition {
+            condition: condition.into(),
+            error_message: error_message.into(),
+        });
         self
     }
 
-    #[doc= "Set the field `notes`.\n"]
-    pub fn set_notes(self, v: impl Into<PrimField<String>>) -> Self {
-        self.0.data.borrow_mut().notes = Some(v.into());
+    pub fn add_lifecycle_postcondition(
+        self,
+        condition: impl std::convert::Into<terrars::PrimField<bool>>,
+        error_message: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.0.data.borrow_mut().lifecycle.postcondition.push(terrars::LifecycleCondition {
+            condition: condition.into(),
+            error_message: error_message.into(),
+        });
         self
     }
 
-    #[doc= "Set the field `target`.\n"]
-    pub fn set_target(self, v: impl Into<BlockAssignable<DirectoryServiceSharedDirectoryTargetEl>>) -> Self {
+    #[doc = "Set the field `id`.\n"]
+    pub fn set_id(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().id = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `method`.\n"]
+    pub fn set_method(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().method = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `notes`.\n"]
+    pub fn set_notes(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().notes = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `target`.\n"]
+    pub fn set_target(
+        self,
+        v: impl std::convert::Into<terrars::BlockAssignable<DirectoryServiceSharedDirectoryTargetEl>>,
+    ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.0.data.borrow_mut().target = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.0.data.borrow_mut().target = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.0.data.borrow_mut().dynamic.target = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.0.data.borrow_mut().dynamic.target = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Set the field `timeouts`.\n"]
-    pub fn set_timeouts(self, v: impl Into<DirectoryServiceSharedDirectoryTimeoutsEl>) -> Self {
-        self.0.data.borrow_mut().timeouts = Some(v.into());
+    #[doc = "Set the field `timeouts`.\n"]
+    pub fn set_timeouts(self, v: impl std::convert::Into<DirectoryServiceSharedDirectoryTimeoutsEl>) -> Self {
+        self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Get a reference to the value of field `directory_id` after provisioning.\n"]
-    pub fn directory_id(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.directory_id", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `directory_id` after provisioning.\n"]
+    pub fn directory_id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.directory_id", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `id` after provisioning.\n"]
-    pub fn id(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
+    pub fn id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `method` after provisioning.\n"]
-    pub fn method(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.method", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `method` after provisioning.\n"]
+    pub fn method(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.method", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `notes` after provisioning.\n"]
-    pub fn notes(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.notes", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `notes` after provisioning.\n"]
+    pub fn notes(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.notes", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `shared_directory_id` after provisioning.\n"]
-    pub fn shared_directory_id(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.shared_directory_id", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `shared_directory_id` after provisioning.\n"]
+    pub fn shared_directory_id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.shared_directory_id", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `target` after provisioning.\n"]
-    pub fn target(&self) -> ListRef<DirectoryServiceSharedDirectoryTargetElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.target", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `target` after provisioning.\n"]
+    pub fn target(&self) -> terrars::ListRef<DirectoryServiceSharedDirectoryTargetElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.target", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `timeouts` after provisioning.\n"]
+    #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
     pub fn timeouts(&self) -> DirectoryServiceSharedDirectoryTimeoutsElRef {
         DirectoryServiceSharedDirectoryTimeoutsElRef::new(
             self.shared().clone(),
@@ -174,29 +214,29 @@ impl DirectoryServiceSharedDirectory {
     }
 }
 
-impl Referable for DirectoryServiceSharedDirectory {
-    fn extract_ref(&self) -> String {
+impl terrars::Referable for DirectoryServiceSharedDirectory {
+    fn extract_ref(&self) -> std::string::String {
         format!("{}.{}", self.0.extract_resource_type(), self.0.extract_tf_id())
     }
 }
 
-impl Resource for DirectoryServiceSharedDirectory { }
+impl terrars::Resource for DirectoryServiceSharedDirectory { }
 
-impl ToListMappable for DirectoryServiceSharedDirectory {
-    type O = ListRef<DirectoryServiceSharedDirectoryRef>;
+impl terrars::ToListMappable for DirectoryServiceSharedDirectory {
+    type O = terrars::ListRef<DirectoryServiceSharedDirectoryRef>;
 
-    fn do_map(self, base: String) -> Self::O {
-        self.0.data.borrow_mut().for_each = Some(format!("${{{}}}", base));
-        ListRef::new(self.0.shared.clone(), self.extract_ref())
+    fn do_map(self, base: std::string::String) -> Self::O {
+        self.0.data.borrow_mut().for_each = std::option::Option::Some(format!("${{{}}}", base));
+        terrars::ListRef::new(self.0.shared.clone(), self.extract_ref())
     }
 }
 
-impl Resource_ for DirectoryServiceSharedDirectory_ {
-    fn extract_resource_type(&self) -> String {
+impl terrars::Resource_ for DirectoryServiceSharedDirectory_ {
+    fn extract_resource_type(&self) -> std::string::String {
         "aws_directory_service_shared_directory".into()
     }
 
-    fn extract_tf_id(&self) -> String {
+    fn extract_tf_id(&self) -> std::string::String {
         self.tf_id.clone()
     }
 
@@ -206,28 +246,29 @@ impl Resource_ for DirectoryServiceSharedDirectory_ {
 }
 
 pub struct BuildDirectoryServiceSharedDirectory {
-    pub tf_id: String,
-    #[doc= ""]
-    pub directory_id: PrimField<String>,
+    pub tf_id: std::string::String,
+    #[doc = ""]
+    pub directory_id: terrars::PrimField<std::string::String>,
 }
 
 impl BuildDirectoryServiceSharedDirectory {
-    pub fn build(self, stack: &mut Stack) -> DirectoryServiceSharedDirectory {
-        let out = DirectoryServiceSharedDirectory(Rc::new(DirectoryServiceSharedDirectory_ {
+    pub fn build(self, stack: &mut terrars::Stack) -> DirectoryServiceSharedDirectory {
+        let out = DirectoryServiceSharedDirectory(std::rc::Rc::new(DirectoryServiceSharedDirectory_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: RefCell::new(DirectoryServiceSharedDirectoryData {
+            data: std::cell::RefCell::new(DirectoryServiceSharedDirectoryData {
                 depends_on: core::default::Default::default(),
-                provider: None,
+                provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
-                for_each: None,
+                for_each: std::option::Option::None,
+                provisioner: core::default::Default::default(),
                 directory_id: self.directory_id,
                 id: core::default::Default::default(),
                 method: core::default::Default::default(),
                 notes: core::default::Default::default(),
                 target: core::default::Default::default(),
                 timeouts: core::default::Default::default(),
-                dynamic: Default::default(),
+                dynamic: core::default::Default::default(),
             }),
         }));
         stack.add_resource(out.0.clone());
@@ -236,12 +277,12 @@ impl BuildDirectoryServiceSharedDirectory {
 }
 
 pub struct DirectoryServiceSharedDirectoryRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for DirectoryServiceSharedDirectoryRef {
-    fn new(shared: StackShared, base: String) -> Self {
+impl terrars::Ref for DirectoryServiceSharedDirectoryRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> Self {
         Self {
             shared: shared,
             base: base,
@@ -250,45 +291,45 @@ impl Ref for DirectoryServiceSharedDirectoryRef {
 }
 
 impl DirectoryServiceSharedDirectoryRef {
-    fn extract_ref(&self) -> String {
+    fn extract_ref(&self) -> std::string::String {
         self.base.clone()
     }
 
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `directory_id` after provisioning.\n"]
-    pub fn directory_id(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.directory_id", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `directory_id` after provisioning.\n"]
+    pub fn directory_id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.directory_id", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `id` after provisioning.\n"]
-    pub fn id(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
+    pub fn id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `method` after provisioning.\n"]
-    pub fn method(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.method", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `method` after provisioning.\n"]
+    pub fn method(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.method", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `notes` after provisioning.\n"]
-    pub fn notes(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.notes", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `notes` after provisioning.\n"]
+    pub fn notes(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.notes", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `shared_directory_id` after provisioning.\n"]
-    pub fn shared_directory_id(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.shared_directory_id", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `shared_directory_id` after provisioning.\n"]
+    pub fn shared_directory_id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.shared_directory_id", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `target` after provisioning.\n"]
-    pub fn target(&self) -> ListRef<DirectoryServiceSharedDirectoryTargetElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.target", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `target` after provisioning.\n"]
+    pub fn target(&self) -> terrars::ListRef<DirectoryServiceSharedDirectoryTargetElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.target", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `timeouts` after provisioning.\n"]
+    #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
     pub fn timeouts(&self) -> DirectoryServiceSharedDirectoryTimeoutsElRef {
         DirectoryServiceSharedDirectoryTimeoutsElRef::new(
             self.shared().clone(),
@@ -299,24 +340,24 @@ impl DirectoryServiceSharedDirectoryRef {
 
 #[derive(Serialize)]
 pub struct DirectoryServiceSharedDirectoryTargetEl {
-    id: PrimField<String>,
-    #[serde(rename = "type", skip_serializing_if = "Option::is_none")]
-    type_: Option<PrimField<String>>,
+    id: terrars::PrimField<std::string::String>,
+    #[serde(rename = "type", skip_serializing_if = "std::option::Option::is_none")]
+    type_: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
 impl DirectoryServiceSharedDirectoryTargetEl {
-    #[doc= "Set the field `type_`.\n"]
-    pub fn set_type(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.type_ = Some(v.into());
+    #[doc = "Set the field `type_`.\n"]
+    pub fn set_type(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.type_ = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl ToListMappable for DirectoryServiceSharedDirectoryTargetEl {
-    type O = BlockAssignable<DirectoryServiceSharedDirectoryTargetEl>;
+impl terrars::ToListMappable for DirectoryServiceSharedDirectoryTargetEl {
+    type O = terrars::BlockAssignable<DirectoryServiceSharedDirectoryTargetEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -325,8 +366,8 @@ impl ToListMappable for DirectoryServiceSharedDirectoryTargetEl {
 }
 
 pub struct BuildDirectoryServiceSharedDirectoryTargetEl {
-    #[doc= ""]
-    pub id: PrimField<String>,
+    #[doc = ""]
+    pub id: terrars::PrimField<std::string::String>,
 }
 
 impl BuildDirectoryServiceSharedDirectoryTargetEl {
@@ -339,12 +380,12 @@ impl BuildDirectoryServiceSharedDirectoryTargetEl {
 }
 
 pub struct DirectoryServiceSharedDirectoryTargetElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for DirectoryServiceSharedDirectoryTargetElRef {
-    fn new(shared: StackShared, base: String) -> DirectoryServiceSharedDirectoryTargetElRef {
+impl terrars::Ref for DirectoryServiceSharedDirectoryTargetElRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DirectoryServiceSharedDirectoryTargetElRef {
         DirectoryServiceSharedDirectoryTargetElRef {
             shared: shared,
             base: base.to_string(),
@@ -353,40 +394,40 @@ impl Ref for DirectoryServiceSharedDirectoryTargetElRef {
 }
 
 impl DirectoryServiceSharedDirectoryTargetElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `id` after provisioning.\n"]
-    pub fn id(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.id", self.base))
+    #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
+    pub fn id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `type_` after provisioning.\n"]
-    pub fn type_(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.type", self.base))
+    #[doc = "Get a reference to the value of field `type_` after provisioning.\n"]
+    pub fn type_(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.type", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct DirectoryServiceSharedDirectoryTimeoutsEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    delete: Option<PrimField<String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    delete: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
 impl DirectoryServiceSharedDirectoryTimeoutsEl {
-    #[doc= "Set the field `delete`.\n"]
-    pub fn set_delete(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.delete = Some(v.into());
+    #[doc = "Set the field `delete`.\n"]
+    pub fn set_delete(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.delete = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl ToListMappable for DirectoryServiceSharedDirectoryTimeoutsEl {
-    type O = BlockAssignable<DirectoryServiceSharedDirectoryTimeoutsEl>;
+impl terrars::ToListMappable for DirectoryServiceSharedDirectoryTimeoutsEl {
+    type O = terrars::BlockAssignable<DirectoryServiceSharedDirectoryTimeoutsEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -403,12 +444,12 @@ impl BuildDirectoryServiceSharedDirectoryTimeoutsEl {
 }
 
 pub struct DirectoryServiceSharedDirectoryTimeoutsElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for DirectoryServiceSharedDirectoryTimeoutsElRef {
-    fn new(shared: StackShared, base: String) -> DirectoryServiceSharedDirectoryTimeoutsElRef {
+impl terrars::Ref for DirectoryServiceSharedDirectoryTimeoutsElRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DirectoryServiceSharedDirectoryTimeoutsElRef {
         DirectoryServiceSharedDirectoryTimeoutsElRef {
             shared: shared,
             base: base.to_string(),
@@ -417,17 +458,17 @@ impl Ref for DirectoryServiceSharedDirectoryTimeoutsElRef {
 }
 
 impl DirectoryServiceSharedDirectoryTimeoutsElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `delete` after provisioning.\n"]
-    pub fn delete(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.delete", self.base))
+    #[doc = "Get a reference to the value of field `delete` after provisioning.\n"]
+    pub fn delete(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.delete", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
 struct DirectoryServiceSharedDirectoryDynamic {
-    target: Option<DynamicBlock<DirectoryServiceSharedDirectoryTargetEl>>,
+    target: std::option::Option<terrars::DynamicBlock<DirectoryServiceSharedDirectoryTargetEl>>,
 }

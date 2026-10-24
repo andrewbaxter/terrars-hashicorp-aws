@@ -1,119 +1,147 @@
 use serde::Serialize;
-use std::cell::RefCell;
-use std::rc::Rc;
-use terrars::*;
+use terrars::{
+    Referable as _,
+    Datasource_ as _,
+    Ref as _,
+};
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
 struct DataCloudhsmV2ClusterData {
-    #[serde(skip_serializing_if = "Vec::is_empty")]
-    depends_on: Vec<String>,
-    #[serde(skip_serializing_if = "SerdeSkipDefault::is_default")]
-    provider: Option<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    for_each: Option<String>,
-    cluster_id: PrimField<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    cluster_state: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    id: Option<PrimField<String>>,
+    #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
+    depends_on: std::vec::Vec<std::string::String>,
+    #[serde(skip_serializing_if = "terrars::SerdeSkipDefault::is_default")]
+    provider: std::option::Option<std::string::String>,
+    #[serde(skip_serializing_if = "terrars::SerdeSkipDefault::is_default")]
+    lifecycle: terrars::DatasourceLifecycle,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    for_each: std::option::Option<std::string::String>,
+    cluster_id: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    cluster_state: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    id: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
 struct DataCloudhsmV2Cluster_ {
-    shared: StackShared,
-    tf_id: String,
-    data: RefCell<DataCloudhsmV2ClusterData>,
+    shared: terrars::StackShared,
+    tf_id: std::string::String,
+    data: std::cell::RefCell<DataCloudhsmV2ClusterData>,
 }
 
 #[derive(Clone)]
-pub struct DataCloudhsmV2Cluster(Rc<DataCloudhsmV2Cluster_>);
+pub struct DataCloudhsmV2Cluster(std::rc::Rc<DataCloudhsmV2Cluster_>);
 
 impl DataCloudhsmV2Cluster {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.0.shared
     }
 
-    pub fn depends_on(self, dep: &impl Referable) -> Self {
+    pub fn depends_on(self, dep: &impl terrars::Referable) -> Self {
         self.0.data.borrow_mut().depends_on.push(dep.extract_ref());
         self
     }
 
     pub fn set_provider(&self, provider: &ProviderAws) -> &Self {
-        self.0.data.borrow_mut().provider = Some(provider.provider_ref());
+        self.0.data.borrow_mut().provider = std::option::Option::Some(provider.provider_ref());
         self
     }
 
-    #[doc= "Set the field `cluster_state`.\n"]
-    pub fn set_cluster_state(self, v: impl Into<PrimField<String>>) -> Self {
-        self.0.data.borrow_mut().cluster_state = Some(v.into());
+    pub fn add_lifecycle_precondition(
+        self,
+        condition: impl std::convert::Into<terrars::PrimField<bool>>,
+        error_message: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.0.data.borrow_mut().lifecycle.precondition.push(terrars::LifecycleCondition {
+            condition: condition.into(),
+            error_message: error_message.into(),
+        });
         self
     }
 
-    #[doc= "Set the field `id`.\n"]
-    pub fn set_id(self, v: impl Into<PrimField<String>>) -> Self {
-        self.0.data.borrow_mut().id = Some(v.into());
+    pub fn add_lifecycle_postcondition(
+        self,
+        condition: impl std::convert::Into<terrars::PrimField<bool>>,
+        error_message: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.0.data.borrow_mut().lifecycle.postcondition.push(terrars::LifecycleCondition {
+            condition: condition.into(),
+            error_message: error_message.into(),
+        });
         self
     }
 
-    #[doc= "Get a reference to the value of field `cluster_certificates` after provisioning.\n"]
-    pub fn cluster_certificates(&self) -> ListRef<DataCloudhsmV2ClusterClusterCertificatesElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.cluster_certificates", self.extract_ref()))
+    #[doc = "Set the field `cluster_state`.\n"]
+    pub fn set_cluster_state(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().cluster_state = std::option::Option::Some(v.into());
+        self
     }
 
-    #[doc= "Get a reference to the value of field `cluster_id` after provisioning.\n"]
-    pub fn cluster_id(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.cluster_id", self.extract_ref()))
+    #[doc = "Set the field `id`.\n"]
+    pub fn set_id(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().id = std::option::Option::Some(v.into());
+        self
     }
 
-    #[doc= "Get a reference to the value of field `cluster_state` after provisioning.\n"]
-    pub fn cluster_state(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.cluster_state", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `cluster_certificates` after provisioning.\n"]
+    pub fn cluster_certificates(&self) -> terrars::ListRef<DataCloudhsmV2ClusterClusterCertificatesElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.cluster_certificates", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `id` after provisioning.\n"]
-    pub fn id(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `cluster_id` after provisioning.\n"]
+    pub fn cluster_id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.cluster_id", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `security_group_id` after provisioning.\n"]
-    pub fn security_group_id(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.security_group_id", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `cluster_state` after provisioning.\n"]
+    pub fn cluster_state(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.cluster_state", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `subnet_ids` after provisioning.\n"]
-    pub fn subnet_ids(&self) -> SetRef<PrimExpr<String>> {
-        SetRef::new(self.shared().clone(), format!("{}.subnet_ids", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
+    pub fn id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `vpc_id` after provisioning.\n"]
-    pub fn vpc_id(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.vpc_id", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `security_group_id` after provisioning.\n"]
+    pub fn security_group_id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.security_group_id", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `subnet_ids` after provisioning.\n"]
+    pub fn subnet_ids(&self) -> terrars::SetRef<terrars::PrimExpr<std::string::String>> {
+        terrars::SetRef::new(self.shared().clone(), format!("{}.subnet_ids", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `vpc_id` after provisioning.\n"]
+    pub fn vpc_id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.vpc_id", self.extract_ref()))
     }
 }
 
-impl Referable for DataCloudhsmV2Cluster {
-    fn extract_ref(&self) -> String {
+impl terrars::Referable for DataCloudhsmV2Cluster {
+    fn extract_ref(&self) -> std::string::String {
         format!("data.{}.{}", self.0.extract_datasource_type(), self.0.extract_tf_id())
     }
 }
 
-impl Datasource for DataCloudhsmV2Cluster { }
+impl terrars::Datasource for DataCloudhsmV2Cluster { }
 
-impl ToListMappable for DataCloudhsmV2Cluster {
-    type O = ListRef<DataCloudhsmV2ClusterRef>;
+impl terrars::ToListMappable for DataCloudhsmV2Cluster {
+    type O = terrars::ListRef<DataCloudhsmV2ClusterRef>;
 
-    fn do_map(self, base: String) -> Self::O {
-        self.0.data.borrow_mut().for_each = Some(format!("${{{}}}", base));
-        ListRef::new(self.0.shared.clone(), self.extract_ref())
+    fn do_map(self, base: std::string::String) -> Self::O {
+        self.0.data.borrow_mut().for_each = std::option::Option::Some(format!("${{{}}}", base));
+        terrars::ListRef::new(self.0.shared.clone(), self.extract_ref())
     }
 }
 
-impl Datasource_ for DataCloudhsmV2Cluster_ {
-    fn extract_datasource_type(&self) -> String {
+impl terrars::Datasource_ for DataCloudhsmV2Cluster_ {
+    fn extract_datasource_type(&self) -> std::string::String {
         "aws_cloudhsm_v2_cluster".into()
     }
 
-    fn extract_tf_id(&self) -> String {
+    fn extract_tf_id(&self) -> std::string::String {
         self.tf_id.clone()
     }
 
@@ -123,20 +151,21 @@ impl Datasource_ for DataCloudhsmV2Cluster_ {
 }
 
 pub struct BuildDataCloudhsmV2Cluster {
-    pub tf_id: String,
-    #[doc= ""]
-    pub cluster_id: PrimField<String>,
+    pub tf_id: std::string::String,
+    #[doc = ""]
+    pub cluster_id: terrars::PrimField<std::string::String>,
 }
 
 impl BuildDataCloudhsmV2Cluster {
-    pub fn build(self, stack: &mut Stack) -> DataCloudhsmV2Cluster {
-        let out = DataCloudhsmV2Cluster(Rc::new(DataCloudhsmV2Cluster_ {
+    pub fn build(self, stack: &mut terrars::Stack) -> DataCloudhsmV2Cluster {
+        let out = DataCloudhsmV2Cluster(std::rc::Rc::new(DataCloudhsmV2Cluster_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: RefCell::new(DataCloudhsmV2ClusterData {
+            data: std::cell::RefCell::new(DataCloudhsmV2ClusterData {
                 depends_on: core::default::Default::default(),
-                provider: None,
-                for_each: None,
+                provider: std::option::Option::None,
+                lifecycle: core::default::Default::default(),
+                for_each: std::option::Option::None,
                 cluster_id: self.cluster_id,
                 cluster_state: core::default::Default::default(),
                 id: core::default::Default::default(),
@@ -148,12 +177,12 @@ impl BuildDataCloudhsmV2Cluster {
 }
 
 pub struct DataCloudhsmV2ClusterRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for DataCloudhsmV2ClusterRef {
-    fn new(shared: StackShared, base: String) -> Self {
+impl terrars::Ref for DataCloudhsmV2ClusterRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> Self {
         Self {
             shared: shared,
             base: base,
@@ -162,101 +191,110 @@ impl Ref for DataCloudhsmV2ClusterRef {
 }
 
 impl DataCloudhsmV2ClusterRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    fn extract_ref(&self) -> String {
+    fn extract_ref(&self) -> std::string::String {
         self.base.clone()
     }
 
-    #[doc= "Get a reference to the value of field `cluster_certificates` after provisioning.\n"]
-    pub fn cluster_certificates(&self) -> ListRef<DataCloudhsmV2ClusterClusterCertificatesElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.cluster_certificates", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `cluster_certificates` after provisioning.\n"]
+    pub fn cluster_certificates(&self) -> terrars::ListRef<DataCloudhsmV2ClusterClusterCertificatesElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.cluster_certificates", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `cluster_id` after provisioning.\n"]
-    pub fn cluster_id(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.cluster_id", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `cluster_id` after provisioning.\n"]
+    pub fn cluster_id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.cluster_id", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `cluster_state` after provisioning.\n"]
-    pub fn cluster_state(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.cluster_state", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `cluster_state` after provisioning.\n"]
+    pub fn cluster_state(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.cluster_state", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `id` after provisioning.\n"]
-    pub fn id(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
+    pub fn id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `security_group_id` after provisioning.\n"]
-    pub fn security_group_id(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.security_group_id", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `security_group_id` after provisioning.\n"]
+    pub fn security_group_id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.security_group_id", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `subnet_ids` after provisioning.\n"]
-    pub fn subnet_ids(&self) -> SetRef<PrimExpr<String>> {
-        SetRef::new(self.shared().clone(), format!("{}.subnet_ids", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `subnet_ids` after provisioning.\n"]
+    pub fn subnet_ids(&self) -> terrars::SetRef<terrars::PrimExpr<std::string::String>> {
+        terrars::SetRef::new(self.shared().clone(), format!("{}.subnet_ids", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `vpc_id` after provisioning.\n"]
-    pub fn vpc_id(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.vpc_id", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `vpc_id` after provisioning.\n"]
+    pub fn vpc_id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.vpc_id", self.extract_ref()))
     }
 }
 
 #[derive(Serialize)]
 pub struct DataCloudhsmV2ClusterClusterCertificatesEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    aws_hardware_certificate: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    cluster_certificate: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    cluster_csr: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    hsm_certificate: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    manufacturer_hardware_certificate: Option<PrimField<String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    aws_hardware_certificate: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    cluster_certificate: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    cluster_csr: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    hsm_certificate: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    manufacturer_hardware_certificate: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
 impl DataCloudhsmV2ClusterClusterCertificatesEl {
-    #[doc= "Set the field `aws_hardware_certificate`.\n"]
-    pub fn set_aws_hardware_certificate(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.aws_hardware_certificate = Some(v.into());
+    #[doc = "Set the field `aws_hardware_certificate`.\n"]
+    pub fn set_aws_hardware_certificate(
+        mut self,
+        v: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.aws_hardware_certificate = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `cluster_certificate`.\n"]
-    pub fn set_cluster_certificate(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.cluster_certificate = Some(v.into());
+    #[doc = "Set the field `cluster_certificate`.\n"]
+    pub fn set_cluster_certificate(
+        mut self,
+        v: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.cluster_certificate = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `cluster_csr`.\n"]
-    pub fn set_cluster_csr(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.cluster_csr = Some(v.into());
+    #[doc = "Set the field `cluster_csr`.\n"]
+    pub fn set_cluster_csr(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.cluster_csr = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `hsm_certificate`.\n"]
-    pub fn set_hsm_certificate(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.hsm_certificate = Some(v.into());
+    #[doc = "Set the field `hsm_certificate`.\n"]
+    pub fn set_hsm_certificate(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.hsm_certificate = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `manufacturer_hardware_certificate`.\n"]
-    pub fn set_manufacturer_hardware_certificate(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.manufacturer_hardware_certificate = Some(v.into());
+    #[doc = "Set the field `manufacturer_hardware_certificate`.\n"]
+    pub fn set_manufacturer_hardware_certificate(
+        mut self,
+        v: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.manufacturer_hardware_certificate = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl ToListMappable for DataCloudhsmV2ClusterClusterCertificatesEl {
-    type O = BlockAssignable<DataCloudhsmV2ClusterClusterCertificatesEl>;
+impl terrars::ToListMappable for DataCloudhsmV2ClusterClusterCertificatesEl {
+    type O = terrars::BlockAssignable<DataCloudhsmV2ClusterClusterCertificatesEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -279,12 +317,12 @@ impl BuildDataCloudhsmV2ClusterClusterCertificatesEl {
 }
 
 pub struct DataCloudhsmV2ClusterClusterCertificatesElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for DataCloudhsmV2ClusterClusterCertificatesElRef {
-    fn new(shared: StackShared, base: String) -> DataCloudhsmV2ClusterClusterCertificatesElRef {
+impl terrars::Ref for DataCloudhsmV2ClusterClusterCertificatesElRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataCloudhsmV2ClusterClusterCertificatesElRef {
         DataCloudhsmV2ClusterClusterCertificatesElRef {
             shared: shared,
             base: base.to_string(),
@@ -293,32 +331,32 @@ impl Ref for DataCloudhsmV2ClusterClusterCertificatesElRef {
 }
 
 impl DataCloudhsmV2ClusterClusterCertificatesElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `aws_hardware_certificate` after provisioning.\n"]
-    pub fn aws_hardware_certificate(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.aws_hardware_certificate", self.base))
+    #[doc = "Get a reference to the value of field `aws_hardware_certificate` after provisioning.\n"]
+    pub fn aws_hardware_certificate(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.aws_hardware_certificate", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `cluster_certificate` after provisioning.\n"]
-    pub fn cluster_certificate(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.cluster_certificate", self.base))
+    #[doc = "Get a reference to the value of field `cluster_certificate` after provisioning.\n"]
+    pub fn cluster_certificate(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.cluster_certificate", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `cluster_csr` after provisioning.\n"]
-    pub fn cluster_csr(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.cluster_csr", self.base))
+    #[doc = "Get a reference to the value of field `cluster_csr` after provisioning.\n"]
+    pub fn cluster_csr(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.cluster_csr", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `hsm_certificate` after provisioning.\n"]
-    pub fn hsm_certificate(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.hsm_certificate", self.base))
+    #[doc = "Get a reference to the value of field `hsm_certificate` after provisioning.\n"]
+    pub fn hsm_certificate(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.hsm_certificate", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `manufacturer_hardware_certificate` after provisioning.\n"]
-    pub fn manufacturer_hardware_certificate(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.manufacturer_hardware_certificate", self.base))
+    #[doc = "Get a reference to the value of field `manufacturer_hardware_certificate` after provisioning.\n"]
+    pub fn manufacturer_hardware_certificate(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.manufacturer_hardware_certificate", self.base))
     }
 }

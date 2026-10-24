@@ -1,65 +1,69 @@
 use serde::Serialize;
-use std::cell::RefCell;
-use std::rc::Rc;
-use terrars::*;
+use terrars::{
+    Referable as _,
+    Resource_ as _,
+    Ref as _,
+};
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
 struct DbProxyData {
-    #[serde(skip_serializing_if = "Vec::is_empty")]
-    depends_on: Vec<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    provider: Option<String>,
-    #[serde(skip_serializing_if = "SerdeSkipDefault::is_default")]
-    lifecycle: ResourceLifecycle,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    for_each: Option<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    debug_logging: Option<PrimField<bool>>,
-    engine_family: PrimField<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    id: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    idle_client_timeout: Option<PrimField<f64>>,
-    name: PrimField<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    require_tls: Option<PrimField<bool>>,
-    role_arn: PrimField<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    tags: Option<RecField<PrimField<String>>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    tags_all: Option<RecField<PrimField<String>>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    vpc_security_group_ids: Option<SetField<PrimField<String>>>,
-    vpc_subnet_ids: SetField<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    auth: Option<Vec<DbProxyAuthEl>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    timeouts: Option<DbProxyTimeoutsEl>,
+    #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
+    depends_on: std::vec::Vec<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    provider: std::option::Option<std::string::String>,
+    #[serde(skip_serializing_if = "terrars::SerdeSkipDefault::is_default")]
+    lifecycle: terrars::ResourceLifecycle,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    for_each: std::option::Option<std::string::String>,
+    #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
+    provisioner: std::vec::Vec<terrars::Provisioner>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    debug_logging: std::option::Option<terrars::PrimField<bool>>,
+    engine_family: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    id: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    idle_client_timeout: std::option::Option<terrars::PrimField<f64>>,
+    name: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    require_tls: std::option::Option<terrars::PrimField<bool>>,
+    role_arn: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    tags: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    tags_all: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    vpc_security_group_ids: std::option::Option<terrars::SetField<terrars::PrimField<std::string::String>>>,
+    vpc_subnet_ids: terrars::SetField<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    auth: std::option::Option<std::vec::Vec<DbProxyAuthEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    timeouts: std::option::Option<DbProxyTimeoutsEl>,
     dynamic: DbProxyDynamic,
 }
 
 struct DbProxy_ {
-    shared: StackShared,
-    tf_id: String,
-    data: RefCell<DbProxyData>,
+    shared: terrars::StackShared,
+    tf_id: std::string::String,
+    data: std::cell::RefCell<DbProxyData>,
 }
 
 #[derive(Clone)]
-pub struct DbProxy(Rc<DbProxy_>);
+pub struct DbProxy(std::rc::Rc<DbProxy_>);
 
 impl DbProxy {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.0.shared
     }
 
-    pub fn depends_on(self, dep: &impl Referable) -> Self {
+    pub fn depends_on(self, dep: &impl terrars::Referable) -> Self {
         self.0.data.borrow_mut().depends_on.push(dep.extract_ref());
         self
     }
 
     pub fn set_provider(self, provider: &ProviderAws) -> Self {
-        self.0.data.borrow_mut().provider = Some(provider.provider_ref());
+        self.0.data.borrow_mut().provider = std::option::Option::Some(provider.provider_ref());
         self
     }
 
@@ -74,196 +78,238 @@ impl DbProxy {
     }
 
     pub fn ignore_changes_to_all(self) -> Self {
-        self.0.data.borrow_mut().lifecycle.ignore_changes = Some(IgnoreChanges::All(IgnoreChangesAll::All));
+        self.0.data.borrow_mut().lifecycle.ignore_changes =
+            std::option::Option::Some(terrars::IgnoreChanges::All(terrars::IgnoreChangesAll::All));
         self
     }
 
-    pub fn ignore_changes_to_attr(self, attr: impl ToString) -> Self {
+    pub fn ignore_changes_to_attr(self, attr: impl std::string::ToString) -> Self {
         {
             let mut d = self.0.data.borrow_mut();
             if match &mut d.lifecycle.ignore_changes {
-                Some(i) => match i {
-                    IgnoreChanges::All(_) => {
+                std::option::Option::Some(i) => match i {
+                    terrars::IgnoreChanges::All(_) => {
                         true
                     },
-                    IgnoreChanges::Refs(r) => {
+                    terrars::IgnoreChanges::Refs(r) => {
                         r.push(attr.to_string());
                         false
                     },
                 },
-                None => true,
+                std::option::Option::None => true,
             } {
-                d.lifecycle.ignore_changes = Some(IgnoreChanges::Refs(vec![attr.to_string()]));
+                d.lifecycle.ignore_changes =
+                    std::option::Option::Some(terrars::IgnoreChanges::Refs(vec![attr.to_string()]));
             }
         }
         self
     }
 
-    pub fn replace_triggered_by_resource(self, r: &impl Resource) -> Self {
+    pub fn replace_triggered_by_resource(self, r: &impl terrars::Resource) -> Self {
         self.0.data.borrow_mut().lifecycle.replace_triggered_by.push(r.extract_ref());
         self
     }
 
-    pub fn replace_triggered_by_attr(self, attr: impl ToString) -> Self {
+    pub fn replace_triggered_by_attr(self, attr: impl std::string::ToString) -> Self {
         self.0.data.borrow_mut().lifecycle.replace_triggered_by.push(attr.to_string());
         self
     }
 
-    #[doc= "Set the field `debug_logging`.\n"]
-    pub fn set_debug_logging(self, v: impl Into<PrimField<bool>>) -> Self {
-        self.0.data.borrow_mut().debug_logging = Some(v.into());
+    #[doc = r" Add a provisioner (ex: `local-exec`, `remote-exec`, `file`) to this resource."]
+    #[doc = r" Provisioners run in the order they're added."]
+    pub fn add_provisioner(self, v: impl std::convert::Into<terrars::Provisioner>) -> Self {
+        self.0.data.borrow_mut().provisioner.push(v.into());
         self
     }
 
-    #[doc= "Set the field `id`.\n"]
-    pub fn set_id(self, v: impl Into<PrimField<String>>) -> Self {
-        self.0.data.borrow_mut().id = Some(v.into());
+    pub fn add_lifecycle_precondition(
+        self,
+        condition: impl std::convert::Into<terrars::PrimField<bool>>,
+        error_message: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.0.data.borrow_mut().lifecycle.precondition.push(terrars::LifecycleCondition {
+            condition: condition.into(),
+            error_message: error_message.into(),
+        });
         self
     }
 
-    #[doc= "Set the field `idle_client_timeout`.\n"]
-    pub fn set_idle_client_timeout(self, v: impl Into<PrimField<f64>>) -> Self {
-        self.0.data.borrow_mut().idle_client_timeout = Some(v.into());
+    pub fn add_lifecycle_postcondition(
+        self,
+        condition: impl std::convert::Into<terrars::PrimField<bool>>,
+        error_message: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.0.data.borrow_mut().lifecycle.postcondition.push(terrars::LifecycleCondition {
+            condition: condition.into(),
+            error_message: error_message.into(),
+        });
         self
     }
 
-    #[doc= "Set the field `require_tls`.\n"]
-    pub fn set_require_tls(self, v: impl Into<PrimField<bool>>) -> Self {
-        self.0.data.borrow_mut().require_tls = Some(v.into());
+    #[doc = "Set the field `debug_logging`.\n"]
+    pub fn set_debug_logging(self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
+        self.0.data.borrow_mut().debug_logging = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `tags`.\n"]
-    pub fn set_tags(self, v: impl Into<RecField<PrimField<String>>>) -> Self {
-        self.0.data.borrow_mut().tags = Some(v.into());
+    #[doc = "Set the field `id`.\n"]
+    pub fn set_id(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().id = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `tags_all`.\n"]
-    pub fn set_tags_all(self, v: impl Into<RecField<PrimField<String>>>) -> Self {
-        self.0.data.borrow_mut().tags_all = Some(v.into());
+    #[doc = "Set the field `idle_client_timeout`.\n"]
+    pub fn set_idle_client_timeout(self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.0.data.borrow_mut().idle_client_timeout = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `vpc_security_group_ids`.\n"]
-    pub fn set_vpc_security_group_ids(self, v: impl Into<SetField<PrimField<String>>>) -> Self {
-        self.0.data.borrow_mut().vpc_security_group_ids = Some(v.into());
+    #[doc = "Set the field `require_tls`.\n"]
+    pub fn set_require_tls(self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
+        self.0.data.borrow_mut().require_tls = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `auth`.\n"]
-    pub fn set_auth(self, v: impl Into<BlockAssignable<DbProxyAuthEl>>) -> Self {
+    #[doc = "Set the field `tags`.\n"]
+    pub fn set_tags(
+        self,
+        v: impl std::convert::Into<terrars::RecField<terrars::PrimField<std::string::String>>>,
+    ) -> Self {
+        self.0.data.borrow_mut().tags = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `tags_all`.\n"]
+    pub fn set_tags_all(
+        self,
+        v: impl std::convert::Into<terrars::RecField<terrars::PrimField<std::string::String>>>,
+    ) -> Self {
+        self.0.data.borrow_mut().tags_all = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `vpc_security_group_ids`.\n"]
+    pub fn set_vpc_security_group_ids(
+        self,
+        v: impl std::convert::Into<terrars::SetField<terrars::PrimField<std::string::String>>>,
+    ) -> Self {
+        self.0.data.borrow_mut().vpc_security_group_ids = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `auth`.\n"]
+    pub fn set_auth(self, v: impl std::convert::Into<terrars::BlockAssignable<DbProxyAuthEl>>) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.0.data.borrow_mut().auth = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.0.data.borrow_mut().auth = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.0.data.borrow_mut().dynamic.auth = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.0.data.borrow_mut().dynamic.auth = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Set the field `timeouts`.\n"]
-    pub fn set_timeouts(self, v: impl Into<DbProxyTimeoutsEl>) -> Self {
-        self.0.data.borrow_mut().timeouts = Some(v.into());
+    #[doc = "Set the field `timeouts`.\n"]
+    pub fn set_timeouts(self, v: impl std::convert::Into<DbProxyTimeoutsEl>) -> Self {
+        self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Get a reference to the value of field `arn` after provisioning.\n"]
-    pub fn arn(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.arn", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `arn` after provisioning.\n"]
+    pub fn arn(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.arn", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `debug_logging` after provisioning.\n"]
-    pub fn debug_logging(&self) -> PrimExpr<bool> {
-        PrimExpr::new(self.shared().clone(), format!("{}.debug_logging", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `debug_logging` after provisioning.\n"]
+    pub fn debug_logging(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.debug_logging", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `endpoint` after provisioning.\n"]
-    pub fn endpoint(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.endpoint", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `endpoint` after provisioning.\n"]
+    pub fn endpoint(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.endpoint", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `engine_family` after provisioning.\n"]
-    pub fn engine_family(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.engine_family", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `engine_family` after provisioning.\n"]
+    pub fn engine_family(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.engine_family", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `id` after provisioning.\n"]
-    pub fn id(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
+    pub fn id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `idle_client_timeout` after provisioning.\n"]
-    pub fn idle_client_timeout(&self) -> PrimExpr<f64> {
-        PrimExpr::new(self.shared().clone(), format!("{}.idle_client_timeout", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `idle_client_timeout` after provisioning.\n"]
+    pub fn idle_client_timeout(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.idle_client_timeout", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `name` after provisioning.\n"]
-    pub fn name(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `name` after provisioning.\n"]
+    pub fn name(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `require_tls` after provisioning.\n"]
-    pub fn require_tls(&self) -> PrimExpr<bool> {
-        PrimExpr::new(self.shared().clone(), format!("{}.require_tls", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `require_tls` after provisioning.\n"]
+    pub fn require_tls(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.require_tls", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `role_arn` after provisioning.\n"]
-    pub fn role_arn(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.role_arn", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `role_arn` after provisioning.\n"]
+    pub fn role_arn(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.role_arn", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `tags` after provisioning.\n"]
-    pub fn tags(&self) -> RecRef<PrimExpr<String>> {
-        RecRef::new(self.shared().clone(), format!("{}.tags", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `tags` after provisioning.\n"]
+    pub fn tags(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
+        terrars::RecRef::new(self.shared().clone(), format!("{}.tags", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `tags_all` after provisioning.\n"]
-    pub fn tags_all(&self) -> RecRef<PrimExpr<String>> {
-        RecRef::new(self.shared().clone(), format!("{}.tags_all", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `tags_all` after provisioning.\n"]
+    pub fn tags_all(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
+        terrars::RecRef::new(self.shared().clone(), format!("{}.tags_all", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `vpc_security_group_ids` after provisioning.\n"]
-    pub fn vpc_security_group_ids(&self) -> SetRef<PrimExpr<String>> {
-        SetRef::new(self.shared().clone(), format!("{}.vpc_security_group_ids", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `vpc_security_group_ids` after provisioning.\n"]
+    pub fn vpc_security_group_ids(&self) -> terrars::SetRef<terrars::PrimExpr<std::string::String>> {
+        terrars::SetRef::new(self.shared().clone(), format!("{}.vpc_security_group_ids", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `vpc_subnet_ids` after provisioning.\n"]
-    pub fn vpc_subnet_ids(&self) -> SetRef<PrimExpr<String>> {
-        SetRef::new(self.shared().clone(), format!("{}.vpc_subnet_ids", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `vpc_subnet_ids` after provisioning.\n"]
+    pub fn vpc_subnet_ids(&self) -> terrars::SetRef<terrars::PrimExpr<std::string::String>> {
+        terrars::SetRef::new(self.shared().clone(), format!("{}.vpc_subnet_ids", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `timeouts` after provisioning.\n"]
+    #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
     pub fn timeouts(&self) -> DbProxyTimeoutsElRef {
         DbProxyTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
-impl Referable for DbProxy {
-    fn extract_ref(&self) -> String {
+impl terrars::Referable for DbProxy {
+    fn extract_ref(&self) -> std::string::String {
         format!("{}.{}", self.0.extract_resource_type(), self.0.extract_tf_id())
     }
 }
 
-impl Resource for DbProxy { }
+impl terrars::Resource for DbProxy { }
 
-impl ToListMappable for DbProxy {
-    type O = ListRef<DbProxyRef>;
+impl terrars::ToListMappable for DbProxy {
+    type O = terrars::ListRef<DbProxyRef>;
 
-    fn do_map(self, base: String) -> Self::O {
-        self.0.data.borrow_mut().for_each = Some(format!("${{{}}}", base));
-        ListRef::new(self.0.shared.clone(), self.extract_ref())
+    fn do_map(self, base: std::string::String) -> Self::O {
+        self.0.data.borrow_mut().for_each = std::option::Option::Some(format!("${{{}}}", base));
+        terrars::ListRef::new(self.0.shared.clone(), self.extract_ref())
     }
 }
 
-impl Resource_ for DbProxy_ {
-    fn extract_resource_type(&self) -> String {
+impl terrars::Resource_ for DbProxy_ {
+    fn extract_resource_type(&self) -> std::string::String {
         "aws_db_proxy".into()
     }
 
-    fn extract_tf_id(&self) -> String {
+    fn extract_tf_id(&self) -> std::string::String {
         self.tf_id.clone()
     }
 
@@ -273,27 +319,28 @@ impl Resource_ for DbProxy_ {
 }
 
 pub struct BuildDbProxy {
-    pub tf_id: String,
-    #[doc= ""]
-    pub engine_family: PrimField<String>,
-    #[doc= ""]
-    pub name: PrimField<String>,
-    #[doc= ""]
-    pub role_arn: PrimField<String>,
-    #[doc= ""]
-    pub vpc_subnet_ids: SetField<PrimField<String>>,
+    pub tf_id: std::string::String,
+    #[doc = ""]
+    pub engine_family: terrars::PrimField<std::string::String>,
+    #[doc = ""]
+    pub name: terrars::PrimField<std::string::String>,
+    #[doc = ""]
+    pub role_arn: terrars::PrimField<std::string::String>,
+    #[doc = ""]
+    pub vpc_subnet_ids: terrars::SetField<terrars::PrimField<std::string::String>>,
 }
 
 impl BuildDbProxy {
-    pub fn build(self, stack: &mut Stack) -> DbProxy {
-        let out = DbProxy(Rc::new(DbProxy_ {
+    pub fn build(self, stack: &mut terrars::Stack) -> DbProxy {
+        let out = DbProxy(std::rc::Rc::new(DbProxy_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: RefCell::new(DbProxyData {
+            data: std::cell::RefCell::new(DbProxyData {
                 depends_on: core::default::Default::default(),
-                provider: None,
+                provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
-                for_each: None,
+                for_each: std::option::Option::None,
+                provisioner: core::default::Default::default(),
                 debug_logging: core::default::Default::default(),
                 engine_family: self.engine_family,
                 id: core::default::Default::default(),
@@ -307,7 +354,7 @@ impl BuildDbProxy {
                 vpc_subnet_ids: self.vpc_subnet_ids,
                 auth: core::default::Default::default(),
                 timeouts: core::default::Default::default(),
-                dynamic: Default::default(),
+                dynamic: core::default::Default::default(),
             }),
         }));
         stack.add_resource(out.0.clone());
@@ -316,12 +363,12 @@ impl BuildDbProxy {
 }
 
 pub struct DbProxyRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for DbProxyRef {
-    fn new(shared: StackShared, base: String) -> Self {
+impl terrars::Ref for DbProxyRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> Self {
         Self {
             shared: shared,
             base: base,
@@ -330,80 +377,80 @@ impl Ref for DbProxyRef {
 }
 
 impl DbProxyRef {
-    fn extract_ref(&self) -> String {
+    fn extract_ref(&self) -> std::string::String {
         self.base.clone()
     }
 
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `arn` after provisioning.\n"]
-    pub fn arn(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.arn", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `arn` after provisioning.\n"]
+    pub fn arn(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.arn", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `debug_logging` after provisioning.\n"]
-    pub fn debug_logging(&self) -> PrimExpr<bool> {
-        PrimExpr::new(self.shared().clone(), format!("{}.debug_logging", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `debug_logging` after provisioning.\n"]
+    pub fn debug_logging(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.debug_logging", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `endpoint` after provisioning.\n"]
-    pub fn endpoint(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.endpoint", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `endpoint` after provisioning.\n"]
+    pub fn endpoint(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.endpoint", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `engine_family` after provisioning.\n"]
-    pub fn engine_family(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.engine_family", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `engine_family` after provisioning.\n"]
+    pub fn engine_family(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.engine_family", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `id` after provisioning.\n"]
-    pub fn id(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
+    pub fn id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `idle_client_timeout` after provisioning.\n"]
-    pub fn idle_client_timeout(&self) -> PrimExpr<f64> {
-        PrimExpr::new(self.shared().clone(), format!("{}.idle_client_timeout", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `idle_client_timeout` after provisioning.\n"]
+    pub fn idle_client_timeout(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.idle_client_timeout", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `name` after provisioning.\n"]
-    pub fn name(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `name` after provisioning.\n"]
+    pub fn name(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `require_tls` after provisioning.\n"]
-    pub fn require_tls(&self) -> PrimExpr<bool> {
-        PrimExpr::new(self.shared().clone(), format!("{}.require_tls", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `require_tls` after provisioning.\n"]
+    pub fn require_tls(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.require_tls", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `role_arn` after provisioning.\n"]
-    pub fn role_arn(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.role_arn", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `role_arn` after provisioning.\n"]
+    pub fn role_arn(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.role_arn", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `tags` after provisioning.\n"]
-    pub fn tags(&self) -> RecRef<PrimExpr<String>> {
-        RecRef::new(self.shared().clone(), format!("{}.tags", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `tags` after provisioning.\n"]
+    pub fn tags(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
+        terrars::RecRef::new(self.shared().clone(), format!("{}.tags", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `tags_all` after provisioning.\n"]
-    pub fn tags_all(&self) -> RecRef<PrimExpr<String>> {
-        RecRef::new(self.shared().clone(), format!("{}.tags_all", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `tags_all` after provisioning.\n"]
+    pub fn tags_all(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
+        terrars::RecRef::new(self.shared().clone(), format!("{}.tags_all", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `vpc_security_group_ids` after provisioning.\n"]
-    pub fn vpc_security_group_ids(&self) -> SetRef<PrimExpr<String>> {
-        SetRef::new(self.shared().clone(), format!("{}.vpc_security_group_ids", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `vpc_security_group_ids` after provisioning.\n"]
+    pub fn vpc_security_group_ids(&self) -> terrars::SetRef<terrars::PrimExpr<std::string::String>> {
+        terrars::SetRef::new(self.shared().clone(), format!("{}.vpc_security_group_ids", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `vpc_subnet_ids` after provisioning.\n"]
-    pub fn vpc_subnet_ids(&self) -> SetRef<PrimExpr<String>> {
-        SetRef::new(self.shared().clone(), format!("{}.vpc_subnet_ids", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `vpc_subnet_ids` after provisioning.\n"]
+    pub fn vpc_subnet_ids(&self) -> terrars::SetRef<terrars::PrimExpr<std::string::String>> {
+        terrars::SetRef::new(self.shared().clone(), format!("{}.vpc_subnet_ids", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `timeouts` after provisioning.\n"]
+    #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
     pub fn timeouts(&self) -> DbProxyTimeoutsElRef {
         DbProxyTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
@@ -411,55 +458,55 @@ impl DbProxyRef {
 
 #[derive(Serialize)]
 pub struct DbProxyAuthEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    auth_scheme: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    description: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    iam_auth: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    secret_arn: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    username: Option<PrimField<String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    auth_scheme: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    description: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    iam_auth: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    secret_arn: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    username: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
 impl DbProxyAuthEl {
-    #[doc= "Set the field `auth_scheme`.\n"]
-    pub fn set_auth_scheme(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.auth_scheme = Some(v.into());
+    #[doc = "Set the field `auth_scheme`.\n"]
+    pub fn set_auth_scheme(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.auth_scheme = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `description`.\n"]
-    pub fn set_description(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.description = Some(v.into());
+    #[doc = "Set the field `description`.\n"]
+    pub fn set_description(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.description = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `iam_auth`.\n"]
-    pub fn set_iam_auth(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.iam_auth = Some(v.into());
+    #[doc = "Set the field `iam_auth`.\n"]
+    pub fn set_iam_auth(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.iam_auth = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `secret_arn`.\n"]
-    pub fn set_secret_arn(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.secret_arn = Some(v.into());
+    #[doc = "Set the field `secret_arn`.\n"]
+    pub fn set_secret_arn(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.secret_arn = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `username`.\n"]
-    pub fn set_username(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.username = Some(v.into());
+    #[doc = "Set the field `username`.\n"]
+    pub fn set_username(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.username = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl ToListMappable for DbProxyAuthEl {
-    type O = BlockAssignable<DbProxyAuthEl>;
+impl terrars::ToListMappable for DbProxyAuthEl {
+    type O = terrars::BlockAssignable<DbProxyAuthEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -482,12 +529,12 @@ impl BuildDbProxyAuthEl {
 }
 
 pub struct DbProxyAuthElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for DbProxyAuthElRef {
-    fn new(shared: StackShared, base: String) -> DbProxyAuthElRef {
+impl terrars::Ref for DbProxyAuthElRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DbProxyAuthElRef {
         DbProxyAuthElRef {
             shared: shared,
             base: base.to_string(),
@@ -496,71 +543,71 @@ impl Ref for DbProxyAuthElRef {
 }
 
 impl DbProxyAuthElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `auth_scheme` after provisioning.\n"]
-    pub fn auth_scheme(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.auth_scheme", self.base))
+    #[doc = "Get a reference to the value of field `auth_scheme` after provisioning.\n"]
+    pub fn auth_scheme(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.auth_scheme", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `description` after provisioning.\n"]
-    pub fn description(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.description", self.base))
+    #[doc = "Get a reference to the value of field `description` after provisioning.\n"]
+    pub fn description(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.description", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `iam_auth` after provisioning.\n"]
-    pub fn iam_auth(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.iam_auth", self.base))
+    #[doc = "Get a reference to the value of field `iam_auth` after provisioning.\n"]
+    pub fn iam_auth(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.iam_auth", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `secret_arn` after provisioning.\n"]
-    pub fn secret_arn(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.secret_arn", self.base))
+    #[doc = "Get a reference to the value of field `secret_arn` after provisioning.\n"]
+    pub fn secret_arn(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.secret_arn", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `username` after provisioning.\n"]
-    pub fn username(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.username", self.base))
+    #[doc = "Get a reference to the value of field `username` after provisioning.\n"]
+    pub fn username(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.username", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct DbProxyTimeoutsEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    create: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    delete: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    update: Option<PrimField<String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    create: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    delete: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    update: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
 impl DbProxyTimeoutsEl {
-    #[doc= "Set the field `create`.\n"]
-    pub fn set_create(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.create = Some(v.into());
+    #[doc = "Set the field `create`.\n"]
+    pub fn set_create(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.create = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `delete`.\n"]
-    pub fn set_delete(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.delete = Some(v.into());
+    #[doc = "Set the field `delete`.\n"]
+    pub fn set_delete(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.delete = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `update`.\n"]
-    pub fn set_update(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.update = Some(v.into());
+    #[doc = "Set the field `update`.\n"]
+    pub fn set_update(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.update = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl ToListMappable for DbProxyTimeoutsEl {
-    type O = BlockAssignable<DbProxyTimeoutsEl>;
+impl terrars::ToListMappable for DbProxyTimeoutsEl {
+    type O = terrars::BlockAssignable<DbProxyTimeoutsEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -581,12 +628,12 @@ impl BuildDbProxyTimeoutsEl {
 }
 
 pub struct DbProxyTimeoutsElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for DbProxyTimeoutsElRef {
-    fn new(shared: StackShared, base: String) -> DbProxyTimeoutsElRef {
+impl terrars::Ref for DbProxyTimeoutsElRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DbProxyTimeoutsElRef {
         DbProxyTimeoutsElRef {
             shared: shared,
             base: base.to_string(),
@@ -595,27 +642,27 @@ impl Ref for DbProxyTimeoutsElRef {
 }
 
 impl DbProxyTimeoutsElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `create` after provisioning.\n"]
-    pub fn create(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.create", self.base))
+    #[doc = "Get a reference to the value of field `create` after provisioning.\n"]
+    pub fn create(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.create", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `delete` after provisioning.\n"]
-    pub fn delete(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.delete", self.base))
+    #[doc = "Get a reference to the value of field `delete` after provisioning.\n"]
+    pub fn delete(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.delete", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `update` after provisioning.\n"]
-    pub fn update(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.update", self.base))
+    #[doc = "Get a reference to the value of field `update` after provisioning.\n"]
+    pub fn update(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.update", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
 struct DbProxyDynamic {
-    auth: Option<DynamicBlock<DbProxyAuthEl>>,
+    auth: std::option::Option<terrars::DynamicBlock<DbProxyAuthEl>>,
 }

@@ -1,134 +1,165 @@
 use serde::Serialize;
-use std::cell::RefCell;
-use std::rc::Rc;
-use terrars::*;
+use terrars::{
+    Referable as _,
+    Datasource_ as _,
+    Ref as _,
+};
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
 struct DataNetworkfirewallFirewallPolicyData {
-    #[serde(skip_serializing_if = "Vec::is_empty")]
-    depends_on: Vec<String>,
-    #[serde(skip_serializing_if = "SerdeSkipDefault::is_default")]
-    provider: Option<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    for_each: Option<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    arn: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    id: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    name: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    tags: Option<RecField<PrimField<String>>>,
+    #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
+    depends_on: std::vec::Vec<std::string::String>,
+    #[serde(skip_serializing_if = "terrars::SerdeSkipDefault::is_default")]
+    provider: std::option::Option<std::string::String>,
+    #[serde(skip_serializing_if = "terrars::SerdeSkipDefault::is_default")]
+    lifecycle: terrars::DatasourceLifecycle,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    for_each: std::option::Option<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    arn: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    id: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    name: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    tags: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
 }
 
 struct DataNetworkfirewallFirewallPolicy_ {
-    shared: StackShared,
-    tf_id: String,
-    data: RefCell<DataNetworkfirewallFirewallPolicyData>,
+    shared: terrars::StackShared,
+    tf_id: std::string::String,
+    data: std::cell::RefCell<DataNetworkfirewallFirewallPolicyData>,
 }
 
 #[derive(Clone)]
-pub struct DataNetworkfirewallFirewallPolicy(Rc<DataNetworkfirewallFirewallPolicy_>);
+pub struct DataNetworkfirewallFirewallPolicy(std::rc::Rc<DataNetworkfirewallFirewallPolicy_>);
 
 impl DataNetworkfirewallFirewallPolicy {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.0.shared
     }
 
-    pub fn depends_on(self, dep: &impl Referable) -> Self {
+    pub fn depends_on(self, dep: &impl terrars::Referable) -> Self {
         self.0.data.borrow_mut().depends_on.push(dep.extract_ref());
         self
     }
 
     pub fn set_provider(&self, provider: &ProviderAws) -> &Self {
-        self.0.data.borrow_mut().provider = Some(provider.provider_ref());
+        self.0.data.borrow_mut().provider = std::option::Option::Some(provider.provider_ref());
         self
     }
 
-    #[doc= "Set the field `arn`.\n"]
-    pub fn set_arn(self, v: impl Into<PrimField<String>>) -> Self {
-        self.0.data.borrow_mut().arn = Some(v.into());
+    pub fn add_lifecycle_precondition(
+        self,
+        condition: impl std::convert::Into<terrars::PrimField<bool>>,
+        error_message: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.0.data.borrow_mut().lifecycle.precondition.push(terrars::LifecycleCondition {
+            condition: condition.into(),
+            error_message: error_message.into(),
+        });
         self
     }
 
-    #[doc= "Set the field `id`.\n"]
-    pub fn set_id(self, v: impl Into<PrimField<String>>) -> Self {
-        self.0.data.borrow_mut().id = Some(v.into());
+    pub fn add_lifecycle_postcondition(
+        self,
+        condition: impl std::convert::Into<terrars::PrimField<bool>>,
+        error_message: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.0.data.borrow_mut().lifecycle.postcondition.push(terrars::LifecycleCondition {
+            condition: condition.into(),
+            error_message: error_message.into(),
+        });
         self
     }
 
-    #[doc= "Set the field `name`.\n"]
-    pub fn set_name(self, v: impl Into<PrimField<String>>) -> Self {
-        self.0.data.borrow_mut().name = Some(v.into());
+    #[doc = "Set the field `arn`.\n"]
+    pub fn set_arn(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().arn = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `tags`.\n"]
-    pub fn set_tags(self, v: impl Into<RecField<PrimField<String>>>) -> Self {
-        self.0.data.borrow_mut().tags = Some(v.into());
+    #[doc = "Set the field `id`.\n"]
+    pub fn set_id(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().id = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Get a reference to the value of field `arn` after provisioning.\n"]
-    pub fn arn(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.arn", self.extract_ref()))
+    #[doc = "Set the field `name`.\n"]
+    pub fn set_name(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().name = std::option::Option::Some(v.into());
+        self
     }
 
-    #[doc= "Get a reference to the value of field `description` after provisioning.\n"]
-    pub fn description(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.description", self.extract_ref()))
+    #[doc = "Set the field `tags`.\n"]
+    pub fn set_tags(
+        self,
+        v: impl std::convert::Into<terrars::RecField<terrars::PrimField<std::string::String>>>,
+    ) -> Self {
+        self.0.data.borrow_mut().tags = std::option::Option::Some(v.into());
+        self
     }
 
-    #[doc= "Get a reference to the value of field `firewall_policy` after provisioning.\n"]
-    pub fn firewall_policy(&self) -> ListRef<DataNetworkfirewallFirewallPolicyFirewallPolicyElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.firewall_policy", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `arn` after provisioning.\n"]
+    pub fn arn(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.arn", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `id` after provisioning.\n"]
-    pub fn id(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `description` after provisioning.\n"]
+    pub fn description(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.description", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `name` after provisioning.\n"]
-    pub fn name(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `firewall_policy` after provisioning.\n"]
+    pub fn firewall_policy(&self) -> terrars::ListRef<DataNetworkfirewallFirewallPolicyFirewallPolicyElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.firewall_policy", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `tags` after provisioning.\n"]
-    pub fn tags(&self) -> RecRef<PrimExpr<String>> {
-        RecRef::new(self.shared().clone(), format!("{}.tags", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
+    pub fn id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `update_token` after provisioning.\n"]
-    pub fn update_token(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.update_token", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `name` after provisioning.\n"]
+    pub fn name(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `tags` after provisioning.\n"]
+    pub fn tags(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
+        terrars::RecRef::new(self.shared().clone(), format!("{}.tags", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `update_token` after provisioning.\n"]
+    pub fn update_token(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.update_token", self.extract_ref()))
     }
 }
 
-impl Referable for DataNetworkfirewallFirewallPolicy {
-    fn extract_ref(&self) -> String {
+impl terrars::Referable for DataNetworkfirewallFirewallPolicy {
+    fn extract_ref(&self) -> std::string::String {
         format!("data.{}.{}", self.0.extract_datasource_type(), self.0.extract_tf_id())
     }
 }
 
-impl Datasource for DataNetworkfirewallFirewallPolicy { }
+impl terrars::Datasource for DataNetworkfirewallFirewallPolicy { }
 
-impl ToListMappable for DataNetworkfirewallFirewallPolicy {
-    type O = ListRef<DataNetworkfirewallFirewallPolicyRef>;
+impl terrars::ToListMappable for DataNetworkfirewallFirewallPolicy {
+    type O = terrars::ListRef<DataNetworkfirewallFirewallPolicyRef>;
 
-    fn do_map(self, base: String) -> Self::O {
-        self.0.data.borrow_mut().for_each = Some(format!("${{{}}}", base));
-        ListRef::new(self.0.shared.clone(), self.extract_ref())
+    fn do_map(self, base: std::string::String) -> Self::O {
+        self.0.data.borrow_mut().for_each = std::option::Option::Some(format!("${{{}}}", base));
+        terrars::ListRef::new(self.0.shared.clone(), self.extract_ref())
     }
 }
 
-impl Datasource_ for DataNetworkfirewallFirewallPolicy_ {
-    fn extract_datasource_type(&self) -> String {
+impl terrars::Datasource_ for DataNetworkfirewallFirewallPolicy_ {
+    fn extract_datasource_type(&self) -> std::string::String {
         "aws_networkfirewall_firewall_policy".into()
     }
 
-    fn extract_tf_id(&self) -> String {
+    fn extract_tf_id(&self) -> std::string::String {
         self.tf_id.clone()
     }
 
@@ -138,18 +169,19 @@ impl Datasource_ for DataNetworkfirewallFirewallPolicy_ {
 }
 
 pub struct BuildDataNetworkfirewallFirewallPolicy {
-    pub tf_id: String,
+    pub tf_id: std::string::String,
 }
 
 impl BuildDataNetworkfirewallFirewallPolicy {
-    pub fn build(self, stack: &mut Stack) -> DataNetworkfirewallFirewallPolicy {
-        let out = DataNetworkfirewallFirewallPolicy(Rc::new(DataNetworkfirewallFirewallPolicy_ {
+    pub fn build(self, stack: &mut terrars::Stack) -> DataNetworkfirewallFirewallPolicy {
+        let out = DataNetworkfirewallFirewallPolicy(std::rc::Rc::new(DataNetworkfirewallFirewallPolicy_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: RefCell::new(DataNetworkfirewallFirewallPolicyData {
+            data: std::cell::RefCell::new(DataNetworkfirewallFirewallPolicyData {
                 depends_on: core::default::Default::default(),
-                provider: None,
-                for_each: None,
+                provider: std::option::Option::None,
+                lifecycle: core::default::Default::default(),
+                for_each: std::option::Option::None,
                 arn: core::default::Default::default(),
                 id: core::default::Default::default(),
                 name: core::default::Default::default(),
@@ -162,12 +194,12 @@ impl BuildDataNetworkfirewallFirewallPolicy {
 }
 
 pub struct DataNetworkfirewallFirewallPolicyRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for DataNetworkfirewallFirewallPolicyRef {
-    fn new(shared: StackShared, base: String) -> Self {
+impl terrars::Ref for DataNetworkfirewallFirewallPolicyRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> Self {
         Self {
             shared: shared,
             base: base,
@@ -176,69 +208,69 @@ impl Ref for DataNetworkfirewallFirewallPolicyRef {
 }
 
 impl DataNetworkfirewallFirewallPolicyRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    fn extract_ref(&self) -> String {
+    fn extract_ref(&self) -> std::string::String {
         self.base.clone()
     }
 
-    #[doc= "Get a reference to the value of field `arn` after provisioning.\n"]
-    pub fn arn(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.arn", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `arn` after provisioning.\n"]
+    pub fn arn(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.arn", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `description` after provisioning.\n"]
-    pub fn description(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.description", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `description` after provisioning.\n"]
+    pub fn description(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.description", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `firewall_policy` after provisioning.\n"]
-    pub fn firewall_policy(&self) -> ListRef<DataNetworkfirewallFirewallPolicyFirewallPolicyElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.firewall_policy", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `firewall_policy` after provisioning.\n"]
+    pub fn firewall_policy(&self) -> terrars::ListRef<DataNetworkfirewallFirewallPolicyFirewallPolicyElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.firewall_policy", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `id` after provisioning.\n"]
-    pub fn id(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
+    pub fn id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `name` after provisioning.\n"]
-    pub fn name(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `name` after provisioning.\n"]
+    pub fn name(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `tags` after provisioning.\n"]
-    pub fn tags(&self) -> RecRef<PrimExpr<String>> {
-        RecRef::new(self.shared().clone(), format!("{}.tags", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `tags` after provisioning.\n"]
+    pub fn tags(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
+        terrars::RecRef::new(self.shared().clone(), format!("{}.tags", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `update_token` after provisioning.\n"]
-    pub fn update_token(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.update_token", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `update_token` after provisioning.\n"]
+    pub fn update_token(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.update_token", self.extract_ref()))
     }
 }
 
 #[derive(Serialize)]
 pub struct DataNetworkfirewallFirewallPolicyFirewallPolicyElStatefulEngineOptionsEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    rule_order: Option<PrimField<String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    rule_order: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
 impl DataNetworkfirewallFirewallPolicyFirewallPolicyElStatefulEngineOptionsEl {
-    #[doc= "Set the field `rule_order`.\n"]
-    pub fn set_rule_order(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.rule_order = Some(v.into());
+    #[doc = "Set the field `rule_order`.\n"]
+    pub fn set_rule_order(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.rule_order = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl ToListMappable for DataNetworkfirewallFirewallPolicyFirewallPolicyElStatefulEngineOptionsEl {
-    type O = BlockAssignable<DataNetworkfirewallFirewallPolicyFirewallPolicyElStatefulEngineOptionsEl>;
+impl terrars::ToListMappable for DataNetworkfirewallFirewallPolicyFirewallPolicyElStatefulEngineOptionsEl {
+    type O = terrars::BlockAssignable<DataNetworkfirewallFirewallPolicyFirewallPolicyElStatefulEngineOptionsEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -257,14 +289,14 @@ impl BuildDataNetworkfirewallFirewallPolicyFirewallPolicyElStatefulEngineOptions
 }
 
 pub struct DataNetworkfirewallFirewallPolicyFirewallPolicyElStatefulEngineOptionsElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for DataNetworkfirewallFirewallPolicyFirewallPolicyElStatefulEngineOptionsElRef {
+impl terrars::Ref for DataNetworkfirewallFirewallPolicyFirewallPolicyElStatefulEngineOptionsElRef {
     fn new(
-        shared: StackShared,
-        base: String,
+        shared: terrars::StackShared,
+        base: std::string::String,
     ) -> DataNetworkfirewallFirewallPolicyFirewallPolicyElStatefulEngineOptionsElRef {
         DataNetworkfirewallFirewallPolicyFirewallPolicyElStatefulEngineOptionsElRef {
             shared: shared,
@@ -274,43 +306,43 @@ impl Ref for DataNetworkfirewallFirewallPolicyFirewallPolicyElStatefulEngineOpti
 }
 
 impl DataNetworkfirewallFirewallPolicyFirewallPolicyElStatefulEngineOptionsElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `rule_order` after provisioning.\n"]
-    pub fn rule_order(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.rule_order", self.base))
+    #[doc = "Get a reference to the value of field `rule_order` after provisioning.\n"]
+    pub fn rule_order(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.rule_order", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct DataNetworkfirewallFirewallPolicyFirewallPolicyElStatefulRuleGroupReferenceEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    priority: Option<PrimField<f64>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    resource_arn: Option<PrimField<String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    priority: std::option::Option<terrars::PrimField<f64>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    resource_arn: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
 impl DataNetworkfirewallFirewallPolicyFirewallPolicyElStatefulRuleGroupReferenceEl {
-    #[doc= "Set the field `priority`.\n"]
-    pub fn set_priority(mut self, v: impl Into<PrimField<f64>>) -> Self {
-        self.priority = Some(v.into());
+    #[doc = "Set the field `priority`.\n"]
+    pub fn set_priority(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.priority = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `resource_arn`.\n"]
-    pub fn set_resource_arn(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.resource_arn = Some(v.into());
+    #[doc = "Set the field `resource_arn`.\n"]
+    pub fn set_resource_arn(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.resource_arn = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl ToListMappable for DataNetworkfirewallFirewallPolicyFirewallPolicyElStatefulRuleGroupReferenceEl {
-    type O = BlockAssignable<DataNetworkfirewallFirewallPolicyFirewallPolicyElStatefulRuleGroupReferenceEl>;
+impl terrars::ToListMappable for DataNetworkfirewallFirewallPolicyFirewallPolicyElStatefulRuleGroupReferenceEl {
+    type O = terrars::BlockAssignable<DataNetworkfirewallFirewallPolicyFirewallPolicyElStatefulRuleGroupReferenceEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -330,14 +362,14 @@ impl BuildDataNetworkfirewallFirewallPolicyFirewallPolicyElStatefulRuleGroupRefe
 }
 
 pub struct DataNetworkfirewallFirewallPolicyFirewallPolicyElStatefulRuleGroupReferenceElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for DataNetworkfirewallFirewallPolicyFirewallPolicyElStatefulRuleGroupReferenceElRef {
+impl terrars::Ref for DataNetworkfirewallFirewallPolicyFirewallPolicyElStatefulRuleGroupReferenceElRef {
     fn new(
-        shared: StackShared,
-        base: String,
+        shared: terrars::StackShared,
+        base: std::string::String,
     ) -> DataNetworkfirewallFirewallPolicyFirewallPolicyElStatefulRuleGroupReferenceElRef {
         DataNetworkfirewallFirewallPolicyFirewallPolicyElStatefulRuleGroupReferenceElRef {
             shared: shared,
@@ -347,43 +379,45 @@ impl Ref for DataNetworkfirewallFirewallPolicyFirewallPolicyElStatefulRuleGroupR
 }
 
 impl DataNetworkfirewallFirewallPolicyFirewallPolicyElStatefulRuleGroupReferenceElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `priority` after provisioning.\n"]
-    pub fn priority(&self) -> PrimExpr<f64> {
-        PrimExpr::new(self.shared().clone(), format!("{}.priority", self.base))
+    #[doc = "Get a reference to the value of field `priority` after provisioning.\n"]
+    pub fn priority(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.priority", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `resource_arn` after provisioning.\n"]
-    pub fn resource_arn(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.resource_arn", self.base))
+    #[doc = "Get a reference to the value of field `resource_arn` after provisioning.\n"]
+    pub fn resource_arn(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.resource_arn", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct DataNetworkfirewallFirewallPolicyFirewallPolicyElStatelessCustomActionElActionDefinitionElPublishMetricActionElDimensionEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    value: Option<PrimField<String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    value: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
 impl DataNetworkfirewallFirewallPolicyFirewallPolicyElStatelessCustomActionElActionDefinitionElPublishMetricActionElDimensionEl {
-    #[doc= "Set the field `value`.\n"]
-    pub fn set_value(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.value = Some(v.into());
+    #[doc = "Set the field `value`.\n"]
+    pub fn set_value(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.value = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl ToListMappable for DataNetworkfirewallFirewallPolicyFirewallPolicyElStatelessCustomActionElActionDefinitionElPublishMetricActionElDimensionEl {
+impl terrars
+::ToListMappable for DataNetworkfirewallFirewallPolicyFirewallPolicyElStatelessCustomActionElActionDefinitionElPublishMetricActionElDimensionEl {
     type O =
-        BlockAssignable<
+        terrars
+        ::BlockAssignable<
             DataNetworkfirewallFirewallPolicyFirewallPolicyElStatelessCustomActionElActionDefinitionElPublishMetricActionElDimensionEl,
         >;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -404,14 +438,15 @@ impl BuildDataNetworkfirewallFirewallPolicyFirewallPolicyElStatelessCustomAction
 }
 
 pub struct DataNetworkfirewallFirewallPolicyFirewallPolicyElStatelessCustomActionElActionDefinitionElPublishMetricActionElDimensionElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for DataNetworkfirewallFirewallPolicyFirewallPolicyElStatelessCustomActionElActionDefinitionElPublishMetricActionElDimensionElRef {
+impl terrars
+::Ref for DataNetworkfirewallFirewallPolicyFirewallPolicyElStatelessCustomActionElActionDefinitionElPublishMetricActionElDimensionElRef {
     fn new(
-        shared: StackShared,
-        base: String,
+        shared: terrars::StackShared,
+        base: std::string::String,
     ) -> DataNetworkfirewallFirewallPolicyFirewallPolicyElStatelessCustomActionElActionDefinitionElPublishMetricActionElDimensionElRef {
         DataNetworkfirewallFirewallPolicyFirewallPolicyElStatelessCustomActionElActionDefinitionElPublishMetricActionElDimensionElRef {
             shared: shared,
@@ -421,52 +456,60 @@ impl Ref for DataNetworkfirewallFirewallPolicyFirewallPolicyElStatelessCustomAct
 }
 
 impl DataNetworkfirewallFirewallPolicyFirewallPolicyElStatelessCustomActionElActionDefinitionElPublishMetricActionElDimensionElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `value` after provisioning.\n"]
-    pub fn value(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.value", self.base))
+    #[doc = "Get a reference to the value of field `value` after provisioning.\n"]
+    pub fn value(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.value", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct DataNetworkfirewallFirewallPolicyFirewallPolicyElStatelessCustomActionElActionDefinitionElPublishMetricActionEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    dimension: Option<
-        SetField<
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    dimension: std
+    ::option
+    ::Option<
+        terrars
+        ::SetField<
             DataNetworkfirewallFirewallPolicyFirewallPolicyElStatelessCustomActionElActionDefinitionElPublishMetricActionElDimensionEl,
         >,
     >,
 }
 
 impl DataNetworkfirewallFirewallPolicyFirewallPolicyElStatelessCustomActionElActionDefinitionElPublishMetricActionEl {
-    #[doc= "Set the field `dimension`.\n"]
+    #[doc = "Set the field `dimension`.\n"]
     pub fn set_dimension(
         mut self,
         v:
             impl
 
-                    Into<
-                        SetField<
+                    std
+                    ::convert
+                    ::Into<
+                        terrars
+                        ::SetField<
                             DataNetworkfirewallFirewallPolicyFirewallPolicyElStatelessCustomActionElActionDefinitionElPublishMetricActionElDimensionEl,
                         >,
                     >,
     ) -> Self {
-        self.dimension = Some(v.into());
+        self.dimension = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl ToListMappable for DataNetworkfirewallFirewallPolicyFirewallPolicyElStatelessCustomActionElActionDefinitionElPublishMetricActionEl {
+impl terrars
+::ToListMappable for DataNetworkfirewallFirewallPolicyFirewallPolicyElStatelessCustomActionElActionDefinitionElPublishMetricActionEl {
     type O =
-        BlockAssignable<
+        terrars
+        ::BlockAssignable<
             DataNetworkfirewallFirewallPolicyFirewallPolicyElStatelessCustomActionElActionDefinitionElPublishMetricActionEl,
         >;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -487,14 +530,15 @@ impl BuildDataNetworkfirewallFirewallPolicyFirewallPolicyElStatelessCustomAction
 }
 
 pub struct DataNetworkfirewallFirewallPolicyFirewallPolicyElStatelessCustomActionElActionDefinitionElPublishMetricActionElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for DataNetworkfirewallFirewallPolicyFirewallPolicyElStatelessCustomActionElActionDefinitionElPublishMetricActionElRef {
+impl terrars
+::Ref for DataNetworkfirewallFirewallPolicyFirewallPolicyElStatelessCustomActionElActionDefinitionElPublishMetricActionElRef {
     fn new(
-        shared: StackShared,
-        base: String,
+        shared: terrars::StackShared,
+        base: std::string::String,
     ) -> DataNetworkfirewallFirewallPolicyFirewallPolicyElStatelessCustomActionElActionDefinitionElPublishMetricActionElRef {
         DataNetworkfirewallFirewallPolicyFirewallPolicyElStatelessCustomActionElActionDefinitionElPublishMetricActionElRef {
             shared: shared,
@@ -504,54 +548,63 @@ impl Ref for DataNetworkfirewallFirewallPolicyFirewallPolicyElStatelessCustomAct
 }
 
 impl DataNetworkfirewallFirewallPolicyFirewallPolicyElStatelessCustomActionElActionDefinitionElPublishMetricActionElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `dimension` after provisioning.\n"]
+    #[doc = "Get a reference to the value of field `dimension` after provisioning.\n"]
     pub fn dimension(
         &self,
-    ) -> SetRef<
+    ) -> terrars
+    ::SetRef<
         DataNetworkfirewallFirewallPolicyFirewallPolicyElStatelessCustomActionElActionDefinitionElPublishMetricActionElDimensionElRef,
     > {
-        SetRef::new(self.shared().clone(), format!("{}.dimension", self.base))
+        terrars::SetRef::new(self.shared().clone(), format!("{}.dimension", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct DataNetworkfirewallFirewallPolicyFirewallPolicyElStatelessCustomActionElActionDefinitionEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    publish_metric_action: Option<
-        ListField<
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    publish_metric_action: std
+    ::option
+    ::Option<
+        terrars
+        ::ListField<
             DataNetworkfirewallFirewallPolicyFirewallPolicyElStatelessCustomActionElActionDefinitionElPublishMetricActionEl,
         >,
     >,
 }
 
 impl DataNetworkfirewallFirewallPolicyFirewallPolicyElStatelessCustomActionElActionDefinitionEl {
-    #[doc= "Set the field `publish_metric_action`.\n"]
+    #[doc = "Set the field `publish_metric_action`.\n"]
     pub fn set_publish_metric_action(
         mut self,
         v:
             impl
 
-                    Into<
-                        ListField<
+                    std
+                    ::convert
+                    ::Into<
+                        terrars
+                        ::ListField<
                             DataNetworkfirewallFirewallPolicyFirewallPolicyElStatelessCustomActionElActionDefinitionElPublishMetricActionEl,
                         >,
                     >,
     ) -> Self {
-        self.publish_metric_action = Some(v.into());
+        self.publish_metric_action = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl ToListMappable for DataNetworkfirewallFirewallPolicyFirewallPolicyElStatelessCustomActionElActionDefinitionEl {
+impl terrars
+::ToListMappable for DataNetworkfirewallFirewallPolicyFirewallPolicyElStatelessCustomActionElActionDefinitionEl {
     type O =
-        BlockAssignable<DataNetworkfirewallFirewallPolicyFirewallPolicyElStatelessCustomActionElActionDefinitionEl>;
+        terrars
+        ::BlockAssignable<DataNetworkfirewallFirewallPolicyFirewallPolicyElStatelessCustomActionElActionDefinitionEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -570,14 +623,14 @@ impl BuildDataNetworkfirewallFirewallPolicyFirewallPolicyElStatelessCustomAction
 }
 
 pub struct DataNetworkfirewallFirewallPolicyFirewallPolicyElStatelessCustomActionElActionDefinitionElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for DataNetworkfirewallFirewallPolicyFirewallPolicyElStatelessCustomActionElActionDefinitionElRef {
+impl terrars::Ref for DataNetworkfirewallFirewallPolicyFirewallPolicyElStatelessCustomActionElActionDefinitionElRef {
     fn new(
-        shared: StackShared,
-        base: String,
+        shared: terrars::StackShared,
+        base: std::string::String,
     ) -> DataNetworkfirewallFirewallPolicyFirewallPolicyElStatelessCustomActionElActionDefinitionElRef {
         DataNetworkfirewallFirewallPolicyFirewallPolicyElStatelessCustomActionElActionDefinitionElRef {
             shared: shared,
@@ -587,59 +640,65 @@ impl Ref for DataNetworkfirewallFirewallPolicyFirewallPolicyElStatelessCustomAct
 }
 
 impl DataNetworkfirewallFirewallPolicyFirewallPolicyElStatelessCustomActionElActionDefinitionElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `publish_metric_action` after provisioning.\n"]
+    #[doc = "Get a reference to the value of field `publish_metric_action` after provisioning.\n"]
     pub fn publish_metric_action(
         &self,
-    ) -> ListRef<
+    ) -> terrars
+    ::ListRef<
         DataNetworkfirewallFirewallPolicyFirewallPolicyElStatelessCustomActionElActionDefinitionElPublishMetricActionElRef,
     > {
-        ListRef::new(self.shared().clone(), format!("{}.publish_metric_action", self.base))
+        terrars::ListRef::new(self.shared().clone(), format!("{}.publish_metric_action", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct DataNetworkfirewallFirewallPolicyFirewallPolicyElStatelessCustomActionEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    action_definition: Option<
-        ListField<DataNetworkfirewallFirewallPolicyFirewallPolicyElStatelessCustomActionElActionDefinitionEl>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    action_definition: std
+    ::option
+    ::Option<
+        terrars::ListField<DataNetworkfirewallFirewallPolicyFirewallPolicyElStatelessCustomActionElActionDefinitionEl>,
     >,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    action_name: Option<PrimField<String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    action_name: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
 impl DataNetworkfirewallFirewallPolicyFirewallPolicyElStatelessCustomActionEl {
-    #[doc= "Set the field `action_definition`.\n"]
+    #[doc = "Set the field `action_definition`.\n"]
     pub fn set_action_definition(
         mut self,
         v:
             impl
 
-                    Into<
-                        ListField<
+                    std
+                    ::convert
+                    ::Into<
+                        terrars
+                        ::ListField<
                             DataNetworkfirewallFirewallPolicyFirewallPolicyElStatelessCustomActionElActionDefinitionEl,
                         >,
                     >,
     ) -> Self {
-        self.action_definition = Some(v.into());
+        self.action_definition = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `action_name`.\n"]
-    pub fn set_action_name(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.action_name = Some(v.into());
+    #[doc = "Set the field `action_name`.\n"]
+    pub fn set_action_name(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.action_name = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl ToListMappable for DataNetworkfirewallFirewallPolicyFirewallPolicyElStatelessCustomActionEl {
-    type O = BlockAssignable<DataNetworkfirewallFirewallPolicyFirewallPolicyElStatelessCustomActionEl>;
+impl terrars::ToListMappable for DataNetworkfirewallFirewallPolicyFirewallPolicyElStatelessCustomActionEl {
+    type O = terrars::BlockAssignable<DataNetworkfirewallFirewallPolicyFirewallPolicyElStatelessCustomActionEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -659,14 +718,14 @@ impl BuildDataNetworkfirewallFirewallPolicyFirewallPolicyElStatelessCustomAction
 }
 
 pub struct DataNetworkfirewallFirewallPolicyFirewallPolicyElStatelessCustomActionElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for DataNetworkfirewallFirewallPolicyFirewallPolicyElStatelessCustomActionElRef {
+impl terrars::Ref for DataNetworkfirewallFirewallPolicyFirewallPolicyElStatelessCustomActionElRef {
     fn new(
-        shared: StackShared,
-        base: String,
+        shared: terrars::StackShared,
+        base: std::string::String,
     ) -> DataNetworkfirewallFirewallPolicyFirewallPolicyElStatelessCustomActionElRef {
         DataNetworkfirewallFirewallPolicyFirewallPolicyElStatelessCustomActionElRef {
             shared: shared,
@@ -676,50 +735,52 @@ impl Ref for DataNetworkfirewallFirewallPolicyFirewallPolicyElStatelessCustomAct
 }
 
 impl DataNetworkfirewallFirewallPolicyFirewallPolicyElStatelessCustomActionElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `action_definition` after provisioning.\n"]
+    #[doc = "Get a reference to the value of field `action_definition` after provisioning.\n"]
     pub fn action_definition(
         &self,
-    ) -> ListRef<DataNetworkfirewallFirewallPolicyFirewallPolicyElStatelessCustomActionElActionDefinitionElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.action_definition", self.base))
+    ) -> terrars
+    ::ListRef<DataNetworkfirewallFirewallPolicyFirewallPolicyElStatelessCustomActionElActionDefinitionElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.action_definition", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `action_name` after provisioning.\n"]
-    pub fn action_name(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.action_name", self.base))
+    #[doc = "Get a reference to the value of field `action_name` after provisioning.\n"]
+    pub fn action_name(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.action_name", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct DataNetworkfirewallFirewallPolicyFirewallPolicyElStatelessRuleGroupReferenceEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    priority: Option<PrimField<f64>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    resource_arn: Option<PrimField<String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    priority: std::option::Option<terrars::PrimField<f64>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    resource_arn: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
 impl DataNetworkfirewallFirewallPolicyFirewallPolicyElStatelessRuleGroupReferenceEl {
-    #[doc= "Set the field `priority`.\n"]
-    pub fn set_priority(mut self, v: impl Into<PrimField<f64>>) -> Self {
-        self.priority = Some(v.into());
+    #[doc = "Set the field `priority`.\n"]
+    pub fn set_priority(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.priority = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `resource_arn`.\n"]
-    pub fn set_resource_arn(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.resource_arn = Some(v.into());
+    #[doc = "Set the field `resource_arn`.\n"]
+    pub fn set_resource_arn(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.resource_arn = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl ToListMappable for DataNetworkfirewallFirewallPolicyFirewallPolicyElStatelessRuleGroupReferenceEl {
-    type O = BlockAssignable<DataNetworkfirewallFirewallPolicyFirewallPolicyElStatelessRuleGroupReferenceEl>;
+impl terrars::ToListMappable for DataNetworkfirewallFirewallPolicyFirewallPolicyElStatelessRuleGroupReferenceEl {
+    type O =
+        terrars::BlockAssignable<DataNetworkfirewallFirewallPolicyFirewallPolicyElStatelessRuleGroupReferenceEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -739,14 +800,14 @@ impl BuildDataNetworkfirewallFirewallPolicyFirewallPolicyElStatelessRuleGroupRef
 }
 
 pub struct DataNetworkfirewallFirewallPolicyFirewallPolicyElStatelessRuleGroupReferenceElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for DataNetworkfirewallFirewallPolicyFirewallPolicyElStatelessRuleGroupReferenceElRef {
+impl terrars::Ref for DataNetworkfirewallFirewallPolicyFirewallPolicyElStatelessRuleGroupReferenceElRef {
     fn new(
-        shared: StackShared,
-        base: String,
+        shared: terrars::StackShared,
+        base: std::string::String,
     ) -> DataNetworkfirewallFirewallPolicyFirewallPolicyElStatelessRuleGroupReferenceElRef {
         DataNetworkfirewallFirewallPolicyFirewallPolicyElStatelessRuleGroupReferenceElRef {
             shared: shared,
@@ -756,104 +817,147 @@ impl Ref for DataNetworkfirewallFirewallPolicyFirewallPolicyElStatelessRuleGroup
 }
 
 impl DataNetworkfirewallFirewallPolicyFirewallPolicyElStatelessRuleGroupReferenceElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `priority` after provisioning.\n"]
-    pub fn priority(&self) -> PrimExpr<f64> {
-        PrimExpr::new(self.shared().clone(), format!("{}.priority", self.base))
+    #[doc = "Get a reference to the value of field `priority` after provisioning.\n"]
+    pub fn priority(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.priority", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `resource_arn` after provisioning.\n"]
-    pub fn resource_arn(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.resource_arn", self.base))
+    #[doc = "Get a reference to the value of field `resource_arn` after provisioning.\n"]
+    pub fn resource_arn(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.resource_arn", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct DataNetworkfirewallFirewallPolicyFirewallPolicyEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    stateful_default_actions: Option<SetField<PrimField<String>>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    stateful_engine_options: Option<ListField<DataNetworkfirewallFirewallPolicyFirewallPolicyElStatefulEngineOptionsEl>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    stateful_rule_group_reference: Option<
-        SetField<DataNetworkfirewallFirewallPolicyFirewallPolicyElStatefulRuleGroupReferenceEl>,
-    >,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    stateless_custom_action: Option<SetField<DataNetworkfirewallFirewallPolicyFirewallPolicyElStatelessCustomActionEl>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    stateless_default_actions: Option<SetField<PrimField<String>>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    stateless_fragment_default_actions: Option<SetField<PrimField<String>>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    stateless_rule_group_reference: Option<
-        SetField<DataNetworkfirewallFirewallPolicyFirewallPolicyElStatelessRuleGroupReferenceEl>,
-    >,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    stateful_default_actions: std::option::Option<terrars::SetField<terrars::PrimField<std::string::String>>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    stateful_engine_options: std
+    ::option
+    ::Option<terrars::ListField<DataNetworkfirewallFirewallPolicyFirewallPolicyElStatefulEngineOptionsEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    stateful_rule_group_reference: std
+    ::option
+    ::Option<terrars::SetField<DataNetworkfirewallFirewallPolicyFirewallPolicyElStatefulRuleGroupReferenceEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    stateless_custom_action: std
+    ::option
+    ::Option<terrars::SetField<DataNetworkfirewallFirewallPolicyFirewallPolicyElStatelessCustomActionEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    stateless_default_actions: std::option::Option<terrars::SetField<terrars::PrimField<std::string::String>>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    stateless_fragment_default_actions: std::option::Option<terrars::SetField<terrars::PrimField<std::string::String>>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    stateless_rule_group_reference: std
+    ::option
+    ::Option<terrars::SetField<DataNetworkfirewallFirewallPolicyFirewallPolicyElStatelessRuleGroupReferenceEl>>,
 }
 
 impl DataNetworkfirewallFirewallPolicyFirewallPolicyEl {
-    #[doc= "Set the field `stateful_default_actions`.\n"]
-    pub fn set_stateful_default_actions(mut self, v: impl Into<SetField<PrimField<String>>>) -> Self {
-        self.stateful_default_actions = Some(v.into());
+    #[doc = "Set the field `stateful_default_actions`.\n"]
+    pub fn set_stateful_default_actions(
+        mut self,
+        v: impl std::convert::Into<terrars::SetField<terrars::PrimField<std::string::String>>>,
+    ) -> Self {
+        self.stateful_default_actions = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `stateful_engine_options`.\n"]
+    #[doc = "Set the field `stateful_engine_options`.\n"]
     pub fn set_stateful_engine_options(
         mut self,
-        v: impl Into<ListField<DataNetworkfirewallFirewallPolicyFirewallPolicyElStatefulEngineOptionsEl>>,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<
+                        terrars::ListField<DataNetworkfirewallFirewallPolicyFirewallPolicyElStatefulEngineOptionsEl>,
+                    >,
     ) -> Self {
-        self.stateful_engine_options = Some(v.into());
+        self.stateful_engine_options = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `stateful_rule_group_reference`.\n"]
+    #[doc = "Set the field `stateful_rule_group_reference`.\n"]
     pub fn set_stateful_rule_group_reference(
         mut self,
-        v: impl Into<SetField<DataNetworkfirewallFirewallPolicyFirewallPolicyElStatefulRuleGroupReferenceEl>>,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<
+                        terrars
+                        ::SetField<DataNetworkfirewallFirewallPolicyFirewallPolicyElStatefulRuleGroupReferenceEl>,
+                    >,
     ) -> Self {
-        self.stateful_rule_group_reference = Some(v.into());
+        self.stateful_rule_group_reference = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `stateless_custom_action`.\n"]
+    #[doc = "Set the field `stateless_custom_action`.\n"]
     pub fn set_stateless_custom_action(
         mut self,
-        v: impl Into<SetField<DataNetworkfirewallFirewallPolicyFirewallPolicyElStatelessCustomActionEl>>,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<
+                        terrars::SetField<DataNetworkfirewallFirewallPolicyFirewallPolicyElStatelessCustomActionEl>,
+                    >,
     ) -> Self {
-        self.stateless_custom_action = Some(v.into());
+        self.stateless_custom_action = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `stateless_default_actions`.\n"]
-    pub fn set_stateless_default_actions(mut self, v: impl Into<SetField<PrimField<String>>>) -> Self {
-        self.stateless_default_actions = Some(v.into());
+    #[doc = "Set the field `stateless_default_actions`.\n"]
+    pub fn set_stateless_default_actions(
+        mut self,
+        v: impl std::convert::Into<terrars::SetField<terrars::PrimField<std::string::String>>>,
+    ) -> Self {
+        self.stateless_default_actions = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `stateless_fragment_default_actions`.\n"]
-    pub fn set_stateless_fragment_default_actions(mut self, v: impl Into<SetField<PrimField<String>>>) -> Self {
-        self.stateless_fragment_default_actions = Some(v.into());
+    #[doc = "Set the field `stateless_fragment_default_actions`.\n"]
+    pub fn set_stateless_fragment_default_actions(
+        mut self,
+        v: impl std::convert::Into<terrars::SetField<terrars::PrimField<std::string::String>>>,
+    ) -> Self {
+        self.stateless_fragment_default_actions = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `stateless_rule_group_reference`.\n"]
+    #[doc = "Set the field `stateless_rule_group_reference`.\n"]
     pub fn set_stateless_rule_group_reference(
         mut self,
-        v: impl Into<SetField<DataNetworkfirewallFirewallPolicyFirewallPolicyElStatelessRuleGroupReferenceEl>>,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<
+                        terrars
+                        ::SetField<DataNetworkfirewallFirewallPolicyFirewallPolicyElStatelessRuleGroupReferenceEl>,
+                    >,
     ) -> Self {
-        self.stateless_rule_group_reference = Some(v.into());
+        self.stateless_rule_group_reference = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl ToListMappable for DataNetworkfirewallFirewallPolicyFirewallPolicyEl {
-    type O = BlockAssignable<DataNetworkfirewallFirewallPolicyFirewallPolicyEl>;
+impl terrars::ToListMappable for DataNetworkfirewallFirewallPolicyFirewallPolicyEl {
+    type O = terrars::BlockAssignable<DataNetworkfirewallFirewallPolicyFirewallPolicyEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -878,12 +982,15 @@ impl BuildDataNetworkfirewallFirewallPolicyFirewallPolicyEl {
 }
 
 pub struct DataNetworkfirewallFirewallPolicyFirewallPolicyElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for DataNetworkfirewallFirewallPolicyFirewallPolicyElRef {
-    fn new(shared: StackShared, base: String) -> DataNetworkfirewallFirewallPolicyFirewallPolicyElRef {
+impl terrars::Ref for DataNetworkfirewallFirewallPolicyFirewallPolicyElRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> DataNetworkfirewallFirewallPolicyFirewallPolicyElRef {
         DataNetworkfirewallFirewallPolicyFirewallPolicyElRef {
             shared: shared,
             base: base.to_string(),
@@ -892,50 +999,50 @@ impl Ref for DataNetworkfirewallFirewallPolicyFirewallPolicyElRef {
 }
 
 impl DataNetworkfirewallFirewallPolicyFirewallPolicyElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `stateful_default_actions` after provisioning.\n"]
-    pub fn stateful_default_actions(&self) -> SetRef<PrimExpr<String>> {
-        SetRef::new(self.shared().clone(), format!("{}.stateful_default_actions", self.base))
+    #[doc = "Get a reference to the value of field `stateful_default_actions` after provisioning.\n"]
+    pub fn stateful_default_actions(&self) -> terrars::SetRef<terrars::PrimExpr<std::string::String>> {
+        terrars::SetRef::new(self.shared().clone(), format!("{}.stateful_default_actions", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `stateful_engine_options` after provisioning.\n"]
+    #[doc = "Get a reference to the value of field `stateful_engine_options` after provisioning.\n"]
     pub fn stateful_engine_options(
         &self,
-    ) -> ListRef<DataNetworkfirewallFirewallPolicyFirewallPolicyElStatefulEngineOptionsElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.stateful_engine_options", self.base))
+    ) -> terrars::ListRef<DataNetworkfirewallFirewallPolicyFirewallPolicyElStatefulEngineOptionsElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.stateful_engine_options", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `stateful_rule_group_reference` after provisioning.\n"]
+    #[doc = "Get a reference to the value of field `stateful_rule_group_reference` after provisioning.\n"]
     pub fn stateful_rule_group_reference(
         &self,
-    ) -> SetRef<DataNetworkfirewallFirewallPolicyFirewallPolicyElStatefulRuleGroupReferenceElRef> {
-        SetRef::new(self.shared().clone(), format!("{}.stateful_rule_group_reference", self.base))
+    ) -> terrars::SetRef<DataNetworkfirewallFirewallPolicyFirewallPolicyElStatefulRuleGroupReferenceElRef> {
+        terrars::SetRef::new(self.shared().clone(), format!("{}.stateful_rule_group_reference", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `stateless_custom_action` after provisioning.\n"]
+    #[doc = "Get a reference to the value of field `stateless_custom_action` after provisioning.\n"]
     pub fn stateless_custom_action(
         &self,
-    ) -> SetRef<DataNetworkfirewallFirewallPolicyFirewallPolicyElStatelessCustomActionElRef> {
-        SetRef::new(self.shared().clone(), format!("{}.stateless_custom_action", self.base))
+    ) -> terrars::SetRef<DataNetworkfirewallFirewallPolicyFirewallPolicyElStatelessCustomActionElRef> {
+        terrars::SetRef::new(self.shared().clone(), format!("{}.stateless_custom_action", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `stateless_default_actions` after provisioning.\n"]
-    pub fn stateless_default_actions(&self) -> SetRef<PrimExpr<String>> {
-        SetRef::new(self.shared().clone(), format!("{}.stateless_default_actions", self.base))
+    #[doc = "Get a reference to the value of field `stateless_default_actions` after provisioning.\n"]
+    pub fn stateless_default_actions(&self) -> terrars::SetRef<terrars::PrimExpr<std::string::String>> {
+        terrars::SetRef::new(self.shared().clone(), format!("{}.stateless_default_actions", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `stateless_fragment_default_actions` after provisioning.\n"]
-    pub fn stateless_fragment_default_actions(&self) -> SetRef<PrimExpr<String>> {
-        SetRef::new(self.shared().clone(), format!("{}.stateless_fragment_default_actions", self.base))
+    #[doc = "Get a reference to the value of field `stateless_fragment_default_actions` after provisioning.\n"]
+    pub fn stateless_fragment_default_actions(&self) -> terrars::SetRef<terrars::PrimExpr<std::string::String>> {
+        terrars::SetRef::new(self.shared().clone(), format!("{}.stateless_fragment_default_actions", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `stateless_rule_group_reference` after provisioning.\n"]
+    #[doc = "Get a reference to the value of field `stateless_rule_group_reference` after provisioning.\n"]
     pub fn stateless_rule_group_reference(
         &self,
-    ) -> SetRef<DataNetworkfirewallFirewallPolicyFirewallPolicyElStatelessRuleGroupReferenceElRef> {
-        SetRef::new(self.shared().clone(), format!("{}.stateless_rule_group_reference", self.base))
+    ) -> terrars::SetRef<DataNetworkfirewallFirewallPolicyFirewallPolicyElStatelessRuleGroupReferenceElRef> {
+        terrars::SetRef::new(self.shared().clone(), format!("{}.stateless_rule_group_reference", self.base))
     }
 }

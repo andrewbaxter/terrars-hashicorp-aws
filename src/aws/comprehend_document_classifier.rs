@@ -1,70 +1,74 @@
 use serde::Serialize;
-use std::cell::RefCell;
-use std::rc::Rc;
-use terrars::*;
+use terrars::{
+    Referable as _,
+    Resource_ as _,
+    Ref as _,
+};
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
 struct ComprehendDocumentClassifierData {
-    #[serde(skip_serializing_if = "Vec::is_empty")]
-    depends_on: Vec<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    provider: Option<String>,
-    #[serde(skip_serializing_if = "SerdeSkipDefault::is_default")]
-    lifecycle: ResourceLifecycle,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    for_each: Option<String>,
-    data_access_role_arn: PrimField<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    id: Option<PrimField<String>>,
-    language_code: PrimField<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    mode: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    model_kms_key_id: Option<PrimField<String>>,
-    name: PrimField<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    tags: Option<RecField<PrimField<String>>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    tags_all: Option<RecField<PrimField<String>>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    version_name: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    version_name_prefix: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    volume_kms_key_id: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    input_data_config: Option<Vec<ComprehendDocumentClassifierInputDataConfigEl>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    output_data_config: Option<Vec<ComprehendDocumentClassifierOutputDataConfigEl>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    timeouts: Option<ComprehendDocumentClassifierTimeoutsEl>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    vpc_config: Option<Vec<ComprehendDocumentClassifierVpcConfigEl>>,
+    #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
+    depends_on: std::vec::Vec<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    provider: std::option::Option<std::string::String>,
+    #[serde(skip_serializing_if = "terrars::SerdeSkipDefault::is_default")]
+    lifecycle: terrars::ResourceLifecycle,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    for_each: std::option::Option<std::string::String>,
+    #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
+    provisioner: std::vec::Vec<terrars::Provisioner>,
+    data_access_role_arn: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    id: std::option::Option<terrars::PrimField<std::string::String>>,
+    language_code: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    mode: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    model_kms_key_id: std::option::Option<terrars::PrimField<std::string::String>>,
+    name: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    tags: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    tags_all: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    version_name: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    version_name_prefix: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    volume_kms_key_id: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    input_data_config: std::option::Option<std::vec::Vec<ComprehendDocumentClassifierInputDataConfigEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    output_data_config: std::option::Option<std::vec::Vec<ComprehendDocumentClassifierOutputDataConfigEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    timeouts: std::option::Option<ComprehendDocumentClassifierTimeoutsEl>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    vpc_config: std::option::Option<std::vec::Vec<ComprehendDocumentClassifierVpcConfigEl>>,
     dynamic: ComprehendDocumentClassifierDynamic,
 }
 
 struct ComprehendDocumentClassifier_ {
-    shared: StackShared,
-    tf_id: String,
-    data: RefCell<ComprehendDocumentClassifierData>,
+    shared: terrars::StackShared,
+    tf_id: std::string::String,
+    data: std::cell::RefCell<ComprehendDocumentClassifierData>,
 }
 
 #[derive(Clone)]
-pub struct ComprehendDocumentClassifier(Rc<ComprehendDocumentClassifier_>);
+pub struct ComprehendDocumentClassifier(std::rc::Rc<ComprehendDocumentClassifier_>);
 
 impl ComprehendDocumentClassifier {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.0.shared
     }
 
-    pub fn depends_on(self, dep: &impl Referable) -> Self {
+    pub fn depends_on(self, dep: &impl terrars::Referable) -> Self {
         self.0.data.borrow_mut().depends_on.push(dep.extract_ref());
         self
     }
 
     pub fn set_provider(self, provider: &ProviderAws) -> Self {
-        self.0.data.borrow_mut().provider = Some(provider.provider_ref());
+        self.0.data.borrow_mut().provider = std::option::Option::Some(provider.provider_ref());
         self
     }
 
@@ -79,211 +83,253 @@ impl ComprehendDocumentClassifier {
     }
 
     pub fn ignore_changes_to_all(self) -> Self {
-        self.0.data.borrow_mut().lifecycle.ignore_changes = Some(IgnoreChanges::All(IgnoreChangesAll::All));
+        self.0.data.borrow_mut().lifecycle.ignore_changes =
+            std::option::Option::Some(terrars::IgnoreChanges::All(terrars::IgnoreChangesAll::All));
         self
     }
 
-    pub fn ignore_changes_to_attr(self, attr: impl ToString) -> Self {
+    pub fn ignore_changes_to_attr(self, attr: impl std::string::ToString) -> Self {
         {
             let mut d = self.0.data.borrow_mut();
             if match &mut d.lifecycle.ignore_changes {
-                Some(i) => match i {
-                    IgnoreChanges::All(_) => {
+                std::option::Option::Some(i) => match i {
+                    terrars::IgnoreChanges::All(_) => {
                         true
                     },
-                    IgnoreChanges::Refs(r) => {
+                    terrars::IgnoreChanges::Refs(r) => {
                         r.push(attr.to_string());
                         false
                     },
                 },
-                None => true,
+                std::option::Option::None => true,
             } {
-                d.lifecycle.ignore_changes = Some(IgnoreChanges::Refs(vec![attr.to_string()]));
+                d.lifecycle.ignore_changes =
+                    std::option::Option::Some(terrars::IgnoreChanges::Refs(vec![attr.to_string()]));
             }
         }
         self
     }
 
-    pub fn replace_triggered_by_resource(self, r: &impl Resource) -> Self {
+    pub fn replace_triggered_by_resource(self, r: &impl terrars::Resource) -> Self {
         self.0.data.borrow_mut().lifecycle.replace_triggered_by.push(r.extract_ref());
         self
     }
 
-    pub fn replace_triggered_by_attr(self, attr: impl ToString) -> Self {
+    pub fn replace_triggered_by_attr(self, attr: impl std::string::ToString) -> Self {
         self.0.data.borrow_mut().lifecycle.replace_triggered_by.push(attr.to_string());
         self
     }
 
-    #[doc= "Set the field `id`.\n"]
-    pub fn set_id(self, v: impl Into<PrimField<String>>) -> Self {
-        self.0.data.borrow_mut().id = Some(v.into());
+    #[doc = r" Add a provisioner (ex: `local-exec`, `remote-exec`, `file`) to this resource."]
+    #[doc = r" Provisioners run in the order they're added."]
+    pub fn add_provisioner(self, v: impl std::convert::Into<terrars::Provisioner>) -> Self {
+        self.0.data.borrow_mut().provisioner.push(v.into());
         self
     }
 
-    #[doc= "Set the field `mode`.\n"]
-    pub fn set_mode(self, v: impl Into<PrimField<String>>) -> Self {
-        self.0.data.borrow_mut().mode = Some(v.into());
+    pub fn add_lifecycle_precondition(
+        self,
+        condition: impl std::convert::Into<terrars::PrimField<bool>>,
+        error_message: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.0.data.borrow_mut().lifecycle.precondition.push(terrars::LifecycleCondition {
+            condition: condition.into(),
+            error_message: error_message.into(),
+        });
         self
     }
 
-    #[doc= "Set the field `model_kms_key_id`.\n"]
-    pub fn set_model_kms_key_id(self, v: impl Into<PrimField<String>>) -> Self {
-        self.0.data.borrow_mut().model_kms_key_id = Some(v.into());
+    pub fn add_lifecycle_postcondition(
+        self,
+        condition: impl std::convert::Into<terrars::PrimField<bool>>,
+        error_message: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.0.data.borrow_mut().lifecycle.postcondition.push(terrars::LifecycleCondition {
+            condition: condition.into(),
+            error_message: error_message.into(),
+        });
         self
     }
 
-    #[doc= "Set the field `tags`.\n"]
-    pub fn set_tags(self, v: impl Into<RecField<PrimField<String>>>) -> Self {
-        self.0.data.borrow_mut().tags = Some(v.into());
+    #[doc = "Set the field `id`.\n"]
+    pub fn set_id(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().id = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `tags_all`.\n"]
-    pub fn set_tags_all(self, v: impl Into<RecField<PrimField<String>>>) -> Self {
-        self.0.data.borrow_mut().tags_all = Some(v.into());
+    #[doc = "Set the field `mode`.\n"]
+    pub fn set_mode(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().mode = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `version_name`.\n"]
-    pub fn set_version_name(self, v: impl Into<PrimField<String>>) -> Self {
-        self.0.data.borrow_mut().version_name = Some(v.into());
+    #[doc = "Set the field `model_kms_key_id`.\n"]
+    pub fn set_model_kms_key_id(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().model_kms_key_id = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `version_name_prefix`.\n"]
-    pub fn set_version_name_prefix(self, v: impl Into<PrimField<String>>) -> Self {
-        self.0.data.borrow_mut().version_name_prefix = Some(v.into());
+    #[doc = "Set the field `tags`.\n"]
+    pub fn set_tags(
+        self,
+        v: impl std::convert::Into<terrars::RecField<terrars::PrimField<std::string::String>>>,
+    ) -> Self {
+        self.0.data.borrow_mut().tags = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `volume_kms_key_id`.\n"]
-    pub fn set_volume_kms_key_id(self, v: impl Into<PrimField<String>>) -> Self {
-        self.0.data.borrow_mut().volume_kms_key_id = Some(v.into());
+    #[doc = "Set the field `tags_all`.\n"]
+    pub fn set_tags_all(
+        self,
+        v: impl std::convert::Into<terrars::RecField<terrars::PrimField<std::string::String>>>,
+    ) -> Self {
+        self.0.data.borrow_mut().tags_all = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `input_data_config`.\n"]
+    #[doc = "Set the field `version_name`.\n"]
+    pub fn set_version_name(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().version_name = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `version_name_prefix`.\n"]
+    pub fn set_version_name_prefix(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().version_name_prefix = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `volume_kms_key_id`.\n"]
+    pub fn set_volume_kms_key_id(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().volume_kms_key_id = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `input_data_config`.\n"]
     pub fn set_input_data_config(
         self,
-        v: impl Into<BlockAssignable<ComprehendDocumentClassifierInputDataConfigEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<ComprehendDocumentClassifierInputDataConfigEl>>,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.0.data.borrow_mut().input_data_config = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.0.data.borrow_mut().input_data_config = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.0.data.borrow_mut().dynamic.input_data_config = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.0.data.borrow_mut().dynamic.input_data_config = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Set the field `output_data_config`.\n"]
+    #[doc = "Set the field `output_data_config`.\n"]
     pub fn set_output_data_config(
         self,
-        v: impl Into<BlockAssignable<ComprehendDocumentClassifierOutputDataConfigEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<ComprehendDocumentClassifierOutputDataConfigEl>>,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.0.data.borrow_mut().output_data_config = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.0.data.borrow_mut().output_data_config = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.0.data.borrow_mut().dynamic.output_data_config = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.0.data.borrow_mut().dynamic.output_data_config = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Set the field `timeouts`.\n"]
-    pub fn set_timeouts(self, v: impl Into<ComprehendDocumentClassifierTimeoutsEl>) -> Self {
-        self.0.data.borrow_mut().timeouts = Some(v.into());
+    #[doc = "Set the field `timeouts`.\n"]
+    pub fn set_timeouts(self, v: impl std::convert::Into<ComprehendDocumentClassifierTimeoutsEl>) -> Self {
+        self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `vpc_config`.\n"]
-    pub fn set_vpc_config(self, v: impl Into<BlockAssignable<ComprehendDocumentClassifierVpcConfigEl>>) -> Self {
+    #[doc = "Set the field `vpc_config`.\n"]
+    pub fn set_vpc_config(
+        self,
+        v: impl std::convert::Into<terrars::BlockAssignable<ComprehendDocumentClassifierVpcConfigEl>>,
+    ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.0.data.borrow_mut().vpc_config = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.0.data.borrow_mut().vpc_config = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.0.data.borrow_mut().dynamic.vpc_config = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.0.data.borrow_mut().dynamic.vpc_config = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Get a reference to the value of field `arn` after provisioning.\n"]
-    pub fn arn(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.arn", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `arn` after provisioning.\n"]
+    pub fn arn(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.arn", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `data_access_role_arn` after provisioning.\n"]
-    pub fn data_access_role_arn(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.data_access_role_arn", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `data_access_role_arn` after provisioning.\n"]
+    pub fn data_access_role_arn(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.data_access_role_arn", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `id` after provisioning.\n"]
-    pub fn id(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
+    pub fn id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `language_code` after provisioning.\n"]
-    pub fn language_code(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.language_code", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `language_code` after provisioning.\n"]
+    pub fn language_code(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.language_code", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `mode` after provisioning.\n"]
-    pub fn mode(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.mode", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `mode` after provisioning.\n"]
+    pub fn mode(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.mode", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `model_kms_key_id` after provisioning.\n"]
-    pub fn model_kms_key_id(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.model_kms_key_id", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `model_kms_key_id` after provisioning.\n"]
+    pub fn model_kms_key_id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.model_kms_key_id", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `name` after provisioning.\n"]
-    pub fn name(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `name` after provisioning.\n"]
+    pub fn name(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `tags` after provisioning.\n"]
-    pub fn tags(&self) -> RecRef<PrimExpr<String>> {
-        RecRef::new(self.shared().clone(), format!("{}.tags", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `tags` after provisioning.\n"]
+    pub fn tags(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
+        terrars::RecRef::new(self.shared().clone(), format!("{}.tags", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `tags_all` after provisioning.\n"]
-    pub fn tags_all(&self) -> RecRef<PrimExpr<String>> {
-        RecRef::new(self.shared().clone(), format!("{}.tags_all", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `tags_all` after provisioning.\n"]
+    pub fn tags_all(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
+        terrars::RecRef::new(self.shared().clone(), format!("{}.tags_all", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `version_name` after provisioning.\n"]
-    pub fn version_name(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.version_name", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `version_name` after provisioning.\n"]
+    pub fn version_name(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.version_name", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `version_name_prefix` after provisioning.\n"]
-    pub fn version_name_prefix(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.version_name_prefix", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `version_name_prefix` after provisioning.\n"]
+    pub fn version_name_prefix(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.version_name_prefix", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `volume_kms_key_id` after provisioning.\n"]
-    pub fn volume_kms_key_id(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.volume_kms_key_id", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `volume_kms_key_id` after provisioning.\n"]
+    pub fn volume_kms_key_id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.volume_kms_key_id", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `input_data_config` after provisioning.\n"]
-    pub fn input_data_config(&self) -> ListRef<ComprehendDocumentClassifierInputDataConfigElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.input_data_config", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `input_data_config` after provisioning.\n"]
+    pub fn input_data_config(&self) -> terrars::ListRef<ComprehendDocumentClassifierInputDataConfigElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.input_data_config", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `output_data_config` after provisioning.\n"]
-    pub fn output_data_config(&self) -> ListRef<ComprehendDocumentClassifierOutputDataConfigElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.output_data_config", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `output_data_config` after provisioning.\n"]
+    pub fn output_data_config(&self) -> terrars::ListRef<ComprehendDocumentClassifierOutputDataConfigElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.output_data_config", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `timeouts` after provisioning.\n"]
+    #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
     pub fn timeouts(&self) -> ComprehendDocumentClassifierTimeoutsElRef {
         ComprehendDocumentClassifierTimeoutsElRef::new(
             self.shared().clone(),
@@ -291,35 +337,35 @@ impl ComprehendDocumentClassifier {
         )
     }
 
-    #[doc= "Get a reference to the value of field `vpc_config` after provisioning.\n"]
-    pub fn vpc_config(&self) -> ListRef<ComprehendDocumentClassifierVpcConfigElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.vpc_config", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `vpc_config` after provisioning.\n"]
+    pub fn vpc_config(&self) -> terrars::ListRef<ComprehendDocumentClassifierVpcConfigElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.vpc_config", self.extract_ref()))
     }
 }
 
-impl Referable for ComprehendDocumentClassifier {
-    fn extract_ref(&self) -> String {
+impl terrars::Referable for ComprehendDocumentClassifier {
+    fn extract_ref(&self) -> std::string::String {
         format!("{}.{}", self.0.extract_resource_type(), self.0.extract_tf_id())
     }
 }
 
-impl Resource for ComprehendDocumentClassifier { }
+impl terrars::Resource for ComprehendDocumentClassifier { }
 
-impl ToListMappable for ComprehendDocumentClassifier {
-    type O = ListRef<ComprehendDocumentClassifierRef>;
+impl terrars::ToListMappable for ComprehendDocumentClassifier {
+    type O = terrars::ListRef<ComprehendDocumentClassifierRef>;
 
-    fn do_map(self, base: String) -> Self::O {
-        self.0.data.borrow_mut().for_each = Some(format!("${{{}}}", base));
-        ListRef::new(self.0.shared.clone(), self.extract_ref())
+    fn do_map(self, base: std::string::String) -> Self::O {
+        self.0.data.borrow_mut().for_each = std::option::Option::Some(format!("${{{}}}", base));
+        terrars::ListRef::new(self.0.shared.clone(), self.extract_ref())
     }
 }
 
-impl Resource_ for ComprehendDocumentClassifier_ {
-    fn extract_resource_type(&self) -> String {
+impl terrars::Resource_ for ComprehendDocumentClassifier_ {
+    fn extract_resource_type(&self) -> std::string::String {
         "aws_comprehend_document_classifier".into()
     }
 
-    fn extract_tf_id(&self) -> String {
+    fn extract_tf_id(&self) -> std::string::String {
         self.tf_id.clone()
     }
 
@@ -329,25 +375,26 @@ impl Resource_ for ComprehendDocumentClassifier_ {
 }
 
 pub struct BuildComprehendDocumentClassifier {
-    pub tf_id: String,
-    #[doc= ""]
-    pub data_access_role_arn: PrimField<String>,
-    #[doc= ""]
-    pub language_code: PrimField<String>,
-    #[doc= ""]
-    pub name: PrimField<String>,
+    pub tf_id: std::string::String,
+    #[doc = ""]
+    pub data_access_role_arn: terrars::PrimField<std::string::String>,
+    #[doc = ""]
+    pub language_code: terrars::PrimField<std::string::String>,
+    #[doc = ""]
+    pub name: terrars::PrimField<std::string::String>,
 }
 
 impl BuildComprehendDocumentClassifier {
-    pub fn build(self, stack: &mut Stack) -> ComprehendDocumentClassifier {
-        let out = ComprehendDocumentClassifier(Rc::new(ComprehendDocumentClassifier_ {
+    pub fn build(self, stack: &mut terrars::Stack) -> ComprehendDocumentClassifier {
+        let out = ComprehendDocumentClassifier(std::rc::Rc::new(ComprehendDocumentClassifier_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: RefCell::new(ComprehendDocumentClassifierData {
+            data: std::cell::RefCell::new(ComprehendDocumentClassifierData {
                 depends_on: core::default::Default::default(),
-                provider: None,
+                provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
-                for_each: None,
+                for_each: std::option::Option::None,
+                provisioner: core::default::Default::default(),
                 data_access_role_arn: self.data_access_role_arn,
                 id: core::default::Default::default(),
                 language_code: self.language_code,
@@ -363,7 +410,7 @@ impl BuildComprehendDocumentClassifier {
                 output_data_config: core::default::Default::default(),
                 timeouts: core::default::Default::default(),
                 vpc_config: core::default::Default::default(),
-                dynamic: Default::default(),
+                dynamic: core::default::Default::default(),
             }),
         }));
         stack.add_resource(out.0.clone());
@@ -372,12 +419,12 @@ impl BuildComprehendDocumentClassifier {
 }
 
 pub struct ComprehendDocumentClassifierRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for ComprehendDocumentClassifierRef {
-    fn new(shared: StackShared, base: String) -> Self {
+impl terrars::Ref for ComprehendDocumentClassifierRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> Self {
         Self {
             shared: shared,
             base: base,
@@ -386,85 +433,85 @@ impl Ref for ComprehendDocumentClassifierRef {
 }
 
 impl ComprehendDocumentClassifierRef {
-    fn extract_ref(&self) -> String {
+    fn extract_ref(&self) -> std::string::String {
         self.base.clone()
     }
 
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `arn` after provisioning.\n"]
-    pub fn arn(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.arn", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `arn` after provisioning.\n"]
+    pub fn arn(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.arn", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `data_access_role_arn` after provisioning.\n"]
-    pub fn data_access_role_arn(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.data_access_role_arn", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `data_access_role_arn` after provisioning.\n"]
+    pub fn data_access_role_arn(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.data_access_role_arn", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `id` after provisioning.\n"]
-    pub fn id(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
+    pub fn id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `language_code` after provisioning.\n"]
-    pub fn language_code(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.language_code", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `language_code` after provisioning.\n"]
+    pub fn language_code(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.language_code", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `mode` after provisioning.\n"]
-    pub fn mode(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.mode", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `mode` after provisioning.\n"]
+    pub fn mode(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.mode", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `model_kms_key_id` after provisioning.\n"]
-    pub fn model_kms_key_id(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.model_kms_key_id", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `model_kms_key_id` after provisioning.\n"]
+    pub fn model_kms_key_id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.model_kms_key_id", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `name` after provisioning.\n"]
-    pub fn name(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `name` after provisioning.\n"]
+    pub fn name(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `tags` after provisioning.\n"]
-    pub fn tags(&self) -> RecRef<PrimExpr<String>> {
-        RecRef::new(self.shared().clone(), format!("{}.tags", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `tags` after provisioning.\n"]
+    pub fn tags(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
+        terrars::RecRef::new(self.shared().clone(), format!("{}.tags", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `tags_all` after provisioning.\n"]
-    pub fn tags_all(&self) -> RecRef<PrimExpr<String>> {
-        RecRef::new(self.shared().clone(), format!("{}.tags_all", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `tags_all` after provisioning.\n"]
+    pub fn tags_all(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
+        terrars::RecRef::new(self.shared().clone(), format!("{}.tags_all", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `version_name` after provisioning.\n"]
-    pub fn version_name(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.version_name", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `version_name` after provisioning.\n"]
+    pub fn version_name(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.version_name", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `version_name_prefix` after provisioning.\n"]
-    pub fn version_name_prefix(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.version_name_prefix", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `version_name_prefix` after provisioning.\n"]
+    pub fn version_name_prefix(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.version_name_prefix", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `volume_kms_key_id` after provisioning.\n"]
-    pub fn volume_kms_key_id(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.volume_kms_key_id", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `volume_kms_key_id` after provisioning.\n"]
+    pub fn volume_kms_key_id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.volume_kms_key_id", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `input_data_config` after provisioning.\n"]
-    pub fn input_data_config(&self) -> ListRef<ComprehendDocumentClassifierInputDataConfigElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.input_data_config", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `input_data_config` after provisioning.\n"]
+    pub fn input_data_config(&self) -> terrars::ListRef<ComprehendDocumentClassifierInputDataConfigElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.input_data_config", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `output_data_config` after provisioning.\n"]
-    pub fn output_data_config(&self) -> ListRef<ComprehendDocumentClassifierOutputDataConfigElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.output_data_config", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `output_data_config` after provisioning.\n"]
+    pub fn output_data_config(&self) -> terrars::ListRef<ComprehendDocumentClassifierOutputDataConfigElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.output_data_config", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `timeouts` after provisioning.\n"]
+    #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
     pub fn timeouts(&self) -> ComprehendDocumentClassifierTimeoutsElRef {
         ComprehendDocumentClassifierTimeoutsElRef::new(
             self.shared().clone(),
@@ -472,57 +519,63 @@ impl ComprehendDocumentClassifierRef {
         )
     }
 
-    #[doc= "Get a reference to the value of field `vpc_config` after provisioning.\n"]
-    pub fn vpc_config(&self) -> ListRef<ComprehendDocumentClassifierVpcConfigElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.vpc_config", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `vpc_config` after provisioning.\n"]
+    pub fn vpc_config(&self) -> terrars::ListRef<ComprehendDocumentClassifierVpcConfigElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.vpc_config", self.extract_ref()))
     }
 }
 
 #[derive(Serialize)]
 pub struct ComprehendDocumentClassifierInputDataConfigElAugmentedManifestsEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    annotation_data_s3_uri: Option<PrimField<String>>,
-    attribute_names: ListField<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    document_type: Option<PrimField<String>>,
-    s3_uri: PrimField<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    source_documents_s3_uri: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    split: Option<PrimField<String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    annotation_data_s3_uri: std::option::Option<terrars::PrimField<std::string::String>>,
+    attribute_names: terrars::ListField<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    document_type: std::option::Option<terrars::PrimField<std::string::String>>,
+    s3_uri: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    source_documents_s3_uri: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    split: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
 impl ComprehendDocumentClassifierInputDataConfigElAugmentedManifestsEl {
-    #[doc= "Set the field `annotation_data_s3_uri`.\n"]
-    pub fn set_annotation_data_s3_uri(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.annotation_data_s3_uri = Some(v.into());
+    #[doc = "Set the field `annotation_data_s3_uri`.\n"]
+    pub fn set_annotation_data_s3_uri(
+        mut self,
+        v: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.annotation_data_s3_uri = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `document_type`.\n"]
-    pub fn set_document_type(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.document_type = Some(v.into());
+    #[doc = "Set the field `document_type`.\n"]
+    pub fn set_document_type(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.document_type = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `source_documents_s3_uri`.\n"]
-    pub fn set_source_documents_s3_uri(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.source_documents_s3_uri = Some(v.into());
+    #[doc = "Set the field `source_documents_s3_uri`.\n"]
+    pub fn set_source_documents_s3_uri(
+        mut self,
+        v: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.source_documents_s3_uri = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `split`.\n"]
-    pub fn set_split(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.split = Some(v.into());
+    #[doc = "Set the field `split`.\n"]
+    pub fn set_split(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.split = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl ToListMappable for ComprehendDocumentClassifierInputDataConfigElAugmentedManifestsEl {
-    type O = BlockAssignable<ComprehendDocumentClassifierInputDataConfigElAugmentedManifestsEl>;
+impl terrars::ToListMappable for ComprehendDocumentClassifierInputDataConfigElAugmentedManifestsEl {
+    type O = terrars::BlockAssignable<ComprehendDocumentClassifierInputDataConfigElAugmentedManifestsEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -531,10 +584,10 @@ impl ToListMappable for ComprehendDocumentClassifierInputDataConfigElAugmentedMa
 }
 
 pub struct BuildComprehendDocumentClassifierInputDataConfigElAugmentedManifestsEl {
-    #[doc= ""]
-    pub attribute_names: ListField<PrimField<String>>,
-    #[doc= ""]
-    pub s3_uri: PrimField<String>,
+    #[doc = ""]
+    pub attribute_names: terrars::ListField<terrars::PrimField<std::string::String>>,
+    #[doc = ""]
+    pub s3_uri: terrars::PrimField<std::string::String>,
 }
 
 impl BuildComprehendDocumentClassifierInputDataConfigElAugmentedManifestsEl {
@@ -551,14 +604,14 @@ impl BuildComprehendDocumentClassifierInputDataConfigElAugmentedManifestsEl {
 }
 
 pub struct ComprehendDocumentClassifierInputDataConfigElAugmentedManifestsElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for ComprehendDocumentClassifierInputDataConfigElAugmentedManifestsElRef {
+impl terrars::Ref for ComprehendDocumentClassifierInputDataConfigElAugmentedManifestsElRef {
     fn new(
-        shared: StackShared,
-        base: String,
+        shared: terrars::StackShared,
+        base: std::string::String,
     ) -> ComprehendDocumentClassifierInputDataConfigElAugmentedManifestsElRef {
         ComprehendDocumentClassifierInputDataConfigElAugmentedManifestsElRef {
             shared: shared,
@@ -568,108 +621,119 @@ impl Ref for ComprehendDocumentClassifierInputDataConfigElAugmentedManifestsElRe
 }
 
 impl ComprehendDocumentClassifierInputDataConfigElAugmentedManifestsElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `annotation_data_s3_uri` after provisioning.\n"]
-    pub fn annotation_data_s3_uri(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.annotation_data_s3_uri", self.base))
+    #[doc = "Get a reference to the value of field `annotation_data_s3_uri` after provisioning.\n"]
+    pub fn annotation_data_s3_uri(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.annotation_data_s3_uri", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `attribute_names` after provisioning.\n"]
-    pub fn attribute_names(&self) -> ListRef<PrimExpr<String>> {
-        ListRef::new(self.shared().clone(), format!("{}.attribute_names", self.base))
+    #[doc = "Get a reference to the value of field `attribute_names` after provisioning.\n"]
+    pub fn attribute_names(&self) -> terrars::ListRef<terrars::PrimExpr<std::string::String>> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.attribute_names", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `document_type` after provisioning.\n"]
-    pub fn document_type(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.document_type", self.base))
+    #[doc = "Get a reference to the value of field `document_type` after provisioning.\n"]
+    pub fn document_type(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.document_type", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `s3_uri` after provisioning.\n"]
-    pub fn s3_uri(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.s3_uri", self.base))
+    #[doc = "Get a reference to the value of field `s3_uri` after provisioning.\n"]
+    pub fn s3_uri(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.s3_uri", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `source_documents_s3_uri` after provisioning.\n"]
-    pub fn source_documents_s3_uri(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.source_documents_s3_uri", self.base))
+    #[doc = "Get a reference to the value of field `source_documents_s3_uri` after provisioning.\n"]
+    pub fn source_documents_s3_uri(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.source_documents_s3_uri", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `split` after provisioning.\n"]
-    pub fn split(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.split", self.base))
+    #[doc = "Get a reference to the value of field `split` after provisioning.\n"]
+    pub fn split(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.split", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
 struct ComprehendDocumentClassifierInputDataConfigElDynamic {
-    augmented_manifests: Option<DynamicBlock<ComprehendDocumentClassifierInputDataConfigElAugmentedManifestsEl>>,
+    augmented_manifests: std
+    ::option
+    ::Option<terrars::DynamicBlock<ComprehendDocumentClassifierInputDataConfigElAugmentedManifestsEl>>,
 }
 
 #[derive(Serialize)]
 pub struct ComprehendDocumentClassifierInputDataConfigEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    data_format: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    label_delimiter: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    s3_uri: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    test_s3_uri: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    augmented_manifests: Option<Vec<ComprehendDocumentClassifierInputDataConfigElAugmentedManifestsEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    data_format: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    label_delimiter: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    s3_uri: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    test_s3_uri: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    augmented_manifests: std
+    ::option
+    ::Option<std::vec::Vec<ComprehendDocumentClassifierInputDataConfigElAugmentedManifestsEl>>,
     dynamic: ComprehendDocumentClassifierInputDataConfigElDynamic,
 }
 
 impl ComprehendDocumentClassifierInputDataConfigEl {
-    #[doc= "Set the field `data_format`.\n"]
-    pub fn set_data_format(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.data_format = Some(v.into());
+    #[doc = "Set the field `data_format`.\n"]
+    pub fn set_data_format(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.data_format = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `label_delimiter`.\n"]
-    pub fn set_label_delimiter(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.label_delimiter = Some(v.into());
+    #[doc = "Set the field `label_delimiter`.\n"]
+    pub fn set_label_delimiter(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.label_delimiter = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `s3_uri`.\n"]
-    pub fn set_s3_uri(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.s3_uri = Some(v.into());
+    #[doc = "Set the field `s3_uri`.\n"]
+    pub fn set_s3_uri(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.s3_uri = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `test_s3_uri`.\n"]
-    pub fn set_test_s3_uri(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.test_s3_uri = Some(v.into());
+    #[doc = "Set the field `test_s3_uri`.\n"]
+    pub fn set_test_s3_uri(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.test_s3_uri = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `augmented_manifests`.\n"]
+    #[doc = "Set the field `augmented_manifests`.\n"]
     pub fn set_augmented_manifests(
         mut self,
-        v: impl Into<BlockAssignable<ComprehendDocumentClassifierInputDataConfigElAugmentedManifestsEl>>,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<
+                        terrars::BlockAssignable<ComprehendDocumentClassifierInputDataConfigElAugmentedManifestsEl>,
+                    >,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.augmented_manifests = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.augmented_manifests = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.augmented_manifests = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.augmented_manifests = std::option::Option::Some(d);
             },
         }
         self
     }
 }
 
-impl ToListMappable for ComprehendDocumentClassifierInputDataConfigEl {
-    type O = BlockAssignable<ComprehendDocumentClassifierInputDataConfigEl>;
+impl terrars::ToListMappable for ComprehendDocumentClassifierInputDataConfigEl {
+    type O = terrars::BlockAssignable<ComprehendDocumentClassifierInputDataConfigEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -687,18 +751,21 @@ impl BuildComprehendDocumentClassifierInputDataConfigEl {
             s3_uri: core::default::Default::default(),
             test_s3_uri: core::default::Default::default(),
             augmented_manifests: core::default::Default::default(),
-            dynamic: Default::default(),
+            dynamic: core::default::Default::default(),
         }
     }
 }
 
 pub struct ComprehendDocumentClassifierInputDataConfigElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for ComprehendDocumentClassifierInputDataConfigElRef {
-    fn new(shared: StackShared, base: String) -> ComprehendDocumentClassifierInputDataConfigElRef {
+impl terrars::Ref for ComprehendDocumentClassifierInputDataConfigElRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> ComprehendDocumentClassifierInputDataConfigElRef {
         ComprehendDocumentClassifierInputDataConfigElRef {
             shared: shared,
             base: base.to_string(),
@@ -707,51 +774,51 @@ impl Ref for ComprehendDocumentClassifierInputDataConfigElRef {
 }
 
 impl ComprehendDocumentClassifierInputDataConfigElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `data_format` after provisioning.\n"]
-    pub fn data_format(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.data_format", self.base))
+    #[doc = "Get a reference to the value of field `data_format` after provisioning.\n"]
+    pub fn data_format(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.data_format", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `label_delimiter` after provisioning.\n"]
-    pub fn label_delimiter(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.label_delimiter", self.base))
+    #[doc = "Get a reference to the value of field `label_delimiter` after provisioning.\n"]
+    pub fn label_delimiter(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.label_delimiter", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `s3_uri` after provisioning.\n"]
-    pub fn s3_uri(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.s3_uri", self.base))
+    #[doc = "Get a reference to the value of field `s3_uri` after provisioning.\n"]
+    pub fn s3_uri(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.s3_uri", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `test_s3_uri` after provisioning.\n"]
-    pub fn test_s3_uri(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.test_s3_uri", self.base))
+    #[doc = "Get a reference to the value of field `test_s3_uri` after provisioning.\n"]
+    pub fn test_s3_uri(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.test_s3_uri", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct ComprehendDocumentClassifierOutputDataConfigEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    kms_key_id: Option<PrimField<String>>,
-    s3_uri: PrimField<String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    kms_key_id: std::option::Option<terrars::PrimField<std::string::String>>,
+    s3_uri: terrars::PrimField<std::string::String>,
 }
 
 impl ComprehendDocumentClassifierOutputDataConfigEl {
-    #[doc= "Set the field `kms_key_id`.\n"]
-    pub fn set_kms_key_id(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.kms_key_id = Some(v.into());
+    #[doc = "Set the field `kms_key_id`.\n"]
+    pub fn set_kms_key_id(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.kms_key_id = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl ToListMappable for ComprehendDocumentClassifierOutputDataConfigEl {
-    type O = BlockAssignable<ComprehendDocumentClassifierOutputDataConfigEl>;
+impl terrars::ToListMappable for ComprehendDocumentClassifierOutputDataConfigEl {
+    type O = terrars::BlockAssignable<ComprehendDocumentClassifierOutputDataConfigEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -760,8 +827,8 @@ impl ToListMappable for ComprehendDocumentClassifierOutputDataConfigEl {
 }
 
 pub struct BuildComprehendDocumentClassifierOutputDataConfigEl {
-    #[doc= ""]
-    pub s3_uri: PrimField<String>,
+    #[doc = ""]
+    pub s3_uri: terrars::PrimField<std::string::String>,
 }
 
 impl BuildComprehendDocumentClassifierOutputDataConfigEl {
@@ -774,12 +841,15 @@ impl BuildComprehendDocumentClassifierOutputDataConfigEl {
 }
 
 pub struct ComprehendDocumentClassifierOutputDataConfigElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for ComprehendDocumentClassifierOutputDataConfigElRef {
-    fn new(shared: StackShared, base: String) -> ComprehendDocumentClassifierOutputDataConfigElRef {
+impl terrars::Ref for ComprehendDocumentClassifierOutputDataConfigElRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> ComprehendDocumentClassifierOutputDataConfigElRef {
         ComprehendDocumentClassifierOutputDataConfigElRef {
             shared: shared,
             base: base.to_string(),
@@ -788,61 +858,61 @@ impl Ref for ComprehendDocumentClassifierOutputDataConfigElRef {
 }
 
 impl ComprehendDocumentClassifierOutputDataConfigElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `kms_key_id` after provisioning.\n"]
-    pub fn kms_key_id(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.kms_key_id", self.base))
+    #[doc = "Get a reference to the value of field `kms_key_id` after provisioning.\n"]
+    pub fn kms_key_id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.kms_key_id", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `output_s3_uri` after provisioning.\n"]
-    pub fn output_s3_uri(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.output_s3_uri", self.base))
+    #[doc = "Get a reference to the value of field `output_s3_uri` after provisioning.\n"]
+    pub fn output_s3_uri(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.output_s3_uri", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `s3_uri` after provisioning.\n"]
-    pub fn s3_uri(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.s3_uri", self.base))
+    #[doc = "Get a reference to the value of field `s3_uri` after provisioning.\n"]
+    pub fn s3_uri(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.s3_uri", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct ComprehendDocumentClassifierTimeoutsEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    create: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    delete: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    update: Option<PrimField<String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    create: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    delete: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    update: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
 impl ComprehendDocumentClassifierTimeoutsEl {
-    #[doc= "Set the field `create`.\n"]
-    pub fn set_create(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.create = Some(v.into());
+    #[doc = "Set the field `create`.\n"]
+    pub fn set_create(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.create = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `delete`.\n"]
-    pub fn set_delete(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.delete = Some(v.into());
+    #[doc = "Set the field `delete`.\n"]
+    pub fn set_delete(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.delete = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `update`.\n"]
-    pub fn set_update(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.update = Some(v.into());
+    #[doc = "Set the field `update`.\n"]
+    pub fn set_update(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.update = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl ToListMappable for ComprehendDocumentClassifierTimeoutsEl {
-    type O = BlockAssignable<ComprehendDocumentClassifierTimeoutsEl>;
+impl terrars::ToListMappable for ComprehendDocumentClassifierTimeoutsEl {
+    type O = terrars::BlockAssignable<ComprehendDocumentClassifierTimeoutsEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -863,12 +933,12 @@ impl BuildComprehendDocumentClassifierTimeoutsEl {
 }
 
 pub struct ComprehendDocumentClassifierTimeoutsElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for ComprehendDocumentClassifierTimeoutsElRef {
-    fn new(shared: StackShared, base: String) -> ComprehendDocumentClassifierTimeoutsElRef {
+impl terrars::Ref for ComprehendDocumentClassifierTimeoutsElRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> ComprehendDocumentClassifierTimeoutsElRef {
         ComprehendDocumentClassifierTimeoutsElRef {
             shared: shared,
             base: base.to_string(),
@@ -877,39 +947,39 @@ impl Ref for ComprehendDocumentClassifierTimeoutsElRef {
 }
 
 impl ComprehendDocumentClassifierTimeoutsElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `create` after provisioning.\n"]
-    pub fn create(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.create", self.base))
+    #[doc = "Get a reference to the value of field `create` after provisioning.\n"]
+    pub fn create(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.create", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `delete` after provisioning.\n"]
-    pub fn delete(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.delete", self.base))
+    #[doc = "Get a reference to the value of field `delete` after provisioning.\n"]
+    pub fn delete(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.delete", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `update` after provisioning.\n"]
-    pub fn update(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.update", self.base))
+    #[doc = "Get a reference to the value of field `update` after provisioning.\n"]
+    pub fn update(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.update", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct ComprehendDocumentClassifierVpcConfigEl {
-    security_group_ids: SetField<PrimField<String>>,
-    subnets: SetField<PrimField<String>>,
+    security_group_ids: terrars::SetField<terrars::PrimField<std::string::String>>,
+    subnets: terrars::SetField<terrars::PrimField<std::string::String>>,
 }
 
 impl ComprehendDocumentClassifierVpcConfigEl { }
 
-impl ToListMappable for ComprehendDocumentClassifierVpcConfigEl {
-    type O = BlockAssignable<ComprehendDocumentClassifierVpcConfigEl>;
+impl terrars::ToListMappable for ComprehendDocumentClassifierVpcConfigEl {
+    type O = terrars::BlockAssignable<ComprehendDocumentClassifierVpcConfigEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -918,10 +988,10 @@ impl ToListMappable for ComprehendDocumentClassifierVpcConfigEl {
 }
 
 pub struct BuildComprehendDocumentClassifierVpcConfigEl {
-    #[doc= ""]
-    pub security_group_ids: SetField<PrimField<String>>,
-    #[doc= ""]
-    pub subnets: SetField<PrimField<String>>,
+    #[doc = ""]
+    pub security_group_ids: terrars::SetField<terrars::PrimField<std::string::String>>,
+    #[doc = ""]
+    pub subnets: terrars::SetField<terrars::PrimField<std::string::String>>,
 }
 
 impl BuildComprehendDocumentClassifierVpcConfigEl {
@@ -934,12 +1004,12 @@ impl BuildComprehendDocumentClassifierVpcConfigEl {
 }
 
 pub struct ComprehendDocumentClassifierVpcConfigElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for ComprehendDocumentClassifierVpcConfigElRef {
-    fn new(shared: StackShared, base: String) -> ComprehendDocumentClassifierVpcConfigElRef {
+impl terrars::Ref for ComprehendDocumentClassifierVpcConfigElRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> ComprehendDocumentClassifierVpcConfigElRef {
         ComprehendDocumentClassifierVpcConfigElRef {
             shared: shared,
             base: base.to_string(),
@@ -948,24 +1018,24 @@ impl Ref for ComprehendDocumentClassifierVpcConfigElRef {
 }
 
 impl ComprehendDocumentClassifierVpcConfigElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `security_group_ids` after provisioning.\n"]
-    pub fn security_group_ids(&self) -> SetRef<PrimExpr<String>> {
-        SetRef::new(self.shared().clone(), format!("{}.security_group_ids", self.base))
+    #[doc = "Get a reference to the value of field `security_group_ids` after provisioning.\n"]
+    pub fn security_group_ids(&self) -> terrars::SetRef<terrars::PrimExpr<std::string::String>> {
+        terrars::SetRef::new(self.shared().clone(), format!("{}.security_group_ids", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `subnets` after provisioning.\n"]
-    pub fn subnets(&self) -> SetRef<PrimExpr<String>> {
-        SetRef::new(self.shared().clone(), format!("{}.subnets", self.base))
+    #[doc = "Get a reference to the value of field `subnets` after provisioning.\n"]
+    pub fn subnets(&self) -> terrars::SetRef<terrars::PrimExpr<std::string::String>> {
+        terrars::SetRef::new(self.shared().clone(), format!("{}.subnets", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
 struct ComprehendDocumentClassifierDynamic {
-    input_data_config: Option<DynamicBlock<ComprehendDocumentClassifierInputDataConfigEl>>,
-    output_data_config: Option<DynamicBlock<ComprehendDocumentClassifierOutputDataConfigEl>>,
-    vpc_config: Option<DynamicBlock<ComprehendDocumentClassifierVpcConfigEl>>,
+    input_data_config: std::option::Option<terrars::DynamicBlock<ComprehendDocumentClassifierInputDataConfigEl>>,
+    output_data_config: std::option::Option<terrars::DynamicBlock<ComprehendDocumentClassifierOutputDataConfigEl>>,
+    vpc_config: std::option::Option<terrars::DynamicBlock<ComprehendDocumentClassifierVpcConfigEl>>,
 }

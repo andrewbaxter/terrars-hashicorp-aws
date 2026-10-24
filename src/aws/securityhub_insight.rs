@@ -1,49 +1,53 @@
 use serde::Serialize;
-use std::cell::RefCell;
-use std::rc::Rc;
-use terrars::*;
+use terrars::{
+    Referable as _,
+    Resource_ as _,
+    Ref as _,
+};
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
 struct SecurityhubInsightData {
-    #[serde(skip_serializing_if = "Vec::is_empty")]
-    depends_on: Vec<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    provider: Option<String>,
-    #[serde(skip_serializing_if = "SerdeSkipDefault::is_default")]
-    lifecycle: ResourceLifecycle,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    for_each: Option<String>,
-    group_by_attribute: PrimField<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    id: Option<PrimField<String>>,
-    name: PrimField<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    filters: Option<Vec<SecurityhubInsightFiltersEl>>,
+    #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
+    depends_on: std::vec::Vec<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    provider: std::option::Option<std::string::String>,
+    #[serde(skip_serializing_if = "terrars::SerdeSkipDefault::is_default")]
+    lifecycle: terrars::ResourceLifecycle,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    for_each: std::option::Option<std::string::String>,
+    #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
+    provisioner: std::vec::Vec<terrars::Provisioner>,
+    group_by_attribute: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    id: std::option::Option<terrars::PrimField<std::string::String>>,
+    name: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    filters: std::option::Option<std::vec::Vec<SecurityhubInsightFiltersEl>>,
     dynamic: SecurityhubInsightDynamic,
 }
 
 struct SecurityhubInsight_ {
-    shared: StackShared,
-    tf_id: String,
-    data: RefCell<SecurityhubInsightData>,
+    shared: terrars::StackShared,
+    tf_id: std::string::String,
+    data: std::cell::RefCell<SecurityhubInsightData>,
 }
 
 #[derive(Clone)]
-pub struct SecurityhubInsight(Rc<SecurityhubInsight_>);
+pub struct SecurityhubInsight(std::rc::Rc<SecurityhubInsight_>);
 
 impl SecurityhubInsight {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.0.shared
     }
 
-    pub fn depends_on(self, dep: &impl Referable) -> Self {
+    pub fn depends_on(self, dep: &impl terrars::Referable) -> Self {
         self.0.data.borrow_mut().depends_on.push(dep.extract_ref());
         self
     }
 
     pub fn set_provider(self, provider: &ProviderAws) -> Self {
-        self.0.data.borrow_mut().provider = Some(provider.provider_ref());
+        self.0.data.borrow_mut().provider = std::option::Option::Some(provider.provider_ref());
         self
     }
 
@@ -58,109 +62,142 @@ impl SecurityhubInsight {
     }
 
     pub fn ignore_changes_to_all(self) -> Self {
-        self.0.data.borrow_mut().lifecycle.ignore_changes = Some(IgnoreChanges::All(IgnoreChangesAll::All));
+        self.0.data.borrow_mut().lifecycle.ignore_changes =
+            std::option::Option::Some(terrars::IgnoreChanges::All(terrars::IgnoreChangesAll::All));
         self
     }
 
-    pub fn ignore_changes_to_attr(self, attr: impl ToString) -> Self {
+    pub fn ignore_changes_to_attr(self, attr: impl std::string::ToString) -> Self {
         {
             let mut d = self.0.data.borrow_mut();
             if match &mut d.lifecycle.ignore_changes {
-                Some(i) => match i {
-                    IgnoreChanges::All(_) => {
+                std::option::Option::Some(i) => match i {
+                    terrars::IgnoreChanges::All(_) => {
                         true
                     },
-                    IgnoreChanges::Refs(r) => {
+                    terrars::IgnoreChanges::Refs(r) => {
                         r.push(attr.to_string());
                         false
                     },
                 },
-                None => true,
+                std::option::Option::None => true,
             } {
-                d.lifecycle.ignore_changes = Some(IgnoreChanges::Refs(vec![attr.to_string()]));
+                d.lifecycle.ignore_changes =
+                    std::option::Option::Some(terrars::IgnoreChanges::Refs(vec![attr.to_string()]));
             }
         }
         self
     }
 
-    pub fn replace_triggered_by_resource(self, r: &impl Resource) -> Self {
+    pub fn replace_triggered_by_resource(self, r: &impl terrars::Resource) -> Self {
         self.0.data.borrow_mut().lifecycle.replace_triggered_by.push(r.extract_ref());
         self
     }
 
-    pub fn replace_triggered_by_attr(self, attr: impl ToString) -> Self {
+    pub fn replace_triggered_by_attr(self, attr: impl std::string::ToString) -> Self {
         self.0.data.borrow_mut().lifecycle.replace_triggered_by.push(attr.to_string());
         self
     }
 
-    #[doc= "Set the field `id`.\n"]
-    pub fn set_id(self, v: impl Into<PrimField<String>>) -> Self {
-        self.0.data.borrow_mut().id = Some(v.into());
+    #[doc = r" Add a provisioner (ex: `local-exec`, `remote-exec`, `file`) to this resource."]
+    #[doc = r" Provisioners run in the order they're added."]
+    pub fn add_provisioner(self, v: impl std::convert::Into<terrars::Provisioner>) -> Self {
+        self.0.data.borrow_mut().provisioner.push(v.into());
         self
     }
 
-    #[doc= "Set the field `filters`.\n"]
-    pub fn set_filters(self, v: impl Into<BlockAssignable<SecurityhubInsightFiltersEl>>) -> Self {
+    pub fn add_lifecycle_precondition(
+        self,
+        condition: impl std::convert::Into<terrars::PrimField<bool>>,
+        error_message: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.0.data.borrow_mut().lifecycle.precondition.push(terrars::LifecycleCondition {
+            condition: condition.into(),
+            error_message: error_message.into(),
+        });
+        self
+    }
+
+    pub fn add_lifecycle_postcondition(
+        self,
+        condition: impl std::convert::Into<terrars::PrimField<bool>>,
+        error_message: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.0.data.borrow_mut().lifecycle.postcondition.push(terrars::LifecycleCondition {
+            condition: condition.into(),
+            error_message: error_message.into(),
+        });
+        self
+    }
+
+    #[doc = "Set the field `id`.\n"]
+    pub fn set_id(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().id = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `filters`.\n"]
+    pub fn set_filters(self, v: impl std::convert::Into<terrars::BlockAssignable<SecurityhubInsightFiltersEl>>) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.0.data.borrow_mut().filters = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.0.data.borrow_mut().filters = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.0.data.borrow_mut().dynamic.filters = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.0.data.borrow_mut().dynamic.filters = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Get a reference to the value of field `arn` after provisioning.\n"]
-    pub fn arn(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.arn", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `arn` after provisioning.\n"]
+    pub fn arn(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.arn", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `group_by_attribute` after provisioning.\n"]
-    pub fn group_by_attribute(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.group_by_attribute", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `group_by_attribute` after provisioning.\n"]
+    pub fn group_by_attribute(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.group_by_attribute", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `id` after provisioning.\n"]
-    pub fn id(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
+    pub fn id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `name` after provisioning.\n"]
-    pub fn name(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `name` after provisioning.\n"]
+    pub fn name(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `filters` after provisioning.\n"]
-    pub fn filters(&self) -> ListRef<SecurityhubInsightFiltersElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.filters", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `filters` after provisioning.\n"]
+    pub fn filters(&self) -> terrars::ListRef<SecurityhubInsightFiltersElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.filters", self.extract_ref()))
     }
 }
 
-impl Referable for SecurityhubInsight {
-    fn extract_ref(&self) -> String {
+impl terrars::Referable for SecurityhubInsight {
+    fn extract_ref(&self) -> std::string::String {
         format!("{}.{}", self.0.extract_resource_type(), self.0.extract_tf_id())
     }
 }
 
-impl Resource for SecurityhubInsight { }
+impl terrars::Resource for SecurityhubInsight { }
 
-impl ToListMappable for SecurityhubInsight {
-    type O = ListRef<SecurityhubInsightRef>;
+impl terrars::ToListMappable for SecurityhubInsight {
+    type O = terrars::ListRef<SecurityhubInsightRef>;
 
-    fn do_map(self, base: String) -> Self::O {
-        self.0.data.borrow_mut().for_each = Some(format!("${{{}}}", base));
-        ListRef::new(self.0.shared.clone(), self.extract_ref())
+    fn do_map(self, base: std::string::String) -> Self::O {
+        self.0.data.borrow_mut().for_each = std::option::Option::Some(format!("${{{}}}", base));
+        terrars::ListRef::new(self.0.shared.clone(), self.extract_ref())
     }
 }
 
-impl Resource_ for SecurityhubInsight_ {
-    fn extract_resource_type(&self) -> String {
+impl terrars::Resource_ for SecurityhubInsight_ {
+    fn extract_resource_type(&self) -> std::string::String {
         "aws_securityhub_insight".into()
     }
 
-    fn extract_tf_id(&self) -> String {
+    fn extract_tf_id(&self) -> std::string::String {
         self.tf_id.clone()
     }
 
@@ -170,28 +207,29 @@ impl Resource_ for SecurityhubInsight_ {
 }
 
 pub struct BuildSecurityhubInsight {
-    pub tf_id: String,
-    #[doc= ""]
-    pub group_by_attribute: PrimField<String>,
-    #[doc= ""]
-    pub name: PrimField<String>,
+    pub tf_id: std::string::String,
+    #[doc = ""]
+    pub group_by_attribute: terrars::PrimField<std::string::String>,
+    #[doc = ""]
+    pub name: terrars::PrimField<std::string::String>,
 }
 
 impl BuildSecurityhubInsight {
-    pub fn build(self, stack: &mut Stack) -> SecurityhubInsight {
-        let out = SecurityhubInsight(Rc::new(SecurityhubInsight_ {
+    pub fn build(self, stack: &mut terrars::Stack) -> SecurityhubInsight {
+        let out = SecurityhubInsight(std::rc::Rc::new(SecurityhubInsight_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: RefCell::new(SecurityhubInsightData {
+            data: std::cell::RefCell::new(SecurityhubInsightData {
                 depends_on: core::default::Default::default(),
-                provider: None,
+                provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
-                for_each: None,
+                for_each: std::option::Option::None,
+                provisioner: core::default::Default::default(),
                 group_by_attribute: self.group_by_attribute,
                 id: core::default::Default::default(),
                 name: self.name,
                 filters: core::default::Default::default(),
-                dynamic: Default::default(),
+                dynamic: core::default::Default::default(),
             }),
         }));
         stack.add_resource(out.0.clone());
@@ -200,12 +238,12 @@ impl BuildSecurityhubInsight {
 }
 
 pub struct SecurityhubInsightRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for SecurityhubInsightRef {
-    fn new(shared: StackShared, base: String) -> Self {
+impl terrars::Ref for SecurityhubInsightRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> Self {
         Self {
             shared: shared,
             base: base,
@@ -214,53 +252,53 @@ impl Ref for SecurityhubInsightRef {
 }
 
 impl SecurityhubInsightRef {
-    fn extract_ref(&self) -> String {
+    fn extract_ref(&self) -> std::string::String {
         self.base.clone()
     }
 
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `arn` after provisioning.\n"]
-    pub fn arn(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.arn", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `arn` after provisioning.\n"]
+    pub fn arn(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.arn", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `group_by_attribute` after provisioning.\n"]
-    pub fn group_by_attribute(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.group_by_attribute", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `group_by_attribute` after provisioning.\n"]
+    pub fn group_by_attribute(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.group_by_attribute", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `id` after provisioning.\n"]
-    pub fn id(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
+    pub fn id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `name` after provisioning.\n"]
-    pub fn name(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `name` after provisioning.\n"]
+    pub fn name(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `filters` after provisioning.\n"]
-    pub fn filters(&self) -> ListRef<SecurityhubInsightFiltersElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.filters", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `filters` after provisioning.\n"]
+    pub fn filters(&self) -> terrars::ListRef<SecurityhubInsightFiltersElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.filters", self.extract_ref()))
     }
 }
 
 #[derive(Serialize)]
 pub struct SecurityhubInsightFiltersElAwsAccountIdEl {
-    comparison: PrimField<String>,
-    value: PrimField<String>,
+    comparison: terrars::PrimField<std::string::String>,
+    value: terrars::PrimField<std::string::String>,
 }
 
 impl SecurityhubInsightFiltersElAwsAccountIdEl { }
 
-impl ToListMappable for SecurityhubInsightFiltersElAwsAccountIdEl {
-    type O = BlockAssignable<SecurityhubInsightFiltersElAwsAccountIdEl>;
+impl terrars::ToListMappable for SecurityhubInsightFiltersElAwsAccountIdEl {
+    type O = terrars::BlockAssignable<SecurityhubInsightFiltersElAwsAccountIdEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -269,10 +307,10 @@ impl ToListMappable for SecurityhubInsightFiltersElAwsAccountIdEl {
 }
 
 pub struct BuildSecurityhubInsightFiltersElAwsAccountIdEl {
-    #[doc= ""]
-    pub comparison: PrimField<String>,
-    #[doc= ""]
-    pub value: PrimField<String>,
+    #[doc = ""]
+    pub comparison: terrars::PrimField<std::string::String>,
+    #[doc = ""]
+    pub value: terrars::PrimField<std::string::String>,
 }
 
 impl BuildSecurityhubInsightFiltersElAwsAccountIdEl {
@@ -285,12 +323,12 @@ impl BuildSecurityhubInsightFiltersElAwsAccountIdEl {
 }
 
 pub struct SecurityhubInsightFiltersElAwsAccountIdElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for SecurityhubInsightFiltersElAwsAccountIdElRef {
-    fn new(shared: StackShared, base: String) -> SecurityhubInsightFiltersElAwsAccountIdElRef {
+impl terrars::Ref for SecurityhubInsightFiltersElAwsAccountIdElRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> SecurityhubInsightFiltersElAwsAccountIdElRef {
         SecurityhubInsightFiltersElAwsAccountIdElRef {
             shared: shared,
             base: base.to_string(),
@@ -299,34 +337,34 @@ impl Ref for SecurityhubInsightFiltersElAwsAccountIdElRef {
 }
 
 impl SecurityhubInsightFiltersElAwsAccountIdElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `comparison` after provisioning.\n"]
-    pub fn comparison(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.comparison", self.base))
+    #[doc = "Get a reference to the value of field `comparison` after provisioning.\n"]
+    pub fn comparison(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.comparison", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `value` after provisioning.\n"]
-    pub fn value(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.value", self.base))
+    #[doc = "Get a reference to the value of field `value` after provisioning.\n"]
+    pub fn value(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.value", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct SecurityhubInsightFiltersElCompanyNameEl {
-    comparison: PrimField<String>,
-    value: PrimField<String>,
+    comparison: terrars::PrimField<std::string::String>,
+    value: terrars::PrimField<std::string::String>,
 }
 
 impl SecurityhubInsightFiltersElCompanyNameEl { }
 
-impl ToListMappable for SecurityhubInsightFiltersElCompanyNameEl {
-    type O = BlockAssignable<SecurityhubInsightFiltersElCompanyNameEl>;
+impl terrars::ToListMappable for SecurityhubInsightFiltersElCompanyNameEl {
+    type O = terrars::BlockAssignable<SecurityhubInsightFiltersElCompanyNameEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -335,10 +373,10 @@ impl ToListMappable for SecurityhubInsightFiltersElCompanyNameEl {
 }
 
 pub struct BuildSecurityhubInsightFiltersElCompanyNameEl {
-    #[doc= ""]
-    pub comparison: PrimField<String>,
-    #[doc= ""]
-    pub value: PrimField<String>,
+    #[doc = ""]
+    pub comparison: terrars::PrimField<std::string::String>,
+    #[doc = ""]
+    pub value: terrars::PrimField<std::string::String>,
 }
 
 impl BuildSecurityhubInsightFiltersElCompanyNameEl {
@@ -351,12 +389,12 @@ impl BuildSecurityhubInsightFiltersElCompanyNameEl {
 }
 
 pub struct SecurityhubInsightFiltersElCompanyNameElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for SecurityhubInsightFiltersElCompanyNameElRef {
-    fn new(shared: StackShared, base: String) -> SecurityhubInsightFiltersElCompanyNameElRef {
+impl terrars::Ref for SecurityhubInsightFiltersElCompanyNameElRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> SecurityhubInsightFiltersElCompanyNameElRef {
         SecurityhubInsightFiltersElCompanyNameElRef {
             shared: shared,
             base: base.to_string(),
@@ -365,34 +403,34 @@ impl Ref for SecurityhubInsightFiltersElCompanyNameElRef {
 }
 
 impl SecurityhubInsightFiltersElCompanyNameElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `comparison` after provisioning.\n"]
-    pub fn comparison(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.comparison", self.base))
+    #[doc = "Get a reference to the value of field `comparison` after provisioning.\n"]
+    pub fn comparison(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.comparison", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `value` after provisioning.\n"]
-    pub fn value(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.value", self.base))
+    #[doc = "Get a reference to the value of field `value` after provisioning.\n"]
+    pub fn value(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.value", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct SecurityhubInsightFiltersElComplianceStatusEl {
-    comparison: PrimField<String>,
-    value: PrimField<String>,
+    comparison: terrars::PrimField<std::string::String>,
+    value: terrars::PrimField<std::string::String>,
 }
 
 impl SecurityhubInsightFiltersElComplianceStatusEl { }
 
-impl ToListMappable for SecurityhubInsightFiltersElComplianceStatusEl {
-    type O = BlockAssignable<SecurityhubInsightFiltersElComplianceStatusEl>;
+impl terrars::ToListMappable for SecurityhubInsightFiltersElComplianceStatusEl {
+    type O = terrars::BlockAssignable<SecurityhubInsightFiltersElComplianceStatusEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -401,10 +439,10 @@ impl ToListMappable for SecurityhubInsightFiltersElComplianceStatusEl {
 }
 
 pub struct BuildSecurityhubInsightFiltersElComplianceStatusEl {
-    #[doc= ""]
-    pub comparison: PrimField<String>,
-    #[doc= ""]
-    pub value: PrimField<String>,
+    #[doc = ""]
+    pub comparison: terrars::PrimField<std::string::String>,
+    #[doc = ""]
+    pub value: terrars::PrimField<std::string::String>,
 }
 
 impl BuildSecurityhubInsightFiltersElComplianceStatusEl {
@@ -417,12 +455,15 @@ impl BuildSecurityhubInsightFiltersElComplianceStatusEl {
 }
 
 pub struct SecurityhubInsightFiltersElComplianceStatusElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for SecurityhubInsightFiltersElComplianceStatusElRef {
-    fn new(shared: StackShared, base: String) -> SecurityhubInsightFiltersElComplianceStatusElRef {
+impl terrars::Ref for SecurityhubInsightFiltersElComplianceStatusElRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> SecurityhubInsightFiltersElComplianceStatusElRef {
         SecurityhubInsightFiltersElComplianceStatusElRef {
             shared: shared,
             base: base.to_string(),
@@ -431,56 +472,56 @@ impl Ref for SecurityhubInsightFiltersElComplianceStatusElRef {
 }
 
 impl SecurityhubInsightFiltersElComplianceStatusElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `comparison` after provisioning.\n"]
-    pub fn comparison(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.comparison", self.base))
+    #[doc = "Get a reference to the value of field `comparison` after provisioning.\n"]
+    pub fn comparison(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.comparison", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `value` after provisioning.\n"]
-    pub fn value(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.value", self.base))
+    #[doc = "Get a reference to the value of field `value` after provisioning.\n"]
+    pub fn value(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.value", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct SecurityhubInsightFiltersElConfidenceEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    eq: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    gte: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    lte: Option<PrimField<String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    eq: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    gte: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    lte: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
 impl SecurityhubInsightFiltersElConfidenceEl {
-    #[doc= "Set the field `eq`.\n"]
-    pub fn set_eq(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.eq = Some(v.into());
+    #[doc = "Set the field `eq`.\n"]
+    pub fn set_eq(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.eq = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `gte`.\n"]
-    pub fn set_gte(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.gte = Some(v.into());
+    #[doc = "Set the field `gte`.\n"]
+    pub fn set_gte(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.gte = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `lte`.\n"]
-    pub fn set_lte(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.lte = Some(v.into());
+    #[doc = "Set the field `lte`.\n"]
+    pub fn set_lte(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.lte = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl ToListMappable for SecurityhubInsightFiltersElConfidenceEl {
-    type O = BlockAssignable<SecurityhubInsightFiltersElConfidenceEl>;
+impl terrars::ToListMappable for SecurityhubInsightFiltersElConfidenceEl {
+    type O = terrars::BlockAssignable<SecurityhubInsightFiltersElConfidenceEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -501,12 +542,12 @@ impl BuildSecurityhubInsightFiltersElConfidenceEl {
 }
 
 pub struct SecurityhubInsightFiltersElConfidenceElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for SecurityhubInsightFiltersElConfidenceElRef {
-    fn new(shared: StackShared, base: String) -> SecurityhubInsightFiltersElConfidenceElRef {
+impl terrars::Ref for SecurityhubInsightFiltersElConfidenceElRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> SecurityhubInsightFiltersElConfidenceElRef {
         SecurityhubInsightFiltersElConfidenceElRef {
             shared: shared,
             base: base.to_string(),
@@ -515,39 +556,39 @@ impl Ref for SecurityhubInsightFiltersElConfidenceElRef {
 }
 
 impl SecurityhubInsightFiltersElConfidenceElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `eq` after provisioning.\n"]
-    pub fn eq(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.eq", self.base))
+    #[doc = "Get a reference to the value of field `eq` after provisioning.\n"]
+    pub fn eq(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.eq", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `gte` after provisioning.\n"]
-    pub fn gte(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.gte", self.base))
+    #[doc = "Get a reference to the value of field `gte` after provisioning.\n"]
+    pub fn gte(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.gte", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `lte` after provisioning.\n"]
-    pub fn lte(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.lte", self.base))
+    #[doc = "Get a reference to the value of field `lte` after provisioning.\n"]
+    pub fn lte(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.lte", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct SecurityhubInsightFiltersElCreatedAtElDateRangeEl {
-    unit: PrimField<String>,
-    value: PrimField<f64>,
+    unit: terrars::PrimField<std::string::String>,
+    value: terrars::PrimField<f64>,
 }
 
 impl SecurityhubInsightFiltersElCreatedAtElDateRangeEl { }
 
-impl ToListMappable for SecurityhubInsightFiltersElCreatedAtElDateRangeEl {
-    type O = BlockAssignable<SecurityhubInsightFiltersElCreatedAtElDateRangeEl>;
+impl terrars::ToListMappable for SecurityhubInsightFiltersElCreatedAtElDateRangeEl {
+    type O = terrars::BlockAssignable<SecurityhubInsightFiltersElCreatedAtElDateRangeEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -556,10 +597,10 @@ impl ToListMappable for SecurityhubInsightFiltersElCreatedAtElDateRangeEl {
 }
 
 pub struct BuildSecurityhubInsightFiltersElCreatedAtElDateRangeEl {
-    #[doc= ""]
-    pub unit: PrimField<String>,
-    #[doc= ""]
-    pub value: PrimField<f64>,
+    #[doc = ""]
+    pub unit: terrars::PrimField<std::string::String>,
+    #[doc = ""]
+    pub value: terrars::PrimField<f64>,
 }
 
 impl BuildSecurityhubInsightFiltersElCreatedAtElDateRangeEl {
@@ -572,12 +613,15 @@ impl BuildSecurityhubInsightFiltersElCreatedAtElDateRangeEl {
 }
 
 pub struct SecurityhubInsightFiltersElCreatedAtElDateRangeElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for SecurityhubInsightFiltersElCreatedAtElDateRangeElRef {
-    fn new(shared: StackShared, base: String) -> SecurityhubInsightFiltersElCreatedAtElDateRangeElRef {
+impl terrars::Ref for SecurityhubInsightFiltersElCreatedAtElDateRangeElRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> SecurityhubInsightFiltersElCreatedAtElDateRangeElRef {
         SecurityhubInsightFiltersElCreatedAtElDateRangeElRef {
             shared: shared,
             base: base.to_string(),
@@ -586,72 +630,72 @@ impl Ref for SecurityhubInsightFiltersElCreatedAtElDateRangeElRef {
 }
 
 impl SecurityhubInsightFiltersElCreatedAtElDateRangeElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `unit` after provisioning.\n"]
-    pub fn unit(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.unit", self.base))
+    #[doc = "Get a reference to the value of field `unit` after provisioning.\n"]
+    pub fn unit(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.unit", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `value` after provisioning.\n"]
-    pub fn value(&self) -> PrimExpr<f64> {
-        PrimExpr::new(self.shared().clone(), format!("{}.value", self.base))
+    #[doc = "Get a reference to the value of field `value` after provisioning.\n"]
+    pub fn value(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.value", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
 struct SecurityhubInsightFiltersElCreatedAtElDynamic {
-    date_range: Option<DynamicBlock<SecurityhubInsightFiltersElCreatedAtElDateRangeEl>>,
+    date_range: std::option::Option<terrars::DynamicBlock<SecurityhubInsightFiltersElCreatedAtElDateRangeEl>>,
 }
 
 #[derive(Serialize)]
 pub struct SecurityhubInsightFiltersElCreatedAtEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    end: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    start: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    date_range: Option<Vec<SecurityhubInsightFiltersElCreatedAtElDateRangeEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    end: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    start: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    date_range: std::option::Option<std::vec::Vec<SecurityhubInsightFiltersElCreatedAtElDateRangeEl>>,
     dynamic: SecurityhubInsightFiltersElCreatedAtElDynamic,
 }
 
 impl SecurityhubInsightFiltersElCreatedAtEl {
-    #[doc= "Set the field `end`.\n"]
-    pub fn set_end(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.end = Some(v.into());
+    #[doc = "Set the field `end`.\n"]
+    pub fn set_end(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.end = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `start`.\n"]
-    pub fn set_start(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.start = Some(v.into());
+    #[doc = "Set the field `start`.\n"]
+    pub fn set_start(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.start = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `date_range`.\n"]
+    #[doc = "Set the field `date_range`.\n"]
     pub fn set_date_range(
         mut self,
-        v: impl Into<BlockAssignable<SecurityhubInsightFiltersElCreatedAtElDateRangeEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<SecurityhubInsightFiltersElCreatedAtElDateRangeEl>>,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.date_range = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.date_range = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.date_range = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.date_range = std::option::Option::Some(d);
             },
         }
         self
     }
 }
 
-impl ToListMappable for SecurityhubInsightFiltersElCreatedAtEl {
-    type O = BlockAssignable<SecurityhubInsightFiltersElCreatedAtEl>;
+impl terrars::ToListMappable for SecurityhubInsightFiltersElCreatedAtEl {
+    type O = terrars::BlockAssignable<SecurityhubInsightFiltersElCreatedAtEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -667,18 +711,18 @@ impl BuildSecurityhubInsightFiltersElCreatedAtEl {
             end: core::default::Default::default(),
             start: core::default::Default::default(),
             date_range: core::default::Default::default(),
-            dynamic: Default::default(),
+            dynamic: core::default::Default::default(),
         }
     }
 }
 
 pub struct SecurityhubInsightFiltersElCreatedAtElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for SecurityhubInsightFiltersElCreatedAtElRef {
-    fn new(shared: StackShared, base: String) -> SecurityhubInsightFiltersElCreatedAtElRef {
+impl terrars::Ref for SecurityhubInsightFiltersElCreatedAtElRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> SecurityhubInsightFiltersElCreatedAtElRef {
         SecurityhubInsightFiltersElCreatedAtElRef {
             shared: shared,
             base: base.to_string(),
@@ -687,61 +731,61 @@ impl Ref for SecurityhubInsightFiltersElCreatedAtElRef {
 }
 
 impl SecurityhubInsightFiltersElCreatedAtElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `end` after provisioning.\n"]
-    pub fn end(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.end", self.base))
+    #[doc = "Get a reference to the value of field `end` after provisioning.\n"]
+    pub fn end(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.end", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `start` after provisioning.\n"]
-    pub fn start(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.start", self.base))
+    #[doc = "Get a reference to the value of field `start` after provisioning.\n"]
+    pub fn start(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.start", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `date_range` after provisioning.\n"]
-    pub fn date_range(&self) -> ListRef<SecurityhubInsightFiltersElCreatedAtElDateRangeElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.date_range", self.base))
+    #[doc = "Get a reference to the value of field `date_range` after provisioning.\n"]
+    pub fn date_range(&self) -> terrars::ListRef<SecurityhubInsightFiltersElCreatedAtElDateRangeElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.date_range", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct SecurityhubInsightFiltersElCriticalityEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    eq: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    gte: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    lte: Option<PrimField<String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    eq: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    gte: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    lte: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
 impl SecurityhubInsightFiltersElCriticalityEl {
-    #[doc= "Set the field `eq`.\n"]
-    pub fn set_eq(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.eq = Some(v.into());
+    #[doc = "Set the field `eq`.\n"]
+    pub fn set_eq(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.eq = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `gte`.\n"]
-    pub fn set_gte(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.gte = Some(v.into());
+    #[doc = "Set the field `gte`.\n"]
+    pub fn set_gte(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.gte = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `lte`.\n"]
-    pub fn set_lte(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.lte = Some(v.into());
+    #[doc = "Set the field `lte`.\n"]
+    pub fn set_lte(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.lte = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl ToListMappable for SecurityhubInsightFiltersElCriticalityEl {
-    type O = BlockAssignable<SecurityhubInsightFiltersElCriticalityEl>;
+impl terrars::ToListMappable for SecurityhubInsightFiltersElCriticalityEl {
+    type O = terrars::BlockAssignable<SecurityhubInsightFiltersElCriticalityEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -762,12 +806,12 @@ impl BuildSecurityhubInsightFiltersElCriticalityEl {
 }
 
 pub struct SecurityhubInsightFiltersElCriticalityElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for SecurityhubInsightFiltersElCriticalityElRef {
-    fn new(shared: StackShared, base: String) -> SecurityhubInsightFiltersElCriticalityElRef {
+impl terrars::Ref for SecurityhubInsightFiltersElCriticalityElRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> SecurityhubInsightFiltersElCriticalityElRef {
         SecurityhubInsightFiltersElCriticalityElRef {
             shared: shared,
             base: base.to_string(),
@@ -776,39 +820,39 @@ impl Ref for SecurityhubInsightFiltersElCriticalityElRef {
 }
 
 impl SecurityhubInsightFiltersElCriticalityElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `eq` after provisioning.\n"]
-    pub fn eq(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.eq", self.base))
+    #[doc = "Get a reference to the value of field `eq` after provisioning.\n"]
+    pub fn eq(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.eq", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `gte` after provisioning.\n"]
-    pub fn gte(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.gte", self.base))
+    #[doc = "Get a reference to the value of field `gte` after provisioning.\n"]
+    pub fn gte(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.gte", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `lte` after provisioning.\n"]
-    pub fn lte(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.lte", self.base))
+    #[doc = "Get a reference to the value of field `lte` after provisioning.\n"]
+    pub fn lte(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.lte", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct SecurityhubInsightFiltersElDescriptionEl {
-    comparison: PrimField<String>,
-    value: PrimField<String>,
+    comparison: terrars::PrimField<std::string::String>,
+    value: terrars::PrimField<std::string::String>,
 }
 
 impl SecurityhubInsightFiltersElDescriptionEl { }
 
-impl ToListMappable for SecurityhubInsightFiltersElDescriptionEl {
-    type O = BlockAssignable<SecurityhubInsightFiltersElDescriptionEl>;
+impl terrars::ToListMappable for SecurityhubInsightFiltersElDescriptionEl {
+    type O = terrars::BlockAssignable<SecurityhubInsightFiltersElDescriptionEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -817,10 +861,10 @@ impl ToListMappable for SecurityhubInsightFiltersElDescriptionEl {
 }
 
 pub struct BuildSecurityhubInsightFiltersElDescriptionEl {
-    #[doc= ""]
-    pub comparison: PrimField<String>,
-    #[doc= ""]
-    pub value: PrimField<String>,
+    #[doc = ""]
+    pub comparison: terrars::PrimField<std::string::String>,
+    #[doc = ""]
+    pub value: terrars::PrimField<std::string::String>,
 }
 
 impl BuildSecurityhubInsightFiltersElDescriptionEl {
@@ -833,12 +877,12 @@ impl BuildSecurityhubInsightFiltersElDescriptionEl {
 }
 
 pub struct SecurityhubInsightFiltersElDescriptionElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for SecurityhubInsightFiltersElDescriptionElRef {
-    fn new(shared: StackShared, base: String) -> SecurityhubInsightFiltersElDescriptionElRef {
+impl terrars::Ref for SecurityhubInsightFiltersElDescriptionElRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> SecurityhubInsightFiltersElDescriptionElRef {
         SecurityhubInsightFiltersElDescriptionElRef {
             shared: shared,
             base: base.to_string(),
@@ -847,56 +891,56 @@ impl Ref for SecurityhubInsightFiltersElDescriptionElRef {
 }
 
 impl SecurityhubInsightFiltersElDescriptionElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `comparison` after provisioning.\n"]
-    pub fn comparison(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.comparison", self.base))
+    #[doc = "Get a reference to the value of field `comparison` after provisioning.\n"]
+    pub fn comparison(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.comparison", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `value` after provisioning.\n"]
-    pub fn value(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.value", self.base))
+    #[doc = "Get a reference to the value of field `value` after provisioning.\n"]
+    pub fn value(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.value", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct SecurityhubInsightFiltersElFindingProviderFieldsConfidenceEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    eq: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    gte: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    lte: Option<PrimField<String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    eq: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    gte: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    lte: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
 impl SecurityhubInsightFiltersElFindingProviderFieldsConfidenceEl {
-    #[doc= "Set the field `eq`.\n"]
-    pub fn set_eq(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.eq = Some(v.into());
+    #[doc = "Set the field `eq`.\n"]
+    pub fn set_eq(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.eq = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `gte`.\n"]
-    pub fn set_gte(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.gte = Some(v.into());
+    #[doc = "Set the field `gte`.\n"]
+    pub fn set_gte(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.gte = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `lte`.\n"]
-    pub fn set_lte(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.lte = Some(v.into());
+    #[doc = "Set the field `lte`.\n"]
+    pub fn set_lte(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.lte = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl ToListMappable for SecurityhubInsightFiltersElFindingProviderFieldsConfidenceEl {
-    type O = BlockAssignable<SecurityhubInsightFiltersElFindingProviderFieldsConfidenceEl>;
+impl terrars::ToListMappable for SecurityhubInsightFiltersElFindingProviderFieldsConfidenceEl {
+    type O = terrars::BlockAssignable<SecurityhubInsightFiltersElFindingProviderFieldsConfidenceEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -917,12 +961,15 @@ impl BuildSecurityhubInsightFiltersElFindingProviderFieldsConfidenceEl {
 }
 
 pub struct SecurityhubInsightFiltersElFindingProviderFieldsConfidenceElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for SecurityhubInsightFiltersElFindingProviderFieldsConfidenceElRef {
-    fn new(shared: StackShared, base: String) -> SecurityhubInsightFiltersElFindingProviderFieldsConfidenceElRef {
+impl terrars::Ref for SecurityhubInsightFiltersElFindingProviderFieldsConfidenceElRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> SecurityhubInsightFiltersElFindingProviderFieldsConfidenceElRef {
         SecurityhubInsightFiltersElFindingProviderFieldsConfidenceElRef {
             shared: shared,
             base: base.to_string(),
@@ -931,61 +978,61 @@ impl Ref for SecurityhubInsightFiltersElFindingProviderFieldsConfidenceElRef {
 }
 
 impl SecurityhubInsightFiltersElFindingProviderFieldsConfidenceElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `eq` after provisioning.\n"]
-    pub fn eq(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.eq", self.base))
+    #[doc = "Get a reference to the value of field `eq` after provisioning.\n"]
+    pub fn eq(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.eq", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `gte` after provisioning.\n"]
-    pub fn gte(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.gte", self.base))
+    #[doc = "Get a reference to the value of field `gte` after provisioning.\n"]
+    pub fn gte(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.gte", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `lte` after provisioning.\n"]
-    pub fn lte(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.lte", self.base))
+    #[doc = "Get a reference to the value of field `lte` after provisioning.\n"]
+    pub fn lte(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.lte", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct SecurityhubInsightFiltersElFindingProviderFieldsCriticalityEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    eq: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    gte: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    lte: Option<PrimField<String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    eq: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    gte: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    lte: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
 impl SecurityhubInsightFiltersElFindingProviderFieldsCriticalityEl {
-    #[doc= "Set the field `eq`.\n"]
-    pub fn set_eq(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.eq = Some(v.into());
+    #[doc = "Set the field `eq`.\n"]
+    pub fn set_eq(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.eq = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `gte`.\n"]
-    pub fn set_gte(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.gte = Some(v.into());
+    #[doc = "Set the field `gte`.\n"]
+    pub fn set_gte(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.gte = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `lte`.\n"]
-    pub fn set_lte(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.lte = Some(v.into());
+    #[doc = "Set the field `lte`.\n"]
+    pub fn set_lte(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.lte = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl ToListMappable for SecurityhubInsightFiltersElFindingProviderFieldsCriticalityEl {
-    type O = BlockAssignable<SecurityhubInsightFiltersElFindingProviderFieldsCriticalityEl>;
+impl terrars::ToListMappable for SecurityhubInsightFiltersElFindingProviderFieldsCriticalityEl {
+    type O = terrars::BlockAssignable<SecurityhubInsightFiltersElFindingProviderFieldsCriticalityEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -1006,12 +1053,15 @@ impl BuildSecurityhubInsightFiltersElFindingProviderFieldsCriticalityEl {
 }
 
 pub struct SecurityhubInsightFiltersElFindingProviderFieldsCriticalityElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for SecurityhubInsightFiltersElFindingProviderFieldsCriticalityElRef {
-    fn new(shared: StackShared, base: String) -> SecurityhubInsightFiltersElFindingProviderFieldsCriticalityElRef {
+impl terrars::Ref for SecurityhubInsightFiltersElFindingProviderFieldsCriticalityElRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> SecurityhubInsightFiltersElFindingProviderFieldsCriticalityElRef {
         SecurityhubInsightFiltersElFindingProviderFieldsCriticalityElRef {
             shared: shared,
             base: base.to_string(),
@@ -1020,39 +1070,39 @@ impl Ref for SecurityhubInsightFiltersElFindingProviderFieldsCriticalityElRef {
 }
 
 impl SecurityhubInsightFiltersElFindingProviderFieldsCriticalityElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `eq` after provisioning.\n"]
-    pub fn eq(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.eq", self.base))
+    #[doc = "Get a reference to the value of field `eq` after provisioning.\n"]
+    pub fn eq(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.eq", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `gte` after provisioning.\n"]
-    pub fn gte(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.gte", self.base))
+    #[doc = "Get a reference to the value of field `gte` after provisioning.\n"]
+    pub fn gte(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.gte", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `lte` after provisioning.\n"]
-    pub fn lte(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.lte", self.base))
+    #[doc = "Get a reference to the value of field `lte` after provisioning.\n"]
+    pub fn lte(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.lte", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct SecurityhubInsightFiltersElFindingProviderFieldsRelatedFindingsIdEl {
-    comparison: PrimField<String>,
-    value: PrimField<String>,
+    comparison: terrars::PrimField<std::string::String>,
+    value: terrars::PrimField<std::string::String>,
 }
 
 impl SecurityhubInsightFiltersElFindingProviderFieldsRelatedFindingsIdEl { }
 
-impl ToListMappable for SecurityhubInsightFiltersElFindingProviderFieldsRelatedFindingsIdEl {
-    type O = BlockAssignable<SecurityhubInsightFiltersElFindingProviderFieldsRelatedFindingsIdEl>;
+impl terrars::ToListMappable for SecurityhubInsightFiltersElFindingProviderFieldsRelatedFindingsIdEl {
+    type O = terrars::BlockAssignable<SecurityhubInsightFiltersElFindingProviderFieldsRelatedFindingsIdEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -1061,10 +1111,10 @@ impl ToListMappable for SecurityhubInsightFiltersElFindingProviderFieldsRelatedF
 }
 
 pub struct BuildSecurityhubInsightFiltersElFindingProviderFieldsRelatedFindingsIdEl {
-    #[doc= ""]
-    pub comparison: PrimField<String>,
-    #[doc= ""]
-    pub value: PrimField<String>,
+    #[doc = ""]
+    pub comparison: terrars::PrimField<std::string::String>,
+    #[doc = ""]
+    pub value: terrars::PrimField<std::string::String>,
 }
 
 impl BuildSecurityhubInsightFiltersElFindingProviderFieldsRelatedFindingsIdEl {
@@ -1077,14 +1127,14 @@ impl BuildSecurityhubInsightFiltersElFindingProviderFieldsRelatedFindingsIdEl {
 }
 
 pub struct SecurityhubInsightFiltersElFindingProviderFieldsRelatedFindingsIdElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for SecurityhubInsightFiltersElFindingProviderFieldsRelatedFindingsIdElRef {
+impl terrars::Ref for SecurityhubInsightFiltersElFindingProviderFieldsRelatedFindingsIdElRef {
     fn new(
-        shared: StackShared,
-        base: String,
+        shared: terrars::StackShared,
+        base: std::string::String,
     ) -> SecurityhubInsightFiltersElFindingProviderFieldsRelatedFindingsIdElRef {
         SecurityhubInsightFiltersElFindingProviderFieldsRelatedFindingsIdElRef {
             shared: shared,
@@ -1094,34 +1144,34 @@ impl Ref for SecurityhubInsightFiltersElFindingProviderFieldsRelatedFindingsIdEl
 }
 
 impl SecurityhubInsightFiltersElFindingProviderFieldsRelatedFindingsIdElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `comparison` after provisioning.\n"]
-    pub fn comparison(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.comparison", self.base))
+    #[doc = "Get a reference to the value of field `comparison` after provisioning.\n"]
+    pub fn comparison(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.comparison", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `value` after provisioning.\n"]
-    pub fn value(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.value", self.base))
+    #[doc = "Get a reference to the value of field `value` after provisioning.\n"]
+    pub fn value(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.value", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct SecurityhubInsightFiltersElFindingProviderFieldsRelatedFindingsProductArnEl {
-    comparison: PrimField<String>,
-    value: PrimField<String>,
+    comparison: terrars::PrimField<std::string::String>,
+    value: terrars::PrimField<std::string::String>,
 }
 
 impl SecurityhubInsightFiltersElFindingProviderFieldsRelatedFindingsProductArnEl { }
 
-impl ToListMappable for SecurityhubInsightFiltersElFindingProviderFieldsRelatedFindingsProductArnEl {
-    type O = BlockAssignable<SecurityhubInsightFiltersElFindingProviderFieldsRelatedFindingsProductArnEl>;
+impl terrars::ToListMappable for SecurityhubInsightFiltersElFindingProviderFieldsRelatedFindingsProductArnEl {
+    type O = terrars::BlockAssignable<SecurityhubInsightFiltersElFindingProviderFieldsRelatedFindingsProductArnEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -1130,10 +1180,10 @@ impl ToListMappable for SecurityhubInsightFiltersElFindingProviderFieldsRelatedF
 }
 
 pub struct BuildSecurityhubInsightFiltersElFindingProviderFieldsRelatedFindingsProductArnEl {
-    #[doc= ""]
-    pub comparison: PrimField<String>,
-    #[doc= ""]
-    pub value: PrimField<String>,
+    #[doc = ""]
+    pub comparison: terrars::PrimField<std::string::String>,
+    #[doc = ""]
+    pub value: terrars::PrimField<std::string::String>,
 }
 
 impl BuildSecurityhubInsightFiltersElFindingProviderFieldsRelatedFindingsProductArnEl {
@@ -1146,14 +1196,14 @@ impl BuildSecurityhubInsightFiltersElFindingProviderFieldsRelatedFindingsProduct
 }
 
 pub struct SecurityhubInsightFiltersElFindingProviderFieldsRelatedFindingsProductArnElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for SecurityhubInsightFiltersElFindingProviderFieldsRelatedFindingsProductArnElRef {
+impl terrars::Ref for SecurityhubInsightFiltersElFindingProviderFieldsRelatedFindingsProductArnElRef {
     fn new(
-        shared: StackShared,
-        base: String,
+        shared: terrars::StackShared,
+        base: std::string::String,
     ) -> SecurityhubInsightFiltersElFindingProviderFieldsRelatedFindingsProductArnElRef {
         SecurityhubInsightFiltersElFindingProviderFieldsRelatedFindingsProductArnElRef {
             shared: shared,
@@ -1163,34 +1213,34 @@ impl Ref for SecurityhubInsightFiltersElFindingProviderFieldsRelatedFindingsProd
 }
 
 impl SecurityhubInsightFiltersElFindingProviderFieldsRelatedFindingsProductArnElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `comparison` after provisioning.\n"]
-    pub fn comparison(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.comparison", self.base))
+    #[doc = "Get a reference to the value of field `comparison` after provisioning.\n"]
+    pub fn comparison(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.comparison", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `value` after provisioning.\n"]
-    pub fn value(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.value", self.base))
+    #[doc = "Get a reference to the value of field `value` after provisioning.\n"]
+    pub fn value(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.value", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct SecurityhubInsightFiltersElFindingProviderFieldsSeverityLabelEl {
-    comparison: PrimField<String>,
-    value: PrimField<String>,
+    comparison: terrars::PrimField<std::string::String>,
+    value: terrars::PrimField<std::string::String>,
 }
 
 impl SecurityhubInsightFiltersElFindingProviderFieldsSeverityLabelEl { }
 
-impl ToListMappable for SecurityhubInsightFiltersElFindingProviderFieldsSeverityLabelEl {
-    type O = BlockAssignable<SecurityhubInsightFiltersElFindingProviderFieldsSeverityLabelEl>;
+impl terrars::ToListMappable for SecurityhubInsightFiltersElFindingProviderFieldsSeverityLabelEl {
+    type O = terrars::BlockAssignable<SecurityhubInsightFiltersElFindingProviderFieldsSeverityLabelEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -1199,10 +1249,10 @@ impl ToListMappable for SecurityhubInsightFiltersElFindingProviderFieldsSeverity
 }
 
 pub struct BuildSecurityhubInsightFiltersElFindingProviderFieldsSeverityLabelEl {
-    #[doc= ""]
-    pub comparison: PrimField<String>,
-    #[doc= ""]
-    pub value: PrimField<String>,
+    #[doc = ""]
+    pub comparison: terrars::PrimField<std::string::String>,
+    #[doc = ""]
+    pub value: terrars::PrimField<std::string::String>,
 }
 
 impl BuildSecurityhubInsightFiltersElFindingProviderFieldsSeverityLabelEl {
@@ -1215,12 +1265,15 @@ impl BuildSecurityhubInsightFiltersElFindingProviderFieldsSeverityLabelEl {
 }
 
 pub struct SecurityhubInsightFiltersElFindingProviderFieldsSeverityLabelElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for SecurityhubInsightFiltersElFindingProviderFieldsSeverityLabelElRef {
-    fn new(shared: StackShared, base: String) -> SecurityhubInsightFiltersElFindingProviderFieldsSeverityLabelElRef {
+impl terrars::Ref for SecurityhubInsightFiltersElFindingProviderFieldsSeverityLabelElRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> SecurityhubInsightFiltersElFindingProviderFieldsSeverityLabelElRef {
         SecurityhubInsightFiltersElFindingProviderFieldsSeverityLabelElRef {
             shared: shared,
             base: base.to_string(),
@@ -1229,34 +1282,34 @@ impl Ref for SecurityhubInsightFiltersElFindingProviderFieldsSeverityLabelElRef 
 }
 
 impl SecurityhubInsightFiltersElFindingProviderFieldsSeverityLabelElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `comparison` after provisioning.\n"]
-    pub fn comparison(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.comparison", self.base))
+    #[doc = "Get a reference to the value of field `comparison` after provisioning.\n"]
+    pub fn comparison(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.comparison", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `value` after provisioning.\n"]
-    pub fn value(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.value", self.base))
+    #[doc = "Get a reference to the value of field `value` after provisioning.\n"]
+    pub fn value(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.value", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct SecurityhubInsightFiltersElFindingProviderFieldsSeverityOriginalEl {
-    comparison: PrimField<String>,
-    value: PrimField<String>,
+    comparison: terrars::PrimField<std::string::String>,
+    value: terrars::PrimField<std::string::String>,
 }
 
 impl SecurityhubInsightFiltersElFindingProviderFieldsSeverityOriginalEl { }
 
-impl ToListMappable for SecurityhubInsightFiltersElFindingProviderFieldsSeverityOriginalEl {
-    type O = BlockAssignable<SecurityhubInsightFiltersElFindingProviderFieldsSeverityOriginalEl>;
+impl terrars::ToListMappable for SecurityhubInsightFiltersElFindingProviderFieldsSeverityOriginalEl {
+    type O = terrars::BlockAssignable<SecurityhubInsightFiltersElFindingProviderFieldsSeverityOriginalEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -1265,10 +1318,10 @@ impl ToListMappable for SecurityhubInsightFiltersElFindingProviderFieldsSeverity
 }
 
 pub struct BuildSecurityhubInsightFiltersElFindingProviderFieldsSeverityOriginalEl {
-    #[doc= ""]
-    pub comparison: PrimField<String>,
-    #[doc= ""]
-    pub value: PrimField<String>,
+    #[doc = ""]
+    pub comparison: terrars::PrimField<std::string::String>,
+    #[doc = ""]
+    pub value: terrars::PrimField<std::string::String>,
 }
 
 impl BuildSecurityhubInsightFiltersElFindingProviderFieldsSeverityOriginalEl {
@@ -1281,14 +1334,14 @@ impl BuildSecurityhubInsightFiltersElFindingProviderFieldsSeverityOriginalEl {
 }
 
 pub struct SecurityhubInsightFiltersElFindingProviderFieldsSeverityOriginalElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for SecurityhubInsightFiltersElFindingProviderFieldsSeverityOriginalElRef {
+impl terrars::Ref for SecurityhubInsightFiltersElFindingProviderFieldsSeverityOriginalElRef {
     fn new(
-        shared: StackShared,
-        base: String,
+        shared: terrars::StackShared,
+        base: std::string::String,
     ) -> SecurityhubInsightFiltersElFindingProviderFieldsSeverityOriginalElRef {
         SecurityhubInsightFiltersElFindingProviderFieldsSeverityOriginalElRef {
             shared: shared,
@@ -1298,34 +1351,34 @@ impl Ref for SecurityhubInsightFiltersElFindingProviderFieldsSeverityOriginalElR
 }
 
 impl SecurityhubInsightFiltersElFindingProviderFieldsSeverityOriginalElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `comparison` after provisioning.\n"]
-    pub fn comparison(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.comparison", self.base))
+    #[doc = "Get a reference to the value of field `comparison` after provisioning.\n"]
+    pub fn comparison(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.comparison", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `value` after provisioning.\n"]
-    pub fn value(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.value", self.base))
+    #[doc = "Get a reference to the value of field `value` after provisioning.\n"]
+    pub fn value(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.value", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct SecurityhubInsightFiltersElFindingProviderFieldsTypesEl {
-    comparison: PrimField<String>,
-    value: PrimField<String>,
+    comparison: terrars::PrimField<std::string::String>,
+    value: terrars::PrimField<std::string::String>,
 }
 
 impl SecurityhubInsightFiltersElFindingProviderFieldsTypesEl { }
 
-impl ToListMappable for SecurityhubInsightFiltersElFindingProviderFieldsTypesEl {
-    type O = BlockAssignable<SecurityhubInsightFiltersElFindingProviderFieldsTypesEl>;
+impl terrars::ToListMappable for SecurityhubInsightFiltersElFindingProviderFieldsTypesEl {
+    type O = terrars::BlockAssignable<SecurityhubInsightFiltersElFindingProviderFieldsTypesEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -1334,10 +1387,10 @@ impl ToListMappable for SecurityhubInsightFiltersElFindingProviderFieldsTypesEl 
 }
 
 pub struct BuildSecurityhubInsightFiltersElFindingProviderFieldsTypesEl {
-    #[doc= ""]
-    pub comparison: PrimField<String>,
-    #[doc= ""]
-    pub value: PrimField<String>,
+    #[doc = ""]
+    pub comparison: terrars::PrimField<std::string::String>,
+    #[doc = ""]
+    pub value: terrars::PrimField<std::string::String>,
 }
 
 impl BuildSecurityhubInsightFiltersElFindingProviderFieldsTypesEl {
@@ -1350,12 +1403,15 @@ impl BuildSecurityhubInsightFiltersElFindingProviderFieldsTypesEl {
 }
 
 pub struct SecurityhubInsightFiltersElFindingProviderFieldsTypesElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for SecurityhubInsightFiltersElFindingProviderFieldsTypesElRef {
-    fn new(shared: StackShared, base: String) -> SecurityhubInsightFiltersElFindingProviderFieldsTypesElRef {
+impl terrars::Ref for SecurityhubInsightFiltersElFindingProviderFieldsTypesElRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> SecurityhubInsightFiltersElFindingProviderFieldsTypesElRef {
         SecurityhubInsightFiltersElFindingProviderFieldsTypesElRef {
             shared: shared,
             base: base.to_string(),
@@ -1364,34 +1420,34 @@ impl Ref for SecurityhubInsightFiltersElFindingProviderFieldsTypesElRef {
 }
 
 impl SecurityhubInsightFiltersElFindingProviderFieldsTypesElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `comparison` after provisioning.\n"]
-    pub fn comparison(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.comparison", self.base))
+    #[doc = "Get a reference to the value of field `comparison` after provisioning.\n"]
+    pub fn comparison(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.comparison", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `value` after provisioning.\n"]
-    pub fn value(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.value", self.base))
+    #[doc = "Get a reference to the value of field `value` after provisioning.\n"]
+    pub fn value(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.value", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct SecurityhubInsightFiltersElFirstObservedAtElDateRangeEl {
-    unit: PrimField<String>,
-    value: PrimField<f64>,
+    unit: terrars::PrimField<std::string::String>,
+    value: terrars::PrimField<f64>,
 }
 
 impl SecurityhubInsightFiltersElFirstObservedAtElDateRangeEl { }
 
-impl ToListMappable for SecurityhubInsightFiltersElFirstObservedAtElDateRangeEl {
-    type O = BlockAssignable<SecurityhubInsightFiltersElFirstObservedAtElDateRangeEl>;
+impl terrars::ToListMappable for SecurityhubInsightFiltersElFirstObservedAtElDateRangeEl {
+    type O = terrars::BlockAssignable<SecurityhubInsightFiltersElFirstObservedAtElDateRangeEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -1400,10 +1456,10 @@ impl ToListMappable for SecurityhubInsightFiltersElFirstObservedAtElDateRangeEl 
 }
 
 pub struct BuildSecurityhubInsightFiltersElFirstObservedAtElDateRangeEl {
-    #[doc= ""]
-    pub unit: PrimField<String>,
-    #[doc= ""]
-    pub value: PrimField<f64>,
+    #[doc = ""]
+    pub unit: terrars::PrimField<std::string::String>,
+    #[doc = ""]
+    pub value: terrars::PrimField<f64>,
 }
 
 impl BuildSecurityhubInsightFiltersElFirstObservedAtElDateRangeEl {
@@ -1416,12 +1472,15 @@ impl BuildSecurityhubInsightFiltersElFirstObservedAtElDateRangeEl {
 }
 
 pub struct SecurityhubInsightFiltersElFirstObservedAtElDateRangeElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for SecurityhubInsightFiltersElFirstObservedAtElDateRangeElRef {
-    fn new(shared: StackShared, base: String) -> SecurityhubInsightFiltersElFirstObservedAtElDateRangeElRef {
+impl terrars::Ref for SecurityhubInsightFiltersElFirstObservedAtElDateRangeElRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> SecurityhubInsightFiltersElFirstObservedAtElDateRangeElRef {
         SecurityhubInsightFiltersElFirstObservedAtElDateRangeElRef {
             shared: shared,
             base: base.to_string(),
@@ -1430,72 +1489,77 @@ impl Ref for SecurityhubInsightFiltersElFirstObservedAtElDateRangeElRef {
 }
 
 impl SecurityhubInsightFiltersElFirstObservedAtElDateRangeElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `unit` after provisioning.\n"]
-    pub fn unit(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.unit", self.base))
+    #[doc = "Get a reference to the value of field `unit` after provisioning.\n"]
+    pub fn unit(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.unit", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `value` after provisioning.\n"]
-    pub fn value(&self) -> PrimExpr<f64> {
-        PrimExpr::new(self.shared().clone(), format!("{}.value", self.base))
+    #[doc = "Get a reference to the value of field `value` after provisioning.\n"]
+    pub fn value(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.value", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
 struct SecurityhubInsightFiltersElFirstObservedAtElDynamic {
-    date_range: Option<DynamicBlock<SecurityhubInsightFiltersElFirstObservedAtElDateRangeEl>>,
+    date_range: std::option::Option<terrars::DynamicBlock<SecurityhubInsightFiltersElFirstObservedAtElDateRangeEl>>,
 }
 
 #[derive(Serialize)]
 pub struct SecurityhubInsightFiltersElFirstObservedAtEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    end: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    start: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    date_range: Option<Vec<SecurityhubInsightFiltersElFirstObservedAtElDateRangeEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    end: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    start: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    date_range: std::option::Option<std::vec::Vec<SecurityhubInsightFiltersElFirstObservedAtElDateRangeEl>>,
     dynamic: SecurityhubInsightFiltersElFirstObservedAtElDynamic,
 }
 
 impl SecurityhubInsightFiltersElFirstObservedAtEl {
-    #[doc= "Set the field `end`.\n"]
-    pub fn set_end(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.end = Some(v.into());
+    #[doc = "Set the field `end`.\n"]
+    pub fn set_end(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.end = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `start`.\n"]
-    pub fn set_start(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.start = Some(v.into());
+    #[doc = "Set the field `start`.\n"]
+    pub fn set_start(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.start = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `date_range`.\n"]
+    #[doc = "Set the field `date_range`.\n"]
     pub fn set_date_range(
         mut self,
-        v: impl Into<BlockAssignable<SecurityhubInsightFiltersElFirstObservedAtElDateRangeEl>>,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<terrars::BlockAssignable<SecurityhubInsightFiltersElFirstObservedAtElDateRangeEl>>,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.date_range = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.date_range = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.date_range = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.date_range = std::option::Option::Some(d);
             },
         }
         self
     }
 }
 
-impl ToListMappable for SecurityhubInsightFiltersElFirstObservedAtEl {
-    type O = BlockAssignable<SecurityhubInsightFiltersElFirstObservedAtEl>;
+impl terrars::ToListMappable for SecurityhubInsightFiltersElFirstObservedAtEl {
+    type O = terrars::BlockAssignable<SecurityhubInsightFiltersElFirstObservedAtEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -1511,18 +1575,21 @@ impl BuildSecurityhubInsightFiltersElFirstObservedAtEl {
             end: core::default::Default::default(),
             start: core::default::Default::default(),
             date_range: core::default::Default::default(),
-            dynamic: Default::default(),
+            dynamic: core::default::Default::default(),
         }
     }
 }
 
 pub struct SecurityhubInsightFiltersElFirstObservedAtElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for SecurityhubInsightFiltersElFirstObservedAtElRef {
-    fn new(shared: StackShared, base: String) -> SecurityhubInsightFiltersElFirstObservedAtElRef {
+impl terrars::Ref for SecurityhubInsightFiltersElFirstObservedAtElRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> SecurityhubInsightFiltersElFirstObservedAtElRef {
         SecurityhubInsightFiltersElFirstObservedAtElRef {
             shared: shared,
             base: base.to_string(),
@@ -1531,39 +1598,39 @@ impl Ref for SecurityhubInsightFiltersElFirstObservedAtElRef {
 }
 
 impl SecurityhubInsightFiltersElFirstObservedAtElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `end` after provisioning.\n"]
-    pub fn end(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.end", self.base))
+    #[doc = "Get a reference to the value of field `end` after provisioning.\n"]
+    pub fn end(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.end", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `start` after provisioning.\n"]
-    pub fn start(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.start", self.base))
+    #[doc = "Get a reference to the value of field `start` after provisioning.\n"]
+    pub fn start(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.start", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `date_range` after provisioning.\n"]
-    pub fn date_range(&self) -> ListRef<SecurityhubInsightFiltersElFirstObservedAtElDateRangeElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.date_range", self.base))
+    #[doc = "Get a reference to the value of field `date_range` after provisioning.\n"]
+    pub fn date_range(&self) -> terrars::ListRef<SecurityhubInsightFiltersElFirstObservedAtElDateRangeElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.date_range", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct SecurityhubInsightFiltersElGeneratorIdEl {
-    comparison: PrimField<String>,
-    value: PrimField<String>,
+    comparison: terrars::PrimField<std::string::String>,
+    value: terrars::PrimField<std::string::String>,
 }
 
 impl SecurityhubInsightFiltersElGeneratorIdEl { }
 
-impl ToListMappable for SecurityhubInsightFiltersElGeneratorIdEl {
-    type O = BlockAssignable<SecurityhubInsightFiltersElGeneratorIdEl>;
+impl terrars::ToListMappable for SecurityhubInsightFiltersElGeneratorIdEl {
+    type O = terrars::BlockAssignable<SecurityhubInsightFiltersElGeneratorIdEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -1572,10 +1639,10 @@ impl ToListMappable for SecurityhubInsightFiltersElGeneratorIdEl {
 }
 
 pub struct BuildSecurityhubInsightFiltersElGeneratorIdEl {
-    #[doc= ""]
-    pub comparison: PrimField<String>,
-    #[doc= ""]
-    pub value: PrimField<String>,
+    #[doc = ""]
+    pub comparison: terrars::PrimField<std::string::String>,
+    #[doc = ""]
+    pub value: terrars::PrimField<std::string::String>,
 }
 
 impl BuildSecurityhubInsightFiltersElGeneratorIdEl {
@@ -1588,12 +1655,12 @@ impl BuildSecurityhubInsightFiltersElGeneratorIdEl {
 }
 
 pub struct SecurityhubInsightFiltersElGeneratorIdElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for SecurityhubInsightFiltersElGeneratorIdElRef {
-    fn new(shared: StackShared, base: String) -> SecurityhubInsightFiltersElGeneratorIdElRef {
+impl terrars::Ref for SecurityhubInsightFiltersElGeneratorIdElRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> SecurityhubInsightFiltersElGeneratorIdElRef {
         SecurityhubInsightFiltersElGeneratorIdElRef {
             shared: shared,
             base: base.to_string(),
@@ -1602,34 +1669,34 @@ impl Ref for SecurityhubInsightFiltersElGeneratorIdElRef {
 }
 
 impl SecurityhubInsightFiltersElGeneratorIdElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `comparison` after provisioning.\n"]
-    pub fn comparison(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.comparison", self.base))
+    #[doc = "Get a reference to the value of field `comparison` after provisioning.\n"]
+    pub fn comparison(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.comparison", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `value` after provisioning.\n"]
-    pub fn value(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.value", self.base))
+    #[doc = "Get a reference to the value of field `value` after provisioning.\n"]
+    pub fn value(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.value", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct SecurityhubInsightFiltersElIdEl {
-    comparison: PrimField<String>,
-    value: PrimField<String>,
+    comparison: terrars::PrimField<std::string::String>,
+    value: terrars::PrimField<std::string::String>,
 }
 
 impl SecurityhubInsightFiltersElIdEl { }
 
-impl ToListMappable for SecurityhubInsightFiltersElIdEl {
-    type O = BlockAssignable<SecurityhubInsightFiltersElIdEl>;
+impl terrars::ToListMappable for SecurityhubInsightFiltersElIdEl {
+    type O = terrars::BlockAssignable<SecurityhubInsightFiltersElIdEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -1638,10 +1705,10 @@ impl ToListMappable for SecurityhubInsightFiltersElIdEl {
 }
 
 pub struct BuildSecurityhubInsightFiltersElIdEl {
-    #[doc= ""]
-    pub comparison: PrimField<String>,
-    #[doc= ""]
-    pub value: PrimField<String>,
+    #[doc = ""]
+    pub comparison: terrars::PrimField<std::string::String>,
+    #[doc = ""]
+    pub value: terrars::PrimField<std::string::String>,
 }
 
 impl BuildSecurityhubInsightFiltersElIdEl {
@@ -1654,12 +1721,12 @@ impl BuildSecurityhubInsightFiltersElIdEl {
 }
 
 pub struct SecurityhubInsightFiltersElIdElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for SecurityhubInsightFiltersElIdElRef {
-    fn new(shared: StackShared, base: String) -> SecurityhubInsightFiltersElIdElRef {
+impl terrars::Ref for SecurityhubInsightFiltersElIdElRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> SecurityhubInsightFiltersElIdElRef {
         SecurityhubInsightFiltersElIdElRef {
             shared: shared,
             base: base.to_string(),
@@ -1668,33 +1735,33 @@ impl Ref for SecurityhubInsightFiltersElIdElRef {
 }
 
 impl SecurityhubInsightFiltersElIdElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `comparison` after provisioning.\n"]
-    pub fn comparison(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.comparison", self.base))
+    #[doc = "Get a reference to the value of field `comparison` after provisioning.\n"]
+    pub fn comparison(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.comparison", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `value` after provisioning.\n"]
-    pub fn value(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.value", self.base))
+    #[doc = "Get a reference to the value of field `value` after provisioning.\n"]
+    pub fn value(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.value", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct SecurityhubInsightFiltersElKeywordEl {
-    value: PrimField<String>,
+    value: terrars::PrimField<std::string::String>,
 }
 
 impl SecurityhubInsightFiltersElKeywordEl { }
 
-impl ToListMappable for SecurityhubInsightFiltersElKeywordEl {
-    type O = BlockAssignable<SecurityhubInsightFiltersElKeywordEl>;
+impl terrars::ToListMappable for SecurityhubInsightFiltersElKeywordEl {
+    type O = terrars::BlockAssignable<SecurityhubInsightFiltersElKeywordEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -1703,8 +1770,8 @@ impl ToListMappable for SecurityhubInsightFiltersElKeywordEl {
 }
 
 pub struct BuildSecurityhubInsightFiltersElKeywordEl {
-    #[doc= ""]
-    pub value: PrimField<String>,
+    #[doc = ""]
+    pub value: terrars::PrimField<std::string::String>,
 }
 
 impl BuildSecurityhubInsightFiltersElKeywordEl {
@@ -1714,12 +1781,12 @@ impl BuildSecurityhubInsightFiltersElKeywordEl {
 }
 
 pub struct SecurityhubInsightFiltersElKeywordElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for SecurityhubInsightFiltersElKeywordElRef {
-    fn new(shared: StackShared, base: String) -> SecurityhubInsightFiltersElKeywordElRef {
+impl terrars::Ref for SecurityhubInsightFiltersElKeywordElRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> SecurityhubInsightFiltersElKeywordElRef {
         SecurityhubInsightFiltersElKeywordElRef {
             shared: shared,
             base: base.to_string(),
@@ -1728,29 +1795,29 @@ impl Ref for SecurityhubInsightFiltersElKeywordElRef {
 }
 
 impl SecurityhubInsightFiltersElKeywordElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `value` after provisioning.\n"]
-    pub fn value(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.value", self.base))
+    #[doc = "Get a reference to the value of field `value` after provisioning.\n"]
+    pub fn value(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.value", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct SecurityhubInsightFiltersElLastObservedAtElDateRangeEl {
-    unit: PrimField<String>,
-    value: PrimField<f64>,
+    unit: terrars::PrimField<std::string::String>,
+    value: terrars::PrimField<f64>,
 }
 
 impl SecurityhubInsightFiltersElLastObservedAtElDateRangeEl { }
 
-impl ToListMappable for SecurityhubInsightFiltersElLastObservedAtElDateRangeEl {
-    type O = BlockAssignable<SecurityhubInsightFiltersElLastObservedAtElDateRangeEl>;
+impl terrars::ToListMappable for SecurityhubInsightFiltersElLastObservedAtElDateRangeEl {
+    type O = terrars::BlockAssignable<SecurityhubInsightFiltersElLastObservedAtElDateRangeEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -1759,10 +1826,10 @@ impl ToListMappable for SecurityhubInsightFiltersElLastObservedAtElDateRangeEl {
 }
 
 pub struct BuildSecurityhubInsightFiltersElLastObservedAtElDateRangeEl {
-    #[doc= ""]
-    pub unit: PrimField<String>,
-    #[doc= ""]
-    pub value: PrimField<f64>,
+    #[doc = ""]
+    pub unit: terrars::PrimField<std::string::String>,
+    #[doc = ""]
+    pub value: terrars::PrimField<f64>,
 }
 
 impl BuildSecurityhubInsightFiltersElLastObservedAtElDateRangeEl {
@@ -1775,12 +1842,15 @@ impl BuildSecurityhubInsightFiltersElLastObservedAtElDateRangeEl {
 }
 
 pub struct SecurityhubInsightFiltersElLastObservedAtElDateRangeElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for SecurityhubInsightFiltersElLastObservedAtElDateRangeElRef {
-    fn new(shared: StackShared, base: String) -> SecurityhubInsightFiltersElLastObservedAtElDateRangeElRef {
+impl terrars::Ref for SecurityhubInsightFiltersElLastObservedAtElDateRangeElRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> SecurityhubInsightFiltersElLastObservedAtElDateRangeElRef {
         SecurityhubInsightFiltersElLastObservedAtElDateRangeElRef {
             shared: shared,
             base: base.to_string(),
@@ -1789,72 +1859,72 @@ impl Ref for SecurityhubInsightFiltersElLastObservedAtElDateRangeElRef {
 }
 
 impl SecurityhubInsightFiltersElLastObservedAtElDateRangeElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `unit` after provisioning.\n"]
-    pub fn unit(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.unit", self.base))
+    #[doc = "Get a reference to the value of field `unit` after provisioning.\n"]
+    pub fn unit(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.unit", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `value` after provisioning.\n"]
-    pub fn value(&self) -> PrimExpr<f64> {
-        PrimExpr::new(self.shared().clone(), format!("{}.value", self.base))
+    #[doc = "Get a reference to the value of field `value` after provisioning.\n"]
+    pub fn value(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.value", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
 struct SecurityhubInsightFiltersElLastObservedAtElDynamic {
-    date_range: Option<DynamicBlock<SecurityhubInsightFiltersElLastObservedAtElDateRangeEl>>,
+    date_range: std::option::Option<terrars::DynamicBlock<SecurityhubInsightFiltersElLastObservedAtElDateRangeEl>>,
 }
 
 #[derive(Serialize)]
 pub struct SecurityhubInsightFiltersElLastObservedAtEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    end: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    start: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    date_range: Option<Vec<SecurityhubInsightFiltersElLastObservedAtElDateRangeEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    end: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    start: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    date_range: std::option::Option<std::vec::Vec<SecurityhubInsightFiltersElLastObservedAtElDateRangeEl>>,
     dynamic: SecurityhubInsightFiltersElLastObservedAtElDynamic,
 }
 
 impl SecurityhubInsightFiltersElLastObservedAtEl {
-    #[doc= "Set the field `end`.\n"]
-    pub fn set_end(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.end = Some(v.into());
+    #[doc = "Set the field `end`.\n"]
+    pub fn set_end(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.end = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `start`.\n"]
-    pub fn set_start(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.start = Some(v.into());
+    #[doc = "Set the field `start`.\n"]
+    pub fn set_start(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.start = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `date_range`.\n"]
+    #[doc = "Set the field `date_range`.\n"]
     pub fn set_date_range(
         mut self,
-        v: impl Into<BlockAssignable<SecurityhubInsightFiltersElLastObservedAtElDateRangeEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<SecurityhubInsightFiltersElLastObservedAtElDateRangeEl>>,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.date_range = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.date_range = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.date_range = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.date_range = std::option::Option::Some(d);
             },
         }
         self
     }
 }
 
-impl ToListMappable for SecurityhubInsightFiltersElLastObservedAtEl {
-    type O = BlockAssignable<SecurityhubInsightFiltersElLastObservedAtEl>;
+impl terrars::ToListMappable for SecurityhubInsightFiltersElLastObservedAtEl {
+    type O = terrars::BlockAssignable<SecurityhubInsightFiltersElLastObservedAtEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -1870,18 +1940,21 @@ impl BuildSecurityhubInsightFiltersElLastObservedAtEl {
             end: core::default::Default::default(),
             start: core::default::Default::default(),
             date_range: core::default::Default::default(),
-            dynamic: Default::default(),
+            dynamic: core::default::Default::default(),
         }
     }
 }
 
 pub struct SecurityhubInsightFiltersElLastObservedAtElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for SecurityhubInsightFiltersElLastObservedAtElRef {
-    fn new(shared: StackShared, base: String) -> SecurityhubInsightFiltersElLastObservedAtElRef {
+impl terrars::Ref for SecurityhubInsightFiltersElLastObservedAtElRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> SecurityhubInsightFiltersElLastObservedAtElRef {
         SecurityhubInsightFiltersElLastObservedAtElRef {
             shared: shared,
             base: base.to_string(),
@@ -1890,39 +1963,39 @@ impl Ref for SecurityhubInsightFiltersElLastObservedAtElRef {
 }
 
 impl SecurityhubInsightFiltersElLastObservedAtElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `end` after provisioning.\n"]
-    pub fn end(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.end", self.base))
+    #[doc = "Get a reference to the value of field `end` after provisioning.\n"]
+    pub fn end(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.end", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `start` after provisioning.\n"]
-    pub fn start(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.start", self.base))
+    #[doc = "Get a reference to the value of field `start` after provisioning.\n"]
+    pub fn start(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.start", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `date_range` after provisioning.\n"]
-    pub fn date_range(&self) -> ListRef<SecurityhubInsightFiltersElLastObservedAtElDateRangeElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.date_range", self.base))
+    #[doc = "Get a reference to the value of field `date_range` after provisioning.\n"]
+    pub fn date_range(&self) -> terrars::ListRef<SecurityhubInsightFiltersElLastObservedAtElDateRangeElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.date_range", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct SecurityhubInsightFiltersElMalwareNameEl {
-    comparison: PrimField<String>,
-    value: PrimField<String>,
+    comparison: terrars::PrimField<std::string::String>,
+    value: terrars::PrimField<std::string::String>,
 }
 
 impl SecurityhubInsightFiltersElMalwareNameEl { }
 
-impl ToListMappable for SecurityhubInsightFiltersElMalwareNameEl {
-    type O = BlockAssignable<SecurityhubInsightFiltersElMalwareNameEl>;
+impl terrars::ToListMappable for SecurityhubInsightFiltersElMalwareNameEl {
+    type O = terrars::BlockAssignable<SecurityhubInsightFiltersElMalwareNameEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -1931,10 +2004,10 @@ impl ToListMappable for SecurityhubInsightFiltersElMalwareNameEl {
 }
 
 pub struct BuildSecurityhubInsightFiltersElMalwareNameEl {
-    #[doc= ""]
-    pub comparison: PrimField<String>,
-    #[doc= ""]
-    pub value: PrimField<String>,
+    #[doc = ""]
+    pub comparison: terrars::PrimField<std::string::String>,
+    #[doc = ""]
+    pub value: terrars::PrimField<std::string::String>,
 }
 
 impl BuildSecurityhubInsightFiltersElMalwareNameEl {
@@ -1947,12 +2020,12 @@ impl BuildSecurityhubInsightFiltersElMalwareNameEl {
 }
 
 pub struct SecurityhubInsightFiltersElMalwareNameElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for SecurityhubInsightFiltersElMalwareNameElRef {
-    fn new(shared: StackShared, base: String) -> SecurityhubInsightFiltersElMalwareNameElRef {
+impl terrars::Ref for SecurityhubInsightFiltersElMalwareNameElRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> SecurityhubInsightFiltersElMalwareNameElRef {
         SecurityhubInsightFiltersElMalwareNameElRef {
             shared: shared,
             base: base.to_string(),
@@ -1961,34 +2034,34 @@ impl Ref for SecurityhubInsightFiltersElMalwareNameElRef {
 }
 
 impl SecurityhubInsightFiltersElMalwareNameElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `comparison` after provisioning.\n"]
-    pub fn comparison(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.comparison", self.base))
+    #[doc = "Get a reference to the value of field `comparison` after provisioning.\n"]
+    pub fn comparison(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.comparison", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `value` after provisioning.\n"]
-    pub fn value(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.value", self.base))
+    #[doc = "Get a reference to the value of field `value` after provisioning.\n"]
+    pub fn value(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.value", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct SecurityhubInsightFiltersElMalwarePathEl {
-    comparison: PrimField<String>,
-    value: PrimField<String>,
+    comparison: terrars::PrimField<std::string::String>,
+    value: terrars::PrimField<std::string::String>,
 }
 
 impl SecurityhubInsightFiltersElMalwarePathEl { }
 
-impl ToListMappable for SecurityhubInsightFiltersElMalwarePathEl {
-    type O = BlockAssignable<SecurityhubInsightFiltersElMalwarePathEl>;
+impl terrars::ToListMappable for SecurityhubInsightFiltersElMalwarePathEl {
+    type O = terrars::BlockAssignable<SecurityhubInsightFiltersElMalwarePathEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -1997,10 +2070,10 @@ impl ToListMappable for SecurityhubInsightFiltersElMalwarePathEl {
 }
 
 pub struct BuildSecurityhubInsightFiltersElMalwarePathEl {
-    #[doc= ""]
-    pub comparison: PrimField<String>,
-    #[doc= ""]
-    pub value: PrimField<String>,
+    #[doc = ""]
+    pub comparison: terrars::PrimField<std::string::String>,
+    #[doc = ""]
+    pub value: terrars::PrimField<std::string::String>,
 }
 
 impl BuildSecurityhubInsightFiltersElMalwarePathEl {
@@ -2013,12 +2086,12 @@ impl BuildSecurityhubInsightFiltersElMalwarePathEl {
 }
 
 pub struct SecurityhubInsightFiltersElMalwarePathElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for SecurityhubInsightFiltersElMalwarePathElRef {
-    fn new(shared: StackShared, base: String) -> SecurityhubInsightFiltersElMalwarePathElRef {
+impl terrars::Ref for SecurityhubInsightFiltersElMalwarePathElRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> SecurityhubInsightFiltersElMalwarePathElRef {
         SecurityhubInsightFiltersElMalwarePathElRef {
             shared: shared,
             base: base.to_string(),
@@ -2027,34 +2100,34 @@ impl Ref for SecurityhubInsightFiltersElMalwarePathElRef {
 }
 
 impl SecurityhubInsightFiltersElMalwarePathElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `comparison` after provisioning.\n"]
-    pub fn comparison(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.comparison", self.base))
+    #[doc = "Get a reference to the value of field `comparison` after provisioning.\n"]
+    pub fn comparison(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.comparison", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `value` after provisioning.\n"]
-    pub fn value(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.value", self.base))
+    #[doc = "Get a reference to the value of field `value` after provisioning.\n"]
+    pub fn value(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.value", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct SecurityhubInsightFiltersElMalwareStateEl {
-    comparison: PrimField<String>,
-    value: PrimField<String>,
+    comparison: terrars::PrimField<std::string::String>,
+    value: terrars::PrimField<std::string::String>,
 }
 
 impl SecurityhubInsightFiltersElMalwareStateEl { }
 
-impl ToListMappable for SecurityhubInsightFiltersElMalwareStateEl {
-    type O = BlockAssignable<SecurityhubInsightFiltersElMalwareStateEl>;
+impl terrars::ToListMappable for SecurityhubInsightFiltersElMalwareStateEl {
+    type O = terrars::BlockAssignable<SecurityhubInsightFiltersElMalwareStateEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -2063,10 +2136,10 @@ impl ToListMappable for SecurityhubInsightFiltersElMalwareStateEl {
 }
 
 pub struct BuildSecurityhubInsightFiltersElMalwareStateEl {
-    #[doc= ""]
-    pub comparison: PrimField<String>,
-    #[doc= ""]
-    pub value: PrimField<String>,
+    #[doc = ""]
+    pub comparison: terrars::PrimField<std::string::String>,
+    #[doc = ""]
+    pub value: terrars::PrimField<std::string::String>,
 }
 
 impl BuildSecurityhubInsightFiltersElMalwareStateEl {
@@ -2079,12 +2152,12 @@ impl BuildSecurityhubInsightFiltersElMalwareStateEl {
 }
 
 pub struct SecurityhubInsightFiltersElMalwareStateElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for SecurityhubInsightFiltersElMalwareStateElRef {
-    fn new(shared: StackShared, base: String) -> SecurityhubInsightFiltersElMalwareStateElRef {
+impl terrars::Ref for SecurityhubInsightFiltersElMalwareStateElRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> SecurityhubInsightFiltersElMalwareStateElRef {
         SecurityhubInsightFiltersElMalwareStateElRef {
             shared: shared,
             base: base.to_string(),
@@ -2093,34 +2166,34 @@ impl Ref for SecurityhubInsightFiltersElMalwareStateElRef {
 }
 
 impl SecurityhubInsightFiltersElMalwareStateElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `comparison` after provisioning.\n"]
-    pub fn comparison(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.comparison", self.base))
+    #[doc = "Get a reference to the value of field `comparison` after provisioning.\n"]
+    pub fn comparison(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.comparison", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `value` after provisioning.\n"]
-    pub fn value(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.value", self.base))
+    #[doc = "Get a reference to the value of field `value` after provisioning.\n"]
+    pub fn value(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.value", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct SecurityhubInsightFiltersElMalwareTypeEl {
-    comparison: PrimField<String>,
-    value: PrimField<String>,
+    comparison: terrars::PrimField<std::string::String>,
+    value: terrars::PrimField<std::string::String>,
 }
 
 impl SecurityhubInsightFiltersElMalwareTypeEl { }
 
-impl ToListMappable for SecurityhubInsightFiltersElMalwareTypeEl {
-    type O = BlockAssignable<SecurityhubInsightFiltersElMalwareTypeEl>;
+impl terrars::ToListMappable for SecurityhubInsightFiltersElMalwareTypeEl {
+    type O = terrars::BlockAssignable<SecurityhubInsightFiltersElMalwareTypeEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -2129,10 +2202,10 @@ impl ToListMappable for SecurityhubInsightFiltersElMalwareTypeEl {
 }
 
 pub struct BuildSecurityhubInsightFiltersElMalwareTypeEl {
-    #[doc= ""]
-    pub comparison: PrimField<String>,
-    #[doc= ""]
-    pub value: PrimField<String>,
+    #[doc = ""]
+    pub comparison: terrars::PrimField<std::string::String>,
+    #[doc = ""]
+    pub value: terrars::PrimField<std::string::String>,
 }
 
 impl BuildSecurityhubInsightFiltersElMalwareTypeEl {
@@ -2145,12 +2218,12 @@ impl BuildSecurityhubInsightFiltersElMalwareTypeEl {
 }
 
 pub struct SecurityhubInsightFiltersElMalwareTypeElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for SecurityhubInsightFiltersElMalwareTypeElRef {
-    fn new(shared: StackShared, base: String) -> SecurityhubInsightFiltersElMalwareTypeElRef {
+impl terrars::Ref for SecurityhubInsightFiltersElMalwareTypeElRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> SecurityhubInsightFiltersElMalwareTypeElRef {
         SecurityhubInsightFiltersElMalwareTypeElRef {
             shared: shared,
             base: base.to_string(),
@@ -2159,34 +2232,34 @@ impl Ref for SecurityhubInsightFiltersElMalwareTypeElRef {
 }
 
 impl SecurityhubInsightFiltersElMalwareTypeElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `comparison` after provisioning.\n"]
-    pub fn comparison(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.comparison", self.base))
+    #[doc = "Get a reference to the value of field `comparison` after provisioning.\n"]
+    pub fn comparison(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.comparison", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `value` after provisioning.\n"]
-    pub fn value(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.value", self.base))
+    #[doc = "Get a reference to the value of field `value` after provisioning.\n"]
+    pub fn value(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.value", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct SecurityhubInsightFiltersElNetworkDestinationDomainEl {
-    comparison: PrimField<String>,
-    value: PrimField<String>,
+    comparison: terrars::PrimField<std::string::String>,
+    value: terrars::PrimField<std::string::String>,
 }
 
 impl SecurityhubInsightFiltersElNetworkDestinationDomainEl { }
 
-impl ToListMappable for SecurityhubInsightFiltersElNetworkDestinationDomainEl {
-    type O = BlockAssignable<SecurityhubInsightFiltersElNetworkDestinationDomainEl>;
+impl terrars::ToListMappable for SecurityhubInsightFiltersElNetworkDestinationDomainEl {
+    type O = terrars::BlockAssignable<SecurityhubInsightFiltersElNetworkDestinationDomainEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -2195,10 +2268,10 @@ impl ToListMappable for SecurityhubInsightFiltersElNetworkDestinationDomainEl {
 }
 
 pub struct BuildSecurityhubInsightFiltersElNetworkDestinationDomainEl {
-    #[doc= ""]
-    pub comparison: PrimField<String>,
-    #[doc= ""]
-    pub value: PrimField<String>,
+    #[doc = ""]
+    pub comparison: terrars::PrimField<std::string::String>,
+    #[doc = ""]
+    pub value: terrars::PrimField<std::string::String>,
 }
 
 impl BuildSecurityhubInsightFiltersElNetworkDestinationDomainEl {
@@ -2211,12 +2284,15 @@ impl BuildSecurityhubInsightFiltersElNetworkDestinationDomainEl {
 }
 
 pub struct SecurityhubInsightFiltersElNetworkDestinationDomainElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for SecurityhubInsightFiltersElNetworkDestinationDomainElRef {
-    fn new(shared: StackShared, base: String) -> SecurityhubInsightFiltersElNetworkDestinationDomainElRef {
+impl terrars::Ref for SecurityhubInsightFiltersElNetworkDestinationDomainElRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> SecurityhubInsightFiltersElNetworkDestinationDomainElRef {
         SecurityhubInsightFiltersElNetworkDestinationDomainElRef {
             shared: shared,
             base: base.to_string(),
@@ -2225,33 +2301,33 @@ impl Ref for SecurityhubInsightFiltersElNetworkDestinationDomainElRef {
 }
 
 impl SecurityhubInsightFiltersElNetworkDestinationDomainElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `comparison` after provisioning.\n"]
-    pub fn comparison(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.comparison", self.base))
+    #[doc = "Get a reference to the value of field `comparison` after provisioning.\n"]
+    pub fn comparison(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.comparison", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `value` after provisioning.\n"]
-    pub fn value(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.value", self.base))
+    #[doc = "Get a reference to the value of field `value` after provisioning.\n"]
+    pub fn value(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.value", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct SecurityhubInsightFiltersElNetworkDestinationIpv4El {
-    cidr: PrimField<String>,
+    cidr: terrars::PrimField<std::string::String>,
 }
 
 impl SecurityhubInsightFiltersElNetworkDestinationIpv4El { }
 
-impl ToListMappable for SecurityhubInsightFiltersElNetworkDestinationIpv4El {
-    type O = BlockAssignable<SecurityhubInsightFiltersElNetworkDestinationIpv4El>;
+impl terrars::ToListMappable for SecurityhubInsightFiltersElNetworkDestinationIpv4El {
+    type O = terrars::BlockAssignable<SecurityhubInsightFiltersElNetworkDestinationIpv4El>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -2260,8 +2336,8 @@ impl ToListMappable for SecurityhubInsightFiltersElNetworkDestinationIpv4El {
 }
 
 pub struct BuildSecurityhubInsightFiltersElNetworkDestinationIpv4El {
-    #[doc= ""]
-    pub cidr: PrimField<String>,
+    #[doc = ""]
+    pub cidr: terrars::PrimField<std::string::String>,
 }
 
 impl BuildSecurityhubInsightFiltersElNetworkDestinationIpv4El {
@@ -2271,12 +2347,15 @@ impl BuildSecurityhubInsightFiltersElNetworkDestinationIpv4El {
 }
 
 pub struct SecurityhubInsightFiltersElNetworkDestinationIpv4ElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for SecurityhubInsightFiltersElNetworkDestinationIpv4ElRef {
-    fn new(shared: StackShared, base: String) -> SecurityhubInsightFiltersElNetworkDestinationIpv4ElRef {
+impl terrars::Ref for SecurityhubInsightFiltersElNetworkDestinationIpv4ElRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> SecurityhubInsightFiltersElNetworkDestinationIpv4ElRef {
         SecurityhubInsightFiltersElNetworkDestinationIpv4ElRef {
             shared: shared,
             base: base.to_string(),
@@ -2285,28 +2364,28 @@ impl Ref for SecurityhubInsightFiltersElNetworkDestinationIpv4ElRef {
 }
 
 impl SecurityhubInsightFiltersElNetworkDestinationIpv4ElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `cidr` after provisioning.\n"]
-    pub fn cidr(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.cidr", self.base))
+    #[doc = "Get a reference to the value of field `cidr` after provisioning.\n"]
+    pub fn cidr(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.cidr", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct SecurityhubInsightFiltersElNetworkDestinationIpv6El {
-    cidr: PrimField<String>,
+    cidr: terrars::PrimField<std::string::String>,
 }
 
 impl SecurityhubInsightFiltersElNetworkDestinationIpv6El { }
 
-impl ToListMappable for SecurityhubInsightFiltersElNetworkDestinationIpv6El {
-    type O = BlockAssignable<SecurityhubInsightFiltersElNetworkDestinationIpv6El>;
+impl terrars::ToListMappable for SecurityhubInsightFiltersElNetworkDestinationIpv6El {
+    type O = terrars::BlockAssignable<SecurityhubInsightFiltersElNetworkDestinationIpv6El>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -2315,8 +2394,8 @@ impl ToListMappable for SecurityhubInsightFiltersElNetworkDestinationIpv6El {
 }
 
 pub struct BuildSecurityhubInsightFiltersElNetworkDestinationIpv6El {
-    #[doc= ""]
-    pub cidr: PrimField<String>,
+    #[doc = ""]
+    pub cidr: terrars::PrimField<std::string::String>,
 }
 
 impl BuildSecurityhubInsightFiltersElNetworkDestinationIpv6El {
@@ -2326,12 +2405,15 @@ impl BuildSecurityhubInsightFiltersElNetworkDestinationIpv6El {
 }
 
 pub struct SecurityhubInsightFiltersElNetworkDestinationIpv6ElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for SecurityhubInsightFiltersElNetworkDestinationIpv6ElRef {
-    fn new(shared: StackShared, base: String) -> SecurityhubInsightFiltersElNetworkDestinationIpv6ElRef {
+impl terrars::Ref for SecurityhubInsightFiltersElNetworkDestinationIpv6ElRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> SecurityhubInsightFiltersElNetworkDestinationIpv6ElRef {
         SecurityhubInsightFiltersElNetworkDestinationIpv6ElRef {
             shared: shared,
             base: base.to_string(),
@@ -2340,51 +2422,51 @@ impl Ref for SecurityhubInsightFiltersElNetworkDestinationIpv6ElRef {
 }
 
 impl SecurityhubInsightFiltersElNetworkDestinationIpv6ElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `cidr` after provisioning.\n"]
-    pub fn cidr(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.cidr", self.base))
+    #[doc = "Get a reference to the value of field `cidr` after provisioning.\n"]
+    pub fn cidr(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.cidr", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct SecurityhubInsightFiltersElNetworkDestinationPortEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    eq: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    gte: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    lte: Option<PrimField<String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    eq: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    gte: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    lte: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
 impl SecurityhubInsightFiltersElNetworkDestinationPortEl {
-    #[doc= "Set the field `eq`.\n"]
-    pub fn set_eq(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.eq = Some(v.into());
+    #[doc = "Set the field `eq`.\n"]
+    pub fn set_eq(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.eq = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `gte`.\n"]
-    pub fn set_gte(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.gte = Some(v.into());
+    #[doc = "Set the field `gte`.\n"]
+    pub fn set_gte(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.gte = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `lte`.\n"]
-    pub fn set_lte(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.lte = Some(v.into());
+    #[doc = "Set the field `lte`.\n"]
+    pub fn set_lte(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.lte = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl ToListMappable for SecurityhubInsightFiltersElNetworkDestinationPortEl {
-    type O = BlockAssignable<SecurityhubInsightFiltersElNetworkDestinationPortEl>;
+impl terrars::ToListMappable for SecurityhubInsightFiltersElNetworkDestinationPortEl {
+    type O = terrars::BlockAssignable<SecurityhubInsightFiltersElNetworkDestinationPortEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -2405,12 +2487,15 @@ impl BuildSecurityhubInsightFiltersElNetworkDestinationPortEl {
 }
 
 pub struct SecurityhubInsightFiltersElNetworkDestinationPortElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for SecurityhubInsightFiltersElNetworkDestinationPortElRef {
-    fn new(shared: StackShared, base: String) -> SecurityhubInsightFiltersElNetworkDestinationPortElRef {
+impl terrars::Ref for SecurityhubInsightFiltersElNetworkDestinationPortElRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> SecurityhubInsightFiltersElNetworkDestinationPortElRef {
         SecurityhubInsightFiltersElNetworkDestinationPortElRef {
             shared: shared,
             base: base.to_string(),
@@ -2419,39 +2504,39 @@ impl Ref for SecurityhubInsightFiltersElNetworkDestinationPortElRef {
 }
 
 impl SecurityhubInsightFiltersElNetworkDestinationPortElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `eq` after provisioning.\n"]
-    pub fn eq(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.eq", self.base))
+    #[doc = "Get a reference to the value of field `eq` after provisioning.\n"]
+    pub fn eq(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.eq", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `gte` after provisioning.\n"]
-    pub fn gte(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.gte", self.base))
+    #[doc = "Get a reference to the value of field `gte` after provisioning.\n"]
+    pub fn gte(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.gte", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `lte` after provisioning.\n"]
-    pub fn lte(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.lte", self.base))
+    #[doc = "Get a reference to the value of field `lte` after provisioning.\n"]
+    pub fn lte(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.lte", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct SecurityhubInsightFiltersElNetworkDirectionEl {
-    comparison: PrimField<String>,
-    value: PrimField<String>,
+    comparison: terrars::PrimField<std::string::String>,
+    value: terrars::PrimField<std::string::String>,
 }
 
 impl SecurityhubInsightFiltersElNetworkDirectionEl { }
 
-impl ToListMappable for SecurityhubInsightFiltersElNetworkDirectionEl {
-    type O = BlockAssignable<SecurityhubInsightFiltersElNetworkDirectionEl>;
+impl terrars::ToListMappable for SecurityhubInsightFiltersElNetworkDirectionEl {
+    type O = terrars::BlockAssignable<SecurityhubInsightFiltersElNetworkDirectionEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -2460,10 +2545,10 @@ impl ToListMappable for SecurityhubInsightFiltersElNetworkDirectionEl {
 }
 
 pub struct BuildSecurityhubInsightFiltersElNetworkDirectionEl {
-    #[doc= ""]
-    pub comparison: PrimField<String>,
-    #[doc= ""]
-    pub value: PrimField<String>,
+    #[doc = ""]
+    pub comparison: terrars::PrimField<std::string::String>,
+    #[doc = ""]
+    pub value: terrars::PrimField<std::string::String>,
 }
 
 impl BuildSecurityhubInsightFiltersElNetworkDirectionEl {
@@ -2476,12 +2561,15 @@ impl BuildSecurityhubInsightFiltersElNetworkDirectionEl {
 }
 
 pub struct SecurityhubInsightFiltersElNetworkDirectionElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for SecurityhubInsightFiltersElNetworkDirectionElRef {
-    fn new(shared: StackShared, base: String) -> SecurityhubInsightFiltersElNetworkDirectionElRef {
+impl terrars::Ref for SecurityhubInsightFiltersElNetworkDirectionElRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> SecurityhubInsightFiltersElNetworkDirectionElRef {
         SecurityhubInsightFiltersElNetworkDirectionElRef {
             shared: shared,
             base: base.to_string(),
@@ -2490,34 +2578,34 @@ impl Ref for SecurityhubInsightFiltersElNetworkDirectionElRef {
 }
 
 impl SecurityhubInsightFiltersElNetworkDirectionElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `comparison` after provisioning.\n"]
-    pub fn comparison(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.comparison", self.base))
+    #[doc = "Get a reference to the value of field `comparison` after provisioning.\n"]
+    pub fn comparison(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.comparison", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `value` after provisioning.\n"]
-    pub fn value(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.value", self.base))
+    #[doc = "Get a reference to the value of field `value` after provisioning.\n"]
+    pub fn value(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.value", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct SecurityhubInsightFiltersElNetworkProtocolEl {
-    comparison: PrimField<String>,
-    value: PrimField<String>,
+    comparison: terrars::PrimField<std::string::String>,
+    value: terrars::PrimField<std::string::String>,
 }
 
 impl SecurityhubInsightFiltersElNetworkProtocolEl { }
 
-impl ToListMappable for SecurityhubInsightFiltersElNetworkProtocolEl {
-    type O = BlockAssignable<SecurityhubInsightFiltersElNetworkProtocolEl>;
+impl terrars::ToListMappable for SecurityhubInsightFiltersElNetworkProtocolEl {
+    type O = terrars::BlockAssignable<SecurityhubInsightFiltersElNetworkProtocolEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -2526,10 +2614,10 @@ impl ToListMappable for SecurityhubInsightFiltersElNetworkProtocolEl {
 }
 
 pub struct BuildSecurityhubInsightFiltersElNetworkProtocolEl {
-    #[doc= ""]
-    pub comparison: PrimField<String>,
-    #[doc= ""]
-    pub value: PrimField<String>,
+    #[doc = ""]
+    pub comparison: terrars::PrimField<std::string::String>,
+    #[doc = ""]
+    pub value: terrars::PrimField<std::string::String>,
 }
 
 impl BuildSecurityhubInsightFiltersElNetworkProtocolEl {
@@ -2542,12 +2630,15 @@ impl BuildSecurityhubInsightFiltersElNetworkProtocolEl {
 }
 
 pub struct SecurityhubInsightFiltersElNetworkProtocolElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for SecurityhubInsightFiltersElNetworkProtocolElRef {
-    fn new(shared: StackShared, base: String) -> SecurityhubInsightFiltersElNetworkProtocolElRef {
+impl terrars::Ref for SecurityhubInsightFiltersElNetworkProtocolElRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> SecurityhubInsightFiltersElNetworkProtocolElRef {
         SecurityhubInsightFiltersElNetworkProtocolElRef {
             shared: shared,
             base: base.to_string(),
@@ -2556,34 +2647,34 @@ impl Ref for SecurityhubInsightFiltersElNetworkProtocolElRef {
 }
 
 impl SecurityhubInsightFiltersElNetworkProtocolElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `comparison` after provisioning.\n"]
-    pub fn comparison(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.comparison", self.base))
+    #[doc = "Get a reference to the value of field `comparison` after provisioning.\n"]
+    pub fn comparison(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.comparison", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `value` after provisioning.\n"]
-    pub fn value(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.value", self.base))
+    #[doc = "Get a reference to the value of field `value` after provisioning.\n"]
+    pub fn value(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.value", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct SecurityhubInsightFiltersElNetworkSourceDomainEl {
-    comparison: PrimField<String>,
-    value: PrimField<String>,
+    comparison: terrars::PrimField<std::string::String>,
+    value: terrars::PrimField<std::string::String>,
 }
 
 impl SecurityhubInsightFiltersElNetworkSourceDomainEl { }
 
-impl ToListMappable for SecurityhubInsightFiltersElNetworkSourceDomainEl {
-    type O = BlockAssignable<SecurityhubInsightFiltersElNetworkSourceDomainEl>;
+impl terrars::ToListMappable for SecurityhubInsightFiltersElNetworkSourceDomainEl {
+    type O = terrars::BlockAssignable<SecurityhubInsightFiltersElNetworkSourceDomainEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -2592,10 +2683,10 @@ impl ToListMappable for SecurityhubInsightFiltersElNetworkSourceDomainEl {
 }
 
 pub struct BuildSecurityhubInsightFiltersElNetworkSourceDomainEl {
-    #[doc= ""]
-    pub comparison: PrimField<String>,
-    #[doc= ""]
-    pub value: PrimField<String>,
+    #[doc = ""]
+    pub comparison: terrars::PrimField<std::string::String>,
+    #[doc = ""]
+    pub value: terrars::PrimField<std::string::String>,
 }
 
 impl BuildSecurityhubInsightFiltersElNetworkSourceDomainEl {
@@ -2608,12 +2699,15 @@ impl BuildSecurityhubInsightFiltersElNetworkSourceDomainEl {
 }
 
 pub struct SecurityhubInsightFiltersElNetworkSourceDomainElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for SecurityhubInsightFiltersElNetworkSourceDomainElRef {
-    fn new(shared: StackShared, base: String) -> SecurityhubInsightFiltersElNetworkSourceDomainElRef {
+impl terrars::Ref for SecurityhubInsightFiltersElNetworkSourceDomainElRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> SecurityhubInsightFiltersElNetworkSourceDomainElRef {
         SecurityhubInsightFiltersElNetworkSourceDomainElRef {
             shared: shared,
             base: base.to_string(),
@@ -2622,33 +2716,33 @@ impl Ref for SecurityhubInsightFiltersElNetworkSourceDomainElRef {
 }
 
 impl SecurityhubInsightFiltersElNetworkSourceDomainElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `comparison` after provisioning.\n"]
-    pub fn comparison(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.comparison", self.base))
+    #[doc = "Get a reference to the value of field `comparison` after provisioning.\n"]
+    pub fn comparison(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.comparison", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `value` after provisioning.\n"]
-    pub fn value(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.value", self.base))
+    #[doc = "Get a reference to the value of field `value` after provisioning.\n"]
+    pub fn value(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.value", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct SecurityhubInsightFiltersElNetworkSourceIpv4El {
-    cidr: PrimField<String>,
+    cidr: terrars::PrimField<std::string::String>,
 }
 
 impl SecurityhubInsightFiltersElNetworkSourceIpv4El { }
 
-impl ToListMappable for SecurityhubInsightFiltersElNetworkSourceIpv4El {
-    type O = BlockAssignable<SecurityhubInsightFiltersElNetworkSourceIpv4El>;
+impl terrars::ToListMappable for SecurityhubInsightFiltersElNetworkSourceIpv4El {
+    type O = terrars::BlockAssignable<SecurityhubInsightFiltersElNetworkSourceIpv4El>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -2657,8 +2751,8 @@ impl ToListMappable for SecurityhubInsightFiltersElNetworkSourceIpv4El {
 }
 
 pub struct BuildSecurityhubInsightFiltersElNetworkSourceIpv4El {
-    #[doc= ""]
-    pub cidr: PrimField<String>,
+    #[doc = ""]
+    pub cidr: terrars::PrimField<std::string::String>,
 }
 
 impl BuildSecurityhubInsightFiltersElNetworkSourceIpv4El {
@@ -2668,12 +2762,15 @@ impl BuildSecurityhubInsightFiltersElNetworkSourceIpv4El {
 }
 
 pub struct SecurityhubInsightFiltersElNetworkSourceIpv4ElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for SecurityhubInsightFiltersElNetworkSourceIpv4ElRef {
-    fn new(shared: StackShared, base: String) -> SecurityhubInsightFiltersElNetworkSourceIpv4ElRef {
+impl terrars::Ref for SecurityhubInsightFiltersElNetworkSourceIpv4ElRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> SecurityhubInsightFiltersElNetworkSourceIpv4ElRef {
         SecurityhubInsightFiltersElNetworkSourceIpv4ElRef {
             shared: shared,
             base: base.to_string(),
@@ -2682,28 +2779,28 @@ impl Ref for SecurityhubInsightFiltersElNetworkSourceIpv4ElRef {
 }
 
 impl SecurityhubInsightFiltersElNetworkSourceIpv4ElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `cidr` after provisioning.\n"]
-    pub fn cidr(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.cidr", self.base))
+    #[doc = "Get a reference to the value of field `cidr` after provisioning.\n"]
+    pub fn cidr(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.cidr", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct SecurityhubInsightFiltersElNetworkSourceIpv6El {
-    cidr: PrimField<String>,
+    cidr: terrars::PrimField<std::string::String>,
 }
 
 impl SecurityhubInsightFiltersElNetworkSourceIpv6El { }
 
-impl ToListMappable for SecurityhubInsightFiltersElNetworkSourceIpv6El {
-    type O = BlockAssignable<SecurityhubInsightFiltersElNetworkSourceIpv6El>;
+impl terrars::ToListMappable for SecurityhubInsightFiltersElNetworkSourceIpv6El {
+    type O = terrars::BlockAssignable<SecurityhubInsightFiltersElNetworkSourceIpv6El>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -2712,8 +2809,8 @@ impl ToListMappable for SecurityhubInsightFiltersElNetworkSourceIpv6El {
 }
 
 pub struct BuildSecurityhubInsightFiltersElNetworkSourceIpv6El {
-    #[doc= ""]
-    pub cidr: PrimField<String>,
+    #[doc = ""]
+    pub cidr: terrars::PrimField<std::string::String>,
 }
 
 impl BuildSecurityhubInsightFiltersElNetworkSourceIpv6El {
@@ -2723,12 +2820,15 @@ impl BuildSecurityhubInsightFiltersElNetworkSourceIpv6El {
 }
 
 pub struct SecurityhubInsightFiltersElNetworkSourceIpv6ElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for SecurityhubInsightFiltersElNetworkSourceIpv6ElRef {
-    fn new(shared: StackShared, base: String) -> SecurityhubInsightFiltersElNetworkSourceIpv6ElRef {
+impl terrars::Ref for SecurityhubInsightFiltersElNetworkSourceIpv6ElRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> SecurityhubInsightFiltersElNetworkSourceIpv6ElRef {
         SecurityhubInsightFiltersElNetworkSourceIpv6ElRef {
             shared: shared,
             base: base.to_string(),
@@ -2737,29 +2837,29 @@ impl Ref for SecurityhubInsightFiltersElNetworkSourceIpv6ElRef {
 }
 
 impl SecurityhubInsightFiltersElNetworkSourceIpv6ElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `cidr` after provisioning.\n"]
-    pub fn cidr(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.cidr", self.base))
+    #[doc = "Get a reference to the value of field `cidr` after provisioning.\n"]
+    pub fn cidr(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.cidr", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct SecurityhubInsightFiltersElNetworkSourceMacEl {
-    comparison: PrimField<String>,
-    value: PrimField<String>,
+    comparison: terrars::PrimField<std::string::String>,
+    value: terrars::PrimField<std::string::String>,
 }
 
 impl SecurityhubInsightFiltersElNetworkSourceMacEl { }
 
-impl ToListMappable for SecurityhubInsightFiltersElNetworkSourceMacEl {
-    type O = BlockAssignable<SecurityhubInsightFiltersElNetworkSourceMacEl>;
+impl terrars::ToListMappable for SecurityhubInsightFiltersElNetworkSourceMacEl {
+    type O = terrars::BlockAssignable<SecurityhubInsightFiltersElNetworkSourceMacEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -2768,10 +2868,10 @@ impl ToListMappable for SecurityhubInsightFiltersElNetworkSourceMacEl {
 }
 
 pub struct BuildSecurityhubInsightFiltersElNetworkSourceMacEl {
-    #[doc= ""]
-    pub comparison: PrimField<String>,
-    #[doc= ""]
-    pub value: PrimField<String>,
+    #[doc = ""]
+    pub comparison: terrars::PrimField<std::string::String>,
+    #[doc = ""]
+    pub value: terrars::PrimField<std::string::String>,
 }
 
 impl BuildSecurityhubInsightFiltersElNetworkSourceMacEl {
@@ -2784,12 +2884,15 @@ impl BuildSecurityhubInsightFiltersElNetworkSourceMacEl {
 }
 
 pub struct SecurityhubInsightFiltersElNetworkSourceMacElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for SecurityhubInsightFiltersElNetworkSourceMacElRef {
-    fn new(shared: StackShared, base: String) -> SecurityhubInsightFiltersElNetworkSourceMacElRef {
+impl terrars::Ref for SecurityhubInsightFiltersElNetworkSourceMacElRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> SecurityhubInsightFiltersElNetworkSourceMacElRef {
         SecurityhubInsightFiltersElNetworkSourceMacElRef {
             shared: shared,
             base: base.to_string(),
@@ -2798,56 +2901,56 @@ impl Ref for SecurityhubInsightFiltersElNetworkSourceMacElRef {
 }
 
 impl SecurityhubInsightFiltersElNetworkSourceMacElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `comparison` after provisioning.\n"]
-    pub fn comparison(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.comparison", self.base))
+    #[doc = "Get a reference to the value of field `comparison` after provisioning.\n"]
+    pub fn comparison(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.comparison", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `value` after provisioning.\n"]
-    pub fn value(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.value", self.base))
+    #[doc = "Get a reference to the value of field `value` after provisioning.\n"]
+    pub fn value(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.value", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct SecurityhubInsightFiltersElNetworkSourcePortEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    eq: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    gte: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    lte: Option<PrimField<String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    eq: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    gte: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    lte: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
 impl SecurityhubInsightFiltersElNetworkSourcePortEl {
-    #[doc= "Set the field `eq`.\n"]
-    pub fn set_eq(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.eq = Some(v.into());
+    #[doc = "Set the field `eq`.\n"]
+    pub fn set_eq(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.eq = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `gte`.\n"]
-    pub fn set_gte(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.gte = Some(v.into());
+    #[doc = "Set the field `gte`.\n"]
+    pub fn set_gte(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.gte = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `lte`.\n"]
-    pub fn set_lte(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.lte = Some(v.into());
+    #[doc = "Set the field `lte`.\n"]
+    pub fn set_lte(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.lte = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl ToListMappable for SecurityhubInsightFiltersElNetworkSourcePortEl {
-    type O = BlockAssignable<SecurityhubInsightFiltersElNetworkSourcePortEl>;
+impl terrars::ToListMappable for SecurityhubInsightFiltersElNetworkSourcePortEl {
+    type O = terrars::BlockAssignable<SecurityhubInsightFiltersElNetworkSourcePortEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -2868,12 +2971,15 @@ impl BuildSecurityhubInsightFiltersElNetworkSourcePortEl {
 }
 
 pub struct SecurityhubInsightFiltersElNetworkSourcePortElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for SecurityhubInsightFiltersElNetworkSourcePortElRef {
-    fn new(shared: StackShared, base: String) -> SecurityhubInsightFiltersElNetworkSourcePortElRef {
+impl terrars::Ref for SecurityhubInsightFiltersElNetworkSourcePortElRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> SecurityhubInsightFiltersElNetworkSourcePortElRef {
         SecurityhubInsightFiltersElNetworkSourcePortElRef {
             shared: shared,
             base: base.to_string(),
@@ -2882,39 +2988,39 @@ impl Ref for SecurityhubInsightFiltersElNetworkSourcePortElRef {
 }
 
 impl SecurityhubInsightFiltersElNetworkSourcePortElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `eq` after provisioning.\n"]
-    pub fn eq(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.eq", self.base))
+    #[doc = "Get a reference to the value of field `eq` after provisioning.\n"]
+    pub fn eq(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.eq", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `gte` after provisioning.\n"]
-    pub fn gte(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.gte", self.base))
+    #[doc = "Get a reference to the value of field `gte` after provisioning.\n"]
+    pub fn gte(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.gte", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `lte` after provisioning.\n"]
-    pub fn lte(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.lte", self.base))
+    #[doc = "Get a reference to the value of field `lte` after provisioning.\n"]
+    pub fn lte(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.lte", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct SecurityhubInsightFiltersElNoteTextEl {
-    comparison: PrimField<String>,
-    value: PrimField<String>,
+    comparison: terrars::PrimField<std::string::String>,
+    value: terrars::PrimField<std::string::String>,
 }
 
 impl SecurityhubInsightFiltersElNoteTextEl { }
 
-impl ToListMappable for SecurityhubInsightFiltersElNoteTextEl {
-    type O = BlockAssignable<SecurityhubInsightFiltersElNoteTextEl>;
+impl terrars::ToListMappable for SecurityhubInsightFiltersElNoteTextEl {
+    type O = terrars::BlockAssignable<SecurityhubInsightFiltersElNoteTextEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -2923,10 +3029,10 @@ impl ToListMappable for SecurityhubInsightFiltersElNoteTextEl {
 }
 
 pub struct BuildSecurityhubInsightFiltersElNoteTextEl {
-    #[doc= ""]
-    pub comparison: PrimField<String>,
-    #[doc= ""]
-    pub value: PrimField<String>,
+    #[doc = ""]
+    pub comparison: terrars::PrimField<std::string::String>,
+    #[doc = ""]
+    pub value: terrars::PrimField<std::string::String>,
 }
 
 impl BuildSecurityhubInsightFiltersElNoteTextEl {
@@ -2939,12 +3045,12 @@ impl BuildSecurityhubInsightFiltersElNoteTextEl {
 }
 
 pub struct SecurityhubInsightFiltersElNoteTextElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for SecurityhubInsightFiltersElNoteTextElRef {
-    fn new(shared: StackShared, base: String) -> SecurityhubInsightFiltersElNoteTextElRef {
+impl terrars::Ref for SecurityhubInsightFiltersElNoteTextElRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> SecurityhubInsightFiltersElNoteTextElRef {
         SecurityhubInsightFiltersElNoteTextElRef {
             shared: shared,
             base: base.to_string(),
@@ -2953,34 +3059,34 @@ impl Ref for SecurityhubInsightFiltersElNoteTextElRef {
 }
 
 impl SecurityhubInsightFiltersElNoteTextElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `comparison` after provisioning.\n"]
-    pub fn comparison(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.comparison", self.base))
+    #[doc = "Get a reference to the value of field `comparison` after provisioning.\n"]
+    pub fn comparison(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.comparison", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `value` after provisioning.\n"]
-    pub fn value(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.value", self.base))
+    #[doc = "Get a reference to the value of field `value` after provisioning.\n"]
+    pub fn value(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.value", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct SecurityhubInsightFiltersElNoteUpdatedAtElDateRangeEl {
-    unit: PrimField<String>,
-    value: PrimField<f64>,
+    unit: terrars::PrimField<std::string::String>,
+    value: terrars::PrimField<f64>,
 }
 
 impl SecurityhubInsightFiltersElNoteUpdatedAtElDateRangeEl { }
 
-impl ToListMappable for SecurityhubInsightFiltersElNoteUpdatedAtElDateRangeEl {
-    type O = BlockAssignable<SecurityhubInsightFiltersElNoteUpdatedAtElDateRangeEl>;
+impl terrars::ToListMappable for SecurityhubInsightFiltersElNoteUpdatedAtElDateRangeEl {
+    type O = terrars::BlockAssignable<SecurityhubInsightFiltersElNoteUpdatedAtElDateRangeEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -2989,10 +3095,10 @@ impl ToListMappable for SecurityhubInsightFiltersElNoteUpdatedAtElDateRangeEl {
 }
 
 pub struct BuildSecurityhubInsightFiltersElNoteUpdatedAtElDateRangeEl {
-    #[doc= ""]
-    pub unit: PrimField<String>,
-    #[doc= ""]
-    pub value: PrimField<f64>,
+    #[doc = ""]
+    pub unit: terrars::PrimField<std::string::String>,
+    #[doc = ""]
+    pub value: terrars::PrimField<f64>,
 }
 
 impl BuildSecurityhubInsightFiltersElNoteUpdatedAtElDateRangeEl {
@@ -3005,12 +3111,15 @@ impl BuildSecurityhubInsightFiltersElNoteUpdatedAtElDateRangeEl {
 }
 
 pub struct SecurityhubInsightFiltersElNoteUpdatedAtElDateRangeElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for SecurityhubInsightFiltersElNoteUpdatedAtElDateRangeElRef {
-    fn new(shared: StackShared, base: String) -> SecurityhubInsightFiltersElNoteUpdatedAtElDateRangeElRef {
+impl terrars::Ref for SecurityhubInsightFiltersElNoteUpdatedAtElDateRangeElRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> SecurityhubInsightFiltersElNoteUpdatedAtElDateRangeElRef {
         SecurityhubInsightFiltersElNoteUpdatedAtElDateRangeElRef {
             shared: shared,
             base: base.to_string(),
@@ -3019,72 +3128,72 @@ impl Ref for SecurityhubInsightFiltersElNoteUpdatedAtElDateRangeElRef {
 }
 
 impl SecurityhubInsightFiltersElNoteUpdatedAtElDateRangeElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `unit` after provisioning.\n"]
-    pub fn unit(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.unit", self.base))
+    #[doc = "Get a reference to the value of field `unit` after provisioning.\n"]
+    pub fn unit(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.unit", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `value` after provisioning.\n"]
-    pub fn value(&self) -> PrimExpr<f64> {
-        PrimExpr::new(self.shared().clone(), format!("{}.value", self.base))
+    #[doc = "Get a reference to the value of field `value` after provisioning.\n"]
+    pub fn value(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.value", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
 struct SecurityhubInsightFiltersElNoteUpdatedAtElDynamic {
-    date_range: Option<DynamicBlock<SecurityhubInsightFiltersElNoteUpdatedAtElDateRangeEl>>,
+    date_range: std::option::Option<terrars::DynamicBlock<SecurityhubInsightFiltersElNoteUpdatedAtElDateRangeEl>>,
 }
 
 #[derive(Serialize)]
 pub struct SecurityhubInsightFiltersElNoteUpdatedAtEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    end: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    start: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    date_range: Option<Vec<SecurityhubInsightFiltersElNoteUpdatedAtElDateRangeEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    end: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    start: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    date_range: std::option::Option<std::vec::Vec<SecurityhubInsightFiltersElNoteUpdatedAtElDateRangeEl>>,
     dynamic: SecurityhubInsightFiltersElNoteUpdatedAtElDynamic,
 }
 
 impl SecurityhubInsightFiltersElNoteUpdatedAtEl {
-    #[doc= "Set the field `end`.\n"]
-    pub fn set_end(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.end = Some(v.into());
+    #[doc = "Set the field `end`.\n"]
+    pub fn set_end(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.end = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `start`.\n"]
-    pub fn set_start(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.start = Some(v.into());
+    #[doc = "Set the field `start`.\n"]
+    pub fn set_start(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.start = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `date_range`.\n"]
+    #[doc = "Set the field `date_range`.\n"]
     pub fn set_date_range(
         mut self,
-        v: impl Into<BlockAssignable<SecurityhubInsightFiltersElNoteUpdatedAtElDateRangeEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<SecurityhubInsightFiltersElNoteUpdatedAtElDateRangeEl>>,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.date_range = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.date_range = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.date_range = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.date_range = std::option::Option::Some(d);
             },
         }
         self
     }
 }
 
-impl ToListMappable for SecurityhubInsightFiltersElNoteUpdatedAtEl {
-    type O = BlockAssignable<SecurityhubInsightFiltersElNoteUpdatedAtEl>;
+impl terrars::ToListMappable for SecurityhubInsightFiltersElNoteUpdatedAtEl {
+    type O = terrars::BlockAssignable<SecurityhubInsightFiltersElNoteUpdatedAtEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -3100,18 +3209,18 @@ impl BuildSecurityhubInsightFiltersElNoteUpdatedAtEl {
             end: core::default::Default::default(),
             start: core::default::Default::default(),
             date_range: core::default::Default::default(),
-            dynamic: Default::default(),
+            dynamic: core::default::Default::default(),
         }
     }
 }
 
 pub struct SecurityhubInsightFiltersElNoteUpdatedAtElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for SecurityhubInsightFiltersElNoteUpdatedAtElRef {
-    fn new(shared: StackShared, base: String) -> SecurityhubInsightFiltersElNoteUpdatedAtElRef {
+impl terrars::Ref for SecurityhubInsightFiltersElNoteUpdatedAtElRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> SecurityhubInsightFiltersElNoteUpdatedAtElRef {
         SecurityhubInsightFiltersElNoteUpdatedAtElRef {
             shared: shared,
             base: base.to_string(),
@@ -3120,39 +3229,39 @@ impl Ref for SecurityhubInsightFiltersElNoteUpdatedAtElRef {
 }
 
 impl SecurityhubInsightFiltersElNoteUpdatedAtElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `end` after provisioning.\n"]
-    pub fn end(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.end", self.base))
+    #[doc = "Get a reference to the value of field `end` after provisioning.\n"]
+    pub fn end(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.end", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `start` after provisioning.\n"]
-    pub fn start(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.start", self.base))
+    #[doc = "Get a reference to the value of field `start` after provisioning.\n"]
+    pub fn start(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.start", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `date_range` after provisioning.\n"]
-    pub fn date_range(&self) -> ListRef<SecurityhubInsightFiltersElNoteUpdatedAtElDateRangeElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.date_range", self.base))
+    #[doc = "Get a reference to the value of field `date_range` after provisioning.\n"]
+    pub fn date_range(&self) -> terrars::ListRef<SecurityhubInsightFiltersElNoteUpdatedAtElDateRangeElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.date_range", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct SecurityhubInsightFiltersElNoteUpdatedByEl {
-    comparison: PrimField<String>,
-    value: PrimField<String>,
+    comparison: terrars::PrimField<std::string::String>,
+    value: terrars::PrimField<std::string::String>,
 }
 
 impl SecurityhubInsightFiltersElNoteUpdatedByEl { }
 
-impl ToListMappable for SecurityhubInsightFiltersElNoteUpdatedByEl {
-    type O = BlockAssignable<SecurityhubInsightFiltersElNoteUpdatedByEl>;
+impl terrars::ToListMappable for SecurityhubInsightFiltersElNoteUpdatedByEl {
+    type O = terrars::BlockAssignable<SecurityhubInsightFiltersElNoteUpdatedByEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -3161,10 +3270,10 @@ impl ToListMappable for SecurityhubInsightFiltersElNoteUpdatedByEl {
 }
 
 pub struct BuildSecurityhubInsightFiltersElNoteUpdatedByEl {
-    #[doc= ""]
-    pub comparison: PrimField<String>,
-    #[doc= ""]
-    pub value: PrimField<String>,
+    #[doc = ""]
+    pub comparison: terrars::PrimField<std::string::String>,
+    #[doc = ""]
+    pub value: terrars::PrimField<std::string::String>,
 }
 
 impl BuildSecurityhubInsightFiltersElNoteUpdatedByEl {
@@ -3177,12 +3286,12 @@ impl BuildSecurityhubInsightFiltersElNoteUpdatedByEl {
 }
 
 pub struct SecurityhubInsightFiltersElNoteUpdatedByElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for SecurityhubInsightFiltersElNoteUpdatedByElRef {
-    fn new(shared: StackShared, base: String) -> SecurityhubInsightFiltersElNoteUpdatedByElRef {
+impl terrars::Ref for SecurityhubInsightFiltersElNoteUpdatedByElRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> SecurityhubInsightFiltersElNoteUpdatedByElRef {
         SecurityhubInsightFiltersElNoteUpdatedByElRef {
             shared: shared,
             base: base.to_string(),
@@ -3191,34 +3300,34 @@ impl Ref for SecurityhubInsightFiltersElNoteUpdatedByElRef {
 }
 
 impl SecurityhubInsightFiltersElNoteUpdatedByElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `comparison` after provisioning.\n"]
-    pub fn comparison(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.comparison", self.base))
+    #[doc = "Get a reference to the value of field `comparison` after provisioning.\n"]
+    pub fn comparison(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.comparison", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `value` after provisioning.\n"]
-    pub fn value(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.value", self.base))
+    #[doc = "Get a reference to the value of field `value` after provisioning.\n"]
+    pub fn value(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.value", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct SecurityhubInsightFiltersElProcessLaunchedAtElDateRangeEl {
-    unit: PrimField<String>,
-    value: PrimField<f64>,
+    unit: terrars::PrimField<std::string::String>,
+    value: terrars::PrimField<f64>,
 }
 
 impl SecurityhubInsightFiltersElProcessLaunchedAtElDateRangeEl { }
 
-impl ToListMappable for SecurityhubInsightFiltersElProcessLaunchedAtElDateRangeEl {
-    type O = BlockAssignable<SecurityhubInsightFiltersElProcessLaunchedAtElDateRangeEl>;
+impl terrars::ToListMappable for SecurityhubInsightFiltersElProcessLaunchedAtElDateRangeEl {
+    type O = terrars::BlockAssignable<SecurityhubInsightFiltersElProcessLaunchedAtElDateRangeEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -3227,10 +3336,10 @@ impl ToListMappable for SecurityhubInsightFiltersElProcessLaunchedAtElDateRangeE
 }
 
 pub struct BuildSecurityhubInsightFiltersElProcessLaunchedAtElDateRangeEl {
-    #[doc= ""]
-    pub unit: PrimField<String>,
-    #[doc= ""]
-    pub value: PrimField<f64>,
+    #[doc = ""]
+    pub unit: terrars::PrimField<std::string::String>,
+    #[doc = ""]
+    pub value: terrars::PrimField<f64>,
 }
 
 impl BuildSecurityhubInsightFiltersElProcessLaunchedAtElDateRangeEl {
@@ -3243,12 +3352,15 @@ impl BuildSecurityhubInsightFiltersElProcessLaunchedAtElDateRangeEl {
 }
 
 pub struct SecurityhubInsightFiltersElProcessLaunchedAtElDateRangeElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for SecurityhubInsightFiltersElProcessLaunchedAtElDateRangeElRef {
-    fn new(shared: StackShared, base: String) -> SecurityhubInsightFiltersElProcessLaunchedAtElDateRangeElRef {
+impl terrars::Ref for SecurityhubInsightFiltersElProcessLaunchedAtElDateRangeElRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> SecurityhubInsightFiltersElProcessLaunchedAtElDateRangeElRef {
         SecurityhubInsightFiltersElProcessLaunchedAtElDateRangeElRef {
             shared: shared,
             base: base.to_string(),
@@ -3257,72 +3369,79 @@ impl Ref for SecurityhubInsightFiltersElProcessLaunchedAtElDateRangeElRef {
 }
 
 impl SecurityhubInsightFiltersElProcessLaunchedAtElDateRangeElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `unit` after provisioning.\n"]
-    pub fn unit(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.unit", self.base))
+    #[doc = "Get a reference to the value of field `unit` after provisioning.\n"]
+    pub fn unit(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.unit", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `value` after provisioning.\n"]
-    pub fn value(&self) -> PrimExpr<f64> {
-        PrimExpr::new(self.shared().clone(), format!("{}.value", self.base))
+    #[doc = "Get a reference to the value of field `value` after provisioning.\n"]
+    pub fn value(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.value", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
 struct SecurityhubInsightFiltersElProcessLaunchedAtElDynamic {
-    date_range: Option<DynamicBlock<SecurityhubInsightFiltersElProcessLaunchedAtElDateRangeEl>>,
+    date_range: std
+    ::option
+    ::Option<terrars::DynamicBlock<SecurityhubInsightFiltersElProcessLaunchedAtElDateRangeEl>>,
 }
 
 #[derive(Serialize)]
 pub struct SecurityhubInsightFiltersElProcessLaunchedAtEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    end: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    start: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    date_range: Option<Vec<SecurityhubInsightFiltersElProcessLaunchedAtElDateRangeEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    end: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    start: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    date_range: std::option::Option<std::vec::Vec<SecurityhubInsightFiltersElProcessLaunchedAtElDateRangeEl>>,
     dynamic: SecurityhubInsightFiltersElProcessLaunchedAtElDynamic,
 }
 
 impl SecurityhubInsightFiltersElProcessLaunchedAtEl {
-    #[doc= "Set the field `end`.\n"]
-    pub fn set_end(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.end = Some(v.into());
+    #[doc = "Set the field `end`.\n"]
+    pub fn set_end(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.end = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `start`.\n"]
-    pub fn set_start(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.start = Some(v.into());
+    #[doc = "Set the field `start`.\n"]
+    pub fn set_start(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.start = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `date_range`.\n"]
+    #[doc = "Set the field `date_range`.\n"]
     pub fn set_date_range(
         mut self,
-        v: impl Into<BlockAssignable<SecurityhubInsightFiltersElProcessLaunchedAtElDateRangeEl>>,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<terrars::BlockAssignable<SecurityhubInsightFiltersElProcessLaunchedAtElDateRangeEl>>,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.date_range = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.date_range = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.date_range = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.date_range = std::option::Option::Some(d);
             },
         }
         self
     }
 }
 
-impl ToListMappable for SecurityhubInsightFiltersElProcessLaunchedAtEl {
-    type O = BlockAssignable<SecurityhubInsightFiltersElProcessLaunchedAtEl>;
+impl terrars::ToListMappable for SecurityhubInsightFiltersElProcessLaunchedAtEl {
+    type O = terrars::BlockAssignable<SecurityhubInsightFiltersElProcessLaunchedAtEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -3338,18 +3457,21 @@ impl BuildSecurityhubInsightFiltersElProcessLaunchedAtEl {
             end: core::default::Default::default(),
             start: core::default::Default::default(),
             date_range: core::default::Default::default(),
-            dynamic: Default::default(),
+            dynamic: core::default::Default::default(),
         }
     }
 }
 
 pub struct SecurityhubInsightFiltersElProcessLaunchedAtElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for SecurityhubInsightFiltersElProcessLaunchedAtElRef {
-    fn new(shared: StackShared, base: String) -> SecurityhubInsightFiltersElProcessLaunchedAtElRef {
+impl terrars::Ref for SecurityhubInsightFiltersElProcessLaunchedAtElRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> SecurityhubInsightFiltersElProcessLaunchedAtElRef {
         SecurityhubInsightFiltersElProcessLaunchedAtElRef {
             shared: shared,
             base: base.to_string(),
@@ -3358,39 +3480,39 @@ impl Ref for SecurityhubInsightFiltersElProcessLaunchedAtElRef {
 }
 
 impl SecurityhubInsightFiltersElProcessLaunchedAtElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `end` after provisioning.\n"]
-    pub fn end(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.end", self.base))
+    #[doc = "Get a reference to the value of field `end` after provisioning.\n"]
+    pub fn end(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.end", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `start` after provisioning.\n"]
-    pub fn start(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.start", self.base))
+    #[doc = "Get a reference to the value of field `start` after provisioning.\n"]
+    pub fn start(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.start", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `date_range` after provisioning.\n"]
-    pub fn date_range(&self) -> ListRef<SecurityhubInsightFiltersElProcessLaunchedAtElDateRangeElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.date_range", self.base))
+    #[doc = "Get a reference to the value of field `date_range` after provisioning.\n"]
+    pub fn date_range(&self) -> terrars::ListRef<SecurityhubInsightFiltersElProcessLaunchedAtElDateRangeElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.date_range", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct SecurityhubInsightFiltersElProcessNameEl {
-    comparison: PrimField<String>,
-    value: PrimField<String>,
+    comparison: terrars::PrimField<std::string::String>,
+    value: terrars::PrimField<std::string::String>,
 }
 
 impl SecurityhubInsightFiltersElProcessNameEl { }
 
-impl ToListMappable for SecurityhubInsightFiltersElProcessNameEl {
-    type O = BlockAssignable<SecurityhubInsightFiltersElProcessNameEl>;
+impl terrars::ToListMappable for SecurityhubInsightFiltersElProcessNameEl {
+    type O = terrars::BlockAssignable<SecurityhubInsightFiltersElProcessNameEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -3399,10 +3521,10 @@ impl ToListMappable for SecurityhubInsightFiltersElProcessNameEl {
 }
 
 pub struct BuildSecurityhubInsightFiltersElProcessNameEl {
-    #[doc= ""]
-    pub comparison: PrimField<String>,
-    #[doc= ""]
-    pub value: PrimField<String>,
+    #[doc = ""]
+    pub comparison: terrars::PrimField<std::string::String>,
+    #[doc = ""]
+    pub value: terrars::PrimField<std::string::String>,
 }
 
 impl BuildSecurityhubInsightFiltersElProcessNameEl {
@@ -3415,12 +3537,12 @@ impl BuildSecurityhubInsightFiltersElProcessNameEl {
 }
 
 pub struct SecurityhubInsightFiltersElProcessNameElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for SecurityhubInsightFiltersElProcessNameElRef {
-    fn new(shared: StackShared, base: String) -> SecurityhubInsightFiltersElProcessNameElRef {
+impl terrars::Ref for SecurityhubInsightFiltersElProcessNameElRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> SecurityhubInsightFiltersElProcessNameElRef {
         SecurityhubInsightFiltersElProcessNameElRef {
             shared: shared,
             base: base.to_string(),
@@ -3429,56 +3551,56 @@ impl Ref for SecurityhubInsightFiltersElProcessNameElRef {
 }
 
 impl SecurityhubInsightFiltersElProcessNameElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `comparison` after provisioning.\n"]
-    pub fn comparison(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.comparison", self.base))
+    #[doc = "Get a reference to the value of field `comparison` after provisioning.\n"]
+    pub fn comparison(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.comparison", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `value` after provisioning.\n"]
-    pub fn value(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.value", self.base))
+    #[doc = "Get a reference to the value of field `value` after provisioning.\n"]
+    pub fn value(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.value", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct SecurityhubInsightFiltersElProcessParentPidEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    eq: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    gte: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    lte: Option<PrimField<String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    eq: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    gte: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    lte: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
 impl SecurityhubInsightFiltersElProcessParentPidEl {
-    #[doc= "Set the field `eq`.\n"]
-    pub fn set_eq(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.eq = Some(v.into());
+    #[doc = "Set the field `eq`.\n"]
+    pub fn set_eq(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.eq = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `gte`.\n"]
-    pub fn set_gte(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.gte = Some(v.into());
+    #[doc = "Set the field `gte`.\n"]
+    pub fn set_gte(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.gte = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `lte`.\n"]
-    pub fn set_lte(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.lte = Some(v.into());
+    #[doc = "Set the field `lte`.\n"]
+    pub fn set_lte(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.lte = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl ToListMappable for SecurityhubInsightFiltersElProcessParentPidEl {
-    type O = BlockAssignable<SecurityhubInsightFiltersElProcessParentPidEl>;
+impl terrars::ToListMappable for SecurityhubInsightFiltersElProcessParentPidEl {
+    type O = terrars::BlockAssignable<SecurityhubInsightFiltersElProcessParentPidEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -3499,12 +3621,15 @@ impl BuildSecurityhubInsightFiltersElProcessParentPidEl {
 }
 
 pub struct SecurityhubInsightFiltersElProcessParentPidElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for SecurityhubInsightFiltersElProcessParentPidElRef {
-    fn new(shared: StackShared, base: String) -> SecurityhubInsightFiltersElProcessParentPidElRef {
+impl terrars::Ref for SecurityhubInsightFiltersElProcessParentPidElRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> SecurityhubInsightFiltersElProcessParentPidElRef {
         SecurityhubInsightFiltersElProcessParentPidElRef {
             shared: shared,
             base: base.to_string(),
@@ -3513,39 +3638,39 @@ impl Ref for SecurityhubInsightFiltersElProcessParentPidElRef {
 }
 
 impl SecurityhubInsightFiltersElProcessParentPidElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `eq` after provisioning.\n"]
-    pub fn eq(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.eq", self.base))
+    #[doc = "Get a reference to the value of field `eq` after provisioning.\n"]
+    pub fn eq(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.eq", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `gte` after provisioning.\n"]
-    pub fn gte(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.gte", self.base))
+    #[doc = "Get a reference to the value of field `gte` after provisioning.\n"]
+    pub fn gte(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.gte", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `lte` after provisioning.\n"]
-    pub fn lte(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.lte", self.base))
+    #[doc = "Get a reference to the value of field `lte` after provisioning.\n"]
+    pub fn lte(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.lte", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct SecurityhubInsightFiltersElProcessPathEl {
-    comparison: PrimField<String>,
-    value: PrimField<String>,
+    comparison: terrars::PrimField<std::string::String>,
+    value: terrars::PrimField<std::string::String>,
 }
 
 impl SecurityhubInsightFiltersElProcessPathEl { }
 
-impl ToListMappable for SecurityhubInsightFiltersElProcessPathEl {
-    type O = BlockAssignable<SecurityhubInsightFiltersElProcessPathEl>;
+impl terrars::ToListMappable for SecurityhubInsightFiltersElProcessPathEl {
+    type O = terrars::BlockAssignable<SecurityhubInsightFiltersElProcessPathEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -3554,10 +3679,10 @@ impl ToListMappable for SecurityhubInsightFiltersElProcessPathEl {
 }
 
 pub struct BuildSecurityhubInsightFiltersElProcessPathEl {
-    #[doc= ""]
-    pub comparison: PrimField<String>,
-    #[doc= ""]
-    pub value: PrimField<String>,
+    #[doc = ""]
+    pub comparison: terrars::PrimField<std::string::String>,
+    #[doc = ""]
+    pub value: terrars::PrimField<std::string::String>,
 }
 
 impl BuildSecurityhubInsightFiltersElProcessPathEl {
@@ -3570,12 +3695,12 @@ impl BuildSecurityhubInsightFiltersElProcessPathEl {
 }
 
 pub struct SecurityhubInsightFiltersElProcessPathElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for SecurityhubInsightFiltersElProcessPathElRef {
-    fn new(shared: StackShared, base: String) -> SecurityhubInsightFiltersElProcessPathElRef {
+impl terrars::Ref for SecurityhubInsightFiltersElProcessPathElRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> SecurityhubInsightFiltersElProcessPathElRef {
         SecurityhubInsightFiltersElProcessPathElRef {
             shared: shared,
             base: base.to_string(),
@@ -3584,56 +3709,56 @@ impl Ref for SecurityhubInsightFiltersElProcessPathElRef {
 }
 
 impl SecurityhubInsightFiltersElProcessPathElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `comparison` after provisioning.\n"]
-    pub fn comparison(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.comparison", self.base))
+    #[doc = "Get a reference to the value of field `comparison` after provisioning.\n"]
+    pub fn comparison(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.comparison", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `value` after provisioning.\n"]
-    pub fn value(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.value", self.base))
+    #[doc = "Get a reference to the value of field `value` after provisioning.\n"]
+    pub fn value(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.value", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct SecurityhubInsightFiltersElProcessPidEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    eq: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    gte: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    lte: Option<PrimField<String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    eq: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    gte: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    lte: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
 impl SecurityhubInsightFiltersElProcessPidEl {
-    #[doc= "Set the field `eq`.\n"]
-    pub fn set_eq(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.eq = Some(v.into());
+    #[doc = "Set the field `eq`.\n"]
+    pub fn set_eq(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.eq = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `gte`.\n"]
-    pub fn set_gte(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.gte = Some(v.into());
+    #[doc = "Set the field `gte`.\n"]
+    pub fn set_gte(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.gte = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `lte`.\n"]
-    pub fn set_lte(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.lte = Some(v.into());
+    #[doc = "Set the field `lte`.\n"]
+    pub fn set_lte(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.lte = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl ToListMappable for SecurityhubInsightFiltersElProcessPidEl {
-    type O = BlockAssignable<SecurityhubInsightFiltersElProcessPidEl>;
+impl terrars::ToListMappable for SecurityhubInsightFiltersElProcessPidEl {
+    type O = terrars::BlockAssignable<SecurityhubInsightFiltersElProcessPidEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -3654,12 +3779,12 @@ impl BuildSecurityhubInsightFiltersElProcessPidEl {
 }
 
 pub struct SecurityhubInsightFiltersElProcessPidElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for SecurityhubInsightFiltersElProcessPidElRef {
-    fn new(shared: StackShared, base: String) -> SecurityhubInsightFiltersElProcessPidElRef {
+impl terrars::Ref for SecurityhubInsightFiltersElProcessPidElRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> SecurityhubInsightFiltersElProcessPidElRef {
         SecurityhubInsightFiltersElProcessPidElRef {
             shared: shared,
             base: base.to_string(),
@@ -3668,39 +3793,39 @@ impl Ref for SecurityhubInsightFiltersElProcessPidElRef {
 }
 
 impl SecurityhubInsightFiltersElProcessPidElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `eq` after provisioning.\n"]
-    pub fn eq(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.eq", self.base))
+    #[doc = "Get a reference to the value of field `eq` after provisioning.\n"]
+    pub fn eq(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.eq", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `gte` after provisioning.\n"]
-    pub fn gte(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.gte", self.base))
+    #[doc = "Get a reference to the value of field `gte` after provisioning.\n"]
+    pub fn gte(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.gte", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `lte` after provisioning.\n"]
-    pub fn lte(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.lte", self.base))
+    #[doc = "Get a reference to the value of field `lte` after provisioning.\n"]
+    pub fn lte(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.lte", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct SecurityhubInsightFiltersElProcessTerminatedAtElDateRangeEl {
-    unit: PrimField<String>,
-    value: PrimField<f64>,
+    unit: terrars::PrimField<std::string::String>,
+    value: terrars::PrimField<f64>,
 }
 
 impl SecurityhubInsightFiltersElProcessTerminatedAtElDateRangeEl { }
 
-impl ToListMappable for SecurityhubInsightFiltersElProcessTerminatedAtElDateRangeEl {
-    type O = BlockAssignable<SecurityhubInsightFiltersElProcessTerminatedAtElDateRangeEl>;
+impl terrars::ToListMappable for SecurityhubInsightFiltersElProcessTerminatedAtElDateRangeEl {
+    type O = terrars::BlockAssignable<SecurityhubInsightFiltersElProcessTerminatedAtElDateRangeEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -3709,10 +3834,10 @@ impl ToListMappable for SecurityhubInsightFiltersElProcessTerminatedAtElDateRang
 }
 
 pub struct BuildSecurityhubInsightFiltersElProcessTerminatedAtElDateRangeEl {
-    #[doc= ""]
-    pub unit: PrimField<String>,
-    #[doc= ""]
-    pub value: PrimField<f64>,
+    #[doc = ""]
+    pub unit: terrars::PrimField<std::string::String>,
+    #[doc = ""]
+    pub value: terrars::PrimField<f64>,
 }
 
 impl BuildSecurityhubInsightFiltersElProcessTerminatedAtElDateRangeEl {
@@ -3725,12 +3850,15 @@ impl BuildSecurityhubInsightFiltersElProcessTerminatedAtElDateRangeEl {
 }
 
 pub struct SecurityhubInsightFiltersElProcessTerminatedAtElDateRangeElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for SecurityhubInsightFiltersElProcessTerminatedAtElDateRangeElRef {
-    fn new(shared: StackShared, base: String) -> SecurityhubInsightFiltersElProcessTerminatedAtElDateRangeElRef {
+impl terrars::Ref for SecurityhubInsightFiltersElProcessTerminatedAtElDateRangeElRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> SecurityhubInsightFiltersElProcessTerminatedAtElDateRangeElRef {
         SecurityhubInsightFiltersElProcessTerminatedAtElDateRangeElRef {
             shared: shared,
             base: base.to_string(),
@@ -3739,72 +3867,79 @@ impl Ref for SecurityhubInsightFiltersElProcessTerminatedAtElDateRangeElRef {
 }
 
 impl SecurityhubInsightFiltersElProcessTerminatedAtElDateRangeElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `unit` after provisioning.\n"]
-    pub fn unit(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.unit", self.base))
+    #[doc = "Get a reference to the value of field `unit` after provisioning.\n"]
+    pub fn unit(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.unit", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `value` after provisioning.\n"]
-    pub fn value(&self) -> PrimExpr<f64> {
-        PrimExpr::new(self.shared().clone(), format!("{}.value", self.base))
+    #[doc = "Get a reference to the value of field `value` after provisioning.\n"]
+    pub fn value(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.value", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
 struct SecurityhubInsightFiltersElProcessTerminatedAtElDynamic {
-    date_range: Option<DynamicBlock<SecurityhubInsightFiltersElProcessTerminatedAtElDateRangeEl>>,
+    date_range: std
+    ::option
+    ::Option<terrars::DynamicBlock<SecurityhubInsightFiltersElProcessTerminatedAtElDateRangeEl>>,
 }
 
 #[derive(Serialize)]
 pub struct SecurityhubInsightFiltersElProcessTerminatedAtEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    end: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    start: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    date_range: Option<Vec<SecurityhubInsightFiltersElProcessTerminatedAtElDateRangeEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    end: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    start: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    date_range: std::option::Option<std::vec::Vec<SecurityhubInsightFiltersElProcessTerminatedAtElDateRangeEl>>,
     dynamic: SecurityhubInsightFiltersElProcessTerminatedAtElDynamic,
 }
 
 impl SecurityhubInsightFiltersElProcessTerminatedAtEl {
-    #[doc= "Set the field `end`.\n"]
-    pub fn set_end(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.end = Some(v.into());
+    #[doc = "Set the field `end`.\n"]
+    pub fn set_end(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.end = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `start`.\n"]
-    pub fn set_start(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.start = Some(v.into());
+    #[doc = "Set the field `start`.\n"]
+    pub fn set_start(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.start = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `date_range`.\n"]
+    #[doc = "Set the field `date_range`.\n"]
     pub fn set_date_range(
         mut self,
-        v: impl Into<BlockAssignable<SecurityhubInsightFiltersElProcessTerminatedAtElDateRangeEl>>,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<terrars::BlockAssignable<SecurityhubInsightFiltersElProcessTerminatedAtElDateRangeEl>>,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.date_range = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.date_range = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.date_range = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.date_range = std::option::Option::Some(d);
             },
         }
         self
     }
 }
 
-impl ToListMappable for SecurityhubInsightFiltersElProcessTerminatedAtEl {
-    type O = BlockAssignable<SecurityhubInsightFiltersElProcessTerminatedAtEl>;
+impl terrars::ToListMappable for SecurityhubInsightFiltersElProcessTerminatedAtEl {
+    type O = terrars::BlockAssignable<SecurityhubInsightFiltersElProcessTerminatedAtEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -3820,18 +3955,21 @@ impl BuildSecurityhubInsightFiltersElProcessTerminatedAtEl {
             end: core::default::Default::default(),
             start: core::default::Default::default(),
             date_range: core::default::Default::default(),
-            dynamic: Default::default(),
+            dynamic: core::default::Default::default(),
         }
     }
 }
 
 pub struct SecurityhubInsightFiltersElProcessTerminatedAtElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for SecurityhubInsightFiltersElProcessTerminatedAtElRef {
-    fn new(shared: StackShared, base: String) -> SecurityhubInsightFiltersElProcessTerminatedAtElRef {
+impl terrars::Ref for SecurityhubInsightFiltersElProcessTerminatedAtElRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> SecurityhubInsightFiltersElProcessTerminatedAtElRef {
         SecurityhubInsightFiltersElProcessTerminatedAtElRef {
             shared: shared,
             base: base.to_string(),
@@ -3840,39 +3978,39 @@ impl Ref for SecurityhubInsightFiltersElProcessTerminatedAtElRef {
 }
 
 impl SecurityhubInsightFiltersElProcessTerminatedAtElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `end` after provisioning.\n"]
-    pub fn end(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.end", self.base))
+    #[doc = "Get a reference to the value of field `end` after provisioning.\n"]
+    pub fn end(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.end", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `start` after provisioning.\n"]
-    pub fn start(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.start", self.base))
+    #[doc = "Get a reference to the value of field `start` after provisioning.\n"]
+    pub fn start(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.start", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `date_range` after provisioning.\n"]
-    pub fn date_range(&self) -> ListRef<SecurityhubInsightFiltersElProcessTerminatedAtElDateRangeElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.date_range", self.base))
+    #[doc = "Get a reference to the value of field `date_range` after provisioning.\n"]
+    pub fn date_range(&self) -> terrars::ListRef<SecurityhubInsightFiltersElProcessTerminatedAtElDateRangeElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.date_range", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct SecurityhubInsightFiltersElProductArnEl {
-    comparison: PrimField<String>,
-    value: PrimField<String>,
+    comparison: terrars::PrimField<std::string::String>,
+    value: terrars::PrimField<std::string::String>,
 }
 
 impl SecurityhubInsightFiltersElProductArnEl { }
 
-impl ToListMappable for SecurityhubInsightFiltersElProductArnEl {
-    type O = BlockAssignable<SecurityhubInsightFiltersElProductArnEl>;
+impl terrars::ToListMappable for SecurityhubInsightFiltersElProductArnEl {
+    type O = terrars::BlockAssignable<SecurityhubInsightFiltersElProductArnEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -3881,10 +4019,10 @@ impl ToListMappable for SecurityhubInsightFiltersElProductArnEl {
 }
 
 pub struct BuildSecurityhubInsightFiltersElProductArnEl {
-    #[doc= ""]
-    pub comparison: PrimField<String>,
-    #[doc= ""]
-    pub value: PrimField<String>,
+    #[doc = ""]
+    pub comparison: terrars::PrimField<std::string::String>,
+    #[doc = ""]
+    pub value: terrars::PrimField<std::string::String>,
 }
 
 impl BuildSecurityhubInsightFiltersElProductArnEl {
@@ -3897,12 +4035,12 @@ impl BuildSecurityhubInsightFiltersElProductArnEl {
 }
 
 pub struct SecurityhubInsightFiltersElProductArnElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for SecurityhubInsightFiltersElProductArnElRef {
-    fn new(shared: StackShared, base: String) -> SecurityhubInsightFiltersElProductArnElRef {
+impl terrars::Ref for SecurityhubInsightFiltersElProductArnElRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> SecurityhubInsightFiltersElProductArnElRef {
         SecurityhubInsightFiltersElProductArnElRef {
             shared: shared,
             base: base.to_string(),
@@ -3911,35 +4049,35 @@ impl Ref for SecurityhubInsightFiltersElProductArnElRef {
 }
 
 impl SecurityhubInsightFiltersElProductArnElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `comparison` after provisioning.\n"]
-    pub fn comparison(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.comparison", self.base))
+    #[doc = "Get a reference to the value of field `comparison` after provisioning.\n"]
+    pub fn comparison(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.comparison", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `value` after provisioning.\n"]
-    pub fn value(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.value", self.base))
+    #[doc = "Get a reference to the value of field `value` after provisioning.\n"]
+    pub fn value(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.value", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct SecurityhubInsightFiltersElProductFieldsEl {
-    comparison: PrimField<String>,
-    key: PrimField<String>,
-    value: PrimField<String>,
+    comparison: terrars::PrimField<std::string::String>,
+    key: terrars::PrimField<std::string::String>,
+    value: terrars::PrimField<std::string::String>,
 }
 
 impl SecurityhubInsightFiltersElProductFieldsEl { }
 
-impl ToListMappable for SecurityhubInsightFiltersElProductFieldsEl {
-    type O = BlockAssignable<SecurityhubInsightFiltersElProductFieldsEl>;
+impl terrars::ToListMappable for SecurityhubInsightFiltersElProductFieldsEl {
+    type O = terrars::BlockAssignable<SecurityhubInsightFiltersElProductFieldsEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -3948,12 +4086,12 @@ impl ToListMappable for SecurityhubInsightFiltersElProductFieldsEl {
 }
 
 pub struct BuildSecurityhubInsightFiltersElProductFieldsEl {
-    #[doc= ""]
-    pub comparison: PrimField<String>,
-    #[doc= ""]
-    pub key: PrimField<String>,
-    #[doc= ""]
-    pub value: PrimField<String>,
+    #[doc = ""]
+    pub comparison: terrars::PrimField<std::string::String>,
+    #[doc = ""]
+    pub key: terrars::PrimField<std::string::String>,
+    #[doc = ""]
+    pub value: terrars::PrimField<std::string::String>,
 }
 
 impl BuildSecurityhubInsightFiltersElProductFieldsEl {
@@ -3967,12 +4105,12 @@ impl BuildSecurityhubInsightFiltersElProductFieldsEl {
 }
 
 pub struct SecurityhubInsightFiltersElProductFieldsElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for SecurityhubInsightFiltersElProductFieldsElRef {
-    fn new(shared: StackShared, base: String) -> SecurityhubInsightFiltersElProductFieldsElRef {
+impl terrars::Ref for SecurityhubInsightFiltersElProductFieldsElRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> SecurityhubInsightFiltersElProductFieldsElRef {
         SecurityhubInsightFiltersElProductFieldsElRef {
             shared: shared,
             base: base.to_string(),
@@ -3981,39 +4119,39 @@ impl Ref for SecurityhubInsightFiltersElProductFieldsElRef {
 }
 
 impl SecurityhubInsightFiltersElProductFieldsElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `comparison` after provisioning.\n"]
-    pub fn comparison(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.comparison", self.base))
+    #[doc = "Get a reference to the value of field `comparison` after provisioning.\n"]
+    pub fn comparison(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.comparison", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `key` after provisioning.\n"]
-    pub fn key(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.key", self.base))
+    #[doc = "Get a reference to the value of field `key` after provisioning.\n"]
+    pub fn key(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.key", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `value` after provisioning.\n"]
-    pub fn value(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.value", self.base))
+    #[doc = "Get a reference to the value of field `value` after provisioning.\n"]
+    pub fn value(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.value", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct SecurityhubInsightFiltersElProductNameEl {
-    comparison: PrimField<String>,
-    value: PrimField<String>,
+    comparison: terrars::PrimField<std::string::String>,
+    value: terrars::PrimField<std::string::String>,
 }
 
 impl SecurityhubInsightFiltersElProductNameEl { }
 
-impl ToListMappable for SecurityhubInsightFiltersElProductNameEl {
-    type O = BlockAssignable<SecurityhubInsightFiltersElProductNameEl>;
+impl terrars::ToListMappable for SecurityhubInsightFiltersElProductNameEl {
+    type O = terrars::BlockAssignable<SecurityhubInsightFiltersElProductNameEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -4022,10 +4160,10 @@ impl ToListMappable for SecurityhubInsightFiltersElProductNameEl {
 }
 
 pub struct BuildSecurityhubInsightFiltersElProductNameEl {
-    #[doc= ""]
-    pub comparison: PrimField<String>,
-    #[doc= ""]
-    pub value: PrimField<String>,
+    #[doc = ""]
+    pub comparison: terrars::PrimField<std::string::String>,
+    #[doc = ""]
+    pub value: terrars::PrimField<std::string::String>,
 }
 
 impl BuildSecurityhubInsightFiltersElProductNameEl {
@@ -4038,12 +4176,12 @@ impl BuildSecurityhubInsightFiltersElProductNameEl {
 }
 
 pub struct SecurityhubInsightFiltersElProductNameElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for SecurityhubInsightFiltersElProductNameElRef {
-    fn new(shared: StackShared, base: String) -> SecurityhubInsightFiltersElProductNameElRef {
+impl terrars::Ref for SecurityhubInsightFiltersElProductNameElRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> SecurityhubInsightFiltersElProductNameElRef {
         SecurityhubInsightFiltersElProductNameElRef {
             shared: shared,
             base: base.to_string(),
@@ -4052,34 +4190,34 @@ impl Ref for SecurityhubInsightFiltersElProductNameElRef {
 }
 
 impl SecurityhubInsightFiltersElProductNameElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `comparison` after provisioning.\n"]
-    pub fn comparison(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.comparison", self.base))
+    #[doc = "Get a reference to the value of field `comparison` after provisioning.\n"]
+    pub fn comparison(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.comparison", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `value` after provisioning.\n"]
-    pub fn value(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.value", self.base))
+    #[doc = "Get a reference to the value of field `value` after provisioning.\n"]
+    pub fn value(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.value", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct SecurityhubInsightFiltersElRecommendationTextEl {
-    comparison: PrimField<String>,
-    value: PrimField<String>,
+    comparison: terrars::PrimField<std::string::String>,
+    value: terrars::PrimField<std::string::String>,
 }
 
 impl SecurityhubInsightFiltersElRecommendationTextEl { }
 
-impl ToListMappable for SecurityhubInsightFiltersElRecommendationTextEl {
-    type O = BlockAssignable<SecurityhubInsightFiltersElRecommendationTextEl>;
+impl terrars::ToListMappable for SecurityhubInsightFiltersElRecommendationTextEl {
+    type O = terrars::BlockAssignable<SecurityhubInsightFiltersElRecommendationTextEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -4088,10 +4226,10 @@ impl ToListMappable for SecurityhubInsightFiltersElRecommendationTextEl {
 }
 
 pub struct BuildSecurityhubInsightFiltersElRecommendationTextEl {
-    #[doc= ""]
-    pub comparison: PrimField<String>,
-    #[doc= ""]
-    pub value: PrimField<String>,
+    #[doc = ""]
+    pub comparison: terrars::PrimField<std::string::String>,
+    #[doc = ""]
+    pub value: terrars::PrimField<std::string::String>,
 }
 
 impl BuildSecurityhubInsightFiltersElRecommendationTextEl {
@@ -4104,12 +4242,15 @@ impl BuildSecurityhubInsightFiltersElRecommendationTextEl {
 }
 
 pub struct SecurityhubInsightFiltersElRecommendationTextElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for SecurityhubInsightFiltersElRecommendationTextElRef {
-    fn new(shared: StackShared, base: String) -> SecurityhubInsightFiltersElRecommendationTextElRef {
+impl terrars::Ref for SecurityhubInsightFiltersElRecommendationTextElRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> SecurityhubInsightFiltersElRecommendationTextElRef {
         SecurityhubInsightFiltersElRecommendationTextElRef {
             shared: shared,
             base: base.to_string(),
@@ -4118,34 +4259,34 @@ impl Ref for SecurityhubInsightFiltersElRecommendationTextElRef {
 }
 
 impl SecurityhubInsightFiltersElRecommendationTextElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `comparison` after provisioning.\n"]
-    pub fn comparison(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.comparison", self.base))
+    #[doc = "Get a reference to the value of field `comparison` after provisioning.\n"]
+    pub fn comparison(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.comparison", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `value` after provisioning.\n"]
-    pub fn value(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.value", self.base))
+    #[doc = "Get a reference to the value of field `value` after provisioning.\n"]
+    pub fn value(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.value", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct SecurityhubInsightFiltersElRecordStateEl {
-    comparison: PrimField<String>,
-    value: PrimField<String>,
+    comparison: terrars::PrimField<std::string::String>,
+    value: terrars::PrimField<std::string::String>,
 }
 
 impl SecurityhubInsightFiltersElRecordStateEl { }
 
-impl ToListMappable for SecurityhubInsightFiltersElRecordStateEl {
-    type O = BlockAssignable<SecurityhubInsightFiltersElRecordStateEl>;
+impl terrars::ToListMappable for SecurityhubInsightFiltersElRecordStateEl {
+    type O = terrars::BlockAssignable<SecurityhubInsightFiltersElRecordStateEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -4154,10 +4295,10 @@ impl ToListMappable for SecurityhubInsightFiltersElRecordStateEl {
 }
 
 pub struct BuildSecurityhubInsightFiltersElRecordStateEl {
-    #[doc= ""]
-    pub comparison: PrimField<String>,
-    #[doc= ""]
-    pub value: PrimField<String>,
+    #[doc = ""]
+    pub comparison: terrars::PrimField<std::string::String>,
+    #[doc = ""]
+    pub value: terrars::PrimField<std::string::String>,
 }
 
 impl BuildSecurityhubInsightFiltersElRecordStateEl {
@@ -4170,12 +4311,12 @@ impl BuildSecurityhubInsightFiltersElRecordStateEl {
 }
 
 pub struct SecurityhubInsightFiltersElRecordStateElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for SecurityhubInsightFiltersElRecordStateElRef {
-    fn new(shared: StackShared, base: String) -> SecurityhubInsightFiltersElRecordStateElRef {
+impl terrars::Ref for SecurityhubInsightFiltersElRecordStateElRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> SecurityhubInsightFiltersElRecordStateElRef {
         SecurityhubInsightFiltersElRecordStateElRef {
             shared: shared,
             base: base.to_string(),
@@ -4184,34 +4325,34 @@ impl Ref for SecurityhubInsightFiltersElRecordStateElRef {
 }
 
 impl SecurityhubInsightFiltersElRecordStateElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `comparison` after provisioning.\n"]
-    pub fn comparison(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.comparison", self.base))
+    #[doc = "Get a reference to the value of field `comparison` after provisioning.\n"]
+    pub fn comparison(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.comparison", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `value` after provisioning.\n"]
-    pub fn value(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.value", self.base))
+    #[doc = "Get a reference to the value of field `value` after provisioning.\n"]
+    pub fn value(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.value", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct SecurityhubInsightFiltersElRelatedFindingsIdEl {
-    comparison: PrimField<String>,
-    value: PrimField<String>,
+    comparison: terrars::PrimField<std::string::String>,
+    value: terrars::PrimField<std::string::String>,
 }
 
 impl SecurityhubInsightFiltersElRelatedFindingsIdEl { }
 
-impl ToListMappable for SecurityhubInsightFiltersElRelatedFindingsIdEl {
-    type O = BlockAssignable<SecurityhubInsightFiltersElRelatedFindingsIdEl>;
+impl terrars::ToListMappable for SecurityhubInsightFiltersElRelatedFindingsIdEl {
+    type O = terrars::BlockAssignable<SecurityhubInsightFiltersElRelatedFindingsIdEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -4220,10 +4361,10 @@ impl ToListMappable for SecurityhubInsightFiltersElRelatedFindingsIdEl {
 }
 
 pub struct BuildSecurityhubInsightFiltersElRelatedFindingsIdEl {
-    #[doc= ""]
-    pub comparison: PrimField<String>,
-    #[doc= ""]
-    pub value: PrimField<String>,
+    #[doc = ""]
+    pub comparison: terrars::PrimField<std::string::String>,
+    #[doc = ""]
+    pub value: terrars::PrimField<std::string::String>,
 }
 
 impl BuildSecurityhubInsightFiltersElRelatedFindingsIdEl {
@@ -4236,12 +4377,15 @@ impl BuildSecurityhubInsightFiltersElRelatedFindingsIdEl {
 }
 
 pub struct SecurityhubInsightFiltersElRelatedFindingsIdElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for SecurityhubInsightFiltersElRelatedFindingsIdElRef {
-    fn new(shared: StackShared, base: String) -> SecurityhubInsightFiltersElRelatedFindingsIdElRef {
+impl terrars::Ref for SecurityhubInsightFiltersElRelatedFindingsIdElRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> SecurityhubInsightFiltersElRelatedFindingsIdElRef {
         SecurityhubInsightFiltersElRelatedFindingsIdElRef {
             shared: shared,
             base: base.to_string(),
@@ -4250,34 +4394,34 @@ impl Ref for SecurityhubInsightFiltersElRelatedFindingsIdElRef {
 }
 
 impl SecurityhubInsightFiltersElRelatedFindingsIdElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `comparison` after provisioning.\n"]
-    pub fn comparison(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.comparison", self.base))
+    #[doc = "Get a reference to the value of field `comparison` after provisioning.\n"]
+    pub fn comparison(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.comparison", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `value` after provisioning.\n"]
-    pub fn value(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.value", self.base))
+    #[doc = "Get a reference to the value of field `value` after provisioning.\n"]
+    pub fn value(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.value", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct SecurityhubInsightFiltersElRelatedFindingsProductArnEl {
-    comparison: PrimField<String>,
-    value: PrimField<String>,
+    comparison: terrars::PrimField<std::string::String>,
+    value: terrars::PrimField<std::string::String>,
 }
 
 impl SecurityhubInsightFiltersElRelatedFindingsProductArnEl { }
 
-impl ToListMappable for SecurityhubInsightFiltersElRelatedFindingsProductArnEl {
-    type O = BlockAssignable<SecurityhubInsightFiltersElRelatedFindingsProductArnEl>;
+impl terrars::ToListMappable for SecurityhubInsightFiltersElRelatedFindingsProductArnEl {
+    type O = terrars::BlockAssignable<SecurityhubInsightFiltersElRelatedFindingsProductArnEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -4286,10 +4430,10 @@ impl ToListMappable for SecurityhubInsightFiltersElRelatedFindingsProductArnEl {
 }
 
 pub struct BuildSecurityhubInsightFiltersElRelatedFindingsProductArnEl {
-    #[doc= ""]
-    pub comparison: PrimField<String>,
-    #[doc= ""]
-    pub value: PrimField<String>,
+    #[doc = ""]
+    pub comparison: terrars::PrimField<std::string::String>,
+    #[doc = ""]
+    pub value: terrars::PrimField<std::string::String>,
 }
 
 impl BuildSecurityhubInsightFiltersElRelatedFindingsProductArnEl {
@@ -4302,12 +4446,15 @@ impl BuildSecurityhubInsightFiltersElRelatedFindingsProductArnEl {
 }
 
 pub struct SecurityhubInsightFiltersElRelatedFindingsProductArnElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for SecurityhubInsightFiltersElRelatedFindingsProductArnElRef {
-    fn new(shared: StackShared, base: String) -> SecurityhubInsightFiltersElRelatedFindingsProductArnElRef {
+impl terrars::Ref for SecurityhubInsightFiltersElRelatedFindingsProductArnElRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> SecurityhubInsightFiltersElRelatedFindingsProductArnElRef {
         SecurityhubInsightFiltersElRelatedFindingsProductArnElRef {
             shared: shared,
             base: base.to_string(),
@@ -4316,34 +4463,34 @@ impl Ref for SecurityhubInsightFiltersElRelatedFindingsProductArnElRef {
 }
 
 impl SecurityhubInsightFiltersElRelatedFindingsProductArnElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `comparison` after provisioning.\n"]
-    pub fn comparison(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.comparison", self.base))
+    #[doc = "Get a reference to the value of field `comparison` after provisioning.\n"]
+    pub fn comparison(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.comparison", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `value` after provisioning.\n"]
-    pub fn value(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.value", self.base))
+    #[doc = "Get a reference to the value of field `value` after provisioning.\n"]
+    pub fn value(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.value", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct SecurityhubInsightFiltersElResourceAwsEc2InstanceIamInstanceProfileArnEl {
-    comparison: PrimField<String>,
-    value: PrimField<String>,
+    comparison: terrars::PrimField<std::string::String>,
+    value: terrars::PrimField<std::string::String>,
 }
 
 impl SecurityhubInsightFiltersElResourceAwsEc2InstanceIamInstanceProfileArnEl { }
 
-impl ToListMappable for SecurityhubInsightFiltersElResourceAwsEc2InstanceIamInstanceProfileArnEl {
-    type O = BlockAssignable<SecurityhubInsightFiltersElResourceAwsEc2InstanceIamInstanceProfileArnEl>;
+impl terrars::ToListMappable for SecurityhubInsightFiltersElResourceAwsEc2InstanceIamInstanceProfileArnEl {
+    type O = terrars::BlockAssignable<SecurityhubInsightFiltersElResourceAwsEc2InstanceIamInstanceProfileArnEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -4352,10 +4499,10 @@ impl ToListMappable for SecurityhubInsightFiltersElResourceAwsEc2InstanceIamInst
 }
 
 pub struct BuildSecurityhubInsightFiltersElResourceAwsEc2InstanceIamInstanceProfileArnEl {
-    #[doc= ""]
-    pub comparison: PrimField<String>,
-    #[doc= ""]
-    pub value: PrimField<String>,
+    #[doc = ""]
+    pub comparison: terrars::PrimField<std::string::String>,
+    #[doc = ""]
+    pub value: terrars::PrimField<std::string::String>,
 }
 
 impl BuildSecurityhubInsightFiltersElResourceAwsEc2InstanceIamInstanceProfileArnEl {
@@ -4368,14 +4515,14 @@ impl BuildSecurityhubInsightFiltersElResourceAwsEc2InstanceIamInstanceProfileArn
 }
 
 pub struct SecurityhubInsightFiltersElResourceAwsEc2InstanceIamInstanceProfileArnElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for SecurityhubInsightFiltersElResourceAwsEc2InstanceIamInstanceProfileArnElRef {
+impl terrars::Ref for SecurityhubInsightFiltersElResourceAwsEc2InstanceIamInstanceProfileArnElRef {
     fn new(
-        shared: StackShared,
-        base: String,
+        shared: terrars::StackShared,
+        base: std::string::String,
     ) -> SecurityhubInsightFiltersElResourceAwsEc2InstanceIamInstanceProfileArnElRef {
         SecurityhubInsightFiltersElResourceAwsEc2InstanceIamInstanceProfileArnElRef {
             shared: shared,
@@ -4385,34 +4532,34 @@ impl Ref for SecurityhubInsightFiltersElResourceAwsEc2InstanceIamInstanceProfile
 }
 
 impl SecurityhubInsightFiltersElResourceAwsEc2InstanceIamInstanceProfileArnElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `comparison` after provisioning.\n"]
-    pub fn comparison(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.comparison", self.base))
+    #[doc = "Get a reference to the value of field `comparison` after provisioning.\n"]
+    pub fn comparison(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.comparison", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `value` after provisioning.\n"]
-    pub fn value(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.value", self.base))
+    #[doc = "Get a reference to the value of field `value` after provisioning.\n"]
+    pub fn value(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.value", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct SecurityhubInsightFiltersElResourceAwsEc2InstanceImageIdEl {
-    comparison: PrimField<String>,
-    value: PrimField<String>,
+    comparison: terrars::PrimField<std::string::String>,
+    value: terrars::PrimField<std::string::String>,
 }
 
 impl SecurityhubInsightFiltersElResourceAwsEc2InstanceImageIdEl { }
 
-impl ToListMappable for SecurityhubInsightFiltersElResourceAwsEc2InstanceImageIdEl {
-    type O = BlockAssignable<SecurityhubInsightFiltersElResourceAwsEc2InstanceImageIdEl>;
+impl terrars::ToListMappable for SecurityhubInsightFiltersElResourceAwsEc2InstanceImageIdEl {
+    type O = terrars::BlockAssignable<SecurityhubInsightFiltersElResourceAwsEc2InstanceImageIdEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -4421,10 +4568,10 @@ impl ToListMappable for SecurityhubInsightFiltersElResourceAwsEc2InstanceImageId
 }
 
 pub struct BuildSecurityhubInsightFiltersElResourceAwsEc2InstanceImageIdEl {
-    #[doc= ""]
-    pub comparison: PrimField<String>,
-    #[doc= ""]
-    pub value: PrimField<String>,
+    #[doc = ""]
+    pub comparison: terrars::PrimField<std::string::String>,
+    #[doc = ""]
+    pub value: terrars::PrimField<std::string::String>,
 }
 
 impl BuildSecurityhubInsightFiltersElResourceAwsEc2InstanceImageIdEl {
@@ -4437,12 +4584,15 @@ impl BuildSecurityhubInsightFiltersElResourceAwsEc2InstanceImageIdEl {
 }
 
 pub struct SecurityhubInsightFiltersElResourceAwsEc2InstanceImageIdElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for SecurityhubInsightFiltersElResourceAwsEc2InstanceImageIdElRef {
-    fn new(shared: StackShared, base: String) -> SecurityhubInsightFiltersElResourceAwsEc2InstanceImageIdElRef {
+impl terrars::Ref for SecurityhubInsightFiltersElResourceAwsEc2InstanceImageIdElRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> SecurityhubInsightFiltersElResourceAwsEc2InstanceImageIdElRef {
         SecurityhubInsightFiltersElResourceAwsEc2InstanceImageIdElRef {
             shared: shared,
             base: base.to_string(),
@@ -4451,33 +4601,33 @@ impl Ref for SecurityhubInsightFiltersElResourceAwsEc2InstanceImageIdElRef {
 }
 
 impl SecurityhubInsightFiltersElResourceAwsEc2InstanceImageIdElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `comparison` after provisioning.\n"]
-    pub fn comparison(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.comparison", self.base))
+    #[doc = "Get a reference to the value of field `comparison` after provisioning.\n"]
+    pub fn comparison(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.comparison", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `value` after provisioning.\n"]
-    pub fn value(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.value", self.base))
+    #[doc = "Get a reference to the value of field `value` after provisioning.\n"]
+    pub fn value(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.value", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct SecurityhubInsightFiltersElResourceAwsEc2InstanceIpv4AddressesEl {
-    cidr: PrimField<String>,
+    cidr: terrars::PrimField<std::string::String>,
 }
 
 impl SecurityhubInsightFiltersElResourceAwsEc2InstanceIpv4AddressesEl { }
 
-impl ToListMappable for SecurityhubInsightFiltersElResourceAwsEc2InstanceIpv4AddressesEl {
-    type O = BlockAssignable<SecurityhubInsightFiltersElResourceAwsEc2InstanceIpv4AddressesEl>;
+impl terrars::ToListMappable for SecurityhubInsightFiltersElResourceAwsEc2InstanceIpv4AddressesEl {
+    type O = terrars::BlockAssignable<SecurityhubInsightFiltersElResourceAwsEc2InstanceIpv4AddressesEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -4486,8 +4636,8 @@ impl ToListMappable for SecurityhubInsightFiltersElResourceAwsEc2InstanceIpv4Add
 }
 
 pub struct BuildSecurityhubInsightFiltersElResourceAwsEc2InstanceIpv4AddressesEl {
-    #[doc= ""]
-    pub cidr: PrimField<String>,
+    #[doc = ""]
+    pub cidr: terrars::PrimField<std::string::String>,
 }
 
 impl BuildSecurityhubInsightFiltersElResourceAwsEc2InstanceIpv4AddressesEl {
@@ -4497,12 +4647,15 @@ impl BuildSecurityhubInsightFiltersElResourceAwsEc2InstanceIpv4AddressesEl {
 }
 
 pub struct SecurityhubInsightFiltersElResourceAwsEc2InstanceIpv4AddressesElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for SecurityhubInsightFiltersElResourceAwsEc2InstanceIpv4AddressesElRef {
-    fn new(shared: StackShared, base: String) -> SecurityhubInsightFiltersElResourceAwsEc2InstanceIpv4AddressesElRef {
+impl terrars::Ref for SecurityhubInsightFiltersElResourceAwsEc2InstanceIpv4AddressesElRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> SecurityhubInsightFiltersElResourceAwsEc2InstanceIpv4AddressesElRef {
         SecurityhubInsightFiltersElResourceAwsEc2InstanceIpv4AddressesElRef {
             shared: shared,
             base: base.to_string(),
@@ -4511,28 +4664,28 @@ impl Ref for SecurityhubInsightFiltersElResourceAwsEc2InstanceIpv4AddressesElRef
 }
 
 impl SecurityhubInsightFiltersElResourceAwsEc2InstanceIpv4AddressesElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `cidr` after provisioning.\n"]
-    pub fn cidr(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.cidr", self.base))
+    #[doc = "Get a reference to the value of field `cidr` after provisioning.\n"]
+    pub fn cidr(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.cidr", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct SecurityhubInsightFiltersElResourceAwsEc2InstanceIpv6AddressesEl {
-    cidr: PrimField<String>,
+    cidr: terrars::PrimField<std::string::String>,
 }
 
 impl SecurityhubInsightFiltersElResourceAwsEc2InstanceIpv6AddressesEl { }
 
-impl ToListMappable for SecurityhubInsightFiltersElResourceAwsEc2InstanceIpv6AddressesEl {
-    type O = BlockAssignable<SecurityhubInsightFiltersElResourceAwsEc2InstanceIpv6AddressesEl>;
+impl terrars::ToListMappable for SecurityhubInsightFiltersElResourceAwsEc2InstanceIpv6AddressesEl {
+    type O = terrars::BlockAssignable<SecurityhubInsightFiltersElResourceAwsEc2InstanceIpv6AddressesEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -4541,8 +4694,8 @@ impl ToListMappable for SecurityhubInsightFiltersElResourceAwsEc2InstanceIpv6Add
 }
 
 pub struct BuildSecurityhubInsightFiltersElResourceAwsEc2InstanceIpv6AddressesEl {
-    #[doc= ""]
-    pub cidr: PrimField<String>,
+    #[doc = ""]
+    pub cidr: terrars::PrimField<std::string::String>,
 }
 
 impl BuildSecurityhubInsightFiltersElResourceAwsEc2InstanceIpv6AddressesEl {
@@ -4552,12 +4705,15 @@ impl BuildSecurityhubInsightFiltersElResourceAwsEc2InstanceIpv6AddressesEl {
 }
 
 pub struct SecurityhubInsightFiltersElResourceAwsEc2InstanceIpv6AddressesElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for SecurityhubInsightFiltersElResourceAwsEc2InstanceIpv6AddressesElRef {
-    fn new(shared: StackShared, base: String) -> SecurityhubInsightFiltersElResourceAwsEc2InstanceIpv6AddressesElRef {
+impl terrars::Ref for SecurityhubInsightFiltersElResourceAwsEc2InstanceIpv6AddressesElRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> SecurityhubInsightFiltersElResourceAwsEc2InstanceIpv6AddressesElRef {
         SecurityhubInsightFiltersElResourceAwsEc2InstanceIpv6AddressesElRef {
             shared: shared,
             base: base.to_string(),
@@ -4566,29 +4722,29 @@ impl Ref for SecurityhubInsightFiltersElResourceAwsEc2InstanceIpv6AddressesElRef
 }
 
 impl SecurityhubInsightFiltersElResourceAwsEc2InstanceIpv6AddressesElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `cidr` after provisioning.\n"]
-    pub fn cidr(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.cidr", self.base))
+    #[doc = "Get a reference to the value of field `cidr` after provisioning.\n"]
+    pub fn cidr(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.cidr", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct SecurityhubInsightFiltersElResourceAwsEc2InstanceKeyNameEl {
-    comparison: PrimField<String>,
-    value: PrimField<String>,
+    comparison: terrars::PrimField<std::string::String>,
+    value: terrars::PrimField<std::string::String>,
 }
 
 impl SecurityhubInsightFiltersElResourceAwsEc2InstanceKeyNameEl { }
 
-impl ToListMappable for SecurityhubInsightFiltersElResourceAwsEc2InstanceKeyNameEl {
-    type O = BlockAssignable<SecurityhubInsightFiltersElResourceAwsEc2InstanceKeyNameEl>;
+impl terrars::ToListMappable for SecurityhubInsightFiltersElResourceAwsEc2InstanceKeyNameEl {
+    type O = terrars::BlockAssignable<SecurityhubInsightFiltersElResourceAwsEc2InstanceKeyNameEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -4597,10 +4753,10 @@ impl ToListMappable for SecurityhubInsightFiltersElResourceAwsEc2InstanceKeyName
 }
 
 pub struct BuildSecurityhubInsightFiltersElResourceAwsEc2InstanceKeyNameEl {
-    #[doc= ""]
-    pub comparison: PrimField<String>,
-    #[doc= ""]
-    pub value: PrimField<String>,
+    #[doc = ""]
+    pub comparison: terrars::PrimField<std::string::String>,
+    #[doc = ""]
+    pub value: terrars::PrimField<std::string::String>,
 }
 
 impl BuildSecurityhubInsightFiltersElResourceAwsEc2InstanceKeyNameEl {
@@ -4613,12 +4769,15 @@ impl BuildSecurityhubInsightFiltersElResourceAwsEc2InstanceKeyNameEl {
 }
 
 pub struct SecurityhubInsightFiltersElResourceAwsEc2InstanceKeyNameElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for SecurityhubInsightFiltersElResourceAwsEc2InstanceKeyNameElRef {
-    fn new(shared: StackShared, base: String) -> SecurityhubInsightFiltersElResourceAwsEc2InstanceKeyNameElRef {
+impl terrars::Ref for SecurityhubInsightFiltersElResourceAwsEc2InstanceKeyNameElRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> SecurityhubInsightFiltersElResourceAwsEc2InstanceKeyNameElRef {
         SecurityhubInsightFiltersElResourceAwsEc2InstanceKeyNameElRef {
             shared: shared,
             base: base.to_string(),
@@ -4627,34 +4786,34 @@ impl Ref for SecurityhubInsightFiltersElResourceAwsEc2InstanceKeyNameElRef {
 }
 
 impl SecurityhubInsightFiltersElResourceAwsEc2InstanceKeyNameElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `comparison` after provisioning.\n"]
-    pub fn comparison(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.comparison", self.base))
+    #[doc = "Get a reference to the value of field `comparison` after provisioning.\n"]
+    pub fn comparison(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.comparison", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `value` after provisioning.\n"]
-    pub fn value(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.value", self.base))
+    #[doc = "Get a reference to the value of field `value` after provisioning.\n"]
+    pub fn value(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.value", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct SecurityhubInsightFiltersElResourceAwsEc2InstanceLaunchedAtElDateRangeEl {
-    unit: PrimField<String>,
-    value: PrimField<f64>,
+    unit: terrars::PrimField<std::string::String>,
+    value: terrars::PrimField<f64>,
 }
 
 impl SecurityhubInsightFiltersElResourceAwsEc2InstanceLaunchedAtElDateRangeEl { }
 
-impl ToListMappable for SecurityhubInsightFiltersElResourceAwsEc2InstanceLaunchedAtElDateRangeEl {
-    type O = BlockAssignable<SecurityhubInsightFiltersElResourceAwsEc2InstanceLaunchedAtElDateRangeEl>;
+impl terrars::ToListMappable for SecurityhubInsightFiltersElResourceAwsEc2InstanceLaunchedAtElDateRangeEl {
+    type O = terrars::BlockAssignable<SecurityhubInsightFiltersElResourceAwsEc2InstanceLaunchedAtElDateRangeEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -4663,10 +4822,10 @@ impl ToListMappable for SecurityhubInsightFiltersElResourceAwsEc2InstanceLaunche
 }
 
 pub struct BuildSecurityhubInsightFiltersElResourceAwsEc2InstanceLaunchedAtElDateRangeEl {
-    #[doc= ""]
-    pub unit: PrimField<String>,
-    #[doc= ""]
-    pub value: PrimField<f64>,
+    #[doc = ""]
+    pub unit: terrars::PrimField<std::string::String>,
+    #[doc = ""]
+    pub value: terrars::PrimField<f64>,
 }
 
 impl BuildSecurityhubInsightFiltersElResourceAwsEc2InstanceLaunchedAtElDateRangeEl {
@@ -4679,14 +4838,14 @@ impl BuildSecurityhubInsightFiltersElResourceAwsEc2InstanceLaunchedAtElDateRange
 }
 
 pub struct SecurityhubInsightFiltersElResourceAwsEc2InstanceLaunchedAtElDateRangeElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for SecurityhubInsightFiltersElResourceAwsEc2InstanceLaunchedAtElDateRangeElRef {
+impl terrars::Ref for SecurityhubInsightFiltersElResourceAwsEc2InstanceLaunchedAtElDateRangeElRef {
     fn new(
-        shared: StackShared,
-        base: String,
+        shared: terrars::StackShared,
+        base: std::string::String,
     ) -> SecurityhubInsightFiltersElResourceAwsEc2InstanceLaunchedAtElDateRangeElRef {
         SecurityhubInsightFiltersElResourceAwsEc2InstanceLaunchedAtElDateRangeElRef {
             shared: shared,
@@ -4696,72 +4855,84 @@ impl Ref for SecurityhubInsightFiltersElResourceAwsEc2InstanceLaunchedAtElDateRa
 }
 
 impl SecurityhubInsightFiltersElResourceAwsEc2InstanceLaunchedAtElDateRangeElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `unit` after provisioning.\n"]
-    pub fn unit(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.unit", self.base))
+    #[doc = "Get a reference to the value of field `unit` after provisioning.\n"]
+    pub fn unit(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.unit", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `value` after provisioning.\n"]
-    pub fn value(&self) -> PrimExpr<f64> {
-        PrimExpr::new(self.shared().clone(), format!("{}.value", self.base))
+    #[doc = "Get a reference to the value of field `value` after provisioning.\n"]
+    pub fn value(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.value", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
 struct SecurityhubInsightFiltersElResourceAwsEc2InstanceLaunchedAtElDynamic {
-    date_range: Option<DynamicBlock<SecurityhubInsightFiltersElResourceAwsEc2InstanceLaunchedAtElDateRangeEl>>,
+    date_range: std
+    ::option
+    ::Option<terrars::DynamicBlock<SecurityhubInsightFiltersElResourceAwsEc2InstanceLaunchedAtElDateRangeEl>>,
 }
 
 #[derive(Serialize)]
 pub struct SecurityhubInsightFiltersElResourceAwsEc2InstanceLaunchedAtEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    end: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    start: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    date_range: Option<Vec<SecurityhubInsightFiltersElResourceAwsEc2InstanceLaunchedAtElDateRangeEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    end: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    start: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    date_range: std
+    ::option
+    ::Option<std::vec::Vec<SecurityhubInsightFiltersElResourceAwsEc2InstanceLaunchedAtElDateRangeEl>>,
     dynamic: SecurityhubInsightFiltersElResourceAwsEc2InstanceLaunchedAtElDynamic,
 }
 
 impl SecurityhubInsightFiltersElResourceAwsEc2InstanceLaunchedAtEl {
-    #[doc= "Set the field `end`.\n"]
-    pub fn set_end(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.end = Some(v.into());
+    #[doc = "Set the field `end`.\n"]
+    pub fn set_end(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.end = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `start`.\n"]
-    pub fn set_start(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.start = Some(v.into());
+    #[doc = "Set the field `start`.\n"]
+    pub fn set_start(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.start = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `date_range`.\n"]
+    #[doc = "Set the field `date_range`.\n"]
     pub fn set_date_range(
         mut self,
-        v: impl Into<BlockAssignable<SecurityhubInsightFiltersElResourceAwsEc2InstanceLaunchedAtElDateRangeEl>>,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<
+                        terrars
+                        ::BlockAssignable<SecurityhubInsightFiltersElResourceAwsEc2InstanceLaunchedAtElDateRangeEl>,
+                    >,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.date_range = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.date_range = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.date_range = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.date_range = std::option::Option::Some(d);
             },
         }
         self
     }
 }
 
-impl ToListMappable for SecurityhubInsightFiltersElResourceAwsEc2InstanceLaunchedAtEl {
-    type O = BlockAssignable<SecurityhubInsightFiltersElResourceAwsEc2InstanceLaunchedAtEl>;
+impl terrars::ToListMappable for SecurityhubInsightFiltersElResourceAwsEc2InstanceLaunchedAtEl {
+    type O = terrars::BlockAssignable<SecurityhubInsightFiltersElResourceAwsEc2InstanceLaunchedAtEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -4777,18 +4948,21 @@ impl BuildSecurityhubInsightFiltersElResourceAwsEc2InstanceLaunchedAtEl {
             end: core::default::Default::default(),
             start: core::default::Default::default(),
             date_range: core::default::Default::default(),
-            dynamic: Default::default(),
+            dynamic: core::default::Default::default(),
         }
     }
 }
 
 pub struct SecurityhubInsightFiltersElResourceAwsEc2InstanceLaunchedAtElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for SecurityhubInsightFiltersElResourceAwsEc2InstanceLaunchedAtElRef {
-    fn new(shared: StackShared, base: String) -> SecurityhubInsightFiltersElResourceAwsEc2InstanceLaunchedAtElRef {
+impl terrars::Ref for SecurityhubInsightFiltersElResourceAwsEc2InstanceLaunchedAtElRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> SecurityhubInsightFiltersElResourceAwsEc2InstanceLaunchedAtElRef {
         SecurityhubInsightFiltersElResourceAwsEc2InstanceLaunchedAtElRef {
             shared: shared,
             base: base.to_string(),
@@ -4797,39 +4971,41 @@ impl Ref for SecurityhubInsightFiltersElResourceAwsEc2InstanceLaunchedAtElRef {
 }
 
 impl SecurityhubInsightFiltersElResourceAwsEc2InstanceLaunchedAtElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `end` after provisioning.\n"]
-    pub fn end(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.end", self.base))
+    #[doc = "Get a reference to the value of field `end` after provisioning.\n"]
+    pub fn end(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.end", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `start` after provisioning.\n"]
-    pub fn start(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.start", self.base))
+    #[doc = "Get a reference to the value of field `start` after provisioning.\n"]
+    pub fn start(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.start", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `date_range` after provisioning.\n"]
-    pub fn date_range(&self) -> ListRef<SecurityhubInsightFiltersElResourceAwsEc2InstanceLaunchedAtElDateRangeElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.date_range", self.base))
+    #[doc = "Get a reference to the value of field `date_range` after provisioning.\n"]
+    pub fn date_range(
+        &self,
+    ) -> terrars::ListRef<SecurityhubInsightFiltersElResourceAwsEc2InstanceLaunchedAtElDateRangeElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.date_range", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct SecurityhubInsightFiltersElResourceAwsEc2InstanceSubnetIdEl {
-    comparison: PrimField<String>,
-    value: PrimField<String>,
+    comparison: terrars::PrimField<std::string::String>,
+    value: terrars::PrimField<std::string::String>,
 }
 
 impl SecurityhubInsightFiltersElResourceAwsEc2InstanceSubnetIdEl { }
 
-impl ToListMappable for SecurityhubInsightFiltersElResourceAwsEc2InstanceSubnetIdEl {
-    type O = BlockAssignable<SecurityhubInsightFiltersElResourceAwsEc2InstanceSubnetIdEl>;
+impl terrars::ToListMappable for SecurityhubInsightFiltersElResourceAwsEc2InstanceSubnetIdEl {
+    type O = terrars::BlockAssignable<SecurityhubInsightFiltersElResourceAwsEc2InstanceSubnetIdEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -4838,10 +5014,10 @@ impl ToListMappable for SecurityhubInsightFiltersElResourceAwsEc2InstanceSubnetI
 }
 
 pub struct BuildSecurityhubInsightFiltersElResourceAwsEc2InstanceSubnetIdEl {
-    #[doc= ""]
-    pub comparison: PrimField<String>,
-    #[doc= ""]
-    pub value: PrimField<String>,
+    #[doc = ""]
+    pub comparison: terrars::PrimField<std::string::String>,
+    #[doc = ""]
+    pub value: terrars::PrimField<std::string::String>,
 }
 
 impl BuildSecurityhubInsightFiltersElResourceAwsEc2InstanceSubnetIdEl {
@@ -4854,12 +5030,15 @@ impl BuildSecurityhubInsightFiltersElResourceAwsEc2InstanceSubnetIdEl {
 }
 
 pub struct SecurityhubInsightFiltersElResourceAwsEc2InstanceSubnetIdElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for SecurityhubInsightFiltersElResourceAwsEc2InstanceSubnetIdElRef {
-    fn new(shared: StackShared, base: String) -> SecurityhubInsightFiltersElResourceAwsEc2InstanceSubnetIdElRef {
+impl terrars::Ref for SecurityhubInsightFiltersElResourceAwsEc2InstanceSubnetIdElRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> SecurityhubInsightFiltersElResourceAwsEc2InstanceSubnetIdElRef {
         SecurityhubInsightFiltersElResourceAwsEc2InstanceSubnetIdElRef {
             shared: shared,
             base: base.to_string(),
@@ -4868,34 +5047,34 @@ impl Ref for SecurityhubInsightFiltersElResourceAwsEc2InstanceSubnetIdElRef {
 }
 
 impl SecurityhubInsightFiltersElResourceAwsEc2InstanceSubnetIdElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `comparison` after provisioning.\n"]
-    pub fn comparison(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.comparison", self.base))
+    #[doc = "Get a reference to the value of field `comparison` after provisioning.\n"]
+    pub fn comparison(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.comparison", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `value` after provisioning.\n"]
-    pub fn value(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.value", self.base))
+    #[doc = "Get a reference to the value of field `value` after provisioning.\n"]
+    pub fn value(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.value", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct SecurityhubInsightFiltersElResourceAwsEc2InstanceTypeEl {
-    comparison: PrimField<String>,
-    value: PrimField<String>,
+    comparison: terrars::PrimField<std::string::String>,
+    value: terrars::PrimField<std::string::String>,
 }
 
 impl SecurityhubInsightFiltersElResourceAwsEc2InstanceTypeEl { }
 
-impl ToListMappable for SecurityhubInsightFiltersElResourceAwsEc2InstanceTypeEl {
-    type O = BlockAssignable<SecurityhubInsightFiltersElResourceAwsEc2InstanceTypeEl>;
+impl terrars::ToListMappable for SecurityhubInsightFiltersElResourceAwsEc2InstanceTypeEl {
+    type O = terrars::BlockAssignable<SecurityhubInsightFiltersElResourceAwsEc2InstanceTypeEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -4904,10 +5083,10 @@ impl ToListMappable for SecurityhubInsightFiltersElResourceAwsEc2InstanceTypeEl 
 }
 
 pub struct BuildSecurityhubInsightFiltersElResourceAwsEc2InstanceTypeEl {
-    #[doc= ""]
-    pub comparison: PrimField<String>,
-    #[doc= ""]
-    pub value: PrimField<String>,
+    #[doc = ""]
+    pub comparison: terrars::PrimField<std::string::String>,
+    #[doc = ""]
+    pub value: terrars::PrimField<std::string::String>,
 }
 
 impl BuildSecurityhubInsightFiltersElResourceAwsEc2InstanceTypeEl {
@@ -4920,12 +5099,15 @@ impl BuildSecurityhubInsightFiltersElResourceAwsEc2InstanceTypeEl {
 }
 
 pub struct SecurityhubInsightFiltersElResourceAwsEc2InstanceTypeElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for SecurityhubInsightFiltersElResourceAwsEc2InstanceTypeElRef {
-    fn new(shared: StackShared, base: String) -> SecurityhubInsightFiltersElResourceAwsEc2InstanceTypeElRef {
+impl terrars::Ref for SecurityhubInsightFiltersElResourceAwsEc2InstanceTypeElRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> SecurityhubInsightFiltersElResourceAwsEc2InstanceTypeElRef {
         SecurityhubInsightFiltersElResourceAwsEc2InstanceTypeElRef {
             shared: shared,
             base: base.to_string(),
@@ -4934,34 +5116,34 @@ impl Ref for SecurityhubInsightFiltersElResourceAwsEc2InstanceTypeElRef {
 }
 
 impl SecurityhubInsightFiltersElResourceAwsEc2InstanceTypeElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `comparison` after provisioning.\n"]
-    pub fn comparison(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.comparison", self.base))
+    #[doc = "Get a reference to the value of field `comparison` after provisioning.\n"]
+    pub fn comparison(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.comparison", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `value` after provisioning.\n"]
-    pub fn value(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.value", self.base))
+    #[doc = "Get a reference to the value of field `value` after provisioning.\n"]
+    pub fn value(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.value", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct SecurityhubInsightFiltersElResourceAwsEc2InstanceVpcIdEl {
-    comparison: PrimField<String>,
-    value: PrimField<String>,
+    comparison: terrars::PrimField<std::string::String>,
+    value: terrars::PrimField<std::string::String>,
 }
 
 impl SecurityhubInsightFiltersElResourceAwsEc2InstanceVpcIdEl { }
 
-impl ToListMappable for SecurityhubInsightFiltersElResourceAwsEc2InstanceVpcIdEl {
-    type O = BlockAssignable<SecurityhubInsightFiltersElResourceAwsEc2InstanceVpcIdEl>;
+impl terrars::ToListMappable for SecurityhubInsightFiltersElResourceAwsEc2InstanceVpcIdEl {
+    type O = terrars::BlockAssignable<SecurityhubInsightFiltersElResourceAwsEc2InstanceVpcIdEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -4970,10 +5152,10 @@ impl ToListMappable for SecurityhubInsightFiltersElResourceAwsEc2InstanceVpcIdEl
 }
 
 pub struct BuildSecurityhubInsightFiltersElResourceAwsEc2InstanceVpcIdEl {
-    #[doc= ""]
-    pub comparison: PrimField<String>,
-    #[doc= ""]
-    pub value: PrimField<String>,
+    #[doc = ""]
+    pub comparison: terrars::PrimField<std::string::String>,
+    #[doc = ""]
+    pub value: terrars::PrimField<std::string::String>,
 }
 
 impl BuildSecurityhubInsightFiltersElResourceAwsEc2InstanceVpcIdEl {
@@ -4986,12 +5168,15 @@ impl BuildSecurityhubInsightFiltersElResourceAwsEc2InstanceVpcIdEl {
 }
 
 pub struct SecurityhubInsightFiltersElResourceAwsEc2InstanceVpcIdElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for SecurityhubInsightFiltersElResourceAwsEc2InstanceVpcIdElRef {
-    fn new(shared: StackShared, base: String) -> SecurityhubInsightFiltersElResourceAwsEc2InstanceVpcIdElRef {
+impl terrars::Ref for SecurityhubInsightFiltersElResourceAwsEc2InstanceVpcIdElRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> SecurityhubInsightFiltersElResourceAwsEc2InstanceVpcIdElRef {
         SecurityhubInsightFiltersElResourceAwsEc2InstanceVpcIdElRef {
             shared: shared,
             base: base.to_string(),
@@ -5000,34 +5185,34 @@ impl Ref for SecurityhubInsightFiltersElResourceAwsEc2InstanceVpcIdElRef {
 }
 
 impl SecurityhubInsightFiltersElResourceAwsEc2InstanceVpcIdElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `comparison` after provisioning.\n"]
-    pub fn comparison(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.comparison", self.base))
+    #[doc = "Get a reference to the value of field `comparison` after provisioning.\n"]
+    pub fn comparison(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.comparison", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `value` after provisioning.\n"]
-    pub fn value(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.value", self.base))
+    #[doc = "Get a reference to the value of field `value` after provisioning.\n"]
+    pub fn value(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.value", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct SecurityhubInsightFiltersElResourceAwsIamAccessKeyCreatedAtElDateRangeEl {
-    unit: PrimField<String>,
-    value: PrimField<f64>,
+    unit: terrars::PrimField<std::string::String>,
+    value: terrars::PrimField<f64>,
 }
 
 impl SecurityhubInsightFiltersElResourceAwsIamAccessKeyCreatedAtElDateRangeEl { }
 
-impl ToListMappable for SecurityhubInsightFiltersElResourceAwsIamAccessKeyCreatedAtElDateRangeEl {
-    type O = BlockAssignable<SecurityhubInsightFiltersElResourceAwsIamAccessKeyCreatedAtElDateRangeEl>;
+impl terrars::ToListMappable for SecurityhubInsightFiltersElResourceAwsIamAccessKeyCreatedAtElDateRangeEl {
+    type O = terrars::BlockAssignable<SecurityhubInsightFiltersElResourceAwsIamAccessKeyCreatedAtElDateRangeEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -5036,10 +5221,10 @@ impl ToListMappable for SecurityhubInsightFiltersElResourceAwsIamAccessKeyCreate
 }
 
 pub struct BuildSecurityhubInsightFiltersElResourceAwsIamAccessKeyCreatedAtElDateRangeEl {
-    #[doc= ""]
-    pub unit: PrimField<String>,
-    #[doc= ""]
-    pub value: PrimField<f64>,
+    #[doc = ""]
+    pub unit: terrars::PrimField<std::string::String>,
+    #[doc = ""]
+    pub value: terrars::PrimField<f64>,
 }
 
 impl BuildSecurityhubInsightFiltersElResourceAwsIamAccessKeyCreatedAtElDateRangeEl {
@@ -5052,14 +5237,14 @@ impl BuildSecurityhubInsightFiltersElResourceAwsIamAccessKeyCreatedAtElDateRange
 }
 
 pub struct SecurityhubInsightFiltersElResourceAwsIamAccessKeyCreatedAtElDateRangeElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for SecurityhubInsightFiltersElResourceAwsIamAccessKeyCreatedAtElDateRangeElRef {
+impl terrars::Ref for SecurityhubInsightFiltersElResourceAwsIamAccessKeyCreatedAtElDateRangeElRef {
     fn new(
-        shared: StackShared,
-        base: String,
+        shared: terrars::StackShared,
+        base: std::string::String,
     ) -> SecurityhubInsightFiltersElResourceAwsIamAccessKeyCreatedAtElDateRangeElRef {
         SecurityhubInsightFiltersElResourceAwsIamAccessKeyCreatedAtElDateRangeElRef {
             shared: shared,
@@ -5069,72 +5254,84 @@ impl Ref for SecurityhubInsightFiltersElResourceAwsIamAccessKeyCreatedAtElDateRa
 }
 
 impl SecurityhubInsightFiltersElResourceAwsIamAccessKeyCreatedAtElDateRangeElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `unit` after provisioning.\n"]
-    pub fn unit(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.unit", self.base))
+    #[doc = "Get a reference to the value of field `unit` after provisioning.\n"]
+    pub fn unit(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.unit", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `value` after provisioning.\n"]
-    pub fn value(&self) -> PrimExpr<f64> {
-        PrimExpr::new(self.shared().clone(), format!("{}.value", self.base))
+    #[doc = "Get a reference to the value of field `value` after provisioning.\n"]
+    pub fn value(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.value", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
 struct SecurityhubInsightFiltersElResourceAwsIamAccessKeyCreatedAtElDynamic {
-    date_range: Option<DynamicBlock<SecurityhubInsightFiltersElResourceAwsIamAccessKeyCreatedAtElDateRangeEl>>,
+    date_range: std
+    ::option
+    ::Option<terrars::DynamicBlock<SecurityhubInsightFiltersElResourceAwsIamAccessKeyCreatedAtElDateRangeEl>>,
 }
 
 #[derive(Serialize)]
 pub struct SecurityhubInsightFiltersElResourceAwsIamAccessKeyCreatedAtEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    end: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    start: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    date_range: Option<Vec<SecurityhubInsightFiltersElResourceAwsIamAccessKeyCreatedAtElDateRangeEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    end: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    start: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    date_range: std
+    ::option
+    ::Option<std::vec::Vec<SecurityhubInsightFiltersElResourceAwsIamAccessKeyCreatedAtElDateRangeEl>>,
     dynamic: SecurityhubInsightFiltersElResourceAwsIamAccessKeyCreatedAtElDynamic,
 }
 
 impl SecurityhubInsightFiltersElResourceAwsIamAccessKeyCreatedAtEl {
-    #[doc= "Set the field `end`.\n"]
-    pub fn set_end(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.end = Some(v.into());
+    #[doc = "Set the field `end`.\n"]
+    pub fn set_end(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.end = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `start`.\n"]
-    pub fn set_start(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.start = Some(v.into());
+    #[doc = "Set the field `start`.\n"]
+    pub fn set_start(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.start = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `date_range`.\n"]
+    #[doc = "Set the field `date_range`.\n"]
     pub fn set_date_range(
         mut self,
-        v: impl Into<BlockAssignable<SecurityhubInsightFiltersElResourceAwsIamAccessKeyCreatedAtElDateRangeEl>>,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<
+                        terrars
+                        ::BlockAssignable<SecurityhubInsightFiltersElResourceAwsIamAccessKeyCreatedAtElDateRangeEl>,
+                    >,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.date_range = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.date_range = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.date_range = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.date_range = std::option::Option::Some(d);
             },
         }
         self
     }
 }
 
-impl ToListMappable for SecurityhubInsightFiltersElResourceAwsIamAccessKeyCreatedAtEl {
-    type O = BlockAssignable<SecurityhubInsightFiltersElResourceAwsIamAccessKeyCreatedAtEl>;
+impl terrars::ToListMappable for SecurityhubInsightFiltersElResourceAwsIamAccessKeyCreatedAtEl {
+    type O = terrars::BlockAssignable<SecurityhubInsightFiltersElResourceAwsIamAccessKeyCreatedAtEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -5150,18 +5347,21 @@ impl BuildSecurityhubInsightFiltersElResourceAwsIamAccessKeyCreatedAtEl {
             end: core::default::Default::default(),
             start: core::default::Default::default(),
             date_range: core::default::Default::default(),
-            dynamic: Default::default(),
+            dynamic: core::default::Default::default(),
         }
     }
 }
 
 pub struct SecurityhubInsightFiltersElResourceAwsIamAccessKeyCreatedAtElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for SecurityhubInsightFiltersElResourceAwsIamAccessKeyCreatedAtElRef {
-    fn new(shared: StackShared, base: String) -> SecurityhubInsightFiltersElResourceAwsIamAccessKeyCreatedAtElRef {
+impl terrars::Ref for SecurityhubInsightFiltersElResourceAwsIamAccessKeyCreatedAtElRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> SecurityhubInsightFiltersElResourceAwsIamAccessKeyCreatedAtElRef {
         SecurityhubInsightFiltersElResourceAwsIamAccessKeyCreatedAtElRef {
             shared: shared,
             base: base.to_string(),
@@ -5170,39 +5370,41 @@ impl Ref for SecurityhubInsightFiltersElResourceAwsIamAccessKeyCreatedAtElRef {
 }
 
 impl SecurityhubInsightFiltersElResourceAwsIamAccessKeyCreatedAtElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `end` after provisioning.\n"]
-    pub fn end(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.end", self.base))
+    #[doc = "Get a reference to the value of field `end` after provisioning.\n"]
+    pub fn end(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.end", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `start` after provisioning.\n"]
-    pub fn start(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.start", self.base))
+    #[doc = "Get a reference to the value of field `start` after provisioning.\n"]
+    pub fn start(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.start", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `date_range` after provisioning.\n"]
-    pub fn date_range(&self) -> ListRef<SecurityhubInsightFiltersElResourceAwsIamAccessKeyCreatedAtElDateRangeElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.date_range", self.base))
+    #[doc = "Get a reference to the value of field `date_range` after provisioning.\n"]
+    pub fn date_range(
+        &self,
+    ) -> terrars::ListRef<SecurityhubInsightFiltersElResourceAwsIamAccessKeyCreatedAtElDateRangeElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.date_range", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct SecurityhubInsightFiltersElResourceAwsIamAccessKeyStatusEl {
-    comparison: PrimField<String>,
-    value: PrimField<String>,
+    comparison: terrars::PrimField<std::string::String>,
+    value: terrars::PrimField<std::string::String>,
 }
 
 impl SecurityhubInsightFiltersElResourceAwsIamAccessKeyStatusEl { }
 
-impl ToListMappable for SecurityhubInsightFiltersElResourceAwsIamAccessKeyStatusEl {
-    type O = BlockAssignable<SecurityhubInsightFiltersElResourceAwsIamAccessKeyStatusEl>;
+impl terrars::ToListMappable for SecurityhubInsightFiltersElResourceAwsIamAccessKeyStatusEl {
+    type O = terrars::BlockAssignable<SecurityhubInsightFiltersElResourceAwsIamAccessKeyStatusEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -5211,10 +5413,10 @@ impl ToListMappable for SecurityhubInsightFiltersElResourceAwsIamAccessKeyStatus
 }
 
 pub struct BuildSecurityhubInsightFiltersElResourceAwsIamAccessKeyStatusEl {
-    #[doc= ""]
-    pub comparison: PrimField<String>,
-    #[doc= ""]
-    pub value: PrimField<String>,
+    #[doc = ""]
+    pub comparison: terrars::PrimField<std::string::String>,
+    #[doc = ""]
+    pub value: terrars::PrimField<std::string::String>,
 }
 
 impl BuildSecurityhubInsightFiltersElResourceAwsIamAccessKeyStatusEl {
@@ -5227,12 +5429,15 @@ impl BuildSecurityhubInsightFiltersElResourceAwsIamAccessKeyStatusEl {
 }
 
 pub struct SecurityhubInsightFiltersElResourceAwsIamAccessKeyStatusElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for SecurityhubInsightFiltersElResourceAwsIamAccessKeyStatusElRef {
-    fn new(shared: StackShared, base: String) -> SecurityhubInsightFiltersElResourceAwsIamAccessKeyStatusElRef {
+impl terrars::Ref for SecurityhubInsightFiltersElResourceAwsIamAccessKeyStatusElRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> SecurityhubInsightFiltersElResourceAwsIamAccessKeyStatusElRef {
         SecurityhubInsightFiltersElResourceAwsIamAccessKeyStatusElRef {
             shared: shared,
             base: base.to_string(),
@@ -5241,34 +5446,34 @@ impl Ref for SecurityhubInsightFiltersElResourceAwsIamAccessKeyStatusElRef {
 }
 
 impl SecurityhubInsightFiltersElResourceAwsIamAccessKeyStatusElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `comparison` after provisioning.\n"]
-    pub fn comparison(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.comparison", self.base))
+    #[doc = "Get a reference to the value of field `comparison` after provisioning.\n"]
+    pub fn comparison(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.comparison", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `value` after provisioning.\n"]
-    pub fn value(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.value", self.base))
+    #[doc = "Get a reference to the value of field `value` after provisioning.\n"]
+    pub fn value(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.value", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct SecurityhubInsightFiltersElResourceAwsIamAccessKeyUserNameEl {
-    comparison: PrimField<String>,
-    value: PrimField<String>,
+    comparison: terrars::PrimField<std::string::String>,
+    value: terrars::PrimField<std::string::String>,
 }
 
 impl SecurityhubInsightFiltersElResourceAwsIamAccessKeyUserNameEl { }
 
-impl ToListMappable for SecurityhubInsightFiltersElResourceAwsIamAccessKeyUserNameEl {
-    type O = BlockAssignable<SecurityhubInsightFiltersElResourceAwsIamAccessKeyUserNameEl>;
+impl terrars::ToListMappable for SecurityhubInsightFiltersElResourceAwsIamAccessKeyUserNameEl {
+    type O = terrars::BlockAssignable<SecurityhubInsightFiltersElResourceAwsIamAccessKeyUserNameEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -5277,10 +5482,10 @@ impl ToListMappable for SecurityhubInsightFiltersElResourceAwsIamAccessKeyUserNa
 }
 
 pub struct BuildSecurityhubInsightFiltersElResourceAwsIamAccessKeyUserNameEl {
-    #[doc= ""]
-    pub comparison: PrimField<String>,
-    #[doc= ""]
-    pub value: PrimField<String>,
+    #[doc = ""]
+    pub comparison: terrars::PrimField<std::string::String>,
+    #[doc = ""]
+    pub value: terrars::PrimField<std::string::String>,
 }
 
 impl BuildSecurityhubInsightFiltersElResourceAwsIamAccessKeyUserNameEl {
@@ -5293,12 +5498,15 @@ impl BuildSecurityhubInsightFiltersElResourceAwsIamAccessKeyUserNameEl {
 }
 
 pub struct SecurityhubInsightFiltersElResourceAwsIamAccessKeyUserNameElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for SecurityhubInsightFiltersElResourceAwsIamAccessKeyUserNameElRef {
-    fn new(shared: StackShared, base: String) -> SecurityhubInsightFiltersElResourceAwsIamAccessKeyUserNameElRef {
+impl terrars::Ref for SecurityhubInsightFiltersElResourceAwsIamAccessKeyUserNameElRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> SecurityhubInsightFiltersElResourceAwsIamAccessKeyUserNameElRef {
         SecurityhubInsightFiltersElResourceAwsIamAccessKeyUserNameElRef {
             shared: shared,
             base: base.to_string(),
@@ -5307,34 +5515,34 @@ impl Ref for SecurityhubInsightFiltersElResourceAwsIamAccessKeyUserNameElRef {
 }
 
 impl SecurityhubInsightFiltersElResourceAwsIamAccessKeyUserNameElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `comparison` after provisioning.\n"]
-    pub fn comparison(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.comparison", self.base))
+    #[doc = "Get a reference to the value of field `comparison` after provisioning.\n"]
+    pub fn comparison(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.comparison", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `value` after provisioning.\n"]
-    pub fn value(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.value", self.base))
+    #[doc = "Get a reference to the value of field `value` after provisioning.\n"]
+    pub fn value(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.value", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct SecurityhubInsightFiltersElResourceAwsS3BucketOwnerIdEl {
-    comparison: PrimField<String>,
-    value: PrimField<String>,
+    comparison: terrars::PrimField<std::string::String>,
+    value: terrars::PrimField<std::string::String>,
 }
 
 impl SecurityhubInsightFiltersElResourceAwsS3BucketOwnerIdEl { }
 
-impl ToListMappable for SecurityhubInsightFiltersElResourceAwsS3BucketOwnerIdEl {
-    type O = BlockAssignable<SecurityhubInsightFiltersElResourceAwsS3BucketOwnerIdEl>;
+impl terrars::ToListMappable for SecurityhubInsightFiltersElResourceAwsS3BucketOwnerIdEl {
+    type O = terrars::BlockAssignable<SecurityhubInsightFiltersElResourceAwsS3BucketOwnerIdEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -5343,10 +5551,10 @@ impl ToListMappable for SecurityhubInsightFiltersElResourceAwsS3BucketOwnerIdEl 
 }
 
 pub struct BuildSecurityhubInsightFiltersElResourceAwsS3BucketOwnerIdEl {
-    #[doc= ""]
-    pub comparison: PrimField<String>,
-    #[doc= ""]
-    pub value: PrimField<String>,
+    #[doc = ""]
+    pub comparison: terrars::PrimField<std::string::String>,
+    #[doc = ""]
+    pub value: terrars::PrimField<std::string::String>,
 }
 
 impl BuildSecurityhubInsightFiltersElResourceAwsS3BucketOwnerIdEl {
@@ -5359,12 +5567,15 @@ impl BuildSecurityhubInsightFiltersElResourceAwsS3BucketOwnerIdEl {
 }
 
 pub struct SecurityhubInsightFiltersElResourceAwsS3BucketOwnerIdElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for SecurityhubInsightFiltersElResourceAwsS3BucketOwnerIdElRef {
-    fn new(shared: StackShared, base: String) -> SecurityhubInsightFiltersElResourceAwsS3BucketOwnerIdElRef {
+impl terrars::Ref for SecurityhubInsightFiltersElResourceAwsS3BucketOwnerIdElRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> SecurityhubInsightFiltersElResourceAwsS3BucketOwnerIdElRef {
         SecurityhubInsightFiltersElResourceAwsS3BucketOwnerIdElRef {
             shared: shared,
             base: base.to_string(),
@@ -5373,34 +5584,34 @@ impl Ref for SecurityhubInsightFiltersElResourceAwsS3BucketOwnerIdElRef {
 }
 
 impl SecurityhubInsightFiltersElResourceAwsS3BucketOwnerIdElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `comparison` after provisioning.\n"]
-    pub fn comparison(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.comparison", self.base))
+    #[doc = "Get a reference to the value of field `comparison` after provisioning.\n"]
+    pub fn comparison(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.comparison", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `value` after provisioning.\n"]
-    pub fn value(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.value", self.base))
+    #[doc = "Get a reference to the value of field `value` after provisioning.\n"]
+    pub fn value(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.value", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct SecurityhubInsightFiltersElResourceAwsS3BucketOwnerNameEl {
-    comparison: PrimField<String>,
-    value: PrimField<String>,
+    comparison: terrars::PrimField<std::string::String>,
+    value: terrars::PrimField<std::string::String>,
 }
 
 impl SecurityhubInsightFiltersElResourceAwsS3BucketOwnerNameEl { }
 
-impl ToListMappable for SecurityhubInsightFiltersElResourceAwsS3BucketOwnerNameEl {
-    type O = BlockAssignable<SecurityhubInsightFiltersElResourceAwsS3BucketOwnerNameEl>;
+impl terrars::ToListMappable for SecurityhubInsightFiltersElResourceAwsS3BucketOwnerNameEl {
+    type O = terrars::BlockAssignable<SecurityhubInsightFiltersElResourceAwsS3BucketOwnerNameEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -5409,10 +5620,10 @@ impl ToListMappable for SecurityhubInsightFiltersElResourceAwsS3BucketOwnerNameE
 }
 
 pub struct BuildSecurityhubInsightFiltersElResourceAwsS3BucketOwnerNameEl {
-    #[doc= ""]
-    pub comparison: PrimField<String>,
-    #[doc= ""]
-    pub value: PrimField<String>,
+    #[doc = ""]
+    pub comparison: terrars::PrimField<std::string::String>,
+    #[doc = ""]
+    pub value: terrars::PrimField<std::string::String>,
 }
 
 impl BuildSecurityhubInsightFiltersElResourceAwsS3BucketOwnerNameEl {
@@ -5425,12 +5636,15 @@ impl BuildSecurityhubInsightFiltersElResourceAwsS3BucketOwnerNameEl {
 }
 
 pub struct SecurityhubInsightFiltersElResourceAwsS3BucketOwnerNameElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for SecurityhubInsightFiltersElResourceAwsS3BucketOwnerNameElRef {
-    fn new(shared: StackShared, base: String) -> SecurityhubInsightFiltersElResourceAwsS3BucketOwnerNameElRef {
+impl terrars::Ref for SecurityhubInsightFiltersElResourceAwsS3BucketOwnerNameElRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> SecurityhubInsightFiltersElResourceAwsS3BucketOwnerNameElRef {
         SecurityhubInsightFiltersElResourceAwsS3BucketOwnerNameElRef {
             shared: shared,
             base: base.to_string(),
@@ -5439,34 +5653,34 @@ impl Ref for SecurityhubInsightFiltersElResourceAwsS3BucketOwnerNameElRef {
 }
 
 impl SecurityhubInsightFiltersElResourceAwsS3BucketOwnerNameElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `comparison` after provisioning.\n"]
-    pub fn comparison(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.comparison", self.base))
+    #[doc = "Get a reference to the value of field `comparison` after provisioning.\n"]
+    pub fn comparison(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.comparison", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `value` after provisioning.\n"]
-    pub fn value(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.value", self.base))
+    #[doc = "Get a reference to the value of field `value` after provisioning.\n"]
+    pub fn value(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.value", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct SecurityhubInsightFiltersElResourceContainerImageIdEl {
-    comparison: PrimField<String>,
-    value: PrimField<String>,
+    comparison: terrars::PrimField<std::string::String>,
+    value: terrars::PrimField<std::string::String>,
 }
 
 impl SecurityhubInsightFiltersElResourceContainerImageIdEl { }
 
-impl ToListMappable for SecurityhubInsightFiltersElResourceContainerImageIdEl {
-    type O = BlockAssignable<SecurityhubInsightFiltersElResourceContainerImageIdEl>;
+impl terrars::ToListMappable for SecurityhubInsightFiltersElResourceContainerImageIdEl {
+    type O = terrars::BlockAssignable<SecurityhubInsightFiltersElResourceContainerImageIdEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -5475,10 +5689,10 @@ impl ToListMappable for SecurityhubInsightFiltersElResourceContainerImageIdEl {
 }
 
 pub struct BuildSecurityhubInsightFiltersElResourceContainerImageIdEl {
-    #[doc= ""]
-    pub comparison: PrimField<String>,
-    #[doc= ""]
-    pub value: PrimField<String>,
+    #[doc = ""]
+    pub comparison: terrars::PrimField<std::string::String>,
+    #[doc = ""]
+    pub value: terrars::PrimField<std::string::String>,
 }
 
 impl BuildSecurityhubInsightFiltersElResourceContainerImageIdEl {
@@ -5491,12 +5705,15 @@ impl BuildSecurityhubInsightFiltersElResourceContainerImageIdEl {
 }
 
 pub struct SecurityhubInsightFiltersElResourceContainerImageIdElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for SecurityhubInsightFiltersElResourceContainerImageIdElRef {
-    fn new(shared: StackShared, base: String) -> SecurityhubInsightFiltersElResourceContainerImageIdElRef {
+impl terrars::Ref for SecurityhubInsightFiltersElResourceContainerImageIdElRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> SecurityhubInsightFiltersElResourceContainerImageIdElRef {
         SecurityhubInsightFiltersElResourceContainerImageIdElRef {
             shared: shared,
             base: base.to_string(),
@@ -5505,34 +5722,34 @@ impl Ref for SecurityhubInsightFiltersElResourceContainerImageIdElRef {
 }
 
 impl SecurityhubInsightFiltersElResourceContainerImageIdElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `comparison` after provisioning.\n"]
-    pub fn comparison(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.comparison", self.base))
+    #[doc = "Get a reference to the value of field `comparison` after provisioning.\n"]
+    pub fn comparison(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.comparison", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `value` after provisioning.\n"]
-    pub fn value(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.value", self.base))
+    #[doc = "Get a reference to the value of field `value` after provisioning.\n"]
+    pub fn value(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.value", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct SecurityhubInsightFiltersElResourceContainerImageNameEl {
-    comparison: PrimField<String>,
-    value: PrimField<String>,
+    comparison: terrars::PrimField<std::string::String>,
+    value: terrars::PrimField<std::string::String>,
 }
 
 impl SecurityhubInsightFiltersElResourceContainerImageNameEl { }
 
-impl ToListMappable for SecurityhubInsightFiltersElResourceContainerImageNameEl {
-    type O = BlockAssignable<SecurityhubInsightFiltersElResourceContainerImageNameEl>;
+impl terrars::ToListMappable for SecurityhubInsightFiltersElResourceContainerImageNameEl {
+    type O = terrars::BlockAssignable<SecurityhubInsightFiltersElResourceContainerImageNameEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -5541,10 +5758,10 @@ impl ToListMappable for SecurityhubInsightFiltersElResourceContainerImageNameEl 
 }
 
 pub struct BuildSecurityhubInsightFiltersElResourceContainerImageNameEl {
-    #[doc= ""]
-    pub comparison: PrimField<String>,
-    #[doc= ""]
-    pub value: PrimField<String>,
+    #[doc = ""]
+    pub comparison: terrars::PrimField<std::string::String>,
+    #[doc = ""]
+    pub value: terrars::PrimField<std::string::String>,
 }
 
 impl BuildSecurityhubInsightFiltersElResourceContainerImageNameEl {
@@ -5557,12 +5774,15 @@ impl BuildSecurityhubInsightFiltersElResourceContainerImageNameEl {
 }
 
 pub struct SecurityhubInsightFiltersElResourceContainerImageNameElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for SecurityhubInsightFiltersElResourceContainerImageNameElRef {
-    fn new(shared: StackShared, base: String) -> SecurityhubInsightFiltersElResourceContainerImageNameElRef {
+impl terrars::Ref for SecurityhubInsightFiltersElResourceContainerImageNameElRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> SecurityhubInsightFiltersElResourceContainerImageNameElRef {
         SecurityhubInsightFiltersElResourceContainerImageNameElRef {
             shared: shared,
             base: base.to_string(),
@@ -5571,34 +5791,34 @@ impl Ref for SecurityhubInsightFiltersElResourceContainerImageNameElRef {
 }
 
 impl SecurityhubInsightFiltersElResourceContainerImageNameElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `comparison` after provisioning.\n"]
-    pub fn comparison(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.comparison", self.base))
+    #[doc = "Get a reference to the value of field `comparison` after provisioning.\n"]
+    pub fn comparison(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.comparison", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `value` after provisioning.\n"]
-    pub fn value(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.value", self.base))
+    #[doc = "Get a reference to the value of field `value` after provisioning.\n"]
+    pub fn value(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.value", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct SecurityhubInsightFiltersElResourceContainerLaunchedAtElDateRangeEl {
-    unit: PrimField<String>,
-    value: PrimField<f64>,
+    unit: terrars::PrimField<std::string::String>,
+    value: terrars::PrimField<f64>,
 }
 
 impl SecurityhubInsightFiltersElResourceContainerLaunchedAtElDateRangeEl { }
 
-impl ToListMappable for SecurityhubInsightFiltersElResourceContainerLaunchedAtElDateRangeEl {
-    type O = BlockAssignable<SecurityhubInsightFiltersElResourceContainerLaunchedAtElDateRangeEl>;
+impl terrars::ToListMappable for SecurityhubInsightFiltersElResourceContainerLaunchedAtElDateRangeEl {
+    type O = terrars::BlockAssignable<SecurityhubInsightFiltersElResourceContainerLaunchedAtElDateRangeEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -5607,10 +5827,10 @@ impl ToListMappable for SecurityhubInsightFiltersElResourceContainerLaunchedAtEl
 }
 
 pub struct BuildSecurityhubInsightFiltersElResourceContainerLaunchedAtElDateRangeEl {
-    #[doc= ""]
-    pub unit: PrimField<String>,
-    #[doc= ""]
-    pub value: PrimField<f64>,
+    #[doc = ""]
+    pub unit: terrars::PrimField<std::string::String>,
+    #[doc = ""]
+    pub value: terrars::PrimField<f64>,
 }
 
 impl BuildSecurityhubInsightFiltersElResourceContainerLaunchedAtElDateRangeEl {
@@ -5623,14 +5843,14 @@ impl BuildSecurityhubInsightFiltersElResourceContainerLaunchedAtElDateRangeEl {
 }
 
 pub struct SecurityhubInsightFiltersElResourceContainerLaunchedAtElDateRangeElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for SecurityhubInsightFiltersElResourceContainerLaunchedAtElDateRangeElRef {
+impl terrars::Ref for SecurityhubInsightFiltersElResourceContainerLaunchedAtElDateRangeElRef {
     fn new(
-        shared: StackShared,
-        base: String,
+        shared: terrars::StackShared,
+        base: std::string::String,
     ) -> SecurityhubInsightFiltersElResourceContainerLaunchedAtElDateRangeElRef {
         SecurityhubInsightFiltersElResourceContainerLaunchedAtElDateRangeElRef {
             shared: shared,
@@ -5640,72 +5860,81 @@ impl Ref for SecurityhubInsightFiltersElResourceContainerLaunchedAtElDateRangeEl
 }
 
 impl SecurityhubInsightFiltersElResourceContainerLaunchedAtElDateRangeElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `unit` after provisioning.\n"]
-    pub fn unit(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.unit", self.base))
+    #[doc = "Get a reference to the value of field `unit` after provisioning.\n"]
+    pub fn unit(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.unit", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `value` after provisioning.\n"]
-    pub fn value(&self) -> PrimExpr<f64> {
-        PrimExpr::new(self.shared().clone(), format!("{}.value", self.base))
+    #[doc = "Get a reference to the value of field `value` after provisioning.\n"]
+    pub fn value(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.value", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
 struct SecurityhubInsightFiltersElResourceContainerLaunchedAtElDynamic {
-    date_range: Option<DynamicBlock<SecurityhubInsightFiltersElResourceContainerLaunchedAtElDateRangeEl>>,
+    date_range: std
+    ::option
+    ::Option<terrars::DynamicBlock<SecurityhubInsightFiltersElResourceContainerLaunchedAtElDateRangeEl>>,
 }
 
 #[derive(Serialize)]
 pub struct SecurityhubInsightFiltersElResourceContainerLaunchedAtEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    end: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    start: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    date_range: Option<Vec<SecurityhubInsightFiltersElResourceContainerLaunchedAtElDateRangeEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    end: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    start: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    date_range: std::option::Option<std::vec::Vec<SecurityhubInsightFiltersElResourceContainerLaunchedAtElDateRangeEl>>,
     dynamic: SecurityhubInsightFiltersElResourceContainerLaunchedAtElDynamic,
 }
 
 impl SecurityhubInsightFiltersElResourceContainerLaunchedAtEl {
-    #[doc= "Set the field `end`.\n"]
-    pub fn set_end(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.end = Some(v.into());
+    #[doc = "Set the field `end`.\n"]
+    pub fn set_end(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.end = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `start`.\n"]
-    pub fn set_start(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.start = Some(v.into());
+    #[doc = "Set the field `start`.\n"]
+    pub fn set_start(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.start = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `date_range`.\n"]
+    #[doc = "Set the field `date_range`.\n"]
     pub fn set_date_range(
         mut self,
-        v: impl Into<BlockAssignable<SecurityhubInsightFiltersElResourceContainerLaunchedAtElDateRangeEl>>,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<
+                        terrars::BlockAssignable<SecurityhubInsightFiltersElResourceContainerLaunchedAtElDateRangeEl>,
+                    >,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.date_range = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.date_range = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.date_range = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.date_range = std::option::Option::Some(d);
             },
         }
         self
     }
 }
 
-impl ToListMappable for SecurityhubInsightFiltersElResourceContainerLaunchedAtEl {
-    type O = BlockAssignable<SecurityhubInsightFiltersElResourceContainerLaunchedAtEl>;
+impl terrars::ToListMappable for SecurityhubInsightFiltersElResourceContainerLaunchedAtEl {
+    type O = terrars::BlockAssignable<SecurityhubInsightFiltersElResourceContainerLaunchedAtEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -5721,18 +5950,21 @@ impl BuildSecurityhubInsightFiltersElResourceContainerLaunchedAtEl {
             end: core::default::Default::default(),
             start: core::default::Default::default(),
             date_range: core::default::Default::default(),
-            dynamic: Default::default(),
+            dynamic: core::default::Default::default(),
         }
     }
 }
 
 pub struct SecurityhubInsightFiltersElResourceContainerLaunchedAtElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for SecurityhubInsightFiltersElResourceContainerLaunchedAtElRef {
-    fn new(shared: StackShared, base: String) -> SecurityhubInsightFiltersElResourceContainerLaunchedAtElRef {
+impl terrars::Ref for SecurityhubInsightFiltersElResourceContainerLaunchedAtElRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> SecurityhubInsightFiltersElResourceContainerLaunchedAtElRef {
         SecurityhubInsightFiltersElResourceContainerLaunchedAtElRef {
             shared: shared,
             base: base.to_string(),
@@ -5741,39 +5973,39 @@ impl Ref for SecurityhubInsightFiltersElResourceContainerLaunchedAtElRef {
 }
 
 impl SecurityhubInsightFiltersElResourceContainerLaunchedAtElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `end` after provisioning.\n"]
-    pub fn end(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.end", self.base))
+    #[doc = "Get a reference to the value of field `end` after provisioning.\n"]
+    pub fn end(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.end", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `start` after provisioning.\n"]
-    pub fn start(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.start", self.base))
+    #[doc = "Get a reference to the value of field `start` after provisioning.\n"]
+    pub fn start(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.start", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `date_range` after provisioning.\n"]
-    pub fn date_range(&self) -> ListRef<SecurityhubInsightFiltersElResourceContainerLaunchedAtElDateRangeElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.date_range", self.base))
+    #[doc = "Get a reference to the value of field `date_range` after provisioning.\n"]
+    pub fn date_range(&self) -> terrars::ListRef<SecurityhubInsightFiltersElResourceContainerLaunchedAtElDateRangeElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.date_range", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct SecurityhubInsightFiltersElResourceContainerNameEl {
-    comparison: PrimField<String>,
-    value: PrimField<String>,
+    comparison: terrars::PrimField<std::string::String>,
+    value: terrars::PrimField<std::string::String>,
 }
 
 impl SecurityhubInsightFiltersElResourceContainerNameEl { }
 
-impl ToListMappable for SecurityhubInsightFiltersElResourceContainerNameEl {
-    type O = BlockAssignable<SecurityhubInsightFiltersElResourceContainerNameEl>;
+impl terrars::ToListMappable for SecurityhubInsightFiltersElResourceContainerNameEl {
+    type O = terrars::BlockAssignable<SecurityhubInsightFiltersElResourceContainerNameEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -5782,10 +6014,10 @@ impl ToListMappable for SecurityhubInsightFiltersElResourceContainerNameEl {
 }
 
 pub struct BuildSecurityhubInsightFiltersElResourceContainerNameEl {
-    #[doc= ""]
-    pub comparison: PrimField<String>,
-    #[doc= ""]
-    pub value: PrimField<String>,
+    #[doc = ""]
+    pub comparison: terrars::PrimField<std::string::String>,
+    #[doc = ""]
+    pub value: terrars::PrimField<std::string::String>,
 }
 
 impl BuildSecurityhubInsightFiltersElResourceContainerNameEl {
@@ -5798,12 +6030,15 @@ impl BuildSecurityhubInsightFiltersElResourceContainerNameEl {
 }
 
 pub struct SecurityhubInsightFiltersElResourceContainerNameElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for SecurityhubInsightFiltersElResourceContainerNameElRef {
-    fn new(shared: StackShared, base: String) -> SecurityhubInsightFiltersElResourceContainerNameElRef {
+impl terrars::Ref for SecurityhubInsightFiltersElResourceContainerNameElRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> SecurityhubInsightFiltersElResourceContainerNameElRef {
         SecurityhubInsightFiltersElResourceContainerNameElRef {
             shared: shared,
             base: base.to_string(),
@@ -5812,35 +6047,35 @@ impl Ref for SecurityhubInsightFiltersElResourceContainerNameElRef {
 }
 
 impl SecurityhubInsightFiltersElResourceContainerNameElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `comparison` after provisioning.\n"]
-    pub fn comparison(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.comparison", self.base))
+    #[doc = "Get a reference to the value of field `comparison` after provisioning.\n"]
+    pub fn comparison(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.comparison", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `value` after provisioning.\n"]
-    pub fn value(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.value", self.base))
+    #[doc = "Get a reference to the value of field `value` after provisioning.\n"]
+    pub fn value(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.value", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct SecurityhubInsightFiltersElResourceDetailsOtherEl {
-    comparison: PrimField<String>,
-    key: PrimField<String>,
-    value: PrimField<String>,
+    comparison: terrars::PrimField<std::string::String>,
+    key: terrars::PrimField<std::string::String>,
+    value: terrars::PrimField<std::string::String>,
 }
 
 impl SecurityhubInsightFiltersElResourceDetailsOtherEl { }
 
-impl ToListMappable for SecurityhubInsightFiltersElResourceDetailsOtherEl {
-    type O = BlockAssignable<SecurityhubInsightFiltersElResourceDetailsOtherEl>;
+impl terrars::ToListMappable for SecurityhubInsightFiltersElResourceDetailsOtherEl {
+    type O = terrars::BlockAssignable<SecurityhubInsightFiltersElResourceDetailsOtherEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -5849,12 +6084,12 @@ impl ToListMappable for SecurityhubInsightFiltersElResourceDetailsOtherEl {
 }
 
 pub struct BuildSecurityhubInsightFiltersElResourceDetailsOtherEl {
-    #[doc= ""]
-    pub comparison: PrimField<String>,
-    #[doc= ""]
-    pub key: PrimField<String>,
-    #[doc= ""]
-    pub value: PrimField<String>,
+    #[doc = ""]
+    pub comparison: terrars::PrimField<std::string::String>,
+    #[doc = ""]
+    pub key: terrars::PrimField<std::string::String>,
+    #[doc = ""]
+    pub value: terrars::PrimField<std::string::String>,
 }
 
 impl BuildSecurityhubInsightFiltersElResourceDetailsOtherEl {
@@ -5868,12 +6103,15 @@ impl BuildSecurityhubInsightFiltersElResourceDetailsOtherEl {
 }
 
 pub struct SecurityhubInsightFiltersElResourceDetailsOtherElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for SecurityhubInsightFiltersElResourceDetailsOtherElRef {
-    fn new(shared: StackShared, base: String) -> SecurityhubInsightFiltersElResourceDetailsOtherElRef {
+impl terrars::Ref for SecurityhubInsightFiltersElResourceDetailsOtherElRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> SecurityhubInsightFiltersElResourceDetailsOtherElRef {
         SecurityhubInsightFiltersElResourceDetailsOtherElRef {
             shared: shared,
             base: base.to_string(),
@@ -5882,39 +6120,39 @@ impl Ref for SecurityhubInsightFiltersElResourceDetailsOtherElRef {
 }
 
 impl SecurityhubInsightFiltersElResourceDetailsOtherElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `comparison` after provisioning.\n"]
-    pub fn comparison(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.comparison", self.base))
+    #[doc = "Get a reference to the value of field `comparison` after provisioning.\n"]
+    pub fn comparison(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.comparison", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `key` after provisioning.\n"]
-    pub fn key(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.key", self.base))
+    #[doc = "Get a reference to the value of field `key` after provisioning.\n"]
+    pub fn key(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.key", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `value` after provisioning.\n"]
-    pub fn value(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.value", self.base))
+    #[doc = "Get a reference to the value of field `value` after provisioning.\n"]
+    pub fn value(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.value", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct SecurityhubInsightFiltersElResourceIdEl {
-    comparison: PrimField<String>,
-    value: PrimField<String>,
+    comparison: terrars::PrimField<std::string::String>,
+    value: terrars::PrimField<std::string::String>,
 }
 
 impl SecurityhubInsightFiltersElResourceIdEl { }
 
-impl ToListMappable for SecurityhubInsightFiltersElResourceIdEl {
-    type O = BlockAssignable<SecurityhubInsightFiltersElResourceIdEl>;
+impl terrars::ToListMappable for SecurityhubInsightFiltersElResourceIdEl {
+    type O = terrars::BlockAssignable<SecurityhubInsightFiltersElResourceIdEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -5923,10 +6161,10 @@ impl ToListMappable for SecurityhubInsightFiltersElResourceIdEl {
 }
 
 pub struct BuildSecurityhubInsightFiltersElResourceIdEl {
-    #[doc= ""]
-    pub comparison: PrimField<String>,
-    #[doc= ""]
-    pub value: PrimField<String>,
+    #[doc = ""]
+    pub comparison: terrars::PrimField<std::string::String>,
+    #[doc = ""]
+    pub value: terrars::PrimField<std::string::String>,
 }
 
 impl BuildSecurityhubInsightFiltersElResourceIdEl {
@@ -5939,12 +6177,12 @@ impl BuildSecurityhubInsightFiltersElResourceIdEl {
 }
 
 pub struct SecurityhubInsightFiltersElResourceIdElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for SecurityhubInsightFiltersElResourceIdElRef {
-    fn new(shared: StackShared, base: String) -> SecurityhubInsightFiltersElResourceIdElRef {
+impl terrars::Ref for SecurityhubInsightFiltersElResourceIdElRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> SecurityhubInsightFiltersElResourceIdElRef {
         SecurityhubInsightFiltersElResourceIdElRef {
             shared: shared,
             base: base.to_string(),
@@ -5953,34 +6191,34 @@ impl Ref for SecurityhubInsightFiltersElResourceIdElRef {
 }
 
 impl SecurityhubInsightFiltersElResourceIdElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `comparison` after provisioning.\n"]
-    pub fn comparison(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.comparison", self.base))
+    #[doc = "Get a reference to the value of field `comparison` after provisioning.\n"]
+    pub fn comparison(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.comparison", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `value` after provisioning.\n"]
-    pub fn value(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.value", self.base))
+    #[doc = "Get a reference to the value of field `value` after provisioning.\n"]
+    pub fn value(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.value", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct SecurityhubInsightFiltersElResourcePartitionEl {
-    comparison: PrimField<String>,
-    value: PrimField<String>,
+    comparison: terrars::PrimField<std::string::String>,
+    value: terrars::PrimField<std::string::String>,
 }
 
 impl SecurityhubInsightFiltersElResourcePartitionEl { }
 
-impl ToListMappable for SecurityhubInsightFiltersElResourcePartitionEl {
-    type O = BlockAssignable<SecurityhubInsightFiltersElResourcePartitionEl>;
+impl terrars::ToListMappable for SecurityhubInsightFiltersElResourcePartitionEl {
+    type O = terrars::BlockAssignable<SecurityhubInsightFiltersElResourcePartitionEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -5989,10 +6227,10 @@ impl ToListMappable for SecurityhubInsightFiltersElResourcePartitionEl {
 }
 
 pub struct BuildSecurityhubInsightFiltersElResourcePartitionEl {
-    #[doc= ""]
-    pub comparison: PrimField<String>,
-    #[doc= ""]
-    pub value: PrimField<String>,
+    #[doc = ""]
+    pub comparison: terrars::PrimField<std::string::String>,
+    #[doc = ""]
+    pub value: terrars::PrimField<std::string::String>,
 }
 
 impl BuildSecurityhubInsightFiltersElResourcePartitionEl {
@@ -6005,12 +6243,15 @@ impl BuildSecurityhubInsightFiltersElResourcePartitionEl {
 }
 
 pub struct SecurityhubInsightFiltersElResourcePartitionElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for SecurityhubInsightFiltersElResourcePartitionElRef {
-    fn new(shared: StackShared, base: String) -> SecurityhubInsightFiltersElResourcePartitionElRef {
+impl terrars::Ref for SecurityhubInsightFiltersElResourcePartitionElRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> SecurityhubInsightFiltersElResourcePartitionElRef {
         SecurityhubInsightFiltersElResourcePartitionElRef {
             shared: shared,
             base: base.to_string(),
@@ -6019,34 +6260,34 @@ impl Ref for SecurityhubInsightFiltersElResourcePartitionElRef {
 }
 
 impl SecurityhubInsightFiltersElResourcePartitionElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `comparison` after provisioning.\n"]
-    pub fn comparison(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.comparison", self.base))
+    #[doc = "Get a reference to the value of field `comparison` after provisioning.\n"]
+    pub fn comparison(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.comparison", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `value` after provisioning.\n"]
-    pub fn value(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.value", self.base))
+    #[doc = "Get a reference to the value of field `value` after provisioning.\n"]
+    pub fn value(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.value", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct SecurityhubInsightFiltersElResourceRegionEl {
-    comparison: PrimField<String>,
-    value: PrimField<String>,
+    comparison: terrars::PrimField<std::string::String>,
+    value: terrars::PrimField<std::string::String>,
 }
 
 impl SecurityhubInsightFiltersElResourceRegionEl { }
 
-impl ToListMappable for SecurityhubInsightFiltersElResourceRegionEl {
-    type O = BlockAssignable<SecurityhubInsightFiltersElResourceRegionEl>;
+impl terrars::ToListMappable for SecurityhubInsightFiltersElResourceRegionEl {
+    type O = terrars::BlockAssignable<SecurityhubInsightFiltersElResourceRegionEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -6055,10 +6296,10 @@ impl ToListMappable for SecurityhubInsightFiltersElResourceRegionEl {
 }
 
 pub struct BuildSecurityhubInsightFiltersElResourceRegionEl {
-    #[doc= ""]
-    pub comparison: PrimField<String>,
-    #[doc= ""]
-    pub value: PrimField<String>,
+    #[doc = ""]
+    pub comparison: terrars::PrimField<std::string::String>,
+    #[doc = ""]
+    pub value: terrars::PrimField<std::string::String>,
 }
 
 impl BuildSecurityhubInsightFiltersElResourceRegionEl {
@@ -6071,12 +6312,15 @@ impl BuildSecurityhubInsightFiltersElResourceRegionEl {
 }
 
 pub struct SecurityhubInsightFiltersElResourceRegionElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for SecurityhubInsightFiltersElResourceRegionElRef {
-    fn new(shared: StackShared, base: String) -> SecurityhubInsightFiltersElResourceRegionElRef {
+impl terrars::Ref for SecurityhubInsightFiltersElResourceRegionElRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> SecurityhubInsightFiltersElResourceRegionElRef {
         SecurityhubInsightFiltersElResourceRegionElRef {
             shared: shared,
             base: base.to_string(),
@@ -6085,35 +6329,35 @@ impl Ref for SecurityhubInsightFiltersElResourceRegionElRef {
 }
 
 impl SecurityhubInsightFiltersElResourceRegionElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `comparison` after provisioning.\n"]
-    pub fn comparison(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.comparison", self.base))
+    #[doc = "Get a reference to the value of field `comparison` after provisioning.\n"]
+    pub fn comparison(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.comparison", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `value` after provisioning.\n"]
-    pub fn value(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.value", self.base))
+    #[doc = "Get a reference to the value of field `value` after provisioning.\n"]
+    pub fn value(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.value", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct SecurityhubInsightFiltersElResourceTagsEl {
-    comparison: PrimField<String>,
-    key: PrimField<String>,
-    value: PrimField<String>,
+    comparison: terrars::PrimField<std::string::String>,
+    key: terrars::PrimField<std::string::String>,
+    value: terrars::PrimField<std::string::String>,
 }
 
 impl SecurityhubInsightFiltersElResourceTagsEl { }
 
-impl ToListMappable for SecurityhubInsightFiltersElResourceTagsEl {
-    type O = BlockAssignable<SecurityhubInsightFiltersElResourceTagsEl>;
+impl terrars::ToListMappable for SecurityhubInsightFiltersElResourceTagsEl {
+    type O = terrars::BlockAssignable<SecurityhubInsightFiltersElResourceTagsEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -6122,12 +6366,12 @@ impl ToListMappable for SecurityhubInsightFiltersElResourceTagsEl {
 }
 
 pub struct BuildSecurityhubInsightFiltersElResourceTagsEl {
-    #[doc= ""]
-    pub comparison: PrimField<String>,
-    #[doc= ""]
-    pub key: PrimField<String>,
-    #[doc= ""]
-    pub value: PrimField<String>,
+    #[doc = ""]
+    pub comparison: terrars::PrimField<std::string::String>,
+    #[doc = ""]
+    pub key: terrars::PrimField<std::string::String>,
+    #[doc = ""]
+    pub value: terrars::PrimField<std::string::String>,
 }
 
 impl BuildSecurityhubInsightFiltersElResourceTagsEl {
@@ -6141,12 +6385,12 @@ impl BuildSecurityhubInsightFiltersElResourceTagsEl {
 }
 
 pub struct SecurityhubInsightFiltersElResourceTagsElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for SecurityhubInsightFiltersElResourceTagsElRef {
-    fn new(shared: StackShared, base: String) -> SecurityhubInsightFiltersElResourceTagsElRef {
+impl terrars::Ref for SecurityhubInsightFiltersElResourceTagsElRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> SecurityhubInsightFiltersElResourceTagsElRef {
         SecurityhubInsightFiltersElResourceTagsElRef {
             shared: shared,
             base: base.to_string(),
@@ -6155,39 +6399,39 @@ impl Ref for SecurityhubInsightFiltersElResourceTagsElRef {
 }
 
 impl SecurityhubInsightFiltersElResourceTagsElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `comparison` after provisioning.\n"]
-    pub fn comparison(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.comparison", self.base))
+    #[doc = "Get a reference to the value of field `comparison` after provisioning.\n"]
+    pub fn comparison(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.comparison", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `key` after provisioning.\n"]
-    pub fn key(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.key", self.base))
+    #[doc = "Get a reference to the value of field `key` after provisioning.\n"]
+    pub fn key(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.key", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `value` after provisioning.\n"]
-    pub fn value(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.value", self.base))
+    #[doc = "Get a reference to the value of field `value` after provisioning.\n"]
+    pub fn value(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.value", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct SecurityhubInsightFiltersElResourceTypeEl {
-    comparison: PrimField<String>,
-    value: PrimField<String>,
+    comparison: terrars::PrimField<std::string::String>,
+    value: terrars::PrimField<std::string::String>,
 }
 
 impl SecurityhubInsightFiltersElResourceTypeEl { }
 
-impl ToListMappable for SecurityhubInsightFiltersElResourceTypeEl {
-    type O = BlockAssignable<SecurityhubInsightFiltersElResourceTypeEl>;
+impl terrars::ToListMappable for SecurityhubInsightFiltersElResourceTypeEl {
+    type O = terrars::BlockAssignable<SecurityhubInsightFiltersElResourceTypeEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -6196,10 +6440,10 @@ impl ToListMappable for SecurityhubInsightFiltersElResourceTypeEl {
 }
 
 pub struct BuildSecurityhubInsightFiltersElResourceTypeEl {
-    #[doc= ""]
-    pub comparison: PrimField<String>,
-    #[doc= ""]
-    pub value: PrimField<String>,
+    #[doc = ""]
+    pub comparison: terrars::PrimField<std::string::String>,
+    #[doc = ""]
+    pub value: terrars::PrimField<std::string::String>,
 }
 
 impl BuildSecurityhubInsightFiltersElResourceTypeEl {
@@ -6212,12 +6456,12 @@ impl BuildSecurityhubInsightFiltersElResourceTypeEl {
 }
 
 pub struct SecurityhubInsightFiltersElResourceTypeElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for SecurityhubInsightFiltersElResourceTypeElRef {
-    fn new(shared: StackShared, base: String) -> SecurityhubInsightFiltersElResourceTypeElRef {
+impl terrars::Ref for SecurityhubInsightFiltersElResourceTypeElRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> SecurityhubInsightFiltersElResourceTypeElRef {
         SecurityhubInsightFiltersElResourceTypeElRef {
             shared: shared,
             base: base.to_string(),
@@ -6226,34 +6470,34 @@ impl Ref for SecurityhubInsightFiltersElResourceTypeElRef {
 }
 
 impl SecurityhubInsightFiltersElResourceTypeElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `comparison` after provisioning.\n"]
-    pub fn comparison(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.comparison", self.base))
+    #[doc = "Get a reference to the value of field `comparison` after provisioning.\n"]
+    pub fn comparison(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.comparison", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `value` after provisioning.\n"]
-    pub fn value(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.value", self.base))
+    #[doc = "Get a reference to the value of field `value` after provisioning.\n"]
+    pub fn value(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.value", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct SecurityhubInsightFiltersElSeverityLabelEl {
-    comparison: PrimField<String>,
-    value: PrimField<String>,
+    comparison: terrars::PrimField<std::string::String>,
+    value: terrars::PrimField<std::string::String>,
 }
 
 impl SecurityhubInsightFiltersElSeverityLabelEl { }
 
-impl ToListMappable for SecurityhubInsightFiltersElSeverityLabelEl {
-    type O = BlockAssignable<SecurityhubInsightFiltersElSeverityLabelEl>;
+impl terrars::ToListMappable for SecurityhubInsightFiltersElSeverityLabelEl {
+    type O = terrars::BlockAssignable<SecurityhubInsightFiltersElSeverityLabelEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -6262,10 +6506,10 @@ impl ToListMappable for SecurityhubInsightFiltersElSeverityLabelEl {
 }
 
 pub struct BuildSecurityhubInsightFiltersElSeverityLabelEl {
-    #[doc= ""]
-    pub comparison: PrimField<String>,
-    #[doc= ""]
-    pub value: PrimField<String>,
+    #[doc = ""]
+    pub comparison: terrars::PrimField<std::string::String>,
+    #[doc = ""]
+    pub value: terrars::PrimField<std::string::String>,
 }
 
 impl BuildSecurityhubInsightFiltersElSeverityLabelEl {
@@ -6278,12 +6522,12 @@ impl BuildSecurityhubInsightFiltersElSeverityLabelEl {
 }
 
 pub struct SecurityhubInsightFiltersElSeverityLabelElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for SecurityhubInsightFiltersElSeverityLabelElRef {
-    fn new(shared: StackShared, base: String) -> SecurityhubInsightFiltersElSeverityLabelElRef {
+impl terrars::Ref for SecurityhubInsightFiltersElSeverityLabelElRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> SecurityhubInsightFiltersElSeverityLabelElRef {
         SecurityhubInsightFiltersElSeverityLabelElRef {
             shared: shared,
             base: base.to_string(),
@@ -6292,34 +6536,34 @@ impl Ref for SecurityhubInsightFiltersElSeverityLabelElRef {
 }
 
 impl SecurityhubInsightFiltersElSeverityLabelElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `comparison` after provisioning.\n"]
-    pub fn comparison(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.comparison", self.base))
+    #[doc = "Get a reference to the value of field `comparison` after provisioning.\n"]
+    pub fn comparison(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.comparison", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `value` after provisioning.\n"]
-    pub fn value(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.value", self.base))
+    #[doc = "Get a reference to the value of field `value` after provisioning.\n"]
+    pub fn value(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.value", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct SecurityhubInsightFiltersElSourceUrlEl {
-    comparison: PrimField<String>,
-    value: PrimField<String>,
+    comparison: terrars::PrimField<std::string::String>,
+    value: terrars::PrimField<std::string::String>,
 }
 
 impl SecurityhubInsightFiltersElSourceUrlEl { }
 
-impl ToListMappable for SecurityhubInsightFiltersElSourceUrlEl {
-    type O = BlockAssignable<SecurityhubInsightFiltersElSourceUrlEl>;
+impl terrars::ToListMappable for SecurityhubInsightFiltersElSourceUrlEl {
+    type O = terrars::BlockAssignable<SecurityhubInsightFiltersElSourceUrlEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -6328,10 +6572,10 @@ impl ToListMappable for SecurityhubInsightFiltersElSourceUrlEl {
 }
 
 pub struct BuildSecurityhubInsightFiltersElSourceUrlEl {
-    #[doc= ""]
-    pub comparison: PrimField<String>,
-    #[doc= ""]
-    pub value: PrimField<String>,
+    #[doc = ""]
+    pub comparison: terrars::PrimField<std::string::String>,
+    #[doc = ""]
+    pub value: terrars::PrimField<std::string::String>,
 }
 
 impl BuildSecurityhubInsightFiltersElSourceUrlEl {
@@ -6344,12 +6588,12 @@ impl BuildSecurityhubInsightFiltersElSourceUrlEl {
 }
 
 pub struct SecurityhubInsightFiltersElSourceUrlElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for SecurityhubInsightFiltersElSourceUrlElRef {
-    fn new(shared: StackShared, base: String) -> SecurityhubInsightFiltersElSourceUrlElRef {
+impl terrars::Ref for SecurityhubInsightFiltersElSourceUrlElRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> SecurityhubInsightFiltersElSourceUrlElRef {
         SecurityhubInsightFiltersElSourceUrlElRef {
             shared: shared,
             base: base.to_string(),
@@ -6358,34 +6602,34 @@ impl Ref for SecurityhubInsightFiltersElSourceUrlElRef {
 }
 
 impl SecurityhubInsightFiltersElSourceUrlElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `comparison` after provisioning.\n"]
-    pub fn comparison(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.comparison", self.base))
+    #[doc = "Get a reference to the value of field `comparison` after provisioning.\n"]
+    pub fn comparison(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.comparison", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `value` after provisioning.\n"]
-    pub fn value(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.value", self.base))
+    #[doc = "Get a reference to the value of field `value` after provisioning.\n"]
+    pub fn value(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.value", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct SecurityhubInsightFiltersElThreatIntelIndicatorCategoryEl {
-    comparison: PrimField<String>,
-    value: PrimField<String>,
+    comparison: terrars::PrimField<std::string::String>,
+    value: terrars::PrimField<std::string::String>,
 }
 
 impl SecurityhubInsightFiltersElThreatIntelIndicatorCategoryEl { }
 
-impl ToListMappable for SecurityhubInsightFiltersElThreatIntelIndicatorCategoryEl {
-    type O = BlockAssignable<SecurityhubInsightFiltersElThreatIntelIndicatorCategoryEl>;
+impl terrars::ToListMappable for SecurityhubInsightFiltersElThreatIntelIndicatorCategoryEl {
+    type O = terrars::BlockAssignable<SecurityhubInsightFiltersElThreatIntelIndicatorCategoryEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -6394,10 +6638,10 @@ impl ToListMappable for SecurityhubInsightFiltersElThreatIntelIndicatorCategoryE
 }
 
 pub struct BuildSecurityhubInsightFiltersElThreatIntelIndicatorCategoryEl {
-    #[doc= ""]
-    pub comparison: PrimField<String>,
-    #[doc= ""]
-    pub value: PrimField<String>,
+    #[doc = ""]
+    pub comparison: terrars::PrimField<std::string::String>,
+    #[doc = ""]
+    pub value: terrars::PrimField<std::string::String>,
 }
 
 impl BuildSecurityhubInsightFiltersElThreatIntelIndicatorCategoryEl {
@@ -6410,12 +6654,15 @@ impl BuildSecurityhubInsightFiltersElThreatIntelIndicatorCategoryEl {
 }
 
 pub struct SecurityhubInsightFiltersElThreatIntelIndicatorCategoryElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for SecurityhubInsightFiltersElThreatIntelIndicatorCategoryElRef {
-    fn new(shared: StackShared, base: String) -> SecurityhubInsightFiltersElThreatIntelIndicatorCategoryElRef {
+impl terrars::Ref for SecurityhubInsightFiltersElThreatIntelIndicatorCategoryElRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> SecurityhubInsightFiltersElThreatIntelIndicatorCategoryElRef {
         SecurityhubInsightFiltersElThreatIntelIndicatorCategoryElRef {
             shared: shared,
             base: base.to_string(),
@@ -6424,34 +6671,34 @@ impl Ref for SecurityhubInsightFiltersElThreatIntelIndicatorCategoryElRef {
 }
 
 impl SecurityhubInsightFiltersElThreatIntelIndicatorCategoryElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `comparison` after provisioning.\n"]
-    pub fn comparison(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.comparison", self.base))
+    #[doc = "Get a reference to the value of field `comparison` after provisioning.\n"]
+    pub fn comparison(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.comparison", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `value` after provisioning.\n"]
-    pub fn value(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.value", self.base))
+    #[doc = "Get a reference to the value of field `value` after provisioning.\n"]
+    pub fn value(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.value", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct SecurityhubInsightFiltersElThreatIntelIndicatorLastObservedAtElDateRangeEl {
-    unit: PrimField<String>,
-    value: PrimField<f64>,
+    unit: terrars::PrimField<std::string::String>,
+    value: terrars::PrimField<f64>,
 }
 
 impl SecurityhubInsightFiltersElThreatIntelIndicatorLastObservedAtElDateRangeEl { }
 
-impl ToListMappable for SecurityhubInsightFiltersElThreatIntelIndicatorLastObservedAtElDateRangeEl {
-    type O = BlockAssignable<SecurityhubInsightFiltersElThreatIntelIndicatorLastObservedAtElDateRangeEl>;
+impl terrars::ToListMappable for SecurityhubInsightFiltersElThreatIntelIndicatorLastObservedAtElDateRangeEl {
+    type O = terrars::BlockAssignable<SecurityhubInsightFiltersElThreatIntelIndicatorLastObservedAtElDateRangeEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -6460,10 +6707,10 @@ impl ToListMappable for SecurityhubInsightFiltersElThreatIntelIndicatorLastObser
 }
 
 pub struct BuildSecurityhubInsightFiltersElThreatIntelIndicatorLastObservedAtElDateRangeEl {
-    #[doc= ""]
-    pub unit: PrimField<String>,
-    #[doc= ""]
-    pub value: PrimField<f64>,
+    #[doc = ""]
+    pub unit: terrars::PrimField<std::string::String>,
+    #[doc = ""]
+    pub value: terrars::PrimField<f64>,
 }
 
 impl BuildSecurityhubInsightFiltersElThreatIntelIndicatorLastObservedAtElDateRangeEl {
@@ -6476,14 +6723,14 @@ impl BuildSecurityhubInsightFiltersElThreatIntelIndicatorLastObservedAtElDateRan
 }
 
 pub struct SecurityhubInsightFiltersElThreatIntelIndicatorLastObservedAtElDateRangeElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for SecurityhubInsightFiltersElThreatIntelIndicatorLastObservedAtElDateRangeElRef {
+impl terrars::Ref for SecurityhubInsightFiltersElThreatIntelIndicatorLastObservedAtElDateRangeElRef {
     fn new(
-        shared: StackShared,
-        base: String,
+        shared: terrars::StackShared,
+        base: std::string::String,
     ) -> SecurityhubInsightFiltersElThreatIntelIndicatorLastObservedAtElDateRangeElRef {
         SecurityhubInsightFiltersElThreatIntelIndicatorLastObservedAtElDateRangeElRef {
             shared: shared,
@@ -6493,72 +6740,84 @@ impl Ref for SecurityhubInsightFiltersElThreatIntelIndicatorLastObservedAtElDate
 }
 
 impl SecurityhubInsightFiltersElThreatIntelIndicatorLastObservedAtElDateRangeElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `unit` after provisioning.\n"]
-    pub fn unit(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.unit", self.base))
+    #[doc = "Get a reference to the value of field `unit` after provisioning.\n"]
+    pub fn unit(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.unit", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `value` after provisioning.\n"]
-    pub fn value(&self) -> PrimExpr<f64> {
-        PrimExpr::new(self.shared().clone(), format!("{}.value", self.base))
+    #[doc = "Get a reference to the value of field `value` after provisioning.\n"]
+    pub fn value(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.value", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
 struct SecurityhubInsightFiltersElThreatIntelIndicatorLastObservedAtElDynamic {
-    date_range: Option<DynamicBlock<SecurityhubInsightFiltersElThreatIntelIndicatorLastObservedAtElDateRangeEl>>,
+    date_range: std
+    ::option
+    ::Option<terrars::DynamicBlock<SecurityhubInsightFiltersElThreatIntelIndicatorLastObservedAtElDateRangeEl>>,
 }
 
 #[derive(Serialize)]
 pub struct SecurityhubInsightFiltersElThreatIntelIndicatorLastObservedAtEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    end: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    start: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    date_range: Option<Vec<SecurityhubInsightFiltersElThreatIntelIndicatorLastObservedAtElDateRangeEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    end: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    start: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    date_range: std
+    ::option
+    ::Option<std::vec::Vec<SecurityhubInsightFiltersElThreatIntelIndicatorLastObservedAtElDateRangeEl>>,
     dynamic: SecurityhubInsightFiltersElThreatIntelIndicatorLastObservedAtElDynamic,
 }
 
 impl SecurityhubInsightFiltersElThreatIntelIndicatorLastObservedAtEl {
-    #[doc= "Set the field `end`.\n"]
-    pub fn set_end(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.end = Some(v.into());
+    #[doc = "Set the field `end`.\n"]
+    pub fn set_end(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.end = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `start`.\n"]
-    pub fn set_start(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.start = Some(v.into());
+    #[doc = "Set the field `start`.\n"]
+    pub fn set_start(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.start = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `date_range`.\n"]
+    #[doc = "Set the field `date_range`.\n"]
     pub fn set_date_range(
         mut self,
-        v: impl Into<BlockAssignable<SecurityhubInsightFiltersElThreatIntelIndicatorLastObservedAtElDateRangeEl>>,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<
+                        terrars
+                        ::BlockAssignable<SecurityhubInsightFiltersElThreatIntelIndicatorLastObservedAtElDateRangeEl>,
+                    >,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.date_range = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.date_range = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.date_range = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.date_range = std::option::Option::Some(d);
             },
         }
         self
     }
 }
 
-impl ToListMappable for SecurityhubInsightFiltersElThreatIntelIndicatorLastObservedAtEl {
-    type O = BlockAssignable<SecurityhubInsightFiltersElThreatIntelIndicatorLastObservedAtEl>;
+impl terrars::ToListMappable for SecurityhubInsightFiltersElThreatIntelIndicatorLastObservedAtEl {
+    type O = terrars::BlockAssignable<SecurityhubInsightFiltersElThreatIntelIndicatorLastObservedAtEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -6574,18 +6833,21 @@ impl BuildSecurityhubInsightFiltersElThreatIntelIndicatorLastObservedAtEl {
             end: core::default::Default::default(),
             start: core::default::Default::default(),
             date_range: core::default::Default::default(),
-            dynamic: Default::default(),
+            dynamic: core::default::Default::default(),
         }
     }
 }
 
 pub struct SecurityhubInsightFiltersElThreatIntelIndicatorLastObservedAtElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for SecurityhubInsightFiltersElThreatIntelIndicatorLastObservedAtElRef {
-    fn new(shared: StackShared, base: String) -> SecurityhubInsightFiltersElThreatIntelIndicatorLastObservedAtElRef {
+impl terrars::Ref for SecurityhubInsightFiltersElThreatIntelIndicatorLastObservedAtElRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> SecurityhubInsightFiltersElThreatIntelIndicatorLastObservedAtElRef {
         SecurityhubInsightFiltersElThreatIntelIndicatorLastObservedAtElRef {
             shared: shared,
             base: base.to_string(),
@@ -6594,39 +6856,41 @@ impl Ref for SecurityhubInsightFiltersElThreatIntelIndicatorLastObservedAtElRef 
 }
 
 impl SecurityhubInsightFiltersElThreatIntelIndicatorLastObservedAtElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `end` after provisioning.\n"]
-    pub fn end(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.end", self.base))
+    #[doc = "Get a reference to the value of field `end` after provisioning.\n"]
+    pub fn end(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.end", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `start` after provisioning.\n"]
-    pub fn start(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.start", self.base))
+    #[doc = "Get a reference to the value of field `start` after provisioning.\n"]
+    pub fn start(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.start", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `date_range` after provisioning.\n"]
-    pub fn date_range(&self) -> ListRef<SecurityhubInsightFiltersElThreatIntelIndicatorLastObservedAtElDateRangeElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.date_range", self.base))
+    #[doc = "Get a reference to the value of field `date_range` after provisioning.\n"]
+    pub fn date_range(
+        &self,
+    ) -> terrars::ListRef<SecurityhubInsightFiltersElThreatIntelIndicatorLastObservedAtElDateRangeElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.date_range", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct SecurityhubInsightFiltersElThreatIntelIndicatorSourceEl {
-    comparison: PrimField<String>,
-    value: PrimField<String>,
+    comparison: terrars::PrimField<std::string::String>,
+    value: terrars::PrimField<std::string::String>,
 }
 
 impl SecurityhubInsightFiltersElThreatIntelIndicatorSourceEl { }
 
-impl ToListMappable for SecurityhubInsightFiltersElThreatIntelIndicatorSourceEl {
-    type O = BlockAssignable<SecurityhubInsightFiltersElThreatIntelIndicatorSourceEl>;
+impl terrars::ToListMappable for SecurityhubInsightFiltersElThreatIntelIndicatorSourceEl {
+    type O = terrars::BlockAssignable<SecurityhubInsightFiltersElThreatIntelIndicatorSourceEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -6635,10 +6899,10 @@ impl ToListMappable for SecurityhubInsightFiltersElThreatIntelIndicatorSourceEl 
 }
 
 pub struct BuildSecurityhubInsightFiltersElThreatIntelIndicatorSourceEl {
-    #[doc= ""]
-    pub comparison: PrimField<String>,
-    #[doc= ""]
-    pub value: PrimField<String>,
+    #[doc = ""]
+    pub comparison: terrars::PrimField<std::string::String>,
+    #[doc = ""]
+    pub value: terrars::PrimField<std::string::String>,
 }
 
 impl BuildSecurityhubInsightFiltersElThreatIntelIndicatorSourceEl {
@@ -6651,12 +6915,15 @@ impl BuildSecurityhubInsightFiltersElThreatIntelIndicatorSourceEl {
 }
 
 pub struct SecurityhubInsightFiltersElThreatIntelIndicatorSourceElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for SecurityhubInsightFiltersElThreatIntelIndicatorSourceElRef {
-    fn new(shared: StackShared, base: String) -> SecurityhubInsightFiltersElThreatIntelIndicatorSourceElRef {
+impl terrars::Ref for SecurityhubInsightFiltersElThreatIntelIndicatorSourceElRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> SecurityhubInsightFiltersElThreatIntelIndicatorSourceElRef {
         SecurityhubInsightFiltersElThreatIntelIndicatorSourceElRef {
             shared: shared,
             base: base.to_string(),
@@ -6665,34 +6932,34 @@ impl Ref for SecurityhubInsightFiltersElThreatIntelIndicatorSourceElRef {
 }
 
 impl SecurityhubInsightFiltersElThreatIntelIndicatorSourceElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `comparison` after provisioning.\n"]
-    pub fn comparison(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.comparison", self.base))
+    #[doc = "Get a reference to the value of field `comparison` after provisioning.\n"]
+    pub fn comparison(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.comparison", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `value` after provisioning.\n"]
-    pub fn value(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.value", self.base))
+    #[doc = "Get a reference to the value of field `value` after provisioning.\n"]
+    pub fn value(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.value", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct SecurityhubInsightFiltersElThreatIntelIndicatorSourceUrlEl {
-    comparison: PrimField<String>,
-    value: PrimField<String>,
+    comparison: terrars::PrimField<std::string::String>,
+    value: terrars::PrimField<std::string::String>,
 }
 
 impl SecurityhubInsightFiltersElThreatIntelIndicatorSourceUrlEl { }
 
-impl ToListMappable for SecurityhubInsightFiltersElThreatIntelIndicatorSourceUrlEl {
-    type O = BlockAssignable<SecurityhubInsightFiltersElThreatIntelIndicatorSourceUrlEl>;
+impl terrars::ToListMappable for SecurityhubInsightFiltersElThreatIntelIndicatorSourceUrlEl {
+    type O = terrars::BlockAssignable<SecurityhubInsightFiltersElThreatIntelIndicatorSourceUrlEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -6701,10 +6968,10 @@ impl ToListMappable for SecurityhubInsightFiltersElThreatIntelIndicatorSourceUrl
 }
 
 pub struct BuildSecurityhubInsightFiltersElThreatIntelIndicatorSourceUrlEl {
-    #[doc= ""]
-    pub comparison: PrimField<String>,
-    #[doc= ""]
-    pub value: PrimField<String>,
+    #[doc = ""]
+    pub comparison: terrars::PrimField<std::string::String>,
+    #[doc = ""]
+    pub value: terrars::PrimField<std::string::String>,
 }
 
 impl BuildSecurityhubInsightFiltersElThreatIntelIndicatorSourceUrlEl {
@@ -6717,12 +6984,15 @@ impl BuildSecurityhubInsightFiltersElThreatIntelIndicatorSourceUrlEl {
 }
 
 pub struct SecurityhubInsightFiltersElThreatIntelIndicatorSourceUrlElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for SecurityhubInsightFiltersElThreatIntelIndicatorSourceUrlElRef {
-    fn new(shared: StackShared, base: String) -> SecurityhubInsightFiltersElThreatIntelIndicatorSourceUrlElRef {
+impl terrars::Ref for SecurityhubInsightFiltersElThreatIntelIndicatorSourceUrlElRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> SecurityhubInsightFiltersElThreatIntelIndicatorSourceUrlElRef {
         SecurityhubInsightFiltersElThreatIntelIndicatorSourceUrlElRef {
             shared: shared,
             base: base.to_string(),
@@ -6731,34 +7001,34 @@ impl Ref for SecurityhubInsightFiltersElThreatIntelIndicatorSourceUrlElRef {
 }
 
 impl SecurityhubInsightFiltersElThreatIntelIndicatorSourceUrlElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `comparison` after provisioning.\n"]
-    pub fn comparison(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.comparison", self.base))
+    #[doc = "Get a reference to the value of field `comparison` after provisioning.\n"]
+    pub fn comparison(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.comparison", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `value` after provisioning.\n"]
-    pub fn value(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.value", self.base))
+    #[doc = "Get a reference to the value of field `value` after provisioning.\n"]
+    pub fn value(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.value", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct SecurityhubInsightFiltersElThreatIntelIndicatorTypeEl {
-    comparison: PrimField<String>,
-    value: PrimField<String>,
+    comparison: terrars::PrimField<std::string::String>,
+    value: terrars::PrimField<std::string::String>,
 }
 
 impl SecurityhubInsightFiltersElThreatIntelIndicatorTypeEl { }
 
-impl ToListMappable for SecurityhubInsightFiltersElThreatIntelIndicatorTypeEl {
-    type O = BlockAssignable<SecurityhubInsightFiltersElThreatIntelIndicatorTypeEl>;
+impl terrars::ToListMappable for SecurityhubInsightFiltersElThreatIntelIndicatorTypeEl {
+    type O = terrars::BlockAssignable<SecurityhubInsightFiltersElThreatIntelIndicatorTypeEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -6767,10 +7037,10 @@ impl ToListMappable for SecurityhubInsightFiltersElThreatIntelIndicatorTypeEl {
 }
 
 pub struct BuildSecurityhubInsightFiltersElThreatIntelIndicatorTypeEl {
-    #[doc= ""]
-    pub comparison: PrimField<String>,
-    #[doc= ""]
-    pub value: PrimField<String>,
+    #[doc = ""]
+    pub comparison: terrars::PrimField<std::string::String>,
+    #[doc = ""]
+    pub value: terrars::PrimField<std::string::String>,
 }
 
 impl BuildSecurityhubInsightFiltersElThreatIntelIndicatorTypeEl {
@@ -6783,12 +7053,15 @@ impl BuildSecurityhubInsightFiltersElThreatIntelIndicatorTypeEl {
 }
 
 pub struct SecurityhubInsightFiltersElThreatIntelIndicatorTypeElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for SecurityhubInsightFiltersElThreatIntelIndicatorTypeElRef {
-    fn new(shared: StackShared, base: String) -> SecurityhubInsightFiltersElThreatIntelIndicatorTypeElRef {
+impl terrars::Ref for SecurityhubInsightFiltersElThreatIntelIndicatorTypeElRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> SecurityhubInsightFiltersElThreatIntelIndicatorTypeElRef {
         SecurityhubInsightFiltersElThreatIntelIndicatorTypeElRef {
             shared: shared,
             base: base.to_string(),
@@ -6797,34 +7070,34 @@ impl Ref for SecurityhubInsightFiltersElThreatIntelIndicatorTypeElRef {
 }
 
 impl SecurityhubInsightFiltersElThreatIntelIndicatorTypeElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `comparison` after provisioning.\n"]
-    pub fn comparison(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.comparison", self.base))
+    #[doc = "Get a reference to the value of field `comparison` after provisioning.\n"]
+    pub fn comparison(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.comparison", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `value` after provisioning.\n"]
-    pub fn value(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.value", self.base))
+    #[doc = "Get a reference to the value of field `value` after provisioning.\n"]
+    pub fn value(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.value", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct SecurityhubInsightFiltersElThreatIntelIndicatorValueEl {
-    comparison: PrimField<String>,
-    value: PrimField<String>,
+    comparison: terrars::PrimField<std::string::String>,
+    value: terrars::PrimField<std::string::String>,
 }
 
 impl SecurityhubInsightFiltersElThreatIntelIndicatorValueEl { }
 
-impl ToListMappable for SecurityhubInsightFiltersElThreatIntelIndicatorValueEl {
-    type O = BlockAssignable<SecurityhubInsightFiltersElThreatIntelIndicatorValueEl>;
+impl terrars::ToListMappable for SecurityhubInsightFiltersElThreatIntelIndicatorValueEl {
+    type O = terrars::BlockAssignable<SecurityhubInsightFiltersElThreatIntelIndicatorValueEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -6833,10 +7106,10 @@ impl ToListMappable for SecurityhubInsightFiltersElThreatIntelIndicatorValueEl {
 }
 
 pub struct BuildSecurityhubInsightFiltersElThreatIntelIndicatorValueEl {
-    #[doc= ""]
-    pub comparison: PrimField<String>,
-    #[doc= ""]
-    pub value: PrimField<String>,
+    #[doc = ""]
+    pub comparison: terrars::PrimField<std::string::String>,
+    #[doc = ""]
+    pub value: terrars::PrimField<std::string::String>,
 }
 
 impl BuildSecurityhubInsightFiltersElThreatIntelIndicatorValueEl {
@@ -6849,12 +7122,15 @@ impl BuildSecurityhubInsightFiltersElThreatIntelIndicatorValueEl {
 }
 
 pub struct SecurityhubInsightFiltersElThreatIntelIndicatorValueElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for SecurityhubInsightFiltersElThreatIntelIndicatorValueElRef {
-    fn new(shared: StackShared, base: String) -> SecurityhubInsightFiltersElThreatIntelIndicatorValueElRef {
+impl terrars::Ref for SecurityhubInsightFiltersElThreatIntelIndicatorValueElRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> SecurityhubInsightFiltersElThreatIntelIndicatorValueElRef {
         SecurityhubInsightFiltersElThreatIntelIndicatorValueElRef {
             shared: shared,
             base: base.to_string(),
@@ -6863,34 +7139,34 @@ impl Ref for SecurityhubInsightFiltersElThreatIntelIndicatorValueElRef {
 }
 
 impl SecurityhubInsightFiltersElThreatIntelIndicatorValueElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `comparison` after provisioning.\n"]
-    pub fn comparison(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.comparison", self.base))
+    #[doc = "Get a reference to the value of field `comparison` after provisioning.\n"]
+    pub fn comparison(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.comparison", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `value` after provisioning.\n"]
-    pub fn value(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.value", self.base))
+    #[doc = "Get a reference to the value of field `value` after provisioning.\n"]
+    pub fn value(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.value", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct SecurityhubInsightFiltersElTitleEl {
-    comparison: PrimField<String>,
-    value: PrimField<String>,
+    comparison: terrars::PrimField<std::string::String>,
+    value: terrars::PrimField<std::string::String>,
 }
 
 impl SecurityhubInsightFiltersElTitleEl { }
 
-impl ToListMappable for SecurityhubInsightFiltersElTitleEl {
-    type O = BlockAssignable<SecurityhubInsightFiltersElTitleEl>;
+impl terrars::ToListMappable for SecurityhubInsightFiltersElTitleEl {
+    type O = terrars::BlockAssignable<SecurityhubInsightFiltersElTitleEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -6899,10 +7175,10 @@ impl ToListMappable for SecurityhubInsightFiltersElTitleEl {
 }
 
 pub struct BuildSecurityhubInsightFiltersElTitleEl {
-    #[doc= ""]
-    pub comparison: PrimField<String>,
-    #[doc= ""]
-    pub value: PrimField<String>,
+    #[doc = ""]
+    pub comparison: terrars::PrimField<std::string::String>,
+    #[doc = ""]
+    pub value: terrars::PrimField<std::string::String>,
 }
 
 impl BuildSecurityhubInsightFiltersElTitleEl {
@@ -6915,12 +7191,12 @@ impl BuildSecurityhubInsightFiltersElTitleEl {
 }
 
 pub struct SecurityhubInsightFiltersElTitleElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for SecurityhubInsightFiltersElTitleElRef {
-    fn new(shared: StackShared, base: String) -> SecurityhubInsightFiltersElTitleElRef {
+impl terrars::Ref for SecurityhubInsightFiltersElTitleElRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> SecurityhubInsightFiltersElTitleElRef {
         SecurityhubInsightFiltersElTitleElRef {
             shared: shared,
             base: base.to_string(),
@@ -6929,34 +7205,34 @@ impl Ref for SecurityhubInsightFiltersElTitleElRef {
 }
 
 impl SecurityhubInsightFiltersElTitleElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `comparison` after provisioning.\n"]
-    pub fn comparison(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.comparison", self.base))
+    #[doc = "Get a reference to the value of field `comparison` after provisioning.\n"]
+    pub fn comparison(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.comparison", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `value` after provisioning.\n"]
-    pub fn value(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.value", self.base))
+    #[doc = "Get a reference to the value of field `value` after provisioning.\n"]
+    pub fn value(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.value", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct SecurityhubInsightFiltersElTypeEl {
-    comparison: PrimField<String>,
-    value: PrimField<String>,
+    comparison: terrars::PrimField<std::string::String>,
+    value: terrars::PrimField<std::string::String>,
 }
 
 impl SecurityhubInsightFiltersElTypeEl { }
 
-impl ToListMappable for SecurityhubInsightFiltersElTypeEl {
-    type O = BlockAssignable<SecurityhubInsightFiltersElTypeEl>;
+impl terrars::ToListMappable for SecurityhubInsightFiltersElTypeEl {
+    type O = terrars::BlockAssignable<SecurityhubInsightFiltersElTypeEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -6965,10 +7241,10 @@ impl ToListMappable for SecurityhubInsightFiltersElTypeEl {
 }
 
 pub struct BuildSecurityhubInsightFiltersElTypeEl {
-    #[doc= ""]
-    pub comparison: PrimField<String>,
-    #[doc= ""]
-    pub value: PrimField<String>,
+    #[doc = ""]
+    pub comparison: terrars::PrimField<std::string::String>,
+    #[doc = ""]
+    pub value: terrars::PrimField<std::string::String>,
 }
 
 impl BuildSecurityhubInsightFiltersElTypeEl {
@@ -6981,12 +7257,12 @@ impl BuildSecurityhubInsightFiltersElTypeEl {
 }
 
 pub struct SecurityhubInsightFiltersElTypeElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for SecurityhubInsightFiltersElTypeElRef {
-    fn new(shared: StackShared, base: String) -> SecurityhubInsightFiltersElTypeElRef {
+impl terrars::Ref for SecurityhubInsightFiltersElTypeElRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> SecurityhubInsightFiltersElTypeElRef {
         SecurityhubInsightFiltersElTypeElRef {
             shared: shared,
             base: base.to_string(),
@@ -6995,34 +7271,34 @@ impl Ref for SecurityhubInsightFiltersElTypeElRef {
 }
 
 impl SecurityhubInsightFiltersElTypeElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `comparison` after provisioning.\n"]
-    pub fn comparison(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.comparison", self.base))
+    #[doc = "Get a reference to the value of field `comparison` after provisioning.\n"]
+    pub fn comparison(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.comparison", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `value` after provisioning.\n"]
-    pub fn value(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.value", self.base))
+    #[doc = "Get a reference to the value of field `value` after provisioning.\n"]
+    pub fn value(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.value", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct SecurityhubInsightFiltersElUpdatedAtElDateRangeEl {
-    unit: PrimField<String>,
-    value: PrimField<f64>,
+    unit: terrars::PrimField<std::string::String>,
+    value: terrars::PrimField<f64>,
 }
 
 impl SecurityhubInsightFiltersElUpdatedAtElDateRangeEl { }
 
-impl ToListMappable for SecurityhubInsightFiltersElUpdatedAtElDateRangeEl {
-    type O = BlockAssignable<SecurityhubInsightFiltersElUpdatedAtElDateRangeEl>;
+impl terrars::ToListMappable for SecurityhubInsightFiltersElUpdatedAtElDateRangeEl {
+    type O = terrars::BlockAssignable<SecurityhubInsightFiltersElUpdatedAtElDateRangeEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -7031,10 +7307,10 @@ impl ToListMappable for SecurityhubInsightFiltersElUpdatedAtElDateRangeEl {
 }
 
 pub struct BuildSecurityhubInsightFiltersElUpdatedAtElDateRangeEl {
-    #[doc= ""]
-    pub unit: PrimField<String>,
-    #[doc= ""]
-    pub value: PrimField<f64>,
+    #[doc = ""]
+    pub unit: terrars::PrimField<std::string::String>,
+    #[doc = ""]
+    pub value: terrars::PrimField<f64>,
 }
 
 impl BuildSecurityhubInsightFiltersElUpdatedAtElDateRangeEl {
@@ -7047,12 +7323,15 @@ impl BuildSecurityhubInsightFiltersElUpdatedAtElDateRangeEl {
 }
 
 pub struct SecurityhubInsightFiltersElUpdatedAtElDateRangeElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for SecurityhubInsightFiltersElUpdatedAtElDateRangeElRef {
-    fn new(shared: StackShared, base: String) -> SecurityhubInsightFiltersElUpdatedAtElDateRangeElRef {
+impl terrars::Ref for SecurityhubInsightFiltersElUpdatedAtElDateRangeElRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> SecurityhubInsightFiltersElUpdatedAtElDateRangeElRef {
         SecurityhubInsightFiltersElUpdatedAtElDateRangeElRef {
             shared: shared,
             base: base.to_string(),
@@ -7061,72 +7340,72 @@ impl Ref for SecurityhubInsightFiltersElUpdatedAtElDateRangeElRef {
 }
 
 impl SecurityhubInsightFiltersElUpdatedAtElDateRangeElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `unit` after provisioning.\n"]
-    pub fn unit(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.unit", self.base))
+    #[doc = "Get a reference to the value of field `unit` after provisioning.\n"]
+    pub fn unit(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.unit", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `value` after provisioning.\n"]
-    pub fn value(&self) -> PrimExpr<f64> {
-        PrimExpr::new(self.shared().clone(), format!("{}.value", self.base))
+    #[doc = "Get a reference to the value of field `value` after provisioning.\n"]
+    pub fn value(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.value", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
 struct SecurityhubInsightFiltersElUpdatedAtElDynamic {
-    date_range: Option<DynamicBlock<SecurityhubInsightFiltersElUpdatedAtElDateRangeEl>>,
+    date_range: std::option::Option<terrars::DynamicBlock<SecurityhubInsightFiltersElUpdatedAtElDateRangeEl>>,
 }
 
 #[derive(Serialize)]
 pub struct SecurityhubInsightFiltersElUpdatedAtEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    end: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    start: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    date_range: Option<Vec<SecurityhubInsightFiltersElUpdatedAtElDateRangeEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    end: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    start: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    date_range: std::option::Option<std::vec::Vec<SecurityhubInsightFiltersElUpdatedAtElDateRangeEl>>,
     dynamic: SecurityhubInsightFiltersElUpdatedAtElDynamic,
 }
 
 impl SecurityhubInsightFiltersElUpdatedAtEl {
-    #[doc= "Set the field `end`.\n"]
-    pub fn set_end(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.end = Some(v.into());
+    #[doc = "Set the field `end`.\n"]
+    pub fn set_end(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.end = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `start`.\n"]
-    pub fn set_start(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.start = Some(v.into());
+    #[doc = "Set the field `start`.\n"]
+    pub fn set_start(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.start = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `date_range`.\n"]
+    #[doc = "Set the field `date_range`.\n"]
     pub fn set_date_range(
         mut self,
-        v: impl Into<BlockAssignable<SecurityhubInsightFiltersElUpdatedAtElDateRangeEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<SecurityhubInsightFiltersElUpdatedAtElDateRangeEl>>,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.date_range = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.date_range = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.date_range = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.date_range = std::option::Option::Some(d);
             },
         }
         self
     }
 }
 
-impl ToListMappable for SecurityhubInsightFiltersElUpdatedAtEl {
-    type O = BlockAssignable<SecurityhubInsightFiltersElUpdatedAtEl>;
+impl terrars::ToListMappable for SecurityhubInsightFiltersElUpdatedAtEl {
+    type O = terrars::BlockAssignable<SecurityhubInsightFiltersElUpdatedAtEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -7142,18 +7421,18 @@ impl BuildSecurityhubInsightFiltersElUpdatedAtEl {
             end: core::default::Default::default(),
             start: core::default::Default::default(),
             date_range: core::default::Default::default(),
-            dynamic: Default::default(),
+            dynamic: core::default::Default::default(),
         }
     }
 }
 
 pub struct SecurityhubInsightFiltersElUpdatedAtElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for SecurityhubInsightFiltersElUpdatedAtElRef {
-    fn new(shared: StackShared, base: String) -> SecurityhubInsightFiltersElUpdatedAtElRef {
+impl terrars::Ref for SecurityhubInsightFiltersElUpdatedAtElRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> SecurityhubInsightFiltersElUpdatedAtElRef {
         SecurityhubInsightFiltersElUpdatedAtElRef {
             shared: shared,
             base: base.to_string(),
@@ -7162,40 +7441,40 @@ impl Ref for SecurityhubInsightFiltersElUpdatedAtElRef {
 }
 
 impl SecurityhubInsightFiltersElUpdatedAtElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `end` after provisioning.\n"]
-    pub fn end(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.end", self.base))
+    #[doc = "Get a reference to the value of field `end` after provisioning.\n"]
+    pub fn end(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.end", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `start` after provisioning.\n"]
-    pub fn start(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.start", self.base))
+    #[doc = "Get a reference to the value of field `start` after provisioning.\n"]
+    pub fn start(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.start", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `date_range` after provisioning.\n"]
-    pub fn date_range(&self) -> ListRef<SecurityhubInsightFiltersElUpdatedAtElDateRangeElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.date_range", self.base))
+    #[doc = "Get a reference to the value of field `date_range` after provisioning.\n"]
+    pub fn date_range(&self) -> terrars::ListRef<SecurityhubInsightFiltersElUpdatedAtElDateRangeElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.date_range", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct SecurityhubInsightFiltersElUserDefinedValuesEl {
-    comparison: PrimField<String>,
-    key: PrimField<String>,
-    value: PrimField<String>,
+    comparison: terrars::PrimField<std::string::String>,
+    key: terrars::PrimField<std::string::String>,
+    value: terrars::PrimField<std::string::String>,
 }
 
 impl SecurityhubInsightFiltersElUserDefinedValuesEl { }
 
-impl ToListMappable for SecurityhubInsightFiltersElUserDefinedValuesEl {
-    type O = BlockAssignable<SecurityhubInsightFiltersElUserDefinedValuesEl>;
+impl terrars::ToListMappable for SecurityhubInsightFiltersElUserDefinedValuesEl {
+    type O = terrars::BlockAssignable<SecurityhubInsightFiltersElUserDefinedValuesEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -7204,12 +7483,12 @@ impl ToListMappable for SecurityhubInsightFiltersElUserDefinedValuesEl {
 }
 
 pub struct BuildSecurityhubInsightFiltersElUserDefinedValuesEl {
-    #[doc= ""]
-    pub comparison: PrimField<String>,
-    #[doc= ""]
-    pub key: PrimField<String>,
-    #[doc= ""]
-    pub value: PrimField<String>,
+    #[doc = ""]
+    pub comparison: terrars::PrimField<std::string::String>,
+    #[doc = ""]
+    pub key: terrars::PrimField<std::string::String>,
+    #[doc = ""]
+    pub value: terrars::PrimField<std::string::String>,
 }
 
 impl BuildSecurityhubInsightFiltersElUserDefinedValuesEl {
@@ -7223,12 +7502,15 @@ impl BuildSecurityhubInsightFiltersElUserDefinedValuesEl {
 }
 
 pub struct SecurityhubInsightFiltersElUserDefinedValuesElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for SecurityhubInsightFiltersElUserDefinedValuesElRef {
-    fn new(shared: StackShared, base: String) -> SecurityhubInsightFiltersElUserDefinedValuesElRef {
+impl terrars::Ref for SecurityhubInsightFiltersElUserDefinedValuesElRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> SecurityhubInsightFiltersElUserDefinedValuesElRef {
         SecurityhubInsightFiltersElUserDefinedValuesElRef {
             shared: shared,
             base: base.to_string(),
@@ -7237,39 +7519,39 @@ impl Ref for SecurityhubInsightFiltersElUserDefinedValuesElRef {
 }
 
 impl SecurityhubInsightFiltersElUserDefinedValuesElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `comparison` after provisioning.\n"]
-    pub fn comparison(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.comparison", self.base))
+    #[doc = "Get a reference to the value of field `comparison` after provisioning.\n"]
+    pub fn comparison(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.comparison", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `key` after provisioning.\n"]
-    pub fn key(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.key", self.base))
+    #[doc = "Get a reference to the value of field `key` after provisioning.\n"]
+    pub fn key(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.key", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `value` after provisioning.\n"]
-    pub fn value(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.value", self.base))
+    #[doc = "Get a reference to the value of field `value` after provisioning.\n"]
+    pub fn value(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.value", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct SecurityhubInsightFiltersElVerificationStateEl {
-    comparison: PrimField<String>,
-    value: PrimField<String>,
+    comparison: terrars::PrimField<std::string::String>,
+    value: terrars::PrimField<std::string::String>,
 }
 
 impl SecurityhubInsightFiltersElVerificationStateEl { }
 
-impl ToListMappable for SecurityhubInsightFiltersElVerificationStateEl {
-    type O = BlockAssignable<SecurityhubInsightFiltersElVerificationStateEl>;
+impl terrars::ToListMappable for SecurityhubInsightFiltersElVerificationStateEl {
+    type O = terrars::BlockAssignable<SecurityhubInsightFiltersElVerificationStateEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -7278,10 +7560,10 @@ impl ToListMappable for SecurityhubInsightFiltersElVerificationStateEl {
 }
 
 pub struct BuildSecurityhubInsightFiltersElVerificationStateEl {
-    #[doc= ""]
-    pub comparison: PrimField<String>,
-    #[doc= ""]
-    pub value: PrimField<String>,
+    #[doc = ""]
+    pub comparison: terrars::PrimField<std::string::String>,
+    #[doc = ""]
+    pub value: terrars::PrimField<std::string::String>,
 }
 
 impl BuildSecurityhubInsightFiltersElVerificationStateEl {
@@ -7294,12 +7576,15 @@ impl BuildSecurityhubInsightFiltersElVerificationStateEl {
 }
 
 pub struct SecurityhubInsightFiltersElVerificationStateElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for SecurityhubInsightFiltersElVerificationStateElRef {
-    fn new(shared: StackShared, base: String) -> SecurityhubInsightFiltersElVerificationStateElRef {
+impl terrars::Ref for SecurityhubInsightFiltersElVerificationStateElRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> SecurityhubInsightFiltersElVerificationStateElRef {
         SecurityhubInsightFiltersElVerificationStateElRef {
             shared: shared,
             base: base.to_string(),
@@ -7308,34 +7593,34 @@ impl Ref for SecurityhubInsightFiltersElVerificationStateElRef {
 }
 
 impl SecurityhubInsightFiltersElVerificationStateElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `comparison` after provisioning.\n"]
-    pub fn comparison(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.comparison", self.base))
+    #[doc = "Get a reference to the value of field `comparison` after provisioning.\n"]
+    pub fn comparison(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.comparison", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `value` after provisioning.\n"]
-    pub fn value(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.value", self.base))
+    #[doc = "Get a reference to the value of field `value` after provisioning.\n"]
+    pub fn value(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.value", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct SecurityhubInsightFiltersElWorkflowStatusEl {
-    comparison: PrimField<String>,
-    value: PrimField<String>,
+    comparison: terrars::PrimField<std::string::String>,
+    value: terrars::PrimField<std::string::String>,
 }
 
 impl SecurityhubInsightFiltersElWorkflowStatusEl { }
 
-impl ToListMappable for SecurityhubInsightFiltersElWorkflowStatusEl {
-    type O = BlockAssignable<SecurityhubInsightFiltersElWorkflowStatusEl>;
+impl terrars::ToListMappable for SecurityhubInsightFiltersElWorkflowStatusEl {
+    type O = terrars::BlockAssignable<SecurityhubInsightFiltersElWorkflowStatusEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -7344,10 +7629,10 @@ impl ToListMappable for SecurityhubInsightFiltersElWorkflowStatusEl {
 }
 
 pub struct BuildSecurityhubInsightFiltersElWorkflowStatusEl {
-    #[doc= ""]
-    pub comparison: PrimField<String>,
-    #[doc= ""]
-    pub value: PrimField<String>,
+    #[doc = ""]
+    pub comparison: terrars::PrimField<std::string::String>,
+    #[doc = ""]
+    pub value: terrars::PrimField<std::string::String>,
 }
 
 impl BuildSecurityhubInsightFiltersElWorkflowStatusEl {
@@ -7360,12 +7645,15 @@ impl BuildSecurityhubInsightFiltersElWorkflowStatusEl {
 }
 
 pub struct SecurityhubInsightFiltersElWorkflowStatusElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for SecurityhubInsightFiltersElWorkflowStatusElRef {
-    fn new(shared: StackShared, base: String) -> SecurityhubInsightFiltersElWorkflowStatusElRef {
+impl terrars::Ref for SecurityhubInsightFiltersElWorkflowStatusElRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> SecurityhubInsightFiltersElWorkflowStatusElRef {
         SecurityhubInsightFiltersElWorkflowStatusElRef {
             shared: shared,
             base: base.to_string(),
@@ -7374,1690 +7662,1998 @@ impl Ref for SecurityhubInsightFiltersElWorkflowStatusElRef {
 }
 
 impl SecurityhubInsightFiltersElWorkflowStatusElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `comparison` after provisioning.\n"]
-    pub fn comparison(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.comparison", self.base))
+    #[doc = "Get a reference to the value of field `comparison` after provisioning.\n"]
+    pub fn comparison(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.comparison", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `value` after provisioning.\n"]
-    pub fn value(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.value", self.base))
+    #[doc = "Get a reference to the value of field `value` after provisioning.\n"]
+    pub fn value(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.value", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
 struct SecurityhubInsightFiltersElDynamic {
-    aws_account_id: Option<DynamicBlock<SecurityhubInsightFiltersElAwsAccountIdEl>>,
-    company_name: Option<DynamicBlock<SecurityhubInsightFiltersElCompanyNameEl>>,
-    compliance_status: Option<DynamicBlock<SecurityhubInsightFiltersElComplianceStatusEl>>,
-    confidence: Option<DynamicBlock<SecurityhubInsightFiltersElConfidenceEl>>,
-    created_at: Option<DynamicBlock<SecurityhubInsightFiltersElCreatedAtEl>>,
-    criticality: Option<DynamicBlock<SecurityhubInsightFiltersElCriticalityEl>>,
-    description: Option<DynamicBlock<SecurityhubInsightFiltersElDescriptionEl>>,
-    finding_provider_fields_confidence: Option<
-        DynamicBlock<SecurityhubInsightFiltersElFindingProviderFieldsConfidenceEl>,
-    >,
-    finding_provider_fields_criticality: Option<
-        DynamicBlock<SecurityhubInsightFiltersElFindingProviderFieldsCriticalityEl>,
-    >,
-    finding_provider_fields_related_findings_id: Option<
-        DynamicBlock<SecurityhubInsightFiltersElFindingProviderFieldsRelatedFindingsIdEl>,
-    >,
-    finding_provider_fields_related_findings_product_arn: Option<
-        DynamicBlock<SecurityhubInsightFiltersElFindingProviderFieldsRelatedFindingsProductArnEl>,
-    >,
-    finding_provider_fields_severity_label: Option<
-        DynamicBlock<SecurityhubInsightFiltersElFindingProviderFieldsSeverityLabelEl>,
-    >,
-    finding_provider_fields_severity_original: Option<
-        DynamicBlock<SecurityhubInsightFiltersElFindingProviderFieldsSeverityOriginalEl>,
-    >,
-    finding_provider_fields_types: Option<DynamicBlock<SecurityhubInsightFiltersElFindingProviderFieldsTypesEl>>,
-    first_observed_at: Option<DynamicBlock<SecurityhubInsightFiltersElFirstObservedAtEl>>,
-    generator_id: Option<DynamicBlock<SecurityhubInsightFiltersElGeneratorIdEl>>,
-    id: Option<DynamicBlock<SecurityhubInsightFiltersElIdEl>>,
-    keyword: Option<DynamicBlock<SecurityhubInsightFiltersElKeywordEl>>,
-    last_observed_at: Option<DynamicBlock<SecurityhubInsightFiltersElLastObservedAtEl>>,
-    malware_name: Option<DynamicBlock<SecurityhubInsightFiltersElMalwareNameEl>>,
-    malware_path: Option<DynamicBlock<SecurityhubInsightFiltersElMalwarePathEl>>,
-    malware_state: Option<DynamicBlock<SecurityhubInsightFiltersElMalwareStateEl>>,
-    malware_type: Option<DynamicBlock<SecurityhubInsightFiltersElMalwareTypeEl>>,
-    network_destination_domain: Option<DynamicBlock<SecurityhubInsightFiltersElNetworkDestinationDomainEl>>,
-    network_destination_ipv4: Option<DynamicBlock<SecurityhubInsightFiltersElNetworkDestinationIpv4El>>,
-    network_destination_ipv6: Option<DynamicBlock<SecurityhubInsightFiltersElNetworkDestinationIpv6El>>,
-    network_destination_port: Option<DynamicBlock<SecurityhubInsightFiltersElNetworkDestinationPortEl>>,
-    network_direction: Option<DynamicBlock<SecurityhubInsightFiltersElNetworkDirectionEl>>,
-    network_protocol: Option<DynamicBlock<SecurityhubInsightFiltersElNetworkProtocolEl>>,
-    network_source_domain: Option<DynamicBlock<SecurityhubInsightFiltersElNetworkSourceDomainEl>>,
-    network_source_ipv4: Option<DynamicBlock<SecurityhubInsightFiltersElNetworkSourceIpv4El>>,
-    network_source_ipv6: Option<DynamicBlock<SecurityhubInsightFiltersElNetworkSourceIpv6El>>,
-    network_source_mac: Option<DynamicBlock<SecurityhubInsightFiltersElNetworkSourceMacEl>>,
-    network_source_port: Option<DynamicBlock<SecurityhubInsightFiltersElNetworkSourcePortEl>>,
-    note_text: Option<DynamicBlock<SecurityhubInsightFiltersElNoteTextEl>>,
-    note_updated_at: Option<DynamicBlock<SecurityhubInsightFiltersElNoteUpdatedAtEl>>,
-    note_updated_by: Option<DynamicBlock<SecurityhubInsightFiltersElNoteUpdatedByEl>>,
-    process_launched_at: Option<DynamicBlock<SecurityhubInsightFiltersElProcessLaunchedAtEl>>,
-    process_name: Option<DynamicBlock<SecurityhubInsightFiltersElProcessNameEl>>,
-    process_parent_pid: Option<DynamicBlock<SecurityhubInsightFiltersElProcessParentPidEl>>,
-    process_path: Option<DynamicBlock<SecurityhubInsightFiltersElProcessPathEl>>,
-    process_pid: Option<DynamicBlock<SecurityhubInsightFiltersElProcessPidEl>>,
-    process_terminated_at: Option<DynamicBlock<SecurityhubInsightFiltersElProcessTerminatedAtEl>>,
-    product_arn: Option<DynamicBlock<SecurityhubInsightFiltersElProductArnEl>>,
-    product_fields: Option<DynamicBlock<SecurityhubInsightFiltersElProductFieldsEl>>,
-    product_name: Option<DynamicBlock<SecurityhubInsightFiltersElProductNameEl>>,
-    recommendation_text: Option<DynamicBlock<SecurityhubInsightFiltersElRecommendationTextEl>>,
-    record_state: Option<DynamicBlock<SecurityhubInsightFiltersElRecordStateEl>>,
-    related_findings_id: Option<DynamicBlock<SecurityhubInsightFiltersElRelatedFindingsIdEl>>,
-    related_findings_product_arn: Option<DynamicBlock<SecurityhubInsightFiltersElRelatedFindingsProductArnEl>>,
-    resource_aws_ec2_instance_iam_instance_profile_arn: Option<
-        DynamicBlock<SecurityhubInsightFiltersElResourceAwsEc2InstanceIamInstanceProfileArnEl>,
-    >,
-    resource_aws_ec2_instance_image_id: Option<
-        DynamicBlock<SecurityhubInsightFiltersElResourceAwsEc2InstanceImageIdEl>,
-    >,
-    resource_aws_ec2_instance_ipv4_addresses: Option<
-        DynamicBlock<SecurityhubInsightFiltersElResourceAwsEc2InstanceIpv4AddressesEl>,
-    >,
-    resource_aws_ec2_instance_ipv6_addresses: Option<
-        DynamicBlock<SecurityhubInsightFiltersElResourceAwsEc2InstanceIpv6AddressesEl>,
-    >,
-    resource_aws_ec2_instance_key_name: Option<
-        DynamicBlock<SecurityhubInsightFiltersElResourceAwsEc2InstanceKeyNameEl>,
-    >,
-    resource_aws_ec2_instance_launched_at: Option<
-        DynamicBlock<SecurityhubInsightFiltersElResourceAwsEc2InstanceLaunchedAtEl>,
-    >,
-    resource_aws_ec2_instance_subnet_id: Option<
-        DynamicBlock<SecurityhubInsightFiltersElResourceAwsEc2InstanceSubnetIdEl>,
-    >,
-    resource_aws_ec2_instance_type: Option<DynamicBlock<SecurityhubInsightFiltersElResourceAwsEc2InstanceTypeEl>>,
-    resource_aws_ec2_instance_vpc_id: Option<DynamicBlock<SecurityhubInsightFiltersElResourceAwsEc2InstanceVpcIdEl>>,
-    resource_aws_iam_access_key_created_at: Option<
-        DynamicBlock<SecurityhubInsightFiltersElResourceAwsIamAccessKeyCreatedAtEl>,
-    >,
-    resource_aws_iam_access_key_status: Option<
-        DynamicBlock<SecurityhubInsightFiltersElResourceAwsIamAccessKeyStatusEl>,
-    >,
-    resource_aws_iam_access_key_user_name: Option<
-        DynamicBlock<SecurityhubInsightFiltersElResourceAwsIamAccessKeyUserNameEl>,
-    >,
-    resource_aws_s3_bucket_owner_id: Option<DynamicBlock<SecurityhubInsightFiltersElResourceAwsS3BucketOwnerIdEl>>,
-    resource_aws_s3_bucket_owner_name: Option<
-        DynamicBlock<SecurityhubInsightFiltersElResourceAwsS3BucketOwnerNameEl>,
-    >,
-    resource_container_image_id: Option<DynamicBlock<SecurityhubInsightFiltersElResourceContainerImageIdEl>>,
-    resource_container_image_name: Option<DynamicBlock<SecurityhubInsightFiltersElResourceContainerImageNameEl>>,
-    resource_container_launched_at: Option<DynamicBlock<SecurityhubInsightFiltersElResourceContainerLaunchedAtEl>>,
-    resource_container_name: Option<DynamicBlock<SecurityhubInsightFiltersElResourceContainerNameEl>>,
-    resource_details_other: Option<DynamicBlock<SecurityhubInsightFiltersElResourceDetailsOtherEl>>,
-    resource_id: Option<DynamicBlock<SecurityhubInsightFiltersElResourceIdEl>>,
-    resource_partition: Option<DynamicBlock<SecurityhubInsightFiltersElResourcePartitionEl>>,
-    resource_region: Option<DynamicBlock<SecurityhubInsightFiltersElResourceRegionEl>>,
-    resource_tags: Option<DynamicBlock<SecurityhubInsightFiltersElResourceTagsEl>>,
-    resource_type: Option<DynamicBlock<SecurityhubInsightFiltersElResourceTypeEl>>,
-    severity_label: Option<DynamicBlock<SecurityhubInsightFiltersElSeverityLabelEl>>,
-    source_url: Option<DynamicBlock<SecurityhubInsightFiltersElSourceUrlEl>>,
-    threat_intel_indicator_category: Option<DynamicBlock<SecurityhubInsightFiltersElThreatIntelIndicatorCategoryEl>>,
-    threat_intel_indicator_last_observed_at: Option<
-        DynamicBlock<SecurityhubInsightFiltersElThreatIntelIndicatorLastObservedAtEl>,
-    >,
-    threat_intel_indicator_source: Option<DynamicBlock<SecurityhubInsightFiltersElThreatIntelIndicatorSourceEl>>,
-    threat_intel_indicator_source_url: Option<
-        DynamicBlock<SecurityhubInsightFiltersElThreatIntelIndicatorSourceUrlEl>,
-    >,
-    threat_intel_indicator_type: Option<DynamicBlock<SecurityhubInsightFiltersElThreatIntelIndicatorTypeEl>>,
-    threat_intel_indicator_value: Option<DynamicBlock<SecurityhubInsightFiltersElThreatIntelIndicatorValueEl>>,
-    title: Option<DynamicBlock<SecurityhubInsightFiltersElTitleEl>>,
-    type_: Option<DynamicBlock<SecurityhubInsightFiltersElTypeEl>>,
-    updated_at: Option<DynamicBlock<SecurityhubInsightFiltersElUpdatedAtEl>>,
-    user_defined_values: Option<DynamicBlock<SecurityhubInsightFiltersElUserDefinedValuesEl>>,
-    verification_state: Option<DynamicBlock<SecurityhubInsightFiltersElVerificationStateEl>>,
-    workflow_status: Option<DynamicBlock<SecurityhubInsightFiltersElWorkflowStatusEl>>,
+    aws_account_id: std::option::Option<terrars::DynamicBlock<SecurityhubInsightFiltersElAwsAccountIdEl>>,
+    company_name: std::option::Option<terrars::DynamicBlock<SecurityhubInsightFiltersElCompanyNameEl>>,
+    compliance_status: std::option::Option<terrars::DynamicBlock<SecurityhubInsightFiltersElComplianceStatusEl>>,
+    confidence: std::option::Option<terrars::DynamicBlock<SecurityhubInsightFiltersElConfidenceEl>>,
+    created_at: std::option::Option<terrars::DynamicBlock<SecurityhubInsightFiltersElCreatedAtEl>>,
+    criticality: std::option::Option<terrars::DynamicBlock<SecurityhubInsightFiltersElCriticalityEl>>,
+    description: std::option::Option<terrars::DynamicBlock<SecurityhubInsightFiltersElDescriptionEl>>,
+    finding_provider_fields_confidence: std
+    ::option
+    ::Option<terrars::DynamicBlock<SecurityhubInsightFiltersElFindingProviderFieldsConfidenceEl>>,
+    finding_provider_fields_criticality: std
+    ::option
+    ::Option<terrars::DynamicBlock<SecurityhubInsightFiltersElFindingProviderFieldsCriticalityEl>>,
+    finding_provider_fields_related_findings_id: std
+    ::option
+    ::Option<terrars::DynamicBlock<SecurityhubInsightFiltersElFindingProviderFieldsRelatedFindingsIdEl>>,
+    finding_provider_fields_related_findings_product_arn: std
+    ::option
+    ::Option<terrars::DynamicBlock<SecurityhubInsightFiltersElFindingProviderFieldsRelatedFindingsProductArnEl>>,
+    finding_provider_fields_severity_label: std
+    ::option
+    ::Option<terrars::DynamicBlock<SecurityhubInsightFiltersElFindingProviderFieldsSeverityLabelEl>>,
+    finding_provider_fields_severity_original: std
+    ::option
+    ::Option<terrars::DynamicBlock<SecurityhubInsightFiltersElFindingProviderFieldsSeverityOriginalEl>>,
+    finding_provider_fields_types: std
+    ::option
+    ::Option<terrars::DynamicBlock<SecurityhubInsightFiltersElFindingProviderFieldsTypesEl>>,
+    first_observed_at: std::option::Option<terrars::DynamicBlock<SecurityhubInsightFiltersElFirstObservedAtEl>>,
+    generator_id: std::option::Option<terrars::DynamicBlock<SecurityhubInsightFiltersElGeneratorIdEl>>,
+    id: std::option::Option<terrars::DynamicBlock<SecurityhubInsightFiltersElIdEl>>,
+    keyword: std::option::Option<terrars::DynamicBlock<SecurityhubInsightFiltersElKeywordEl>>,
+    last_observed_at: std::option::Option<terrars::DynamicBlock<SecurityhubInsightFiltersElLastObservedAtEl>>,
+    malware_name: std::option::Option<terrars::DynamicBlock<SecurityhubInsightFiltersElMalwareNameEl>>,
+    malware_path: std::option::Option<terrars::DynamicBlock<SecurityhubInsightFiltersElMalwarePathEl>>,
+    malware_state: std::option::Option<terrars::DynamicBlock<SecurityhubInsightFiltersElMalwareStateEl>>,
+    malware_type: std::option::Option<terrars::DynamicBlock<SecurityhubInsightFiltersElMalwareTypeEl>>,
+    network_destination_domain: std
+    ::option
+    ::Option<terrars::DynamicBlock<SecurityhubInsightFiltersElNetworkDestinationDomainEl>>,
+    network_destination_ipv4: std
+    ::option
+    ::Option<terrars::DynamicBlock<SecurityhubInsightFiltersElNetworkDestinationIpv4El>>,
+    network_destination_ipv6: std
+    ::option
+    ::Option<terrars::DynamicBlock<SecurityhubInsightFiltersElNetworkDestinationIpv6El>>,
+    network_destination_port: std
+    ::option
+    ::Option<terrars::DynamicBlock<SecurityhubInsightFiltersElNetworkDestinationPortEl>>,
+    network_direction: std::option::Option<terrars::DynamicBlock<SecurityhubInsightFiltersElNetworkDirectionEl>>,
+    network_protocol: std::option::Option<terrars::DynamicBlock<SecurityhubInsightFiltersElNetworkProtocolEl>>,
+    network_source_domain: std
+    ::option
+    ::Option<terrars::DynamicBlock<SecurityhubInsightFiltersElNetworkSourceDomainEl>>,
+    network_source_ipv4: std::option::Option<terrars::DynamicBlock<SecurityhubInsightFiltersElNetworkSourceIpv4El>>,
+    network_source_ipv6: std::option::Option<terrars::DynamicBlock<SecurityhubInsightFiltersElNetworkSourceIpv6El>>,
+    network_source_mac: std::option::Option<terrars::DynamicBlock<SecurityhubInsightFiltersElNetworkSourceMacEl>>,
+    network_source_port: std::option::Option<terrars::DynamicBlock<SecurityhubInsightFiltersElNetworkSourcePortEl>>,
+    note_text: std::option::Option<terrars::DynamicBlock<SecurityhubInsightFiltersElNoteTextEl>>,
+    note_updated_at: std::option::Option<terrars::DynamicBlock<SecurityhubInsightFiltersElNoteUpdatedAtEl>>,
+    note_updated_by: std::option::Option<terrars::DynamicBlock<SecurityhubInsightFiltersElNoteUpdatedByEl>>,
+    process_launched_at: std::option::Option<terrars::DynamicBlock<SecurityhubInsightFiltersElProcessLaunchedAtEl>>,
+    process_name: std::option::Option<terrars::DynamicBlock<SecurityhubInsightFiltersElProcessNameEl>>,
+    process_parent_pid: std::option::Option<terrars::DynamicBlock<SecurityhubInsightFiltersElProcessParentPidEl>>,
+    process_path: std::option::Option<terrars::DynamicBlock<SecurityhubInsightFiltersElProcessPathEl>>,
+    process_pid: std::option::Option<terrars::DynamicBlock<SecurityhubInsightFiltersElProcessPidEl>>,
+    process_terminated_at: std
+    ::option
+    ::Option<terrars::DynamicBlock<SecurityhubInsightFiltersElProcessTerminatedAtEl>>,
+    product_arn: std::option::Option<terrars::DynamicBlock<SecurityhubInsightFiltersElProductArnEl>>,
+    product_fields: std::option::Option<terrars::DynamicBlock<SecurityhubInsightFiltersElProductFieldsEl>>,
+    product_name: std::option::Option<terrars::DynamicBlock<SecurityhubInsightFiltersElProductNameEl>>,
+    recommendation_text: std::option::Option<terrars::DynamicBlock<SecurityhubInsightFiltersElRecommendationTextEl>>,
+    record_state: std::option::Option<terrars::DynamicBlock<SecurityhubInsightFiltersElRecordStateEl>>,
+    related_findings_id: std::option::Option<terrars::DynamicBlock<SecurityhubInsightFiltersElRelatedFindingsIdEl>>,
+    related_findings_product_arn: std
+    ::option
+    ::Option<terrars::DynamicBlock<SecurityhubInsightFiltersElRelatedFindingsProductArnEl>>,
+    resource_aws_ec2_instance_iam_instance_profile_arn: std
+    ::option
+    ::Option<terrars::DynamicBlock<SecurityhubInsightFiltersElResourceAwsEc2InstanceIamInstanceProfileArnEl>>,
+    resource_aws_ec2_instance_image_id: std
+    ::option
+    ::Option<terrars::DynamicBlock<SecurityhubInsightFiltersElResourceAwsEc2InstanceImageIdEl>>,
+    resource_aws_ec2_instance_ipv4_addresses: std
+    ::option
+    ::Option<terrars::DynamicBlock<SecurityhubInsightFiltersElResourceAwsEc2InstanceIpv4AddressesEl>>,
+    resource_aws_ec2_instance_ipv6_addresses: std
+    ::option
+    ::Option<terrars::DynamicBlock<SecurityhubInsightFiltersElResourceAwsEc2InstanceIpv6AddressesEl>>,
+    resource_aws_ec2_instance_key_name: std
+    ::option
+    ::Option<terrars::DynamicBlock<SecurityhubInsightFiltersElResourceAwsEc2InstanceKeyNameEl>>,
+    resource_aws_ec2_instance_launched_at: std
+    ::option
+    ::Option<terrars::DynamicBlock<SecurityhubInsightFiltersElResourceAwsEc2InstanceLaunchedAtEl>>,
+    resource_aws_ec2_instance_subnet_id: std
+    ::option
+    ::Option<terrars::DynamicBlock<SecurityhubInsightFiltersElResourceAwsEc2InstanceSubnetIdEl>>,
+    resource_aws_ec2_instance_type: std
+    ::option
+    ::Option<terrars::DynamicBlock<SecurityhubInsightFiltersElResourceAwsEc2InstanceTypeEl>>,
+    resource_aws_ec2_instance_vpc_id: std
+    ::option
+    ::Option<terrars::DynamicBlock<SecurityhubInsightFiltersElResourceAwsEc2InstanceVpcIdEl>>,
+    resource_aws_iam_access_key_created_at: std
+    ::option
+    ::Option<terrars::DynamicBlock<SecurityhubInsightFiltersElResourceAwsIamAccessKeyCreatedAtEl>>,
+    resource_aws_iam_access_key_status: std
+    ::option
+    ::Option<terrars::DynamicBlock<SecurityhubInsightFiltersElResourceAwsIamAccessKeyStatusEl>>,
+    resource_aws_iam_access_key_user_name: std
+    ::option
+    ::Option<terrars::DynamicBlock<SecurityhubInsightFiltersElResourceAwsIamAccessKeyUserNameEl>>,
+    resource_aws_s3_bucket_owner_id: std
+    ::option
+    ::Option<terrars::DynamicBlock<SecurityhubInsightFiltersElResourceAwsS3BucketOwnerIdEl>>,
+    resource_aws_s3_bucket_owner_name: std
+    ::option
+    ::Option<terrars::DynamicBlock<SecurityhubInsightFiltersElResourceAwsS3BucketOwnerNameEl>>,
+    resource_container_image_id: std
+    ::option
+    ::Option<terrars::DynamicBlock<SecurityhubInsightFiltersElResourceContainerImageIdEl>>,
+    resource_container_image_name: std
+    ::option
+    ::Option<terrars::DynamicBlock<SecurityhubInsightFiltersElResourceContainerImageNameEl>>,
+    resource_container_launched_at: std
+    ::option
+    ::Option<terrars::DynamicBlock<SecurityhubInsightFiltersElResourceContainerLaunchedAtEl>>,
+    resource_container_name: std
+    ::option
+    ::Option<terrars::DynamicBlock<SecurityhubInsightFiltersElResourceContainerNameEl>>,
+    resource_details_other: std
+    ::option
+    ::Option<terrars::DynamicBlock<SecurityhubInsightFiltersElResourceDetailsOtherEl>>,
+    resource_id: std::option::Option<terrars::DynamicBlock<SecurityhubInsightFiltersElResourceIdEl>>,
+    resource_partition: std::option::Option<terrars::DynamicBlock<SecurityhubInsightFiltersElResourcePartitionEl>>,
+    resource_region: std::option::Option<terrars::DynamicBlock<SecurityhubInsightFiltersElResourceRegionEl>>,
+    resource_tags: std::option::Option<terrars::DynamicBlock<SecurityhubInsightFiltersElResourceTagsEl>>,
+    resource_type: std::option::Option<terrars::DynamicBlock<SecurityhubInsightFiltersElResourceTypeEl>>,
+    severity_label: std::option::Option<terrars::DynamicBlock<SecurityhubInsightFiltersElSeverityLabelEl>>,
+    source_url: std::option::Option<terrars::DynamicBlock<SecurityhubInsightFiltersElSourceUrlEl>>,
+    threat_intel_indicator_category: std
+    ::option
+    ::Option<terrars::DynamicBlock<SecurityhubInsightFiltersElThreatIntelIndicatorCategoryEl>>,
+    threat_intel_indicator_last_observed_at: std
+    ::option
+    ::Option<terrars::DynamicBlock<SecurityhubInsightFiltersElThreatIntelIndicatorLastObservedAtEl>>,
+    threat_intel_indicator_source: std
+    ::option
+    ::Option<terrars::DynamicBlock<SecurityhubInsightFiltersElThreatIntelIndicatorSourceEl>>,
+    threat_intel_indicator_source_url: std
+    ::option
+    ::Option<terrars::DynamicBlock<SecurityhubInsightFiltersElThreatIntelIndicatorSourceUrlEl>>,
+    threat_intel_indicator_type: std
+    ::option
+    ::Option<terrars::DynamicBlock<SecurityhubInsightFiltersElThreatIntelIndicatorTypeEl>>,
+    threat_intel_indicator_value: std
+    ::option
+    ::Option<terrars::DynamicBlock<SecurityhubInsightFiltersElThreatIntelIndicatorValueEl>>,
+    title: std::option::Option<terrars::DynamicBlock<SecurityhubInsightFiltersElTitleEl>>,
+    type_: std::option::Option<terrars::DynamicBlock<SecurityhubInsightFiltersElTypeEl>>,
+    updated_at: std::option::Option<terrars::DynamicBlock<SecurityhubInsightFiltersElUpdatedAtEl>>,
+    user_defined_values: std::option::Option<terrars::DynamicBlock<SecurityhubInsightFiltersElUserDefinedValuesEl>>,
+    verification_state: std::option::Option<terrars::DynamicBlock<SecurityhubInsightFiltersElVerificationStateEl>>,
+    workflow_status: std::option::Option<terrars::DynamicBlock<SecurityhubInsightFiltersElWorkflowStatusEl>>,
 }
 
 #[derive(Serialize)]
 pub struct SecurityhubInsightFiltersEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    aws_account_id: Option<Vec<SecurityhubInsightFiltersElAwsAccountIdEl>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    company_name: Option<Vec<SecurityhubInsightFiltersElCompanyNameEl>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    compliance_status: Option<Vec<SecurityhubInsightFiltersElComplianceStatusEl>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    confidence: Option<Vec<SecurityhubInsightFiltersElConfidenceEl>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    created_at: Option<Vec<SecurityhubInsightFiltersElCreatedAtEl>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    criticality: Option<Vec<SecurityhubInsightFiltersElCriticalityEl>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    description: Option<Vec<SecurityhubInsightFiltersElDescriptionEl>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    finding_provider_fields_confidence: Option<Vec<SecurityhubInsightFiltersElFindingProviderFieldsConfidenceEl>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    finding_provider_fields_criticality: Option<Vec<SecurityhubInsightFiltersElFindingProviderFieldsCriticalityEl>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    finding_provider_fields_related_findings_id: Option<
-        Vec<SecurityhubInsightFiltersElFindingProviderFieldsRelatedFindingsIdEl>,
-    >,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    finding_provider_fields_related_findings_product_arn: Option<
-        Vec<SecurityhubInsightFiltersElFindingProviderFieldsRelatedFindingsProductArnEl>,
-    >,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    finding_provider_fields_severity_label: Option<Vec<SecurityhubInsightFiltersElFindingProviderFieldsSeverityLabelEl>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    finding_provider_fields_severity_original: Option<
-        Vec<SecurityhubInsightFiltersElFindingProviderFieldsSeverityOriginalEl>,
-    >,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    finding_provider_fields_types: Option<Vec<SecurityhubInsightFiltersElFindingProviderFieldsTypesEl>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    first_observed_at: Option<Vec<SecurityhubInsightFiltersElFirstObservedAtEl>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    generator_id: Option<Vec<SecurityhubInsightFiltersElGeneratorIdEl>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    id: Option<Vec<SecurityhubInsightFiltersElIdEl>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    keyword: Option<Vec<SecurityhubInsightFiltersElKeywordEl>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    last_observed_at: Option<Vec<SecurityhubInsightFiltersElLastObservedAtEl>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    malware_name: Option<Vec<SecurityhubInsightFiltersElMalwareNameEl>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    malware_path: Option<Vec<SecurityhubInsightFiltersElMalwarePathEl>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    malware_state: Option<Vec<SecurityhubInsightFiltersElMalwareStateEl>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    malware_type: Option<Vec<SecurityhubInsightFiltersElMalwareTypeEl>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    network_destination_domain: Option<Vec<SecurityhubInsightFiltersElNetworkDestinationDomainEl>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    network_destination_ipv4: Option<Vec<SecurityhubInsightFiltersElNetworkDestinationIpv4El>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    network_destination_ipv6: Option<Vec<SecurityhubInsightFiltersElNetworkDestinationIpv6El>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    network_destination_port: Option<Vec<SecurityhubInsightFiltersElNetworkDestinationPortEl>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    network_direction: Option<Vec<SecurityhubInsightFiltersElNetworkDirectionEl>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    network_protocol: Option<Vec<SecurityhubInsightFiltersElNetworkProtocolEl>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    network_source_domain: Option<Vec<SecurityhubInsightFiltersElNetworkSourceDomainEl>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    network_source_ipv4: Option<Vec<SecurityhubInsightFiltersElNetworkSourceIpv4El>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    network_source_ipv6: Option<Vec<SecurityhubInsightFiltersElNetworkSourceIpv6El>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    network_source_mac: Option<Vec<SecurityhubInsightFiltersElNetworkSourceMacEl>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    network_source_port: Option<Vec<SecurityhubInsightFiltersElNetworkSourcePortEl>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    note_text: Option<Vec<SecurityhubInsightFiltersElNoteTextEl>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    note_updated_at: Option<Vec<SecurityhubInsightFiltersElNoteUpdatedAtEl>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    note_updated_by: Option<Vec<SecurityhubInsightFiltersElNoteUpdatedByEl>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    process_launched_at: Option<Vec<SecurityhubInsightFiltersElProcessLaunchedAtEl>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    process_name: Option<Vec<SecurityhubInsightFiltersElProcessNameEl>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    process_parent_pid: Option<Vec<SecurityhubInsightFiltersElProcessParentPidEl>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    process_path: Option<Vec<SecurityhubInsightFiltersElProcessPathEl>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    process_pid: Option<Vec<SecurityhubInsightFiltersElProcessPidEl>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    process_terminated_at: Option<Vec<SecurityhubInsightFiltersElProcessTerminatedAtEl>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    product_arn: Option<Vec<SecurityhubInsightFiltersElProductArnEl>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    product_fields: Option<Vec<SecurityhubInsightFiltersElProductFieldsEl>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    product_name: Option<Vec<SecurityhubInsightFiltersElProductNameEl>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    recommendation_text: Option<Vec<SecurityhubInsightFiltersElRecommendationTextEl>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    record_state: Option<Vec<SecurityhubInsightFiltersElRecordStateEl>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    related_findings_id: Option<Vec<SecurityhubInsightFiltersElRelatedFindingsIdEl>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    related_findings_product_arn: Option<Vec<SecurityhubInsightFiltersElRelatedFindingsProductArnEl>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    resource_aws_ec2_instance_iam_instance_profile_arn: Option<
-        Vec<SecurityhubInsightFiltersElResourceAwsEc2InstanceIamInstanceProfileArnEl>,
-    >,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    resource_aws_ec2_instance_image_id: Option<Vec<SecurityhubInsightFiltersElResourceAwsEc2InstanceImageIdEl>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    resource_aws_ec2_instance_ipv4_addresses: Option<
-        Vec<SecurityhubInsightFiltersElResourceAwsEc2InstanceIpv4AddressesEl>,
-    >,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    resource_aws_ec2_instance_ipv6_addresses: Option<
-        Vec<SecurityhubInsightFiltersElResourceAwsEc2InstanceIpv6AddressesEl>,
-    >,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    resource_aws_ec2_instance_key_name: Option<Vec<SecurityhubInsightFiltersElResourceAwsEc2InstanceKeyNameEl>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    resource_aws_ec2_instance_launched_at: Option<Vec<SecurityhubInsightFiltersElResourceAwsEc2InstanceLaunchedAtEl>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    resource_aws_ec2_instance_subnet_id: Option<Vec<SecurityhubInsightFiltersElResourceAwsEc2InstanceSubnetIdEl>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    resource_aws_ec2_instance_type: Option<Vec<SecurityhubInsightFiltersElResourceAwsEc2InstanceTypeEl>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    resource_aws_ec2_instance_vpc_id: Option<Vec<SecurityhubInsightFiltersElResourceAwsEc2InstanceVpcIdEl>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    resource_aws_iam_access_key_created_at: Option<Vec<SecurityhubInsightFiltersElResourceAwsIamAccessKeyCreatedAtEl>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    resource_aws_iam_access_key_status: Option<Vec<SecurityhubInsightFiltersElResourceAwsIamAccessKeyStatusEl>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    resource_aws_iam_access_key_user_name: Option<Vec<SecurityhubInsightFiltersElResourceAwsIamAccessKeyUserNameEl>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    resource_aws_s3_bucket_owner_id: Option<Vec<SecurityhubInsightFiltersElResourceAwsS3BucketOwnerIdEl>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    resource_aws_s3_bucket_owner_name: Option<Vec<SecurityhubInsightFiltersElResourceAwsS3BucketOwnerNameEl>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    resource_container_image_id: Option<Vec<SecurityhubInsightFiltersElResourceContainerImageIdEl>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    resource_container_image_name: Option<Vec<SecurityhubInsightFiltersElResourceContainerImageNameEl>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    resource_container_launched_at: Option<Vec<SecurityhubInsightFiltersElResourceContainerLaunchedAtEl>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    resource_container_name: Option<Vec<SecurityhubInsightFiltersElResourceContainerNameEl>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    resource_details_other: Option<Vec<SecurityhubInsightFiltersElResourceDetailsOtherEl>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    resource_id: Option<Vec<SecurityhubInsightFiltersElResourceIdEl>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    resource_partition: Option<Vec<SecurityhubInsightFiltersElResourcePartitionEl>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    resource_region: Option<Vec<SecurityhubInsightFiltersElResourceRegionEl>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    resource_tags: Option<Vec<SecurityhubInsightFiltersElResourceTagsEl>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    resource_type: Option<Vec<SecurityhubInsightFiltersElResourceTypeEl>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    severity_label: Option<Vec<SecurityhubInsightFiltersElSeverityLabelEl>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    source_url: Option<Vec<SecurityhubInsightFiltersElSourceUrlEl>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    threat_intel_indicator_category: Option<Vec<SecurityhubInsightFiltersElThreatIntelIndicatorCategoryEl>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    threat_intel_indicator_last_observed_at: Option<Vec<SecurityhubInsightFiltersElThreatIntelIndicatorLastObservedAtEl>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    threat_intel_indicator_source: Option<Vec<SecurityhubInsightFiltersElThreatIntelIndicatorSourceEl>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    threat_intel_indicator_source_url: Option<Vec<SecurityhubInsightFiltersElThreatIntelIndicatorSourceUrlEl>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    threat_intel_indicator_type: Option<Vec<SecurityhubInsightFiltersElThreatIntelIndicatorTypeEl>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    threat_intel_indicator_value: Option<Vec<SecurityhubInsightFiltersElThreatIntelIndicatorValueEl>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    title: Option<Vec<SecurityhubInsightFiltersElTitleEl>>,
-    #[serde(rename = "type", skip_serializing_if = "Option::is_none")]
-    type_: Option<Vec<SecurityhubInsightFiltersElTypeEl>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    updated_at: Option<Vec<SecurityhubInsightFiltersElUpdatedAtEl>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    user_defined_values: Option<Vec<SecurityhubInsightFiltersElUserDefinedValuesEl>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    verification_state: Option<Vec<SecurityhubInsightFiltersElVerificationStateEl>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    workflow_status: Option<Vec<SecurityhubInsightFiltersElWorkflowStatusEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    aws_account_id: std::option::Option<std::vec::Vec<SecurityhubInsightFiltersElAwsAccountIdEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    company_name: std::option::Option<std::vec::Vec<SecurityhubInsightFiltersElCompanyNameEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    compliance_status: std::option::Option<std::vec::Vec<SecurityhubInsightFiltersElComplianceStatusEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    confidence: std::option::Option<std::vec::Vec<SecurityhubInsightFiltersElConfidenceEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    created_at: std::option::Option<std::vec::Vec<SecurityhubInsightFiltersElCreatedAtEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    criticality: std::option::Option<std::vec::Vec<SecurityhubInsightFiltersElCriticalityEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    description: std::option::Option<std::vec::Vec<SecurityhubInsightFiltersElDescriptionEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    finding_provider_fields_confidence: std
+    ::option
+    ::Option<std::vec::Vec<SecurityhubInsightFiltersElFindingProviderFieldsConfidenceEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    finding_provider_fields_criticality: std
+    ::option
+    ::Option<std::vec::Vec<SecurityhubInsightFiltersElFindingProviderFieldsCriticalityEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    finding_provider_fields_related_findings_id: std
+    ::option
+    ::Option<std::vec::Vec<SecurityhubInsightFiltersElFindingProviderFieldsRelatedFindingsIdEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    finding_provider_fields_related_findings_product_arn: std
+    ::option
+    ::Option<std::vec::Vec<SecurityhubInsightFiltersElFindingProviderFieldsRelatedFindingsProductArnEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    finding_provider_fields_severity_label: std
+    ::option
+    ::Option<std::vec::Vec<SecurityhubInsightFiltersElFindingProviderFieldsSeverityLabelEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    finding_provider_fields_severity_original: std
+    ::option
+    ::Option<std::vec::Vec<SecurityhubInsightFiltersElFindingProviderFieldsSeverityOriginalEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    finding_provider_fields_types: std
+    ::option
+    ::Option<std::vec::Vec<SecurityhubInsightFiltersElFindingProviderFieldsTypesEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    first_observed_at: std::option::Option<std::vec::Vec<SecurityhubInsightFiltersElFirstObservedAtEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    generator_id: std::option::Option<std::vec::Vec<SecurityhubInsightFiltersElGeneratorIdEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    id: std::option::Option<std::vec::Vec<SecurityhubInsightFiltersElIdEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    keyword: std::option::Option<std::vec::Vec<SecurityhubInsightFiltersElKeywordEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    last_observed_at: std::option::Option<std::vec::Vec<SecurityhubInsightFiltersElLastObservedAtEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    malware_name: std::option::Option<std::vec::Vec<SecurityhubInsightFiltersElMalwareNameEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    malware_path: std::option::Option<std::vec::Vec<SecurityhubInsightFiltersElMalwarePathEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    malware_state: std::option::Option<std::vec::Vec<SecurityhubInsightFiltersElMalwareStateEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    malware_type: std::option::Option<std::vec::Vec<SecurityhubInsightFiltersElMalwareTypeEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    network_destination_domain: std::option::Option<std::vec::Vec<SecurityhubInsightFiltersElNetworkDestinationDomainEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    network_destination_ipv4: std::option::Option<std::vec::Vec<SecurityhubInsightFiltersElNetworkDestinationIpv4El>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    network_destination_ipv6: std::option::Option<std::vec::Vec<SecurityhubInsightFiltersElNetworkDestinationIpv6El>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    network_destination_port: std::option::Option<std::vec::Vec<SecurityhubInsightFiltersElNetworkDestinationPortEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    network_direction: std::option::Option<std::vec::Vec<SecurityhubInsightFiltersElNetworkDirectionEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    network_protocol: std::option::Option<std::vec::Vec<SecurityhubInsightFiltersElNetworkProtocolEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    network_source_domain: std::option::Option<std::vec::Vec<SecurityhubInsightFiltersElNetworkSourceDomainEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    network_source_ipv4: std::option::Option<std::vec::Vec<SecurityhubInsightFiltersElNetworkSourceIpv4El>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    network_source_ipv6: std::option::Option<std::vec::Vec<SecurityhubInsightFiltersElNetworkSourceIpv6El>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    network_source_mac: std::option::Option<std::vec::Vec<SecurityhubInsightFiltersElNetworkSourceMacEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    network_source_port: std::option::Option<std::vec::Vec<SecurityhubInsightFiltersElNetworkSourcePortEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    note_text: std::option::Option<std::vec::Vec<SecurityhubInsightFiltersElNoteTextEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    note_updated_at: std::option::Option<std::vec::Vec<SecurityhubInsightFiltersElNoteUpdatedAtEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    note_updated_by: std::option::Option<std::vec::Vec<SecurityhubInsightFiltersElNoteUpdatedByEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    process_launched_at: std::option::Option<std::vec::Vec<SecurityhubInsightFiltersElProcessLaunchedAtEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    process_name: std::option::Option<std::vec::Vec<SecurityhubInsightFiltersElProcessNameEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    process_parent_pid: std::option::Option<std::vec::Vec<SecurityhubInsightFiltersElProcessParentPidEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    process_path: std::option::Option<std::vec::Vec<SecurityhubInsightFiltersElProcessPathEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    process_pid: std::option::Option<std::vec::Vec<SecurityhubInsightFiltersElProcessPidEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    process_terminated_at: std::option::Option<std::vec::Vec<SecurityhubInsightFiltersElProcessTerminatedAtEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    product_arn: std::option::Option<std::vec::Vec<SecurityhubInsightFiltersElProductArnEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    product_fields: std::option::Option<std::vec::Vec<SecurityhubInsightFiltersElProductFieldsEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    product_name: std::option::Option<std::vec::Vec<SecurityhubInsightFiltersElProductNameEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    recommendation_text: std::option::Option<std::vec::Vec<SecurityhubInsightFiltersElRecommendationTextEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    record_state: std::option::Option<std::vec::Vec<SecurityhubInsightFiltersElRecordStateEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    related_findings_id: std::option::Option<std::vec::Vec<SecurityhubInsightFiltersElRelatedFindingsIdEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    related_findings_product_arn: std
+    ::option
+    ::Option<std::vec::Vec<SecurityhubInsightFiltersElRelatedFindingsProductArnEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    resource_aws_ec2_instance_iam_instance_profile_arn: std
+    ::option
+    ::Option<std::vec::Vec<SecurityhubInsightFiltersElResourceAwsEc2InstanceIamInstanceProfileArnEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    resource_aws_ec2_instance_image_id: std
+    ::option
+    ::Option<std::vec::Vec<SecurityhubInsightFiltersElResourceAwsEc2InstanceImageIdEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    resource_aws_ec2_instance_ipv4_addresses: std
+    ::option
+    ::Option<std::vec::Vec<SecurityhubInsightFiltersElResourceAwsEc2InstanceIpv4AddressesEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    resource_aws_ec2_instance_ipv6_addresses: std
+    ::option
+    ::Option<std::vec::Vec<SecurityhubInsightFiltersElResourceAwsEc2InstanceIpv6AddressesEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    resource_aws_ec2_instance_key_name: std
+    ::option
+    ::Option<std::vec::Vec<SecurityhubInsightFiltersElResourceAwsEc2InstanceKeyNameEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    resource_aws_ec2_instance_launched_at: std
+    ::option
+    ::Option<std::vec::Vec<SecurityhubInsightFiltersElResourceAwsEc2InstanceLaunchedAtEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    resource_aws_ec2_instance_subnet_id: std
+    ::option
+    ::Option<std::vec::Vec<SecurityhubInsightFiltersElResourceAwsEc2InstanceSubnetIdEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    resource_aws_ec2_instance_type: std
+    ::option
+    ::Option<std::vec::Vec<SecurityhubInsightFiltersElResourceAwsEc2InstanceTypeEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    resource_aws_ec2_instance_vpc_id: std
+    ::option
+    ::Option<std::vec::Vec<SecurityhubInsightFiltersElResourceAwsEc2InstanceVpcIdEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    resource_aws_iam_access_key_created_at: std
+    ::option
+    ::Option<std::vec::Vec<SecurityhubInsightFiltersElResourceAwsIamAccessKeyCreatedAtEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    resource_aws_iam_access_key_status: std
+    ::option
+    ::Option<std::vec::Vec<SecurityhubInsightFiltersElResourceAwsIamAccessKeyStatusEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    resource_aws_iam_access_key_user_name: std
+    ::option
+    ::Option<std::vec::Vec<SecurityhubInsightFiltersElResourceAwsIamAccessKeyUserNameEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    resource_aws_s3_bucket_owner_id: std
+    ::option
+    ::Option<std::vec::Vec<SecurityhubInsightFiltersElResourceAwsS3BucketOwnerIdEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    resource_aws_s3_bucket_owner_name: std
+    ::option
+    ::Option<std::vec::Vec<SecurityhubInsightFiltersElResourceAwsS3BucketOwnerNameEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    resource_container_image_id: std
+    ::option
+    ::Option<std::vec::Vec<SecurityhubInsightFiltersElResourceContainerImageIdEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    resource_container_image_name: std
+    ::option
+    ::Option<std::vec::Vec<SecurityhubInsightFiltersElResourceContainerImageNameEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    resource_container_launched_at: std
+    ::option
+    ::Option<std::vec::Vec<SecurityhubInsightFiltersElResourceContainerLaunchedAtEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    resource_container_name: std::option::Option<std::vec::Vec<SecurityhubInsightFiltersElResourceContainerNameEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    resource_details_other: std::option::Option<std::vec::Vec<SecurityhubInsightFiltersElResourceDetailsOtherEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    resource_id: std::option::Option<std::vec::Vec<SecurityhubInsightFiltersElResourceIdEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    resource_partition: std::option::Option<std::vec::Vec<SecurityhubInsightFiltersElResourcePartitionEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    resource_region: std::option::Option<std::vec::Vec<SecurityhubInsightFiltersElResourceRegionEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    resource_tags: std::option::Option<std::vec::Vec<SecurityhubInsightFiltersElResourceTagsEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    resource_type: std::option::Option<std::vec::Vec<SecurityhubInsightFiltersElResourceTypeEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    severity_label: std::option::Option<std::vec::Vec<SecurityhubInsightFiltersElSeverityLabelEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    source_url: std::option::Option<std::vec::Vec<SecurityhubInsightFiltersElSourceUrlEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    threat_intel_indicator_category: std
+    ::option
+    ::Option<std::vec::Vec<SecurityhubInsightFiltersElThreatIntelIndicatorCategoryEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    threat_intel_indicator_last_observed_at: std
+    ::option
+    ::Option<std::vec::Vec<SecurityhubInsightFiltersElThreatIntelIndicatorLastObservedAtEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    threat_intel_indicator_source: std
+    ::option
+    ::Option<std::vec::Vec<SecurityhubInsightFiltersElThreatIntelIndicatorSourceEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    threat_intel_indicator_source_url: std
+    ::option
+    ::Option<std::vec::Vec<SecurityhubInsightFiltersElThreatIntelIndicatorSourceUrlEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    threat_intel_indicator_type: std
+    ::option
+    ::Option<std::vec::Vec<SecurityhubInsightFiltersElThreatIntelIndicatorTypeEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    threat_intel_indicator_value: std
+    ::option
+    ::Option<std::vec::Vec<SecurityhubInsightFiltersElThreatIntelIndicatorValueEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    title: std::option::Option<std::vec::Vec<SecurityhubInsightFiltersElTitleEl>>,
+    #[serde(rename = "type", skip_serializing_if = "std::option::Option::is_none")]
+    type_: std::option::Option<std::vec::Vec<SecurityhubInsightFiltersElTypeEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    updated_at: std::option::Option<std::vec::Vec<SecurityhubInsightFiltersElUpdatedAtEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    user_defined_values: std::option::Option<std::vec::Vec<SecurityhubInsightFiltersElUserDefinedValuesEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    verification_state: std::option::Option<std::vec::Vec<SecurityhubInsightFiltersElVerificationStateEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    workflow_status: std::option::Option<std::vec::Vec<SecurityhubInsightFiltersElWorkflowStatusEl>>,
     dynamic: SecurityhubInsightFiltersElDynamic,
 }
 
 impl SecurityhubInsightFiltersEl {
-    #[doc= "Set the field `aws_account_id`.\n"]
+    #[doc = "Set the field `aws_account_id`.\n"]
     pub fn set_aws_account_id(
         mut self,
-        v: impl Into<BlockAssignable<SecurityhubInsightFiltersElAwsAccountIdEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<SecurityhubInsightFiltersElAwsAccountIdEl>>,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.aws_account_id = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.aws_account_id = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.aws_account_id = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.aws_account_id = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Set the field `company_name`.\n"]
-    pub fn set_company_name(mut self, v: impl Into<BlockAssignable<SecurityhubInsightFiltersElCompanyNameEl>>) -> Self {
+    #[doc = "Set the field `company_name`.\n"]
+    pub fn set_company_name(
+        mut self,
+        v: impl std::convert::Into<terrars::BlockAssignable<SecurityhubInsightFiltersElCompanyNameEl>>,
+    ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.company_name = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.company_name = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.company_name = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.company_name = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Set the field `compliance_status`.\n"]
+    #[doc = "Set the field `compliance_status`.\n"]
     pub fn set_compliance_status(
         mut self,
-        v: impl Into<BlockAssignable<SecurityhubInsightFiltersElComplianceStatusEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<SecurityhubInsightFiltersElComplianceStatusEl>>,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.compliance_status = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.compliance_status = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.compliance_status = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.compliance_status = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Set the field `confidence`.\n"]
-    pub fn set_confidence(mut self, v: impl Into<BlockAssignable<SecurityhubInsightFiltersElConfidenceEl>>) -> Self {
+    #[doc = "Set the field `confidence`.\n"]
+    pub fn set_confidence(
+        mut self,
+        v: impl std::convert::Into<terrars::BlockAssignable<SecurityhubInsightFiltersElConfidenceEl>>,
+    ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.confidence = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.confidence = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.confidence = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.confidence = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Set the field `created_at`.\n"]
-    pub fn set_created_at(mut self, v: impl Into<BlockAssignable<SecurityhubInsightFiltersElCreatedAtEl>>) -> Self {
+    #[doc = "Set the field `created_at`.\n"]
+    pub fn set_created_at(
+        mut self,
+        v: impl std::convert::Into<terrars::BlockAssignable<SecurityhubInsightFiltersElCreatedAtEl>>,
+    ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.created_at = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.created_at = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.created_at = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.created_at = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Set the field `criticality`.\n"]
-    pub fn set_criticality(mut self, v: impl Into<BlockAssignable<SecurityhubInsightFiltersElCriticalityEl>>) -> Self {
+    #[doc = "Set the field `criticality`.\n"]
+    pub fn set_criticality(
+        mut self,
+        v: impl std::convert::Into<terrars::BlockAssignable<SecurityhubInsightFiltersElCriticalityEl>>,
+    ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.criticality = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.criticality = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.criticality = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.criticality = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Set the field `description`.\n"]
-    pub fn set_description(mut self, v: impl Into<BlockAssignable<SecurityhubInsightFiltersElDescriptionEl>>) -> Self {
+    #[doc = "Set the field `description`.\n"]
+    pub fn set_description(
+        mut self,
+        v: impl std::convert::Into<terrars::BlockAssignable<SecurityhubInsightFiltersElDescriptionEl>>,
+    ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.description = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.description = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.description = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.description = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Set the field `finding_provider_fields_confidence`.\n"]
+    #[doc = "Set the field `finding_provider_fields_confidence`.\n"]
     pub fn set_finding_provider_fields_confidence(
         mut self,
-        v: impl Into<BlockAssignable<SecurityhubInsightFiltersElFindingProviderFieldsConfidenceEl>>,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<terrars::BlockAssignable<SecurityhubInsightFiltersElFindingProviderFieldsConfidenceEl>>,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.finding_provider_fields_confidence = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.finding_provider_fields_confidence = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.finding_provider_fields_confidence = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.finding_provider_fields_confidence = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Set the field `finding_provider_fields_criticality`.\n"]
+    #[doc = "Set the field `finding_provider_fields_criticality`.\n"]
     pub fn set_finding_provider_fields_criticality(
         mut self,
-        v: impl Into<BlockAssignable<SecurityhubInsightFiltersElFindingProviderFieldsCriticalityEl>>,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<terrars::BlockAssignable<SecurityhubInsightFiltersElFindingProviderFieldsCriticalityEl>>,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.finding_provider_fields_criticality = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.finding_provider_fields_criticality = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.finding_provider_fields_criticality = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.finding_provider_fields_criticality = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Set the field `finding_provider_fields_related_findings_id`.\n"]
+    #[doc = "Set the field `finding_provider_fields_related_findings_id`.\n"]
     pub fn set_finding_provider_fields_related_findings_id(
         mut self,
-        v: impl Into<BlockAssignable<SecurityhubInsightFiltersElFindingProviderFieldsRelatedFindingsIdEl>>,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<
+                        terrars::BlockAssignable<SecurityhubInsightFiltersElFindingProviderFieldsRelatedFindingsIdEl>,
+                    >,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.finding_provider_fields_related_findings_id = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.finding_provider_fields_related_findings_id = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.finding_provider_fields_related_findings_id = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.finding_provider_fields_related_findings_id = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Set the field `finding_provider_fields_related_findings_product_arn`.\n"]
+    #[doc = "Set the field `finding_provider_fields_related_findings_product_arn`.\n"]
     pub fn set_finding_provider_fields_related_findings_product_arn(
         mut self,
-        v: impl Into<BlockAssignable<SecurityhubInsightFiltersElFindingProviderFieldsRelatedFindingsProductArnEl>>,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<
+                        terrars
+                        ::BlockAssignable<SecurityhubInsightFiltersElFindingProviderFieldsRelatedFindingsProductArnEl>,
+                    >,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.finding_provider_fields_related_findings_product_arn = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.finding_provider_fields_related_findings_product_arn = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.finding_provider_fields_related_findings_product_arn = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.finding_provider_fields_related_findings_product_arn = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Set the field `finding_provider_fields_severity_label`.\n"]
+    #[doc = "Set the field `finding_provider_fields_severity_label`.\n"]
     pub fn set_finding_provider_fields_severity_label(
         mut self,
-        v: impl Into<BlockAssignable<SecurityhubInsightFiltersElFindingProviderFieldsSeverityLabelEl>>,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<terrars::BlockAssignable<SecurityhubInsightFiltersElFindingProviderFieldsSeverityLabelEl>>,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.finding_provider_fields_severity_label = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.finding_provider_fields_severity_label = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.finding_provider_fields_severity_label = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.finding_provider_fields_severity_label = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Set the field `finding_provider_fields_severity_original`.\n"]
+    #[doc = "Set the field `finding_provider_fields_severity_original`.\n"]
     pub fn set_finding_provider_fields_severity_original(
         mut self,
-        v: impl Into<BlockAssignable<SecurityhubInsightFiltersElFindingProviderFieldsSeverityOriginalEl>>,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<
+                        terrars::BlockAssignable<SecurityhubInsightFiltersElFindingProviderFieldsSeverityOriginalEl>,
+                    >,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.finding_provider_fields_severity_original = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.finding_provider_fields_severity_original = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.finding_provider_fields_severity_original = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.finding_provider_fields_severity_original = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Set the field `finding_provider_fields_types`.\n"]
+    #[doc = "Set the field `finding_provider_fields_types`.\n"]
     pub fn set_finding_provider_fields_types(
         mut self,
-        v: impl Into<BlockAssignable<SecurityhubInsightFiltersElFindingProviderFieldsTypesEl>>,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<terrars::BlockAssignable<SecurityhubInsightFiltersElFindingProviderFieldsTypesEl>>,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.finding_provider_fields_types = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.finding_provider_fields_types = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.finding_provider_fields_types = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.finding_provider_fields_types = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Set the field `first_observed_at`.\n"]
+    #[doc = "Set the field `first_observed_at`.\n"]
     pub fn set_first_observed_at(
         mut self,
-        v: impl Into<BlockAssignable<SecurityhubInsightFiltersElFirstObservedAtEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<SecurityhubInsightFiltersElFirstObservedAtEl>>,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.first_observed_at = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.first_observed_at = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.first_observed_at = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.first_observed_at = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Set the field `generator_id`.\n"]
-    pub fn set_generator_id(mut self, v: impl Into<BlockAssignable<SecurityhubInsightFiltersElGeneratorIdEl>>) -> Self {
+    #[doc = "Set the field `generator_id`.\n"]
+    pub fn set_generator_id(
+        mut self,
+        v: impl std::convert::Into<terrars::BlockAssignable<SecurityhubInsightFiltersElGeneratorIdEl>>,
+    ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.generator_id = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.generator_id = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.generator_id = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.generator_id = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Set the field `id`.\n"]
-    pub fn set_id(mut self, v: impl Into<BlockAssignable<SecurityhubInsightFiltersElIdEl>>) -> Self {
+    #[doc = "Set the field `id`.\n"]
+    pub fn set_id(
+        mut self,
+        v: impl std::convert::Into<terrars::BlockAssignable<SecurityhubInsightFiltersElIdEl>>,
+    ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.id = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.id = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.id = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.id = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Set the field `keyword`.\n"]
-    pub fn set_keyword(mut self, v: impl Into<BlockAssignable<SecurityhubInsightFiltersElKeywordEl>>) -> Self {
+    #[doc = "Set the field `keyword`.\n"]
+    pub fn set_keyword(
+        mut self,
+        v: impl std::convert::Into<terrars::BlockAssignable<SecurityhubInsightFiltersElKeywordEl>>,
+    ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.keyword = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.keyword = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.keyword = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.keyword = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Set the field `last_observed_at`.\n"]
+    #[doc = "Set the field `last_observed_at`.\n"]
     pub fn set_last_observed_at(
         mut self,
-        v: impl Into<BlockAssignable<SecurityhubInsightFiltersElLastObservedAtEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<SecurityhubInsightFiltersElLastObservedAtEl>>,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.last_observed_at = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.last_observed_at = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.last_observed_at = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.last_observed_at = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Set the field `malware_name`.\n"]
-    pub fn set_malware_name(mut self, v: impl Into<BlockAssignable<SecurityhubInsightFiltersElMalwareNameEl>>) -> Self {
+    #[doc = "Set the field `malware_name`.\n"]
+    pub fn set_malware_name(
+        mut self,
+        v: impl std::convert::Into<terrars::BlockAssignable<SecurityhubInsightFiltersElMalwareNameEl>>,
+    ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.malware_name = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.malware_name = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.malware_name = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.malware_name = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Set the field `malware_path`.\n"]
-    pub fn set_malware_path(mut self, v: impl Into<BlockAssignable<SecurityhubInsightFiltersElMalwarePathEl>>) -> Self {
+    #[doc = "Set the field `malware_path`.\n"]
+    pub fn set_malware_path(
+        mut self,
+        v: impl std::convert::Into<terrars::BlockAssignable<SecurityhubInsightFiltersElMalwarePathEl>>,
+    ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.malware_path = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.malware_path = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.malware_path = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.malware_path = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Set the field `malware_state`.\n"]
+    #[doc = "Set the field `malware_state`.\n"]
     pub fn set_malware_state(
         mut self,
-        v: impl Into<BlockAssignable<SecurityhubInsightFiltersElMalwareStateEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<SecurityhubInsightFiltersElMalwareStateEl>>,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.malware_state = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.malware_state = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.malware_state = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.malware_state = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Set the field `malware_type`.\n"]
-    pub fn set_malware_type(mut self, v: impl Into<BlockAssignable<SecurityhubInsightFiltersElMalwareTypeEl>>) -> Self {
+    #[doc = "Set the field `malware_type`.\n"]
+    pub fn set_malware_type(
+        mut self,
+        v: impl std::convert::Into<terrars::BlockAssignable<SecurityhubInsightFiltersElMalwareTypeEl>>,
+    ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.malware_type = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.malware_type = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.malware_type = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.malware_type = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Set the field `network_destination_domain`.\n"]
+    #[doc = "Set the field `network_destination_domain`.\n"]
     pub fn set_network_destination_domain(
         mut self,
-        v: impl Into<BlockAssignable<SecurityhubInsightFiltersElNetworkDestinationDomainEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<SecurityhubInsightFiltersElNetworkDestinationDomainEl>>,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.network_destination_domain = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.network_destination_domain = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.network_destination_domain = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.network_destination_domain = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Set the field `network_destination_ipv4`.\n"]
+    #[doc = "Set the field `network_destination_ipv4`.\n"]
     pub fn set_network_destination_ipv4(
         mut self,
-        v: impl Into<BlockAssignable<SecurityhubInsightFiltersElNetworkDestinationIpv4El>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<SecurityhubInsightFiltersElNetworkDestinationIpv4El>>,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.network_destination_ipv4 = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.network_destination_ipv4 = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.network_destination_ipv4 = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.network_destination_ipv4 = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Set the field `network_destination_ipv6`.\n"]
+    #[doc = "Set the field `network_destination_ipv6`.\n"]
     pub fn set_network_destination_ipv6(
         mut self,
-        v: impl Into<BlockAssignable<SecurityhubInsightFiltersElNetworkDestinationIpv6El>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<SecurityhubInsightFiltersElNetworkDestinationIpv6El>>,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.network_destination_ipv6 = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.network_destination_ipv6 = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.network_destination_ipv6 = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.network_destination_ipv6 = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Set the field `network_destination_port`.\n"]
+    #[doc = "Set the field `network_destination_port`.\n"]
     pub fn set_network_destination_port(
         mut self,
-        v: impl Into<BlockAssignable<SecurityhubInsightFiltersElNetworkDestinationPortEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<SecurityhubInsightFiltersElNetworkDestinationPortEl>>,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.network_destination_port = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.network_destination_port = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.network_destination_port = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.network_destination_port = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Set the field `network_direction`.\n"]
+    #[doc = "Set the field `network_direction`.\n"]
     pub fn set_network_direction(
         mut self,
-        v: impl Into<BlockAssignable<SecurityhubInsightFiltersElNetworkDirectionEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<SecurityhubInsightFiltersElNetworkDirectionEl>>,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.network_direction = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.network_direction = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.network_direction = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.network_direction = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Set the field `network_protocol`.\n"]
+    #[doc = "Set the field `network_protocol`.\n"]
     pub fn set_network_protocol(
         mut self,
-        v: impl Into<BlockAssignable<SecurityhubInsightFiltersElNetworkProtocolEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<SecurityhubInsightFiltersElNetworkProtocolEl>>,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.network_protocol = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.network_protocol = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.network_protocol = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.network_protocol = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Set the field `network_source_domain`.\n"]
+    #[doc = "Set the field `network_source_domain`.\n"]
     pub fn set_network_source_domain(
         mut self,
-        v: impl Into<BlockAssignable<SecurityhubInsightFiltersElNetworkSourceDomainEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<SecurityhubInsightFiltersElNetworkSourceDomainEl>>,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.network_source_domain = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.network_source_domain = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.network_source_domain = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.network_source_domain = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Set the field `network_source_ipv4`.\n"]
+    #[doc = "Set the field `network_source_ipv4`.\n"]
     pub fn set_network_source_ipv4(
         mut self,
-        v: impl Into<BlockAssignable<SecurityhubInsightFiltersElNetworkSourceIpv4El>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<SecurityhubInsightFiltersElNetworkSourceIpv4El>>,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.network_source_ipv4 = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.network_source_ipv4 = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.network_source_ipv4 = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.network_source_ipv4 = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Set the field `network_source_ipv6`.\n"]
+    #[doc = "Set the field `network_source_ipv6`.\n"]
     pub fn set_network_source_ipv6(
         mut self,
-        v: impl Into<BlockAssignable<SecurityhubInsightFiltersElNetworkSourceIpv6El>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<SecurityhubInsightFiltersElNetworkSourceIpv6El>>,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.network_source_ipv6 = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.network_source_ipv6 = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.network_source_ipv6 = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.network_source_ipv6 = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Set the field `network_source_mac`.\n"]
+    #[doc = "Set the field `network_source_mac`.\n"]
     pub fn set_network_source_mac(
         mut self,
-        v: impl Into<BlockAssignable<SecurityhubInsightFiltersElNetworkSourceMacEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<SecurityhubInsightFiltersElNetworkSourceMacEl>>,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.network_source_mac = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.network_source_mac = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.network_source_mac = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.network_source_mac = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Set the field `network_source_port`.\n"]
+    #[doc = "Set the field `network_source_port`.\n"]
     pub fn set_network_source_port(
         mut self,
-        v: impl Into<BlockAssignable<SecurityhubInsightFiltersElNetworkSourcePortEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<SecurityhubInsightFiltersElNetworkSourcePortEl>>,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.network_source_port = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.network_source_port = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.network_source_port = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.network_source_port = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Set the field `note_text`.\n"]
-    pub fn set_note_text(mut self, v: impl Into<BlockAssignable<SecurityhubInsightFiltersElNoteTextEl>>) -> Self {
+    #[doc = "Set the field `note_text`.\n"]
+    pub fn set_note_text(
+        mut self,
+        v: impl std::convert::Into<terrars::BlockAssignable<SecurityhubInsightFiltersElNoteTextEl>>,
+    ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.note_text = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.note_text = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.note_text = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.note_text = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Set the field `note_updated_at`.\n"]
+    #[doc = "Set the field `note_updated_at`.\n"]
     pub fn set_note_updated_at(
         mut self,
-        v: impl Into<BlockAssignable<SecurityhubInsightFiltersElNoteUpdatedAtEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<SecurityhubInsightFiltersElNoteUpdatedAtEl>>,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.note_updated_at = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.note_updated_at = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.note_updated_at = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.note_updated_at = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Set the field `note_updated_by`.\n"]
+    #[doc = "Set the field `note_updated_by`.\n"]
     pub fn set_note_updated_by(
         mut self,
-        v: impl Into<BlockAssignable<SecurityhubInsightFiltersElNoteUpdatedByEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<SecurityhubInsightFiltersElNoteUpdatedByEl>>,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.note_updated_by = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.note_updated_by = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.note_updated_by = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.note_updated_by = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Set the field `process_launched_at`.\n"]
+    #[doc = "Set the field `process_launched_at`.\n"]
     pub fn set_process_launched_at(
         mut self,
-        v: impl Into<BlockAssignable<SecurityhubInsightFiltersElProcessLaunchedAtEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<SecurityhubInsightFiltersElProcessLaunchedAtEl>>,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.process_launched_at = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.process_launched_at = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.process_launched_at = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.process_launched_at = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Set the field `process_name`.\n"]
-    pub fn set_process_name(mut self, v: impl Into<BlockAssignable<SecurityhubInsightFiltersElProcessNameEl>>) -> Self {
+    #[doc = "Set the field `process_name`.\n"]
+    pub fn set_process_name(
+        mut self,
+        v: impl std::convert::Into<terrars::BlockAssignable<SecurityhubInsightFiltersElProcessNameEl>>,
+    ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.process_name = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.process_name = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.process_name = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.process_name = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Set the field `process_parent_pid`.\n"]
+    #[doc = "Set the field `process_parent_pid`.\n"]
     pub fn set_process_parent_pid(
         mut self,
-        v: impl Into<BlockAssignable<SecurityhubInsightFiltersElProcessParentPidEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<SecurityhubInsightFiltersElProcessParentPidEl>>,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.process_parent_pid = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.process_parent_pid = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.process_parent_pid = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.process_parent_pid = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Set the field `process_path`.\n"]
-    pub fn set_process_path(mut self, v: impl Into<BlockAssignable<SecurityhubInsightFiltersElProcessPathEl>>) -> Self {
+    #[doc = "Set the field `process_path`.\n"]
+    pub fn set_process_path(
+        mut self,
+        v: impl std::convert::Into<terrars::BlockAssignable<SecurityhubInsightFiltersElProcessPathEl>>,
+    ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.process_path = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.process_path = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.process_path = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.process_path = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Set the field `process_pid`.\n"]
-    pub fn set_process_pid(mut self, v: impl Into<BlockAssignable<SecurityhubInsightFiltersElProcessPidEl>>) -> Self {
+    #[doc = "Set the field `process_pid`.\n"]
+    pub fn set_process_pid(
+        mut self,
+        v: impl std::convert::Into<terrars::BlockAssignable<SecurityhubInsightFiltersElProcessPidEl>>,
+    ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.process_pid = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.process_pid = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.process_pid = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.process_pid = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Set the field `process_terminated_at`.\n"]
+    #[doc = "Set the field `process_terminated_at`.\n"]
     pub fn set_process_terminated_at(
         mut self,
-        v: impl Into<BlockAssignable<SecurityhubInsightFiltersElProcessTerminatedAtEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<SecurityhubInsightFiltersElProcessTerminatedAtEl>>,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.process_terminated_at = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.process_terminated_at = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.process_terminated_at = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.process_terminated_at = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Set the field `product_arn`.\n"]
-    pub fn set_product_arn(mut self, v: impl Into<BlockAssignable<SecurityhubInsightFiltersElProductArnEl>>) -> Self {
+    #[doc = "Set the field `product_arn`.\n"]
+    pub fn set_product_arn(
+        mut self,
+        v: impl std::convert::Into<terrars::BlockAssignable<SecurityhubInsightFiltersElProductArnEl>>,
+    ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.product_arn = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.product_arn = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.product_arn = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.product_arn = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Set the field `product_fields`.\n"]
+    #[doc = "Set the field `product_fields`.\n"]
     pub fn set_product_fields(
         mut self,
-        v: impl Into<BlockAssignable<SecurityhubInsightFiltersElProductFieldsEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<SecurityhubInsightFiltersElProductFieldsEl>>,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.product_fields = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.product_fields = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.product_fields = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.product_fields = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Set the field `product_name`.\n"]
-    pub fn set_product_name(mut self, v: impl Into<BlockAssignable<SecurityhubInsightFiltersElProductNameEl>>) -> Self {
+    #[doc = "Set the field `product_name`.\n"]
+    pub fn set_product_name(
+        mut self,
+        v: impl std::convert::Into<terrars::BlockAssignable<SecurityhubInsightFiltersElProductNameEl>>,
+    ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.product_name = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.product_name = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.product_name = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.product_name = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Set the field `recommendation_text`.\n"]
+    #[doc = "Set the field `recommendation_text`.\n"]
     pub fn set_recommendation_text(
         mut self,
-        v: impl Into<BlockAssignable<SecurityhubInsightFiltersElRecommendationTextEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<SecurityhubInsightFiltersElRecommendationTextEl>>,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.recommendation_text = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.recommendation_text = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.recommendation_text = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.recommendation_text = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Set the field `record_state`.\n"]
-    pub fn set_record_state(mut self, v: impl Into<BlockAssignable<SecurityhubInsightFiltersElRecordStateEl>>) -> Self {
+    #[doc = "Set the field `record_state`.\n"]
+    pub fn set_record_state(
+        mut self,
+        v: impl std::convert::Into<terrars::BlockAssignable<SecurityhubInsightFiltersElRecordStateEl>>,
+    ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.record_state = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.record_state = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.record_state = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.record_state = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Set the field `related_findings_id`.\n"]
+    #[doc = "Set the field `related_findings_id`.\n"]
     pub fn set_related_findings_id(
         mut self,
-        v: impl Into<BlockAssignable<SecurityhubInsightFiltersElRelatedFindingsIdEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<SecurityhubInsightFiltersElRelatedFindingsIdEl>>,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.related_findings_id = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.related_findings_id = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.related_findings_id = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.related_findings_id = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Set the field `related_findings_product_arn`.\n"]
+    #[doc = "Set the field `related_findings_product_arn`.\n"]
     pub fn set_related_findings_product_arn(
         mut self,
-        v: impl Into<BlockAssignable<SecurityhubInsightFiltersElRelatedFindingsProductArnEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<SecurityhubInsightFiltersElRelatedFindingsProductArnEl>>,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.related_findings_product_arn = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.related_findings_product_arn = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.related_findings_product_arn = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.related_findings_product_arn = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Set the field `resource_aws_ec2_instance_iam_instance_profile_arn`.\n"]
+    #[doc = "Set the field `resource_aws_ec2_instance_iam_instance_profile_arn`.\n"]
     pub fn set_resource_aws_ec2_instance_iam_instance_profile_arn(
         mut self,
-        v: impl Into<BlockAssignable<SecurityhubInsightFiltersElResourceAwsEc2InstanceIamInstanceProfileArnEl>>,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<
+                        terrars
+                        ::BlockAssignable<SecurityhubInsightFiltersElResourceAwsEc2InstanceIamInstanceProfileArnEl>,
+                    >,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.resource_aws_ec2_instance_iam_instance_profile_arn = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.resource_aws_ec2_instance_iam_instance_profile_arn = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.resource_aws_ec2_instance_iam_instance_profile_arn = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.resource_aws_ec2_instance_iam_instance_profile_arn = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Set the field `resource_aws_ec2_instance_image_id`.\n"]
+    #[doc = "Set the field `resource_aws_ec2_instance_image_id`.\n"]
     pub fn set_resource_aws_ec2_instance_image_id(
         mut self,
-        v: impl Into<BlockAssignable<SecurityhubInsightFiltersElResourceAwsEc2InstanceImageIdEl>>,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<terrars::BlockAssignable<SecurityhubInsightFiltersElResourceAwsEc2InstanceImageIdEl>>,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.resource_aws_ec2_instance_image_id = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.resource_aws_ec2_instance_image_id = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.resource_aws_ec2_instance_image_id = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.resource_aws_ec2_instance_image_id = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Set the field `resource_aws_ec2_instance_ipv4_addresses`.\n"]
+    #[doc = "Set the field `resource_aws_ec2_instance_ipv4_addresses`.\n"]
     pub fn set_resource_aws_ec2_instance_ipv4_addresses(
         mut self,
-        v: impl Into<BlockAssignable<SecurityhubInsightFiltersElResourceAwsEc2InstanceIpv4AddressesEl>>,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<
+                        terrars::BlockAssignable<SecurityhubInsightFiltersElResourceAwsEc2InstanceIpv4AddressesEl>,
+                    >,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.resource_aws_ec2_instance_ipv4_addresses = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.resource_aws_ec2_instance_ipv4_addresses = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.resource_aws_ec2_instance_ipv4_addresses = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.resource_aws_ec2_instance_ipv4_addresses = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Set the field `resource_aws_ec2_instance_ipv6_addresses`.\n"]
+    #[doc = "Set the field `resource_aws_ec2_instance_ipv6_addresses`.\n"]
     pub fn set_resource_aws_ec2_instance_ipv6_addresses(
         mut self,
-        v: impl Into<BlockAssignable<SecurityhubInsightFiltersElResourceAwsEc2InstanceIpv6AddressesEl>>,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<
+                        terrars::BlockAssignable<SecurityhubInsightFiltersElResourceAwsEc2InstanceIpv6AddressesEl>,
+                    >,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.resource_aws_ec2_instance_ipv6_addresses = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.resource_aws_ec2_instance_ipv6_addresses = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.resource_aws_ec2_instance_ipv6_addresses = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.resource_aws_ec2_instance_ipv6_addresses = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Set the field `resource_aws_ec2_instance_key_name`.\n"]
+    #[doc = "Set the field `resource_aws_ec2_instance_key_name`.\n"]
     pub fn set_resource_aws_ec2_instance_key_name(
         mut self,
-        v: impl Into<BlockAssignable<SecurityhubInsightFiltersElResourceAwsEc2InstanceKeyNameEl>>,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<terrars::BlockAssignable<SecurityhubInsightFiltersElResourceAwsEc2InstanceKeyNameEl>>,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.resource_aws_ec2_instance_key_name = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.resource_aws_ec2_instance_key_name = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.resource_aws_ec2_instance_key_name = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.resource_aws_ec2_instance_key_name = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Set the field `resource_aws_ec2_instance_launched_at`.\n"]
+    #[doc = "Set the field `resource_aws_ec2_instance_launched_at`.\n"]
     pub fn set_resource_aws_ec2_instance_launched_at(
         mut self,
-        v: impl Into<BlockAssignable<SecurityhubInsightFiltersElResourceAwsEc2InstanceLaunchedAtEl>>,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<terrars::BlockAssignable<SecurityhubInsightFiltersElResourceAwsEc2InstanceLaunchedAtEl>>,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.resource_aws_ec2_instance_launched_at = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.resource_aws_ec2_instance_launched_at = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.resource_aws_ec2_instance_launched_at = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.resource_aws_ec2_instance_launched_at = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Set the field `resource_aws_ec2_instance_subnet_id`.\n"]
+    #[doc = "Set the field `resource_aws_ec2_instance_subnet_id`.\n"]
     pub fn set_resource_aws_ec2_instance_subnet_id(
         mut self,
-        v: impl Into<BlockAssignable<SecurityhubInsightFiltersElResourceAwsEc2InstanceSubnetIdEl>>,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<terrars::BlockAssignable<SecurityhubInsightFiltersElResourceAwsEc2InstanceSubnetIdEl>>,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.resource_aws_ec2_instance_subnet_id = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.resource_aws_ec2_instance_subnet_id = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.resource_aws_ec2_instance_subnet_id = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.resource_aws_ec2_instance_subnet_id = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Set the field `resource_aws_ec2_instance_type`.\n"]
+    #[doc = "Set the field `resource_aws_ec2_instance_type`.\n"]
     pub fn set_resource_aws_ec2_instance_type(
         mut self,
-        v: impl Into<BlockAssignable<SecurityhubInsightFiltersElResourceAwsEc2InstanceTypeEl>>,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<terrars::BlockAssignable<SecurityhubInsightFiltersElResourceAwsEc2InstanceTypeEl>>,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.resource_aws_ec2_instance_type = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.resource_aws_ec2_instance_type = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.resource_aws_ec2_instance_type = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.resource_aws_ec2_instance_type = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Set the field `resource_aws_ec2_instance_vpc_id`.\n"]
+    #[doc = "Set the field `resource_aws_ec2_instance_vpc_id`.\n"]
     pub fn set_resource_aws_ec2_instance_vpc_id(
         mut self,
-        v: impl Into<BlockAssignable<SecurityhubInsightFiltersElResourceAwsEc2InstanceVpcIdEl>>,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<terrars::BlockAssignable<SecurityhubInsightFiltersElResourceAwsEc2InstanceVpcIdEl>>,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.resource_aws_ec2_instance_vpc_id = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.resource_aws_ec2_instance_vpc_id = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.resource_aws_ec2_instance_vpc_id = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.resource_aws_ec2_instance_vpc_id = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Set the field `resource_aws_iam_access_key_created_at`.\n"]
+    #[doc = "Set the field `resource_aws_iam_access_key_created_at`.\n"]
     pub fn set_resource_aws_iam_access_key_created_at(
         mut self,
-        v: impl Into<BlockAssignable<SecurityhubInsightFiltersElResourceAwsIamAccessKeyCreatedAtEl>>,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<terrars::BlockAssignable<SecurityhubInsightFiltersElResourceAwsIamAccessKeyCreatedAtEl>>,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.resource_aws_iam_access_key_created_at = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.resource_aws_iam_access_key_created_at = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.resource_aws_iam_access_key_created_at = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.resource_aws_iam_access_key_created_at = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Set the field `resource_aws_iam_access_key_status`.\n"]
+    #[doc = "Set the field `resource_aws_iam_access_key_status`.\n"]
     pub fn set_resource_aws_iam_access_key_status(
         mut self,
-        v: impl Into<BlockAssignable<SecurityhubInsightFiltersElResourceAwsIamAccessKeyStatusEl>>,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<terrars::BlockAssignable<SecurityhubInsightFiltersElResourceAwsIamAccessKeyStatusEl>>,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.resource_aws_iam_access_key_status = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.resource_aws_iam_access_key_status = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.resource_aws_iam_access_key_status = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.resource_aws_iam_access_key_status = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Set the field `resource_aws_iam_access_key_user_name`.\n"]
+    #[doc = "Set the field `resource_aws_iam_access_key_user_name`.\n"]
     pub fn set_resource_aws_iam_access_key_user_name(
         mut self,
-        v: impl Into<BlockAssignable<SecurityhubInsightFiltersElResourceAwsIamAccessKeyUserNameEl>>,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<terrars::BlockAssignable<SecurityhubInsightFiltersElResourceAwsIamAccessKeyUserNameEl>>,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.resource_aws_iam_access_key_user_name = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.resource_aws_iam_access_key_user_name = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.resource_aws_iam_access_key_user_name = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.resource_aws_iam_access_key_user_name = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Set the field `resource_aws_s3_bucket_owner_id`.\n"]
+    #[doc = "Set the field `resource_aws_s3_bucket_owner_id`.\n"]
     pub fn set_resource_aws_s3_bucket_owner_id(
         mut self,
-        v: impl Into<BlockAssignable<SecurityhubInsightFiltersElResourceAwsS3BucketOwnerIdEl>>,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<terrars::BlockAssignable<SecurityhubInsightFiltersElResourceAwsS3BucketOwnerIdEl>>,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.resource_aws_s3_bucket_owner_id = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.resource_aws_s3_bucket_owner_id = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.resource_aws_s3_bucket_owner_id = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.resource_aws_s3_bucket_owner_id = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Set the field `resource_aws_s3_bucket_owner_name`.\n"]
+    #[doc = "Set the field `resource_aws_s3_bucket_owner_name`.\n"]
     pub fn set_resource_aws_s3_bucket_owner_name(
         mut self,
-        v: impl Into<BlockAssignable<SecurityhubInsightFiltersElResourceAwsS3BucketOwnerNameEl>>,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<terrars::BlockAssignable<SecurityhubInsightFiltersElResourceAwsS3BucketOwnerNameEl>>,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.resource_aws_s3_bucket_owner_name = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.resource_aws_s3_bucket_owner_name = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.resource_aws_s3_bucket_owner_name = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.resource_aws_s3_bucket_owner_name = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Set the field `resource_container_image_id`.\n"]
+    #[doc = "Set the field `resource_container_image_id`.\n"]
     pub fn set_resource_container_image_id(
         mut self,
-        v: impl Into<BlockAssignable<SecurityhubInsightFiltersElResourceContainerImageIdEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<SecurityhubInsightFiltersElResourceContainerImageIdEl>>,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.resource_container_image_id = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.resource_container_image_id = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.resource_container_image_id = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.resource_container_image_id = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Set the field `resource_container_image_name`.\n"]
+    #[doc = "Set the field `resource_container_image_name`.\n"]
     pub fn set_resource_container_image_name(
         mut self,
-        v: impl Into<BlockAssignable<SecurityhubInsightFiltersElResourceContainerImageNameEl>>,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<terrars::BlockAssignable<SecurityhubInsightFiltersElResourceContainerImageNameEl>>,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.resource_container_image_name = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.resource_container_image_name = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.resource_container_image_name = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.resource_container_image_name = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Set the field `resource_container_launched_at`.\n"]
+    #[doc = "Set the field `resource_container_launched_at`.\n"]
     pub fn set_resource_container_launched_at(
         mut self,
-        v: impl Into<BlockAssignable<SecurityhubInsightFiltersElResourceContainerLaunchedAtEl>>,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<terrars::BlockAssignable<SecurityhubInsightFiltersElResourceContainerLaunchedAtEl>>,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.resource_container_launched_at = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.resource_container_launched_at = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.resource_container_launched_at = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.resource_container_launched_at = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Set the field `resource_container_name`.\n"]
+    #[doc = "Set the field `resource_container_name`.\n"]
     pub fn set_resource_container_name(
         mut self,
-        v: impl Into<BlockAssignable<SecurityhubInsightFiltersElResourceContainerNameEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<SecurityhubInsightFiltersElResourceContainerNameEl>>,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.resource_container_name = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.resource_container_name = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.resource_container_name = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.resource_container_name = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Set the field `resource_details_other`.\n"]
+    #[doc = "Set the field `resource_details_other`.\n"]
     pub fn set_resource_details_other(
         mut self,
-        v: impl Into<BlockAssignable<SecurityhubInsightFiltersElResourceDetailsOtherEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<SecurityhubInsightFiltersElResourceDetailsOtherEl>>,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.resource_details_other = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.resource_details_other = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.resource_details_other = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.resource_details_other = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Set the field `resource_id`.\n"]
-    pub fn set_resource_id(mut self, v: impl Into<BlockAssignable<SecurityhubInsightFiltersElResourceIdEl>>) -> Self {
+    #[doc = "Set the field `resource_id`.\n"]
+    pub fn set_resource_id(
+        mut self,
+        v: impl std::convert::Into<terrars::BlockAssignable<SecurityhubInsightFiltersElResourceIdEl>>,
+    ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.resource_id = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.resource_id = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.resource_id = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.resource_id = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Set the field `resource_partition`.\n"]
+    #[doc = "Set the field `resource_partition`.\n"]
     pub fn set_resource_partition(
         mut self,
-        v: impl Into<BlockAssignable<SecurityhubInsightFiltersElResourcePartitionEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<SecurityhubInsightFiltersElResourcePartitionEl>>,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.resource_partition = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.resource_partition = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.resource_partition = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.resource_partition = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Set the field `resource_region`.\n"]
+    #[doc = "Set the field `resource_region`.\n"]
     pub fn set_resource_region(
         mut self,
-        v: impl Into<BlockAssignable<SecurityhubInsightFiltersElResourceRegionEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<SecurityhubInsightFiltersElResourceRegionEl>>,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.resource_region = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.resource_region = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.resource_region = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.resource_region = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Set the field `resource_tags`.\n"]
+    #[doc = "Set the field `resource_tags`.\n"]
     pub fn set_resource_tags(
         mut self,
-        v: impl Into<BlockAssignable<SecurityhubInsightFiltersElResourceTagsEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<SecurityhubInsightFiltersElResourceTagsEl>>,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.resource_tags = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.resource_tags = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.resource_tags = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.resource_tags = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Set the field `resource_type`.\n"]
+    #[doc = "Set the field `resource_type`.\n"]
     pub fn set_resource_type(
         mut self,
-        v: impl Into<BlockAssignable<SecurityhubInsightFiltersElResourceTypeEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<SecurityhubInsightFiltersElResourceTypeEl>>,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.resource_type = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.resource_type = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.resource_type = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.resource_type = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Set the field `severity_label`.\n"]
+    #[doc = "Set the field `severity_label`.\n"]
     pub fn set_severity_label(
         mut self,
-        v: impl Into<BlockAssignable<SecurityhubInsightFiltersElSeverityLabelEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<SecurityhubInsightFiltersElSeverityLabelEl>>,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.severity_label = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.severity_label = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.severity_label = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.severity_label = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Set the field `source_url`.\n"]
-    pub fn set_source_url(mut self, v: impl Into<BlockAssignable<SecurityhubInsightFiltersElSourceUrlEl>>) -> Self {
+    #[doc = "Set the field `source_url`.\n"]
+    pub fn set_source_url(
+        mut self,
+        v: impl std::convert::Into<terrars::BlockAssignable<SecurityhubInsightFiltersElSourceUrlEl>>,
+    ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.source_url = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.source_url = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.source_url = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.source_url = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Set the field `threat_intel_indicator_category`.\n"]
+    #[doc = "Set the field `threat_intel_indicator_category`.\n"]
     pub fn set_threat_intel_indicator_category(
         mut self,
-        v: impl Into<BlockAssignable<SecurityhubInsightFiltersElThreatIntelIndicatorCategoryEl>>,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<terrars::BlockAssignable<SecurityhubInsightFiltersElThreatIntelIndicatorCategoryEl>>,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.threat_intel_indicator_category = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.threat_intel_indicator_category = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.threat_intel_indicator_category = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.threat_intel_indicator_category = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Set the field `threat_intel_indicator_last_observed_at`.\n"]
+    #[doc = "Set the field `threat_intel_indicator_last_observed_at`.\n"]
     pub fn set_threat_intel_indicator_last_observed_at(
         mut self,
-        v: impl Into<BlockAssignable<SecurityhubInsightFiltersElThreatIntelIndicatorLastObservedAtEl>>,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<terrars::BlockAssignable<SecurityhubInsightFiltersElThreatIntelIndicatorLastObservedAtEl>>,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.threat_intel_indicator_last_observed_at = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.threat_intel_indicator_last_observed_at = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.threat_intel_indicator_last_observed_at = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.threat_intel_indicator_last_observed_at = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Set the field `threat_intel_indicator_source`.\n"]
+    #[doc = "Set the field `threat_intel_indicator_source`.\n"]
     pub fn set_threat_intel_indicator_source(
         mut self,
-        v: impl Into<BlockAssignable<SecurityhubInsightFiltersElThreatIntelIndicatorSourceEl>>,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<terrars::BlockAssignable<SecurityhubInsightFiltersElThreatIntelIndicatorSourceEl>>,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.threat_intel_indicator_source = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.threat_intel_indicator_source = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.threat_intel_indicator_source = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.threat_intel_indicator_source = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Set the field `threat_intel_indicator_source_url`.\n"]
+    #[doc = "Set the field `threat_intel_indicator_source_url`.\n"]
     pub fn set_threat_intel_indicator_source_url(
         mut self,
-        v: impl Into<BlockAssignable<SecurityhubInsightFiltersElThreatIntelIndicatorSourceUrlEl>>,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<terrars::BlockAssignable<SecurityhubInsightFiltersElThreatIntelIndicatorSourceUrlEl>>,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.threat_intel_indicator_source_url = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.threat_intel_indicator_source_url = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.threat_intel_indicator_source_url = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.threat_intel_indicator_source_url = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Set the field `threat_intel_indicator_type`.\n"]
+    #[doc = "Set the field `threat_intel_indicator_type`.\n"]
     pub fn set_threat_intel_indicator_type(
         mut self,
-        v: impl Into<BlockAssignable<SecurityhubInsightFiltersElThreatIntelIndicatorTypeEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<SecurityhubInsightFiltersElThreatIntelIndicatorTypeEl>>,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.threat_intel_indicator_type = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.threat_intel_indicator_type = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.threat_intel_indicator_type = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.threat_intel_indicator_type = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Set the field `threat_intel_indicator_value`.\n"]
+    #[doc = "Set the field `threat_intel_indicator_value`.\n"]
     pub fn set_threat_intel_indicator_value(
         mut self,
-        v: impl Into<BlockAssignable<SecurityhubInsightFiltersElThreatIntelIndicatorValueEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<SecurityhubInsightFiltersElThreatIntelIndicatorValueEl>>,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.threat_intel_indicator_value = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.threat_intel_indicator_value = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.threat_intel_indicator_value = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.threat_intel_indicator_value = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Set the field `title`.\n"]
-    pub fn set_title(mut self, v: impl Into<BlockAssignable<SecurityhubInsightFiltersElTitleEl>>) -> Self {
+    #[doc = "Set the field `title`.\n"]
+    pub fn set_title(
+        mut self,
+        v: impl std::convert::Into<terrars::BlockAssignable<SecurityhubInsightFiltersElTitleEl>>,
+    ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.title = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.title = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.title = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.title = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Set the field `type_`.\n"]
-    pub fn set_type(mut self, v: impl Into<BlockAssignable<SecurityhubInsightFiltersElTypeEl>>) -> Self {
+    #[doc = "Set the field `type_`.\n"]
+    pub fn set_type(
+        mut self,
+        v: impl std::convert::Into<terrars::BlockAssignable<SecurityhubInsightFiltersElTypeEl>>,
+    ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.type_ = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.type_ = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.type_ = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.type_ = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Set the field `updated_at`.\n"]
-    pub fn set_updated_at(mut self, v: impl Into<BlockAssignable<SecurityhubInsightFiltersElUpdatedAtEl>>) -> Self {
+    #[doc = "Set the field `updated_at`.\n"]
+    pub fn set_updated_at(
+        mut self,
+        v: impl std::convert::Into<terrars::BlockAssignable<SecurityhubInsightFiltersElUpdatedAtEl>>,
+    ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.updated_at = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.updated_at = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.updated_at = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.updated_at = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Set the field `user_defined_values`.\n"]
+    #[doc = "Set the field `user_defined_values`.\n"]
     pub fn set_user_defined_values(
         mut self,
-        v: impl Into<BlockAssignable<SecurityhubInsightFiltersElUserDefinedValuesEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<SecurityhubInsightFiltersElUserDefinedValuesEl>>,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.user_defined_values = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.user_defined_values = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.user_defined_values = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.user_defined_values = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Set the field `verification_state`.\n"]
+    #[doc = "Set the field `verification_state`.\n"]
     pub fn set_verification_state(
         mut self,
-        v: impl Into<BlockAssignable<SecurityhubInsightFiltersElVerificationStateEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<SecurityhubInsightFiltersElVerificationStateEl>>,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.verification_state = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.verification_state = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.verification_state = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.verification_state = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Set the field `workflow_status`.\n"]
+    #[doc = "Set the field `workflow_status`.\n"]
     pub fn set_workflow_status(
         mut self,
-        v: impl Into<BlockAssignable<SecurityhubInsightFiltersElWorkflowStatusEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<SecurityhubInsightFiltersElWorkflowStatusEl>>,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.workflow_status = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.workflow_status = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.workflow_status = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.workflow_status = std::option::Option::Some(d);
             },
         }
         self
     }
 }
 
-impl ToListMappable for SecurityhubInsightFiltersEl {
-    type O = BlockAssignable<SecurityhubInsightFiltersEl>;
+impl terrars::ToListMappable for SecurityhubInsightFiltersEl {
+    type O = terrars::BlockAssignable<SecurityhubInsightFiltersEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -9158,18 +9754,18 @@ impl BuildSecurityhubInsightFiltersEl {
             user_defined_values: core::default::Default::default(),
             verification_state: core::default::Default::default(),
             workflow_status: core::default::Default::default(),
-            dynamic: Default::default(),
+            dynamic: core::default::Default::default(),
         }
     }
 }
 
 pub struct SecurityhubInsightFiltersElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for SecurityhubInsightFiltersElRef {
-    fn new(shared: StackShared, base: String) -> SecurityhubInsightFiltersElRef {
+impl terrars::Ref for SecurityhubInsightFiltersElRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> SecurityhubInsightFiltersElRef {
         SecurityhubInsightFiltersElRef {
             shared: shared,
             base: base.to_string(),
@@ -9178,12 +9774,12 @@ impl Ref for SecurityhubInsightFiltersElRef {
 }
 
 impl SecurityhubInsightFiltersElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 }
 
 #[derive(Serialize, Default)]
 struct SecurityhubInsightDynamic {
-    filters: Option<DynamicBlock<SecurityhubInsightFiltersEl>>,
+    filters: std::option::Option<terrars::DynamicBlock<SecurityhubInsightFiltersEl>>,
 }

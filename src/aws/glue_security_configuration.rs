@@ -1,48 +1,52 @@
 use serde::Serialize;
-use std::cell::RefCell;
-use std::rc::Rc;
-use terrars::*;
+use terrars::{
+    Referable as _,
+    Resource_ as _,
+    Ref as _,
+};
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
 struct GlueSecurityConfigurationData {
-    #[serde(skip_serializing_if = "Vec::is_empty")]
-    depends_on: Vec<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    provider: Option<String>,
-    #[serde(skip_serializing_if = "SerdeSkipDefault::is_default")]
-    lifecycle: ResourceLifecycle,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    for_each: Option<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    id: Option<PrimField<String>>,
-    name: PrimField<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    encryption_configuration: Option<Vec<GlueSecurityConfigurationEncryptionConfigurationEl>>,
+    #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
+    depends_on: std::vec::Vec<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    provider: std::option::Option<std::string::String>,
+    #[serde(skip_serializing_if = "terrars::SerdeSkipDefault::is_default")]
+    lifecycle: terrars::ResourceLifecycle,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    for_each: std::option::Option<std::string::String>,
+    #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
+    provisioner: std::vec::Vec<terrars::Provisioner>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    id: std::option::Option<terrars::PrimField<std::string::String>>,
+    name: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    encryption_configuration: std::option::Option<std::vec::Vec<GlueSecurityConfigurationEncryptionConfigurationEl>>,
     dynamic: GlueSecurityConfigurationDynamic,
 }
 
 struct GlueSecurityConfiguration_ {
-    shared: StackShared,
-    tf_id: String,
-    data: RefCell<GlueSecurityConfigurationData>,
+    shared: terrars::StackShared,
+    tf_id: std::string::String,
+    data: std::cell::RefCell<GlueSecurityConfigurationData>,
 }
 
 #[derive(Clone)]
-pub struct GlueSecurityConfiguration(Rc<GlueSecurityConfiguration_>);
+pub struct GlueSecurityConfiguration(std::rc::Rc<GlueSecurityConfiguration_>);
 
 impl GlueSecurityConfiguration {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.0.shared
     }
 
-    pub fn depends_on(self, dep: &impl Referable) -> Self {
+    pub fn depends_on(self, dep: &impl terrars::Referable) -> Self {
         self.0.data.borrow_mut().depends_on.push(dep.extract_ref());
         self
     }
 
     pub fn set_provider(self, provider: &ProviderAws) -> Self {
-        self.0.data.borrow_mut().provider = Some(provider.provider_ref());
+        self.0.data.borrow_mut().provider = std::option::Option::Some(provider.provider_ref());
         self
     }
 
@@ -57,102 +61,135 @@ impl GlueSecurityConfiguration {
     }
 
     pub fn ignore_changes_to_all(self) -> Self {
-        self.0.data.borrow_mut().lifecycle.ignore_changes = Some(IgnoreChanges::All(IgnoreChangesAll::All));
+        self.0.data.borrow_mut().lifecycle.ignore_changes =
+            std::option::Option::Some(terrars::IgnoreChanges::All(terrars::IgnoreChangesAll::All));
         self
     }
 
-    pub fn ignore_changes_to_attr(self, attr: impl ToString) -> Self {
+    pub fn ignore_changes_to_attr(self, attr: impl std::string::ToString) -> Self {
         {
             let mut d = self.0.data.borrow_mut();
             if match &mut d.lifecycle.ignore_changes {
-                Some(i) => match i {
-                    IgnoreChanges::All(_) => {
+                std::option::Option::Some(i) => match i {
+                    terrars::IgnoreChanges::All(_) => {
                         true
                     },
-                    IgnoreChanges::Refs(r) => {
+                    terrars::IgnoreChanges::Refs(r) => {
                         r.push(attr.to_string());
                         false
                     },
                 },
-                None => true,
+                std::option::Option::None => true,
             } {
-                d.lifecycle.ignore_changes = Some(IgnoreChanges::Refs(vec![attr.to_string()]));
+                d.lifecycle.ignore_changes =
+                    std::option::Option::Some(terrars::IgnoreChanges::Refs(vec![attr.to_string()]));
             }
         }
         self
     }
 
-    pub fn replace_triggered_by_resource(self, r: &impl Resource) -> Self {
+    pub fn replace_triggered_by_resource(self, r: &impl terrars::Resource) -> Self {
         self.0.data.borrow_mut().lifecycle.replace_triggered_by.push(r.extract_ref());
         self
     }
 
-    pub fn replace_triggered_by_attr(self, attr: impl ToString) -> Self {
+    pub fn replace_triggered_by_attr(self, attr: impl std::string::ToString) -> Self {
         self.0.data.borrow_mut().lifecycle.replace_triggered_by.push(attr.to_string());
         self
     }
 
-    #[doc= "Set the field `id`.\n"]
-    pub fn set_id(self, v: impl Into<PrimField<String>>) -> Self {
-        self.0.data.borrow_mut().id = Some(v.into());
+    #[doc = r" Add a provisioner (ex: `local-exec`, `remote-exec`, `file`) to this resource."]
+    #[doc = r" Provisioners run in the order they're added."]
+    pub fn add_provisioner(self, v: impl std::convert::Into<terrars::Provisioner>) -> Self {
+        self.0.data.borrow_mut().provisioner.push(v.into());
         self
     }
 
-    #[doc= "Set the field `encryption_configuration`.\n"]
+    pub fn add_lifecycle_precondition(
+        self,
+        condition: impl std::convert::Into<terrars::PrimField<bool>>,
+        error_message: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.0.data.borrow_mut().lifecycle.precondition.push(terrars::LifecycleCondition {
+            condition: condition.into(),
+            error_message: error_message.into(),
+        });
+        self
+    }
+
+    pub fn add_lifecycle_postcondition(
+        self,
+        condition: impl std::convert::Into<terrars::PrimField<bool>>,
+        error_message: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.0.data.borrow_mut().lifecycle.postcondition.push(terrars::LifecycleCondition {
+            condition: condition.into(),
+            error_message: error_message.into(),
+        });
+        self
+    }
+
+    #[doc = "Set the field `id`.\n"]
+    pub fn set_id(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().id = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `encryption_configuration`.\n"]
     pub fn set_encryption_configuration(
         self,
-        v: impl Into<BlockAssignable<GlueSecurityConfigurationEncryptionConfigurationEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<GlueSecurityConfigurationEncryptionConfigurationEl>>,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.0.data.borrow_mut().encryption_configuration = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.0.data.borrow_mut().encryption_configuration = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.0.data.borrow_mut().dynamic.encryption_configuration = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.0.data.borrow_mut().dynamic.encryption_configuration = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Get a reference to the value of field `id` after provisioning.\n"]
-    pub fn id(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
+    pub fn id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `name` after provisioning.\n"]
-    pub fn name(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `name` after provisioning.\n"]
+    pub fn name(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `encryption_configuration` after provisioning.\n"]
-    pub fn encryption_configuration(&self) -> ListRef<GlueSecurityConfigurationEncryptionConfigurationElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.encryption_configuration", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `encryption_configuration` after provisioning.\n"]
+    pub fn encryption_configuration(&self) -> terrars::ListRef<GlueSecurityConfigurationEncryptionConfigurationElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.encryption_configuration", self.extract_ref()))
     }
 }
 
-impl Referable for GlueSecurityConfiguration {
-    fn extract_ref(&self) -> String {
+impl terrars::Referable for GlueSecurityConfiguration {
+    fn extract_ref(&self) -> std::string::String {
         format!("{}.{}", self.0.extract_resource_type(), self.0.extract_tf_id())
     }
 }
 
-impl Resource for GlueSecurityConfiguration { }
+impl terrars::Resource for GlueSecurityConfiguration { }
 
-impl ToListMappable for GlueSecurityConfiguration {
-    type O = ListRef<GlueSecurityConfigurationRef>;
+impl terrars::ToListMappable for GlueSecurityConfiguration {
+    type O = terrars::ListRef<GlueSecurityConfigurationRef>;
 
-    fn do_map(self, base: String) -> Self::O {
-        self.0.data.borrow_mut().for_each = Some(format!("${{{}}}", base));
-        ListRef::new(self.0.shared.clone(), self.extract_ref())
+    fn do_map(self, base: std::string::String) -> Self::O {
+        self.0.data.borrow_mut().for_each = std::option::Option::Some(format!("${{{}}}", base));
+        terrars::ListRef::new(self.0.shared.clone(), self.extract_ref())
     }
 }
 
-impl Resource_ for GlueSecurityConfiguration_ {
-    fn extract_resource_type(&self) -> String {
+impl terrars::Resource_ for GlueSecurityConfiguration_ {
+    fn extract_resource_type(&self) -> std::string::String {
         "aws_glue_security_configuration".into()
     }
 
-    fn extract_tf_id(&self) -> String {
+    fn extract_tf_id(&self) -> std::string::String {
         self.tf_id.clone()
     }
 
@@ -162,25 +199,26 @@ impl Resource_ for GlueSecurityConfiguration_ {
 }
 
 pub struct BuildGlueSecurityConfiguration {
-    pub tf_id: String,
-    #[doc= ""]
-    pub name: PrimField<String>,
+    pub tf_id: std::string::String,
+    #[doc = ""]
+    pub name: terrars::PrimField<std::string::String>,
 }
 
 impl BuildGlueSecurityConfiguration {
-    pub fn build(self, stack: &mut Stack) -> GlueSecurityConfiguration {
-        let out = GlueSecurityConfiguration(Rc::new(GlueSecurityConfiguration_ {
+    pub fn build(self, stack: &mut terrars::Stack) -> GlueSecurityConfiguration {
+        let out = GlueSecurityConfiguration(std::rc::Rc::new(GlueSecurityConfiguration_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: RefCell::new(GlueSecurityConfigurationData {
+            data: std::cell::RefCell::new(GlueSecurityConfigurationData {
                 depends_on: core::default::Default::default(),
-                provider: None,
+                provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
-                for_each: None,
+                for_each: std::option::Option::None,
+                provisioner: core::default::Default::default(),
                 id: core::default::Default::default(),
                 name: self.name,
                 encryption_configuration: core::default::Default::default(),
-                dynamic: Default::default(),
+                dynamic: core::default::Default::default(),
             }),
         }));
         stack.add_resource(out.0.clone());
@@ -189,12 +227,12 @@ impl BuildGlueSecurityConfiguration {
 }
 
 pub struct GlueSecurityConfigurationRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for GlueSecurityConfigurationRef {
-    fn new(shared: StackShared, base: String) -> Self {
+impl terrars::Ref for GlueSecurityConfigurationRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> Self {
         Self {
             shared: shared,
             base: base,
@@ -203,57 +241,60 @@ impl Ref for GlueSecurityConfigurationRef {
 }
 
 impl GlueSecurityConfigurationRef {
-    fn extract_ref(&self) -> String {
+    fn extract_ref(&self) -> std::string::String {
         self.base.clone()
     }
 
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `id` after provisioning.\n"]
-    pub fn id(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
+    pub fn id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `name` after provisioning.\n"]
-    pub fn name(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `name` after provisioning.\n"]
+    pub fn name(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `encryption_configuration` after provisioning.\n"]
-    pub fn encryption_configuration(&self) -> ListRef<GlueSecurityConfigurationEncryptionConfigurationElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.encryption_configuration", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `encryption_configuration` after provisioning.\n"]
+    pub fn encryption_configuration(&self) -> terrars::ListRef<GlueSecurityConfigurationEncryptionConfigurationElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.encryption_configuration", self.extract_ref()))
     }
 }
 
 #[derive(Serialize)]
 pub struct GlueSecurityConfigurationEncryptionConfigurationElCloudwatchEncryptionEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    cloudwatch_encryption_mode: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    kms_key_arn: Option<PrimField<String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    cloudwatch_encryption_mode: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    kms_key_arn: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
 impl GlueSecurityConfigurationEncryptionConfigurationElCloudwatchEncryptionEl {
-    #[doc= "Set the field `cloudwatch_encryption_mode`.\n"]
-    pub fn set_cloudwatch_encryption_mode(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.cloudwatch_encryption_mode = Some(v.into());
+    #[doc = "Set the field `cloudwatch_encryption_mode`.\n"]
+    pub fn set_cloudwatch_encryption_mode(
+        mut self,
+        v: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.cloudwatch_encryption_mode = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `kms_key_arn`.\n"]
-    pub fn set_kms_key_arn(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.kms_key_arn = Some(v.into());
+    #[doc = "Set the field `kms_key_arn`.\n"]
+    pub fn set_kms_key_arn(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.kms_key_arn = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl ToListMappable for GlueSecurityConfigurationEncryptionConfigurationElCloudwatchEncryptionEl {
-    type O = BlockAssignable<GlueSecurityConfigurationEncryptionConfigurationElCloudwatchEncryptionEl>;
+impl terrars::ToListMappable for GlueSecurityConfigurationEncryptionConfigurationElCloudwatchEncryptionEl {
+    type O = terrars::BlockAssignable<GlueSecurityConfigurationEncryptionConfigurationElCloudwatchEncryptionEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -273,14 +314,14 @@ impl BuildGlueSecurityConfigurationEncryptionConfigurationElCloudwatchEncryption
 }
 
 pub struct GlueSecurityConfigurationEncryptionConfigurationElCloudwatchEncryptionElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for GlueSecurityConfigurationEncryptionConfigurationElCloudwatchEncryptionElRef {
+impl terrars::Ref for GlueSecurityConfigurationEncryptionConfigurationElCloudwatchEncryptionElRef {
     fn new(
-        shared: StackShared,
-        base: String,
+        shared: terrars::StackShared,
+        base: std::string::String,
     ) -> GlueSecurityConfigurationEncryptionConfigurationElCloudwatchEncryptionElRef {
         GlueSecurityConfigurationEncryptionConfigurationElCloudwatchEncryptionElRef {
             shared: shared,
@@ -290,48 +331,51 @@ impl Ref for GlueSecurityConfigurationEncryptionConfigurationElCloudwatchEncrypt
 }
 
 impl GlueSecurityConfigurationEncryptionConfigurationElCloudwatchEncryptionElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `cloudwatch_encryption_mode` after provisioning.\n"]
-    pub fn cloudwatch_encryption_mode(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.cloudwatch_encryption_mode", self.base))
+    #[doc = "Get a reference to the value of field `cloudwatch_encryption_mode` after provisioning.\n"]
+    pub fn cloudwatch_encryption_mode(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.cloudwatch_encryption_mode", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `kms_key_arn` after provisioning.\n"]
-    pub fn kms_key_arn(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.kms_key_arn", self.base))
+    #[doc = "Get a reference to the value of field `kms_key_arn` after provisioning.\n"]
+    pub fn kms_key_arn(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.kms_key_arn", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct GlueSecurityConfigurationEncryptionConfigurationElJobBookmarksEncryptionEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    job_bookmarks_encryption_mode: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    kms_key_arn: Option<PrimField<String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    job_bookmarks_encryption_mode: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    kms_key_arn: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
 impl GlueSecurityConfigurationEncryptionConfigurationElJobBookmarksEncryptionEl {
-    #[doc= "Set the field `job_bookmarks_encryption_mode`.\n"]
-    pub fn set_job_bookmarks_encryption_mode(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.job_bookmarks_encryption_mode = Some(v.into());
+    #[doc = "Set the field `job_bookmarks_encryption_mode`.\n"]
+    pub fn set_job_bookmarks_encryption_mode(
+        mut self,
+        v: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.job_bookmarks_encryption_mode = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `kms_key_arn`.\n"]
-    pub fn set_kms_key_arn(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.kms_key_arn = Some(v.into());
+    #[doc = "Set the field `kms_key_arn`.\n"]
+    pub fn set_kms_key_arn(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.kms_key_arn = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl ToListMappable for GlueSecurityConfigurationEncryptionConfigurationElJobBookmarksEncryptionEl {
-    type O = BlockAssignable<GlueSecurityConfigurationEncryptionConfigurationElJobBookmarksEncryptionEl>;
+impl terrars::ToListMappable for GlueSecurityConfigurationEncryptionConfigurationElJobBookmarksEncryptionEl {
+    type O = terrars::BlockAssignable<GlueSecurityConfigurationEncryptionConfigurationElJobBookmarksEncryptionEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -351,14 +395,14 @@ impl BuildGlueSecurityConfigurationEncryptionConfigurationElJobBookmarksEncrypti
 }
 
 pub struct GlueSecurityConfigurationEncryptionConfigurationElJobBookmarksEncryptionElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for GlueSecurityConfigurationEncryptionConfigurationElJobBookmarksEncryptionElRef {
+impl terrars::Ref for GlueSecurityConfigurationEncryptionConfigurationElJobBookmarksEncryptionElRef {
     fn new(
-        shared: StackShared,
-        base: String,
+        shared: terrars::StackShared,
+        base: std::string::String,
     ) -> GlueSecurityConfigurationEncryptionConfigurationElJobBookmarksEncryptionElRef {
         GlueSecurityConfigurationEncryptionConfigurationElJobBookmarksEncryptionElRef {
             shared: shared,
@@ -368,48 +412,51 @@ impl Ref for GlueSecurityConfigurationEncryptionConfigurationElJobBookmarksEncry
 }
 
 impl GlueSecurityConfigurationEncryptionConfigurationElJobBookmarksEncryptionElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `job_bookmarks_encryption_mode` after provisioning.\n"]
-    pub fn job_bookmarks_encryption_mode(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.job_bookmarks_encryption_mode", self.base))
+    #[doc = "Get a reference to the value of field `job_bookmarks_encryption_mode` after provisioning.\n"]
+    pub fn job_bookmarks_encryption_mode(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.job_bookmarks_encryption_mode", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `kms_key_arn` after provisioning.\n"]
-    pub fn kms_key_arn(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.kms_key_arn", self.base))
+    #[doc = "Get a reference to the value of field `kms_key_arn` after provisioning.\n"]
+    pub fn kms_key_arn(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.kms_key_arn", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct GlueSecurityConfigurationEncryptionConfigurationElS3EncryptionEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    kms_key_arn: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    s3_encryption_mode: Option<PrimField<String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    kms_key_arn: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    s3_encryption_mode: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
 impl GlueSecurityConfigurationEncryptionConfigurationElS3EncryptionEl {
-    #[doc= "Set the field `kms_key_arn`.\n"]
-    pub fn set_kms_key_arn(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.kms_key_arn = Some(v.into());
+    #[doc = "Set the field `kms_key_arn`.\n"]
+    pub fn set_kms_key_arn(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.kms_key_arn = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `s3_encryption_mode`.\n"]
-    pub fn set_s3_encryption_mode(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.s3_encryption_mode = Some(v.into());
+    #[doc = "Set the field `s3_encryption_mode`.\n"]
+    pub fn set_s3_encryption_mode(
+        mut self,
+        v: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.s3_encryption_mode = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl ToListMappable for GlueSecurityConfigurationEncryptionConfigurationElS3EncryptionEl {
-    type O = BlockAssignable<GlueSecurityConfigurationEncryptionConfigurationElS3EncryptionEl>;
+impl terrars::ToListMappable for GlueSecurityConfigurationEncryptionConfigurationElS3EncryptionEl {
+    type O = terrars::BlockAssignable<GlueSecurityConfigurationEncryptionConfigurationElS3EncryptionEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -429,12 +476,15 @@ impl BuildGlueSecurityConfigurationEncryptionConfigurationElS3EncryptionEl {
 }
 
 pub struct GlueSecurityConfigurationEncryptionConfigurationElS3EncryptionElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for GlueSecurityConfigurationEncryptionConfigurationElS3EncryptionElRef {
-    fn new(shared: StackShared, base: String) -> GlueSecurityConfigurationEncryptionConfigurationElS3EncryptionElRef {
+impl terrars::Ref for GlueSecurityConfigurationEncryptionConfigurationElS3EncryptionElRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> GlueSecurityConfigurationEncryptionConfigurationElS3EncryptionElRef {
         GlueSecurityConfigurationEncryptionConfigurationElS3EncryptionElRef {
             shared: shared,
             base: base.to_string(),
@@ -443,98 +493,127 @@ impl Ref for GlueSecurityConfigurationEncryptionConfigurationElS3EncryptionElRef
 }
 
 impl GlueSecurityConfigurationEncryptionConfigurationElS3EncryptionElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `kms_key_arn` after provisioning.\n"]
-    pub fn kms_key_arn(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.kms_key_arn", self.base))
+    #[doc = "Get a reference to the value of field `kms_key_arn` after provisioning.\n"]
+    pub fn kms_key_arn(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.kms_key_arn", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `s3_encryption_mode` after provisioning.\n"]
-    pub fn s3_encryption_mode(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.s3_encryption_mode", self.base))
+    #[doc = "Get a reference to the value of field `s3_encryption_mode` after provisioning.\n"]
+    pub fn s3_encryption_mode(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.s3_encryption_mode", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
 struct GlueSecurityConfigurationEncryptionConfigurationElDynamic {
-    cloudwatch_encryption: Option<
-        DynamicBlock<GlueSecurityConfigurationEncryptionConfigurationElCloudwatchEncryptionEl>,
-    >,
-    job_bookmarks_encryption: Option<
-        DynamicBlock<GlueSecurityConfigurationEncryptionConfigurationElJobBookmarksEncryptionEl>,
-    >,
-    s3_encryption: Option<DynamicBlock<GlueSecurityConfigurationEncryptionConfigurationElS3EncryptionEl>>,
+    cloudwatch_encryption: std
+    ::option
+    ::Option<terrars::DynamicBlock<GlueSecurityConfigurationEncryptionConfigurationElCloudwatchEncryptionEl>>,
+    job_bookmarks_encryption: std
+    ::option
+    ::Option<terrars::DynamicBlock<GlueSecurityConfigurationEncryptionConfigurationElJobBookmarksEncryptionEl>>,
+    s3_encryption: std
+    ::option
+    ::Option<terrars::DynamicBlock<GlueSecurityConfigurationEncryptionConfigurationElS3EncryptionEl>>,
 }
 
 #[derive(Serialize)]
 pub struct GlueSecurityConfigurationEncryptionConfigurationEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    cloudwatch_encryption: Option<Vec<GlueSecurityConfigurationEncryptionConfigurationElCloudwatchEncryptionEl>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    job_bookmarks_encryption: Option<Vec<GlueSecurityConfigurationEncryptionConfigurationElJobBookmarksEncryptionEl>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    s3_encryption: Option<Vec<GlueSecurityConfigurationEncryptionConfigurationElS3EncryptionEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    cloudwatch_encryption: std
+    ::option
+    ::Option<std::vec::Vec<GlueSecurityConfigurationEncryptionConfigurationElCloudwatchEncryptionEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    job_bookmarks_encryption: std
+    ::option
+    ::Option<std::vec::Vec<GlueSecurityConfigurationEncryptionConfigurationElJobBookmarksEncryptionEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    s3_encryption: std::option::Option<std::vec::Vec<GlueSecurityConfigurationEncryptionConfigurationElS3EncryptionEl>>,
     dynamic: GlueSecurityConfigurationEncryptionConfigurationElDynamic,
 }
 
 impl GlueSecurityConfigurationEncryptionConfigurationEl {
-    #[doc= "Set the field `cloudwatch_encryption`.\n"]
+    #[doc = "Set the field `cloudwatch_encryption`.\n"]
     pub fn set_cloudwatch_encryption(
         mut self,
-        v: impl Into<BlockAssignable<GlueSecurityConfigurationEncryptionConfigurationElCloudwatchEncryptionEl>>,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<
+                        terrars
+                        ::BlockAssignable<GlueSecurityConfigurationEncryptionConfigurationElCloudwatchEncryptionEl>,
+                    >,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.cloudwatch_encryption = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.cloudwatch_encryption = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.cloudwatch_encryption = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.cloudwatch_encryption = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Set the field `job_bookmarks_encryption`.\n"]
+    #[doc = "Set the field `job_bookmarks_encryption`.\n"]
     pub fn set_job_bookmarks_encryption(
         mut self,
-        v: impl Into<BlockAssignable<GlueSecurityConfigurationEncryptionConfigurationElJobBookmarksEncryptionEl>>,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<
+                        terrars
+                        ::BlockAssignable<GlueSecurityConfigurationEncryptionConfigurationElJobBookmarksEncryptionEl>,
+                    >,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.job_bookmarks_encryption = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.job_bookmarks_encryption = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.job_bookmarks_encryption = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.job_bookmarks_encryption = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Set the field `s3_encryption`.\n"]
+    #[doc = "Set the field `s3_encryption`.\n"]
     pub fn set_s3_encryption(
         mut self,
-        v: impl Into<BlockAssignable<GlueSecurityConfigurationEncryptionConfigurationElS3EncryptionEl>>,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<
+                        terrars::BlockAssignable<GlueSecurityConfigurationEncryptionConfigurationElS3EncryptionEl>,
+                    >,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.s3_encryption = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.s3_encryption = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.s3_encryption = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.s3_encryption = std::option::Option::Some(d);
             },
         }
         self
     }
 }
 
-impl ToListMappable for GlueSecurityConfigurationEncryptionConfigurationEl {
-    type O = BlockAssignable<GlueSecurityConfigurationEncryptionConfigurationEl>;
+impl terrars::ToListMappable for GlueSecurityConfigurationEncryptionConfigurationEl {
+    type O = terrars::BlockAssignable<GlueSecurityConfigurationEncryptionConfigurationEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -550,18 +629,21 @@ impl BuildGlueSecurityConfigurationEncryptionConfigurationEl {
             cloudwatch_encryption: core::default::Default::default(),
             job_bookmarks_encryption: core::default::Default::default(),
             s3_encryption: core::default::Default::default(),
-            dynamic: Default::default(),
+            dynamic: core::default::Default::default(),
         }
     }
 }
 
 pub struct GlueSecurityConfigurationEncryptionConfigurationElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for GlueSecurityConfigurationEncryptionConfigurationElRef {
-    fn new(shared: StackShared, base: String) -> GlueSecurityConfigurationEncryptionConfigurationElRef {
+impl terrars::Ref for GlueSecurityConfigurationEncryptionConfigurationElRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> GlueSecurityConfigurationEncryptionConfigurationElRef {
         GlueSecurityConfigurationEncryptionConfigurationElRef {
             shared: shared,
             base: base.to_string(),
@@ -570,31 +652,33 @@ impl Ref for GlueSecurityConfigurationEncryptionConfigurationElRef {
 }
 
 impl GlueSecurityConfigurationEncryptionConfigurationElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `cloudwatch_encryption` after provisioning.\n"]
+    #[doc = "Get a reference to the value of field `cloudwatch_encryption` after provisioning.\n"]
     pub fn cloudwatch_encryption(
         &self,
-    ) -> ListRef<GlueSecurityConfigurationEncryptionConfigurationElCloudwatchEncryptionElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.cloudwatch_encryption", self.base))
+    ) -> terrars::ListRef<GlueSecurityConfigurationEncryptionConfigurationElCloudwatchEncryptionElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.cloudwatch_encryption", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `job_bookmarks_encryption` after provisioning.\n"]
+    #[doc = "Get a reference to the value of field `job_bookmarks_encryption` after provisioning.\n"]
     pub fn job_bookmarks_encryption(
         &self,
-    ) -> ListRef<GlueSecurityConfigurationEncryptionConfigurationElJobBookmarksEncryptionElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.job_bookmarks_encryption", self.base))
+    ) -> terrars::ListRef<GlueSecurityConfigurationEncryptionConfigurationElJobBookmarksEncryptionElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.job_bookmarks_encryption", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `s3_encryption` after provisioning.\n"]
-    pub fn s3_encryption(&self) -> ListRef<GlueSecurityConfigurationEncryptionConfigurationElS3EncryptionElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.s3_encryption", self.base))
+    #[doc = "Get a reference to the value of field `s3_encryption` after provisioning.\n"]
+    pub fn s3_encryption(&self) -> terrars::ListRef<GlueSecurityConfigurationEncryptionConfigurationElS3EncryptionElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.s3_encryption", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
 struct GlueSecurityConfigurationDynamic {
-    encryption_configuration: Option<DynamicBlock<GlueSecurityConfigurationEncryptionConfigurationEl>>,
+    encryption_configuration: std
+    ::option
+    ::Option<terrars::DynamicBlock<GlueSecurityConfigurationEncryptionConfigurationEl>>,
 }

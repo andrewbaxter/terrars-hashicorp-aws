@@ -1,56 +1,60 @@
 use serde::Serialize;
-use std::cell::RefCell;
-use std::rc::Rc;
-use terrars::*;
+use terrars::{
+    Referable as _,
+    Resource_ as _,
+    Ref as _,
+};
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
 struct SagemakerWorkteamData {
-    #[serde(skip_serializing_if = "Vec::is_empty")]
-    depends_on: Vec<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    provider: Option<String>,
-    #[serde(skip_serializing_if = "SerdeSkipDefault::is_default")]
-    lifecycle: ResourceLifecycle,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    for_each: Option<String>,
-    description: PrimField<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    id: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    tags: Option<RecField<PrimField<String>>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    tags_all: Option<RecField<PrimField<String>>>,
-    workforce_name: PrimField<String>,
-    workteam_name: PrimField<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    member_definition: Option<Vec<SagemakerWorkteamMemberDefinitionEl>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    notification_configuration: Option<Vec<SagemakerWorkteamNotificationConfigurationEl>>,
+    #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
+    depends_on: std::vec::Vec<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    provider: std::option::Option<std::string::String>,
+    #[serde(skip_serializing_if = "terrars::SerdeSkipDefault::is_default")]
+    lifecycle: terrars::ResourceLifecycle,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    for_each: std::option::Option<std::string::String>,
+    #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
+    provisioner: std::vec::Vec<terrars::Provisioner>,
+    description: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    id: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    tags: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    tags_all: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
+    workforce_name: terrars::PrimField<std::string::String>,
+    workteam_name: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    member_definition: std::option::Option<std::vec::Vec<SagemakerWorkteamMemberDefinitionEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    notification_configuration: std::option::Option<std::vec::Vec<SagemakerWorkteamNotificationConfigurationEl>>,
     dynamic: SagemakerWorkteamDynamic,
 }
 
 struct SagemakerWorkteam_ {
-    shared: StackShared,
-    tf_id: String,
-    data: RefCell<SagemakerWorkteamData>,
+    shared: terrars::StackShared,
+    tf_id: std::string::String,
+    data: std::cell::RefCell<SagemakerWorkteamData>,
 }
 
 #[derive(Clone)]
-pub struct SagemakerWorkteam(Rc<SagemakerWorkteam_>);
+pub struct SagemakerWorkteam(std::rc::Rc<SagemakerWorkteam_>);
 
 impl SagemakerWorkteam {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.0.shared
     }
 
-    pub fn depends_on(self, dep: &impl Referable) -> Self {
+    pub fn depends_on(self, dep: &impl terrars::Referable) -> Self {
         self.0.data.borrow_mut().depends_on.push(dep.extract_ref());
         self
     }
 
     pub fn set_provider(self, provider: &ProviderAws) -> Self {
-        self.0.data.borrow_mut().provider = Some(provider.provider_ref());
+        self.0.data.borrow_mut().provider = std::option::Option::Some(provider.provider_ref());
         self
     }
 
@@ -65,162 +69,204 @@ impl SagemakerWorkteam {
     }
 
     pub fn ignore_changes_to_all(self) -> Self {
-        self.0.data.borrow_mut().lifecycle.ignore_changes = Some(IgnoreChanges::All(IgnoreChangesAll::All));
+        self.0.data.borrow_mut().lifecycle.ignore_changes =
+            std::option::Option::Some(terrars::IgnoreChanges::All(terrars::IgnoreChangesAll::All));
         self
     }
 
-    pub fn ignore_changes_to_attr(self, attr: impl ToString) -> Self {
+    pub fn ignore_changes_to_attr(self, attr: impl std::string::ToString) -> Self {
         {
             let mut d = self.0.data.borrow_mut();
             if match &mut d.lifecycle.ignore_changes {
-                Some(i) => match i {
-                    IgnoreChanges::All(_) => {
+                std::option::Option::Some(i) => match i {
+                    terrars::IgnoreChanges::All(_) => {
                         true
                     },
-                    IgnoreChanges::Refs(r) => {
+                    terrars::IgnoreChanges::Refs(r) => {
                         r.push(attr.to_string());
                         false
                     },
                 },
-                None => true,
+                std::option::Option::None => true,
             } {
-                d.lifecycle.ignore_changes = Some(IgnoreChanges::Refs(vec![attr.to_string()]));
+                d.lifecycle.ignore_changes =
+                    std::option::Option::Some(terrars::IgnoreChanges::Refs(vec![attr.to_string()]));
             }
         }
         self
     }
 
-    pub fn replace_triggered_by_resource(self, r: &impl Resource) -> Self {
+    pub fn replace_triggered_by_resource(self, r: &impl terrars::Resource) -> Self {
         self.0.data.borrow_mut().lifecycle.replace_triggered_by.push(r.extract_ref());
         self
     }
 
-    pub fn replace_triggered_by_attr(self, attr: impl ToString) -> Self {
+    pub fn replace_triggered_by_attr(self, attr: impl std::string::ToString) -> Self {
         self.0.data.borrow_mut().lifecycle.replace_triggered_by.push(attr.to_string());
         self
     }
 
-    #[doc= "Set the field `id`.\n"]
-    pub fn set_id(self, v: impl Into<PrimField<String>>) -> Self {
-        self.0.data.borrow_mut().id = Some(v.into());
+    #[doc = r" Add a provisioner (ex: `local-exec`, `remote-exec`, `file`) to this resource."]
+    #[doc = r" Provisioners run in the order they're added."]
+    pub fn add_provisioner(self, v: impl std::convert::Into<terrars::Provisioner>) -> Self {
+        self.0.data.borrow_mut().provisioner.push(v.into());
         self
     }
 
-    #[doc= "Set the field `tags`.\n"]
-    pub fn set_tags(self, v: impl Into<RecField<PrimField<String>>>) -> Self {
-        self.0.data.borrow_mut().tags = Some(v.into());
-        self
-    }
-
-    #[doc= "Set the field `tags_all`.\n"]
-    pub fn set_tags_all(self, v: impl Into<RecField<PrimField<String>>>) -> Self {
-        self.0.data.borrow_mut().tags_all = Some(v.into());
-        self
-    }
-
-    #[doc= "Set the field `member_definition`.\n"]
-    pub fn set_member_definition(self, v: impl Into<BlockAssignable<SagemakerWorkteamMemberDefinitionEl>>) -> Self {
-        match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.0.data.borrow_mut().member_definition = Some(v);
-            },
-            BlockAssignable::Dynamic(d) => {
-                self.0.data.borrow_mut().dynamic.member_definition = Some(d);
-            },
-        }
-        self
-    }
-
-    #[doc= "Set the field `notification_configuration`.\n"]
-    pub fn set_notification_configuration(
+    pub fn add_lifecycle_precondition(
         self,
-        v: impl Into<BlockAssignable<SagemakerWorkteamNotificationConfigurationEl>>,
+        condition: impl std::convert::Into<terrars::PrimField<bool>>,
+        error_message: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.0.data.borrow_mut().lifecycle.precondition.push(terrars::LifecycleCondition {
+            condition: condition.into(),
+            error_message: error_message.into(),
+        });
+        self
+    }
+
+    pub fn add_lifecycle_postcondition(
+        self,
+        condition: impl std::convert::Into<terrars::PrimField<bool>>,
+        error_message: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.0.data.borrow_mut().lifecycle.postcondition.push(terrars::LifecycleCondition {
+            condition: condition.into(),
+            error_message: error_message.into(),
+        });
+        self
+    }
+
+    #[doc = "Set the field `id`.\n"]
+    pub fn set_id(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().id = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `tags`.\n"]
+    pub fn set_tags(
+        self,
+        v: impl std::convert::Into<terrars::RecField<terrars::PrimField<std::string::String>>>,
+    ) -> Self {
+        self.0.data.borrow_mut().tags = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `tags_all`.\n"]
+    pub fn set_tags_all(
+        self,
+        v: impl std::convert::Into<terrars::RecField<terrars::PrimField<std::string::String>>>,
+    ) -> Self {
+        self.0.data.borrow_mut().tags_all = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `member_definition`.\n"]
+    pub fn set_member_definition(
+        self,
+        v: impl std::convert::Into<terrars::BlockAssignable<SagemakerWorkteamMemberDefinitionEl>>,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.0.data.borrow_mut().notification_configuration = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.0.data.borrow_mut().member_definition = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.0.data.borrow_mut().dynamic.notification_configuration = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.0.data.borrow_mut().dynamic.member_definition = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Get a reference to the value of field `arn` after provisioning.\n"]
-    pub fn arn(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.arn", self.extract_ref()))
+    #[doc = "Set the field `notification_configuration`.\n"]
+    pub fn set_notification_configuration(
+        self,
+        v: impl std::convert::Into<terrars::BlockAssignable<SagemakerWorkteamNotificationConfigurationEl>>,
+    ) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.0.data.borrow_mut().notification_configuration = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.0.data.borrow_mut().dynamic.notification_configuration = std::option::Option::Some(d);
+            },
+        }
+        self
     }
 
-    #[doc= "Get a reference to the value of field `description` after provisioning.\n"]
-    pub fn description(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.description", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `arn` after provisioning.\n"]
+    pub fn arn(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.arn", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `id` after provisioning.\n"]
-    pub fn id(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `description` after provisioning.\n"]
+    pub fn description(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.description", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `subdomain` after provisioning.\n"]
-    pub fn subdomain(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.subdomain", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
+    pub fn id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `tags` after provisioning.\n"]
-    pub fn tags(&self) -> RecRef<PrimExpr<String>> {
-        RecRef::new(self.shared().clone(), format!("{}.tags", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `subdomain` after provisioning.\n"]
+    pub fn subdomain(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.subdomain", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `tags_all` after provisioning.\n"]
-    pub fn tags_all(&self) -> RecRef<PrimExpr<String>> {
-        RecRef::new(self.shared().clone(), format!("{}.tags_all", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `tags` after provisioning.\n"]
+    pub fn tags(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
+        terrars::RecRef::new(self.shared().clone(), format!("{}.tags", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `workforce_name` after provisioning.\n"]
-    pub fn workforce_name(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.workforce_name", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `tags_all` after provisioning.\n"]
+    pub fn tags_all(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
+        terrars::RecRef::new(self.shared().clone(), format!("{}.tags_all", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `workteam_name` after provisioning.\n"]
-    pub fn workteam_name(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.workteam_name", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `workforce_name` after provisioning.\n"]
+    pub fn workforce_name(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.workforce_name", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `member_definition` after provisioning.\n"]
-    pub fn member_definition(&self) -> ListRef<SagemakerWorkteamMemberDefinitionElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.member_definition", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `workteam_name` after provisioning.\n"]
+    pub fn workteam_name(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.workteam_name", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `notification_configuration` after provisioning.\n"]
-    pub fn notification_configuration(&self) -> ListRef<SagemakerWorkteamNotificationConfigurationElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.notification_configuration", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `member_definition` after provisioning.\n"]
+    pub fn member_definition(&self) -> terrars::ListRef<SagemakerWorkteamMemberDefinitionElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.member_definition", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `notification_configuration` after provisioning.\n"]
+    pub fn notification_configuration(&self) -> terrars::ListRef<SagemakerWorkteamNotificationConfigurationElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.notification_configuration", self.extract_ref()))
     }
 }
 
-impl Referable for SagemakerWorkteam {
-    fn extract_ref(&self) -> String {
+impl terrars::Referable for SagemakerWorkteam {
+    fn extract_ref(&self) -> std::string::String {
         format!("{}.{}", self.0.extract_resource_type(), self.0.extract_tf_id())
     }
 }
 
-impl Resource for SagemakerWorkteam { }
+impl terrars::Resource for SagemakerWorkteam { }
 
-impl ToListMappable for SagemakerWorkteam {
-    type O = ListRef<SagemakerWorkteamRef>;
+impl terrars::ToListMappable for SagemakerWorkteam {
+    type O = terrars::ListRef<SagemakerWorkteamRef>;
 
-    fn do_map(self, base: String) -> Self::O {
-        self.0.data.borrow_mut().for_each = Some(format!("${{{}}}", base));
-        ListRef::new(self.0.shared.clone(), self.extract_ref())
+    fn do_map(self, base: std::string::String) -> Self::O {
+        self.0.data.borrow_mut().for_each = std::option::Option::Some(format!("${{{}}}", base));
+        terrars::ListRef::new(self.0.shared.clone(), self.extract_ref())
     }
 }
 
-impl Resource_ for SagemakerWorkteam_ {
-    fn extract_resource_type(&self) -> String {
+impl terrars::Resource_ for SagemakerWorkteam_ {
+    fn extract_resource_type(&self) -> std::string::String {
         "aws_sagemaker_workteam".into()
     }
 
-    fn extract_tf_id(&self) -> String {
+    fn extract_tf_id(&self) -> std::string::String {
         self.tf_id.clone()
     }
 
@@ -230,25 +276,26 @@ impl Resource_ for SagemakerWorkteam_ {
 }
 
 pub struct BuildSagemakerWorkteam {
-    pub tf_id: String,
-    #[doc= ""]
-    pub description: PrimField<String>,
-    #[doc= ""]
-    pub workforce_name: PrimField<String>,
-    #[doc= ""]
-    pub workteam_name: PrimField<String>,
+    pub tf_id: std::string::String,
+    #[doc = ""]
+    pub description: terrars::PrimField<std::string::String>,
+    #[doc = ""]
+    pub workforce_name: terrars::PrimField<std::string::String>,
+    #[doc = ""]
+    pub workteam_name: terrars::PrimField<std::string::String>,
 }
 
 impl BuildSagemakerWorkteam {
-    pub fn build(self, stack: &mut Stack) -> SagemakerWorkteam {
-        let out = SagemakerWorkteam(Rc::new(SagemakerWorkteam_ {
+    pub fn build(self, stack: &mut terrars::Stack) -> SagemakerWorkteam {
+        let out = SagemakerWorkteam(std::rc::Rc::new(SagemakerWorkteam_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: RefCell::new(SagemakerWorkteamData {
+            data: std::cell::RefCell::new(SagemakerWorkteamData {
                 depends_on: core::default::Default::default(),
-                provider: None,
+                provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
-                for_each: None,
+                for_each: std::option::Option::None,
+                provisioner: core::default::Default::default(),
                 description: self.description,
                 id: core::default::Default::default(),
                 tags: core::default::Default::default(),
@@ -257,7 +304,7 @@ impl BuildSagemakerWorkteam {
                 workteam_name: self.workteam_name,
                 member_definition: core::default::Default::default(),
                 notification_configuration: core::default::Default::default(),
-                dynamic: Default::default(),
+                dynamic: core::default::Default::default(),
             }),
         }));
         stack.add_resource(out.0.clone());
@@ -266,12 +313,12 @@ impl BuildSagemakerWorkteam {
 }
 
 pub struct SagemakerWorkteamRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for SagemakerWorkteamRef {
-    fn new(shared: StackShared, base: String) -> Self {
+impl terrars::Ref for SagemakerWorkteamRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> Self {
         Self {
             shared: shared,
             base: base,
@@ -280,79 +327,79 @@ impl Ref for SagemakerWorkteamRef {
 }
 
 impl SagemakerWorkteamRef {
-    fn extract_ref(&self) -> String {
+    fn extract_ref(&self) -> std::string::String {
         self.base.clone()
     }
 
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `arn` after provisioning.\n"]
-    pub fn arn(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.arn", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `arn` after provisioning.\n"]
+    pub fn arn(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.arn", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `description` after provisioning.\n"]
-    pub fn description(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.description", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `description` after provisioning.\n"]
+    pub fn description(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.description", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `id` after provisioning.\n"]
-    pub fn id(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
+    pub fn id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `subdomain` after provisioning.\n"]
-    pub fn subdomain(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.subdomain", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `subdomain` after provisioning.\n"]
+    pub fn subdomain(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.subdomain", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `tags` after provisioning.\n"]
-    pub fn tags(&self) -> RecRef<PrimExpr<String>> {
-        RecRef::new(self.shared().clone(), format!("{}.tags", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `tags` after provisioning.\n"]
+    pub fn tags(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
+        terrars::RecRef::new(self.shared().clone(), format!("{}.tags", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `tags_all` after provisioning.\n"]
-    pub fn tags_all(&self) -> RecRef<PrimExpr<String>> {
-        RecRef::new(self.shared().clone(), format!("{}.tags_all", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `tags_all` after provisioning.\n"]
+    pub fn tags_all(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
+        terrars::RecRef::new(self.shared().clone(), format!("{}.tags_all", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `workforce_name` after provisioning.\n"]
-    pub fn workforce_name(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.workforce_name", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `workforce_name` after provisioning.\n"]
+    pub fn workforce_name(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.workforce_name", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `workteam_name` after provisioning.\n"]
-    pub fn workteam_name(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.workteam_name", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `workteam_name` after provisioning.\n"]
+    pub fn workteam_name(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.workteam_name", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `member_definition` after provisioning.\n"]
-    pub fn member_definition(&self) -> ListRef<SagemakerWorkteamMemberDefinitionElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.member_definition", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `member_definition` after provisioning.\n"]
+    pub fn member_definition(&self) -> terrars::ListRef<SagemakerWorkteamMemberDefinitionElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.member_definition", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `notification_configuration` after provisioning.\n"]
-    pub fn notification_configuration(&self) -> ListRef<SagemakerWorkteamNotificationConfigurationElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.notification_configuration", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `notification_configuration` after provisioning.\n"]
+    pub fn notification_configuration(&self) -> terrars::ListRef<SagemakerWorkteamNotificationConfigurationElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.notification_configuration", self.extract_ref()))
     }
 }
 
 #[derive(Serialize)]
 pub struct SagemakerWorkteamMemberDefinitionElCognitoMemberDefinitionEl {
-    client_id: PrimField<String>,
-    user_group: PrimField<String>,
-    user_pool: PrimField<String>,
+    client_id: terrars::PrimField<std::string::String>,
+    user_group: terrars::PrimField<std::string::String>,
+    user_pool: terrars::PrimField<std::string::String>,
 }
 
 impl SagemakerWorkteamMemberDefinitionElCognitoMemberDefinitionEl { }
 
-impl ToListMappable for SagemakerWorkteamMemberDefinitionElCognitoMemberDefinitionEl {
-    type O = BlockAssignable<SagemakerWorkteamMemberDefinitionElCognitoMemberDefinitionEl>;
+impl terrars::ToListMappable for SagemakerWorkteamMemberDefinitionElCognitoMemberDefinitionEl {
+    type O = terrars::BlockAssignable<SagemakerWorkteamMemberDefinitionElCognitoMemberDefinitionEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -361,12 +408,12 @@ impl ToListMappable for SagemakerWorkteamMemberDefinitionElCognitoMemberDefiniti
 }
 
 pub struct BuildSagemakerWorkteamMemberDefinitionElCognitoMemberDefinitionEl {
-    #[doc= ""]
-    pub client_id: PrimField<String>,
-    #[doc= ""]
-    pub user_group: PrimField<String>,
-    #[doc= ""]
-    pub user_pool: PrimField<String>,
+    #[doc = ""]
+    pub client_id: terrars::PrimField<std::string::String>,
+    #[doc = ""]
+    pub user_group: terrars::PrimField<std::string::String>,
+    #[doc = ""]
+    pub user_pool: terrars::PrimField<std::string::String>,
 }
 
 impl BuildSagemakerWorkteamMemberDefinitionElCognitoMemberDefinitionEl {
@@ -380,12 +427,15 @@ impl BuildSagemakerWorkteamMemberDefinitionElCognitoMemberDefinitionEl {
 }
 
 pub struct SagemakerWorkteamMemberDefinitionElCognitoMemberDefinitionElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for SagemakerWorkteamMemberDefinitionElCognitoMemberDefinitionElRef {
-    fn new(shared: StackShared, base: String) -> SagemakerWorkteamMemberDefinitionElCognitoMemberDefinitionElRef {
+impl terrars::Ref for SagemakerWorkteamMemberDefinitionElCognitoMemberDefinitionElRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> SagemakerWorkteamMemberDefinitionElCognitoMemberDefinitionElRef {
         SagemakerWorkteamMemberDefinitionElCognitoMemberDefinitionElRef {
             shared: shared,
             base: base.to_string(),
@@ -394,38 +444,38 @@ impl Ref for SagemakerWorkteamMemberDefinitionElCognitoMemberDefinitionElRef {
 }
 
 impl SagemakerWorkteamMemberDefinitionElCognitoMemberDefinitionElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `client_id` after provisioning.\n"]
-    pub fn client_id(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.client_id", self.base))
+    #[doc = "Get a reference to the value of field `client_id` after provisioning.\n"]
+    pub fn client_id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.client_id", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `user_group` after provisioning.\n"]
-    pub fn user_group(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.user_group", self.base))
+    #[doc = "Get a reference to the value of field `user_group` after provisioning.\n"]
+    pub fn user_group(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.user_group", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `user_pool` after provisioning.\n"]
-    pub fn user_pool(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.user_pool", self.base))
+    #[doc = "Get a reference to the value of field `user_pool` after provisioning.\n"]
+    pub fn user_pool(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.user_pool", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct SagemakerWorkteamMemberDefinitionElOidcMemberDefinitionEl {
-    groups: SetField<PrimField<String>>,
+    groups: terrars::SetField<terrars::PrimField<std::string::String>>,
 }
 
 impl SagemakerWorkteamMemberDefinitionElOidcMemberDefinitionEl { }
 
-impl ToListMappable for SagemakerWorkteamMemberDefinitionElOidcMemberDefinitionEl {
-    type O = BlockAssignable<SagemakerWorkteamMemberDefinitionElOidcMemberDefinitionEl>;
+impl terrars::ToListMappable for SagemakerWorkteamMemberDefinitionElOidcMemberDefinitionEl {
+    type O = terrars::BlockAssignable<SagemakerWorkteamMemberDefinitionElOidcMemberDefinitionEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -434,8 +484,8 @@ impl ToListMappable for SagemakerWorkteamMemberDefinitionElOidcMemberDefinitionE
 }
 
 pub struct BuildSagemakerWorkteamMemberDefinitionElOidcMemberDefinitionEl {
-    #[doc= ""]
-    pub groups: SetField<PrimField<String>>,
+    #[doc = ""]
+    pub groups: terrars::SetField<terrars::PrimField<std::string::String>>,
 }
 
 impl BuildSagemakerWorkteamMemberDefinitionElOidcMemberDefinitionEl {
@@ -445,12 +495,15 @@ impl BuildSagemakerWorkteamMemberDefinitionElOidcMemberDefinitionEl {
 }
 
 pub struct SagemakerWorkteamMemberDefinitionElOidcMemberDefinitionElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for SagemakerWorkteamMemberDefinitionElOidcMemberDefinitionElRef {
-    fn new(shared: StackShared, base: String) -> SagemakerWorkteamMemberDefinitionElOidcMemberDefinitionElRef {
+impl terrars::Ref for SagemakerWorkteamMemberDefinitionElOidcMemberDefinitionElRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> SagemakerWorkteamMemberDefinitionElOidcMemberDefinitionElRef {
         SagemakerWorkteamMemberDefinitionElOidcMemberDefinitionElRef {
             shared: shared,
             base: base.to_string(),
@@ -459,70 +512,86 @@ impl Ref for SagemakerWorkteamMemberDefinitionElOidcMemberDefinitionElRef {
 }
 
 impl SagemakerWorkteamMemberDefinitionElOidcMemberDefinitionElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `groups` after provisioning.\n"]
-    pub fn groups(&self) -> SetRef<PrimExpr<String>> {
-        SetRef::new(self.shared().clone(), format!("{}.groups", self.base))
+    #[doc = "Get a reference to the value of field `groups` after provisioning.\n"]
+    pub fn groups(&self) -> terrars::SetRef<terrars::PrimExpr<std::string::String>> {
+        terrars::SetRef::new(self.shared().clone(), format!("{}.groups", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
 struct SagemakerWorkteamMemberDefinitionElDynamic {
-    cognito_member_definition: Option<DynamicBlock<SagemakerWorkteamMemberDefinitionElCognitoMemberDefinitionEl>>,
-    oidc_member_definition: Option<DynamicBlock<SagemakerWorkteamMemberDefinitionElOidcMemberDefinitionEl>>,
+    cognito_member_definition: std
+    ::option
+    ::Option<terrars::DynamicBlock<SagemakerWorkteamMemberDefinitionElCognitoMemberDefinitionEl>>,
+    oidc_member_definition: std
+    ::option
+    ::Option<terrars::DynamicBlock<SagemakerWorkteamMemberDefinitionElOidcMemberDefinitionEl>>,
 }
 
 #[derive(Serialize)]
 pub struct SagemakerWorkteamMemberDefinitionEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    cognito_member_definition: Option<Vec<SagemakerWorkteamMemberDefinitionElCognitoMemberDefinitionEl>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    oidc_member_definition: Option<Vec<SagemakerWorkteamMemberDefinitionElOidcMemberDefinitionEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    cognito_member_definition: std
+    ::option
+    ::Option<std::vec::Vec<SagemakerWorkteamMemberDefinitionElCognitoMemberDefinitionEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    oidc_member_definition: std::option::Option<std::vec::Vec<SagemakerWorkteamMemberDefinitionElOidcMemberDefinitionEl>>,
     dynamic: SagemakerWorkteamMemberDefinitionElDynamic,
 }
 
 impl SagemakerWorkteamMemberDefinitionEl {
-    #[doc= "Set the field `cognito_member_definition`.\n"]
+    #[doc = "Set the field `cognito_member_definition`.\n"]
     pub fn set_cognito_member_definition(
         mut self,
-        v: impl Into<BlockAssignable<SagemakerWorkteamMemberDefinitionElCognitoMemberDefinitionEl>>,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<terrars::BlockAssignable<SagemakerWorkteamMemberDefinitionElCognitoMemberDefinitionEl>>,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.cognito_member_definition = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.cognito_member_definition = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.cognito_member_definition = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.cognito_member_definition = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Set the field `oidc_member_definition`.\n"]
+    #[doc = "Set the field `oidc_member_definition`.\n"]
     pub fn set_oidc_member_definition(
         mut self,
-        v: impl Into<BlockAssignable<SagemakerWorkteamMemberDefinitionElOidcMemberDefinitionEl>>,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<terrars::BlockAssignable<SagemakerWorkteamMemberDefinitionElOidcMemberDefinitionEl>>,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.oidc_member_definition = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.oidc_member_definition = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.oidc_member_definition = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.oidc_member_definition = std::option::Option::Some(d);
             },
         }
         self
     }
 }
 
-impl ToListMappable for SagemakerWorkteamMemberDefinitionEl {
-    type O = BlockAssignable<SagemakerWorkteamMemberDefinitionEl>;
+impl terrars::ToListMappable for SagemakerWorkteamMemberDefinitionEl {
+    type O = terrars::BlockAssignable<SagemakerWorkteamMemberDefinitionEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -537,18 +606,18 @@ impl BuildSagemakerWorkteamMemberDefinitionEl {
         SagemakerWorkteamMemberDefinitionEl {
             cognito_member_definition: core::default::Default::default(),
             oidc_member_definition: core::default::Default::default(),
-            dynamic: Default::default(),
+            dynamic: core::default::Default::default(),
         }
     }
 }
 
 pub struct SagemakerWorkteamMemberDefinitionElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for SagemakerWorkteamMemberDefinitionElRef {
-    fn new(shared: StackShared, base: String) -> SagemakerWorkteamMemberDefinitionElRef {
+impl terrars::Ref for SagemakerWorkteamMemberDefinitionElRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> SagemakerWorkteamMemberDefinitionElRef {
         SagemakerWorkteamMemberDefinitionElRef {
             shared: shared,
             base: base.to_string(),
@@ -557,40 +626,47 @@ impl Ref for SagemakerWorkteamMemberDefinitionElRef {
 }
 
 impl SagemakerWorkteamMemberDefinitionElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `cognito_member_definition` after provisioning.\n"]
-    pub fn cognito_member_definition(&self) -> ListRef<SagemakerWorkteamMemberDefinitionElCognitoMemberDefinitionElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.cognito_member_definition", self.base))
+    #[doc = "Get a reference to the value of field `cognito_member_definition` after provisioning.\n"]
+    pub fn cognito_member_definition(
+        &self,
+    ) -> terrars::ListRef<SagemakerWorkteamMemberDefinitionElCognitoMemberDefinitionElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.cognito_member_definition", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `oidc_member_definition` after provisioning.\n"]
-    pub fn oidc_member_definition(&self) -> ListRef<SagemakerWorkteamMemberDefinitionElOidcMemberDefinitionElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.oidc_member_definition", self.base))
+    #[doc = "Get a reference to the value of field `oidc_member_definition` after provisioning.\n"]
+    pub fn oidc_member_definition(
+        &self,
+    ) -> terrars::ListRef<SagemakerWorkteamMemberDefinitionElOidcMemberDefinitionElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.oidc_member_definition", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct SagemakerWorkteamNotificationConfigurationEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    notification_topic_arn: Option<PrimField<String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    notification_topic_arn: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
 impl SagemakerWorkteamNotificationConfigurationEl {
-    #[doc= "Set the field `notification_topic_arn`.\n"]
-    pub fn set_notification_topic_arn(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.notification_topic_arn = Some(v.into());
+    #[doc = "Set the field `notification_topic_arn`.\n"]
+    pub fn set_notification_topic_arn(
+        mut self,
+        v: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.notification_topic_arn = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl ToListMappable for SagemakerWorkteamNotificationConfigurationEl {
-    type O = BlockAssignable<SagemakerWorkteamNotificationConfigurationEl>;
+impl terrars::ToListMappable for SagemakerWorkteamNotificationConfigurationEl {
+    type O = terrars::BlockAssignable<SagemakerWorkteamNotificationConfigurationEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -607,12 +683,15 @@ impl BuildSagemakerWorkteamNotificationConfigurationEl {
 }
 
 pub struct SagemakerWorkteamNotificationConfigurationElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for SagemakerWorkteamNotificationConfigurationElRef {
-    fn new(shared: StackShared, base: String) -> SagemakerWorkteamNotificationConfigurationElRef {
+impl terrars::Ref for SagemakerWorkteamNotificationConfigurationElRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> SagemakerWorkteamNotificationConfigurationElRef {
         SagemakerWorkteamNotificationConfigurationElRef {
             shared: shared,
             base: base.to_string(),
@@ -621,18 +700,20 @@ impl Ref for SagemakerWorkteamNotificationConfigurationElRef {
 }
 
 impl SagemakerWorkteamNotificationConfigurationElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `notification_topic_arn` after provisioning.\n"]
-    pub fn notification_topic_arn(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.notification_topic_arn", self.base))
+    #[doc = "Get a reference to the value of field `notification_topic_arn` after provisioning.\n"]
+    pub fn notification_topic_arn(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.notification_topic_arn", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
 struct SagemakerWorkteamDynamic {
-    member_definition: Option<DynamicBlock<SagemakerWorkteamMemberDefinitionEl>>,
-    notification_configuration: Option<DynamicBlock<SagemakerWorkteamNotificationConfigurationEl>>,
+    member_definition: std::option::Option<terrars::DynamicBlock<SagemakerWorkteamMemberDefinitionEl>>,
+    notification_configuration: std
+    ::option
+    ::Option<terrars::DynamicBlock<SagemakerWorkteamNotificationConfigurationEl>>,
 }

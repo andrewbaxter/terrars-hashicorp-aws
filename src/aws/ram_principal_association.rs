@@ -1,46 +1,50 @@
 use serde::Serialize;
-use std::cell::RefCell;
-use std::rc::Rc;
-use terrars::*;
+use terrars::{
+    Referable as _,
+    Resource_ as _,
+    Ref as _,
+};
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
 struct RamPrincipalAssociationData {
-    #[serde(skip_serializing_if = "Vec::is_empty")]
-    depends_on: Vec<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    provider: Option<String>,
-    #[serde(skip_serializing_if = "SerdeSkipDefault::is_default")]
-    lifecycle: ResourceLifecycle,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    for_each: Option<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    id: Option<PrimField<String>>,
-    principal: PrimField<String>,
-    resource_share_arn: PrimField<String>,
+    #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
+    depends_on: std::vec::Vec<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    provider: std::option::Option<std::string::String>,
+    #[serde(skip_serializing_if = "terrars::SerdeSkipDefault::is_default")]
+    lifecycle: terrars::ResourceLifecycle,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    for_each: std::option::Option<std::string::String>,
+    #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
+    provisioner: std::vec::Vec<terrars::Provisioner>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    id: std::option::Option<terrars::PrimField<std::string::String>>,
+    principal: terrars::PrimField<std::string::String>,
+    resource_share_arn: terrars::PrimField<std::string::String>,
 }
 
 struct RamPrincipalAssociation_ {
-    shared: StackShared,
-    tf_id: String,
-    data: RefCell<RamPrincipalAssociationData>,
+    shared: terrars::StackShared,
+    tf_id: std::string::String,
+    data: std::cell::RefCell<RamPrincipalAssociationData>,
 }
 
 #[derive(Clone)]
-pub struct RamPrincipalAssociation(Rc<RamPrincipalAssociation_>);
+pub struct RamPrincipalAssociation(std::rc::Rc<RamPrincipalAssociation_>);
 
 impl RamPrincipalAssociation {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.0.shared
     }
 
-    pub fn depends_on(self, dep: &impl Referable) -> Self {
+    pub fn depends_on(self, dep: &impl terrars::Referable) -> Self {
         self.0.data.borrow_mut().depends_on.push(dep.extract_ref());
         self
     }
 
     pub fn set_provider(self, provider: &ProviderAws) -> Self {
-        self.0.data.borrow_mut().provider = Some(provider.provider_ref());
+        self.0.data.borrow_mut().provider = std::option::Option::Some(provider.provider_ref());
         self
     }
 
@@ -55,86 +59,119 @@ impl RamPrincipalAssociation {
     }
 
     pub fn ignore_changes_to_all(self) -> Self {
-        self.0.data.borrow_mut().lifecycle.ignore_changes = Some(IgnoreChanges::All(IgnoreChangesAll::All));
+        self.0.data.borrow_mut().lifecycle.ignore_changes =
+            std::option::Option::Some(terrars::IgnoreChanges::All(terrars::IgnoreChangesAll::All));
         self
     }
 
-    pub fn ignore_changes_to_attr(self, attr: impl ToString) -> Self {
+    pub fn ignore_changes_to_attr(self, attr: impl std::string::ToString) -> Self {
         {
             let mut d = self.0.data.borrow_mut();
             if match &mut d.lifecycle.ignore_changes {
-                Some(i) => match i {
-                    IgnoreChanges::All(_) => {
+                std::option::Option::Some(i) => match i {
+                    terrars::IgnoreChanges::All(_) => {
                         true
                     },
-                    IgnoreChanges::Refs(r) => {
+                    terrars::IgnoreChanges::Refs(r) => {
                         r.push(attr.to_string());
                         false
                     },
                 },
-                None => true,
+                std::option::Option::None => true,
             } {
-                d.lifecycle.ignore_changes = Some(IgnoreChanges::Refs(vec![attr.to_string()]));
+                d.lifecycle.ignore_changes =
+                    std::option::Option::Some(terrars::IgnoreChanges::Refs(vec![attr.to_string()]));
             }
         }
         self
     }
 
-    pub fn replace_triggered_by_resource(self, r: &impl Resource) -> Self {
+    pub fn replace_triggered_by_resource(self, r: &impl terrars::Resource) -> Self {
         self.0.data.borrow_mut().lifecycle.replace_triggered_by.push(r.extract_ref());
         self
     }
 
-    pub fn replace_triggered_by_attr(self, attr: impl ToString) -> Self {
+    pub fn replace_triggered_by_attr(self, attr: impl std::string::ToString) -> Self {
         self.0.data.borrow_mut().lifecycle.replace_triggered_by.push(attr.to_string());
         self
     }
 
-    #[doc= "Set the field `id`.\n"]
-    pub fn set_id(self, v: impl Into<PrimField<String>>) -> Self {
-        self.0.data.borrow_mut().id = Some(v.into());
+    #[doc = r" Add a provisioner (ex: `local-exec`, `remote-exec`, `file`) to this resource."]
+    #[doc = r" Provisioners run in the order they're added."]
+    pub fn add_provisioner(self, v: impl std::convert::Into<terrars::Provisioner>) -> Self {
+        self.0.data.borrow_mut().provisioner.push(v.into());
         self
     }
 
-    #[doc= "Get a reference to the value of field `id` after provisioning.\n"]
-    pub fn id(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
+    pub fn add_lifecycle_precondition(
+        self,
+        condition: impl std::convert::Into<terrars::PrimField<bool>>,
+        error_message: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.0.data.borrow_mut().lifecycle.precondition.push(terrars::LifecycleCondition {
+            condition: condition.into(),
+            error_message: error_message.into(),
+        });
+        self
     }
 
-    #[doc= "Get a reference to the value of field `principal` after provisioning.\n"]
-    pub fn principal(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.principal", self.extract_ref()))
+    pub fn add_lifecycle_postcondition(
+        self,
+        condition: impl std::convert::Into<terrars::PrimField<bool>>,
+        error_message: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.0.data.borrow_mut().lifecycle.postcondition.push(terrars::LifecycleCondition {
+            condition: condition.into(),
+            error_message: error_message.into(),
+        });
+        self
     }
 
-    #[doc= "Get a reference to the value of field `resource_share_arn` after provisioning.\n"]
-    pub fn resource_share_arn(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.resource_share_arn", self.extract_ref()))
+    #[doc = "Set the field `id`.\n"]
+    pub fn set_id(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().id = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
+    pub fn id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `principal` after provisioning.\n"]
+    pub fn principal(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.principal", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `resource_share_arn` after provisioning.\n"]
+    pub fn resource_share_arn(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.resource_share_arn", self.extract_ref()))
     }
 }
 
-impl Referable for RamPrincipalAssociation {
-    fn extract_ref(&self) -> String {
+impl terrars::Referable for RamPrincipalAssociation {
+    fn extract_ref(&self) -> std::string::String {
         format!("{}.{}", self.0.extract_resource_type(), self.0.extract_tf_id())
     }
 }
 
-impl Resource for RamPrincipalAssociation { }
+impl terrars::Resource for RamPrincipalAssociation { }
 
-impl ToListMappable for RamPrincipalAssociation {
-    type O = ListRef<RamPrincipalAssociationRef>;
+impl terrars::ToListMappable for RamPrincipalAssociation {
+    type O = terrars::ListRef<RamPrincipalAssociationRef>;
 
-    fn do_map(self, base: String) -> Self::O {
-        self.0.data.borrow_mut().for_each = Some(format!("${{{}}}", base));
-        ListRef::new(self.0.shared.clone(), self.extract_ref())
+    fn do_map(self, base: std::string::String) -> Self::O {
+        self.0.data.borrow_mut().for_each = std::option::Option::Some(format!("${{{}}}", base));
+        terrars::ListRef::new(self.0.shared.clone(), self.extract_ref())
     }
 }
 
-impl Resource_ for RamPrincipalAssociation_ {
-    fn extract_resource_type(&self) -> String {
+impl terrars::Resource_ for RamPrincipalAssociation_ {
+    fn extract_resource_type(&self) -> std::string::String {
         "aws_ram_principal_association".into()
     }
 
-    fn extract_tf_id(&self) -> String {
+    fn extract_tf_id(&self) -> std::string::String {
         self.tf_id.clone()
     }
 
@@ -144,23 +181,24 @@ impl Resource_ for RamPrincipalAssociation_ {
 }
 
 pub struct BuildRamPrincipalAssociation {
-    pub tf_id: String,
-    #[doc= ""]
-    pub principal: PrimField<String>,
-    #[doc= ""]
-    pub resource_share_arn: PrimField<String>,
+    pub tf_id: std::string::String,
+    #[doc = ""]
+    pub principal: terrars::PrimField<std::string::String>,
+    #[doc = ""]
+    pub resource_share_arn: terrars::PrimField<std::string::String>,
 }
 
 impl BuildRamPrincipalAssociation {
-    pub fn build(self, stack: &mut Stack) -> RamPrincipalAssociation {
-        let out = RamPrincipalAssociation(Rc::new(RamPrincipalAssociation_ {
+    pub fn build(self, stack: &mut terrars::Stack) -> RamPrincipalAssociation {
+        let out = RamPrincipalAssociation(std::rc::Rc::new(RamPrincipalAssociation_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: RefCell::new(RamPrincipalAssociationData {
+            data: std::cell::RefCell::new(RamPrincipalAssociationData {
                 depends_on: core::default::Default::default(),
-                provider: None,
+                provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
-                for_each: None,
+                for_each: std::option::Option::None,
+                provisioner: core::default::Default::default(),
                 id: core::default::Default::default(),
                 principal: self.principal,
                 resource_share_arn: self.resource_share_arn,
@@ -172,12 +210,12 @@ impl BuildRamPrincipalAssociation {
 }
 
 pub struct RamPrincipalAssociationRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for RamPrincipalAssociationRef {
-    fn new(shared: StackShared, base: String) -> Self {
+impl terrars::Ref for RamPrincipalAssociationRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> Self {
         Self {
             shared: shared,
             base: base,
@@ -186,26 +224,26 @@ impl Ref for RamPrincipalAssociationRef {
 }
 
 impl RamPrincipalAssociationRef {
-    fn extract_ref(&self) -> String {
+    fn extract_ref(&self) -> std::string::String {
         self.base.clone()
     }
 
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `id` after provisioning.\n"]
-    pub fn id(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
+    pub fn id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `principal` after provisioning.\n"]
-    pub fn principal(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.principal", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `principal` after provisioning.\n"]
+    pub fn principal(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.principal", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `resource_share_arn` after provisioning.\n"]
-    pub fn resource_share_arn(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.resource_share_arn", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `resource_share_arn` after provisioning.\n"]
+    pub fn resource_share_arn(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.resource_share_arn", self.extract_ref()))
     }
 }

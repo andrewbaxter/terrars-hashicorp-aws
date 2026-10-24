@@ -1,194 +1,225 @@
 use serde::Serialize;
-use std::cell::RefCell;
-use std::rc::Rc;
-use terrars::*;
+use terrars::{
+    Referable as _,
+    Datasource_ as _,
+    Ref as _,
+};
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
 struct DataRouteTableData {
-    #[serde(skip_serializing_if = "Vec::is_empty")]
-    depends_on: Vec<String>,
-    #[serde(skip_serializing_if = "SerdeSkipDefault::is_default")]
-    provider: Option<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    for_each: Option<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    gateway_id: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    id: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    route_table_id: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    subnet_id: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    tags: Option<RecField<PrimField<String>>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    vpc_id: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    filter: Option<Vec<DataRouteTableFilterEl>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    timeouts: Option<DataRouteTableTimeoutsEl>,
+    #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
+    depends_on: std::vec::Vec<std::string::String>,
+    #[serde(skip_serializing_if = "terrars::SerdeSkipDefault::is_default")]
+    provider: std::option::Option<std::string::String>,
+    #[serde(skip_serializing_if = "terrars::SerdeSkipDefault::is_default")]
+    lifecycle: terrars::DatasourceLifecycle,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    for_each: std::option::Option<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    gateway_id: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    id: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    route_table_id: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    subnet_id: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    tags: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    vpc_id: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    filter: std::option::Option<std::vec::Vec<DataRouteTableFilterEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    timeouts: std::option::Option<DataRouteTableTimeoutsEl>,
     dynamic: DataRouteTableDynamic,
 }
 
 struct DataRouteTable_ {
-    shared: StackShared,
-    tf_id: String,
-    data: RefCell<DataRouteTableData>,
+    shared: terrars::StackShared,
+    tf_id: std::string::String,
+    data: std::cell::RefCell<DataRouteTableData>,
 }
 
 #[derive(Clone)]
-pub struct DataRouteTable(Rc<DataRouteTable_>);
+pub struct DataRouteTable(std::rc::Rc<DataRouteTable_>);
 
 impl DataRouteTable {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.0.shared
     }
 
-    pub fn depends_on(self, dep: &impl Referable) -> Self {
+    pub fn depends_on(self, dep: &impl terrars::Referable) -> Self {
         self.0.data.borrow_mut().depends_on.push(dep.extract_ref());
         self
     }
 
     pub fn set_provider(&self, provider: &ProviderAws) -> &Self {
-        self.0.data.borrow_mut().provider = Some(provider.provider_ref());
+        self.0.data.borrow_mut().provider = std::option::Option::Some(provider.provider_ref());
         self
     }
 
-    #[doc= "Set the field `gateway_id`.\n"]
-    pub fn set_gateway_id(self, v: impl Into<PrimField<String>>) -> Self {
-        self.0.data.borrow_mut().gateway_id = Some(v.into());
+    pub fn add_lifecycle_precondition(
+        self,
+        condition: impl std::convert::Into<terrars::PrimField<bool>>,
+        error_message: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.0.data.borrow_mut().lifecycle.precondition.push(terrars::LifecycleCondition {
+            condition: condition.into(),
+            error_message: error_message.into(),
+        });
         self
     }
 
-    #[doc= "Set the field `id`.\n"]
-    pub fn set_id(self, v: impl Into<PrimField<String>>) -> Self {
-        self.0.data.borrow_mut().id = Some(v.into());
+    pub fn add_lifecycle_postcondition(
+        self,
+        condition: impl std::convert::Into<terrars::PrimField<bool>>,
+        error_message: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.0.data.borrow_mut().lifecycle.postcondition.push(terrars::LifecycleCondition {
+            condition: condition.into(),
+            error_message: error_message.into(),
+        });
         self
     }
 
-    #[doc= "Set the field `route_table_id`.\n"]
-    pub fn set_route_table_id(self, v: impl Into<PrimField<String>>) -> Self {
-        self.0.data.borrow_mut().route_table_id = Some(v.into());
+    #[doc = "Set the field `gateway_id`.\n"]
+    pub fn set_gateway_id(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().gateway_id = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `subnet_id`.\n"]
-    pub fn set_subnet_id(self, v: impl Into<PrimField<String>>) -> Self {
-        self.0.data.borrow_mut().subnet_id = Some(v.into());
+    #[doc = "Set the field `id`.\n"]
+    pub fn set_id(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().id = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `tags`.\n"]
-    pub fn set_tags(self, v: impl Into<RecField<PrimField<String>>>) -> Self {
-        self.0.data.borrow_mut().tags = Some(v.into());
+    #[doc = "Set the field `route_table_id`.\n"]
+    pub fn set_route_table_id(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().route_table_id = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `vpc_id`.\n"]
-    pub fn set_vpc_id(self, v: impl Into<PrimField<String>>) -> Self {
-        self.0.data.borrow_mut().vpc_id = Some(v.into());
+    #[doc = "Set the field `subnet_id`.\n"]
+    pub fn set_subnet_id(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().subnet_id = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `filter`.\n"]
-    pub fn set_filter(self, v: impl Into<BlockAssignable<DataRouteTableFilterEl>>) -> Self {
+    #[doc = "Set the field `tags`.\n"]
+    pub fn set_tags(
+        self,
+        v: impl std::convert::Into<terrars::RecField<terrars::PrimField<std::string::String>>>,
+    ) -> Self {
+        self.0.data.borrow_mut().tags = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `vpc_id`.\n"]
+    pub fn set_vpc_id(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().vpc_id = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `filter`.\n"]
+    pub fn set_filter(self, v: impl std::convert::Into<terrars::BlockAssignable<DataRouteTableFilterEl>>) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.0.data.borrow_mut().filter = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.0.data.borrow_mut().filter = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.0.data.borrow_mut().dynamic.filter = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.0.data.borrow_mut().dynamic.filter = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Set the field `timeouts`.\n"]
-    pub fn set_timeouts(self, v: impl Into<DataRouteTableTimeoutsEl>) -> Self {
-        self.0.data.borrow_mut().timeouts = Some(v.into());
+    #[doc = "Set the field `timeouts`.\n"]
+    pub fn set_timeouts(self, v: impl std::convert::Into<DataRouteTableTimeoutsEl>) -> Self {
+        self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Get a reference to the value of field `arn` after provisioning.\n"]
-    pub fn arn(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.arn", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `arn` after provisioning.\n"]
+    pub fn arn(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.arn", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `associations` after provisioning.\n"]
-    pub fn associations(&self) -> ListRef<DataRouteTableAssociationsElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.associations", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `associations` after provisioning.\n"]
+    pub fn associations(&self) -> terrars::ListRef<DataRouteTableAssociationsElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.associations", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `gateway_id` after provisioning.\n"]
-    pub fn gateway_id(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.gateway_id", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `gateway_id` after provisioning.\n"]
+    pub fn gateway_id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.gateway_id", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `id` after provisioning.\n"]
-    pub fn id(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
+    pub fn id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `owner_id` after provisioning.\n"]
-    pub fn owner_id(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.owner_id", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `owner_id` after provisioning.\n"]
+    pub fn owner_id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.owner_id", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `route_table_id` after provisioning.\n"]
-    pub fn route_table_id(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.route_table_id", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `route_table_id` after provisioning.\n"]
+    pub fn route_table_id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.route_table_id", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `routes` after provisioning.\n"]
-    pub fn routes(&self) -> ListRef<DataRouteTableRoutesElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.routes", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `routes` after provisioning.\n"]
+    pub fn routes(&self) -> terrars::ListRef<DataRouteTableRoutesElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.routes", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `subnet_id` after provisioning.\n"]
-    pub fn subnet_id(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.subnet_id", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `subnet_id` after provisioning.\n"]
+    pub fn subnet_id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.subnet_id", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `tags` after provisioning.\n"]
-    pub fn tags(&self) -> RecRef<PrimExpr<String>> {
-        RecRef::new(self.shared().clone(), format!("{}.tags", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `tags` after provisioning.\n"]
+    pub fn tags(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
+        terrars::RecRef::new(self.shared().clone(), format!("{}.tags", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `vpc_id` after provisioning.\n"]
-    pub fn vpc_id(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.vpc_id", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `vpc_id` after provisioning.\n"]
+    pub fn vpc_id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.vpc_id", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `timeouts` after provisioning.\n"]
+    #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
     pub fn timeouts(&self) -> DataRouteTableTimeoutsElRef {
         DataRouteTableTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
-impl Referable for DataRouteTable {
-    fn extract_ref(&self) -> String {
+impl terrars::Referable for DataRouteTable {
+    fn extract_ref(&self) -> std::string::String {
         format!("data.{}.{}", self.0.extract_datasource_type(), self.0.extract_tf_id())
     }
 }
 
-impl Datasource for DataRouteTable { }
+impl terrars::Datasource for DataRouteTable { }
 
-impl ToListMappable for DataRouteTable {
-    type O = ListRef<DataRouteTableRef>;
+impl terrars::ToListMappable for DataRouteTable {
+    type O = terrars::ListRef<DataRouteTableRef>;
 
-    fn do_map(self, base: String) -> Self::O {
-        self.0.data.borrow_mut().for_each = Some(format!("${{{}}}", base));
-        ListRef::new(self.0.shared.clone(), self.extract_ref())
+    fn do_map(self, base: std::string::String) -> Self::O {
+        self.0.data.borrow_mut().for_each = std::option::Option::Some(format!("${{{}}}", base));
+        terrars::ListRef::new(self.0.shared.clone(), self.extract_ref())
     }
 }
 
-impl Datasource_ for DataRouteTable_ {
-    fn extract_datasource_type(&self) -> String {
+impl terrars::Datasource_ for DataRouteTable_ {
+    fn extract_datasource_type(&self) -> std::string::String {
         "aws_route_table".into()
     }
 
-    fn extract_tf_id(&self) -> String {
+    fn extract_tf_id(&self) -> std::string::String {
         self.tf_id.clone()
     }
 
@@ -198,18 +229,19 @@ impl Datasource_ for DataRouteTable_ {
 }
 
 pub struct BuildDataRouteTable {
-    pub tf_id: String,
+    pub tf_id: std::string::String,
 }
 
 impl BuildDataRouteTable {
-    pub fn build(self, stack: &mut Stack) -> DataRouteTable {
-        let out = DataRouteTable(Rc::new(DataRouteTable_ {
+    pub fn build(self, stack: &mut terrars::Stack) -> DataRouteTable {
+        let out = DataRouteTable(std::rc::Rc::new(DataRouteTable_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: RefCell::new(DataRouteTableData {
+            data: std::cell::RefCell::new(DataRouteTableData {
                 depends_on: core::default::Default::default(),
-                provider: None,
-                for_each: None,
+                provider: std::option::Option::None,
+                lifecycle: core::default::Default::default(),
+                for_each: std::option::Option::None,
                 gateway_id: core::default::Default::default(),
                 id: core::default::Default::default(),
                 route_table_id: core::default::Default::default(),
@@ -218,7 +250,7 @@ impl BuildDataRouteTable {
                 vpc_id: core::default::Default::default(),
                 filter: core::default::Default::default(),
                 timeouts: core::default::Default::default(),
-                dynamic: Default::default(),
+                dynamic: core::default::Default::default(),
             }),
         }));
         stack.add_datasource(out.0.clone());
@@ -227,12 +259,12 @@ impl BuildDataRouteTable {
 }
 
 pub struct DataRouteTableRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for DataRouteTableRef {
-    fn new(shared: StackShared, base: String) -> Self {
+impl terrars::Ref for DataRouteTableRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> Self {
         Self {
             shared: shared,
             base: base,
@@ -241,65 +273,65 @@ impl Ref for DataRouteTableRef {
 }
 
 impl DataRouteTableRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    fn extract_ref(&self) -> String {
+    fn extract_ref(&self) -> std::string::String {
         self.base.clone()
     }
 
-    #[doc= "Get a reference to the value of field `arn` after provisioning.\n"]
-    pub fn arn(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.arn", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `arn` after provisioning.\n"]
+    pub fn arn(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.arn", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `associations` after provisioning.\n"]
-    pub fn associations(&self) -> ListRef<DataRouteTableAssociationsElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.associations", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `associations` after provisioning.\n"]
+    pub fn associations(&self) -> terrars::ListRef<DataRouteTableAssociationsElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.associations", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `gateway_id` after provisioning.\n"]
-    pub fn gateway_id(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.gateway_id", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `gateway_id` after provisioning.\n"]
+    pub fn gateway_id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.gateway_id", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `id` after provisioning.\n"]
-    pub fn id(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
+    pub fn id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `owner_id` after provisioning.\n"]
-    pub fn owner_id(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.owner_id", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `owner_id` after provisioning.\n"]
+    pub fn owner_id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.owner_id", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `route_table_id` after provisioning.\n"]
-    pub fn route_table_id(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.route_table_id", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `route_table_id` after provisioning.\n"]
+    pub fn route_table_id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.route_table_id", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `routes` after provisioning.\n"]
-    pub fn routes(&self) -> ListRef<DataRouteTableRoutesElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.routes", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `routes` after provisioning.\n"]
+    pub fn routes(&self) -> terrars::ListRef<DataRouteTableRoutesElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.routes", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `subnet_id` after provisioning.\n"]
-    pub fn subnet_id(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.subnet_id", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `subnet_id` after provisioning.\n"]
+    pub fn subnet_id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.subnet_id", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `tags` after provisioning.\n"]
-    pub fn tags(&self) -> RecRef<PrimExpr<String>> {
-        RecRef::new(self.shared().clone(), format!("{}.tags", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `tags` after provisioning.\n"]
+    pub fn tags(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
+        terrars::RecRef::new(self.shared().clone(), format!("{}.tags", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `vpc_id` after provisioning.\n"]
-    pub fn vpc_id(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.vpc_id", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `vpc_id` after provisioning.\n"]
+    pub fn vpc_id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.vpc_id", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `timeouts` after provisioning.\n"]
+    #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
     pub fn timeouts(&self) -> DataRouteTableTimeoutsElRef {
         DataRouteTableTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
@@ -307,55 +339,58 @@ impl DataRouteTableRef {
 
 #[derive(Serialize)]
 pub struct DataRouteTableAssociationsEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    gateway_id: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    main: Option<PrimField<bool>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    route_table_association_id: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    route_table_id: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    subnet_id: Option<PrimField<String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    gateway_id: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    main: std::option::Option<terrars::PrimField<bool>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    route_table_association_id: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    route_table_id: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    subnet_id: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
 impl DataRouteTableAssociationsEl {
-    #[doc= "Set the field `gateway_id`.\n"]
-    pub fn set_gateway_id(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.gateway_id = Some(v.into());
+    #[doc = "Set the field `gateway_id`.\n"]
+    pub fn set_gateway_id(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.gateway_id = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `main`.\n"]
-    pub fn set_main(mut self, v: impl Into<PrimField<bool>>) -> Self {
-        self.main = Some(v.into());
+    #[doc = "Set the field `main`.\n"]
+    pub fn set_main(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
+        self.main = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `route_table_association_id`.\n"]
-    pub fn set_route_table_association_id(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.route_table_association_id = Some(v.into());
+    #[doc = "Set the field `route_table_association_id`.\n"]
+    pub fn set_route_table_association_id(
+        mut self,
+        v: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.route_table_association_id = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `route_table_id`.\n"]
-    pub fn set_route_table_id(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.route_table_id = Some(v.into());
+    #[doc = "Set the field `route_table_id`.\n"]
+    pub fn set_route_table_id(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.route_table_id = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `subnet_id`.\n"]
-    pub fn set_subnet_id(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.subnet_id = Some(v.into());
+    #[doc = "Set the field `subnet_id`.\n"]
+    pub fn set_subnet_id(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.subnet_id = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl ToListMappable for DataRouteTableAssociationsEl {
-    type O = BlockAssignable<DataRouteTableAssociationsEl>;
+impl terrars::ToListMappable for DataRouteTableAssociationsEl {
+    type O = terrars::BlockAssignable<DataRouteTableAssociationsEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -378,12 +413,12 @@ impl BuildDataRouteTableAssociationsEl {
 }
 
 pub struct DataRouteTableAssociationsElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for DataRouteTableAssociationsElRef {
-    fn new(shared: StackShared, base: String) -> DataRouteTableAssociationsElRef {
+impl terrars::Ref for DataRouteTableAssociationsElRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataRouteTableAssociationsElRef {
         DataRouteTableAssociationsElRef {
             shared: shared,
             base: base.to_string(),
@@ -392,159 +427,177 @@ impl Ref for DataRouteTableAssociationsElRef {
 }
 
 impl DataRouteTableAssociationsElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `gateway_id` after provisioning.\n"]
-    pub fn gateway_id(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.gateway_id", self.base))
+    #[doc = "Get a reference to the value of field `gateway_id` after provisioning.\n"]
+    pub fn gateway_id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.gateway_id", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `main` after provisioning.\n"]
-    pub fn main(&self) -> PrimExpr<bool> {
-        PrimExpr::new(self.shared().clone(), format!("{}.main", self.base))
+    #[doc = "Get a reference to the value of field `main` after provisioning.\n"]
+    pub fn main(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.main", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `route_table_association_id` after provisioning.\n"]
-    pub fn route_table_association_id(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.route_table_association_id", self.base))
+    #[doc = "Get a reference to the value of field `route_table_association_id` after provisioning.\n"]
+    pub fn route_table_association_id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.route_table_association_id", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `route_table_id` after provisioning.\n"]
-    pub fn route_table_id(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.route_table_id", self.base))
+    #[doc = "Get a reference to the value of field `route_table_id` after provisioning.\n"]
+    pub fn route_table_id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.route_table_id", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `subnet_id` after provisioning.\n"]
-    pub fn subnet_id(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.subnet_id", self.base))
+    #[doc = "Get a reference to the value of field `subnet_id` after provisioning.\n"]
+    pub fn subnet_id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.subnet_id", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct DataRouteTableRoutesEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    carrier_gateway_id: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    cidr_block: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    core_network_arn: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    destination_prefix_list_id: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    egress_only_gateway_id: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    gateway_id: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    instance_id: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    ipv6_cidr_block: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    local_gateway_id: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    nat_gateway_id: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    network_interface_id: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    transit_gateway_id: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    vpc_endpoint_id: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    vpc_peering_connection_id: Option<PrimField<String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    carrier_gateway_id: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    cidr_block: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    core_network_arn: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    destination_prefix_list_id: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    egress_only_gateway_id: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    gateway_id: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    instance_id: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    ipv6_cidr_block: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    local_gateway_id: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    nat_gateway_id: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    network_interface_id: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    transit_gateway_id: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    vpc_endpoint_id: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    vpc_peering_connection_id: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
 impl DataRouteTableRoutesEl {
-    #[doc= "Set the field `carrier_gateway_id`.\n"]
-    pub fn set_carrier_gateway_id(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.carrier_gateway_id = Some(v.into());
+    #[doc = "Set the field `carrier_gateway_id`.\n"]
+    pub fn set_carrier_gateway_id(
+        mut self,
+        v: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.carrier_gateway_id = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `cidr_block`.\n"]
-    pub fn set_cidr_block(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.cidr_block = Some(v.into());
+    #[doc = "Set the field `cidr_block`.\n"]
+    pub fn set_cidr_block(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.cidr_block = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `core_network_arn`.\n"]
-    pub fn set_core_network_arn(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.core_network_arn = Some(v.into());
+    #[doc = "Set the field `core_network_arn`.\n"]
+    pub fn set_core_network_arn(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.core_network_arn = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `destination_prefix_list_id`.\n"]
-    pub fn set_destination_prefix_list_id(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.destination_prefix_list_id = Some(v.into());
+    #[doc = "Set the field `destination_prefix_list_id`.\n"]
+    pub fn set_destination_prefix_list_id(
+        mut self,
+        v: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.destination_prefix_list_id = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `egress_only_gateway_id`.\n"]
-    pub fn set_egress_only_gateway_id(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.egress_only_gateway_id = Some(v.into());
+    #[doc = "Set the field `egress_only_gateway_id`.\n"]
+    pub fn set_egress_only_gateway_id(
+        mut self,
+        v: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.egress_only_gateway_id = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `gateway_id`.\n"]
-    pub fn set_gateway_id(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.gateway_id = Some(v.into());
+    #[doc = "Set the field `gateway_id`.\n"]
+    pub fn set_gateway_id(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.gateway_id = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `instance_id`.\n"]
-    pub fn set_instance_id(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.instance_id = Some(v.into());
+    #[doc = "Set the field `instance_id`.\n"]
+    pub fn set_instance_id(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.instance_id = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `ipv6_cidr_block`.\n"]
-    pub fn set_ipv6_cidr_block(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.ipv6_cidr_block = Some(v.into());
+    #[doc = "Set the field `ipv6_cidr_block`.\n"]
+    pub fn set_ipv6_cidr_block(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.ipv6_cidr_block = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `local_gateway_id`.\n"]
-    pub fn set_local_gateway_id(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.local_gateway_id = Some(v.into());
+    #[doc = "Set the field `local_gateway_id`.\n"]
+    pub fn set_local_gateway_id(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.local_gateway_id = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `nat_gateway_id`.\n"]
-    pub fn set_nat_gateway_id(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.nat_gateway_id = Some(v.into());
+    #[doc = "Set the field `nat_gateway_id`.\n"]
+    pub fn set_nat_gateway_id(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.nat_gateway_id = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `network_interface_id`.\n"]
-    pub fn set_network_interface_id(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.network_interface_id = Some(v.into());
+    #[doc = "Set the field `network_interface_id`.\n"]
+    pub fn set_network_interface_id(
+        mut self,
+        v: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.network_interface_id = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `transit_gateway_id`.\n"]
-    pub fn set_transit_gateway_id(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.transit_gateway_id = Some(v.into());
+    #[doc = "Set the field `transit_gateway_id`.\n"]
+    pub fn set_transit_gateway_id(
+        mut self,
+        v: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.transit_gateway_id = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `vpc_endpoint_id`.\n"]
-    pub fn set_vpc_endpoint_id(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.vpc_endpoint_id = Some(v.into());
+    #[doc = "Set the field `vpc_endpoint_id`.\n"]
+    pub fn set_vpc_endpoint_id(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.vpc_endpoint_id = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `vpc_peering_connection_id`.\n"]
-    pub fn set_vpc_peering_connection_id(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.vpc_peering_connection_id = Some(v.into());
+    #[doc = "Set the field `vpc_peering_connection_id`.\n"]
+    pub fn set_vpc_peering_connection_id(
+        mut self,
+        v: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.vpc_peering_connection_id = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl ToListMappable for DataRouteTableRoutesEl {
-    type O = BlockAssignable<DataRouteTableRoutesEl>;
+impl terrars::ToListMappable for DataRouteTableRoutesEl {
+    type O = terrars::BlockAssignable<DataRouteTableRoutesEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -576,12 +629,12 @@ impl BuildDataRouteTableRoutesEl {
 }
 
 pub struct DataRouteTableRoutesElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for DataRouteTableRoutesElRef {
-    fn new(shared: StackShared, base: String) -> DataRouteTableRoutesElRef {
+impl terrars::Ref for DataRouteTableRoutesElRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataRouteTableRoutesElRef {
         DataRouteTableRoutesElRef {
             shared: shared,
             base: base.to_string(),
@@ -590,94 +643,94 @@ impl Ref for DataRouteTableRoutesElRef {
 }
 
 impl DataRouteTableRoutesElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `carrier_gateway_id` after provisioning.\n"]
-    pub fn carrier_gateway_id(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.carrier_gateway_id", self.base))
+    #[doc = "Get a reference to the value of field `carrier_gateway_id` after provisioning.\n"]
+    pub fn carrier_gateway_id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.carrier_gateway_id", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `cidr_block` after provisioning.\n"]
-    pub fn cidr_block(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.cidr_block", self.base))
+    #[doc = "Get a reference to the value of field `cidr_block` after provisioning.\n"]
+    pub fn cidr_block(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.cidr_block", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `core_network_arn` after provisioning.\n"]
-    pub fn core_network_arn(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.core_network_arn", self.base))
+    #[doc = "Get a reference to the value of field `core_network_arn` after provisioning.\n"]
+    pub fn core_network_arn(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.core_network_arn", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `destination_prefix_list_id` after provisioning.\n"]
-    pub fn destination_prefix_list_id(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.destination_prefix_list_id", self.base))
+    #[doc = "Get a reference to the value of field `destination_prefix_list_id` after provisioning.\n"]
+    pub fn destination_prefix_list_id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.destination_prefix_list_id", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `egress_only_gateway_id` after provisioning.\n"]
-    pub fn egress_only_gateway_id(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.egress_only_gateway_id", self.base))
+    #[doc = "Get a reference to the value of field `egress_only_gateway_id` after provisioning.\n"]
+    pub fn egress_only_gateway_id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.egress_only_gateway_id", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `gateway_id` after provisioning.\n"]
-    pub fn gateway_id(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.gateway_id", self.base))
+    #[doc = "Get a reference to the value of field `gateway_id` after provisioning.\n"]
+    pub fn gateway_id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.gateway_id", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `instance_id` after provisioning.\n"]
-    pub fn instance_id(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.instance_id", self.base))
+    #[doc = "Get a reference to the value of field `instance_id` after provisioning.\n"]
+    pub fn instance_id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.instance_id", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `ipv6_cidr_block` after provisioning.\n"]
-    pub fn ipv6_cidr_block(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.ipv6_cidr_block", self.base))
+    #[doc = "Get a reference to the value of field `ipv6_cidr_block` after provisioning.\n"]
+    pub fn ipv6_cidr_block(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.ipv6_cidr_block", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `local_gateway_id` after provisioning.\n"]
-    pub fn local_gateway_id(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.local_gateway_id", self.base))
+    #[doc = "Get a reference to the value of field `local_gateway_id` after provisioning.\n"]
+    pub fn local_gateway_id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.local_gateway_id", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `nat_gateway_id` after provisioning.\n"]
-    pub fn nat_gateway_id(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.nat_gateway_id", self.base))
+    #[doc = "Get a reference to the value of field `nat_gateway_id` after provisioning.\n"]
+    pub fn nat_gateway_id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.nat_gateway_id", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `network_interface_id` after provisioning.\n"]
-    pub fn network_interface_id(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.network_interface_id", self.base))
+    #[doc = "Get a reference to the value of field `network_interface_id` after provisioning.\n"]
+    pub fn network_interface_id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.network_interface_id", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `transit_gateway_id` after provisioning.\n"]
-    pub fn transit_gateway_id(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.transit_gateway_id", self.base))
+    #[doc = "Get a reference to the value of field `transit_gateway_id` after provisioning.\n"]
+    pub fn transit_gateway_id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.transit_gateway_id", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `vpc_endpoint_id` after provisioning.\n"]
-    pub fn vpc_endpoint_id(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.vpc_endpoint_id", self.base))
+    #[doc = "Get a reference to the value of field `vpc_endpoint_id` after provisioning.\n"]
+    pub fn vpc_endpoint_id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.vpc_endpoint_id", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `vpc_peering_connection_id` after provisioning.\n"]
-    pub fn vpc_peering_connection_id(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.vpc_peering_connection_id", self.base))
+    #[doc = "Get a reference to the value of field `vpc_peering_connection_id` after provisioning.\n"]
+    pub fn vpc_peering_connection_id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.vpc_peering_connection_id", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct DataRouteTableFilterEl {
-    name: PrimField<String>,
-    values: SetField<PrimField<String>>,
+    name: terrars::PrimField<std::string::String>,
+    values: terrars::SetField<terrars::PrimField<std::string::String>>,
 }
 
 impl DataRouteTableFilterEl { }
 
-impl ToListMappable for DataRouteTableFilterEl {
-    type O = BlockAssignable<DataRouteTableFilterEl>;
+impl terrars::ToListMappable for DataRouteTableFilterEl {
+    type O = terrars::BlockAssignable<DataRouteTableFilterEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -686,10 +739,10 @@ impl ToListMappable for DataRouteTableFilterEl {
 }
 
 pub struct BuildDataRouteTableFilterEl {
-    #[doc= ""]
-    pub name: PrimField<String>,
-    #[doc= ""]
-    pub values: SetField<PrimField<String>>,
+    #[doc = ""]
+    pub name: terrars::PrimField<std::string::String>,
+    #[doc = ""]
+    pub values: terrars::SetField<terrars::PrimField<std::string::String>>,
 }
 
 impl BuildDataRouteTableFilterEl {
@@ -702,12 +755,12 @@ impl BuildDataRouteTableFilterEl {
 }
 
 pub struct DataRouteTableFilterElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for DataRouteTableFilterElRef {
-    fn new(shared: StackShared, base: String) -> DataRouteTableFilterElRef {
+impl terrars::Ref for DataRouteTableFilterElRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataRouteTableFilterElRef {
         DataRouteTableFilterElRef {
             shared: shared,
             base: base.to_string(),
@@ -716,40 +769,40 @@ impl Ref for DataRouteTableFilterElRef {
 }
 
 impl DataRouteTableFilterElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `name` after provisioning.\n"]
-    pub fn name(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.name", self.base))
+    #[doc = "Get a reference to the value of field `name` after provisioning.\n"]
+    pub fn name(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `values` after provisioning.\n"]
-    pub fn values(&self) -> SetRef<PrimExpr<String>> {
-        SetRef::new(self.shared().clone(), format!("{}.values", self.base))
+    #[doc = "Get a reference to the value of field `values` after provisioning.\n"]
+    pub fn values(&self) -> terrars::SetRef<terrars::PrimExpr<std::string::String>> {
+        terrars::SetRef::new(self.shared().clone(), format!("{}.values", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct DataRouteTableTimeoutsEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    read: Option<PrimField<String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    read: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
 impl DataRouteTableTimeoutsEl {
-    #[doc= "Set the field `read`.\n"]
-    pub fn set_read(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.read = Some(v.into());
+    #[doc = "Set the field `read`.\n"]
+    pub fn set_read(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.read = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl ToListMappable for DataRouteTableTimeoutsEl {
-    type O = BlockAssignable<DataRouteTableTimeoutsEl>;
+impl terrars::ToListMappable for DataRouteTableTimeoutsEl {
+    type O = terrars::BlockAssignable<DataRouteTableTimeoutsEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -766,12 +819,12 @@ impl BuildDataRouteTableTimeoutsEl {
 }
 
 pub struct DataRouteTableTimeoutsElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for DataRouteTableTimeoutsElRef {
-    fn new(shared: StackShared, base: String) -> DataRouteTableTimeoutsElRef {
+impl terrars::Ref for DataRouteTableTimeoutsElRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataRouteTableTimeoutsElRef {
         DataRouteTableTimeoutsElRef {
             shared: shared,
             base: base.to_string(),
@@ -780,17 +833,17 @@ impl Ref for DataRouteTableTimeoutsElRef {
 }
 
 impl DataRouteTableTimeoutsElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `read` after provisioning.\n"]
-    pub fn read(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.read", self.base))
+    #[doc = "Get a reference to the value of field `read` after provisioning.\n"]
+    pub fn read(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.read", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
 struct DataRouteTableDynamic {
-    filter: Option<DynamicBlock<DataRouteTableFilterEl>>,
+    filter: std::option::Option<terrars::DynamicBlock<DataRouteTableFilterEl>>,
 }

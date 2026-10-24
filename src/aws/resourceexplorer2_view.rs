@@ -1,52 +1,56 @@
 use serde::Serialize;
-use std::cell::RefCell;
-use std::rc::Rc;
-use terrars::*;
+use terrars::{
+    Referable as _,
+    Resource_ as _,
+    Ref as _,
+};
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
 struct Resourceexplorer2ViewData {
-    #[serde(skip_serializing_if = "Vec::is_empty")]
-    depends_on: Vec<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    provider: Option<String>,
-    #[serde(skip_serializing_if = "SerdeSkipDefault::is_default")]
-    lifecycle: ResourceLifecycle,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    for_each: Option<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    default_view: Option<PrimField<bool>>,
-    name: PrimField<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    tags: Option<RecField<PrimField<String>>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    filters: Option<Vec<Resourceexplorer2ViewFiltersEl>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    included_property: Option<Vec<Resourceexplorer2ViewIncludedPropertyEl>>,
+    #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
+    depends_on: std::vec::Vec<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    provider: std::option::Option<std::string::String>,
+    #[serde(skip_serializing_if = "terrars::SerdeSkipDefault::is_default")]
+    lifecycle: terrars::ResourceLifecycle,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    for_each: std::option::Option<std::string::String>,
+    #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
+    provisioner: std::vec::Vec<terrars::Provisioner>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    default_view: std::option::Option<terrars::PrimField<bool>>,
+    name: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    tags: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    filters: std::option::Option<std::vec::Vec<Resourceexplorer2ViewFiltersEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    included_property: std::option::Option<std::vec::Vec<Resourceexplorer2ViewIncludedPropertyEl>>,
     dynamic: Resourceexplorer2ViewDynamic,
 }
 
 struct Resourceexplorer2View_ {
-    shared: StackShared,
-    tf_id: String,
-    data: RefCell<Resourceexplorer2ViewData>,
+    shared: terrars::StackShared,
+    tf_id: std::string::String,
+    data: std::cell::RefCell<Resourceexplorer2ViewData>,
 }
 
 #[derive(Clone)]
-pub struct Resourceexplorer2View(Rc<Resourceexplorer2View_>);
+pub struct Resourceexplorer2View(std::rc::Rc<Resourceexplorer2View_>);
 
 impl Resourceexplorer2View {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.0.shared
     }
 
-    pub fn depends_on(self, dep: &impl Referable) -> Self {
+    pub fn depends_on(self, dep: &impl terrars::Referable) -> Self {
         self.0.data.borrow_mut().depends_on.push(dep.extract_ref());
         self
     }
 
     pub fn set_provider(self, provider: &ProviderAws) -> Self {
-        self.0.data.borrow_mut().provider = Some(provider.provider_ref());
+        self.0.data.borrow_mut().provider = std::option::Option::Some(provider.provider_ref());
         self
     }
 
@@ -61,143 +65,185 @@ impl Resourceexplorer2View {
     }
 
     pub fn ignore_changes_to_all(self) -> Self {
-        self.0.data.borrow_mut().lifecycle.ignore_changes = Some(IgnoreChanges::All(IgnoreChangesAll::All));
+        self.0.data.borrow_mut().lifecycle.ignore_changes =
+            std::option::Option::Some(terrars::IgnoreChanges::All(terrars::IgnoreChangesAll::All));
         self
     }
 
-    pub fn ignore_changes_to_attr(self, attr: impl ToString) -> Self {
+    pub fn ignore_changes_to_attr(self, attr: impl std::string::ToString) -> Self {
         {
             let mut d = self.0.data.borrow_mut();
             if match &mut d.lifecycle.ignore_changes {
-                Some(i) => match i {
-                    IgnoreChanges::All(_) => {
+                std::option::Option::Some(i) => match i {
+                    terrars::IgnoreChanges::All(_) => {
                         true
                     },
-                    IgnoreChanges::Refs(r) => {
+                    terrars::IgnoreChanges::Refs(r) => {
                         r.push(attr.to_string());
                         false
                     },
                 },
-                None => true,
+                std::option::Option::None => true,
             } {
-                d.lifecycle.ignore_changes = Some(IgnoreChanges::Refs(vec![attr.to_string()]));
+                d.lifecycle.ignore_changes =
+                    std::option::Option::Some(terrars::IgnoreChanges::Refs(vec![attr.to_string()]));
             }
         }
         self
     }
 
-    pub fn replace_triggered_by_resource(self, r: &impl Resource) -> Self {
+    pub fn replace_triggered_by_resource(self, r: &impl terrars::Resource) -> Self {
         self.0.data.borrow_mut().lifecycle.replace_triggered_by.push(r.extract_ref());
         self
     }
 
-    pub fn replace_triggered_by_attr(self, attr: impl ToString) -> Self {
+    pub fn replace_triggered_by_attr(self, attr: impl std::string::ToString) -> Self {
         self.0.data.borrow_mut().lifecycle.replace_triggered_by.push(attr.to_string());
         self
     }
 
-    #[doc= "Set the field `default_view`.\n"]
-    pub fn set_default_view(self, v: impl Into<PrimField<bool>>) -> Self {
-        self.0.data.borrow_mut().default_view = Some(v.into());
+    #[doc = r" Add a provisioner (ex: `local-exec`, `remote-exec`, `file`) to this resource."]
+    #[doc = r" Provisioners run in the order they're added."]
+    pub fn add_provisioner(self, v: impl std::convert::Into<terrars::Provisioner>) -> Self {
+        self.0.data.borrow_mut().provisioner.push(v.into());
         self
     }
 
-    #[doc= "Set the field `tags`.\n"]
-    pub fn set_tags(self, v: impl Into<RecField<PrimField<String>>>) -> Self {
-        self.0.data.borrow_mut().tags = Some(v.into());
+    pub fn add_lifecycle_precondition(
+        self,
+        condition: impl std::convert::Into<terrars::PrimField<bool>>,
+        error_message: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.0.data.borrow_mut().lifecycle.precondition.push(terrars::LifecycleCondition {
+            condition: condition.into(),
+            error_message: error_message.into(),
+        });
         self
     }
 
-    #[doc= "Set the field `filters`.\n"]
-    pub fn set_filters(self, v: impl Into<BlockAssignable<Resourceexplorer2ViewFiltersEl>>) -> Self {
+    pub fn add_lifecycle_postcondition(
+        self,
+        condition: impl std::convert::Into<terrars::PrimField<bool>>,
+        error_message: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.0.data.borrow_mut().lifecycle.postcondition.push(terrars::LifecycleCondition {
+            condition: condition.into(),
+            error_message: error_message.into(),
+        });
+        self
+    }
+
+    #[doc = "Set the field `default_view`.\n"]
+    pub fn set_default_view(self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
+        self.0.data.borrow_mut().default_view = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `tags`.\n"]
+    pub fn set_tags(
+        self,
+        v: impl std::convert::Into<terrars::RecField<terrars::PrimField<std::string::String>>>,
+    ) -> Self {
+        self.0.data.borrow_mut().tags = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `filters`.\n"]
+    pub fn set_filters(
+        self,
+        v: impl std::convert::Into<terrars::BlockAssignable<Resourceexplorer2ViewFiltersEl>>,
+    ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.0.data.borrow_mut().filters = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.0.data.borrow_mut().filters = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.0.data.borrow_mut().dynamic.filters = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.0.data.borrow_mut().dynamic.filters = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Set the field `included_property`.\n"]
-    pub fn set_included_property(self, v: impl Into<BlockAssignable<Resourceexplorer2ViewIncludedPropertyEl>>) -> Self {
+    #[doc = "Set the field `included_property`.\n"]
+    pub fn set_included_property(
+        self,
+        v: impl std::convert::Into<terrars::BlockAssignable<Resourceexplorer2ViewIncludedPropertyEl>>,
+    ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.0.data.borrow_mut().included_property = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.0.data.borrow_mut().included_property = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.0.data.borrow_mut().dynamic.included_property = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.0.data.borrow_mut().dynamic.included_property = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Get a reference to the value of field `arn` after provisioning.\n"]
-    pub fn arn(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.arn", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `arn` after provisioning.\n"]
+    pub fn arn(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.arn", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `default_view` after provisioning.\n"]
-    pub fn default_view(&self) -> PrimExpr<bool> {
-        PrimExpr::new(self.shared().clone(), format!("{}.default_view", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `default_view` after provisioning.\n"]
+    pub fn default_view(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.default_view", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `id` after provisioning.\n"]
-    pub fn id(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
+    pub fn id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `name` after provisioning.\n"]
-    pub fn name(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `name` after provisioning.\n"]
+    pub fn name(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `tags` after provisioning.\n"]
-    pub fn tags(&self) -> RecRef<PrimExpr<String>> {
-        RecRef::new(self.shared().clone(), format!("{}.tags", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `tags` after provisioning.\n"]
+    pub fn tags(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
+        terrars::RecRef::new(self.shared().clone(), format!("{}.tags", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `tags_all` after provisioning.\n"]
-    pub fn tags_all(&self) -> RecRef<PrimExpr<String>> {
-        RecRef::new(self.shared().clone(), format!("{}.tags_all", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `tags_all` after provisioning.\n"]
+    pub fn tags_all(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
+        terrars::RecRef::new(self.shared().clone(), format!("{}.tags_all", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `filters` after provisioning.\n"]
-    pub fn filters(&self) -> ListRef<Resourceexplorer2ViewFiltersElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.filters", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `filters` after provisioning.\n"]
+    pub fn filters(&self) -> terrars::ListRef<Resourceexplorer2ViewFiltersElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.filters", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `included_property` after provisioning.\n"]
-    pub fn included_property(&self) -> ListRef<Resourceexplorer2ViewIncludedPropertyElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.included_property", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `included_property` after provisioning.\n"]
+    pub fn included_property(&self) -> terrars::ListRef<Resourceexplorer2ViewIncludedPropertyElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.included_property", self.extract_ref()))
     }
 }
 
-impl Referable for Resourceexplorer2View {
-    fn extract_ref(&self) -> String {
+impl terrars::Referable for Resourceexplorer2View {
+    fn extract_ref(&self) -> std::string::String {
         format!("{}.{}", self.0.extract_resource_type(), self.0.extract_tf_id())
     }
 }
 
-impl Resource for Resourceexplorer2View { }
+impl terrars::Resource for Resourceexplorer2View { }
 
-impl ToListMappable for Resourceexplorer2View {
-    type O = ListRef<Resourceexplorer2ViewRef>;
+impl terrars::ToListMappable for Resourceexplorer2View {
+    type O = terrars::ListRef<Resourceexplorer2ViewRef>;
 
-    fn do_map(self, base: String) -> Self::O {
-        self.0.data.borrow_mut().for_each = Some(format!("${{{}}}", base));
-        ListRef::new(self.0.shared.clone(), self.extract_ref())
+    fn do_map(self, base: std::string::String) -> Self::O {
+        self.0.data.borrow_mut().for_each = std::option::Option::Some(format!("${{{}}}", base));
+        terrars::ListRef::new(self.0.shared.clone(), self.extract_ref())
     }
 }
 
-impl Resource_ for Resourceexplorer2View_ {
-    fn extract_resource_type(&self) -> String {
+impl terrars::Resource_ for Resourceexplorer2View_ {
+    fn extract_resource_type(&self) -> std::string::String {
         "aws_resourceexplorer2_view".into()
     }
 
-    fn extract_tf_id(&self) -> String {
+    fn extract_tf_id(&self) -> std::string::String {
         self.tf_id.clone()
     }
 
@@ -207,27 +253,28 @@ impl Resource_ for Resourceexplorer2View_ {
 }
 
 pub struct BuildResourceexplorer2View {
-    pub tf_id: String,
-    #[doc= ""]
-    pub name: PrimField<String>,
+    pub tf_id: std::string::String,
+    #[doc = ""]
+    pub name: terrars::PrimField<std::string::String>,
 }
 
 impl BuildResourceexplorer2View {
-    pub fn build(self, stack: &mut Stack) -> Resourceexplorer2View {
-        let out = Resourceexplorer2View(Rc::new(Resourceexplorer2View_ {
+    pub fn build(self, stack: &mut terrars::Stack) -> Resourceexplorer2View {
+        let out = Resourceexplorer2View(std::rc::Rc::new(Resourceexplorer2View_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: RefCell::new(Resourceexplorer2ViewData {
+            data: std::cell::RefCell::new(Resourceexplorer2ViewData {
                 depends_on: core::default::Default::default(),
-                provider: None,
+                provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
-                for_each: None,
+                for_each: std::option::Option::None,
+                provisioner: core::default::Default::default(),
                 default_view: core::default::Default::default(),
                 name: self.name,
                 tags: core::default::Default::default(),
                 filters: core::default::Default::default(),
                 included_property: core::default::Default::default(),
-                dynamic: Default::default(),
+                dynamic: core::default::Default::default(),
             }),
         }));
         stack.add_resource(out.0.clone());
@@ -236,12 +283,12 @@ impl BuildResourceexplorer2View {
 }
 
 pub struct Resourceexplorer2ViewRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for Resourceexplorer2ViewRef {
-    fn new(shared: StackShared, base: String) -> Self {
+impl terrars::Ref for Resourceexplorer2ViewRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> Self {
         Self {
             shared: shared,
             base: base,
@@ -250,67 +297,67 @@ impl Ref for Resourceexplorer2ViewRef {
 }
 
 impl Resourceexplorer2ViewRef {
-    fn extract_ref(&self) -> String {
+    fn extract_ref(&self) -> std::string::String {
         self.base.clone()
     }
 
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `arn` after provisioning.\n"]
-    pub fn arn(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.arn", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `arn` after provisioning.\n"]
+    pub fn arn(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.arn", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `default_view` after provisioning.\n"]
-    pub fn default_view(&self) -> PrimExpr<bool> {
-        PrimExpr::new(self.shared().clone(), format!("{}.default_view", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `default_view` after provisioning.\n"]
+    pub fn default_view(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.default_view", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `id` after provisioning.\n"]
-    pub fn id(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
+    pub fn id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `name` after provisioning.\n"]
-    pub fn name(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `name` after provisioning.\n"]
+    pub fn name(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `tags` after provisioning.\n"]
-    pub fn tags(&self) -> RecRef<PrimExpr<String>> {
-        RecRef::new(self.shared().clone(), format!("{}.tags", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `tags` after provisioning.\n"]
+    pub fn tags(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
+        terrars::RecRef::new(self.shared().clone(), format!("{}.tags", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `tags_all` after provisioning.\n"]
-    pub fn tags_all(&self) -> RecRef<PrimExpr<String>> {
-        RecRef::new(self.shared().clone(), format!("{}.tags_all", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `tags_all` after provisioning.\n"]
+    pub fn tags_all(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
+        terrars::RecRef::new(self.shared().clone(), format!("{}.tags_all", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `filters` after provisioning.\n"]
-    pub fn filters(&self) -> ListRef<Resourceexplorer2ViewFiltersElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.filters", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `filters` after provisioning.\n"]
+    pub fn filters(&self) -> terrars::ListRef<Resourceexplorer2ViewFiltersElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.filters", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `included_property` after provisioning.\n"]
-    pub fn included_property(&self) -> ListRef<Resourceexplorer2ViewIncludedPropertyElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.included_property", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `included_property` after provisioning.\n"]
+    pub fn included_property(&self) -> terrars::ListRef<Resourceexplorer2ViewIncludedPropertyElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.included_property", self.extract_ref()))
     }
 }
 
 #[derive(Serialize)]
 pub struct Resourceexplorer2ViewFiltersEl {
-    filter_string: PrimField<String>,
+    filter_string: terrars::PrimField<std::string::String>,
 }
 
 impl Resourceexplorer2ViewFiltersEl { }
 
-impl ToListMappable for Resourceexplorer2ViewFiltersEl {
-    type O = BlockAssignable<Resourceexplorer2ViewFiltersEl>;
+impl terrars::ToListMappable for Resourceexplorer2ViewFiltersEl {
+    type O = terrars::BlockAssignable<Resourceexplorer2ViewFiltersEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -319,8 +366,8 @@ impl ToListMappable for Resourceexplorer2ViewFiltersEl {
 }
 
 pub struct BuildResourceexplorer2ViewFiltersEl {
-    #[doc= ""]
-    pub filter_string: PrimField<String>,
+    #[doc = ""]
+    pub filter_string: terrars::PrimField<std::string::String>,
 }
 
 impl BuildResourceexplorer2ViewFiltersEl {
@@ -330,12 +377,12 @@ impl BuildResourceexplorer2ViewFiltersEl {
 }
 
 pub struct Resourceexplorer2ViewFiltersElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for Resourceexplorer2ViewFiltersElRef {
-    fn new(shared: StackShared, base: String) -> Resourceexplorer2ViewFiltersElRef {
+impl terrars::Ref for Resourceexplorer2ViewFiltersElRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> Resourceexplorer2ViewFiltersElRef {
         Resourceexplorer2ViewFiltersElRef {
             shared: shared,
             base: base.to_string(),
@@ -344,28 +391,28 @@ impl Ref for Resourceexplorer2ViewFiltersElRef {
 }
 
 impl Resourceexplorer2ViewFiltersElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `filter_string` after provisioning.\n"]
-    pub fn filter_string(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.filter_string", self.base))
+    #[doc = "Get a reference to the value of field `filter_string` after provisioning.\n"]
+    pub fn filter_string(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.filter_string", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct Resourceexplorer2ViewIncludedPropertyEl {
-    name: PrimField<String>,
+    name: terrars::PrimField<std::string::String>,
 }
 
 impl Resourceexplorer2ViewIncludedPropertyEl { }
 
-impl ToListMappable for Resourceexplorer2ViewIncludedPropertyEl {
-    type O = BlockAssignable<Resourceexplorer2ViewIncludedPropertyEl>;
+impl terrars::ToListMappable for Resourceexplorer2ViewIncludedPropertyEl {
+    type O = terrars::BlockAssignable<Resourceexplorer2ViewIncludedPropertyEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -374,8 +421,8 @@ impl ToListMappable for Resourceexplorer2ViewIncludedPropertyEl {
 }
 
 pub struct BuildResourceexplorer2ViewIncludedPropertyEl {
-    #[doc= ""]
-    pub name: PrimField<String>,
+    #[doc = ""]
+    pub name: terrars::PrimField<std::string::String>,
 }
 
 impl BuildResourceexplorer2ViewIncludedPropertyEl {
@@ -385,12 +432,12 @@ impl BuildResourceexplorer2ViewIncludedPropertyEl {
 }
 
 pub struct Resourceexplorer2ViewIncludedPropertyElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for Resourceexplorer2ViewIncludedPropertyElRef {
-    fn new(shared: StackShared, base: String) -> Resourceexplorer2ViewIncludedPropertyElRef {
+impl terrars::Ref for Resourceexplorer2ViewIncludedPropertyElRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> Resourceexplorer2ViewIncludedPropertyElRef {
         Resourceexplorer2ViewIncludedPropertyElRef {
             shared: shared,
             base: base.to_string(),
@@ -399,18 +446,18 @@ impl Ref for Resourceexplorer2ViewIncludedPropertyElRef {
 }
 
 impl Resourceexplorer2ViewIncludedPropertyElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `name` after provisioning.\n"]
-    pub fn name(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.name", self.base))
+    #[doc = "Get a reference to the value of field `name` after provisioning.\n"]
+    pub fn name(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
 struct Resourceexplorer2ViewDynamic {
-    filters: Option<DynamicBlock<Resourceexplorer2ViewFiltersEl>>,
-    included_property: Option<DynamicBlock<Resourceexplorer2ViewIncludedPropertyEl>>,
+    filters: std::option::Option<terrars::DynamicBlock<Resourceexplorer2ViewFiltersEl>>,
+    included_property: std::option::Option<terrars::DynamicBlock<Resourceexplorer2ViewIncludedPropertyEl>>,
 }

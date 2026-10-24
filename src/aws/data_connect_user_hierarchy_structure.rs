@@ -1,91 +1,119 @@
 use serde::Serialize;
-use std::cell::RefCell;
-use std::rc::Rc;
-use terrars::*;
+use terrars::{
+    Referable as _,
+    Datasource_ as _,
+    Ref as _,
+};
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
 struct DataConnectUserHierarchyStructureData {
-    #[serde(skip_serializing_if = "Vec::is_empty")]
-    depends_on: Vec<String>,
-    #[serde(skip_serializing_if = "SerdeSkipDefault::is_default")]
-    provider: Option<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    for_each: Option<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    id: Option<PrimField<String>>,
-    instance_id: PrimField<String>,
+    #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
+    depends_on: std::vec::Vec<std::string::String>,
+    #[serde(skip_serializing_if = "terrars::SerdeSkipDefault::is_default")]
+    provider: std::option::Option<std::string::String>,
+    #[serde(skip_serializing_if = "terrars::SerdeSkipDefault::is_default")]
+    lifecycle: terrars::DatasourceLifecycle,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    for_each: std::option::Option<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    id: std::option::Option<terrars::PrimField<std::string::String>>,
+    instance_id: terrars::PrimField<std::string::String>,
 }
 
 struct DataConnectUserHierarchyStructure_ {
-    shared: StackShared,
-    tf_id: String,
-    data: RefCell<DataConnectUserHierarchyStructureData>,
+    shared: terrars::StackShared,
+    tf_id: std::string::String,
+    data: std::cell::RefCell<DataConnectUserHierarchyStructureData>,
 }
 
 #[derive(Clone)]
-pub struct DataConnectUserHierarchyStructure(Rc<DataConnectUserHierarchyStructure_>);
+pub struct DataConnectUserHierarchyStructure(std::rc::Rc<DataConnectUserHierarchyStructure_>);
 
 impl DataConnectUserHierarchyStructure {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.0.shared
     }
 
-    pub fn depends_on(self, dep: &impl Referable) -> Self {
+    pub fn depends_on(self, dep: &impl terrars::Referable) -> Self {
         self.0.data.borrow_mut().depends_on.push(dep.extract_ref());
         self
     }
 
     pub fn set_provider(&self, provider: &ProviderAws) -> &Self {
-        self.0.data.borrow_mut().provider = Some(provider.provider_ref());
+        self.0.data.borrow_mut().provider = std::option::Option::Some(provider.provider_ref());
         self
     }
 
-    #[doc= "Set the field `id`.\n"]
-    pub fn set_id(self, v: impl Into<PrimField<String>>) -> Self {
-        self.0.data.borrow_mut().id = Some(v.into());
+    pub fn add_lifecycle_precondition(
+        self,
+        condition: impl std::convert::Into<terrars::PrimField<bool>>,
+        error_message: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.0.data.borrow_mut().lifecycle.precondition.push(terrars::LifecycleCondition {
+            condition: condition.into(),
+            error_message: error_message.into(),
+        });
         self
     }
 
-    #[doc= "Get a reference to the value of field `hierarchy_structure` after provisioning.\n"]
-    pub fn hierarchy_structure(&self) -> ListRef<DataConnectUserHierarchyStructureHierarchyStructureElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.hierarchy_structure", self.extract_ref()))
+    pub fn add_lifecycle_postcondition(
+        self,
+        condition: impl std::convert::Into<terrars::PrimField<bool>>,
+        error_message: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.0.data.borrow_mut().lifecycle.postcondition.push(terrars::LifecycleCondition {
+            condition: condition.into(),
+            error_message: error_message.into(),
+        });
+        self
     }
 
-    #[doc= "Get a reference to the value of field `id` after provisioning.\n"]
-    pub fn id(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
+    #[doc = "Set the field `id`.\n"]
+    pub fn set_id(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().id = std::option::Option::Some(v.into());
+        self
     }
 
-    #[doc= "Get a reference to the value of field `instance_id` after provisioning.\n"]
-    pub fn instance_id(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.instance_id", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `hierarchy_structure` after provisioning.\n"]
+    pub fn hierarchy_structure(&self) -> terrars::ListRef<DataConnectUserHierarchyStructureHierarchyStructureElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.hierarchy_structure", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
+    pub fn id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `instance_id` after provisioning.\n"]
+    pub fn instance_id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.instance_id", self.extract_ref()))
     }
 }
 
-impl Referable for DataConnectUserHierarchyStructure {
-    fn extract_ref(&self) -> String {
+impl terrars::Referable for DataConnectUserHierarchyStructure {
+    fn extract_ref(&self) -> std::string::String {
         format!("data.{}.{}", self.0.extract_datasource_type(), self.0.extract_tf_id())
     }
 }
 
-impl Datasource for DataConnectUserHierarchyStructure { }
+impl terrars::Datasource for DataConnectUserHierarchyStructure { }
 
-impl ToListMappable for DataConnectUserHierarchyStructure {
-    type O = ListRef<DataConnectUserHierarchyStructureRef>;
+impl terrars::ToListMappable for DataConnectUserHierarchyStructure {
+    type O = terrars::ListRef<DataConnectUserHierarchyStructureRef>;
 
-    fn do_map(self, base: String) -> Self::O {
-        self.0.data.borrow_mut().for_each = Some(format!("${{{}}}", base));
-        ListRef::new(self.0.shared.clone(), self.extract_ref())
+    fn do_map(self, base: std::string::String) -> Self::O {
+        self.0.data.borrow_mut().for_each = std::option::Option::Some(format!("${{{}}}", base));
+        terrars::ListRef::new(self.0.shared.clone(), self.extract_ref())
     }
 }
 
-impl Datasource_ for DataConnectUserHierarchyStructure_ {
-    fn extract_datasource_type(&self) -> String {
+impl terrars::Datasource_ for DataConnectUserHierarchyStructure_ {
+    fn extract_datasource_type(&self) -> std::string::String {
         "aws_connect_user_hierarchy_structure".into()
     }
 
-    fn extract_tf_id(&self) -> String {
+    fn extract_tf_id(&self) -> std::string::String {
         self.tf_id.clone()
     }
 
@@ -95,20 +123,21 @@ impl Datasource_ for DataConnectUserHierarchyStructure_ {
 }
 
 pub struct BuildDataConnectUserHierarchyStructure {
-    pub tf_id: String,
-    #[doc= ""]
-    pub instance_id: PrimField<String>,
+    pub tf_id: std::string::String,
+    #[doc = ""]
+    pub instance_id: terrars::PrimField<std::string::String>,
 }
 
 impl BuildDataConnectUserHierarchyStructure {
-    pub fn build(self, stack: &mut Stack) -> DataConnectUserHierarchyStructure {
-        let out = DataConnectUserHierarchyStructure(Rc::new(DataConnectUserHierarchyStructure_ {
+    pub fn build(self, stack: &mut terrars::Stack) -> DataConnectUserHierarchyStructure {
+        let out = DataConnectUserHierarchyStructure(std::rc::Rc::new(DataConnectUserHierarchyStructure_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: RefCell::new(DataConnectUserHierarchyStructureData {
+            data: std::cell::RefCell::new(DataConnectUserHierarchyStructureData {
                 depends_on: core::default::Default::default(),
-                provider: None,
-                for_each: None,
+                provider: std::option::Option::None,
+                lifecycle: core::default::Default::default(),
+                for_each: std::option::Option::None,
                 id: core::default::Default::default(),
                 instance_id: self.instance_id,
             }),
@@ -119,12 +148,12 @@ impl BuildDataConnectUserHierarchyStructure {
 }
 
 pub struct DataConnectUserHierarchyStructureRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for DataConnectUserHierarchyStructureRef {
-    fn new(shared: StackShared, base: String) -> Self {
+impl terrars::Ref for DataConnectUserHierarchyStructureRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> Self {
         Self {
             shared: shared,
             base: base,
@@ -133,65 +162,65 @@ impl Ref for DataConnectUserHierarchyStructureRef {
 }
 
 impl DataConnectUserHierarchyStructureRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    fn extract_ref(&self) -> String {
+    fn extract_ref(&self) -> std::string::String {
         self.base.clone()
     }
 
-    #[doc= "Get a reference to the value of field `hierarchy_structure` after provisioning.\n"]
-    pub fn hierarchy_structure(&self) -> ListRef<DataConnectUserHierarchyStructureHierarchyStructureElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.hierarchy_structure", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `hierarchy_structure` after provisioning.\n"]
+    pub fn hierarchy_structure(&self) -> terrars::ListRef<DataConnectUserHierarchyStructureHierarchyStructureElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.hierarchy_structure", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `id` after provisioning.\n"]
-    pub fn id(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
+    pub fn id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `instance_id` after provisioning.\n"]
-    pub fn instance_id(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.instance_id", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `instance_id` after provisioning.\n"]
+    pub fn instance_id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.instance_id", self.extract_ref()))
     }
 }
 
 #[derive(Serialize)]
 pub struct DataConnectUserHierarchyStructureHierarchyStructureElLevelFiveEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    arn: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    id: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    name: Option<PrimField<String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    arn: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    id: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    name: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
 impl DataConnectUserHierarchyStructureHierarchyStructureElLevelFiveEl {
-    #[doc= "Set the field `arn`.\n"]
-    pub fn set_arn(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.arn = Some(v.into());
+    #[doc = "Set the field `arn`.\n"]
+    pub fn set_arn(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.arn = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `id`.\n"]
-    pub fn set_id(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.id = Some(v.into());
+    #[doc = "Set the field `id`.\n"]
+    pub fn set_id(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.id = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `name`.\n"]
-    pub fn set_name(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.name = Some(v.into());
+    #[doc = "Set the field `name`.\n"]
+    pub fn set_name(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.name = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl ToListMappable for DataConnectUserHierarchyStructureHierarchyStructureElLevelFiveEl {
-    type O = BlockAssignable<DataConnectUserHierarchyStructureHierarchyStructureElLevelFiveEl>;
+impl terrars::ToListMappable for DataConnectUserHierarchyStructureHierarchyStructureElLevelFiveEl {
+    type O = terrars::BlockAssignable<DataConnectUserHierarchyStructureHierarchyStructureElLevelFiveEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -212,12 +241,15 @@ impl BuildDataConnectUserHierarchyStructureHierarchyStructureElLevelFiveEl {
 }
 
 pub struct DataConnectUserHierarchyStructureHierarchyStructureElLevelFiveElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for DataConnectUserHierarchyStructureHierarchyStructureElLevelFiveElRef {
-    fn new(shared: StackShared, base: String) -> DataConnectUserHierarchyStructureHierarchyStructureElLevelFiveElRef {
+impl terrars::Ref for DataConnectUserHierarchyStructureHierarchyStructureElLevelFiveElRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> DataConnectUserHierarchyStructureHierarchyStructureElLevelFiveElRef {
         DataConnectUserHierarchyStructureHierarchyStructureElLevelFiveElRef {
             shared: shared,
             base: base.to_string(),
@@ -226,61 +258,61 @@ impl Ref for DataConnectUserHierarchyStructureHierarchyStructureElLevelFiveElRef
 }
 
 impl DataConnectUserHierarchyStructureHierarchyStructureElLevelFiveElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `arn` after provisioning.\n"]
-    pub fn arn(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.arn", self.base))
+    #[doc = "Get a reference to the value of field `arn` after provisioning.\n"]
+    pub fn arn(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.arn", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `id` after provisioning.\n"]
-    pub fn id(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.id", self.base))
+    #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
+    pub fn id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `name` after provisioning.\n"]
-    pub fn name(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.name", self.base))
+    #[doc = "Get a reference to the value of field `name` after provisioning.\n"]
+    pub fn name(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct DataConnectUserHierarchyStructureHierarchyStructureElLevelFourEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    arn: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    id: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    name: Option<PrimField<String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    arn: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    id: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    name: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
 impl DataConnectUserHierarchyStructureHierarchyStructureElLevelFourEl {
-    #[doc= "Set the field `arn`.\n"]
-    pub fn set_arn(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.arn = Some(v.into());
+    #[doc = "Set the field `arn`.\n"]
+    pub fn set_arn(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.arn = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `id`.\n"]
-    pub fn set_id(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.id = Some(v.into());
+    #[doc = "Set the field `id`.\n"]
+    pub fn set_id(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.id = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `name`.\n"]
-    pub fn set_name(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.name = Some(v.into());
+    #[doc = "Set the field `name`.\n"]
+    pub fn set_name(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.name = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl ToListMappable for DataConnectUserHierarchyStructureHierarchyStructureElLevelFourEl {
-    type O = BlockAssignable<DataConnectUserHierarchyStructureHierarchyStructureElLevelFourEl>;
+impl terrars::ToListMappable for DataConnectUserHierarchyStructureHierarchyStructureElLevelFourEl {
+    type O = terrars::BlockAssignable<DataConnectUserHierarchyStructureHierarchyStructureElLevelFourEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -301,12 +333,15 @@ impl BuildDataConnectUserHierarchyStructureHierarchyStructureElLevelFourEl {
 }
 
 pub struct DataConnectUserHierarchyStructureHierarchyStructureElLevelFourElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for DataConnectUserHierarchyStructureHierarchyStructureElLevelFourElRef {
-    fn new(shared: StackShared, base: String) -> DataConnectUserHierarchyStructureHierarchyStructureElLevelFourElRef {
+impl terrars::Ref for DataConnectUserHierarchyStructureHierarchyStructureElLevelFourElRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> DataConnectUserHierarchyStructureHierarchyStructureElLevelFourElRef {
         DataConnectUserHierarchyStructureHierarchyStructureElLevelFourElRef {
             shared: shared,
             base: base.to_string(),
@@ -315,61 +350,61 @@ impl Ref for DataConnectUserHierarchyStructureHierarchyStructureElLevelFourElRef
 }
 
 impl DataConnectUserHierarchyStructureHierarchyStructureElLevelFourElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `arn` after provisioning.\n"]
-    pub fn arn(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.arn", self.base))
+    #[doc = "Get a reference to the value of field `arn` after provisioning.\n"]
+    pub fn arn(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.arn", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `id` after provisioning.\n"]
-    pub fn id(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.id", self.base))
+    #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
+    pub fn id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `name` after provisioning.\n"]
-    pub fn name(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.name", self.base))
+    #[doc = "Get a reference to the value of field `name` after provisioning.\n"]
+    pub fn name(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct DataConnectUserHierarchyStructureHierarchyStructureElLevelOneEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    arn: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    id: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    name: Option<PrimField<String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    arn: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    id: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    name: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
 impl DataConnectUserHierarchyStructureHierarchyStructureElLevelOneEl {
-    #[doc= "Set the field `arn`.\n"]
-    pub fn set_arn(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.arn = Some(v.into());
+    #[doc = "Set the field `arn`.\n"]
+    pub fn set_arn(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.arn = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `id`.\n"]
-    pub fn set_id(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.id = Some(v.into());
+    #[doc = "Set the field `id`.\n"]
+    pub fn set_id(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.id = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `name`.\n"]
-    pub fn set_name(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.name = Some(v.into());
+    #[doc = "Set the field `name`.\n"]
+    pub fn set_name(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.name = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl ToListMappable for DataConnectUserHierarchyStructureHierarchyStructureElLevelOneEl {
-    type O = BlockAssignable<DataConnectUserHierarchyStructureHierarchyStructureElLevelOneEl>;
+impl terrars::ToListMappable for DataConnectUserHierarchyStructureHierarchyStructureElLevelOneEl {
+    type O = terrars::BlockAssignable<DataConnectUserHierarchyStructureHierarchyStructureElLevelOneEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -390,12 +425,15 @@ impl BuildDataConnectUserHierarchyStructureHierarchyStructureElLevelOneEl {
 }
 
 pub struct DataConnectUserHierarchyStructureHierarchyStructureElLevelOneElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for DataConnectUserHierarchyStructureHierarchyStructureElLevelOneElRef {
-    fn new(shared: StackShared, base: String) -> DataConnectUserHierarchyStructureHierarchyStructureElLevelOneElRef {
+impl terrars::Ref for DataConnectUserHierarchyStructureHierarchyStructureElLevelOneElRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> DataConnectUserHierarchyStructureHierarchyStructureElLevelOneElRef {
         DataConnectUserHierarchyStructureHierarchyStructureElLevelOneElRef {
             shared: shared,
             base: base.to_string(),
@@ -404,61 +442,61 @@ impl Ref for DataConnectUserHierarchyStructureHierarchyStructureElLevelOneElRef 
 }
 
 impl DataConnectUserHierarchyStructureHierarchyStructureElLevelOneElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `arn` after provisioning.\n"]
-    pub fn arn(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.arn", self.base))
+    #[doc = "Get a reference to the value of field `arn` after provisioning.\n"]
+    pub fn arn(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.arn", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `id` after provisioning.\n"]
-    pub fn id(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.id", self.base))
+    #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
+    pub fn id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `name` after provisioning.\n"]
-    pub fn name(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.name", self.base))
+    #[doc = "Get a reference to the value of field `name` after provisioning.\n"]
+    pub fn name(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct DataConnectUserHierarchyStructureHierarchyStructureElLevelThreeEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    arn: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    id: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    name: Option<PrimField<String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    arn: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    id: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    name: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
 impl DataConnectUserHierarchyStructureHierarchyStructureElLevelThreeEl {
-    #[doc= "Set the field `arn`.\n"]
-    pub fn set_arn(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.arn = Some(v.into());
+    #[doc = "Set the field `arn`.\n"]
+    pub fn set_arn(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.arn = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `id`.\n"]
-    pub fn set_id(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.id = Some(v.into());
+    #[doc = "Set the field `id`.\n"]
+    pub fn set_id(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.id = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `name`.\n"]
-    pub fn set_name(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.name = Some(v.into());
+    #[doc = "Set the field `name`.\n"]
+    pub fn set_name(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.name = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl ToListMappable for DataConnectUserHierarchyStructureHierarchyStructureElLevelThreeEl {
-    type O = BlockAssignable<DataConnectUserHierarchyStructureHierarchyStructureElLevelThreeEl>;
+impl terrars::ToListMappable for DataConnectUserHierarchyStructureHierarchyStructureElLevelThreeEl {
+    type O = terrars::BlockAssignable<DataConnectUserHierarchyStructureHierarchyStructureElLevelThreeEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -479,14 +517,14 @@ impl BuildDataConnectUserHierarchyStructureHierarchyStructureElLevelThreeEl {
 }
 
 pub struct DataConnectUserHierarchyStructureHierarchyStructureElLevelThreeElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for DataConnectUserHierarchyStructureHierarchyStructureElLevelThreeElRef {
+impl terrars::Ref for DataConnectUserHierarchyStructureHierarchyStructureElLevelThreeElRef {
     fn new(
-        shared: StackShared,
-        base: String,
+        shared: terrars::StackShared,
+        base: std::string::String,
     ) -> DataConnectUserHierarchyStructureHierarchyStructureElLevelThreeElRef {
         DataConnectUserHierarchyStructureHierarchyStructureElLevelThreeElRef {
             shared: shared,
@@ -496,61 +534,61 @@ impl Ref for DataConnectUserHierarchyStructureHierarchyStructureElLevelThreeElRe
 }
 
 impl DataConnectUserHierarchyStructureHierarchyStructureElLevelThreeElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `arn` after provisioning.\n"]
-    pub fn arn(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.arn", self.base))
+    #[doc = "Get a reference to the value of field `arn` after provisioning.\n"]
+    pub fn arn(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.arn", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `id` after provisioning.\n"]
-    pub fn id(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.id", self.base))
+    #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
+    pub fn id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `name` after provisioning.\n"]
-    pub fn name(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.name", self.base))
+    #[doc = "Get a reference to the value of field `name` after provisioning.\n"]
+    pub fn name(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct DataConnectUserHierarchyStructureHierarchyStructureElLevelTwoEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    arn: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    id: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    name: Option<PrimField<String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    arn: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    id: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    name: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
 impl DataConnectUserHierarchyStructureHierarchyStructureElLevelTwoEl {
-    #[doc= "Set the field `arn`.\n"]
-    pub fn set_arn(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.arn = Some(v.into());
+    #[doc = "Set the field `arn`.\n"]
+    pub fn set_arn(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.arn = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `id`.\n"]
-    pub fn set_id(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.id = Some(v.into());
+    #[doc = "Set the field `id`.\n"]
+    pub fn set_id(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.id = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `name`.\n"]
-    pub fn set_name(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.name = Some(v.into());
+    #[doc = "Set the field `name`.\n"]
+    pub fn set_name(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.name = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl ToListMappable for DataConnectUserHierarchyStructureHierarchyStructureElLevelTwoEl {
-    type O = BlockAssignable<DataConnectUserHierarchyStructureHierarchyStructureElLevelTwoEl>;
+impl terrars::ToListMappable for DataConnectUserHierarchyStructureHierarchyStructureElLevelTwoEl {
+    type O = terrars::BlockAssignable<DataConnectUserHierarchyStructureHierarchyStructureElLevelTwoEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -571,12 +609,15 @@ impl BuildDataConnectUserHierarchyStructureHierarchyStructureElLevelTwoEl {
 }
 
 pub struct DataConnectUserHierarchyStructureHierarchyStructureElLevelTwoElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for DataConnectUserHierarchyStructureHierarchyStructureElLevelTwoElRef {
-    fn new(shared: StackShared, base: String) -> DataConnectUserHierarchyStructureHierarchyStructureElLevelTwoElRef {
+impl terrars::Ref for DataConnectUserHierarchyStructureHierarchyStructureElLevelTwoElRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> DataConnectUserHierarchyStructureHierarchyStructureElLevelTwoElRef {
         DataConnectUserHierarchyStructureHierarchyStructureElLevelTwoElRef {
             shared: shared,
             base: base.to_string(),
@@ -585,92 +626,119 @@ impl Ref for DataConnectUserHierarchyStructureHierarchyStructureElLevelTwoElRef 
 }
 
 impl DataConnectUserHierarchyStructureHierarchyStructureElLevelTwoElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `arn` after provisioning.\n"]
-    pub fn arn(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.arn", self.base))
+    #[doc = "Get a reference to the value of field `arn` after provisioning.\n"]
+    pub fn arn(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.arn", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `id` after provisioning.\n"]
-    pub fn id(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.id", self.base))
+    #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
+    pub fn id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `name` after provisioning.\n"]
-    pub fn name(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.name", self.base))
+    #[doc = "Get a reference to the value of field `name` after provisioning.\n"]
+    pub fn name(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct DataConnectUserHierarchyStructureHierarchyStructureEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    level_five: Option<ListField<DataConnectUserHierarchyStructureHierarchyStructureElLevelFiveEl>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    level_four: Option<ListField<DataConnectUserHierarchyStructureHierarchyStructureElLevelFourEl>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    level_one: Option<ListField<DataConnectUserHierarchyStructureHierarchyStructureElLevelOneEl>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    level_three: Option<ListField<DataConnectUserHierarchyStructureHierarchyStructureElLevelThreeEl>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    level_two: Option<ListField<DataConnectUserHierarchyStructureHierarchyStructureElLevelTwoEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    level_five: std::option::Option<terrars::ListField<DataConnectUserHierarchyStructureHierarchyStructureElLevelFiveEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    level_four: std::option::Option<terrars::ListField<DataConnectUserHierarchyStructureHierarchyStructureElLevelFourEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    level_one: std::option::Option<terrars::ListField<DataConnectUserHierarchyStructureHierarchyStructureElLevelOneEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    level_three: std
+    ::option
+    ::Option<terrars::ListField<DataConnectUserHierarchyStructureHierarchyStructureElLevelThreeEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    level_two: std::option::Option<terrars::ListField<DataConnectUserHierarchyStructureHierarchyStructureElLevelTwoEl>>,
 }
 
 impl DataConnectUserHierarchyStructureHierarchyStructureEl {
-    #[doc= "Set the field `level_five`.\n"]
+    #[doc = "Set the field `level_five`.\n"]
     pub fn set_level_five(
         mut self,
-        v: impl Into<ListField<DataConnectUserHierarchyStructureHierarchyStructureElLevelFiveEl>>,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<terrars::ListField<DataConnectUserHierarchyStructureHierarchyStructureElLevelFiveEl>>,
     ) -> Self {
-        self.level_five = Some(v.into());
+        self.level_five = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `level_four`.\n"]
+    #[doc = "Set the field `level_four`.\n"]
     pub fn set_level_four(
         mut self,
-        v: impl Into<ListField<DataConnectUserHierarchyStructureHierarchyStructureElLevelFourEl>>,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<terrars::ListField<DataConnectUserHierarchyStructureHierarchyStructureElLevelFourEl>>,
     ) -> Self {
-        self.level_four = Some(v.into());
+        self.level_four = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `level_one`.\n"]
+    #[doc = "Set the field `level_one`.\n"]
     pub fn set_level_one(
         mut self,
-        v: impl Into<ListField<DataConnectUserHierarchyStructureHierarchyStructureElLevelOneEl>>,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<terrars::ListField<DataConnectUserHierarchyStructureHierarchyStructureElLevelOneEl>>,
     ) -> Self {
-        self.level_one = Some(v.into());
+        self.level_one = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `level_three`.\n"]
+    #[doc = "Set the field `level_three`.\n"]
     pub fn set_level_three(
         mut self,
-        v: impl Into<ListField<DataConnectUserHierarchyStructureHierarchyStructureElLevelThreeEl>>,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<terrars::ListField<DataConnectUserHierarchyStructureHierarchyStructureElLevelThreeEl>>,
     ) -> Self {
-        self.level_three = Some(v.into());
+        self.level_three = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `level_two`.\n"]
+    #[doc = "Set the field `level_two`.\n"]
     pub fn set_level_two(
         mut self,
-        v: impl Into<ListField<DataConnectUserHierarchyStructureHierarchyStructureElLevelTwoEl>>,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<terrars::ListField<DataConnectUserHierarchyStructureHierarchyStructureElLevelTwoEl>>,
     ) -> Self {
-        self.level_two = Some(v.into());
+        self.level_two = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl ToListMappable for DataConnectUserHierarchyStructureHierarchyStructureEl {
-    type O = BlockAssignable<DataConnectUserHierarchyStructureHierarchyStructureEl>;
+impl terrars::ToListMappable for DataConnectUserHierarchyStructureHierarchyStructureEl {
+    type O = terrars::BlockAssignable<DataConnectUserHierarchyStructureHierarchyStructureEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -693,12 +761,15 @@ impl BuildDataConnectUserHierarchyStructureHierarchyStructureEl {
 }
 
 pub struct DataConnectUserHierarchyStructureHierarchyStructureElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for DataConnectUserHierarchyStructureHierarchyStructureElRef {
-    fn new(shared: StackShared, base: String) -> DataConnectUserHierarchyStructureHierarchyStructureElRef {
+impl terrars::Ref for DataConnectUserHierarchyStructureHierarchyStructureElRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> DataConnectUserHierarchyStructureHierarchyStructureElRef {
         DataConnectUserHierarchyStructureHierarchyStructureElRef {
             shared: shared,
             base: base.to_string(),
@@ -707,32 +778,32 @@ impl Ref for DataConnectUserHierarchyStructureHierarchyStructureElRef {
 }
 
 impl DataConnectUserHierarchyStructureHierarchyStructureElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `level_five` after provisioning.\n"]
-    pub fn level_five(&self) -> ListRef<DataConnectUserHierarchyStructureHierarchyStructureElLevelFiveElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.level_five", self.base))
+    #[doc = "Get a reference to the value of field `level_five` after provisioning.\n"]
+    pub fn level_five(&self) -> terrars::ListRef<DataConnectUserHierarchyStructureHierarchyStructureElLevelFiveElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.level_five", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `level_four` after provisioning.\n"]
-    pub fn level_four(&self) -> ListRef<DataConnectUserHierarchyStructureHierarchyStructureElLevelFourElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.level_four", self.base))
+    #[doc = "Get a reference to the value of field `level_four` after provisioning.\n"]
+    pub fn level_four(&self) -> terrars::ListRef<DataConnectUserHierarchyStructureHierarchyStructureElLevelFourElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.level_four", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `level_one` after provisioning.\n"]
-    pub fn level_one(&self) -> ListRef<DataConnectUserHierarchyStructureHierarchyStructureElLevelOneElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.level_one", self.base))
+    #[doc = "Get a reference to the value of field `level_one` after provisioning.\n"]
+    pub fn level_one(&self) -> terrars::ListRef<DataConnectUserHierarchyStructureHierarchyStructureElLevelOneElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.level_one", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `level_three` after provisioning.\n"]
-    pub fn level_three(&self) -> ListRef<DataConnectUserHierarchyStructureHierarchyStructureElLevelThreeElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.level_three", self.base))
+    #[doc = "Get a reference to the value of field `level_three` after provisioning.\n"]
+    pub fn level_three(&self) -> terrars::ListRef<DataConnectUserHierarchyStructureHierarchyStructureElLevelThreeElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.level_three", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `level_two` after provisioning.\n"]
-    pub fn level_two(&self) -> ListRef<DataConnectUserHierarchyStructureHierarchyStructureElLevelTwoElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.level_two", self.base))
+    #[doc = "Get a reference to the value of field `level_two` after provisioning.\n"]
+    pub fn level_two(&self) -> terrars::ListRef<DataConnectUserHierarchyStructureHierarchyStructureElLevelTwoElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.level_two", self.base))
     }
 }

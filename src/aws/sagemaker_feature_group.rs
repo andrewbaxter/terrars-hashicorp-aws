@@ -1,61 +1,65 @@
 use serde::Serialize;
-use std::cell::RefCell;
-use std::rc::Rc;
-use terrars::*;
+use terrars::{
+    Referable as _,
+    Resource_ as _,
+    Ref as _,
+};
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
 struct SagemakerFeatureGroupData {
-    #[serde(skip_serializing_if = "Vec::is_empty")]
-    depends_on: Vec<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    provider: Option<String>,
-    #[serde(skip_serializing_if = "SerdeSkipDefault::is_default")]
-    lifecycle: ResourceLifecycle,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    for_each: Option<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    description: Option<PrimField<String>>,
-    event_time_feature_name: PrimField<String>,
-    feature_group_name: PrimField<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    id: Option<PrimField<String>>,
-    record_identifier_feature_name: PrimField<String>,
-    role_arn: PrimField<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    tags: Option<RecField<PrimField<String>>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    tags_all: Option<RecField<PrimField<String>>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    feature_definition: Option<Vec<SagemakerFeatureGroupFeatureDefinitionEl>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    offline_store_config: Option<Vec<SagemakerFeatureGroupOfflineStoreConfigEl>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    online_store_config: Option<Vec<SagemakerFeatureGroupOnlineStoreConfigEl>>,
+    #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
+    depends_on: std::vec::Vec<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    provider: std::option::Option<std::string::String>,
+    #[serde(skip_serializing_if = "terrars::SerdeSkipDefault::is_default")]
+    lifecycle: terrars::ResourceLifecycle,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    for_each: std::option::Option<std::string::String>,
+    #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
+    provisioner: std::vec::Vec<terrars::Provisioner>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    description: std::option::Option<terrars::PrimField<std::string::String>>,
+    event_time_feature_name: terrars::PrimField<std::string::String>,
+    feature_group_name: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    id: std::option::Option<terrars::PrimField<std::string::String>>,
+    record_identifier_feature_name: terrars::PrimField<std::string::String>,
+    role_arn: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    tags: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    tags_all: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    feature_definition: std::option::Option<std::vec::Vec<SagemakerFeatureGroupFeatureDefinitionEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    offline_store_config: std::option::Option<std::vec::Vec<SagemakerFeatureGroupOfflineStoreConfigEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    online_store_config: std::option::Option<std::vec::Vec<SagemakerFeatureGroupOnlineStoreConfigEl>>,
     dynamic: SagemakerFeatureGroupDynamic,
 }
 
 struct SagemakerFeatureGroup_ {
-    shared: StackShared,
-    tf_id: String,
-    data: RefCell<SagemakerFeatureGroupData>,
+    shared: terrars::StackShared,
+    tf_id: std::string::String,
+    data: std::cell::RefCell<SagemakerFeatureGroupData>,
 }
 
 #[derive(Clone)]
-pub struct SagemakerFeatureGroup(Rc<SagemakerFeatureGroup_>);
+pub struct SagemakerFeatureGroup(std::rc::Rc<SagemakerFeatureGroup_>);
 
 impl SagemakerFeatureGroup {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.0.shared
     }
 
-    pub fn depends_on(self, dep: &impl Referable) -> Self {
+    pub fn depends_on(self, dep: &impl terrars::Referable) -> Self {
         self.0.data.borrow_mut().depends_on.push(dep.extract_ref());
         self
     }
 
     pub fn set_provider(self, provider: &ProviderAws) -> Self {
-        self.0.data.borrow_mut().provider = Some(provider.provider_ref());
+        self.0.data.borrow_mut().provider = std::option::Option::Some(provider.provider_ref());
         self
     }
 
@@ -70,197 +74,239 @@ impl SagemakerFeatureGroup {
     }
 
     pub fn ignore_changes_to_all(self) -> Self {
-        self.0.data.borrow_mut().lifecycle.ignore_changes = Some(IgnoreChanges::All(IgnoreChangesAll::All));
+        self.0.data.borrow_mut().lifecycle.ignore_changes =
+            std::option::Option::Some(terrars::IgnoreChanges::All(terrars::IgnoreChangesAll::All));
         self
     }
 
-    pub fn ignore_changes_to_attr(self, attr: impl ToString) -> Self {
+    pub fn ignore_changes_to_attr(self, attr: impl std::string::ToString) -> Self {
         {
             let mut d = self.0.data.borrow_mut();
             if match &mut d.lifecycle.ignore_changes {
-                Some(i) => match i {
-                    IgnoreChanges::All(_) => {
+                std::option::Option::Some(i) => match i {
+                    terrars::IgnoreChanges::All(_) => {
                         true
                     },
-                    IgnoreChanges::Refs(r) => {
+                    terrars::IgnoreChanges::Refs(r) => {
                         r.push(attr.to_string());
                         false
                     },
                 },
-                None => true,
+                std::option::Option::None => true,
             } {
-                d.lifecycle.ignore_changes = Some(IgnoreChanges::Refs(vec![attr.to_string()]));
+                d.lifecycle.ignore_changes =
+                    std::option::Option::Some(terrars::IgnoreChanges::Refs(vec![attr.to_string()]));
             }
         }
         self
     }
 
-    pub fn replace_triggered_by_resource(self, r: &impl Resource) -> Self {
+    pub fn replace_triggered_by_resource(self, r: &impl terrars::Resource) -> Self {
         self.0.data.borrow_mut().lifecycle.replace_triggered_by.push(r.extract_ref());
         self
     }
 
-    pub fn replace_triggered_by_attr(self, attr: impl ToString) -> Self {
+    pub fn replace_triggered_by_attr(self, attr: impl std::string::ToString) -> Self {
         self.0.data.borrow_mut().lifecycle.replace_triggered_by.push(attr.to_string());
         self
     }
 
-    #[doc= "Set the field `description`.\n"]
-    pub fn set_description(self, v: impl Into<PrimField<String>>) -> Self {
-        self.0.data.borrow_mut().description = Some(v.into());
+    #[doc = r" Add a provisioner (ex: `local-exec`, `remote-exec`, `file`) to this resource."]
+    #[doc = r" Provisioners run in the order they're added."]
+    pub fn add_provisioner(self, v: impl std::convert::Into<terrars::Provisioner>) -> Self {
+        self.0.data.borrow_mut().provisioner.push(v.into());
         self
     }
 
-    #[doc= "Set the field `id`.\n"]
-    pub fn set_id(self, v: impl Into<PrimField<String>>) -> Self {
-        self.0.data.borrow_mut().id = Some(v.into());
+    pub fn add_lifecycle_precondition(
+        self,
+        condition: impl std::convert::Into<terrars::PrimField<bool>>,
+        error_message: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.0.data.borrow_mut().lifecycle.precondition.push(terrars::LifecycleCondition {
+            condition: condition.into(),
+            error_message: error_message.into(),
+        });
         self
     }
 
-    #[doc= "Set the field `tags`.\n"]
-    pub fn set_tags(self, v: impl Into<RecField<PrimField<String>>>) -> Self {
-        self.0.data.borrow_mut().tags = Some(v.into());
+    pub fn add_lifecycle_postcondition(
+        self,
+        condition: impl std::convert::Into<terrars::PrimField<bool>>,
+        error_message: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.0.data.borrow_mut().lifecycle.postcondition.push(terrars::LifecycleCondition {
+            condition: condition.into(),
+            error_message: error_message.into(),
+        });
         self
     }
 
-    #[doc= "Set the field `tags_all`.\n"]
-    pub fn set_tags_all(self, v: impl Into<RecField<PrimField<String>>>) -> Self {
-        self.0.data.borrow_mut().tags_all = Some(v.into());
+    #[doc = "Set the field `description`.\n"]
+    pub fn set_description(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().description = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `feature_definition`.\n"]
+    #[doc = "Set the field `id`.\n"]
+    pub fn set_id(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().id = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `tags`.\n"]
+    pub fn set_tags(
+        self,
+        v: impl std::convert::Into<terrars::RecField<terrars::PrimField<std::string::String>>>,
+    ) -> Self {
+        self.0.data.borrow_mut().tags = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `tags_all`.\n"]
+    pub fn set_tags_all(
+        self,
+        v: impl std::convert::Into<terrars::RecField<terrars::PrimField<std::string::String>>>,
+    ) -> Self {
+        self.0.data.borrow_mut().tags_all = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `feature_definition`.\n"]
     pub fn set_feature_definition(
         self,
-        v: impl Into<BlockAssignable<SagemakerFeatureGroupFeatureDefinitionEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<SagemakerFeatureGroupFeatureDefinitionEl>>,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.0.data.borrow_mut().feature_definition = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.0.data.borrow_mut().feature_definition = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.0.data.borrow_mut().dynamic.feature_definition = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.0.data.borrow_mut().dynamic.feature_definition = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Set the field `offline_store_config`.\n"]
+    #[doc = "Set the field `offline_store_config`.\n"]
     pub fn set_offline_store_config(
         self,
-        v: impl Into<BlockAssignable<SagemakerFeatureGroupOfflineStoreConfigEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<SagemakerFeatureGroupOfflineStoreConfigEl>>,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.0.data.borrow_mut().offline_store_config = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.0.data.borrow_mut().offline_store_config = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.0.data.borrow_mut().dynamic.offline_store_config = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.0.data.borrow_mut().dynamic.offline_store_config = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Set the field `online_store_config`.\n"]
+    #[doc = "Set the field `online_store_config`.\n"]
     pub fn set_online_store_config(
         self,
-        v: impl Into<BlockAssignable<SagemakerFeatureGroupOnlineStoreConfigEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<SagemakerFeatureGroupOnlineStoreConfigEl>>,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.0.data.borrow_mut().online_store_config = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.0.data.borrow_mut().online_store_config = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.0.data.borrow_mut().dynamic.online_store_config = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.0.data.borrow_mut().dynamic.online_store_config = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Get a reference to the value of field `arn` after provisioning.\n"]
-    pub fn arn(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.arn", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `arn` after provisioning.\n"]
+    pub fn arn(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.arn", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `description` after provisioning.\n"]
-    pub fn description(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.description", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `description` after provisioning.\n"]
+    pub fn description(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.description", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `event_time_feature_name` after provisioning.\n"]
-    pub fn event_time_feature_name(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.event_time_feature_name", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `event_time_feature_name` after provisioning.\n"]
+    pub fn event_time_feature_name(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.event_time_feature_name", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `feature_group_name` after provisioning.\n"]
-    pub fn feature_group_name(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.feature_group_name", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `feature_group_name` after provisioning.\n"]
+    pub fn feature_group_name(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.feature_group_name", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `id` after provisioning.\n"]
-    pub fn id(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
+    pub fn id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `record_identifier_feature_name` after provisioning.\n"]
-    pub fn record_identifier_feature_name(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.record_identifier_feature_name", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `record_identifier_feature_name` after provisioning.\n"]
+    pub fn record_identifier_feature_name(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(
+            self.shared().clone(),
+            format!("{}.record_identifier_feature_name", self.extract_ref()),
+        )
     }
 
-    #[doc= "Get a reference to the value of field `role_arn` after provisioning.\n"]
-    pub fn role_arn(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.role_arn", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `role_arn` after provisioning.\n"]
+    pub fn role_arn(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.role_arn", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `tags` after provisioning.\n"]
-    pub fn tags(&self) -> RecRef<PrimExpr<String>> {
-        RecRef::new(self.shared().clone(), format!("{}.tags", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `tags` after provisioning.\n"]
+    pub fn tags(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
+        terrars::RecRef::new(self.shared().clone(), format!("{}.tags", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `tags_all` after provisioning.\n"]
-    pub fn tags_all(&self) -> RecRef<PrimExpr<String>> {
-        RecRef::new(self.shared().clone(), format!("{}.tags_all", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `tags_all` after provisioning.\n"]
+    pub fn tags_all(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
+        terrars::RecRef::new(self.shared().clone(), format!("{}.tags_all", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `feature_definition` after provisioning.\n"]
-    pub fn feature_definition(&self) -> ListRef<SagemakerFeatureGroupFeatureDefinitionElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.feature_definition", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `feature_definition` after provisioning.\n"]
+    pub fn feature_definition(&self) -> terrars::ListRef<SagemakerFeatureGroupFeatureDefinitionElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.feature_definition", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `offline_store_config` after provisioning.\n"]
-    pub fn offline_store_config(&self) -> ListRef<SagemakerFeatureGroupOfflineStoreConfigElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.offline_store_config", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `offline_store_config` after provisioning.\n"]
+    pub fn offline_store_config(&self) -> terrars::ListRef<SagemakerFeatureGroupOfflineStoreConfigElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.offline_store_config", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `online_store_config` after provisioning.\n"]
-    pub fn online_store_config(&self) -> ListRef<SagemakerFeatureGroupOnlineStoreConfigElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.online_store_config", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `online_store_config` after provisioning.\n"]
+    pub fn online_store_config(&self) -> terrars::ListRef<SagemakerFeatureGroupOnlineStoreConfigElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.online_store_config", self.extract_ref()))
     }
 }
 
-impl Referable for SagemakerFeatureGroup {
-    fn extract_ref(&self) -> String {
+impl terrars::Referable for SagemakerFeatureGroup {
+    fn extract_ref(&self) -> std::string::String {
         format!("{}.{}", self.0.extract_resource_type(), self.0.extract_tf_id())
     }
 }
 
-impl Resource for SagemakerFeatureGroup { }
+impl terrars::Resource for SagemakerFeatureGroup { }
 
-impl ToListMappable for SagemakerFeatureGroup {
-    type O = ListRef<SagemakerFeatureGroupRef>;
+impl terrars::ToListMappable for SagemakerFeatureGroup {
+    type O = terrars::ListRef<SagemakerFeatureGroupRef>;
 
-    fn do_map(self, base: String) -> Self::O {
-        self.0.data.borrow_mut().for_each = Some(format!("${{{}}}", base));
-        ListRef::new(self.0.shared.clone(), self.extract_ref())
+    fn do_map(self, base: std::string::String) -> Self::O {
+        self.0.data.borrow_mut().for_each = std::option::Option::Some(format!("${{{}}}", base));
+        terrars::ListRef::new(self.0.shared.clone(), self.extract_ref())
     }
 }
 
-impl Resource_ for SagemakerFeatureGroup_ {
-    fn extract_resource_type(&self) -> String {
+impl terrars::Resource_ for SagemakerFeatureGroup_ {
+    fn extract_resource_type(&self) -> std::string::String {
         "aws_sagemaker_feature_group".into()
     }
 
-    fn extract_tf_id(&self) -> String {
+    fn extract_tf_id(&self) -> std::string::String {
         self.tf_id.clone()
     }
 
@@ -270,27 +316,28 @@ impl Resource_ for SagemakerFeatureGroup_ {
 }
 
 pub struct BuildSagemakerFeatureGroup {
-    pub tf_id: String,
-    #[doc= ""]
-    pub event_time_feature_name: PrimField<String>,
-    #[doc= ""]
-    pub feature_group_name: PrimField<String>,
-    #[doc= ""]
-    pub record_identifier_feature_name: PrimField<String>,
-    #[doc= ""]
-    pub role_arn: PrimField<String>,
+    pub tf_id: std::string::String,
+    #[doc = ""]
+    pub event_time_feature_name: terrars::PrimField<std::string::String>,
+    #[doc = ""]
+    pub feature_group_name: terrars::PrimField<std::string::String>,
+    #[doc = ""]
+    pub record_identifier_feature_name: terrars::PrimField<std::string::String>,
+    #[doc = ""]
+    pub role_arn: terrars::PrimField<std::string::String>,
 }
 
 impl BuildSagemakerFeatureGroup {
-    pub fn build(self, stack: &mut Stack) -> SagemakerFeatureGroup {
-        let out = SagemakerFeatureGroup(Rc::new(SagemakerFeatureGroup_ {
+    pub fn build(self, stack: &mut terrars::Stack) -> SagemakerFeatureGroup {
+        let out = SagemakerFeatureGroup(std::rc::Rc::new(SagemakerFeatureGroup_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: RefCell::new(SagemakerFeatureGroupData {
+            data: std::cell::RefCell::new(SagemakerFeatureGroupData {
                 depends_on: core::default::Default::default(),
-                provider: None,
+                provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
-                for_each: None,
+                for_each: std::option::Option::None,
+                provisioner: core::default::Default::default(),
                 description: core::default::Default::default(),
                 event_time_feature_name: self.event_time_feature_name,
                 feature_group_name: self.feature_group_name,
@@ -302,7 +349,7 @@ impl BuildSagemakerFeatureGroup {
                 feature_definition: core::default::Default::default(),
                 offline_store_config: core::default::Default::default(),
                 online_store_config: core::default::Default::default(),
-                dynamic: Default::default(),
+                dynamic: core::default::Default::default(),
             }),
         }));
         stack.add_resource(out.0.clone());
@@ -311,12 +358,12 @@ impl BuildSagemakerFeatureGroup {
 }
 
 pub struct SagemakerFeatureGroupRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for SagemakerFeatureGroupRef {
-    fn new(shared: StackShared, base: String) -> Self {
+impl terrars::Ref for SagemakerFeatureGroupRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> Self {
         Self {
             shared: shared,
             base: base,
@@ -325,102 +372,105 @@ impl Ref for SagemakerFeatureGroupRef {
 }
 
 impl SagemakerFeatureGroupRef {
-    fn extract_ref(&self) -> String {
+    fn extract_ref(&self) -> std::string::String {
         self.base.clone()
     }
 
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `arn` after provisioning.\n"]
-    pub fn arn(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.arn", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `arn` after provisioning.\n"]
+    pub fn arn(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.arn", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `description` after provisioning.\n"]
-    pub fn description(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.description", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `description` after provisioning.\n"]
+    pub fn description(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.description", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `event_time_feature_name` after provisioning.\n"]
-    pub fn event_time_feature_name(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.event_time_feature_name", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `event_time_feature_name` after provisioning.\n"]
+    pub fn event_time_feature_name(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.event_time_feature_name", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `feature_group_name` after provisioning.\n"]
-    pub fn feature_group_name(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.feature_group_name", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `feature_group_name` after provisioning.\n"]
+    pub fn feature_group_name(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.feature_group_name", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `id` after provisioning.\n"]
-    pub fn id(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
+    pub fn id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `record_identifier_feature_name` after provisioning.\n"]
-    pub fn record_identifier_feature_name(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.record_identifier_feature_name", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `record_identifier_feature_name` after provisioning.\n"]
+    pub fn record_identifier_feature_name(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(
+            self.shared().clone(),
+            format!("{}.record_identifier_feature_name", self.extract_ref()),
+        )
     }
 
-    #[doc= "Get a reference to the value of field `role_arn` after provisioning.\n"]
-    pub fn role_arn(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.role_arn", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `role_arn` after provisioning.\n"]
+    pub fn role_arn(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.role_arn", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `tags` after provisioning.\n"]
-    pub fn tags(&self) -> RecRef<PrimExpr<String>> {
-        RecRef::new(self.shared().clone(), format!("{}.tags", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `tags` after provisioning.\n"]
+    pub fn tags(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
+        terrars::RecRef::new(self.shared().clone(), format!("{}.tags", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `tags_all` after provisioning.\n"]
-    pub fn tags_all(&self) -> RecRef<PrimExpr<String>> {
-        RecRef::new(self.shared().clone(), format!("{}.tags_all", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `tags_all` after provisioning.\n"]
+    pub fn tags_all(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
+        terrars::RecRef::new(self.shared().clone(), format!("{}.tags_all", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `feature_definition` after provisioning.\n"]
-    pub fn feature_definition(&self) -> ListRef<SagemakerFeatureGroupFeatureDefinitionElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.feature_definition", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `feature_definition` after provisioning.\n"]
+    pub fn feature_definition(&self) -> terrars::ListRef<SagemakerFeatureGroupFeatureDefinitionElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.feature_definition", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `offline_store_config` after provisioning.\n"]
-    pub fn offline_store_config(&self) -> ListRef<SagemakerFeatureGroupOfflineStoreConfigElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.offline_store_config", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `offline_store_config` after provisioning.\n"]
+    pub fn offline_store_config(&self) -> terrars::ListRef<SagemakerFeatureGroupOfflineStoreConfigElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.offline_store_config", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `online_store_config` after provisioning.\n"]
-    pub fn online_store_config(&self) -> ListRef<SagemakerFeatureGroupOnlineStoreConfigElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.online_store_config", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `online_store_config` after provisioning.\n"]
+    pub fn online_store_config(&self) -> terrars::ListRef<SagemakerFeatureGroupOnlineStoreConfigElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.online_store_config", self.extract_ref()))
     }
 }
 
 #[derive(Serialize)]
 pub struct SagemakerFeatureGroupFeatureDefinitionEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    feature_name: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    feature_type: Option<PrimField<String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    feature_name: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    feature_type: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
 impl SagemakerFeatureGroupFeatureDefinitionEl {
-    #[doc= "Set the field `feature_name`.\n"]
-    pub fn set_feature_name(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.feature_name = Some(v.into());
+    #[doc = "Set the field `feature_name`.\n"]
+    pub fn set_feature_name(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.feature_name = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `feature_type`.\n"]
-    pub fn set_feature_type(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.feature_type = Some(v.into());
+    #[doc = "Set the field `feature_type`.\n"]
+    pub fn set_feature_type(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.feature_type = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl ToListMappable for SagemakerFeatureGroupFeatureDefinitionEl {
-    type O = BlockAssignable<SagemakerFeatureGroupFeatureDefinitionEl>;
+impl terrars::ToListMappable for SagemakerFeatureGroupFeatureDefinitionEl {
+    type O = terrars::BlockAssignable<SagemakerFeatureGroupFeatureDefinitionEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -440,12 +490,12 @@ impl BuildSagemakerFeatureGroupFeatureDefinitionEl {
 }
 
 pub struct SagemakerFeatureGroupFeatureDefinitionElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for SagemakerFeatureGroupFeatureDefinitionElRef {
-    fn new(shared: StackShared, base: String) -> SagemakerFeatureGroupFeatureDefinitionElRef {
+impl terrars::Ref for SagemakerFeatureGroupFeatureDefinitionElRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> SagemakerFeatureGroupFeatureDefinitionElRef {
         SagemakerFeatureGroupFeatureDefinitionElRef {
             shared: shared,
             base: base.to_string(),
@@ -454,56 +504,56 @@ impl Ref for SagemakerFeatureGroupFeatureDefinitionElRef {
 }
 
 impl SagemakerFeatureGroupFeatureDefinitionElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `feature_name` after provisioning.\n"]
-    pub fn feature_name(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.feature_name", self.base))
+    #[doc = "Get a reference to the value of field `feature_name` after provisioning.\n"]
+    pub fn feature_name(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.feature_name", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `feature_type` after provisioning.\n"]
-    pub fn feature_type(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.feature_type", self.base))
+    #[doc = "Get a reference to the value of field `feature_type` after provisioning.\n"]
+    pub fn feature_type(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.feature_type", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct SagemakerFeatureGroupOfflineStoreConfigElDataCatalogConfigEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    catalog: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    database: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    table_name: Option<PrimField<String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    catalog: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    database: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    table_name: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
 impl SagemakerFeatureGroupOfflineStoreConfigElDataCatalogConfigEl {
-    #[doc= "Set the field `catalog`.\n"]
-    pub fn set_catalog(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.catalog = Some(v.into());
+    #[doc = "Set the field `catalog`.\n"]
+    pub fn set_catalog(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.catalog = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `database`.\n"]
-    pub fn set_database(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.database = Some(v.into());
+    #[doc = "Set the field `database`.\n"]
+    pub fn set_database(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.database = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `table_name`.\n"]
-    pub fn set_table_name(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.table_name = Some(v.into());
+    #[doc = "Set the field `table_name`.\n"]
+    pub fn set_table_name(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.table_name = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl ToListMappable for SagemakerFeatureGroupOfflineStoreConfigElDataCatalogConfigEl {
-    type O = BlockAssignable<SagemakerFeatureGroupOfflineStoreConfigElDataCatalogConfigEl>;
+impl terrars::ToListMappable for SagemakerFeatureGroupOfflineStoreConfigElDataCatalogConfigEl {
+    type O = terrars::BlockAssignable<SagemakerFeatureGroupOfflineStoreConfigElDataCatalogConfigEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -524,12 +574,15 @@ impl BuildSagemakerFeatureGroupOfflineStoreConfigElDataCatalogConfigEl {
 }
 
 pub struct SagemakerFeatureGroupOfflineStoreConfigElDataCatalogConfigElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for SagemakerFeatureGroupOfflineStoreConfigElDataCatalogConfigElRef {
-    fn new(shared: StackShared, base: String) -> SagemakerFeatureGroupOfflineStoreConfigElDataCatalogConfigElRef {
+impl terrars::Ref for SagemakerFeatureGroupOfflineStoreConfigElDataCatalogConfigElRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> SagemakerFeatureGroupOfflineStoreConfigElDataCatalogConfigElRef {
         SagemakerFeatureGroupOfflineStoreConfigElDataCatalogConfigElRef {
             shared: shared,
             base: base.to_string(),
@@ -538,46 +591,46 @@ impl Ref for SagemakerFeatureGroupOfflineStoreConfigElDataCatalogConfigElRef {
 }
 
 impl SagemakerFeatureGroupOfflineStoreConfigElDataCatalogConfigElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `catalog` after provisioning.\n"]
-    pub fn catalog(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.catalog", self.base))
+    #[doc = "Get a reference to the value of field `catalog` after provisioning.\n"]
+    pub fn catalog(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.catalog", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `database` after provisioning.\n"]
-    pub fn database(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.database", self.base))
+    #[doc = "Get a reference to the value of field `database` after provisioning.\n"]
+    pub fn database(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.database", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `table_name` after provisioning.\n"]
-    pub fn table_name(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.table_name", self.base))
+    #[doc = "Get a reference to the value of field `table_name` after provisioning.\n"]
+    pub fn table_name(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.table_name", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct SagemakerFeatureGroupOfflineStoreConfigElS3StorageConfigEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    kms_key_id: Option<PrimField<String>>,
-    s3_uri: PrimField<String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    kms_key_id: std::option::Option<terrars::PrimField<std::string::String>>,
+    s3_uri: terrars::PrimField<std::string::String>,
 }
 
 impl SagemakerFeatureGroupOfflineStoreConfigElS3StorageConfigEl {
-    #[doc= "Set the field `kms_key_id`.\n"]
-    pub fn set_kms_key_id(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.kms_key_id = Some(v.into());
+    #[doc = "Set the field `kms_key_id`.\n"]
+    pub fn set_kms_key_id(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.kms_key_id = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl ToListMappable for SagemakerFeatureGroupOfflineStoreConfigElS3StorageConfigEl {
-    type O = BlockAssignable<SagemakerFeatureGroupOfflineStoreConfigElS3StorageConfigEl>;
+impl terrars::ToListMappable for SagemakerFeatureGroupOfflineStoreConfigElS3StorageConfigEl {
+    type O = terrars::BlockAssignable<SagemakerFeatureGroupOfflineStoreConfigElS3StorageConfigEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -586,8 +639,8 @@ impl ToListMappable for SagemakerFeatureGroupOfflineStoreConfigElS3StorageConfig
 }
 
 pub struct BuildSagemakerFeatureGroupOfflineStoreConfigElS3StorageConfigEl {
-    #[doc= ""]
-    pub s3_uri: PrimField<String>,
+    #[doc = ""]
+    pub s3_uri: terrars::PrimField<std::string::String>,
 }
 
 impl BuildSagemakerFeatureGroupOfflineStoreConfigElS3StorageConfigEl {
@@ -600,12 +653,15 @@ impl BuildSagemakerFeatureGroupOfflineStoreConfigElS3StorageConfigEl {
 }
 
 pub struct SagemakerFeatureGroupOfflineStoreConfigElS3StorageConfigElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for SagemakerFeatureGroupOfflineStoreConfigElS3StorageConfigElRef {
-    fn new(shared: StackShared, base: String) -> SagemakerFeatureGroupOfflineStoreConfigElS3StorageConfigElRef {
+impl terrars::Ref for SagemakerFeatureGroupOfflineStoreConfigElS3StorageConfigElRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> SagemakerFeatureGroupOfflineStoreConfigElS3StorageConfigElRef {
         SagemakerFeatureGroupOfflineStoreConfigElS3StorageConfigElRef {
             shared: shared,
             base: base.to_string(),
@@ -614,83 +670,97 @@ impl Ref for SagemakerFeatureGroupOfflineStoreConfigElS3StorageConfigElRef {
 }
 
 impl SagemakerFeatureGroupOfflineStoreConfigElS3StorageConfigElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `kms_key_id` after provisioning.\n"]
-    pub fn kms_key_id(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.kms_key_id", self.base))
+    #[doc = "Get a reference to the value of field `kms_key_id` after provisioning.\n"]
+    pub fn kms_key_id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.kms_key_id", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `s3_uri` after provisioning.\n"]
-    pub fn s3_uri(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.s3_uri", self.base))
+    #[doc = "Get a reference to the value of field `s3_uri` after provisioning.\n"]
+    pub fn s3_uri(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.s3_uri", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
 struct SagemakerFeatureGroupOfflineStoreConfigElDynamic {
-    data_catalog_config: Option<DynamicBlock<SagemakerFeatureGroupOfflineStoreConfigElDataCatalogConfigEl>>,
-    s3_storage_config: Option<DynamicBlock<SagemakerFeatureGroupOfflineStoreConfigElS3StorageConfigEl>>,
+    data_catalog_config: std
+    ::option
+    ::Option<terrars::DynamicBlock<SagemakerFeatureGroupOfflineStoreConfigElDataCatalogConfigEl>>,
+    s3_storage_config: std
+    ::option
+    ::Option<terrars::DynamicBlock<SagemakerFeatureGroupOfflineStoreConfigElS3StorageConfigEl>>,
 }
 
 #[derive(Serialize)]
 pub struct SagemakerFeatureGroupOfflineStoreConfigEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    disable_glue_table_creation: Option<PrimField<bool>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    data_catalog_config: Option<Vec<SagemakerFeatureGroupOfflineStoreConfigElDataCatalogConfigEl>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    s3_storage_config: Option<Vec<SagemakerFeatureGroupOfflineStoreConfigElS3StorageConfigEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    disable_glue_table_creation: std::option::Option<terrars::PrimField<bool>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    data_catalog_config: std::option::Option<std::vec::Vec<SagemakerFeatureGroupOfflineStoreConfigElDataCatalogConfigEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    s3_storage_config: std::option::Option<std::vec::Vec<SagemakerFeatureGroupOfflineStoreConfigElS3StorageConfigEl>>,
     dynamic: SagemakerFeatureGroupOfflineStoreConfigElDynamic,
 }
 
 impl SagemakerFeatureGroupOfflineStoreConfigEl {
-    #[doc= "Set the field `disable_glue_table_creation`.\n"]
-    pub fn set_disable_glue_table_creation(mut self, v: impl Into<PrimField<bool>>) -> Self {
-        self.disable_glue_table_creation = Some(v.into());
+    #[doc = "Set the field `disable_glue_table_creation`.\n"]
+    pub fn set_disable_glue_table_creation(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
+        self.disable_glue_table_creation = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `data_catalog_config`.\n"]
+    #[doc = "Set the field `data_catalog_config`.\n"]
     pub fn set_data_catalog_config(
         mut self,
-        v: impl Into<BlockAssignable<SagemakerFeatureGroupOfflineStoreConfigElDataCatalogConfigEl>>,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<terrars::BlockAssignable<SagemakerFeatureGroupOfflineStoreConfigElDataCatalogConfigEl>>,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.data_catalog_config = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.data_catalog_config = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.data_catalog_config = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.data_catalog_config = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Set the field `s3_storage_config`.\n"]
+    #[doc = "Set the field `s3_storage_config`.\n"]
     pub fn set_s3_storage_config(
         mut self,
-        v: impl Into<BlockAssignable<SagemakerFeatureGroupOfflineStoreConfigElS3StorageConfigEl>>,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<terrars::BlockAssignable<SagemakerFeatureGroupOfflineStoreConfigElS3StorageConfigEl>>,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.s3_storage_config = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.s3_storage_config = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.s3_storage_config = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.s3_storage_config = std::option::Option::Some(d);
             },
         }
         self
     }
 }
 
-impl ToListMappable for SagemakerFeatureGroupOfflineStoreConfigEl {
-    type O = BlockAssignable<SagemakerFeatureGroupOfflineStoreConfigEl>;
+impl terrars::ToListMappable for SagemakerFeatureGroupOfflineStoreConfigEl {
+    type O = terrars::BlockAssignable<SagemakerFeatureGroupOfflineStoreConfigEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -706,18 +776,18 @@ impl BuildSagemakerFeatureGroupOfflineStoreConfigEl {
             disable_glue_table_creation: core::default::Default::default(),
             data_catalog_config: core::default::Default::default(),
             s3_storage_config: core::default::Default::default(),
-            dynamic: Default::default(),
+            dynamic: core::default::Default::default(),
         }
     }
 }
 
 pub struct SagemakerFeatureGroupOfflineStoreConfigElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for SagemakerFeatureGroupOfflineStoreConfigElRef {
-    fn new(shared: StackShared, base: String) -> SagemakerFeatureGroupOfflineStoreConfigElRef {
+impl terrars::Ref for SagemakerFeatureGroupOfflineStoreConfigElRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> SagemakerFeatureGroupOfflineStoreConfigElRef {
         SagemakerFeatureGroupOfflineStoreConfigElRef {
             shared: shared,
             base: base.to_string(),
@@ -726,45 +796,47 @@ impl Ref for SagemakerFeatureGroupOfflineStoreConfigElRef {
 }
 
 impl SagemakerFeatureGroupOfflineStoreConfigElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `disable_glue_table_creation` after provisioning.\n"]
-    pub fn disable_glue_table_creation(&self) -> PrimExpr<bool> {
-        PrimExpr::new(self.shared().clone(), format!("{}.disable_glue_table_creation", self.base))
+    #[doc = "Get a reference to the value of field `disable_glue_table_creation` after provisioning.\n"]
+    pub fn disable_glue_table_creation(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.disable_glue_table_creation", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `data_catalog_config` after provisioning.\n"]
-    pub fn data_catalog_config(&self) -> ListRef<SagemakerFeatureGroupOfflineStoreConfigElDataCatalogConfigElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.data_catalog_config", self.base))
+    #[doc = "Get a reference to the value of field `data_catalog_config` after provisioning.\n"]
+    pub fn data_catalog_config(
+        &self,
+    ) -> terrars::ListRef<SagemakerFeatureGroupOfflineStoreConfigElDataCatalogConfigElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.data_catalog_config", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `s3_storage_config` after provisioning.\n"]
-    pub fn s3_storage_config(&self) -> ListRef<SagemakerFeatureGroupOfflineStoreConfigElS3StorageConfigElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.s3_storage_config", self.base))
+    #[doc = "Get a reference to the value of field `s3_storage_config` after provisioning.\n"]
+    pub fn s3_storage_config(&self) -> terrars::ListRef<SagemakerFeatureGroupOfflineStoreConfigElS3StorageConfigElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.s3_storage_config", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct SagemakerFeatureGroupOnlineStoreConfigElSecurityConfigEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    kms_key_id: Option<PrimField<String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    kms_key_id: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
 impl SagemakerFeatureGroupOnlineStoreConfigElSecurityConfigEl {
-    #[doc= "Set the field `kms_key_id`.\n"]
-    pub fn set_kms_key_id(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.kms_key_id = Some(v.into());
+    #[doc = "Set the field `kms_key_id`.\n"]
+    pub fn set_kms_key_id(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.kms_key_id = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl ToListMappable for SagemakerFeatureGroupOnlineStoreConfigElSecurityConfigEl {
-    type O = BlockAssignable<SagemakerFeatureGroupOnlineStoreConfigElSecurityConfigEl>;
+impl terrars::ToListMappable for SagemakerFeatureGroupOnlineStoreConfigElSecurityConfigEl {
+    type O = terrars::BlockAssignable<SagemakerFeatureGroupOnlineStoreConfigElSecurityConfigEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -781,12 +853,15 @@ impl BuildSagemakerFeatureGroupOnlineStoreConfigElSecurityConfigEl {
 }
 
 pub struct SagemakerFeatureGroupOnlineStoreConfigElSecurityConfigElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for SagemakerFeatureGroupOnlineStoreConfigElSecurityConfigElRef {
-    fn new(shared: StackShared, base: String) -> SagemakerFeatureGroupOnlineStoreConfigElSecurityConfigElRef {
+impl terrars::Ref for SagemakerFeatureGroupOnlineStoreConfigElSecurityConfigElRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> SagemakerFeatureGroupOnlineStoreConfigElSecurityConfigElRef {
         SagemakerFeatureGroupOnlineStoreConfigElSecurityConfigElRef {
             shared: shared,
             base: base.to_string(),
@@ -795,59 +870,66 @@ impl Ref for SagemakerFeatureGroupOnlineStoreConfigElSecurityConfigElRef {
 }
 
 impl SagemakerFeatureGroupOnlineStoreConfigElSecurityConfigElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `kms_key_id` after provisioning.\n"]
-    pub fn kms_key_id(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.kms_key_id", self.base))
+    #[doc = "Get a reference to the value of field `kms_key_id` after provisioning.\n"]
+    pub fn kms_key_id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.kms_key_id", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
 struct SagemakerFeatureGroupOnlineStoreConfigElDynamic {
-    security_config: Option<DynamicBlock<SagemakerFeatureGroupOnlineStoreConfigElSecurityConfigEl>>,
+    security_config: std
+    ::option
+    ::Option<terrars::DynamicBlock<SagemakerFeatureGroupOnlineStoreConfigElSecurityConfigEl>>,
 }
 
 #[derive(Serialize)]
 pub struct SagemakerFeatureGroupOnlineStoreConfigEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    enable_online_store: Option<PrimField<bool>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    security_config: Option<Vec<SagemakerFeatureGroupOnlineStoreConfigElSecurityConfigEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    enable_online_store: std::option::Option<terrars::PrimField<bool>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    security_config: std::option::Option<std::vec::Vec<SagemakerFeatureGroupOnlineStoreConfigElSecurityConfigEl>>,
     dynamic: SagemakerFeatureGroupOnlineStoreConfigElDynamic,
 }
 
 impl SagemakerFeatureGroupOnlineStoreConfigEl {
-    #[doc= "Set the field `enable_online_store`.\n"]
-    pub fn set_enable_online_store(mut self, v: impl Into<PrimField<bool>>) -> Self {
-        self.enable_online_store = Some(v.into());
+    #[doc = "Set the field `enable_online_store`.\n"]
+    pub fn set_enable_online_store(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
+        self.enable_online_store = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `security_config`.\n"]
+    #[doc = "Set the field `security_config`.\n"]
     pub fn set_security_config(
         mut self,
-        v: impl Into<BlockAssignable<SagemakerFeatureGroupOnlineStoreConfigElSecurityConfigEl>>,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<terrars::BlockAssignable<SagemakerFeatureGroupOnlineStoreConfigElSecurityConfigEl>>,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.security_config = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.security_config = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.security_config = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.security_config = std::option::Option::Some(d);
             },
         }
         self
     }
 }
 
-impl ToListMappable for SagemakerFeatureGroupOnlineStoreConfigEl {
-    type O = BlockAssignable<SagemakerFeatureGroupOnlineStoreConfigEl>;
+impl terrars::ToListMappable for SagemakerFeatureGroupOnlineStoreConfigEl {
+    type O = terrars::BlockAssignable<SagemakerFeatureGroupOnlineStoreConfigEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -862,18 +944,18 @@ impl BuildSagemakerFeatureGroupOnlineStoreConfigEl {
         SagemakerFeatureGroupOnlineStoreConfigEl {
             enable_online_store: core::default::Default::default(),
             security_config: core::default::Default::default(),
-            dynamic: Default::default(),
+            dynamic: core::default::Default::default(),
         }
     }
 }
 
 pub struct SagemakerFeatureGroupOnlineStoreConfigElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for SagemakerFeatureGroupOnlineStoreConfigElRef {
-    fn new(shared: StackShared, base: String) -> SagemakerFeatureGroupOnlineStoreConfigElRef {
+impl terrars::Ref for SagemakerFeatureGroupOnlineStoreConfigElRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> SagemakerFeatureGroupOnlineStoreConfigElRef {
         SagemakerFeatureGroupOnlineStoreConfigElRef {
             shared: shared,
             base: base.to_string(),
@@ -882,24 +964,24 @@ impl Ref for SagemakerFeatureGroupOnlineStoreConfigElRef {
 }
 
 impl SagemakerFeatureGroupOnlineStoreConfigElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `enable_online_store` after provisioning.\n"]
-    pub fn enable_online_store(&self) -> PrimExpr<bool> {
-        PrimExpr::new(self.shared().clone(), format!("{}.enable_online_store", self.base))
+    #[doc = "Get a reference to the value of field `enable_online_store` after provisioning.\n"]
+    pub fn enable_online_store(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.enable_online_store", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `security_config` after provisioning.\n"]
-    pub fn security_config(&self) -> ListRef<SagemakerFeatureGroupOnlineStoreConfigElSecurityConfigElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.security_config", self.base))
+    #[doc = "Get a reference to the value of field `security_config` after provisioning.\n"]
+    pub fn security_config(&self) -> terrars::ListRef<SagemakerFeatureGroupOnlineStoreConfigElSecurityConfigElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.security_config", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
 struct SagemakerFeatureGroupDynamic {
-    feature_definition: Option<DynamicBlock<SagemakerFeatureGroupFeatureDefinitionEl>>,
-    offline_store_config: Option<DynamicBlock<SagemakerFeatureGroupOfflineStoreConfigEl>>,
-    online_store_config: Option<DynamicBlock<SagemakerFeatureGroupOnlineStoreConfigEl>>,
+    feature_definition: std::option::Option<terrars::DynamicBlock<SagemakerFeatureGroupFeatureDefinitionEl>>,
+    offline_store_config: std::option::Option<terrars::DynamicBlock<SagemakerFeatureGroupOfflineStoreConfigEl>>,
+    online_store_config: std::option::Option<terrars::DynamicBlock<SagemakerFeatureGroupOnlineStoreConfigEl>>,
 }

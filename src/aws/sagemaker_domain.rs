@@ -1,67 +1,71 @@
 use serde::Serialize;
-use std::cell::RefCell;
-use std::rc::Rc;
-use terrars::*;
+use terrars::{
+    Referable as _,
+    Resource_ as _,
+    Ref as _,
+};
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
 struct SagemakerDomainData {
-    #[serde(skip_serializing_if = "Vec::is_empty")]
-    depends_on: Vec<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    provider: Option<String>,
-    #[serde(skip_serializing_if = "SerdeSkipDefault::is_default")]
-    lifecycle: ResourceLifecycle,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    for_each: Option<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    app_network_access_type: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    app_security_group_management: Option<PrimField<String>>,
-    auth_mode: PrimField<String>,
-    domain_name: PrimField<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    id: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    kms_key_id: Option<PrimField<String>>,
-    subnet_ids: SetField<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    tags: Option<RecField<PrimField<String>>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    tags_all: Option<RecField<PrimField<String>>>,
-    vpc_id: PrimField<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    default_space_settings: Option<Vec<SagemakerDomainDefaultSpaceSettingsEl>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    default_user_settings: Option<Vec<SagemakerDomainDefaultUserSettingsEl>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    domain_settings: Option<Vec<SagemakerDomainDomainSettingsEl>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    retention_policy: Option<Vec<SagemakerDomainRetentionPolicyEl>>,
+    #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
+    depends_on: std::vec::Vec<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    provider: std::option::Option<std::string::String>,
+    #[serde(skip_serializing_if = "terrars::SerdeSkipDefault::is_default")]
+    lifecycle: terrars::ResourceLifecycle,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    for_each: std::option::Option<std::string::String>,
+    #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
+    provisioner: std::vec::Vec<terrars::Provisioner>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    app_network_access_type: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    app_security_group_management: std::option::Option<terrars::PrimField<std::string::String>>,
+    auth_mode: terrars::PrimField<std::string::String>,
+    domain_name: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    id: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    kms_key_id: std::option::Option<terrars::PrimField<std::string::String>>,
+    subnet_ids: terrars::SetField<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    tags: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    tags_all: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
+    vpc_id: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    default_space_settings: std::option::Option<std::vec::Vec<SagemakerDomainDefaultSpaceSettingsEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    default_user_settings: std::option::Option<std::vec::Vec<SagemakerDomainDefaultUserSettingsEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    domain_settings: std::option::Option<std::vec::Vec<SagemakerDomainDomainSettingsEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    retention_policy: std::option::Option<std::vec::Vec<SagemakerDomainRetentionPolicyEl>>,
     dynamic: SagemakerDomainDynamic,
 }
 
 struct SagemakerDomain_ {
-    shared: StackShared,
-    tf_id: String,
-    data: RefCell<SagemakerDomainData>,
+    shared: terrars::StackShared,
+    tf_id: std::string::String,
+    data: std::cell::RefCell<SagemakerDomainData>,
 }
 
 #[derive(Clone)]
-pub struct SagemakerDomain(Rc<SagemakerDomain_>);
+pub struct SagemakerDomain(std::rc::Rc<SagemakerDomain_>);
 
 impl SagemakerDomain {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.0.shared
     }
 
-    pub fn depends_on(self, dep: &impl Referable) -> Self {
+    pub fn depends_on(self, dep: &impl terrars::Referable) -> Self {
         self.0.data.borrow_mut().depends_on.push(dep.extract_ref());
         self
     }
 
     pub fn set_provider(self, provider: &ProviderAws) -> Self {
-        self.0.data.borrow_mut().provider = Some(provider.provider_ref());
+        self.0.data.borrow_mut().provider = std::option::Option::Some(provider.provider_ref());
         self
     }
 
@@ -76,254 +80,315 @@ impl SagemakerDomain {
     }
 
     pub fn ignore_changes_to_all(self) -> Self {
-        self.0.data.borrow_mut().lifecycle.ignore_changes = Some(IgnoreChanges::All(IgnoreChangesAll::All));
+        self.0.data.borrow_mut().lifecycle.ignore_changes =
+            std::option::Option::Some(terrars::IgnoreChanges::All(terrars::IgnoreChangesAll::All));
         self
     }
 
-    pub fn ignore_changes_to_attr(self, attr: impl ToString) -> Self {
+    pub fn ignore_changes_to_attr(self, attr: impl std::string::ToString) -> Self {
         {
             let mut d = self.0.data.borrow_mut();
             if match &mut d.lifecycle.ignore_changes {
-                Some(i) => match i {
-                    IgnoreChanges::All(_) => {
+                std::option::Option::Some(i) => match i {
+                    terrars::IgnoreChanges::All(_) => {
                         true
                     },
-                    IgnoreChanges::Refs(r) => {
+                    terrars::IgnoreChanges::Refs(r) => {
                         r.push(attr.to_string());
                         false
                     },
                 },
-                None => true,
+                std::option::Option::None => true,
             } {
-                d.lifecycle.ignore_changes = Some(IgnoreChanges::Refs(vec![attr.to_string()]));
+                d.lifecycle.ignore_changes =
+                    std::option::Option::Some(terrars::IgnoreChanges::Refs(vec![attr.to_string()]));
             }
         }
         self
     }
 
-    pub fn replace_triggered_by_resource(self, r: &impl Resource) -> Self {
+    pub fn replace_triggered_by_resource(self, r: &impl terrars::Resource) -> Self {
         self.0.data.borrow_mut().lifecycle.replace_triggered_by.push(r.extract_ref());
         self
     }
 
-    pub fn replace_triggered_by_attr(self, attr: impl ToString) -> Self {
+    pub fn replace_triggered_by_attr(self, attr: impl std::string::ToString) -> Self {
         self.0.data.borrow_mut().lifecycle.replace_triggered_by.push(attr.to_string());
         self
     }
 
-    #[doc= "Set the field `app_network_access_type`.\n"]
-    pub fn set_app_network_access_type(self, v: impl Into<PrimField<String>>) -> Self {
-        self.0.data.borrow_mut().app_network_access_type = Some(v.into());
+    #[doc = r" Add a provisioner (ex: `local-exec`, `remote-exec`, `file`) to this resource."]
+    #[doc = r" Provisioners run in the order they're added."]
+    pub fn add_provisioner(self, v: impl std::convert::Into<terrars::Provisioner>) -> Self {
+        self.0.data.borrow_mut().provisioner.push(v.into());
         self
     }
 
-    #[doc= "Set the field `app_security_group_management`.\n"]
-    pub fn set_app_security_group_management(self, v: impl Into<PrimField<String>>) -> Self {
-        self.0.data.borrow_mut().app_security_group_management = Some(v.into());
+    pub fn add_lifecycle_precondition(
+        self,
+        condition: impl std::convert::Into<terrars::PrimField<bool>>,
+        error_message: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.0.data.borrow_mut().lifecycle.precondition.push(terrars::LifecycleCondition {
+            condition: condition.into(),
+            error_message: error_message.into(),
+        });
         self
     }
 
-    #[doc= "Set the field `id`.\n"]
-    pub fn set_id(self, v: impl Into<PrimField<String>>) -> Self {
-        self.0.data.borrow_mut().id = Some(v.into());
+    pub fn add_lifecycle_postcondition(
+        self,
+        condition: impl std::convert::Into<terrars::PrimField<bool>>,
+        error_message: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.0.data.borrow_mut().lifecycle.postcondition.push(terrars::LifecycleCondition {
+            condition: condition.into(),
+            error_message: error_message.into(),
+        });
         self
     }
 
-    #[doc= "Set the field `kms_key_id`.\n"]
-    pub fn set_kms_key_id(self, v: impl Into<PrimField<String>>) -> Self {
-        self.0.data.borrow_mut().kms_key_id = Some(v.into());
+    #[doc = "Set the field `app_network_access_type`.\n"]
+    pub fn set_app_network_access_type(
+        self,
+        v: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.0.data.borrow_mut().app_network_access_type = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `tags`.\n"]
-    pub fn set_tags(self, v: impl Into<RecField<PrimField<String>>>) -> Self {
-        self.0.data.borrow_mut().tags = Some(v.into());
+    #[doc = "Set the field `app_security_group_management`.\n"]
+    pub fn set_app_security_group_management(
+        self,
+        v: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.0.data.borrow_mut().app_security_group_management = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `tags_all`.\n"]
-    pub fn set_tags_all(self, v: impl Into<RecField<PrimField<String>>>) -> Self {
-        self.0.data.borrow_mut().tags_all = Some(v.into());
+    #[doc = "Set the field `id`.\n"]
+    pub fn set_id(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().id = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `default_space_settings`.\n"]
+    #[doc = "Set the field `kms_key_id`.\n"]
+    pub fn set_kms_key_id(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().kms_key_id = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `tags`.\n"]
+    pub fn set_tags(
+        self,
+        v: impl std::convert::Into<terrars::RecField<terrars::PrimField<std::string::String>>>,
+    ) -> Self {
+        self.0.data.borrow_mut().tags = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `tags_all`.\n"]
+    pub fn set_tags_all(
+        self,
+        v: impl std::convert::Into<terrars::RecField<terrars::PrimField<std::string::String>>>,
+    ) -> Self {
+        self.0.data.borrow_mut().tags_all = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `default_space_settings`.\n"]
     pub fn set_default_space_settings(
         self,
-        v: impl Into<BlockAssignable<SagemakerDomainDefaultSpaceSettingsEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<SagemakerDomainDefaultSpaceSettingsEl>>,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.0.data.borrow_mut().default_space_settings = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.0.data.borrow_mut().default_space_settings = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.0.data.borrow_mut().dynamic.default_space_settings = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.0.data.borrow_mut().dynamic.default_space_settings = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Set the field `default_user_settings`.\n"]
-    pub fn set_default_user_settings(self, v: impl Into<BlockAssignable<SagemakerDomainDefaultUserSettingsEl>>) -> Self {
+    #[doc = "Set the field `default_user_settings`.\n"]
+    pub fn set_default_user_settings(
+        self,
+        v: impl std::convert::Into<terrars::BlockAssignable<SagemakerDomainDefaultUserSettingsEl>>,
+    ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.0.data.borrow_mut().default_user_settings = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.0.data.borrow_mut().default_user_settings = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.0.data.borrow_mut().dynamic.default_user_settings = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.0.data.borrow_mut().dynamic.default_user_settings = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Set the field `domain_settings`.\n"]
-    pub fn set_domain_settings(self, v: impl Into<BlockAssignable<SagemakerDomainDomainSettingsEl>>) -> Self {
+    #[doc = "Set the field `domain_settings`.\n"]
+    pub fn set_domain_settings(
+        self,
+        v: impl std::convert::Into<terrars::BlockAssignable<SagemakerDomainDomainSettingsEl>>,
+    ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.0.data.borrow_mut().domain_settings = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.0.data.borrow_mut().domain_settings = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.0.data.borrow_mut().dynamic.domain_settings = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.0.data.borrow_mut().dynamic.domain_settings = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Set the field `retention_policy`.\n"]
-    pub fn set_retention_policy(self, v: impl Into<BlockAssignable<SagemakerDomainRetentionPolicyEl>>) -> Self {
+    #[doc = "Set the field `retention_policy`.\n"]
+    pub fn set_retention_policy(
+        self,
+        v: impl std::convert::Into<terrars::BlockAssignable<SagemakerDomainRetentionPolicyEl>>,
+    ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.0.data.borrow_mut().retention_policy = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.0.data.borrow_mut().retention_policy = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.0.data.borrow_mut().dynamic.retention_policy = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.0.data.borrow_mut().dynamic.retention_policy = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Get a reference to the value of field `app_network_access_type` after provisioning.\n"]
-    pub fn app_network_access_type(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.app_network_access_type", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `app_network_access_type` after provisioning.\n"]
+    pub fn app_network_access_type(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.app_network_access_type", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `app_security_group_management` after provisioning.\n"]
-    pub fn app_security_group_management(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.app_security_group_management", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `app_security_group_management` after provisioning.\n"]
+    pub fn app_security_group_management(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(
+            self.shared().clone(),
+            format!("{}.app_security_group_management", self.extract_ref()),
+        )
     }
 
-    #[doc= "Get a reference to the value of field `arn` after provisioning.\n"]
-    pub fn arn(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.arn", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `arn` after provisioning.\n"]
+    pub fn arn(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.arn", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `auth_mode` after provisioning.\n"]
-    pub fn auth_mode(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.auth_mode", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `auth_mode` after provisioning.\n"]
+    pub fn auth_mode(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.auth_mode", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `domain_name` after provisioning.\n"]
-    pub fn domain_name(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.domain_name", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `domain_name` after provisioning.\n"]
+    pub fn domain_name(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.domain_name", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `home_efs_file_system_id` after provisioning.\n"]
-    pub fn home_efs_file_system_id(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.home_efs_file_system_id", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `home_efs_file_system_id` after provisioning.\n"]
+    pub fn home_efs_file_system_id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.home_efs_file_system_id", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `id` after provisioning.\n"]
-    pub fn id(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
+    pub fn id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `kms_key_id` after provisioning.\n"]
-    pub fn kms_key_id(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.kms_key_id", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `kms_key_id` after provisioning.\n"]
+    pub fn kms_key_id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.kms_key_id", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `security_group_id_for_domain_boundary` after provisioning.\n"]
-    pub fn security_group_id_for_domain_boundary(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.security_group_id_for_domain_boundary", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `security_group_id_for_domain_boundary` after provisioning.\n"]
+    pub fn security_group_id_for_domain_boundary(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(
+            self.shared().clone(),
+            format!("{}.security_group_id_for_domain_boundary", self.extract_ref()),
+        )
     }
 
-    #[doc= "Get a reference to the value of field `single_sign_on_managed_application_instance_id` after provisioning.\n"]
-    pub fn single_sign_on_managed_application_instance_id(&self) -> PrimExpr<String> {
-        PrimExpr::new(
+    #[doc =
+        "Get a reference to the value of field `single_sign_on_managed_application_instance_id` after provisioning.\n"]
+    pub fn single_sign_on_managed_application_instance_id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(
             self.shared().clone(),
             format!("{}.single_sign_on_managed_application_instance_id", self.extract_ref()),
         )
     }
 
-    #[doc= "Get a reference to the value of field `subnet_ids` after provisioning.\n"]
-    pub fn subnet_ids(&self) -> SetRef<PrimExpr<String>> {
-        SetRef::new(self.shared().clone(), format!("{}.subnet_ids", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `subnet_ids` after provisioning.\n"]
+    pub fn subnet_ids(&self) -> terrars::SetRef<terrars::PrimExpr<std::string::String>> {
+        terrars::SetRef::new(self.shared().clone(), format!("{}.subnet_ids", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `tags` after provisioning.\n"]
-    pub fn tags(&self) -> RecRef<PrimExpr<String>> {
-        RecRef::new(self.shared().clone(), format!("{}.tags", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `tags` after provisioning.\n"]
+    pub fn tags(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
+        terrars::RecRef::new(self.shared().clone(), format!("{}.tags", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `tags_all` after provisioning.\n"]
-    pub fn tags_all(&self) -> RecRef<PrimExpr<String>> {
-        RecRef::new(self.shared().clone(), format!("{}.tags_all", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `tags_all` after provisioning.\n"]
+    pub fn tags_all(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
+        terrars::RecRef::new(self.shared().clone(), format!("{}.tags_all", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `url` after provisioning.\n"]
-    pub fn url(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.url", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `url` after provisioning.\n"]
+    pub fn url(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.url", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `vpc_id` after provisioning.\n"]
-    pub fn vpc_id(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.vpc_id", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `vpc_id` after provisioning.\n"]
+    pub fn vpc_id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.vpc_id", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `default_space_settings` after provisioning.\n"]
-    pub fn default_space_settings(&self) -> ListRef<SagemakerDomainDefaultSpaceSettingsElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.default_space_settings", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `default_space_settings` after provisioning.\n"]
+    pub fn default_space_settings(&self) -> terrars::ListRef<SagemakerDomainDefaultSpaceSettingsElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.default_space_settings", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `default_user_settings` after provisioning.\n"]
-    pub fn default_user_settings(&self) -> ListRef<SagemakerDomainDefaultUserSettingsElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.default_user_settings", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `default_user_settings` after provisioning.\n"]
+    pub fn default_user_settings(&self) -> terrars::ListRef<SagemakerDomainDefaultUserSettingsElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.default_user_settings", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `domain_settings` after provisioning.\n"]
-    pub fn domain_settings(&self) -> ListRef<SagemakerDomainDomainSettingsElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.domain_settings", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `domain_settings` after provisioning.\n"]
+    pub fn domain_settings(&self) -> terrars::ListRef<SagemakerDomainDomainSettingsElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.domain_settings", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `retention_policy` after provisioning.\n"]
-    pub fn retention_policy(&self) -> ListRef<SagemakerDomainRetentionPolicyElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.retention_policy", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `retention_policy` after provisioning.\n"]
+    pub fn retention_policy(&self) -> terrars::ListRef<SagemakerDomainRetentionPolicyElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.retention_policy", self.extract_ref()))
     }
 }
 
-impl Referable for SagemakerDomain {
-    fn extract_ref(&self) -> String {
+impl terrars::Referable for SagemakerDomain {
+    fn extract_ref(&self) -> std::string::String {
         format!("{}.{}", self.0.extract_resource_type(), self.0.extract_tf_id())
     }
 }
 
-impl Resource for SagemakerDomain { }
+impl terrars::Resource for SagemakerDomain { }
 
-impl ToListMappable for SagemakerDomain {
-    type O = ListRef<SagemakerDomainRef>;
+impl terrars::ToListMappable for SagemakerDomain {
+    type O = terrars::ListRef<SagemakerDomainRef>;
 
-    fn do_map(self, base: String) -> Self::O {
-        self.0.data.borrow_mut().for_each = Some(format!("${{{}}}", base));
-        ListRef::new(self.0.shared.clone(), self.extract_ref())
+    fn do_map(self, base: std::string::String) -> Self::O {
+        self.0.data.borrow_mut().for_each = std::option::Option::Some(format!("${{{}}}", base));
+        terrars::ListRef::new(self.0.shared.clone(), self.extract_ref())
     }
 }
 
-impl Resource_ for SagemakerDomain_ {
-    fn extract_resource_type(&self) -> String {
+impl terrars::Resource_ for SagemakerDomain_ {
+    fn extract_resource_type(&self) -> std::string::String {
         "aws_sagemaker_domain".into()
     }
 
-    fn extract_tf_id(&self) -> String {
+    fn extract_tf_id(&self) -> std::string::String {
         self.tf_id.clone()
     }
 
@@ -333,27 +398,28 @@ impl Resource_ for SagemakerDomain_ {
 }
 
 pub struct BuildSagemakerDomain {
-    pub tf_id: String,
-    #[doc= ""]
-    pub auth_mode: PrimField<String>,
-    #[doc= ""]
-    pub domain_name: PrimField<String>,
-    #[doc= ""]
-    pub subnet_ids: SetField<PrimField<String>>,
-    #[doc= ""]
-    pub vpc_id: PrimField<String>,
+    pub tf_id: std::string::String,
+    #[doc = ""]
+    pub auth_mode: terrars::PrimField<std::string::String>,
+    #[doc = ""]
+    pub domain_name: terrars::PrimField<std::string::String>,
+    #[doc = ""]
+    pub subnet_ids: terrars::SetField<terrars::PrimField<std::string::String>>,
+    #[doc = ""]
+    pub vpc_id: terrars::PrimField<std::string::String>,
 }
 
 impl BuildSagemakerDomain {
-    pub fn build(self, stack: &mut Stack) -> SagemakerDomain {
-        let out = SagemakerDomain(Rc::new(SagemakerDomain_ {
+    pub fn build(self, stack: &mut terrars::Stack) -> SagemakerDomain {
+        let out = SagemakerDomain(std::rc::Rc::new(SagemakerDomain_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: RefCell::new(SagemakerDomainData {
+            data: std::cell::RefCell::new(SagemakerDomainData {
                 depends_on: core::default::Default::default(),
-                provider: None,
+                provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
-                for_each: None,
+                for_each: std::option::Option::None,
+                provisioner: core::default::Default::default(),
                 app_network_access_type: core::default::Default::default(),
                 app_security_group_management: core::default::Default::default(),
                 auth_mode: self.auth_mode,
@@ -368,7 +434,7 @@ impl BuildSagemakerDomain {
                 default_user_settings: core::default::Default::default(),
                 domain_settings: core::default::Default::default(),
                 retention_policy: core::default::Default::default(),
-                dynamic: Default::default(),
+                dynamic: core::default::Default::default(),
             }),
         }));
         stack.add_resource(out.0.clone());
@@ -377,12 +443,12 @@ impl BuildSagemakerDomain {
 }
 
 pub struct SagemakerDomainRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for SagemakerDomainRef {
-    fn new(shared: StackShared, base: String) -> Self {
+impl terrars::Ref for SagemakerDomainRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> Self {
         Self {
             shared: shared,
             base: base,
@@ -391,125 +457,133 @@ impl Ref for SagemakerDomainRef {
 }
 
 impl SagemakerDomainRef {
-    fn extract_ref(&self) -> String {
+    fn extract_ref(&self) -> std::string::String {
         self.base.clone()
     }
 
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `app_network_access_type` after provisioning.\n"]
-    pub fn app_network_access_type(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.app_network_access_type", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `app_network_access_type` after provisioning.\n"]
+    pub fn app_network_access_type(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.app_network_access_type", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `app_security_group_management` after provisioning.\n"]
-    pub fn app_security_group_management(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.app_security_group_management", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `app_security_group_management` after provisioning.\n"]
+    pub fn app_security_group_management(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(
+            self.shared().clone(),
+            format!("{}.app_security_group_management", self.extract_ref()),
+        )
     }
 
-    #[doc= "Get a reference to the value of field `arn` after provisioning.\n"]
-    pub fn arn(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.arn", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `arn` after provisioning.\n"]
+    pub fn arn(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.arn", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `auth_mode` after provisioning.\n"]
-    pub fn auth_mode(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.auth_mode", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `auth_mode` after provisioning.\n"]
+    pub fn auth_mode(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.auth_mode", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `domain_name` after provisioning.\n"]
-    pub fn domain_name(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.domain_name", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `domain_name` after provisioning.\n"]
+    pub fn domain_name(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.domain_name", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `home_efs_file_system_id` after provisioning.\n"]
-    pub fn home_efs_file_system_id(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.home_efs_file_system_id", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `home_efs_file_system_id` after provisioning.\n"]
+    pub fn home_efs_file_system_id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.home_efs_file_system_id", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `id` after provisioning.\n"]
-    pub fn id(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
+    pub fn id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `kms_key_id` after provisioning.\n"]
-    pub fn kms_key_id(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.kms_key_id", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `kms_key_id` after provisioning.\n"]
+    pub fn kms_key_id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.kms_key_id", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `security_group_id_for_domain_boundary` after provisioning.\n"]
-    pub fn security_group_id_for_domain_boundary(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.security_group_id_for_domain_boundary", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `security_group_id_for_domain_boundary` after provisioning.\n"]
+    pub fn security_group_id_for_domain_boundary(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(
+            self.shared().clone(),
+            format!("{}.security_group_id_for_domain_boundary", self.extract_ref()),
+        )
     }
 
-    #[doc= "Get a reference to the value of field `single_sign_on_managed_application_instance_id` after provisioning.\n"]
-    pub fn single_sign_on_managed_application_instance_id(&self) -> PrimExpr<String> {
-        PrimExpr::new(
+    #[doc =
+        "Get a reference to the value of field `single_sign_on_managed_application_instance_id` after provisioning.\n"]
+    pub fn single_sign_on_managed_application_instance_id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(
             self.shared().clone(),
             format!("{}.single_sign_on_managed_application_instance_id", self.extract_ref()),
         )
     }
 
-    #[doc= "Get a reference to the value of field `subnet_ids` after provisioning.\n"]
-    pub fn subnet_ids(&self) -> SetRef<PrimExpr<String>> {
-        SetRef::new(self.shared().clone(), format!("{}.subnet_ids", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `subnet_ids` after provisioning.\n"]
+    pub fn subnet_ids(&self) -> terrars::SetRef<terrars::PrimExpr<std::string::String>> {
+        terrars::SetRef::new(self.shared().clone(), format!("{}.subnet_ids", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `tags` after provisioning.\n"]
-    pub fn tags(&self) -> RecRef<PrimExpr<String>> {
-        RecRef::new(self.shared().clone(), format!("{}.tags", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `tags` after provisioning.\n"]
+    pub fn tags(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
+        terrars::RecRef::new(self.shared().clone(), format!("{}.tags", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `tags_all` after provisioning.\n"]
-    pub fn tags_all(&self) -> RecRef<PrimExpr<String>> {
-        RecRef::new(self.shared().clone(), format!("{}.tags_all", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `tags_all` after provisioning.\n"]
+    pub fn tags_all(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
+        terrars::RecRef::new(self.shared().clone(), format!("{}.tags_all", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `url` after provisioning.\n"]
-    pub fn url(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.url", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `url` after provisioning.\n"]
+    pub fn url(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.url", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `vpc_id` after provisioning.\n"]
-    pub fn vpc_id(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.vpc_id", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `vpc_id` after provisioning.\n"]
+    pub fn vpc_id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.vpc_id", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `default_space_settings` after provisioning.\n"]
-    pub fn default_space_settings(&self) -> ListRef<SagemakerDomainDefaultSpaceSettingsElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.default_space_settings", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `default_space_settings` after provisioning.\n"]
+    pub fn default_space_settings(&self) -> terrars::ListRef<SagemakerDomainDefaultSpaceSettingsElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.default_space_settings", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `default_user_settings` after provisioning.\n"]
-    pub fn default_user_settings(&self) -> ListRef<SagemakerDomainDefaultUserSettingsElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.default_user_settings", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `default_user_settings` after provisioning.\n"]
+    pub fn default_user_settings(&self) -> terrars::ListRef<SagemakerDomainDefaultUserSettingsElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.default_user_settings", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `domain_settings` after provisioning.\n"]
-    pub fn domain_settings(&self) -> ListRef<SagemakerDomainDomainSettingsElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.domain_settings", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `domain_settings` after provisioning.\n"]
+    pub fn domain_settings(&self) -> terrars::ListRef<SagemakerDomainDomainSettingsElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.domain_settings", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `retention_policy` after provisioning.\n"]
-    pub fn retention_policy(&self) -> ListRef<SagemakerDomainRetentionPolicyElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.retention_policy", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `retention_policy` after provisioning.\n"]
+    pub fn retention_policy(&self) -> terrars::ListRef<SagemakerDomainRetentionPolicyElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.retention_policy", self.extract_ref()))
     }
 }
 
 #[derive(Serialize)]
 pub struct SagemakerDomainDefaultSpaceSettingsElJupyterServerAppSettingsElCodeRepositoryEl {
-    repository_url: PrimField<String>,
+    repository_url: terrars::PrimField<std::string::String>,
 }
 
 impl SagemakerDomainDefaultSpaceSettingsElJupyterServerAppSettingsElCodeRepositoryEl { }
 
-impl ToListMappable for SagemakerDomainDefaultSpaceSettingsElJupyterServerAppSettingsElCodeRepositoryEl {
-    type O = BlockAssignable<SagemakerDomainDefaultSpaceSettingsElJupyterServerAppSettingsElCodeRepositoryEl>;
+impl terrars::ToListMappable for SagemakerDomainDefaultSpaceSettingsElJupyterServerAppSettingsElCodeRepositoryEl {
+    type O =
+        terrars::BlockAssignable<SagemakerDomainDefaultSpaceSettingsElJupyterServerAppSettingsElCodeRepositoryEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -518,8 +592,8 @@ impl ToListMappable for SagemakerDomainDefaultSpaceSettingsElJupyterServerAppSet
 }
 
 pub struct BuildSagemakerDomainDefaultSpaceSettingsElJupyterServerAppSettingsElCodeRepositoryEl {
-    #[doc= ""]
-    pub repository_url: PrimField<String>,
+    #[doc = ""]
+    pub repository_url: terrars::PrimField<std::string::String>,
 }
 
 impl BuildSagemakerDomainDefaultSpaceSettingsElJupyterServerAppSettingsElCodeRepositoryEl {
@@ -531,14 +605,14 @@ impl BuildSagemakerDomainDefaultSpaceSettingsElJupyterServerAppSettingsElCodeRep
 }
 
 pub struct SagemakerDomainDefaultSpaceSettingsElJupyterServerAppSettingsElCodeRepositoryElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for SagemakerDomainDefaultSpaceSettingsElJupyterServerAppSettingsElCodeRepositoryElRef {
+impl terrars::Ref for SagemakerDomainDefaultSpaceSettingsElJupyterServerAppSettingsElCodeRepositoryElRef {
     fn new(
-        shared: StackShared,
-        base: String,
+        shared: terrars::StackShared,
+        base: std::string::String,
     ) -> SagemakerDomainDefaultSpaceSettingsElJupyterServerAppSettingsElCodeRepositoryElRef {
         SagemakerDomainDefaultSpaceSettingsElJupyterServerAppSettingsElCodeRepositoryElRef {
             shared: shared,
@@ -548,59 +622,70 @@ impl Ref for SagemakerDomainDefaultSpaceSettingsElJupyterServerAppSettingsElCode
 }
 
 impl SagemakerDomainDefaultSpaceSettingsElJupyterServerAppSettingsElCodeRepositoryElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `repository_url` after provisioning.\n"]
-    pub fn repository_url(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.repository_url", self.base))
+    #[doc = "Get a reference to the value of field `repository_url` after provisioning.\n"]
+    pub fn repository_url(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.repository_url", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct SagemakerDomainDefaultSpaceSettingsElJupyterServerAppSettingsElDefaultResourceSpecEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    instance_type: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    lifecycle_config_arn: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    sagemaker_image_arn: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    sagemaker_image_version_arn: Option<PrimField<String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    instance_type: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    lifecycle_config_arn: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    sagemaker_image_arn: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    sagemaker_image_version_arn: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
 impl SagemakerDomainDefaultSpaceSettingsElJupyterServerAppSettingsElDefaultResourceSpecEl {
-    #[doc= "Set the field `instance_type`.\n"]
-    pub fn set_instance_type(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.instance_type = Some(v.into());
+    #[doc = "Set the field `instance_type`.\n"]
+    pub fn set_instance_type(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.instance_type = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `lifecycle_config_arn`.\n"]
-    pub fn set_lifecycle_config_arn(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.lifecycle_config_arn = Some(v.into());
+    #[doc = "Set the field `lifecycle_config_arn`.\n"]
+    pub fn set_lifecycle_config_arn(
+        mut self,
+        v: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.lifecycle_config_arn = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `sagemaker_image_arn`.\n"]
-    pub fn set_sagemaker_image_arn(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.sagemaker_image_arn = Some(v.into());
+    #[doc = "Set the field `sagemaker_image_arn`.\n"]
+    pub fn set_sagemaker_image_arn(
+        mut self,
+        v: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.sagemaker_image_arn = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `sagemaker_image_version_arn`.\n"]
-    pub fn set_sagemaker_image_version_arn(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.sagemaker_image_version_arn = Some(v.into());
+    #[doc = "Set the field `sagemaker_image_version_arn`.\n"]
+    pub fn set_sagemaker_image_version_arn(
+        mut self,
+        v: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.sagemaker_image_version_arn = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl ToListMappable for SagemakerDomainDefaultSpaceSettingsElJupyterServerAppSettingsElDefaultResourceSpecEl {
-    type O = BlockAssignable<SagemakerDomainDefaultSpaceSettingsElJupyterServerAppSettingsElDefaultResourceSpecEl>;
+impl terrars::ToListMappable for SagemakerDomainDefaultSpaceSettingsElJupyterServerAppSettingsElDefaultResourceSpecEl {
+    type O =
+        terrars
+        ::BlockAssignable<SagemakerDomainDefaultSpaceSettingsElJupyterServerAppSettingsElDefaultResourceSpecEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -622,14 +707,14 @@ impl BuildSagemakerDomainDefaultSpaceSettingsElJupyterServerAppSettingsElDefault
 }
 
 pub struct SagemakerDomainDefaultSpaceSettingsElJupyterServerAppSettingsElDefaultResourceSpecElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for SagemakerDomainDefaultSpaceSettingsElJupyterServerAppSettingsElDefaultResourceSpecElRef {
+impl terrars::Ref for SagemakerDomainDefaultSpaceSettingsElJupyterServerAppSettingsElDefaultResourceSpecElRef {
     fn new(
-        shared: StackShared,
-        base: String,
+        shared: terrars::StackShared,
+        base: std::string::String,
     ) -> SagemakerDomainDefaultSpaceSettingsElJupyterServerAppSettingsElDefaultResourceSpecElRef {
         SagemakerDomainDefaultSpaceSettingsElJupyterServerAppSettingsElDefaultResourceSpecElRef {
             shared: shared,
@@ -639,113 +724,126 @@ impl Ref for SagemakerDomainDefaultSpaceSettingsElJupyterServerAppSettingsElDefa
 }
 
 impl SagemakerDomainDefaultSpaceSettingsElJupyterServerAppSettingsElDefaultResourceSpecElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `instance_type` after provisioning.\n"]
-    pub fn instance_type(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.instance_type", self.base))
+    #[doc = "Get a reference to the value of field `instance_type` after provisioning.\n"]
+    pub fn instance_type(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.instance_type", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `lifecycle_config_arn` after provisioning.\n"]
-    pub fn lifecycle_config_arn(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.lifecycle_config_arn", self.base))
+    #[doc = "Get a reference to the value of field `lifecycle_config_arn` after provisioning.\n"]
+    pub fn lifecycle_config_arn(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.lifecycle_config_arn", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `sagemaker_image_arn` after provisioning.\n"]
-    pub fn sagemaker_image_arn(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.sagemaker_image_arn", self.base))
+    #[doc = "Get a reference to the value of field `sagemaker_image_arn` after provisioning.\n"]
+    pub fn sagemaker_image_arn(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.sagemaker_image_arn", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `sagemaker_image_version_arn` after provisioning.\n"]
-    pub fn sagemaker_image_version_arn(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.sagemaker_image_version_arn", self.base))
+    #[doc = "Get a reference to the value of field `sagemaker_image_version_arn` after provisioning.\n"]
+    pub fn sagemaker_image_version_arn(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.sagemaker_image_version_arn", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
 struct SagemakerDomainDefaultSpaceSettingsElJupyterServerAppSettingsElDynamic {
-    code_repository: Option<
-        DynamicBlock<SagemakerDomainDefaultSpaceSettingsElJupyterServerAppSettingsElCodeRepositoryEl>,
-    >,
-    default_resource_spec: Option<
-        DynamicBlock<SagemakerDomainDefaultSpaceSettingsElJupyterServerAppSettingsElDefaultResourceSpecEl>,
+    code_repository: std
+    ::option
+    ::Option<terrars::DynamicBlock<SagemakerDomainDefaultSpaceSettingsElJupyterServerAppSettingsElCodeRepositoryEl>>,
+    default_resource_spec: std
+    ::option
+    ::Option<
+        terrars::DynamicBlock<SagemakerDomainDefaultSpaceSettingsElJupyterServerAppSettingsElDefaultResourceSpecEl>,
     >,
 }
 
 #[derive(Serialize)]
 pub struct SagemakerDomainDefaultSpaceSettingsElJupyterServerAppSettingsEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    lifecycle_config_arns: Option<SetField<PrimField<String>>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    code_repository: Option<Vec<SagemakerDomainDefaultSpaceSettingsElJupyterServerAppSettingsElCodeRepositoryEl>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    default_resource_spec: Option<
-        Vec<SagemakerDomainDefaultSpaceSettingsElJupyterServerAppSettingsElDefaultResourceSpecEl>,
-    >,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    lifecycle_config_arns: std::option::Option<terrars::SetField<terrars::PrimField<std::string::String>>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    code_repository: std
+    ::option
+    ::Option<std::vec::Vec<SagemakerDomainDefaultSpaceSettingsElJupyterServerAppSettingsElCodeRepositoryEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    default_resource_spec: std
+    ::option
+    ::Option<std::vec::Vec<SagemakerDomainDefaultSpaceSettingsElJupyterServerAppSettingsElDefaultResourceSpecEl>>,
     dynamic: SagemakerDomainDefaultSpaceSettingsElJupyterServerAppSettingsElDynamic,
 }
 
 impl SagemakerDomainDefaultSpaceSettingsElJupyterServerAppSettingsEl {
-    #[doc= "Set the field `lifecycle_config_arns`.\n"]
-    pub fn set_lifecycle_config_arns(mut self, v: impl Into<SetField<PrimField<String>>>) -> Self {
-        self.lifecycle_config_arns = Some(v.into());
+    #[doc = "Set the field `lifecycle_config_arns`.\n"]
+    pub fn set_lifecycle_config_arns(
+        mut self,
+        v: impl std::convert::Into<terrars::SetField<terrars::PrimField<std::string::String>>>,
+    ) -> Self {
+        self.lifecycle_config_arns = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `code_repository`.\n"]
+    #[doc = "Set the field `code_repository`.\n"]
     pub fn set_code_repository(
         mut self,
         v:
             impl
 
-                    Into<
-                        BlockAssignable<
+                    std
+                    ::convert
+                    ::Into<
+                        terrars
+                        ::BlockAssignable<
                             SagemakerDomainDefaultSpaceSettingsElJupyterServerAppSettingsElCodeRepositoryEl,
                         >,
                     >,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.code_repository = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.code_repository = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.code_repository = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.code_repository = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Set the field `default_resource_spec`.\n"]
+    #[doc = "Set the field `default_resource_spec`.\n"]
     pub fn set_default_resource_spec(
         mut self,
         v:
             impl
 
-                    Into<
-                        BlockAssignable<
+                    std
+                    ::convert
+                    ::Into<
+                        terrars
+                        ::BlockAssignable<
                             SagemakerDomainDefaultSpaceSettingsElJupyterServerAppSettingsElDefaultResourceSpecEl,
                         >,
                     >,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.default_resource_spec = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.default_resource_spec = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.default_resource_spec = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.default_resource_spec = std::option::Option::Some(d);
             },
         }
         self
     }
 }
 
-impl ToListMappable for SagemakerDomainDefaultSpaceSettingsElJupyterServerAppSettingsEl {
-    type O = BlockAssignable<SagemakerDomainDefaultSpaceSettingsElJupyterServerAppSettingsEl>;
+impl terrars::ToListMappable for SagemakerDomainDefaultSpaceSettingsElJupyterServerAppSettingsEl {
+    type O = terrars::BlockAssignable<SagemakerDomainDefaultSpaceSettingsElJupyterServerAppSettingsEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -761,18 +859,21 @@ impl BuildSagemakerDomainDefaultSpaceSettingsElJupyterServerAppSettingsEl {
             lifecycle_config_arns: core::default::Default::default(),
             code_repository: core::default::Default::default(),
             default_resource_spec: core::default::Default::default(),
-            dynamic: Default::default(),
+            dynamic: core::default::Default::default(),
         }
     }
 }
 
 pub struct SagemakerDomainDefaultSpaceSettingsElJupyterServerAppSettingsElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for SagemakerDomainDefaultSpaceSettingsElJupyterServerAppSettingsElRef {
-    fn new(shared: StackShared, base: String) -> SagemakerDomainDefaultSpaceSettingsElJupyterServerAppSettingsElRef {
+impl terrars::Ref for SagemakerDomainDefaultSpaceSettingsElJupyterServerAppSettingsElRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> SagemakerDomainDefaultSpaceSettingsElJupyterServerAppSettingsElRef {
         SagemakerDomainDefaultSpaceSettingsElJupyterServerAppSettingsElRef {
             shared: shared,
             base: base.to_string(),
@@ -781,44 +882,44 @@ impl Ref for SagemakerDomainDefaultSpaceSettingsElJupyterServerAppSettingsElRef 
 }
 
 impl SagemakerDomainDefaultSpaceSettingsElJupyterServerAppSettingsElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `lifecycle_config_arns` after provisioning.\n"]
-    pub fn lifecycle_config_arns(&self) -> SetRef<PrimExpr<String>> {
-        SetRef::new(self.shared().clone(), format!("{}.lifecycle_config_arns", self.base))
+    #[doc = "Get a reference to the value of field `lifecycle_config_arns` after provisioning.\n"]
+    pub fn lifecycle_config_arns(&self) -> terrars::SetRef<terrars::PrimExpr<std::string::String>> {
+        terrars::SetRef::new(self.shared().clone(), format!("{}.lifecycle_config_arns", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `default_resource_spec` after provisioning.\n"]
+    #[doc = "Get a reference to the value of field `default_resource_spec` after provisioning.\n"]
     pub fn default_resource_spec(
         &self,
-    ) -> ListRef<SagemakerDomainDefaultSpaceSettingsElJupyterServerAppSettingsElDefaultResourceSpecElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.default_resource_spec", self.base))
+    ) -> terrars::ListRef<SagemakerDomainDefaultSpaceSettingsElJupyterServerAppSettingsElDefaultResourceSpecElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.default_resource_spec", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct SagemakerDomainDefaultSpaceSettingsElKernelGatewayAppSettingsElCustomImageEl {
-    app_image_config_name: PrimField<String>,
-    image_name: PrimField<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    image_version_number: Option<PrimField<f64>>,
+    app_image_config_name: terrars::PrimField<std::string::String>,
+    image_name: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    image_version_number: std::option::Option<terrars::PrimField<f64>>,
 }
 
 impl SagemakerDomainDefaultSpaceSettingsElKernelGatewayAppSettingsElCustomImageEl {
-    #[doc= "Set the field `image_version_number`.\n"]
-    pub fn set_image_version_number(mut self, v: impl Into<PrimField<f64>>) -> Self {
-        self.image_version_number = Some(v.into());
+    #[doc = "Set the field `image_version_number`.\n"]
+    pub fn set_image_version_number(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.image_version_number = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl ToListMappable for SagemakerDomainDefaultSpaceSettingsElKernelGatewayAppSettingsElCustomImageEl {
-    type O = BlockAssignable<SagemakerDomainDefaultSpaceSettingsElKernelGatewayAppSettingsElCustomImageEl>;
+impl terrars::ToListMappable for SagemakerDomainDefaultSpaceSettingsElKernelGatewayAppSettingsElCustomImageEl {
+    type O = terrars::BlockAssignable<SagemakerDomainDefaultSpaceSettingsElKernelGatewayAppSettingsElCustomImageEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -827,10 +928,10 @@ impl ToListMappable for SagemakerDomainDefaultSpaceSettingsElKernelGatewayAppSet
 }
 
 pub struct BuildSagemakerDomainDefaultSpaceSettingsElKernelGatewayAppSettingsElCustomImageEl {
-    #[doc= ""]
-    pub app_image_config_name: PrimField<String>,
-    #[doc= ""]
-    pub image_name: PrimField<String>,
+    #[doc = ""]
+    pub app_image_config_name: terrars::PrimField<std::string::String>,
+    #[doc = ""]
+    pub image_name: terrars::PrimField<std::string::String>,
 }
 
 impl BuildSagemakerDomainDefaultSpaceSettingsElKernelGatewayAppSettingsElCustomImageEl {
@@ -844,14 +945,14 @@ impl BuildSagemakerDomainDefaultSpaceSettingsElKernelGatewayAppSettingsElCustomI
 }
 
 pub struct SagemakerDomainDefaultSpaceSettingsElKernelGatewayAppSettingsElCustomImageElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for SagemakerDomainDefaultSpaceSettingsElKernelGatewayAppSettingsElCustomImageElRef {
+impl terrars::Ref for SagemakerDomainDefaultSpaceSettingsElKernelGatewayAppSettingsElCustomImageElRef {
     fn new(
-        shared: StackShared,
-        base: String,
+        shared: terrars::StackShared,
+        base: std::string::String,
     ) -> SagemakerDomainDefaultSpaceSettingsElKernelGatewayAppSettingsElCustomImageElRef {
         SagemakerDomainDefaultSpaceSettingsElKernelGatewayAppSettingsElCustomImageElRef {
             shared: shared,
@@ -861,69 +962,80 @@ impl Ref for SagemakerDomainDefaultSpaceSettingsElKernelGatewayAppSettingsElCust
 }
 
 impl SagemakerDomainDefaultSpaceSettingsElKernelGatewayAppSettingsElCustomImageElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `app_image_config_name` after provisioning.\n"]
-    pub fn app_image_config_name(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.app_image_config_name", self.base))
+    #[doc = "Get a reference to the value of field `app_image_config_name` after provisioning.\n"]
+    pub fn app_image_config_name(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.app_image_config_name", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `image_name` after provisioning.\n"]
-    pub fn image_name(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.image_name", self.base))
+    #[doc = "Get a reference to the value of field `image_name` after provisioning.\n"]
+    pub fn image_name(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.image_name", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `image_version_number` after provisioning.\n"]
-    pub fn image_version_number(&self) -> PrimExpr<f64> {
-        PrimExpr::new(self.shared().clone(), format!("{}.image_version_number", self.base))
+    #[doc = "Get a reference to the value of field `image_version_number` after provisioning.\n"]
+    pub fn image_version_number(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.image_version_number", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct SagemakerDomainDefaultSpaceSettingsElKernelGatewayAppSettingsElDefaultResourceSpecEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    instance_type: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    lifecycle_config_arn: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    sagemaker_image_arn: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    sagemaker_image_version_arn: Option<PrimField<String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    instance_type: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    lifecycle_config_arn: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    sagemaker_image_arn: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    sagemaker_image_version_arn: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
 impl SagemakerDomainDefaultSpaceSettingsElKernelGatewayAppSettingsElDefaultResourceSpecEl {
-    #[doc= "Set the field `instance_type`.\n"]
-    pub fn set_instance_type(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.instance_type = Some(v.into());
+    #[doc = "Set the field `instance_type`.\n"]
+    pub fn set_instance_type(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.instance_type = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `lifecycle_config_arn`.\n"]
-    pub fn set_lifecycle_config_arn(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.lifecycle_config_arn = Some(v.into());
+    #[doc = "Set the field `lifecycle_config_arn`.\n"]
+    pub fn set_lifecycle_config_arn(
+        mut self,
+        v: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.lifecycle_config_arn = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `sagemaker_image_arn`.\n"]
-    pub fn set_sagemaker_image_arn(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.sagemaker_image_arn = Some(v.into());
+    #[doc = "Set the field `sagemaker_image_arn`.\n"]
+    pub fn set_sagemaker_image_arn(
+        mut self,
+        v: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.sagemaker_image_arn = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `sagemaker_image_version_arn`.\n"]
-    pub fn set_sagemaker_image_version_arn(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.sagemaker_image_version_arn = Some(v.into());
+    #[doc = "Set the field `sagemaker_image_version_arn`.\n"]
+    pub fn set_sagemaker_image_version_arn(
+        mut self,
+        v: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.sagemaker_image_version_arn = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl ToListMappable for SagemakerDomainDefaultSpaceSettingsElKernelGatewayAppSettingsElDefaultResourceSpecEl {
-    type O = BlockAssignable<SagemakerDomainDefaultSpaceSettingsElKernelGatewayAppSettingsElDefaultResourceSpecEl>;
+impl terrars::ToListMappable for SagemakerDomainDefaultSpaceSettingsElKernelGatewayAppSettingsElDefaultResourceSpecEl {
+    type O =
+        terrars
+        ::BlockAssignable<SagemakerDomainDefaultSpaceSettingsElKernelGatewayAppSettingsElDefaultResourceSpecEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -945,14 +1057,14 @@ impl BuildSagemakerDomainDefaultSpaceSettingsElKernelGatewayAppSettingsElDefault
 }
 
 pub struct SagemakerDomainDefaultSpaceSettingsElKernelGatewayAppSettingsElDefaultResourceSpecElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for SagemakerDomainDefaultSpaceSettingsElKernelGatewayAppSettingsElDefaultResourceSpecElRef {
+impl terrars::Ref for SagemakerDomainDefaultSpaceSettingsElKernelGatewayAppSettingsElDefaultResourceSpecElRef {
     fn new(
-        shared: StackShared,
-        base: String,
+        shared: terrars::StackShared,
+        base: std::string::String,
     ) -> SagemakerDomainDefaultSpaceSettingsElKernelGatewayAppSettingsElDefaultResourceSpecElRef {
         SagemakerDomainDefaultSpaceSettingsElKernelGatewayAppSettingsElDefaultResourceSpecElRef {
             shared: shared,
@@ -962,104 +1074,126 @@ impl Ref for SagemakerDomainDefaultSpaceSettingsElKernelGatewayAppSettingsElDefa
 }
 
 impl SagemakerDomainDefaultSpaceSettingsElKernelGatewayAppSettingsElDefaultResourceSpecElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `instance_type` after provisioning.\n"]
-    pub fn instance_type(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.instance_type", self.base))
+    #[doc = "Get a reference to the value of field `instance_type` after provisioning.\n"]
+    pub fn instance_type(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.instance_type", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `lifecycle_config_arn` after provisioning.\n"]
-    pub fn lifecycle_config_arn(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.lifecycle_config_arn", self.base))
+    #[doc = "Get a reference to the value of field `lifecycle_config_arn` after provisioning.\n"]
+    pub fn lifecycle_config_arn(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.lifecycle_config_arn", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `sagemaker_image_arn` after provisioning.\n"]
-    pub fn sagemaker_image_arn(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.sagemaker_image_arn", self.base))
+    #[doc = "Get a reference to the value of field `sagemaker_image_arn` after provisioning.\n"]
+    pub fn sagemaker_image_arn(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.sagemaker_image_arn", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `sagemaker_image_version_arn` after provisioning.\n"]
-    pub fn sagemaker_image_version_arn(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.sagemaker_image_version_arn", self.base))
+    #[doc = "Get a reference to the value of field `sagemaker_image_version_arn` after provisioning.\n"]
+    pub fn sagemaker_image_version_arn(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.sagemaker_image_version_arn", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
 struct SagemakerDomainDefaultSpaceSettingsElKernelGatewayAppSettingsElDynamic {
-    custom_image: Option<DynamicBlock<SagemakerDomainDefaultSpaceSettingsElKernelGatewayAppSettingsElCustomImageEl>>,
-    default_resource_spec: Option<
-        DynamicBlock<SagemakerDomainDefaultSpaceSettingsElKernelGatewayAppSettingsElDefaultResourceSpecEl>,
+    custom_image: std
+    ::option
+    ::Option<terrars::DynamicBlock<SagemakerDomainDefaultSpaceSettingsElKernelGatewayAppSettingsElCustomImageEl>>,
+    default_resource_spec: std
+    ::option
+    ::Option<
+        terrars::DynamicBlock<SagemakerDomainDefaultSpaceSettingsElKernelGatewayAppSettingsElDefaultResourceSpecEl>,
     >,
 }
 
 #[derive(Serialize)]
 pub struct SagemakerDomainDefaultSpaceSettingsElKernelGatewayAppSettingsEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    lifecycle_config_arns: Option<SetField<PrimField<String>>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    custom_image: Option<Vec<SagemakerDomainDefaultSpaceSettingsElKernelGatewayAppSettingsElCustomImageEl>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    default_resource_spec: Option<
-        Vec<SagemakerDomainDefaultSpaceSettingsElKernelGatewayAppSettingsElDefaultResourceSpecEl>,
-    >,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    lifecycle_config_arns: std::option::Option<terrars::SetField<terrars::PrimField<std::string::String>>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    custom_image: std
+    ::option
+    ::Option<std::vec::Vec<SagemakerDomainDefaultSpaceSettingsElKernelGatewayAppSettingsElCustomImageEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    default_resource_spec: std
+    ::option
+    ::Option<std::vec::Vec<SagemakerDomainDefaultSpaceSettingsElKernelGatewayAppSettingsElDefaultResourceSpecEl>>,
     dynamic: SagemakerDomainDefaultSpaceSettingsElKernelGatewayAppSettingsElDynamic,
 }
 
 impl SagemakerDomainDefaultSpaceSettingsElKernelGatewayAppSettingsEl {
-    #[doc= "Set the field `lifecycle_config_arns`.\n"]
-    pub fn set_lifecycle_config_arns(mut self, v: impl Into<SetField<PrimField<String>>>) -> Self {
-        self.lifecycle_config_arns = Some(v.into());
+    #[doc = "Set the field `lifecycle_config_arns`.\n"]
+    pub fn set_lifecycle_config_arns(
+        mut self,
+        v: impl std::convert::Into<terrars::SetField<terrars::PrimField<std::string::String>>>,
+    ) -> Self {
+        self.lifecycle_config_arns = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `custom_image`.\n"]
+    #[doc = "Set the field `custom_image`.\n"]
     pub fn set_custom_image(
         mut self,
-        v: impl Into<BlockAssignable<SagemakerDomainDefaultSpaceSettingsElKernelGatewayAppSettingsElCustomImageEl>>,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<
+                        terrars
+                        ::BlockAssignable<
+                            SagemakerDomainDefaultSpaceSettingsElKernelGatewayAppSettingsElCustomImageEl,
+                        >,
+                    >,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.custom_image = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.custom_image = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.custom_image = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.custom_image = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Set the field `default_resource_spec`.\n"]
+    #[doc = "Set the field `default_resource_spec`.\n"]
     pub fn set_default_resource_spec(
         mut self,
         v:
             impl
 
-                    Into<
-                        BlockAssignable<
+                    std
+                    ::convert
+                    ::Into<
+                        terrars
+                        ::BlockAssignable<
                             SagemakerDomainDefaultSpaceSettingsElKernelGatewayAppSettingsElDefaultResourceSpecEl,
                         >,
                     >,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.default_resource_spec = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.default_resource_spec = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.default_resource_spec = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.default_resource_spec = std::option::Option::Some(d);
             },
         }
         self
     }
 }
 
-impl ToListMappable for SagemakerDomainDefaultSpaceSettingsElKernelGatewayAppSettingsEl {
-    type O = BlockAssignable<SagemakerDomainDefaultSpaceSettingsElKernelGatewayAppSettingsEl>;
+impl terrars::ToListMappable for SagemakerDomainDefaultSpaceSettingsElKernelGatewayAppSettingsEl {
+    type O = terrars::BlockAssignable<SagemakerDomainDefaultSpaceSettingsElKernelGatewayAppSettingsEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -1075,18 +1209,21 @@ impl BuildSagemakerDomainDefaultSpaceSettingsElKernelGatewayAppSettingsEl {
             lifecycle_config_arns: core::default::Default::default(),
             custom_image: core::default::Default::default(),
             default_resource_spec: core::default::Default::default(),
-            dynamic: Default::default(),
+            dynamic: core::default::Default::default(),
         }
     }
 }
 
 pub struct SagemakerDomainDefaultSpaceSettingsElKernelGatewayAppSettingsElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for SagemakerDomainDefaultSpaceSettingsElKernelGatewayAppSettingsElRef {
-    fn new(shared: StackShared, base: String) -> SagemakerDomainDefaultSpaceSettingsElKernelGatewayAppSettingsElRef {
+impl terrars::Ref for SagemakerDomainDefaultSpaceSettingsElKernelGatewayAppSettingsElRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> SagemakerDomainDefaultSpaceSettingsElKernelGatewayAppSettingsElRef {
         SagemakerDomainDefaultSpaceSettingsElKernelGatewayAppSettingsElRef {
             shared: shared,
             base: base.to_string(),
@@ -1095,97 +1232,114 @@ impl Ref for SagemakerDomainDefaultSpaceSettingsElKernelGatewayAppSettingsElRef 
 }
 
 impl SagemakerDomainDefaultSpaceSettingsElKernelGatewayAppSettingsElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `lifecycle_config_arns` after provisioning.\n"]
-    pub fn lifecycle_config_arns(&self) -> SetRef<PrimExpr<String>> {
-        SetRef::new(self.shared().clone(), format!("{}.lifecycle_config_arns", self.base))
+    #[doc = "Get a reference to the value of field `lifecycle_config_arns` after provisioning.\n"]
+    pub fn lifecycle_config_arns(&self) -> terrars::SetRef<terrars::PrimExpr<std::string::String>> {
+        terrars::SetRef::new(self.shared().clone(), format!("{}.lifecycle_config_arns", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `custom_image` after provisioning.\n"]
+    #[doc = "Get a reference to the value of field `custom_image` after provisioning.\n"]
     pub fn custom_image(
         &self,
-    ) -> ListRef<SagemakerDomainDefaultSpaceSettingsElKernelGatewayAppSettingsElCustomImageElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.custom_image", self.base))
+    ) -> terrars::ListRef<SagemakerDomainDefaultSpaceSettingsElKernelGatewayAppSettingsElCustomImageElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.custom_image", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `default_resource_spec` after provisioning.\n"]
+    #[doc = "Get a reference to the value of field `default_resource_spec` after provisioning.\n"]
     pub fn default_resource_spec(
         &self,
-    ) -> ListRef<SagemakerDomainDefaultSpaceSettingsElKernelGatewayAppSettingsElDefaultResourceSpecElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.default_resource_spec", self.base))
+    ) -> terrars::ListRef<SagemakerDomainDefaultSpaceSettingsElKernelGatewayAppSettingsElDefaultResourceSpecElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.default_resource_spec", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
 struct SagemakerDomainDefaultSpaceSettingsElDynamic {
-    jupyter_server_app_settings: Option<
-        DynamicBlock<SagemakerDomainDefaultSpaceSettingsElJupyterServerAppSettingsEl>,
-    >,
-    kernel_gateway_app_settings: Option<
-        DynamicBlock<SagemakerDomainDefaultSpaceSettingsElKernelGatewayAppSettingsEl>,
-    >,
+    jupyter_server_app_settings: std
+    ::option
+    ::Option<terrars::DynamicBlock<SagemakerDomainDefaultSpaceSettingsElJupyterServerAppSettingsEl>>,
+    kernel_gateway_app_settings: std
+    ::option
+    ::Option<terrars::DynamicBlock<SagemakerDomainDefaultSpaceSettingsElKernelGatewayAppSettingsEl>>,
 }
 
 #[derive(Serialize)]
 pub struct SagemakerDomainDefaultSpaceSettingsEl {
-    execution_role: PrimField<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    security_groups: Option<SetField<PrimField<String>>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    jupyter_server_app_settings: Option<Vec<SagemakerDomainDefaultSpaceSettingsElJupyterServerAppSettingsEl>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    kernel_gateway_app_settings: Option<Vec<SagemakerDomainDefaultSpaceSettingsElKernelGatewayAppSettingsEl>>,
+    execution_role: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    security_groups: std::option::Option<terrars::SetField<terrars::PrimField<std::string::String>>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    jupyter_server_app_settings: std
+    ::option
+    ::Option<std::vec::Vec<SagemakerDomainDefaultSpaceSettingsElJupyterServerAppSettingsEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    kernel_gateway_app_settings: std
+    ::option
+    ::Option<std::vec::Vec<SagemakerDomainDefaultSpaceSettingsElKernelGatewayAppSettingsEl>>,
     dynamic: SagemakerDomainDefaultSpaceSettingsElDynamic,
 }
 
 impl SagemakerDomainDefaultSpaceSettingsEl {
-    #[doc= "Set the field `security_groups`.\n"]
-    pub fn set_security_groups(mut self, v: impl Into<SetField<PrimField<String>>>) -> Self {
-        self.security_groups = Some(v.into());
+    #[doc = "Set the field `security_groups`.\n"]
+    pub fn set_security_groups(
+        mut self,
+        v: impl std::convert::Into<terrars::SetField<terrars::PrimField<std::string::String>>>,
+    ) -> Self {
+        self.security_groups = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `jupyter_server_app_settings`.\n"]
+    #[doc = "Set the field `jupyter_server_app_settings`.\n"]
     pub fn set_jupyter_server_app_settings(
         mut self,
-        v: impl Into<BlockAssignable<SagemakerDomainDefaultSpaceSettingsElJupyterServerAppSettingsEl>>,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<terrars::BlockAssignable<SagemakerDomainDefaultSpaceSettingsElJupyterServerAppSettingsEl>>,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.jupyter_server_app_settings = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.jupyter_server_app_settings = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.jupyter_server_app_settings = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.jupyter_server_app_settings = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Set the field `kernel_gateway_app_settings`.\n"]
+    #[doc = "Set the field `kernel_gateway_app_settings`.\n"]
     pub fn set_kernel_gateway_app_settings(
         mut self,
-        v: impl Into<BlockAssignable<SagemakerDomainDefaultSpaceSettingsElKernelGatewayAppSettingsEl>>,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<terrars::BlockAssignable<SagemakerDomainDefaultSpaceSettingsElKernelGatewayAppSettingsEl>>,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.kernel_gateway_app_settings = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.kernel_gateway_app_settings = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.kernel_gateway_app_settings = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.kernel_gateway_app_settings = std::option::Option::Some(d);
             },
         }
         self
     }
 }
 
-impl ToListMappable for SagemakerDomainDefaultSpaceSettingsEl {
-    type O = BlockAssignable<SagemakerDomainDefaultSpaceSettingsEl>;
+impl terrars::ToListMappable for SagemakerDomainDefaultSpaceSettingsEl {
+    type O = terrars::BlockAssignable<SagemakerDomainDefaultSpaceSettingsEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -1194,8 +1348,8 @@ impl ToListMappable for SagemakerDomainDefaultSpaceSettingsEl {
 }
 
 pub struct BuildSagemakerDomainDefaultSpaceSettingsEl {
-    #[doc= ""]
-    pub execution_role: PrimField<String>,
+    #[doc = ""]
+    pub execution_role: terrars::PrimField<std::string::String>,
 }
 
 impl BuildSagemakerDomainDefaultSpaceSettingsEl {
@@ -1205,18 +1359,18 @@ impl BuildSagemakerDomainDefaultSpaceSettingsEl {
             security_groups: core::default::Default::default(),
             jupyter_server_app_settings: core::default::Default::default(),
             kernel_gateway_app_settings: core::default::Default::default(),
-            dynamic: Default::default(),
+            dynamic: core::default::Default::default(),
         }
     }
 }
 
 pub struct SagemakerDomainDefaultSpaceSettingsElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for SagemakerDomainDefaultSpaceSettingsElRef {
-    fn new(shared: StackShared, base: String) -> SagemakerDomainDefaultSpaceSettingsElRef {
+impl terrars::Ref for SagemakerDomainDefaultSpaceSettingsElRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> SagemakerDomainDefaultSpaceSettingsElRef {
         SagemakerDomainDefaultSpaceSettingsElRef {
             shared: shared,
             base: base.to_string(),
@@ -1225,62 +1379,68 @@ impl Ref for SagemakerDomainDefaultSpaceSettingsElRef {
 }
 
 impl SagemakerDomainDefaultSpaceSettingsElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `execution_role` after provisioning.\n"]
-    pub fn execution_role(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.execution_role", self.base))
+    #[doc = "Get a reference to the value of field `execution_role` after provisioning.\n"]
+    pub fn execution_role(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.execution_role", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `security_groups` after provisioning.\n"]
-    pub fn security_groups(&self) -> SetRef<PrimExpr<String>> {
-        SetRef::new(self.shared().clone(), format!("{}.security_groups", self.base))
+    #[doc = "Get a reference to the value of field `security_groups` after provisioning.\n"]
+    pub fn security_groups(&self) -> terrars::SetRef<terrars::PrimExpr<std::string::String>> {
+        terrars::SetRef::new(self.shared().clone(), format!("{}.security_groups", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `jupyter_server_app_settings` after provisioning.\n"]
+    #[doc = "Get a reference to the value of field `jupyter_server_app_settings` after provisioning.\n"]
     pub fn jupyter_server_app_settings(
         &self,
-    ) -> ListRef<SagemakerDomainDefaultSpaceSettingsElJupyterServerAppSettingsElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.jupyter_server_app_settings", self.base))
+    ) -> terrars::ListRef<SagemakerDomainDefaultSpaceSettingsElJupyterServerAppSettingsElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.jupyter_server_app_settings", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `kernel_gateway_app_settings` after provisioning.\n"]
+    #[doc = "Get a reference to the value of field `kernel_gateway_app_settings` after provisioning.\n"]
     pub fn kernel_gateway_app_settings(
         &self,
-    ) -> ListRef<SagemakerDomainDefaultSpaceSettingsElKernelGatewayAppSettingsElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.kernel_gateway_app_settings", self.base))
+    ) -> terrars::ListRef<SagemakerDomainDefaultSpaceSettingsElKernelGatewayAppSettingsElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.kernel_gateway_app_settings", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct SagemakerDomainDefaultUserSettingsElCanvasAppSettingsElTimeSeriesForecastingSettingsEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    amazon_forecast_role_arn: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    status: Option<PrimField<String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    amazon_forecast_role_arn: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    status: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
 impl SagemakerDomainDefaultUserSettingsElCanvasAppSettingsElTimeSeriesForecastingSettingsEl {
-    #[doc= "Set the field `amazon_forecast_role_arn`.\n"]
-    pub fn set_amazon_forecast_role_arn(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.amazon_forecast_role_arn = Some(v.into());
+    #[doc = "Set the field `amazon_forecast_role_arn`.\n"]
+    pub fn set_amazon_forecast_role_arn(
+        mut self,
+        v: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.amazon_forecast_role_arn = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `status`.\n"]
-    pub fn set_status(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.status = Some(v.into());
+    #[doc = "Set the field `status`.\n"]
+    pub fn set_status(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.status = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl ToListMappable for SagemakerDomainDefaultUserSettingsElCanvasAppSettingsElTimeSeriesForecastingSettingsEl {
-    type O = BlockAssignable<SagemakerDomainDefaultUserSettingsElCanvasAppSettingsElTimeSeriesForecastingSettingsEl>;
+impl terrars
+::ToListMappable for SagemakerDomainDefaultUserSettingsElCanvasAppSettingsElTimeSeriesForecastingSettingsEl {
+    type O =
+        terrars
+        ::BlockAssignable<SagemakerDomainDefaultUserSettingsElCanvasAppSettingsElTimeSeriesForecastingSettingsEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -1300,14 +1460,14 @@ impl BuildSagemakerDomainDefaultUserSettingsElCanvasAppSettingsElTimeSeriesForec
 }
 
 pub struct SagemakerDomainDefaultUserSettingsElCanvasAppSettingsElTimeSeriesForecastingSettingsElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for SagemakerDomainDefaultUserSettingsElCanvasAppSettingsElTimeSeriesForecastingSettingsElRef {
+impl terrars::Ref for SagemakerDomainDefaultUserSettingsElCanvasAppSettingsElTimeSeriesForecastingSettingsElRef {
     fn new(
-        shared: StackShared,
-        base: String,
+        shared: terrars::StackShared,
+        base: std::string::String,
     ) -> SagemakerDomainDefaultUserSettingsElCanvasAppSettingsElTimeSeriesForecastingSettingsElRef {
         SagemakerDomainDefaultUserSettingsElCanvasAppSettingsElTimeSeriesForecastingSettingsElRef {
             shared: shared,
@@ -1317,67 +1477,72 @@ impl Ref for SagemakerDomainDefaultUserSettingsElCanvasAppSettingsElTimeSeriesFo
 }
 
 impl SagemakerDomainDefaultUserSettingsElCanvasAppSettingsElTimeSeriesForecastingSettingsElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `amazon_forecast_role_arn` after provisioning.\n"]
-    pub fn amazon_forecast_role_arn(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.amazon_forecast_role_arn", self.base))
+    #[doc = "Get a reference to the value of field `amazon_forecast_role_arn` after provisioning.\n"]
+    pub fn amazon_forecast_role_arn(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.amazon_forecast_role_arn", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `status` after provisioning.\n"]
-    pub fn status(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.status", self.base))
+    #[doc = "Get a reference to the value of field `status` after provisioning.\n"]
+    pub fn status(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.status", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
 struct SagemakerDomainDefaultUserSettingsElCanvasAppSettingsElDynamic {
-    time_series_forecasting_settings: Option<
-        DynamicBlock<SagemakerDomainDefaultUserSettingsElCanvasAppSettingsElTimeSeriesForecastingSettingsEl>,
+    time_series_forecasting_settings: std
+    ::option
+    ::Option<
+        terrars::DynamicBlock<SagemakerDomainDefaultUserSettingsElCanvasAppSettingsElTimeSeriesForecastingSettingsEl>,
     >,
 }
 
 #[derive(Serialize)]
 pub struct SagemakerDomainDefaultUserSettingsElCanvasAppSettingsEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    time_series_forecasting_settings: Option<
-        Vec<SagemakerDomainDefaultUserSettingsElCanvasAppSettingsElTimeSeriesForecastingSettingsEl>,
-    >,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    time_series_forecasting_settings: std
+    ::option
+    ::Option<std::vec::Vec<SagemakerDomainDefaultUserSettingsElCanvasAppSettingsElTimeSeriesForecastingSettingsEl>>,
     dynamic: SagemakerDomainDefaultUserSettingsElCanvasAppSettingsElDynamic,
 }
 
 impl SagemakerDomainDefaultUserSettingsElCanvasAppSettingsEl {
-    #[doc= "Set the field `time_series_forecasting_settings`.\n"]
+    #[doc = "Set the field `time_series_forecasting_settings`.\n"]
     pub fn set_time_series_forecasting_settings(
         mut self,
         v:
             impl
 
-                    Into<
-                        BlockAssignable<
+                    std
+                    ::convert
+                    ::Into<
+                        terrars
+                        ::BlockAssignable<
                             SagemakerDomainDefaultUserSettingsElCanvasAppSettingsElTimeSeriesForecastingSettingsEl,
                         >,
                     >,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.time_series_forecasting_settings = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.time_series_forecasting_settings = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.time_series_forecasting_settings = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.time_series_forecasting_settings = std::option::Option::Some(d);
             },
         }
         self
     }
 }
 
-impl ToListMappable for SagemakerDomainDefaultUserSettingsElCanvasAppSettingsEl {
-    type O = BlockAssignable<SagemakerDomainDefaultUserSettingsElCanvasAppSettingsEl>;
+impl terrars::ToListMappable for SagemakerDomainDefaultUserSettingsElCanvasAppSettingsEl {
+    type O = terrars::BlockAssignable<SagemakerDomainDefaultUserSettingsElCanvasAppSettingsEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -1391,18 +1556,21 @@ impl BuildSagemakerDomainDefaultUserSettingsElCanvasAppSettingsEl {
     pub fn build(self) -> SagemakerDomainDefaultUserSettingsElCanvasAppSettingsEl {
         SagemakerDomainDefaultUserSettingsElCanvasAppSettingsEl {
             time_series_forecasting_settings: core::default::Default::default(),
-            dynamic: Default::default(),
+            dynamic: core::default::Default::default(),
         }
     }
 }
 
 pub struct SagemakerDomainDefaultUserSettingsElCanvasAppSettingsElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for SagemakerDomainDefaultUserSettingsElCanvasAppSettingsElRef {
-    fn new(shared: StackShared, base: String) -> SagemakerDomainDefaultUserSettingsElCanvasAppSettingsElRef {
+impl terrars::Ref for SagemakerDomainDefaultUserSettingsElCanvasAppSettingsElRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> SagemakerDomainDefaultUserSettingsElCanvasAppSettingsElRef {
         SagemakerDomainDefaultUserSettingsElCanvasAppSettingsElRef {
             shared: shared,
             base: base.to_string(),
@@ -1411,30 +1579,31 @@ impl Ref for SagemakerDomainDefaultUserSettingsElCanvasAppSettingsElRef {
 }
 
 impl SagemakerDomainDefaultUserSettingsElCanvasAppSettingsElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `time_series_forecasting_settings` after provisioning.\n"]
+    #[doc = "Get a reference to the value of field `time_series_forecasting_settings` after provisioning.\n"]
     pub fn time_series_forecasting_settings(
         &self,
-    ) -> ListRef<SagemakerDomainDefaultUserSettingsElCanvasAppSettingsElTimeSeriesForecastingSettingsElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.time_series_forecasting_settings", self.base))
+    ) -> terrars::ListRef<SagemakerDomainDefaultUserSettingsElCanvasAppSettingsElTimeSeriesForecastingSettingsElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.time_series_forecasting_settings", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct SagemakerDomainDefaultUserSettingsElJupyterServerAppSettingsElCodeRepositoryEl {
-    repository_url: PrimField<String>,
+    repository_url: terrars::PrimField<std::string::String>,
 }
 
 impl SagemakerDomainDefaultUserSettingsElJupyterServerAppSettingsElCodeRepositoryEl { }
 
-impl ToListMappable for SagemakerDomainDefaultUserSettingsElJupyterServerAppSettingsElCodeRepositoryEl {
-    type O = BlockAssignable<SagemakerDomainDefaultUserSettingsElJupyterServerAppSettingsElCodeRepositoryEl>;
+impl terrars::ToListMappable for SagemakerDomainDefaultUserSettingsElJupyterServerAppSettingsElCodeRepositoryEl {
+    type O =
+        terrars::BlockAssignable<SagemakerDomainDefaultUserSettingsElJupyterServerAppSettingsElCodeRepositoryEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -1443,8 +1612,8 @@ impl ToListMappable for SagemakerDomainDefaultUserSettingsElJupyterServerAppSett
 }
 
 pub struct BuildSagemakerDomainDefaultUserSettingsElJupyterServerAppSettingsElCodeRepositoryEl {
-    #[doc= ""]
-    pub repository_url: PrimField<String>,
+    #[doc = ""]
+    pub repository_url: terrars::PrimField<std::string::String>,
 }
 
 impl BuildSagemakerDomainDefaultUserSettingsElJupyterServerAppSettingsElCodeRepositoryEl {
@@ -1456,14 +1625,14 @@ impl BuildSagemakerDomainDefaultUserSettingsElJupyterServerAppSettingsElCodeRepo
 }
 
 pub struct SagemakerDomainDefaultUserSettingsElJupyterServerAppSettingsElCodeRepositoryElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for SagemakerDomainDefaultUserSettingsElJupyterServerAppSettingsElCodeRepositoryElRef {
+impl terrars::Ref for SagemakerDomainDefaultUserSettingsElJupyterServerAppSettingsElCodeRepositoryElRef {
     fn new(
-        shared: StackShared,
-        base: String,
+        shared: terrars::StackShared,
+        base: std::string::String,
     ) -> SagemakerDomainDefaultUserSettingsElJupyterServerAppSettingsElCodeRepositoryElRef {
         SagemakerDomainDefaultUserSettingsElJupyterServerAppSettingsElCodeRepositoryElRef {
             shared: shared,
@@ -1473,59 +1642,70 @@ impl Ref for SagemakerDomainDefaultUserSettingsElJupyterServerAppSettingsElCodeR
 }
 
 impl SagemakerDomainDefaultUserSettingsElJupyterServerAppSettingsElCodeRepositoryElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `repository_url` after provisioning.\n"]
-    pub fn repository_url(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.repository_url", self.base))
+    #[doc = "Get a reference to the value of field `repository_url` after provisioning.\n"]
+    pub fn repository_url(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.repository_url", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct SagemakerDomainDefaultUserSettingsElJupyterServerAppSettingsElDefaultResourceSpecEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    instance_type: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    lifecycle_config_arn: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    sagemaker_image_arn: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    sagemaker_image_version_arn: Option<PrimField<String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    instance_type: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    lifecycle_config_arn: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    sagemaker_image_arn: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    sagemaker_image_version_arn: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
 impl SagemakerDomainDefaultUserSettingsElJupyterServerAppSettingsElDefaultResourceSpecEl {
-    #[doc= "Set the field `instance_type`.\n"]
-    pub fn set_instance_type(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.instance_type = Some(v.into());
+    #[doc = "Set the field `instance_type`.\n"]
+    pub fn set_instance_type(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.instance_type = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `lifecycle_config_arn`.\n"]
-    pub fn set_lifecycle_config_arn(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.lifecycle_config_arn = Some(v.into());
+    #[doc = "Set the field `lifecycle_config_arn`.\n"]
+    pub fn set_lifecycle_config_arn(
+        mut self,
+        v: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.lifecycle_config_arn = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `sagemaker_image_arn`.\n"]
-    pub fn set_sagemaker_image_arn(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.sagemaker_image_arn = Some(v.into());
+    #[doc = "Set the field `sagemaker_image_arn`.\n"]
+    pub fn set_sagemaker_image_arn(
+        mut self,
+        v: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.sagemaker_image_arn = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `sagemaker_image_version_arn`.\n"]
-    pub fn set_sagemaker_image_version_arn(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.sagemaker_image_version_arn = Some(v.into());
+    #[doc = "Set the field `sagemaker_image_version_arn`.\n"]
+    pub fn set_sagemaker_image_version_arn(
+        mut self,
+        v: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.sagemaker_image_version_arn = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl ToListMappable for SagemakerDomainDefaultUserSettingsElJupyterServerAppSettingsElDefaultResourceSpecEl {
-    type O = BlockAssignable<SagemakerDomainDefaultUserSettingsElJupyterServerAppSettingsElDefaultResourceSpecEl>;
+impl terrars::ToListMappable for SagemakerDomainDefaultUserSettingsElJupyterServerAppSettingsElDefaultResourceSpecEl {
+    type O =
+        terrars
+        ::BlockAssignable<SagemakerDomainDefaultUserSettingsElJupyterServerAppSettingsElDefaultResourceSpecEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -1547,14 +1727,14 @@ impl BuildSagemakerDomainDefaultUserSettingsElJupyterServerAppSettingsElDefaultR
 }
 
 pub struct SagemakerDomainDefaultUserSettingsElJupyterServerAppSettingsElDefaultResourceSpecElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for SagemakerDomainDefaultUserSettingsElJupyterServerAppSettingsElDefaultResourceSpecElRef {
+impl terrars::Ref for SagemakerDomainDefaultUserSettingsElJupyterServerAppSettingsElDefaultResourceSpecElRef {
     fn new(
-        shared: StackShared,
-        base: String,
+        shared: terrars::StackShared,
+        base: std::string::String,
     ) -> SagemakerDomainDefaultUserSettingsElJupyterServerAppSettingsElDefaultResourceSpecElRef {
         SagemakerDomainDefaultUserSettingsElJupyterServerAppSettingsElDefaultResourceSpecElRef {
             shared: shared,
@@ -1564,113 +1744,126 @@ impl Ref for SagemakerDomainDefaultUserSettingsElJupyterServerAppSettingsElDefau
 }
 
 impl SagemakerDomainDefaultUserSettingsElJupyterServerAppSettingsElDefaultResourceSpecElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `instance_type` after provisioning.\n"]
-    pub fn instance_type(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.instance_type", self.base))
+    #[doc = "Get a reference to the value of field `instance_type` after provisioning.\n"]
+    pub fn instance_type(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.instance_type", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `lifecycle_config_arn` after provisioning.\n"]
-    pub fn lifecycle_config_arn(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.lifecycle_config_arn", self.base))
+    #[doc = "Get a reference to the value of field `lifecycle_config_arn` after provisioning.\n"]
+    pub fn lifecycle_config_arn(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.lifecycle_config_arn", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `sagemaker_image_arn` after provisioning.\n"]
-    pub fn sagemaker_image_arn(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.sagemaker_image_arn", self.base))
+    #[doc = "Get a reference to the value of field `sagemaker_image_arn` after provisioning.\n"]
+    pub fn sagemaker_image_arn(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.sagemaker_image_arn", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `sagemaker_image_version_arn` after provisioning.\n"]
-    pub fn sagemaker_image_version_arn(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.sagemaker_image_version_arn", self.base))
+    #[doc = "Get a reference to the value of field `sagemaker_image_version_arn` after provisioning.\n"]
+    pub fn sagemaker_image_version_arn(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.sagemaker_image_version_arn", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
 struct SagemakerDomainDefaultUserSettingsElJupyterServerAppSettingsElDynamic {
-    code_repository: Option<
-        DynamicBlock<SagemakerDomainDefaultUserSettingsElJupyterServerAppSettingsElCodeRepositoryEl>,
-    >,
-    default_resource_spec: Option<
-        DynamicBlock<SagemakerDomainDefaultUserSettingsElJupyterServerAppSettingsElDefaultResourceSpecEl>,
+    code_repository: std
+    ::option
+    ::Option<terrars::DynamicBlock<SagemakerDomainDefaultUserSettingsElJupyterServerAppSettingsElCodeRepositoryEl>>,
+    default_resource_spec: std
+    ::option
+    ::Option<
+        terrars::DynamicBlock<SagemakerDomainDefaultUserSettingsElJupyterServerAppSettingsElDefaultResourceSpecEl>,
     >,
 }
 
 #[derive(Serialize)]
 pub struct SagemakerDomainDefaultUserSettingsElJupyterServerAppSettingsEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    lifecycle_config_arns: Option<SetField<PrimField<String>>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    code_repository: Option<Vec<SagemakerDomainDefaultUserSettingsElJupyterServerAppSettingsElCodeRepositoryEl>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    default_resource_spec: Option<
-        Vec<SagemakerDomainDefaultUserSettingsElJupyterServerAppSettingsElDefaultResourceSpecEl>,
-    >,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    lifecycle_config_arns: std::option::Option<terrars::SetField<terrars::PrimField<std::string::String>>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    code_repository: std
+    ::option
+    ::Option<std::vec::Vec<SagemakerDomainDefaultUserSettingsElJupyterServerAppSettingsElCodeRepositoryEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    default_resource_spec: std
+    ::option
+    ::Option<std::vec::Vec<SagemakerDomainDefaultUserSettingsElJupyterServerAppSettingsElDefaultResourceSpecEl>>,
     dynamic: SagemakerDomainDefaultUserSettingsElJupyterServerAppSettingsElDynamic,
 }
 
 impl SagemakerDomainDefaultUserSettingsElJupyterServerAppSettingsEl {
-    #[doc= "Set the field `lifecycle_config_arns`.\n"]
-    pub fn set_lifecycle_config_arns(mut self, v: impl Into<SetField<PrimField<String>>>) -> Self {
-        self.lifecycle_config_arns = Some(v.into());
+    #[doc = "Set the field `lifecycle_config_arns`.\n"]
+    pub fn set_lifecycle_config_arns(
+        mut self,
+        v: impl std::convert::Into<terrars::SetField<terrars::PrimField<std::string::String>>>,
+    ) -> Self {
+        self.lifecycle_config_arns = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `code_repository`.\n"]
+    #[doc = "Set the field `code_repository`.\n"]
     pub fn set_code_repository(
         mut self,
         v:
             impl
 
-                    Into<
-                        BlockAssignable<
+                    std
+                    ::convert
+                    ::Into<
+                        terrars
+                        ::BlockAssignable<
                             SagemakerDomainDefaultUserSettingsElJupyterServerAppSettingsElCodeRepositoryEl,
                         >,
                     >,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.code_repository = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.code_repository = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.code_repository = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.code_repository = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Set the field `default_resource_spec`.\n"]
+    #[doc = "Set the field `default_resource_spec`.\n"]
     pub fn set_default_resource_spec(
         mut self,
         v:
             impl
 
-                    Into<
-                        BlockAssignable<
+                    std
+                    ::convert
+                    ::Into<
+                        terrars
+                        ::BlockAssignable<
                             SagemakerDomainDefaultUserSettingsElJupyterServerAppSettingsElDefaultResourceSpecEl,
                         >,
                     >,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.default_resource_spec = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.default_resource_spec = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.default_resource_spec = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.default_resource_spec = std::option::Option::Some(d);
             },
         }
         self
     }
 }
 
-impl ToListMappable for SagemakerDomainDefaultUserSettingsElJupyterServerAppSettingsEl {
-    type O = BlockAssignable<SagemakerDomainDefaultUserSettingsElJupyterServerAppSettingsEl>;
+impl terrars::ToListMappable for SagemakerDomainDefaultUserSettingsElJupyterServerAppSettingsEl {
+    type O = terrars::BlockAssignable<SagemakerDomainDefaultUserSettingsElJupyterServerAppSettingsEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -1686,18 +1879,21 @@ impl BuildSagemakerDomainDefaultUserSettingsElJupyterServerAppSettingsEl {
             lifecycle_config_arns: core::default::Default::default(),
             code_repository: core::default::Default::default(),
             default_resource_spec: core::default::Default::default(),
-            dynamic: Default::default(),
+            dynamic: core::default::Default::default(),
         }
     }
 }
 
 pub struct SagemakerDomainDefaultUserSettingsElJupyterServerAppSettingsElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for SagemakerDomainDefaultUserSettingsElJupyterServerAppSettingsElRef {
-    fn new(shared: StackShared, base: String) -> SagemakerDomainDefaultUserSettingsElJupyterServerAppSettingsElRef {
+impl terrars::Ref for SagemakerDomainDefaultUserSettingsElJupyterServerAppSettingsElRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> SagemakerDomainDefaultUserSettingsElJupyterServerAppSettingsElRef {
         SagemakerDomainDefaultUserSettingsElJupyterServerAppSettingsElRef {
             shared: shared,
             base: base.to_string(),
@@ -1706,44 +1902,44 @@ impl Ref for SagemakerDomainDefaultUserSettingsElJupyterServerAppSettingsElRef {
 }
 
 impl SagemakerDomainDefaultUserSettingsElJupyterServerAppSettingsElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `lifecycle_config_arns` after provisioning.\n"]
-    pub fn lifecycle_config_arns(&self) -> SetRef<PrimExpr<String>> {
-        SetRef::new(self.shared().clone(), format!("{}.lifecycle_config_arns", self.base))
+    #[doc = "Get a reference to the value of field `lifecycle_config_arns` after provisioning.\n"]
+    pub fn lifecycle_config_arns(&self) -> terrars::SetRef<terrars::PrimExpr<std::string::String>> {
+        terrars::SetRef::new(self.shared().clone(), format!("{}.lifecycle_config_arns", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `default_resource_spec` after provisioning.\n"]
+    #[doc = "Get a reference to the value of field `default_resource_spec` after provisioning.\n"]
     pub fn default_resource_spec(
         &self,
-    ) -> ListRef<SagemakerDomainDefaultUserSettingsElJupyterServerAppSettingsElDefaultResourceSpecElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.default_resource_spec", self.base))
+    ) -> terrars::ListRef<SagemakerDomainDefaultUserSettingsElJupyterServerAppSettingsElDefaultResourceSpecElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.default_resource_spec", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct SagemakerDomainDefaultUserSettingsElKernelGatewayAppSettingsElCustomImageEl {
-    app_image_config_name: PrimField<String>,
-    image_name: PrimField<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    image_version_number: Option<PrimField<f64>>,
+    app_image_config_name: terrars::PrimField<std::string::String>,
+    image_name: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    image_version_number: std::option::Option<terrars::PrimField<f64>>,
 }
 
 impl SagemakerDomainDefaultUserSettingsElKernelGatewayAppSettingsElCustomImageEl {
-    #[doc= "Set the field `image_version_number`.\n"]
-    pub fn set_image_version_number(mut self, v: impl Into<PrimField<f64>>) -> Self {
-        self.image_version_number = Some(v.into());
+    #[doc = "Set the field `image_version_number`.\n"]
+    pub fn set_image_version_number(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.image_version_number = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl ToListMappable for SagemakerDomainDefaultUserSettingsElKernelGatewayAppSettingsElCustomImageEl {
-    type O = BlockAssignable<SagemakerDomainDefaultUserSettingsElKernelGatewayAppSettingsElCustomImageEl>;
+impl terrars::ToListMappable for SagemakerDomainDefaultUserSettingsElKernelGatewayAppSettingsElCustomImageEl {
+    type O = terrars::BlockAssignable<SagemakerDomainDefaultUserSettingsElKernelGatewayAppSettingsElCustomImageEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -1752,10 +1948,10 @@ impl ToListMappable for SagemakerDomainDefaultUserSettingsElKernelGatewayAppSett
 }
 
 pub struct BuildSagemakerDomainDefaultUserSettingsElKernelGatewayAppSettingsElCustomImageEl {
-    #[doc= ""]
-    pub app_image_config_name: PrimField<String>,
-    #[doc= ""]
-    pub image_name: PrimField<String>,
+    #[doc = ""]
+    pub app_image_config_name: terrars::PrimField<std::string::String>,
+    #[doc = ""]
+    pub image_name: terrars::PrimField<std::string::String>,
 }
 
 impl BuildSagemakerDomainDefaultUserSettingsElKernelGatewayAppSettingsElCustomImageEl {
@@ -1769,14 +1965,14 @@ impl BuildSagemakerDomainDefaultUserSettingsElKernelGatewayAppSettingsElCustomIm
 }
 
 pub struct SagemakerDomainDefaultUserSettingsElKernelGatewayAppSettingsElCustomImageElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for SagemakerDomainDefaultUserSettingsElKernelGatewayAppSettingsElCustomImageElRef {
+impl terrars::Ref for SagemakerDomainDefaultUserSettingsElKernelGatewayAppSettingsElCustomImageElRef {
     fn new(
-        shared: StackShared,
-        base: String,
+        shared: terrars::StackShared,
+        base: std::string::String,
     ) -> SagemakerDomainDefaultUserSettingsElKernelGatewayAppSettingsElCustomImageElRef {
         SagemakerDomainDefaultUserSettingsElKernelGatewayAppSettingsElCustomImageElRef {
             shared: shared,
@@ -1786,69 +1982,80 @@ impl Ref for SagemakerDomainDefaultUserSettingsElKernelGatewayAppSettingsElCusto
 }
 
 impl SagemakerDomainDefaultUserSettingsElKernelGatewayAppSettingsElCustomImageElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `app_image_config_name` after provisioning.\n"]
-    pub fn app_image_config_name(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.app_image_config_name", self.base))
+    #[doc = "Get a reference to the value of field `app_image_config_name` after provisioning.\n"]
+    pub fn app_image_config_name(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.app_image_config_name", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `image_name` after provisioning.\n"]
-    pub fn image_name(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.image_name", self.base))
+    #[doc = "Get a reference to the value of field `image_name` after provisioning.\n"]
+    pub fn image_name(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.image_name", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `image_version_number` after provisioning.\n"]
-    pub fn image_version_number(&self) -> PrimExpr<f64> {
-        PrimExpr::new(self.shared().clone(), format!("{}.image_version_number", self.base))
+    #[doc = "Get a reference to the value of field `image_version_number` after provisioning.\n"]
+    pub fn image_version_number(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.image_version_number", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct SagemakerDomainDefaultUserSettingsElKernelGatewayAppSettingsElDefaultResourceSpecEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    instance_type: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    lifecycle_config_arn: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    sagemaker_image_arn: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    sagemaker_image_version_arn: Option<PrimField<String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    instance_type: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    lifecycle_config_arn: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    sagemaker_image_arn: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    sagemaker_image_version_arn: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
 impl SagemakerDomainDefaultUserSettingsElKernelGatewayAppSettingsElDefaultResourceSpecEl {
-    #[doc= "Set the field `instance_type`.\n"]
-    pub fn set_instance_type(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.instance_type = Some(v.into());
+    #[doc = "Set the field `instance_type`.\n"]
+    pub fn set_instance_type(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.instance_type = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `lifecycle_config_arn`.\n"]
-    pub fn set_lifecycle_config_arn(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.lifecycle_config_arn = Some(v.into());
+    #[doc = "Set the field `lifecycle_config_arn`.\n"]
+    pub fn set_lifecycle_config_arn(
+        mut self,
+        v: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.lifecycle_config_arn = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `sagemaker_image_arn`.\n"]
-    pub fn set_sagemaker_image_arn(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.sagemaker_image_arn = Some(v.into());
+    #[doc = "Set the field `sagemaker_image_arn`.\n"]
+    pub fn set_sagemaker_image_arn(
+        mut self,
+        v: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.sagemaker_image_arn = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `sagemaker_image_version_arn`.\n"]
-    pub fn set_sagemaker_image_version_arn(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.sagemaker_image_version_arn = Some(v.into());
+    #[doc = "Set the field `sagemaker_image_version_arn`.\n"]
+    pub fn set_sagemaker_image_version_arn(
+        mut self,
+        v: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.sagemaker_image_version_arn = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl ToListMappable for SagemakerDomainDefaultUserSettingsElKernelGatewayAppSettingsElDefaultResourceSpecEl {
-    type O = BlockAssignable<SagemakerDomainDefaultUserSettingsElKernelGatewayAppSettingsElDefaultResourceSpecEl>;
+impl terrars::ToListMappable for SagemakerDomainDefaultUserSettingsElKernelGatewayAppSettingsElDefaultResourceSpecEl {
+    type O =
+        terrars
+        ::BlockAssignable<SagemakerDomainDefaultUserSettingsElKernelGatewayAppSettingsElDefaultResourceSpecEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -1870,14 +2077,14 @@ impl BuildSagemakerDomainDefaultUserSettingsElKernelGatewayAppSettingsElDefaultR
 }
 
 pub struct SagemakerDomainDefaultUserSettingsElKernelGatewayAppSettingsElDefaultResourceSpecElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for SagemakerDomainDefaultUserSettingsElKernelGatewayAppSettingsElDefaultResourceSpecElRef {
+impl terrars::Ref for SagemakerDomainDefaultUserSettingsElKernelGatewayAppSettingsElDefaultResourceSpecElRef {
     fn new(
-        shared: StackShared,
-        base: String,
+        shared: terrars::StackShared,
+        base: std::string::String,
     ) -> SagemakerDomainDefaultUserSettingsElKernelGatewayAppSettingsElDefaultResourceSpecElRef {
         SagemakerDomainDefaultUserSettingsElKernelGatewayAppSettingsElDefaultResourceSpecElRef {
             shared: shared,
@@ -1887,104 +2094,124 @@ impl Ref for SagemakerDomainDefaultUserSettingsElKernelGatewayAppSettingsElDefau
 }
 
 impl SagemakerDomainDefaultUserSettingsElKernelGatewayAppSettingsElDefaultResourceSpecElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `instance_type` after provisioning.\n"]
-    pub fn instance_type(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.instance_type", self.base))
+    #[doc = "Get a reference to the value of field `instance_type` after provisioning.\n"]
+    pub fn instance_type(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.instance_type", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `lifecycle_config_arn` after provisioning.\n"]
-    pub fn lifecycle_config_arn(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.lifecycle_config_arn", self.base))
+    #[doc = "Get a reference to the value of field `lifecycle_config_arn` after provisioning.\n"]
+    pub fn lifecycle_config_arn(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.lifecycle_config_arn", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `sagemaker_image_arn` after provisioning.\n"]
-    pub fn sagemaker_image_arn(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.sagemaker_image_arn", self.base))
+    #[doc = "Get a reference to the value of field `sagemaker_image_arn` after provisioning.\n"]
+    pub fn sagemaker_image_arn(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.sagemaker_image_arn", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `sagemaker_image_version_arn` after provisioning.\n"]
-    pub fn sagemaker_image_version_arn(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.sagemaker_image_version_arn", self.base))
+    #[doc = "Get a reference to the value of field `sagemaker_image_version_arn` after provisioning.\n"]
+    pub fn sagemaker_image_version_arn(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.sagemaker_image_version_arn", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
 struct SagemakerDomainDefaultUserSettingsElKernelGatewayAppSettingsElDynamic {
-    custom_image: Option<DynamicBlock<SagemakerDomainDefaultUserSettingsElKernelGatewayAppSettingsElCustomImageEl>>,
-    default_resource_spec: Option<
-        DynamicBlock<SagemakerDomainDefaultUserSettingsElKernelGatewayAppSettingsElDefaultResourceSpecEl>,
+    custom_image: std
+    ::option
+    ::Option<terrars::DynamicBlock<SagemakerDomainDefaultUserSettingsElKernelGatewayAppSettingsElCustomImageEl>>,
+    default_resource_spec: std
+    ::option
+    ::Option<
+        terrars::DynamicBlock<SagemakerDomainDefaultUserSettingsElKernelGatewayAppSettingsElDefaultResourceSpecEl>,
     >,
 }
 
 #[derive(Serialize)]
 pub struct SagemakerDomainDefaultUserSettingsElKernelGatewayAppSettingsEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    lifecycle_config_arns: Option<SetField<PrimField<String>>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    custom_image: Option<Vec<SagemakerDomainDefaultUserSettingsElKernelGatewayAppSettingsElCustomImageEl>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    default_resource_spec: Option<
-        Vec<SagemakerDomainDefaultUserSettingsElKernelGatewayAppSettingsElDefaultResourceSpecEl>,
-    >,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    lifecycle_config_arns: std::option::Option<terrars::SetField<terrars::PrimField<std::string::String>>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    custom_image: std
+    ::option
+    ::Option<std::vec::Vec<SagemakerDomainDefaultUserSettingsElKernelGatewayAppSettingsElCustomImageEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    default_resource_spec: std
+    ::option
+    ::Option<std::vec::Vec<SagemakerDomainDefaultUserSettingsElKernelGatewayAppSettingsElDefaultResourceSpecEl>>,
     dynamic: SagemakerDomainDefaultUserSettingsElKernelGatewayAppSettingsElDynamic,
 }
 
 impl SagemakerDomainDefaultUserSettingsElKernelGatewayAppSettingsEl {
-    #[doc= "Set the field `lifecycle_config_arns`.\n"]
-    pub fn set_lifecycle_config_arns(mut self, v: impl Into<SetField<PrimField<String>>>) -> Self {
-        self.lifecycle_config_arns = Some(v.into());
+    #[doc = "Set the field `lifecycle_config_arns`.\n"]
+    pub fn set_lifecycle_config_arns(
+        mut self,
+        v: impl std::convert::Into<terrars::SetField<terrars::PrimField<std::string::String>>>,
+    ) -> Self {
+        self.lifecycle_config_arns = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `custom_image`.\n"]
+    #[doc = "Set the field `custom_image`.\n"]
     pub fn set_custom_image(
         mut self,
-        v: impl Into<BlockAssignable<SagemakerDomainDefaultUserSettingsElKernelGatewayAppSettingsElCustomImageEl>>,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<
+                        terrars
+                        ::BlockAssignable<SagemakerDomainDefaultUserSettingsElKernelGatewayAppSettingsElCustomImageEl>,
+                    >,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.custom_image = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.custom_image = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.custom_image = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.custom_image = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Set the field `default_resource_spec`.\n"]
+    #[doc = "Set the field `default_resource_spec`.\n"]
     pub fn set_default_resource_spec(
         mut self,
         v:
             impl
 
-                    Into<
-                        BlockAssignable<
+                    std
+                    ::convert
+                    ::Into<
+                        terrars
+                        ::BlockAssignable<
                             SagemakerDomainDefaultUserSettingsElKernelGatewayAppSettingsElDefaultResourceSpecEl,
                         >,
                     >,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.default_resource_spec = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.default_resource_spec = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.default_resource_spec = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.default_resource_spec = std::option::Option::Some(d);
             },
         }
         self
     }
 }
 
-impl ToListMappable for SagemakerDomainDefaultUserSettingsElKernelGatewayAppSettingsEl {
-    type O = BlockAssignable<SagemakerDomainDefaultUserSettingsElKernelGatewayAppSettingsEl>;
+impl terrars::ToListMappable for SagemakerDomainDefaultUserSettingsElKernelGatewayAppSettingsEl {
+    type O = terrars::BlockAssignable<SagemakerDomainDefaultUserSettingsElKernelGatewayAppSettingsEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -2000,18 +2227,21 @@ impl BuildSagemakerDomainDefaultUserSettingsElKernelGatewayAppSettingsEl {
             lifecycle_config_arns: core::default::Default::default(),
             custom_image: core::default::Default::default(),
             default_resource_spec: core::default::Default::default(),
-            dynamic: Default::default(),
+            dynamic: core::default::Default::default(),
         }
     }
 }
 
 pub struct SagemakerDomainDefaultUserSettingsElKernelGatewayAppSettingsElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for SagemakerDomainDefaultUserSettingsElKernelGatewayAppSettingsElRef {
-    fn new(shared: StackShared, base: String) -> SagemakerDomainDefaultUserSettingsElKernelGatewayAppSettingsElRef {
+impl terrars::Ref for SagemakerDomainDefaultUserSettingsElKernelGatewayAppSettingsElRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> SagemakerDomainDefaultUserSettingsElKernelGatewayAppSettingsElRef {
         SagemakerDomainDefaultUserSettingsElKernelGatewayAppSettingsElRef {
             shared: shared,
             base: base.to_string(),
@@ -2020,51 +2250,51 @@ impl Ref for SagemakerDomainDefaultUserSettingsElKernelGatewayAppSettingsElRef {
 }
 
 impl SagemakerDomainDefaultUserSettingsElKernelGatewayAppSettingsElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `lifecycle_config_arns` after provisioning.\n"]
-    pub fn lifecycle_config_arns(&self) -> SetRef<PrimExpr<String>> {
-        SetRef::new(self.shared().clone(), format!("{}.lifecycle_config_arns", self.base))
+    #[doc = "Get a reference to the value of field `lifecycle_config_arns` after provisioning.\n"]
+    pub fn lifecycle_config_arns(&self) -> terrars::SetRef<terrars::PrimExpr<std::string::String>> {
+        terrars::SetRef::new(self.shared().clone(), format!("{}.lifecycle_config_arns", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `custom_image` after provisioning.\n"]
+    #[doc = "Get a reference to the value of field `custom_image` after provisioning.\n"]
     pub fn custom_image(
         &self,
-    ) -> ListRef<SagemakerDomainDefaultUserSettingsElKernelGatewayAppSettingsElCustomImageElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.custom_image", self.base))
+    ) -> terrars::ListRef<SagemakerDomainDefaultUserSettingsElKernelGatewayAppSettingsElCustomImageElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.custom_image", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `default_resource_spec` after provisioning.\n"]
+    #[doc = "Get a reference to the value of field `default_resource_spec` after provisioning.\n"]
     pub fn default_resource_spec(
         &self,
-    ) -> ListRef<SagemakerDomainDefaultUserSettingsElKernelGatewayAppSettingsElDefaultResourceSpecElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.default_resource_spec", self.base))
+    ) -> terrars::ListRef<SagemakerDomainDefaultUserSettingsElKernelGatewayAppSettingsElDefaultResourceSpecElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.default_resource_spec", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct SagemakerDomainDefaultUserSettingsElRSessionAppSettingsElCustomImageEl {
-    app_image_config_name: PrimField<String>,
-    image_name: PrimField<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    image_version_number: Option<PrimField<f64>>,
+    app_image_config_name: terrars::PrimField<std::string::String>,
+    image_name: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    image_version_number: std::option::Option<terrars::PrimField<f64>>,
 }
 
 impl SagemakerDomainDefaultUserSettingsElRSessionAppSettingsElCustomImageEl {
-    #[doc= "Set the field `image_version_number`.\n"]
-    pub fn set_image_version_number(mut self, v: impl Into<PrimField<f64>>) -> Self {
-        self.image_version_number = Some(v.into());
+    #[doc = "Set the field `image_version_number`.\n"]
+    pub fn set_image_version_number(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.image_version_number = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl ToListMappable for SagemakerDomainDefaultUserSettingsElRSessionAppSettingsElCustomImageEl {
-    type O = BlockAssignable<SagemakerDomainDefaultUserSettingsElRSessionAppSettingsElCustomImageEl>;
+impl terrars::ToListMappable for SagemakerDomainDefaultUserSettingsElRSessionAppSettingsElCustomImageEl {
+    type O = terrars::BlockAssignable<SagemakerDomainDefaultUserSettingsElRSessionAppSettingsElCustomImageEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -2073,10 +2303,10 @@ impl ToListMappable for SagemakerDomainDefaultUserSettingsElRSessionAppSettingsE
 }
 
 pub struct BuildSagemakerDomainDefaultUserSettingsElRSessionAppSettingsElCustomImageEl {
-    #[doc= ""]
-    pub app_image_config_name: PrimField<String>,
-    #[doc= ""]
-    pub image_name: PrimField<String>,
+    #[doc = ""]
+    pub app_image_config_name: terrars::PrimField<std::string::String>,
+    #[doc = ""]
+    pub image_name: terrars::PrimField<std::string::String>,
 }
 
 impl BuildSagemakerDomainDefaultUserSettingsElRSessionAppSettingsElCustomImageEl {
@@ -2090,14 +2320,14 @@ impl BuildSagemakerDomainDefaultUserSettingsElRSessionAppSettingsElCustomImageEl
 }
 
 pub struct SagemakerDomainDefaultUserSettingsElRSessionAppSettingsElCustomImageElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for SagemakerDomainDefaultUserSettingsElRSessionAppSettingsElCustomImageElRef {
+impl terrars::Ref for SagemakerDomainDefaultUserSettingsElRSessionAppSettingsElCustomImageElRef {
     fn new(
-        shared: StackShared,
-        base: String,
+        shared: terrars::StackShared,
+        base: std::string::String,
     ) -> SagemakerDomainDefaultUserSettingsElRSessionAppSettingsElCustomImageElRef {
         SagemakerDomainDefaultUserSettingsElRSessionAppSettingsElCustomImageElRef {
             shared: shared,
@@ -2107,69 +2337,79 @@ impl Ref for SagemakerDomainDefaultUserSettingsElRSessionAppSettingsElCustomImag
 }
 
 impl SagemakerDomainDefaultUserSettingsElRSessionAppSettingsElCustomImageElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `app_image_config_name` after provisioning.\n"]
-    pub fn app_image_config_name(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.app_image_config_name", self.base))
+    #[doc = "Get a reference to the value of field `app_image_config_name` after provisioning.\n"]
+    pub fn app_image_config_name(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.app_image_config_name", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `image_name` after provisioning.\n"]
-    pub fn image_name(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.image_name", self.base))
+    #[doc = "Get a reference to the value of field `image_name` after provisioning.\n"]
+    pub fn image_name(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.image_name", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `image_version_number` after provisioning.\n"]
-    pub fn image_version_number(&self) -> PrimExpr<f64> {
-        PrimExpr::new(self.shared().clone(), format!("{}.image_version_number", self.base))
+    #[doc = "Get a reference to the value of field `image_version_number` after provisioning.\n"]
+    pub fn image_version_number(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.image_version_number", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct SagemakerDomainDefaultUserSettingsElRSessionAppSettingsElDefaultResourceSpecEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    instance_type: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    lifecycle_config_arn: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    sagemaker_image_arn: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    sagemaker_image_version_arn: Option<PrimField<String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    instance_type: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    lifecycle_config_arn: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    sagemaker_image_arn: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    sagemaker_image_version_arn: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
 impl SagemakerDomainDefaultUserSettingsElRSessionAppSettingsElDefaultResourceSpecEl {
-    #[doc= "Set the field `instance_type`.\n"]
-    pub fn set_instance_type(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.instance_type = Some(v.into());
+    #[doc = "Set the field `instance_type`.\n"]
+    pub fn set_instance_type(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.instance_type = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `lifecycle_config_arn`.\n"]
-    pub fn set_lifecycle_config_arn(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.lifecycle_config_arn = Some(v.into());
+    #[doc = "Set the field `lifecycle_config_arn`.\n"]
+    pub fn set_lifecycle_config_arn(
+        mut self,
+        v: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.lifecycle_config_arn = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `sagemaker_image_arn`.\n"]
-    pub fn set_sagemaker_image_arn(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.sagemaker_image_arn = Some(v.into());
+    #[doc = "Set the field `sagemaker_image_arn`.\n"]
+    pub fn set_sagemaker_image_arn(
+        mut self,
+        v: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.sagemaker_image_arn = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `sagemaker_image_version_arn`.\n"]
-    pub fn set_sagemaker_image_version_arn(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.sagemaker_image_version_arn = Some(v.into());
+    #[doc = "Set the field `sagemaker_image_version_arn`.\n"]
+    pub fn set_sagemaker_image_version_arn(
+        mut self,
+        v: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.sagemaker_image_version_arn = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl ToListMappable for SagemakerDomainDefaultUserSettingsElRSessionAppSettingsElDefaultResourceSpecEl {
-    type O = BlockAssignable<SagemakerDomainDefaultUserSettingsElRSessionAppSettingsElDefaultResourceSpecEl>;
+impl terrars::ToListMappable for SagemakerDomainDefaultUserSettingsElRSessionAppSettingsElDefaultResourceSpecEl {
+    type O =
+        terrars::BlockAssignable<SagemakerDomainDefaultUserSettingsElRSessionAppSettingsElDefaultResourceSpecEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -2191,14 +2431,14 @@ impl BuildSagemakerDomainDefaultUserSettingsElRSessionAppSettingsElDefaultResour
 }
 
 pub struct SagemakerDomainDefaultUserSettingsElRSessionAppSettingsElDefaultResourceSpecElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for SagemakerDomainDefaultUserSettingsElRSessionAppSettingsElDefaultResourceSpecElRef {
+impl terrars::Ref for SagemakerDomainDefaultUserSettingsElRSessionAppSettingsElDefaultResourceSpecElRef {
     fn new(
-        shared: StackShared,
-        base: String,
+        shared: terrars::StackShared,
+        base: std::string::String,
     ) -> SagemakerDomainDefaultUserSettingsElRSessionAppSettingsElDefaultResourceSpecElRef {
         SagemakerDomainDefaultUserSettingsElRSessionAppSettingsElDefaultResourceSpecElRef {
             shared: shared,
@@ -2208,94 +2448,111 @@ impl Ref for SagemakerDomainDefaultUserSettingsElRSessionAppSettingsElDefaultRes
 }
 
 impl SagemakerDomainDefaultUserSettingsElRSessionAppSettingsElDefaultResourceSpecElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `instance_type` after provisioning.\n"]
-    pub fn instance_type(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.instance_type", self.base))
+    #[doc = "Get a reference to the value of field `instance_type` after provisioning.\n"]
+    pub fn instance_type(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.instance_type", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `lifecycle_config_arn` after provisioning.\n"]
-    pub fn lifecycle_config_arn(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.lifecycle_config_arn", self.base))
+    #[doc = "Get a reference to the value of field `lifecycle_config_arn` after provisioning.\n"]
+    pub fn lifecycle_config_arn(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.lifecycle_config_arn", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `sagemaker_image_arn` after provisioning.\n"]
-    pub fn sagemaker_image_arn(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.sagemaker_image_arn", self.base))
+    #[doc = "Get a reference to the value of field `sagemaker_image_arn` after provisioning.\n"]
+    pub fn sagemaker_image_arn(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.sagemaker_image_arn", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `sagemaker_image_version_arn` after provisioning.\n"]
-    pub fn sagemaker_image_version_arn(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.sagemaker_image_version_arn", self.base))
+    #[doc = "Get a reference to the value of field `sagemaker_image_version_arn` after provisioning.\n"]
+    pub fn sagemaker_image_version_arn(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.sagemaker_image_version_arn", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
 struct SagemakerDomainDefaultUserSettingsElRSessionAppSettingsElDynamic {
-    custom_image: Option<DynamicBlock<SagemakerDomainDefaultUserSettingsElRSessionAppSettingsElCustomImageEl>>,
-    default_resource_spec: Option<
-        DynamicBlock<SagemakerDomainDefaultUserSettingsElRSessionAppSettingsElDefaultResourceSpecEl>,
-    >,
+    custom_image: std
+    ::option
+    ::Option<terrars::DynamicBlock<SagemakerDomainDefaultUserSettingsElRSessionAppSettingsElCustomImageEl>>,
+    default_resource_spec: std
+    ::option
+    ::Option<terrars::DynamicBlock<SagemakerDomainDefaultUserSettingsElRSessionAppSettingsElDefaultResourceSpecEl>>,
 }
 
 #[derive(Serialize)]
 pub struct SagemakerDomainDefaultUserSettingsElRSessionAppSettingsEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    custom_image: Option<Vec<SagemakerDomainDefaultUserSettingsElRSessionAppSettingsElCustomImageEl>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    default_resource_spec: Option<Vec<SagemakerDomainDefaultUserSettingsElRSessionAppSettingsElDefaultResourceSpecEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    custom_image: std
+    ::option
+    ::Option<std::vec::Vec<SagemakerDomainDefaultUserSettingsElRSessionAppSettingsElCustomImageEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    default_resource_spec: std
+    ::option
+    ::Option<std::vec::Vec<SagemakerDomainDefaultUserSettingsElRSessionAppSettingsElDefaultResourceSpecEl>>,
     dynamic: SagemakerDomainDefaultUserSettingsElRSessionAppSettingsElDynamic,
 }
 
 impl SagemakerDomainDefaultUserSettingsElRSessionAppSettingsEl {
-    #[doc= "Set the field `custom_image`.\n"]
+    #[doc = "Set the field `custom_image`.\n"]
     pub fn set_custom_image(
         mut self,
-        v: impl Into<BlockAssignable<SagemakerDomainDefaultUserSettingsElRSessionAppSettingsElCustomImageEl>>,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<
+                        terrars
+                        ::BlockAssignable<SagemakerDomainDefaultUserSettingsElRSessionAppSettingsElCustomImageEl>,
+                    >,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.custom_image = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.custom_image = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.custom_image = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.custom_image = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Set the field `default_resource_spec`.\n"]
+    #[doc = "Set the field `default_resource_spec`.\n"]
     pub fn set_default_resource_spec(
         mut self,
         v:
             impl
 
-                    Into<
-                        BlockAssignable<
+                    std
+                    ::convert
+                    ::Into<
+                        terrars
+                        ::BlockAssignable<
                             SagemakerDomainDefaultUserSettingsElRSessionAppSettingsElDefaultResourceSpecEl,
                         >,
                     >,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.default_resource_spec = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.default_resource_spec = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.default_resource_spec = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.default_resource_spec = std::option::Option::Some(d);
             },
         }
         self
     }
 }
 
-impl ToListMappable for SagemakerDomainDefaultUserSettingsElRSessionAppSettingsEl {
-    type O = BlockAssignable<SagemakerDomainDefaultUserSettingsElRSessionAppSettingsEl>;
+impl terrars::ToListMappable for SagemakerDomainDefaultUserSettingsElRSessionAppSettingsEl {
+    type O = terrars::BlockAssignable<SagemakerDomainDefaultUserSettingsElRSessionAppSettingsEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -2310,18 +2567,21 @@ impl BuildSagemakerDomainDefaultUserSettingsElRSessionAppSettingsEl {
         SagemakerDomainDefaultUserSettingsElRSessionAppSettingsEl {
             custom_image: core::default::Default::default(),
             default_resource_spec: core::default::Default::default(),
-            dynamic: Default::default(),
+            dynamic: core::default::Default::default(),
         }
     }
 }
 
 pub struct SagemakerDomainDefaultUserSettingsElRSessionAppSettingsElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for SagemakerDomainDefaultUserSettingsElRSessionAppSettingsElRef {
-    fn new(shared: StackShared, base: String) -> SagemakerDomainDefaultUserSettingsElRSessionAppSettingsElRef {
+impl terrars::Ref for SagemakerDomainDefaultUserSettingsElRSessionAppSettingsElRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> SagemakerDomainDefaultUserSettingsElRSessionAppSettingsElRef {
         SagemakerDomainDefaultUserSettingsElRSessionAppSettingsElRef {
             shared: shared,
             base: base.to_string(),
@@ -2330,58 +2590,63 @@ impl Ref for SagemakerDomainDefaultUserSettingsElRSessionAppSettingsElRef {
 }
 
 impl SagemakerDomainDefaultUserSettingsElRSessionAppSettingsElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `custom_image` after provisioning.\n"]
-    pub fn custom_image(&self) -> ListRef<SagemakerDomainDefaultUserSettingsElRSessionAppSettingsElCustomImageElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.custom_image", self.base))
+    #[doc = "Get a reference to the value of field `custom_image` after provisioning.\n"]
+    pub fn custom_image(
+        &self,
+    ) -> terrars::ListRef<SagemakerDomainDefaultUserSettingsElRSessionAppSettingsElCustomImageElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.custom_image", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `default_resource_spec` after provisioning.\n"]
+    #[doc = "Get a reference to the value of field `default_resource_spec` after provisioning.\n"]
     pub fn default_resource_spec(
         &self,
-    ) -> ListRef<SagemakerDomainDefaultUserSettingsElRSessionAppSettingsElDefaultResourceSpecElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.default_resource_spec", self.base))
+    ) -> terrars::ListRef<SagemakerDomainDefaultUserSettingsElRSessionAppSettingsElDefaultResourceSpecElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.default_resource_spec", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct SagemakerDomainDefaultUserSettingsElSharingSettingsEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    notebook_output_option: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    s3_kms_key_id: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    s3_output_path: Option<PrimField<String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    notebook_output_option: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    s3_kms_key_id: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    s3_output_path: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
 impl SagemakerDomainDefaultUserSettingsElSharingSettingsEl {
-    #[doc= "Set the field `notebook_output_option`.\n"]
-    pub fn set_notebook_output_option(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.notebook_output_option = Some(v.into());
+    #[doc = "Set the field `notebook_output_option`.\n"]
+    pub fn set_notebook_output_option(
+        mut self,
+        v: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.notebook_output_option = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `s3_kms_key_id`.\n"]
-    pub fn set_s3_kms_key_id(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.s3_kms_key_id = Some(v.into());
+    #[doc = "Set the field `s3_kms_key_id`.\n"]
+    pub fn set_s3_kms_key_id(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.s3_kms_key_id = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `s3_output_path`.\n"]
-    pub fn set_s3_output_path(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.s3_output_path = Some(v.into());
+    #[doc = "Set the field `s3_output_path`.\n"]
+    pub fn set_s3_output_path(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.s3_output_path = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl ToListMappable for SagemakerDomainDefaultUserSettingsElSharingSettingsEl {
-    type O = BlockAssignable<SagemakerDomainDefaultUserSettingsElSharingSettingsEl>;
+impl terrars::ToListMappable for SagemakerDomainDefaultUserSettingsElSharingSettingsEl {
+    type O = terrars::BlockAssignable<SagemakerDomainDefaultUserSettingsElSharingSettingsEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -2402,12 +2667,15 @@ impl BuildSagemakerDomainDefaultUserSettingsElSharingSettingsEl {
 }
 
 pub struct SagemakerDomainDefaultUserSettingsElSharingSettingsElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for SagemakerDomainDefaultUserSettingsElSharingSettingsElRef {
-    fn new(shared: StackShared, base: String) -> SagemakerDomainDefaultUserSettingsElSharingSettingsElRef {
+impl terrars::Ref for SagemakerDomainDefaultUserSettingsElSharingSettingsElRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> SagemakerDomainDefaultUserSettingsElSharingSettingsElRef {
         SagemakerDomainDefaultUserSettingsElSharingSettingsElRef {
             shared: shared,
             base: base.to_string(),
@@ -2416,69 +2684,79 @@ impl Ref for SagemakerDomainDefaultUserSettingsElSharingSettingsElRef {
 }
 
 impl SagemakerDomainDefaultUserSettingsElSharingSettingsElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `notebook_output_option` after provisioning.\n"]
-    pub fn notebook_output_option(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.notebook_output_option", self.base))
+    #[doc = "Get a reference to the value of field `notebook_output_option` after provisioning.\n"]
+    pub fn notebook_output_option(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.notebook_output_option", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `s3_kms_key_id` after provisioning.\n"]
-    pub fn s3_kms_key_id(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.s3_kms_key_id", self.base))
+    #[doc = "Get a reference to the value of field `s3_kms_key_id` after provisioning.\n"]
+    pub fn s3_kms_key_id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.s3_kms_key_id", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `s3_output_path` after provisioning.\n"]
-    pub fn s3_output_path(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.s3_output_path", self.base))
+    #[doc = "Get a reference to the value of field `s3_output_path` after provisioning.\n"]
+    pub fn s3_output_path(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.s3_output_path", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct SagemakerDomainDefaultUserSettingsElTensorBoardAppSettingsElDefaultResourceSpecEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    instance_type: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    lifecycle_config_arn: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    sagemaker_image_arn: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    sagemaker_image_version_arn: Option<PrimField<String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    instance_type: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    lifecycle_config_arn: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    sagemaker_image_arn: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    sagemaker_image_version_arn: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
 impl SagemakerDomainDefaultUserSettingsElTensorBoardAppSettingsElDefaultResourceSpecEl {
-    #[doc= "Set the field `instance_type`.\n"]
-    pub fn set_instance_type(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.instance_type = Some(v.into());
+    #[doc = "Set the field `instance_type`.\n"]
+    pub fn set_instance_type(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.instance_type = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `lifecycle_config_arn`.\n"]
-    pub fn set_lifecycle_config_arn(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.lifecycle_config_arn = Some(v.into());
+    #[doc = "Set the field `lifecycle_config_arn`.\n"]
+    pub fn set_lifecycle_config_arn(
+        mut self,
+        v: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.lifecycle_config_arn = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `sagemaker_image_arn`.\n"]
-    pub fn set_sagemaker_image_arn(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.sagemaker_image_arn = Some(v.into());
+    #[doc = "Set the field `sagemaker_image_arn`.\n"]
+    pub fn set_sagemaker_image_arn(
+        mut self,
+        v: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.sagemaker_image_arn = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `sagemaker_image_version_arn`.\n"]
-    pub fn set_sagemaker_image_version_arn(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.sagemaker_image_version_arn = Some(v.into());
+    #[doc = "Set the field `sagemaker_image_version_arn`.\n"]
+    pub fn set_sagemaker_image_version_arn(
+        mut self,
+        v: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.sagemaker_image_version_arn = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl ToListMappable for SagemakerDomainDefaultUserSettingsElTensorBoardAppSettingsElDefaultResourceSpecEl {
-    type O = BlockAssignable<SagemakerDomainDefaultUserSettingsElTensorBoardAppSettingsElDefaultResourceSpecEl>;
+impl terrars::ToListMappable for SagemakerDomainDefaultUserSettingsElTensorBoardAppSettingsElDefaultResourceSpecEl {
+    type O =
+        terrars::BlockAssignable<SagemakerDomainDefaultUserSettingsElTensorBoardAppSettingsElDefaultResourceSpecEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -2500,14 +2778,14 @@ impl BuildSagemakerDomainDefaultUserSettingsElTensorBoardAppSettingsElDefaultRes
 }
 
 pub struct SagemakerDomainDefaultUserSettingsElTensorBoardAppSettingsElDefaultResourceSpecElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for SagemakerDomainDefaultUserSettingsElTensorBoardAppSettingsElDefaultResourceSpecElRef {
+impl terrars::Ref for SagemakerDomainDefaultUserSettingsElTensorBoardAppSettingsElDefaultResourceSpecElRef {
     fn new(
-        shared: StackShared,
-        base: String,
+        shared: terrars::StackShared,
+        base: std::string::String,
     ) -> SagemakerDomainDefaultUserSettingsElTensorBoardAppSettingsElDefaultResourceSpecElRef {
         SagemakerDomainDefaultUserSettingsElTensorBoardAppSettingsElDefaultResourceSpecElRef {
             shared: shared,
@@ -2517,75 +2795,82 @@ impl Ref for SagemakerDomainDefaultUserSettingsElTensorBoardAppSettingsElDefault
 }
 
 impl SagemakerDomainDefaultUserSettingsElTensorBoardAppSettingsElDefaultResourceSpecElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `instance_type` after provisioning.\n"]
-    pub fn instance_type(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.instance_type", self.base))
+    #[doc = "Get a reference to the value of field `instance_type` after provisioning.\n"]
+    pub fn instance_type(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.instance_type", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `lifecycle_config_arn` after provisioning.\n"]
-    pub fn lifecycle_config_arn(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.lifecycle_config_arn", self.base))
+    #[doc = "Get a reference to the value of field `lifecycle_config_arn` after provisioning.\n"]
+    pub fn lifecycle_config_arn(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.lifecycle_config_arn", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `sagemaker_image_arn` after provisioning.\n"]
-    pub fn sagemaker_image_arn(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.sagemaker_image_arn", self.base))
+    #[doc = "Get a reference to the value of field `sagemaker_image_arn` after provisioning.\n"]
+    pub fn sagemaker_image_arn(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.sagemaker_image_arn", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `sagemaker_image_version_arn` after provisioning.\n"]
-    pub fn sagemaker_image_version_arn(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.sagemaker_image_version_arn", self.base))
+    #[doc = "Get a reference to the value of field `sagemaker_image_version_arn` after provisioning.\n"]
+    pub fn sagemaker_image_version_arn(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.sagemaker_image_version_arn", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
 struct SagemakerDomainDefaultUserSettingsElTensorBoardAppSettingsElDynamic {
-    default_resource_spec: Option<
-        DynamicBlock<SagemakerDomainDefaultUserSettingsElTensorBoardAppSettingsElDefaultResourceSpecEl>,
+    default_resource_spec: std
+    ::option
+    ::Option<
+        terrars::DynamicBlock<SagemakerDomainDefaultUserSettingsElTensorBoardAppSettingsElDefaultResourceSpecEl>,
     >,
 }
 
 #[derive(Serialize)]
 pub struct SagemakerDomainDefaultUserSettingsElTensorBoardAppSettingsEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    default_resource_spec: Option<Vec<SagemakerDomainDefaultUserSettingsElTensorBoardAppSettingsElDefaultResourceSpecEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    default_resource_spec: std
+    ::option
+    ::Option<std::vec::Vec<SagemakerDomainDefaultUserSettingsElTensorBoardAppSettingsElDefaultResourceSpecEl>>,
     dynamic: SagemakerDomainDefaultUserSettingsElTensorBoardAppSettingsElDynamic,
 }
 
 impl SagemakerDomainDefaultUserSettingsElTensorBoardAppSettingsEl {
-    #[doc= "Set the field `default_resource_spec`.\n"]
+    #[doc = "Set the field `default_resource_spec`.\n"]
     pub fn set_default_resource_spec(
         mut self,
         v:
             impl
 
-                    Into<
-                        BlockAssignable<
+                    std
+                    ::convert
+                    ::Into<
+                        terrars
+                        ::BlockAssignable<
                             SagemakerDomainDefaultUserSettingsElTensorBoardAppSettingsElDefaultResourceSpecEl,
                         >,
                     >,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.default_resource_spec = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.default_resource_spec = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.default_resource_spec = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.default_resource_spec = std::option::Option::Some(d);
             },
         }
         self
     }
 }
 
-impl ToListMappable for SagemakerDomainDefaultUserSettingsElTensorBoardAppSettingsEl {
-    type O = BlockAssignable<SagemakerDomainDefaultUserSettingsElTensorBoardAppSettingsEl>;
+impl terrars::ToListMappable for SagemakerDomainDefaultUserSettingsElTensorBoardAppSettingsEl {
+    type O = terrars::BlockAssignable<SagemakerDomainDefaultUserSettingsElTensorBoardAppSettingsEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -2599,18 +2884,21 @@ impl BuildSagemakerDomainDefaultUserSettingsElTensorBoardAppSettingsEl {
     pub fn build(self) -> SagemakerDomainDefaultUserSettingsElTensorBoardAppSettingsEl {
         SagemakerDomainDefaultUserSettingsElTensorBoardAppSettingsEl {
             default_resource_spec: core::default::Default::default(),
-            dynamic: Default::default(),
+            dynamic: core::default::Default::default(),
         }
     }
 }
 
 pub struct SagemakerDomainDefaultUserSettingsElTensorBoardAppSettingsElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for SagemakerDomainDefaultUserSettingsElTensorBoardAppSettingsElRef {
-    fn new(shared: StackShared, base: String) -> SagemakerDomainDefaultUserSettingsElTensorBoardAppSettingsElRef {
+impl terrars::Ref for SagemakerDomainDefaultUserSettingsElTensorBoardAppSettingsElRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> SagemakerDomainDefaultUserSettingsElTensorBoardAppSettingsElRef {
         SagemakerDomainDefaultUserSettingsElTensorBoardAppSettingsElRef {
             shared: shared,
             base: base.to_string(),
@@ -2619,161 +2907,203 @@ impl Ref for SagemakerDomainDefaultUserSettingsElTensorBoardAppSettingsElRef {
 }
 
 impl SagemakerDomainDefaultUserSettingsElTensorBoardAppSettingsElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `default_resource_spec` after provisioning.\n"]
+    #[doc = "Get a reference to the value of field `default_resource_spec` after provisioning.\n"]
     pub fn default_resource_spec(
         &self,
-    ) -> ListRef<SagemakerDomainDefaultUserSettingsElTensorBoardAppSettingsElDefaultResourceSpecElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.default_resource_spec", self.base))
+    ) -> terrars::ListRef<SagemakerDomainDefaultUserSettingsElTensorBoardAppSettingsElDefaultResourceSpecElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.default_resource_spec", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
 struct SagemakerDomainDefaultUserSettingsElDynamic {
-    canvas_app_settings: Option<DynamicBlock<SagemakerDomainDefaultUserSettingsElCanvasAppSettingsEl>>,
-    jupyter_server_app_settings: Option<
-        DynamicBlock<SagemakerDomainDefaultUserSettingsElJupyterServerAppSettingsEl>,
-    >,
-    kernel_gateway_app_settings: Option<
-        DynamicBlock<SagemakerDomainDefaultUserSettingsElKernelGatewayAppSettingsEl>,
-    >,
-    r_session_app_settings: Option<DynamicBlock<SagemakerDomainDefaultUserSettingsElRSessionAppSettingsEl>>,
-    sharing_settings: Option<DynamicBlock<SagemakerDomainDefaultUserSettingsElSharingSettingsEl>>,
-    tensor_board_app_settings: Option<DynamicBlock<SagemakerDomainDefaultUserSettingsElTensorBoardAppSettingsEl>>,
+    canvas_app_settings: std
+    ::option
+    ::Option<terrars::DynamicBlock<SagemakerDomainDefaultUserSettingsElCanvasAppSettingsEl>>,
+    jupyter_server_app_settings: std
+    ::option
+    ::Option<terrars::DynamicBlock<SagemakerDomainDefaultUserSettingsElJupyterServerAppSettingsEl>>,
+    kernel_gateway_app_settings: std
+    ::option
+    ::Option<terrars::DynamicBlock<SagemakerDomainDefaultUserSettingsElKernelGatewayAppSettingsEl>>,
+    r_session_app_settings: std
+    ::option
+    ::Option<terrars::DynamicBlock<SagemakerDomainDefaultUserSettingsElRSessionAppSettingsEl>>,
+    sharing_settings: std
+    ::option
+    ::Option<terrars::DynamicBlock<SagemakerDomainDefaultUserSettingsElSharingSettingsEl>>,
+    tensor_board_app_settings: std
+    ::option
+    ::Option<terrars::DynamicBlock<SagemakerDomainDefaultUserSettingsElTensorBoardAppSettingsEl>>,
 }
 
 #[derive(Serialize)]
 pub struct SagemakerDomainDefaultUserSettingsEl {
-    execution_role: PrimField<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    security_groups: Option<SetField<PrimField<String>>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    canvas_app_settings: Option<Vec<SagemakerDomainDefaultUserSettingsElCanvasAppSettingsEl>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    jupyter_server_app_settings: Option<Vec<SagemakerDomainDefaultUserSettingsElJupyterServerAppSettingsEl>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    kernel_gateway_app_settings: Option<Vec<SagemakerDomainDefaultUserSettingsElKernelGatewayAppSettingsEl>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    r_session_app_settings: Option<Vec<SagemakerDomainDefaultUserSettingsElRSessionAppSettingsEl>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    sharing_settings: Option<Vec<SagemakerDomainDefaultUserSettingsElSharingSettingsEl>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    tensor_board_app_settings: Option<Vec<SagemakerDomainDefaultUserSettingsElTensorBoardAppSettingsEl>>,
+    execution_role: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    security_groups: std::option::Option<terrars::SetField<terrars::PrimField<std::string::String>>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    canvas_app_settings: std::option::Option<std::vec::Vec<SagemakerDomainDefaultUserSettingsElCanvasAppSettingsEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    jupyter_server_app_settings: std
+    ::option
+    ::Option<std::vec::Vec<SagemakerDomainDefaultUserSettingsElJupyterServerAppSettingsEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    kernel_gateway_app_settings: std
+    ::option
+    ::Option<std::vec::Vec<SagemakerDomainDefaultUserSettingsElKernelGatewayAppSettingsEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    r_session_app_settings: std::option::Option<std::vec::Vec<SagemakerDomainDefaultUserSettingsElRSessionAppSettingsEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    sharing_settings: std::option::Option<std::vec::Vec<SagemakerDomainDefaultUserSettingsElSharingSettingsEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    tensor_board_app_settings: std
+    ::option
+    ::Option<std::vec::Vec<SagemakerDomainDefaultUserSettingsElTensorBoardAppSettingsEl>>,
     dynamic: SagemakerDomainDefaultUserSettingsElDynamic,
 }
 
 impl SagemakerDomainDefaultUserSettingsEl {
-    #[doc= "Set the field `security_groups`.\n"]
-    pub fn set_security_groups(mut self, v: impl Into<SetField<PrimField<String>>>) -> Self {
-        self.security_groups = Some(v.into());
+    #[doc = "Set the field `security_groups`.\n"]
+    pub fn set_security_groups(
+        mut self,
+        v: impl std::convert::Into<terrars::SetField<terrars::PrimField<std::string::String>>>,
+    ) -> Self {
+        self.security_groups = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `canvas_app_settings`.\n"]
+    #[doc = "Set the field `canvas_app_settings`.\n"]
     pub fn set_canvas_app_settings(
         mut self,
-        v: impl Into<BlockAssignable<SagemakerDomainDefaultUserSettingsElCanvasAppSettingsEl>>,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<terrars::BlockAssignable<SagemakerDomainDefaultUserSettingsElCanvasAppSettingsEl>>,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.canvas_app_settings = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.canvas_app_settings = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.canvas_app_settings = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.canvas_app_settings = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Set the field `jupyter_server_app_settings`.\n"]
+    #[doc = "Set the field `jupyter_server_app_settings`.\n"]
     pub fn set_jupyter_server_app_settings(
         mut self,
-        v: impl Into<BlockAssignable<SagemakerDomainDefaultUserSettingsElJupyterServerAppSettingsEl>>,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<terrars::BlockAssignable<SagemakerDomainDefaultUserSettingsElJupyterServerAppSettingsEl>>,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.jupyter_server_app_settings = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.jupyter_server_app_settings = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.jupyter_server_app_settings = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.jupyter_server_app_settings = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Set the field `kernel_gateway_app_settings`.\n"]
+    #[doc = "Set the field `kernel_gateway_app_settings`.\n"]
     pub fn set_kernel_gateway_app_settings(
         mut self,
-        v: impl Into<BlockAssignable<SagemakerDomainDefaultUserSettingsElKernelGatewayAppSettingsEl>>,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<terrars::BlockAssignable<SagemakerDomainDefaultUserSettingsElKernelGatewayAppSettingsEl>>,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.kernel_gateway_app_settings = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.kernel_gateway_app_settings = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.kernel_gateway_app_settings = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.kernel_gateway_app_settings = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Set the field `r_session_app_settings`.\n"]
+    #[doc = "Set the field `r_session_app_settings`.\n"]
     pub fn set_r_session_app_settings(
         mut self,
-        v: impl Into<BlockAssignable<SagemakerDomainDefaultUserSettingsElRSessionAppSettingsEl>>,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<terrars::BlockAssignable<SagemakerDomainDefaultUserSettingsElRSessionAppSettingsEl>>,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.r_session_app_settings = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.r_session_app_settings = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.r_session_app_settings = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.r_session_app_settings = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Set the field `sharing_settings`.\n"]
+    #[doc = "Set the field `sharing_settings`.\n"]
     pub fn set_sharing_settings(
         mut self,
-        v: impl Into<BlockAssignable<SagemakerDomainDefaultUserSettingsElSharingSettingsEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<SagemakerDomainDefaultUserSettingsElSharingSettingsEl>>,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.sharing_settings = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.sharing_settings = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.sharing_settings = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.sharing_settings = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Set the field `tensor_board_app_settings`.\n"]
+    #[doc = "Set the field `tensor_board_app_settings`.\n"]
     pub fn set_tensor_board_app_settings(
         mut self,
-        v: impl Into<BlockAssignable<SagemakerDomainDefaultUserSettingsElTensorBoardAppSettingsEl>>,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<terrars::BlockAssignable<SagemakerDomainDefaultUserSettingsElTensorBoardAppSettingsEl>>,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.tensor_board_app_settings = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.tensor_board_app_settings = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.tensor_board_app_settings = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.tensor_board_app_settings = std::option::Option::Some(d);
             },
         }
         self
     }
 }
 
-impl ToListMappable for SagemakerDomainDefaultUserSettingsEl {
-    type O = BlockAssignable<SagemakerDomainDefaultUserSettingsEl>;
+impl terrars::ToListMappable for SagemakerDomainDefaultUserSettingsEl {
+    type O = terrars::BlockAssignable<SagemakerDomainDefaultUserSettingsEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -2782,8 +3112,8 @@ impl ToListMappable for SagemakerDomainDefaultUserSettingsEl {
 }
 
 pub struct BuildSagemakerDomainDefaultUserSettingsEl {
-    #[doc= ""]
-    pub execution_role: PrimField<String>,
+    #[doc = ""]
+    pub execution_role: terrars::PrimField<std::string::String>,
 }
 
 impl BuildSagemakerDomainDefaultUserSettingsEl {
@@ -2797,18 +3127,18 @@ impl BuildSagemakerDomainDefaultUserSettingsEl {
             r_session_app_settings: core::default::Default::default(),
             sharing_settings: core::default::Default::default(),
             tensor_board_app_settings: core::default::Default::default(),
-            dynamic: Default::default(),
+            dynamic: core::default::Default::default(),
         }
     }
 }
 
 pub struct SagemakerDomainDefaultUserSettingsElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for SagemakerDomainDefaultUserSettingsElRef {
-    fn new(shared: StackShared, base: String) -> SagemakerDomainDefaultUserSettingsElRef {
+impl terrars::Ref for SagemakerDomainDefaultUserSettingsElRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> SagemakerDomainDefaultUserSettingsElRef {
         SagemakerDomainDefaultUserSettingsElRef {
             shared: shared,
             base: base.to_string(),
@@ -2817,82 +3147,92 @@ impl Ref for SagemakerDomainDefaultUserSettingsElRef {
 }
 
 impl SagemakerDomainDefaultUserSettingsElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `execution_role` after provisioning.\n"]
-    pub fn execution_role(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.execution_role", self.base))
+    #[doc = "Get a reference to the value of field `execution_role` after provisioning.\n"]
+    pub fn execution_role(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.execution_role", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `security_groups` after provisioning.\n"]
-    pub fn security_groups(&self) -> SetRef<PrimExpr<String>> {
-        SetRef::new(self.shared().clone(), format!("{}.security_groups", self.base))
+    #[doc = "Get a reference to the value of field `security_groups` after provisioning.\n"]
+    pub fn security_groups(&self) -> terrars::SetRef<terrars::PrimExpr<std::string::String>> {
+        terrars::SetRef::new(self.shared().clone(), format!("{}.security_groups", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `canvas_app_settings` after provisioning.\n"]
-    pub fn canvas_app_settings(&self) -> ListRef<SagemakerDomainDefaultUserSettingsElCanvasAppSettingsElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.canvas_app_settings", self.base))
+    #[doc = "Get a reference to the value of field `canvas_app_settings` after provisioning.\n"]
+    pub fn canvas_app_settings(&self) -> terrars::ListRef<SagemakerDomainDefaultUserSettingsElCanvasAppSettingsElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.canvas_app_settings", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `jupyter_server_app_settings` after provisioning.\n"]
+    #[doc = "Get a reference to the value of field `jupyter_server_app_settings` after provisioning.\n"]
     pub fn jupyter_server_app_settings(
         &self,
-    ) -> ListRef<SagemakerDomainDefaultUserSettingsElJupyterServerAppSettingsElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.jupyter_server_app_settings", self.base))
+    ) -> terrars::ListRef<SagemakerDomainDefaultUserSettingsElJupyterServerAppSettingsElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.jupyter_server_app_settings", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `kernel_gateway_app_settings` after provisioning.\n"]
+    #[doc = "Get a reference to the value of field `kernel_gateway_app_settings` after provisioning.\n"]
     pub fn kernel_gateway_app_settings(
         &self,
-    ) -> ListRef<SagemakerDomainDefaultUserSettingsElKernelGatewayAppSettingsElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.kernel_gateway_app_settings", self.base))
+    ) -> terrars::ListRef<SagemakerDomainDefaultUserSettingsElKernelGatewayAppSettingsElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.kernel_gateway_app_settings", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `r_session_app_settings` after provisioning.\n"]
-    pub fn r_session_app_settings(&self) -> ListRef<SagemakerDomainDefaultUserSettingsElRSessionAppSettingsElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.r_session_app_settings", self.base))
+    #[doc = "Get a reference to the value of field `r_session_app_settings` after provisioning.\n"]
+    pub fn r_session_app_settings(
+        &self,
+    ) -> terrars::ListRef<SagemakerDomainDefaultUserSettingsElRSessionAppSettingsElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.r_session_app_settings", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `sharing_settings` after provisioning.\n"]
-    pub fn sharing_settings(&self) -> ListRef<SagemakerDomainDefaultUserSettingsElSharingSettingsElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.sharing_settings", self.base))
+    #[doc = "Get a reference to the value of field `sharing_settings` after provisioning.\n"]
+    pub fn sharing_settings(&self) -> terrars::ListRef<SagemakerDomainDefaultUserSettingsElSharingSettingsElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.sharing_settings", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `tensor_board_app_settings` after provisioning.\n"]
-    pub fn tensor_board_app_settings(&self) -> ListRef<SagemakerDomainDefaultUserSettingsElTensorBoardAppSettingsElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.tensor_board_app_settings", self.base))
+    #[doc = "Get a reference to the value of field `tensor_board_app_settings` after provisioning.\n"]
+    pub fn tensor_board_app_settings(
+        &self,
+    ) -> terrars::ListRef<SagemakerDomainDefaultUserSettingsElTensorBoardAppSettingsElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.tensor_board_app_settings", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct SagemakerDomainDomainSettingsEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    execution_role_identity_config: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    security_group_ids: Option<SetField<PrimField<String>>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    execution_role_identity_config: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    security_group_ids: std::option::Option<terrars::SetField<terrars::PrimField<std::string::String>>>,
 }
 
 impl SagemakerDomainDomainSettingsEl {
-    #[doc= "Set the field `execution_role_identity_config`.\n"]
-    pub fn set_execution_role_identity_config(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.execution_role_identity_config = Some(v.into());
+    #[doc = "Set the field `execution_role_identity_config`.\n"]
+    pub fn set_execution_role_identity_config(
+        mut self,
+        v: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.execution_role_identity_config = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `security_group_ids`.\n"]
-    pub fn set_security_group_ids(mut self, v: impl Into<SetField<PrimField<String>>>) -> Self {
-        self.security_group_ids = Some(v.into());
+    #[doc = "Set the field `security_group_ids`.\n"]
+    pub fn set_security_group_ids(
+        mut self,
+        v: impl std::convert::Into<terrars::SetField<terrars::PrimField<std::string::String>>>,
+    ) -> Self {
+        self.security_group_ids = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl ToListMappable for SagemakerDomainDomainSettingsEl {
-    type O = BlockAssignable<SagemakerDomainDomainSettingsEl>;
+impl terrars::ToListMappable for SagemakerDomainDomainSettingsEl {
+    type O = terrars::BlockAssignable<SagemakerDomainDomainSettingsEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -2912,12 +3252,12 @@ impl BuildSagemakerDomainDomainSettingsEl {
 }
 
 pub struct SagemakerDomainDomainSettingsElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for SagemakerDomainDomainSettingsElRef {
-    fn new(shared: StackShared, base: String) -> SagemakerDomainDomainSettingsElRef {
+impl terrars::Ref for SagemakerDomainDomainSettingsElRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> SagemakerDomainDomainSettingsElRef {
         SagemakerDomainDomainSettingsElRef {
             shared: shared,
             base: base.to_string(),
@@ -2926,40 +3266,43 @@ impl Ref for SagemakerDomainDomainSettingsElRef {
 }
 
 impl SagemakerDomainDomainSettingsElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `execution_role_identity_config` after provisioning.\n"]
-    pub fn execution_role_identity_config(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.execution_role_identity_config", self.base))
+    #[doc = "Get a reference to the value of field `execution_role_identity_config` after provisioning.\n"]
+    pub fn execution_role_identity_config(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.execution_role_identity_config", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `security_group_ids` after provisioning.\n"]
-    pub fn security_group_ids(&self) -> SetRef<PrimExpr<String>> {
-        SetRef::new(self.shared().clone(), format!("{}.security_group_ids", self.base))
+    #[doc = "Get a reference to the value of field `security_group_ids` after provisioning.\n"]
+    pub fn security_group_ids(&self) -> terrars::SetRef<terrars::PrimExpr<std::string::String>> {
+        terrars::SetRef::new(self.shared().clone(), format!("{}.security_group_ids", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct SagemakerDomainRetentionPolicyEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    home_efs_file_system: Option<PrimField<String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    home_efs_file_system: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
 impl SagemakerDomainRetentionPolicyEl {
-    #[doc= "Set the field `home_efs_file_system`.\n"]
-    pub fn set_home_efs_file_system(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.home_efs_file_system = Some(v.into());
+    #[doc = "Set the field `home_efs_file_system`.\n"]
+    pub fn set_home_efs_file_system(
+        mut self,
+        v: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.home_efs_file_system = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl ToListMappable for SagemakerDomainRetentionPolicyEl {
-    type O = BlockAssignable<SagemakerDomainRetentionPolicyEl>;
+impl terrars::ToListMappable for SagemakerDomainRetentionPolicyEl {
+    type O = terrars::BlockAssignable<SagemakerDomainRetentionPolicyEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -2976,12 +3319,12 @@ impl BuildSagemakerDomainRetentionPolicyEl {
 }
 
 pub struct SagemakerDomainRetentionPolicyElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for SagemakerDomainRetentionPolicyElRef {
-    fn new(shared: StackShared, base: String) -> SagemakerDomainRetentionPolicyElRef {
+impl terrars::Ref for SagemakerDomainRetentionPolicyElRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> SagemakerDomainRetentionPolicyElRef {
         SagemakerDomainRetentionPolicyElRef {
             shared: shared,
             base: base.to_string(),
@@ -2990,20 +3333,20 @@ impl Ref for SagemakerDomainRetentionPolicyElRef {
 }
 
 impl SagemakerDomainRetentionPolicyElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `home_efs_file_system` after provisioning.\n"]
-    pub fn home_efs_file_system(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.home_efs_file_system", self.base))
+    #[doc = "Get a reference to the value of field `home_efs_file_system` after provisioning.\n"]
+    pub fn home_efs_file_system(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.home_efs_file_system", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
 struct SagemakerDomainDynamic {
-    default_space_settings: Option<DynamicBlock<SagemakerDomainDefaultSpaceSettingsEl>>,
-    default_user_settings: Option<DynamicBlock<SagemakerDomainDefaultUserSettingsEl>>,
-    domain_settings: Option<DynamicBlock<SagemakerDomainDomainSettingsEl>>,
-    retention_policy: Option<DynamicBlock<SagemakerDomainRetentionPolicyEl>>,
+    default_space_settings: std::option::Option<terrars::DynamicBlock<SagemakerDomainDefaultSpaceSettingsEl>>,
+    default_user_settings: std::option::Option<terrars::DynamicBlock<SagemakerDomainDefaultUserSettingsEl>>,
+    domain_settings: std::option::Option<terrars::DynamicBlock<SagemakerDomainDomainSettingsEl>>,
+    retention_policy: std::option::Option<terrars::DynamicBlock<SagemakerDomainRetentionPolicyEl>>,
 }

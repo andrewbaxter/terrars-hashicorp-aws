@@ -1,60 +1,64 @@
 use serde::Serialize;
-use std::cell::RefCell;
-use std::rc::Rc;
-use terrars::*;
+use terrars::{
+    Referable as _,
+    Resource_ as _,
+    Ref as _,
+};
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
 struct ConfigConfigRuleData {
-    #[serde(skip_serializing_if = "Vec::is_empty")]
-    depends_on: Vec<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    provider: Option<String>,
-    #[serde(skip_serializing_if = "SerdeSkipDefault::is_default")]
-    lifecycle: ResourceLifecycle,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    for_each: Option<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    description: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    id: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    input_parameters: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    maximum_execution_frequency: Option<PrimField<String>>,
-    name: PrimField<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    tags: Option<RecField<PrimField<String>>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    tags_all: Option<RecField<PrimField<String>>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    scope: Option<Vec<ConfigConfigRuleScopeEl>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    source: Option<Vec<ConfigConfigRuleSourceEl>>,
+    #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
+    depends_on: std::vec::Vec<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    provider: std::option::Option<std::string::String>,
+    #[serde(skip_serializing_if = "terrars::SerdeSkipDefault::is_default")]
+    lifecycle: terrars::ResourceLifecycle,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    for_each: std::option::Option<std::string::String>,
+    #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
+    provisioner: std::vec::Vec<terrars::Provisioner>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    description: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    id: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    input_parameters: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    maximum_execution_frequency: std::option::Option<terrars::PrimField<std::string::String>>,
+    name: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    tags: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    tags_all: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    scope: std::option::Option<std::vec::Vec<ConfigConfigRuleScopeEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    source: std::option::Option<std::vec::Vec<ConfigConfigRuleSourceEl>>,
     dynamic: ConfigConfigRuleDynamic,
 }
 
 struct ConfigConfigRule_ {
-    shared: StackShared,
-    tf_id: String,
-    data: RefCell<ConfigConfigRuleData>,
+    shared: terrars::StackShared,
+    tf_id: std::string::String,
+    data: std::cell::RefCell<ConfigConfigRuleData>,
 }
 
 #[derive(Clone)]
-pub struct ConfigConfigRule(Rc<ConfigConfigRule_>);
+pub struct ConfigConfigRule(std::rc::Rc<ConfigConfigRule_>);
 
 impl ConfigConfigRule {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.0.shared
     }
 
-    pub fn depends_on(self, dep: &impl Referable) -> Self {
+    pub fn depends_on(self, dep: &impl terrars::Referable) -> Self {
         self.0.data.borrow_mut().depends_on.push(dep.extract_ref());
         self
     }
 
     pub fn set_provider(self, provider: &ProviderAws) -> Self {
-        self.0.data.borrow_mut().provider = Some(provider.provider_ref());
+        self.0.data.borrow_mut().provider = std::option::Option::Some(provider.provider_ref());
         self
     }
 
@@ -69,182 +73,224 @@ impl ConfigConfigRule {
     }
 
     pub fn ignore_changes_to_all(self) -> Self {
-        self.0.data.borrow_mut().lifecycle.ignore_changes = Some(IgnoreChanges::All(IgnoreChangesAll::All));
+        self.0.data.borrow_mut().lifecycle.ignore_changes =
+            std::option::Option::Some(terrars::IgnoreChanges::All(terrars::IgnoreChangesAll::All));
         self
     }
 
-    pub fn ignore_changes_to_attr(self, attr: impl ToString) -> Self {
+    pub fn ignore_changes_to_attr(self, attr: impl std::string::ToString) -> Self {
         {
             let mut d = self.0.data.borrow_mut();
             if match &mut d.lifecycle.ignore_changes {
-                Some(i) => match i {
-                    IgnoreChanges::All(_) => {
+                std::option::Option::Some(i) => match i {
+                    terrars::IgnoreChanges::All(_) => {
                         true
                     },
-                    IgnoreChanges::Refs(r) => {
+                    terrars::IgnoreChanges::Refs(r) => {
                         r.push(attr.to_string());
                         false
                     },
                 },
-                None => true,
+                std::option::Option::None => true,
             } {
-                d.lifecycle.ignore_changes = Some(IgnoreChanges::Refs(vec![attr.to_string()]));
+                d.lifecycle.ignore_changes =
+                    std::option::Option::Some(terrars::IgnoreChanges::Refs(vec![attr.to_string()]));
             }
         }
         self
     }
 
-    pub fn replace_triggered_by_resource(self, r: &impl Resource) -> Self {
+    pub fn replace_triggered_by_resource(self, r: &impl terrars::Resource) -> Self {
         self.0.data.borrow_mut().lifecycle.replace_triggered_by.push(r.extract_ref());
         self
     }
 
-    pub fn replace_triggered_by_attr(self, attr: impl ToString) -> Self {
+    pub fn replace_triggered_by_attr(self, attr: impl std::string::ToString) -> Self {
         self.0.data.borrow_mut().lifecycle.replace_triggered_by.push(attr.to_string());
         self
     }
 
-    #[doc= "Set the field `description`.\n"]
-    pub fn set_description(self, v: impl Into<PrimField<String>>) -> Self {
-        self.0.data.borrow_mut().description = Some(v.into());
+    #[doc = r" Add a provisioner (ex: `local-exec`, `remote-exec`, `file`) to this resource."]
+    #[doc = r" Provisioners run in the order they're added."]
+    pub fn add_provisioner(self, v: impl std::convert::Into<terrars::Provisioner>) -> Self {
+        self.0.data.borrow_mut().provisioner.push(v.into());
         self
     }
 
-    #[doc= "Set the field `id`.\n"]
-    pub fn set_id(self, v: impl Into<PrimField<String>>) -> Self {
-        self.0.data.borrow_mut().id = Some(v.into());
+    pub fn add_lifecycle_precondition(
+        self,
+        condition: impl std::convert::Into<terrars::PrimField<bool>>,
+        error_message: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.0.data.borrow_mut().lifecycle.precondition.push(terrars::LifecycleCondition {
+            condition: condition.into(),
+            error_message: error_message.into(),
+        });
         self
     }
 
-    #[doc= "Set the field `input_parameters`.\n"]
-    pub fn set_input_parameters(self, v: impl Into<PrimField<String>>) -> Self {
-        self.0.data.borrow_mut().input_parameters = Some(v.into());
+    pub fn add_lifecycle_postcondition(
+        self,
+        condition: impl std::convert::Into<terrars::PrimField<bool>>,
+        error_message: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.0.data.borrow_mut().lifecycle.postcondition.push(terrars::LifecycleCondition {
+            condition: condition.into(),
+            error_message: error_message.into(),
+        });
         self
     }
 
-    #[doc= "Set the field `maximum_execution_frequency`.\n"]
-    pub fn set_maximum_execution_frequency(self, v: impl Into<PrimField<String>>) -> Self {
-        self.0.data.borrow_mut().maximum_execution_frequency = Some(v.into());
+    #[doc = "Set the field `description`.\n"]
+    pub fn set_description(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().description = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `tags`.\n"]
-    pub fn set_tags(self, v: impl Into<RecField<PrimField<String>>>) -> Self {
-        self.0.data.borrow_mut().tags = Some(v.into());
+    #[doc = "Set the field `id`.\n"]
+    pub fn set_id(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().id = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `tags_all`.\n"]
-    pub fn set_tags_all(self, v: impl Into<RecField<PrimField<String>>>) -> Self {
-        self.0.data.borrow_mut().tags_all = Some(v.into());
+    #[doc = "Set the field `input_parameters`.\n"]
+    pub fn set_input_parameters(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().input_parameters = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `scope`.\n"]
-    pub fn set_scope(self, v: impl Into<BlockAssignable<ConfigConfigRuleScopeEl>>) -> Self {
+    #[doc = "Set the field `maximum_execution_frequency`.\n"]
+    pub fn set_maximum_execution_frequency(
+        self,
+        v: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.0.data.borrow_mut().maximum_execution_frequency = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `tags`.\n"]
+    pub fn set_tags(
+        self,
+        v: impl std::convert::Into<terrars::RecField<terrars::PrimField<std::string::String>>>,
+    ) -> Self {
+        self.0.data.borrow_mut().tags = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `tags_all`.\n"]
+    pub fn set_tags_all(
+        self,
+        v: impl std::convert::Into<terrars::RecField<terrars::PrimField<std::string::String>>>,
+    ) -> Self {
+        self.0.data.borrow_mut().tags_all = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `scope`.\n"]
+    pub fn set_scope(self, v: impl std::convert::Into<terrars::BlockAssignable<ConfigConfigRuleScopeEl>>) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.0.data.borrow_mut().scope = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.0.data.borrow_mut().scope = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.0.data.borrow_mut().dynamic.scope = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.0.data.borrow_mut().dynamic.scope = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Set the field `source`.\n"]
-    pub fn set_source(self, v: impl Into<BlockAssignable<ConfigConfigRuleSourceEl>>) -> Self {
+    #[doc = "Set the field `source`.\n"]
+    pub fn set_source(self, v: impl std::convert::Into<terrars::BlockAssignable<ConfigConfigRuleSourceEl>>) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.0.data.borrow_mut().source = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.0.data.borrow_mut().source = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.0.data.borrow_mut().dynamic.source = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.0.data.borrow_mut().dynamic.source = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Get a reference to the value of field `arn` after provisioning.\n"]
-    pub fn arn(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.arn", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `arn` after provisioning.\n"]
+    pub fn arn(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.arn", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `description` after provisioning.\n"]
-    pub fn description(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.description", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `description` after provisioning.\n"]
+    pub fn description(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.description", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `id` after provisioning.\n"]
-    pub fn id(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
+    pub fn id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `input_parameters` after provisioning.\n"]
-    pub fn input_parameters(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.input_parameters", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `input_parameters` after provisioning.\n"]
+    pub fn input_parameters(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.input_parameters", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `maximum_execution_frequency` after provisioning.\n"]
-    pub fn maximum_execution_frequency(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.maximum_execution_frequency", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `maximum_execution_frequency` after provisioning.\n"]
+    pub fn maximum_execution_frequency(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.maximum_execution_frequency", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `name` after provisioning.\n"]
-    pub fn name(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `name` after provisioning.\n"]
+    pub fn name(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `rule_id` after provisioning.\n"]
-    pub fn rule_id(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.rule_id", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `rule_id` after provisioning.\n"]
+    pub fn rule_id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.rule_id", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `tags` after provisioning.\n"]
-    pub fn tags(&self) -> RecRef<PrimExpr<String>> {
-        RecRef::new(self.shared().clone(), format!("{}.tags", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `tags` after provisioning.\n"]
+    pub fn tags(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
+        terrars::RecRef::new(self.shared().clone(), format!("{}.tags", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `tags_all` after provisioning.\n"]
-    pub fn tags_all(&self) -> RecRef<PrimExpr<String>> {
-        RecRef::new(self.shared().clone(), format!("{}.tags_all", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `tags_all` after provisioning.\n"]
+    pub fn tags_all(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
+        terrars::RecRef::new(self.shared().clone(), format!("{}.tags_all", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `scope` after provisioning.\n"]
-    pub fn scope(&self) -> ListRef<ConfigConfigRuleScopeElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.scope", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `scope` after provisioning.\n"]
+    pub fn scope(&self) -> terrars::ListRef<ConfigConfigRuleScopeElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.scope", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `source` after provisioning.\n"]
-    pub fn source(&self) -> ListRef<ConfigConfigRuleSourceElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.source", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `source` after provisioning.\n"]
+    pub fn source(&self) -> terrars::ListRef<ConfigConfigRuleSourceElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.source", self.extract_ref()))
     }
 }
 
-impl Referable for ConfigConfigRule {
-    fn extract_ref(&self) -> String {
+impl terrars::Referable for ConfigConfigRule {
+    fn extract_ref(&self) -> std::string::String {
         format!("{}.{}", self.0.extract_resource_type(), self.0.extract_tf_id())
     }
 }
 
-impl Resource for ConfigConfigRule { }
+impl terrars::Resource for ConfigConfigRule { }
 
-impl ToListMappable for ConfigConfigRule {
-    type O = ListRef<ConfigConfigRuleRef>;
+impl terrars::ToListMappable for ConfigConfigRule {
+    type O = terrars::ListRef<ConfigConfigRuleRef>;
 
-    fn do_map(self, base: String) -> Self::O {
-        self.0.data.borrow_mut().for_each = Some(format!("${{{}}}", base));
-        ListRef::new(self.0.shared.clone(), self.extract_ref())
+    fn do_map(self, base: std::string::String) -> Self::O {
+        self.0.data.borrow_mut().for_each = std::option::Option::Some(format!("${{{}}}", base));
+        terrars::ListRef::new(self.0.shared.clone(), self.extract_ref())
     }
 }
 
-impl Resource_ for ConfigConfigRule_ {
-    fn extract_resource_type(&self) -> String {
+impl terrars::Resource_ for ConfigConfigRule_ {
+    fn extract_resource_type(&self) -> std::string::String {
         "aws_config_config_rule".into()
     }
 
-    fn extract_tf_id(&self) -> String {
+    fn extract_tf_id(&self) -> std::string::String {
         self.tf_id.clone()
     }
 
@@ -254,21 +300,22 @@ impl Resource_ for ConfigConfigRule_ {
 }
 
 pub struct BuildConfigConfigRule {
-    pub tf_id: String,
-    #[doc= ""]
-    pub name: PrimField<String>,
+    pub tf_id: std::string::String,
+    #[doc = ""]
+    pub name: terrars::PrimField<std::string::String>,
 }
 
 impl BuildConfigConfigRule {
-    pub fn build(self, stack: &mut Stack) -> ConfigConfigRule {
-        let out = ConfigConfigRule(Rc::new(ConfigConfigRule_ {
+    pub fn build(self, stack: &mut terrars::Stack) -> ConfigConfigRule {
+        let out = ConfigConfigRule(std::rc::Rc::new(ConfigConfigRule_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: RefCell::new(ConfigConfigRuleData {
+            data: std::cell::RefCell::new(ConfigConfigRuleData {
                 depends_on: core::default::Default::default(),
-                provider: None,
+                provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
-                for_each: None,
+                for_each: std::option::Option::None,
+                provisioner: core::default::Default::default(),
                 description: core::default::Default::default(),
                 id: core::default::Default::default(),
                 input_parameters: core::default::Default::default(),
@@ -278,7 +325,7 @@ impl BuildConfigConfigRule {
                 tags_all: core::default::Default::default(),
                 scope: core::default::Default::default(),
                 source: core::default::Default::default(),
-                dynamic: Default::default(),
+                dynamic: core::default::Default::default(),
             }),
         }));
         stack.add_resource(out.0.clone());
@@ -287,12 +334,12 @@ impl BuildConfigConfigRule {
 }
 
 pub struct ConfigConfigRuleRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for ConfigConfigRuleRef {
-    fn new(shared: StackShared, base: String) -> Self {
+impl terrars::Ref for ConfigConfigRuleRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> Self {
         Self {
             shared: shared,
             base: base,
@@ -301,113 +348,119 @@ impl Ref for ConfigConfigRuleRef {
 }
 
 impl ConfigConfigRuleRef {
-    fn extract_ref(&self) -> String {
+    fn extract_ref(&self) -> std::string::String {
         self.base.clone()
     }
 
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `arn` after provisioning.\n"]
-    pub fn arn(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.arn", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `arn` after provisioning.\n"]
+    pub fn arn(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.arn", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `description` after provisioning.\n"]
-    pub fn description(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.description", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `description` after provisioning.\n"]
+    pub fn description(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.description", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `id` after provisioning.\n"]
-    pub fn id(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
+    pub fn id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `input_parameters` after provisioning.\n"]
-    pub fn input_parameters(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.input_parameters", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `input_parameters` after provisioning.\n"]
+    pub fn input_parameters(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.input_parameters", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `maximum_execution_frequency` after provisioning.\n"]
-    pub fn maximum_execution_frequency(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.maximum_execution_frequency", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `maximum_execution_frequency` after provisioning.\n"]
+    pub fn maximum_execution_frequency(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.maximum_execution_frequency", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `name` after provisioning.\n"]
-    pub fn name(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `name` after provisioning.\n"]
+    pub fn name(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `rule_id` after provisioning.\n"]
-    pub fn rule_id(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.rule_id", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `rule_id` after provisioning.\n"]
+    pub fn rule_id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.rule_id", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `tags` after provisioning.\n"]
-    pub fn tags(&self) -> RecRef<PrimExpr<String>> {
-        RecRef::new(self.shared().clone(), format!("{}.tags", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `tags` after provisioning.\n"]
+    pub fn tags(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
+        terrars::RecRef::new(self.shared().clone(), format!("{}.tags", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `tags_all` after provisioning.\n"]
-    pub fn tags_all(&self) -> RecRef<PrimExpr<String>> {
-        RecRef::new(self.shared().clone(), format!("{}.tags_all", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `tags_all` after provisioning.\n"]
+    pub fn tags_all(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
+        terrars::RecRef::new(self.shared().clone(), format!("{}.tags_all", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `scope` after provisioning.\n"]
-    pub fn scope(&self) -> ListRef<ConfigConfigRuleScopeElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.scope", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `scope` after provisioning.\n"]
+    pub fn scope(&self) -> terrars::ListRef<ConfigConfigRuleScopeElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.scope", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `source` after provisioning.\n"]
-    pub fn source(&self) -> ListRef<ConfigConfigRuleSourceElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.source", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `source` after provisioning.\n"]
+    pub fn source(&self) -> terrars::ListRef<ConfigConfigRuleSourceElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.source", self.extract_ref()))
     }
 }
 
 #[derive(Serialize)]
 pub struct ConfigConfigRuleScopeEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    compliance_resource_id: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    compliance_resource_types: Option<SetField<PrimField<String>>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    tag_key: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    tag_value: Option<PrimField<String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    compliance_resource_id: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    compliance_resource_types: std::option::Option<terrars::SetField<terrars::PrimField<std::string::String>>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    tag_key: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    tag_value: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
 impl ConfigConfigRuleScopeEl {
-    #[doc= "Set the field `compliance_resource_id`.\n"]
-    pub fn set_compliance_resource_id(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.compliance_resource_id = Some(v.into());
+    #[doc = "Set the field `compliance_resource_id`.\n"]
+    pub fn set_compliance_resource_id(
+        mut self,
+        v: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.compliance_resource_id = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `compliance_resource_types`.\n"]
-    pub fn set_compliance_resource_types(mut self, v: impl Into<SetField<PrimField<String>>>) -> Self {
-        self.compliance_resource_types = Some(v.into());
+    #[doc = "Set the field `compliance_resource_types`.\n"]
+    pub fn set_compliance_resource_types(
+        mut self,
+        v: impl std::convert::Into<terrars::SetField<terrars::PrimField<std::string::String>>>,
+    ) -> Self {
+        self.compliance_resource_types = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `tag_key`.\n"]
-    pub fn set_tag_key(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.tag_key = Some(v.into());
+    #[doc = "Set the field `tag_key`.\n"]
+    pub fn set_tag_key(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.tag_key = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `tag_value`.\n"]
-    pub fn set_tag_value(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.tag_value = Some(v.into());
+    #[doc = "Set the field `tag_value`.\n"]
+    pub fn set_tag_value(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.tag_value = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl ToListMappable for ConfigConfigRuleScopeEl {
-    type O = BlockAssignable<ConfigConfigRuleScopeEl>;
+impl terrars::ToListMappable for ConfigConfigRuleScopeEl {
+    type O = terrars::BlockAssignable<ConfigConfigRuleScopeEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -429,12 +482,12 @@ impl BuildConfigConfigRuleScopeEl {
 }
 
 pub struct ConfigConfigRuleScopeElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for ConfigConfigRuleScopeElRef {
-    fn new(shared: StackShared, base: String) -> ConfigConfigRuleScopeElRef {
+impl terrars::Ref for ConfigConfigRuleScopeElRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> ConfigConfigRuleScopeElRef {
         ConfigConfigRuleScopeElRef {
             shared: shared,
             base: base.to_string(),
@@ -443,52 +496,52 @@ impl Ref for ConfigConfigRuleScopeElRef {
 }
 
 impl ConfigConfigRuleScopeElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `compliance_resource_id` after provisioning.\n"]
-    pub fn compliance_resource_id(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.compliance_resource_id", self.base))
+    #[doc = "Get a reference to the value of field `compliance_resource_id` after provisioning.\n"]
+    pub fn compliance_resource_id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.compliance_resource_id", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `compliance_resource_types` after provisioning.\n"]
-    pub fn compliance_resource_types(&self) -> SetRef<PrimExpr<String>> {
-        SetRef::new(self.shared().clone(), format!("{}.compliance_resource_types", self.base))
+    #[doc = "Get a reference to the value of field `compliance_resource_types` after provisioning.\n"]
+    pub fn compliance_resource_types(&self) -> terrars::SetRef<terrars::PrimExpr<std::string::String>> {
+        terrars::SetRef::new(self.shared().clone(), format!("{}.compliance_resource_types", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `tag_key` after provisioning.\n"]
-    pub fn tag_key(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.tag_key", self.base))
+    #[doc = "Get a reference to the value of field `tag_key` after provisioning.\n"]
+    pub fn tag_key(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.tag_key", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `tag_value` after provisioning.\n"]
-    pub fn tag_value(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.tag_value", self.base))
+    #[doc = "Get a reference to the value of field `tag_value` after provisioning.\n"]
+    pub fn tag_value(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.tag_value", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct ConfigConfigRuleSourceElCustomPolicyDetailsEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    enable_debug_log_delivery: Option<PrimField<bool>>,
-    policy_runtime: PrimField<String>,
-    policy_text: PrimField<String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    enable_debug_log_delivery: std::option::Option<terrars::PrimField<bool>>,
+    policy_runtime: terrars::PrimField<std::string::String>,
+    policy_text: terrars::PrimField<std::string::String>,
 }
 
 impl ConfigConfigRuleSourceElCustomPolicyDetailsEl {
-    #[doc= "Set the field `enable_debug_log_delivery`.\n"]
-    pub fn set_enable_debug_log_delivery(mut self, v: impl Into<PrimField<bool>>) -> Self {
-        self.enable_debug_log_delivery = Some(v.into());
+    #[doc = "Set the field `enable_debug_log_delivery`.\n"]
+    pub fn set_enable_debug_log_delivery(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
+        self.enable_debug_log_delivery = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl ToListMappable for ConfigConfigRuleSourceElCustomPolicyDetailsEl {
-    type O = BlockAssignable<ConfigConfigRuleSourceElCustomPolicyDetailsEl>;
+impl terrars::ToListMappable for ConfigConfigRuleSourceElCustomPolicyDetailsEl {
+    type O = terrars::BlockAssignable<ConfigConfigRuleSourceElCustomPolicyDetailsEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -497,10 +550,10 @@ impl ToListMappable for ConfigConfigRuleSourceElCustomPolicyDetailsEl {
 }
 
 pub struct BuildConfigConfigRuleSourceElCustomPolicyDetailsEl {
-    #[doc= ""]
-    pub policy_runtime: PrimField<String>,
-    #[doc= ""]
-    pub policy_text: PrimField<String>,
+    #[doc = ""]
+    pub policy_runtime: terrars::PrimField<std::string::String>,
+    #[doc = ""]
+    pub policy_text: terrars::PrimField<std::string::String>,
 }
 
 impl BuildConfigConfigRuleSourceElCustomPolicyDetailsEl {
@@ -514,12 +567,15 @@ impl BuildConfigConfigRuleSourceElCustomPolicyDetailsEl {
 }
 
 pub struct ConfigConfigRuleSourceElCustomPolicyDetailsElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for ConfigConfigRuleSourceElCustomPolicyDetailsElRef {
-    fn new(shared: StackShared, base: String) -> ConfigConfigRuleSourceElCustomPolicyDetailsElRef {
+impl terrars::Ref for ConfigConfigRuleSourceElCustomPolicyDetailsElRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> ConfigConfigRuleSourceElCustomPolicyDetailsElRef {
         ConfigConfigRuleSourceElCustomPolicyDetailsElRef {
             shared: shared,
             base: base.to_string(),
@@ -528,61 +584,64 @@ impl Ref for ConfigConfigRuleSourceElCustomPolicyDetailsElRef {
 }
 
 impl ConfigConfigRuleSourceElCustomPolicyDetailsElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `enable_debug_log_delivery` after provisioning.\n"]
-    pub fn enable_debug_log_delivery(&self) -> PrimExpr<bool> {
-        PrimExpr::new(self.shared().clone(), format!("{}.enable_debug_log_delivery", self.base))
+    #[doc = "Get a reference to the value of field `enable_debug_log_delivery` after provisioning.\n"]
+    pub fn enable_debug_log_delivery(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.enable_debug_log_delivery", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `policy_runtime` after provisioning.\n"]
-    pub fn policy_runtime(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.policy_runtime", self.base))
+    #[doc = "Get a reference to the value of field `policy_runtime` after provisioning.\n"]
+    pub fn policy_runtime(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.policy_runtime", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `policy_text` after provisioning.\n"]
-    pub fn policy_text(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.policy_text", self.base))
+    #[doc = "Get a reference to the value of field `policy_text` after provisioning.\n"]
+    pub fn policy_text(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.policy_text", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct ConfigConfigRuleSourceElSourceDetailEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    event_source: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    maximum_execution_frequency: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    message_type: Option<PrimField<String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    event_source: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    maximum_execution_frequency: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    message_type: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
 impl ConfigConfigRuleSourceElSourceDetailEl {
-    #[doc= "Set the field `event_source`.\n"]
-    pub fn set_event_source(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.event_source = Some(v.into());
+    #[doc = "Set the field `event_source`.\n"]
+    pub fn set_event_source(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.event_source = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `maximum_execution_frequency`.\n"]
-    pub fn set_maximum_execution_frequency(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.maximum_execution_frequency = Some(v.into());
+    #[doc = "Set the field `maximum_execution_frequency`.\n"]
+    pub fn set_maximum_execution_frequency(
+        mut self,
+        v: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.maximum_execution_frequency = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `message_type`.\n"]
-    pub fn set_message_type(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.message_type = Some(v.into());
+    #[doc = "Set the field `message_type`.\n"]
+    pub fn set_message_type(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.message_type = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl ToListMappable for ConfigConfigRuleSourceElSourceDetailEl {
-    type O = BlockAssignable<ConfigConfigRuleSourceElSourceDetailEl>;
+impl terrars::ToListMappable for ConfigConfigRuleSourceElSourceDetailEl {
+    type O = terrars::BlockAssignable<ConfigConfigRuleSourceElSourceDetailEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -603,12 +662,12 @@ impl BuildConfigConfigRuleSourceElSourceDetailEl {
 }
 
 pub struct ConfigConfigRuleSourceElSourceDetailElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for ConfigConfigRuleSourceElSourceDetailElRef {
-    fn new(shared: StackShared, base: String) -> ConfigConfigRuleSourceElSourceDetailElRef {
+impl terrars::Ref for ConfigConfigRuleSourceElSourceDetailElRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> ConfigConfigRuleSourceElSourceDetailElRef {
         ConfigConfigRuleSourceElSourceDetailElRef {
             shared: shared,
             base: base.to_string(),
@@ -617,86 +676,89 @@ impl Ref for ConfigConfigRuleSourceElSourceDetailElRef {
 }
 
 impl ConfigConfigRuleSourceElSourceDetailElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `event_source` after provisioning.\n"]
-    pub fn event_source(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.event_source", self.base))
+    #[doc = "Get a reference to the value of field `event_source` after provisioning.\n"]
+    pub fn event_source(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.event_source", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `maximum_execution_frequency` after provisioning.\n"]
-    pub fn maximum_execution_frequency(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.maximum_execution_frequency", self.base))
+    #[doc = "Get a reference to the value of field `maximum_execution_frequency` after provisioning.\n"]
+    pub fn maximum_execution_frequency(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.maximum_execution_frequency", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `message_type` after provisioning.\n"]
-    pub fn message_type(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.message_type", self.base))
+    #[doc = "Get a reference to the value of field `message_type` after provisioning.\n"]
+    pub fn message_type(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.message_type", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
 struct ConfigConfigRuleSourceElDynamic {
-    custom_policy_details: Option<DynamicBlock<ConfigConfigRuleSourceElCustomPolicyDetailsEl>>,
-    source_detail: Option<DynamicBlock<ConfigConfigRuleSourceElSourceDetailEl>>,
+    custom_policy_details: std::option::Option<terrars::DynamicBlock<ConfigConfigRuleSourceElCustomPolicyDetailsEl>>,
+    source_detail: std::option::Option<terrars::DynamicBlock<ConfigConfigRuleSourceElSourceDetailEl>>,
 }
 
 #[derive(Serialize)]
 pub struct ConfigConfigRuleSourceEl {
-    owner: PrimField<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    source_identifier: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    custom_policy_details: Option<Vec<ConfigConfigRuleSourceElCustomPolicyDetailsEl>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    source_detail: Option<Vec<ConfigConfigRuleSourceElSourceDetailEl>>,
+    owner: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    source_identifier: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    custom_policy_details: std::option::Option<std::vec::Vec<ConfigConfigRuleSourceElCustomPolicyDetailsEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    source_detail: std::option::Option<std::vec::Vec<ConfigConfigRuleSourceElSourceDetailEl>>,
     dynamic: ConfigConfigRuleSourceElDynamic,
 }
 
 impl ConfigConfigRuleSourceEl {
-    #[doc= "Set the field `source_identifier`.\n"]
-    pub fn set_source_identifier(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.source_identifier = Some(v.into());
+    #[doc = "Set the field `source_identifier`.\n"]
+    pub fn set_source_identifier(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.source_identifier = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `custom_policy_details`.\n"]
+    #[doc = "Set the field `custom_policy_details`.\n"]
     pub fn set_custom_policy_details(
         mut self,
-        v: impl Into<BlockAssignable<ConfigConfigRuleSourceElCustomPolicyDetailsEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<ConfigConfigRuleSourceElCustomPolicyDetailsEl>>,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.custom_policy_details = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.custom_policy_details = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.custom_policy_details = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.custom_policy_details = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Set the field `source_detail`.\n"]
-    pub fn set_source_detail(mut self, v: impl Into<BlockAssignable<ConfigConfigRuleSourceElSourceDetailEl>>) -> Self {
+    #[doc = "Set the field `source_detail`.\n"]
+    pub fn set_source_detail(
+        mut self,
+        v: impl std::convert::Into<terrars::BlockAssignable<ConfigConfigRuleSourceElSourceDetailEl>>,
+    ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.source_detail = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.source_detail = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.source_detail = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.source_detail = std::option::Option::Some(d);
             },
         }
         self
     }
 }
 
-impl ToListMappable for ConfigConfigRuleSourceEl {
-    type O = BlockAssignable<ConfigConfigRuleSourceEl>;
+impl terrars::ToListMappable for ConfigConfigRuleSourceEl {
+    type O = terrars::BlockAssignable<ConfigConfigRuleSourceEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -705,8 +767,8 @@ impl ToListMappable for ConfigConfigRuleSourceEl {
 }
 
 pub struct BuildConfigConfigRuleSourceEl {
-    #[doc= ""]
-    pub owner: PrimField<String>,
+    #[doc = ""]
+    pub owner: terrars::PrimField<std::string::String>,
 }
 
 impl BuildConfigConfigRuleSourceEl {
@@ -716,18 +778,18 @@ impl BuildConfigConfigRuleSourceEl {
             source_identifier: core::default::Default::default(),
             custom_policy_details: core::default::Default::default(),
             source_detail: core::default::Default::default(),
-            dynamic: Default::default(),
+            dynamic: core::default::Default::default(),
         }
     }
 }
 
 pub struct ConfigConfigRuleSourceElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for ConfigConfigRuleSourceElRef {
-    fn new(shared: StackShared, base: String) -> ConfigConfigRuleSourceElRef {
+impl terrars::Ref for ConfigConfigRuleSourceElRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> ConfigConfigRuleSourceElRef {
         ConfigConfigRuleSourceElRef {
             shared: shared,
             base: base.to_string(),
@@ -736,28 +798,28 @@ impl Ref for ConfigConfigRuleSourceElRef {
 }
 
 impl ConfigConfigRuleSourceElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `owner` after provisioning.\n"]
-    pub fn owner(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.owner", self.base))
+    #[doc = "Get a reference to the value of field `owner` after provisioning.\n"]
+    pub fn owner(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.owner", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `source_identifier` after provisioning.\n"]
-    pub fn source_identifier(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.source_identifier", self.base))
+    #[doc = "Get a reference to the value of field `source_identifier` after provisioning.\n"]
+    pub fn source_identifier(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.source_identifier", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `custom_policy_details` after provisioning.\n"]
-    pub fn custom_policy_details(&self) -> ListRef<ConfigConfigRuleSourceElCustomPolicyDetailsElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.custom_policy_details", self.base))
+    #[doc = "Get a reference to the value of field `custom_policy_details` after provisioning.\n"]
+    pub fn custom_policy_details(&self) -> terrars::ListRef<ConfigConfigRuleSourceElCustomPolicyDetailsElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.custom_policy_details", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
 struct ConfigConfigRuleDynamic {
-    scope: Option<DynamicBlock<ConfigConfigRuleScopeEl>>,
-    source: Option<DynamicBlock<ConfigConfigRuleSourceEl>>,
+    scope: std::option::Option<terrars::DynamicBlock<ConfigConfigRuleScopeEl>>,
+    source: std::option::Option<terrars::DynamicBlock<ConfigConfigRuleSourceEl>>,
 }

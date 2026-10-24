@@ -1,51 +1,55 @@
 use serde::Serialize;
-use std::cell::RefCell;
-use std::rc::Rc;
-use terrars::*;
+use terrars::{
+    Referable as _,
+    Resource_ as _,
+    Ref as _,
+};
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
 struct RedshiftEndpointAccessData {
-    #[serde(skip_serializing_if = "Vec::is_empty")]
-    depends_on: Vec<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    provider: Option<String>,
-    #[serde(skip_serializing_if = "SerdeSkipDefault::is_default")]
-    lifecycle: ResourceLifecycle,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    for_each: Option<String>,
-    cluster_identifier: PrimField<String>,
-    endpoint_name: PrimField<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    id: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    resource_owner: Option<PrimField<String>>,
-    subnet_group_name: PrimField<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    vpc_security_group_ids: Option<SetField<PrimField<String>>>,
+    #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
+    depends_on: std::vec::Vec<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    provider: std::option::Option<std::string::String>,
+    #[serde(skip_serializing_if = "terrars::SerdeSkipDefault::is_default")]
+    lifecycle: terrars::ResourceLifecycle,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    for_each: std::option::Option<std::string::String>,
+    #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
+    provisioner: std::vec::Vec<terrars::Provisioner>,
+    cluster_identifier: terrars::PrimField<std::string::String>,
+    endpoint_name: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    id: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    resource_owner: std::option::Option<terrars::PrimField<std::string::String>>,
+    subnet_group_name: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    vpc_security_group_ids: std::option::Option<terrars::SetField<terrars::PrimField<std::string::String>>>,
 }
 
 struct RedshiftEndpointAccess_ {
-    shared: StackShared,
-    tf_id: String,
-    data: RefCell<RedshiftEndpointAccessData>,
+    shared: terrars::StackShared,
+    tf_id: std::string::String,
+    data: std::cell::RefCell<RedshiftEndpointAccessData>,
 }
 
 #[derive(Clone)]
-pub struct RedshiftEndpointAccess(Rc<RedshiftEndpointAccess_>);
+pub struct RedshiftEndpointAccess(std::rc::Rc<RedshiftEndpointAccess_>);
 
 impl RedshiftEndpointAccess {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.0.shared
     }
 
-    pub fn depends_on(self, dep: &impl Referable) -> Self {
+    pub fn depends_on(self, dep: &impl terrars::Referable) -> Self {
         self.0.data.borrow_mut().depends_on.push(dep.extract_ref());
         self
     }
 
     pub fn set_provider(self, provider: &ProviderAws) -> Self {
-        self.0.data.borrow_mut().provider = Some(provider.provider_ref());
+        self.0.data.borrow_mut().provider = std::option::Option::Some(provider.provider_ref());
         self
     }
 
@@ -60,128 +64,164 @@ impl RedshiftEndpointAccess {
     }
 
     pub fn ignore_changes_to_all(self) -> Self {
-        self.0.data.borrow_mut().lifecycle.ignore_changes = Some(IgnoreChanges::All(IgnoreChangesAll::All));
+        self.0.data.borrow_mut().lifecycle.ignore_changes =
+            std::option::Option::Some(terrars::IgnoreChanges::All(terrars::IgnoreChangesAll::All));
         self
     }
 
-    pub fn ignore_changes_to_attr(self, attr: impl ToString) -> Self {
+    pub fn ignore_changes_to_attr(self, attr: impl std::string::ToString) -> Self {
         {
             let mut d = self.0.data.borrow_mut();
             if match &mut d.lifecycle.ignore_changes {
-                Some(i) => match i {
-                    IgnoreChanges::All(_) => {
+                std::option::Option::Some(i) => match i {
+                    terrars::IgnoreChanges::All(_) => {
                         true
                     },
-                    IgnoreChanges::Refs(r) => {
+                    terrars::IgnoreChanges::Refs(r) => {
                         r.push(attr.to_string());
                         false
                     },
                 },
-                None => true,
+                std::option::Option::None => true,
             } {
-                d.lifecycle.ignore_changes = Some(IgnoreChanges::Refs(vec![attr.to_string()]));
+                d.lifecycle.ignore_changes =
+                    std::option::Option::Some(terrars::IgnoreChanges::Refs(vec![attr.to_string()]));
             }
         }
         self
     }
 
-    pub fn replace_triggered_by_resource(self, r: &impl Resource) -> Self {
+    pub fn replace_triggered_by_resource(self, r: &impl terrars::Resource) -> Self {
         self.0.data.borrow_mut().lifecycle.replace_triggered_by.push(r.extract_ref());
         self
     }
 
-    pub fn replace_triggered_by_attr(self, attr: impl ToString) -> Self {
+    pub fn replace_triggered_by_attr(self, attr: impl std::string::ToString) -> Self {
         self.0.data.borrow_mut().lifecycle.replace_triggered_by.push(attr.to_string());
         self
     }
 
-    #[doc= "Set the field `id`.\n"]
-    pub fn set_id(self, v: impl Into<PrimField<String>>) -> Self {
-        self.0.data.borrow_mut().id = Some(v.into());
+    #[doc = r" Add a provisioner (ex: `local-exec`, `remote-exec`, `file`) to this resource."]
+    #[doc = r" Provisioners run in the order they're added."]
+    pub fn add_provisioner(self, v: impl std::convert::Into<terrars::Provisioner>) -> Self {
+        self.0.data.borrow_mut().provisioner.push(v.into());
         self
     }
 
-    #[doc= "Set the field `resource_owner`.\n"]
-    pub fn set_resource_owner(self, v: impl Into<PrimField<String>>) -> Self {
-        self.0.data.borrow_mut().resource_owner = Some(v.into());
+    pub fn add_lifecycle_precondition(
+        self,
+        condition: impl std::convert::Into<terrars::PrimField<bool>>,
+        error_message: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.0.data.borrow_mut().lifecycle.precondition.push(terrars::LifecycleCondition {
+            condition: condition.into(),
+            error_message: error_message.into(),
+        });
         self
     }
 
-    #[doc= "Set the field `vpc_security_group_ids`.\n"]
-    pub fn set_vpc_security_group_ids(self, v: impl Into<SetField<PrimField<String>>>) -> Self {
-        self.0.data.borrow_mut().vpc_security_group_ids = Some(v.into());
+    pub fn add_lifecycle_postcondition(
+        self,
+        condition: impl std::convert::Into<terrars::PrimField<bool>>,
+        error_message: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.0.data.borrow_mut().lifecycle.postcondition.push(terrars::LifecycleCondition {
+            condition: condition.into(),
+            error_message: error_message.into(),
+        });
         self
     }
 
-    #[doc= "Get a reference to the value of field `address` after provisioning.\n"]
-    pub fn address(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.address", self.extract_ref()))
+    #[doc = "Set the field `id`.\n"]
+    pub fn set_id(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().id = std::option::Option::Some(v.into());
+        self
     }
 
-    #[doc= "Get a reference to the value of field `cluster_identifier` after provisioning.\n"]
-    pub fn cluster_identifier(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.cluster_identifier", self.extract_ref()))
+    #[doc = "Set the field `resource_owner`.\n"]
+    pub fn set_resource_owner(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().resource_owner = std::option::Option::Some(v.into());
+        self
     }
 
-    #[doc= "Get a reference to the value of field `endpoint_name` after provisioning.\n"]
-    pub fn endpoint_name(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.endpoint_name", self.extract_ref()))
+    #[doc = "Set the field `vpc_security_group_ids`.\n"]
+    pub fn set_vpc_security_group_ids(
+        self,
+        v: impl std::convert::Into<terrars::SetField<terrars::PrimField<std::string::String>>>,
+    ) -> Self {
+        self.0.data.borrow_mut().vpc_security_group_ids = std::option::Option::Some(v.into());
+        self
     }
 
-    #[doc= "Get a reference to the value of field `id` after provisioning.\n"]
-    pub fn id(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `address` after provisioning.\n"]
+    pub fn address(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.address", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `port` after provisioning.\n"]
-    pub fn port(&self) -> PrimExpr<f64> {
-        PrimExpr::new(self.shared().clone(), format!("{}.port", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `cluster_identifier` after provisioning.\n"]
+    pub fn cluster_identifier(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.cluster_identifier", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `resource_owner` after provisioning.\n"]
-    pub fn resource_owner(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.resource_owner", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `endpoint_name` after provisioning.\n"]
+    pub fn endpoint_name(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.endpoint_name", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `subnet_group_name` after provisioning.\n"]
-    pub fn subnet_group_name(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.subnet_group_name", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
+    pub fn id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `vpc_endpoint` after provisioning.\n"]
-    pub fn vpc_endpoint(&self) -> ListRef<RedshiftEndpointAccessVpcEndpointElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.vpc_endpoint", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `port` after provisioning.\n"]
+    pub fn port(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.port", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `vpc_security_group_ids` after provisioning.\n"]
-    pub fn vpc_security_group_ids(&self) -> SetRef<PrimExpr<String>> {
-        SetRef::new(self.shared().clone(), format!("{}.vpc_security_group_ids", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `resource_owner` after provisioning.\n"]
+    pub fn resource_owner(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.resource_owner", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `subnet_group_name` after provisioning.\n"]
+    pub fn subnet_group_name(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.subnet_group_name", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `vpc_endpoint` after provisioning.\n"]
+    pub fn vpc_endpoint(&self) -> terrars::ListRef<RedshiftEndpointAccessVpcEndpointElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.vpc_endpoint", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `vpc_security_group_ids` after provisioning.\n"]
+    pub fn vpc_security_group_ids(&self) -> terrars::SetRef<terrars::PrimExpr<std::string::String>> {
+        terrars::SetRef::new(self.shared().clone(), format!("{}.vpc_security_group_ids", self.extract_ref()))
     }
 }
 
-impl Referable for RedshiftEndpointAccess {
-    fn extract_ref(&self) -> String {
+impl terrars::Referable for RedshiftEndpointAccess {
+    fn extract_ref(&self) -> std::string::String {
         format!("{}.{}", self.0.extract_resource_type(), self.0.extract_tf_id())
     }
 }
 
-impl Resource for RedshiftEndpointAccess { }
+impl terrars::Resource for RedshiftEndpointAccess { }
 
-impl ToListMappable for RedshiftEndpointAccess {
-    type O = ListRef<RedshiftEndpointAccessRef>;
+impl terrars::ToListMappable for RedshiftEndpointAccess {
+    type O = terrars::ListRef<RedshiftEndpointAccessRef>;
 
-    fn do_map(self, base: String) -> Self::O {
-        self.0.data.borrow_mut().for_each = Some(format!("${{{}}}", base));
-        ListRef::new(self.0.shared.clone(), self.extract_ref())
+    fn do_map(self, base: std::string::String) -> Self::O {
+        self.0.data.borrow_mut().for_each = std::option::Option::Some(format!("${{{}}}", base));
+        terrars::ListRef::new(self.0.shared.clone(), self.extract_ref())
     }
 }
 
-impl Resource_ for RedshiftEndpointAccess_ {
-    fn extract_resource_type(&self) -> String {
+impl terrars::Resource_ for RedshiftEndpointAccess_ {
+    fn extract_resource_type(&self) -> std::string::String {
         "aws_redshift_endpoint_access".into()
     }
 
-    fn extract_tf_id(&self) -> String {
+    fn extract_tf_id(&self) -> std::string::String {
         self.tf_id.clone()
     }
 
@@ -191,25 +231,26 @@ impl Resource_ for RedshiftEndpointAccess_ {
 }
 
 pub struct BuildRedshiftEndpointAccess {
-    pub tf_id: String,
-    #[doc= ""]
-    pub cluster_identifier: PrimField<String>,
-    #[doc= ""]
-    pub endpoint_name: PrimField<String>,
-    #[doc= ""]
-    pub subnet_group_name: PrimField<String>,
+    pub tf_id: std::string::String,
+    #[doc = ""]
+    pub cluster_identifier: terrars::PrimField<std::string::String>,
+    #[doc = ""]
+    pub endpoint_name: terrars::PrimField<std::string::String>,
+    #[doc = ""]
+    pub subnet_group_name: terrars::PrimField<std::string::String>,
 }
 
 impl BuildRedshiftEndpointAccess {
-    pub fn build(self, stack: &mut Stack) -> RedshiftEndpointAccess {
-        let out = RedshiftEndpointAccess(Rc::new(RedshiftEndpointAccess_ {
+    pub fn build(self, stack: &mut terrars::Stack) -> RedshiftEndpointAccess {
+        let out = RedshiftEndpointAccess(std::rc::Rc::new(RedshiftEndpointAccess_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: RefCell::new(RedshiftEndpointAccessData {
+            data: std::cell::RefCell::new(RedshiftEndpointAccessData {
                 depends_on: core::default::Default::default(),
-                provider: None,
+                provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
-                for_each: None,
+                for_each: std::option::Option::None,
+                provisioner: core::default::Default::default(),
                 cluster_identifier: self.cluster_identifier,
                 endpoint_name: self.endpoint_name,
                 id: core::default::Default::default(),
@@ -224,12 +265,12 @@ impl BuildRedshiftEndpointAccess {
 }
 
 pub struct RedshiftEndpointAccessRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for RedshiftEndpointAccessRef {
-    fn new(shared: StackShared, base: String) -> Self {
+impl terrars::Ref for RedshiftEndpointAccessRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> Self {
         Self {
             shared: shared,
             base: base,
@@ -238,103 +279,109 @@ impl Ref for RedshiftEndpointAccessRef {
 }
 
 impl RedshiftEndpointAccessRef {
-    fn extract_ref(&self) -> String {
+    fn extract_ref(&self) -> std::string::String {
         self.base.clone()
     }
 
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `address` after provisioning.\n"]
-    pub fn address(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.address", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `address` after provisioning.\n"]
+    pub fn address(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.address", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `cluster_identifier` after provisioning.\n"]
-    pub fn cluster_identifier(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.cluster_identifier", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `cluster_identifier` after provisioning.\n"]
+    pub fn cluster_identifier(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.cluster_identifier", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `endpoint_name` after provisioning.\n"]
-    pub fn endpoint_name(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.endpoint_name", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `endpoint_name` after provisioning.\n"]
+    pub fn endpoint_name(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.endpoint_name", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `id` after provisioning.\n"]
-    pub fn id(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
+    pub fn id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `port` after provisioning.\n"]
-    pub fn port(&self) -> PrimExpr<f64> {
-        PrimExpr::new(self.shared().clone(), format!("{}.port", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `port` after provisioning.\n"]
+    pub fn port(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.port", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `resource_owner` after provisioning.\n"]
-    pub fn resource_owner(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.resource_owner", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `resource_owner` after provisioning.\n"]
+    pub fn resource_owner(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.resource_owner", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `subnet_group_name` after provisioning.\n"]
-    pub fn subnet_group_name(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.subnet_group_name", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `subnet_group_name` after provisioning.\n"]
+    pub fn subnet_group_name(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.subnet_group_name", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `vpc_endpoint` after provisioning.\n"]
-    pub fn vpc_endpoint(&self) -> ListRef<RedshiftEndpointAccessVpcEndpointElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.vpc_endpoint", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `vpc_endpoint` after provisioning.\n"]
+    pub fn vpc_endpoint(&self) -> terrars::ListRef<RedshiftEndpointAccessVpcEndpointElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.vpc_endpoint", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `vpc_security_group_ids` after provisioning.\n"]
-    pub fn vpc_security_group_ids(&self) -> SetRef<PrimExpr<String>> {
-        SetRef::new(self.shared().clone(), format!("{}.vpc_security_group_ids", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `vpc_security_group_ids` after provisioning.\n"]
+    pub fn vpc_security_group_ids(&self) -> terrars::SetRef<terrars::PrimExpr<std::string::String>> {
+        terrars::SetRef::new(self.shared().clone(), format!("{}.vpc_security_group_ids", self.extract_ref()))
     }
 }
 
 #[derive(Serialize)]
 pub struct RedshiftEndpointAccessVpcEndpointElNetworkInterfaceEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    availability_zone: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    network_interface_id: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    private_ip_address: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    subnet_id: Option<PrimField<String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    availability_zone: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    network_interface_id: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    private_ip_address: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    subnet_id: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
 impl RedshiftEndpointAccessVpcEndpointElNetworkInterfaceEl {
-    #[doc= "Set the field `availability_zone`.\n"]
-    pub fn set_availability_zone(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.availability_zone = Some(v.into());
+    #[doc = "Set the field `availability_zone`.\n"]
+    pub fn set_availability_zone(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.availability_zone = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `network_interface_id`.\n"]
-    pub fn set_network_interface_id(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.network_interface_id = Some(v.into());
+    #[doc = "Set the field `network_interface_id`.\n"]
+    pub fn set_network_interface_id(
+        mut self,
+        v: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.network_interface_id = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `private_ip_address`.\n"]
-    pub fn set_private_ip_address(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.private_ip_address = Some(v.into());
+    #[doc = "Set the field `private_ip_address`.\n"]
+    pub fn set_private_ip_address(
+        mut self,
+        v: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.private_ip_address = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `subnet_id`.\n"]
-    pub fn set_subnet_id(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.subnet_id = Some(v.into());
+    #[doc = "Set the field `subnet_id`.\n"]
+    pub fn set_subnet_id(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.subnet_id = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl ToListMappable for RedshiftEndpointAccessVpcEndpointElNetworkInterfaceEl {
-    type O = BlockAssignable<RedshiftEndpointAccessVpcEndpointElNetworkInterfaceEl>;
+impl terrars::ToListMappable for RedshiftEndpointAccessVpcEndpointElNetworkInterfaceEl {
+    type O = terrars::BlockAssignable<RedshiftEndpointAccessVpcEndpointElNetworkInterfaceEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -356,12 +403,15 @@ impl BuildRedshiftEndpointAccessVpcEndpointElNetworkInterfaceEl {
 }
 
 pub struct RedshiftEndpointAccessVpcEndpointElNetworkInterfaceElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for RedshiftEndpointAccessVpcEndpointElNetworkInterfaceElRef {
-    fn new(shared: StackShared, base: String) -> RedshiftEndpointAccessVpcEndpointElNetworkInterfaceElRef {
+impl terrars::Ref for RedshiftEndpointAccessVpcEndpointElNetworkInterfaceElRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> RedshiftEndpointAccessVpcEndpointElNetworkInterfaceElRef {
         RedshiftEndpointAccessVpcEndpointElNetworkInterfaceElRef {
             shared: shared,
             base: base.to_string(),
@@ -370,69 +420,69 @@ impl Ref for RedshiftEndpointAccessVpcEndpointElNetworkInterfaceElRef {
 }
 
 impl RedshiftEndpointAccessVpcEndpointElNetworkInterfaceElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `availability_zone` after provisioning.\n"]
-    pub fn availability_zone(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.availability_zone", self.base))
+    #[doc = "Get a reference to the value of field `availability_zone` after provisioning.\n"]
+    pub fn availability_zone(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.availability_zone", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `network_interface_id` after provisioning.\n"]
-    pub fn network_interface_id(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.network_interface_id", self.base))
+    #[doc = "Get a reference to the value of field `network_interface_id` after provisioning.\n"]
+    pub fn network_interface_id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.network_interface_id", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `private_ip_address` after provisioning.\n"]
-    pub fn private_ip_address(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.private_ip_address", self.base))
+    #[doc = "Get a reference to the value of field `private_ip_address` after provisioning.\n"]
+    pub fn private_ip_address(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.private_ip_address", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `subnet_id` after provisioning.\n"]
-    pub fn subnet_id(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.subnet_id", self.base))
+    #[doc = "Get a reference to the value of field `subnet_id` after provisioning.\n"]
+    pub fn subnet_id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.subnet_id", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct RedshiftEndpointAccessVpcEndpointEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    network_interface: Option<ListField<RedshiftEndpointAccessVpcEndpointElNetworkInterfaceEl>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    vpc_endpoint_id: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    vpc_id: Option<PrimField<String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    network_interface: std::option::Option<terrars::ListField<RedshiftEndpointAccessVpcEndpointElNetworkInterfaceEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    vpc_endpoint_id: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    vpc_id: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
 impl RedshiftEndpointAccessVpcEndpointEl {
-    #[doc= "Set the field `network_interface`.\n"]
+    #[doc = "Set the field `network_interface`.\n"]
     pub fn set_network_interface(
         mut self,
-        v: impl Into<ListField<RedshiftEndpointAccessVpcEndpointElNetworkInterfaceEl>>,
+        v: impl std::convert::Into<terrars::ListField<RedshiftEndpointAccessVpcEndpointElNetworkInterfaceEl>>,
     ) -> Self {
-        self.network_interface = Some(v.into());
+        self.network_interface = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `vpc_endpoint_id`.\n"]
-    pub fn set_vpc_endpoint_id(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.vpc_endpoint_id = Some(v.into());
+    #[doc = "Set the field `vpc_endpoint_id`.\n"]
+    pub fn set_vpc_endpoint_id(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.vpc_endpoint_id = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `vpc_id`.\n"]
-    pub fn set_vpc_id(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.vpc_id = Some(v.into());
+    #[doc = "Set the field `vpc_id`.\n"]
+    pub fn set_vpc_id(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.vpc_id = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl ToListMappable for RedshiftEndpointAccessVpcEndpointEl {
-    type O = BlockAssignable<RedshiftEndpointAccessVpcEndpointEl>;
+impl terrars::ToListMappable for RedshiftEndpointAccessVpcEndpointEl {
+    type O = terrars::BlockAssignable<RedshiftEndpointAccessVpcEndpointEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -453,12 +503,12 @@ impl BuildRedshiftEndpointAccessVpcEndpointEl {
 }
 
 pub struct RedshiftEndpointAccessVpcEndpointElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for RedshiftEndpointAccessVpcEndpointElRef {
-    fn new(shared: StackShared, base: String) -> RedshiftEndpointAccessVpcEndpointElRef {
+impl terrars::Ref for RedshiftEndpointAccessVpcEndpointElRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> RedshiftEndpointAccessVpcEndpointElRef {
         RedshiftEndpointAccessVpcEndpointElRef {
             shared: shared,
             base: base.to_string(),
@@ -467,22 +517,22 @@ impl Ref for RedshiftEndpointAccessVpcEndpointElRef {
 }
 
 impl RedshiftEndpointAccessVpcEndpointElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `network_interface` after provisioning.\n"]
-    pub fn network_interface(&self) -> ListRef<RedshiftEndpointAccessVpcEndpointElNetworkInterfaceElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.network_interface", self.base))
+    #[doc = "Get a reference to the value of field `network_interface` after provisioning.\n"]
+    pub fn network_interface(&self) -> terrars::ListRef<RedshiftEndpointAccessVpcEndpointElNetworkInterfaceElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.network_interface", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `vpc_endpoint_id` after provisioning.\n"]
-    pub fn vpc_endpoint_id(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.vpc_endpoint_id", self.base))
+    #[doc = "Get a reference to the value of field `vpc_endpoint_id` after provisioning.\n"]
+    pub fn vpc_endpoint_id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.vpc_endpoint_id", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `vpc_id` after provisioning.\n"]
-    pub fn vpc_id(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.vpc_id", self.base))
+    #[doc = "Get a reference to the value of field `vpc_id` after provisioning.\n"]
+    pub fn vpc_id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.vpc_id", self.base))
     }
 }

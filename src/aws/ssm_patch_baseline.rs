@@ -1,70 +1,74 @@
 use serde::Serialize;
-use std::cell::RefCell;
-use std::rc::Rc;
-use terrars::*;
+use terrars::{
+    Referable as _,
+    Resource_ as _,
+    Ref as _,
+};
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
 struct SsmPatchBaselineData {
-    #[serde(skip_serializing_if = "Vec::is_empty")]
-    depends_on: Vec<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    provider: Option<String>,
-    #[serde(skip_serializing_if = "SerdeSkipDefault::is_default")]
-    lifecycle: ResourceLifecycle,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    for_each: Option<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    approved_patches: Option<SetField<PrimField<String>>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    approved_patches_compliance_level: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    approved_patches_enable_non_security: Option<PrimField<bool>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    description: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    id: Option<PrimField<String>>,
-    name: PrimField<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    operating_system: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    rejected_patches: Option<SetField<PrimField<String>>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    rejected_patches_action: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    tags: Option<RecField<PrimField<String>>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    tags_all: Option<RecField<PrimField<String>>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    approval_rule: Option<Vec<SsmPatchBaselineApprovalRuleEl>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    global_filter: Option<Vec<SsmPatchBaselineGlobalFilterEl>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    source: Option<Vec<SsmPatchBaselineSourceEl>>,
+    #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
+    depends_on: std::vec::Vec<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    provider: std::option::Option<std::string::String>,
+    #[serde(skip_serializing_if = "terrars::SerdeSkipDefault::is_default")]
+    lifecycle: terrars::ResourceLifecycle,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    for_each: std::option::Option<std::string::String>,
+    #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
+    provisioner: std::vec::Vec<terrars::Provisioner>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    approved_patches: std::option::Option<terrars::SetField<terrars::PrimField<std::string::String>>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    approved_patches_compliance_level: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    approved_patches_enable_non_security: std::option::Option<terrars::PrimField<bool>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    description: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    id: std::option::Option<terrars::PrimField<std::string::String>>,
+    name: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    operating_system: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    rejected_patches: std::option::Option<terrars::SetField<terrars::PrimField<std::string::String>>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    rejected_patches_action: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    tags: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    tags_all: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    approval_rule: std::option::Option<std::vec::Vec<SsmPatchBaselineApprovalRuleEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    global_filter: std::option::Option<std::vec::Vec<SsmPatchBaselineGlobalFilterEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    source: std::option::Option<std::vec::Vec<SsmPatchBaselineSourceEl>>,
     dynamic: SsmPatchBaselineDynamic,
 }
 
 struct SsmPatchBaseline_ {
-    shared: StackShared,
-    tf_id: String,
-    data: RefCell<SsmPatchBaselineData>,
+    shared: terrars::StackShared,
+    tf_id: std::string::String,
+    data: std::cell::RefCell<SsmPatchBaselineData>,
 }
 
 #[derive(Clone)]
-pub struct SsmPatchBaseline(Rc<SsmPatchBaseline_>);
+pub struct SsmPatchBaseline(std::rc::Rc<SsmPatchBaseline_>);
 
 impl SsmPatchBaseline {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.0.shared
     }
 
-    pub fn depends_on(self, dep: &impl Referable) -> Self {
+    pub fn depends_on(self, dep: &impl terrars::Referable) -> Self {
         self.0.data.borrow_mut().depends_on.push(dep.extract_ref());
         self
     }
 
     pub fn set_provider(self, provider: &ProviderAws) -> Self {
-        self.0.data.borrow_mut().provider = Some(provider.provider_ref());
+        self.0.data.borrow_mut().provider = std::option::Option::Some(provider.provider_ref());
         self
     }
 
@@ -79,239 +83,302 @@ impl SsmPatchBaseline {
     }
 
     pub fn ignore_changes_to_all(self) -> Self {
-        self.0.data.borrow_mut().lifecycle.ignore_changes = Some(IgnoreChanges::All(IgnoreChangesAll::All));
+        self.0.data.borrow_mut().lifecycle.ignore_changes =
+            std::option::Option::Some(terrars::IgnoreChanges::All(terrars::IgnoreChangesAll::All));
         self
     }
 
-    pub fn ignore_changes_to_attr(self, attr: impl ToString) -> Self {
+    pub fn ignore_changes_to_attr(self, attr: impl std::string::ToString) -> Self {
         {
             let mut d = self.0.data.borrow_mut();
             if match &mut d.lifecycle.ignore_changes {
-                Some(i) => match i {
-                    IgnoreChanges::All(_) => {
+                std::option::Option::Some(i) => match i {
+                    terrars::IgnoreChanges::All(_) => {
                         true
                     },
-                    IgnoreChanges::Refs(r) => {
+                    terrars::IgnoreChanges::Refs(r) => {
                         r.push(attr.to_string());
                         false
                     },
                 },
-                None => true,
+                std::option::Option::None => true,
             } {
-                d.lifecycle.ignore_changes = Some(IgnoreChanges::Refs(vec![attr.to_string()]));
+                d.lifecycle.ignore_changes =
+                    std::option::Option::Some(terrars::IgnoreChanges::Refs(vec![attr.to_string()]));
             }
         }
         self
     }
 
-    pub fn replace_triggered_by_resource(self, r: &impl Resource) -> Self {
+    pub fn replace_triggered_by_resource(self, r: &impl terrars::Resource) -> Self {
         self.0.data.borrow_mut().lifecycle.replace_triggered_by.push(r.extract_ref());
         self
     }
 
-    pub fn replace_triggered_by_attr(self, attr: impl ToString) -> Self {
+    pub fn replace_triggered_by_attr(self, attr: impl std::string::ToString) -> Self {
         self.0.data.borrow_mut().lifecycle.replace_triggered_by.push(attr.to_string());
         self
     }
 
-    #[doc= "Set the field `approved_patches`.\n"]
-    pub fn set_approved_patches(self, v: impl Into<SetField<PrimField<String>>>) -> Self {
-        self.0.data.borrow_mut().approved_patches = Some(v.into());
+    #[doc = r" Add a provisioner (ex: `local-exec`, `remote-exec`, `file`) to this resource."]
+    #[doc = r" Provisioners run in the order they're added."]
+    pub fn add_provisioner(self, v: impl std::convert::Into<terrars::Provisioner>) -> Self {
+        self.0.data.borrow_mut().provisioner.push(v.into());
         self
     }
 
-    #[doc= "Set the field `approved_patches_compliance_level`.\n"]
-    pub fn set_approved_patches_compliance_level(self, v: impl Into<PrimField<String>>) -> Self {
-        self.0.data.borrow_mut().approved_patches_compliance_level = Some(v.into());
+    pub fn add_lifecycle_precondition(
+        self,
+        condition: impl std::convert::Into<terrars::PrimField<bool>>,
+        error_message: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.0.data.borrow_mut().lifecycle.precondition.push(terrars::LifecycleCondition {
+            condition: condition.into(),
+            error_message: error_message.into(),
+        });
         self
     }
 
-    #[doc= "Set the field `approved_patches_enable_non_security`.\n"]
-    pub fn set_approved_patches_enable_non_security(self, v: impl Into<PrimField<bool>>) -> Self {
-        self.0.data.borrow_mut().approved_patches_enable_non_security = Some(v.into());
+    pub fn add_lifecycle_postcondition(
+        self,
+        condition: impl std::convert::Into<terrars::PrimField<bool>>,
+        error_message: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.0.data.borrow_mut().lifecycle.postcondition.push(terrars::LifecycleCondition {
+            condition: condition.into(),
+            error_message: error_message.into(),
+        });
         self
     }
 
-    #[doc= "Set the field `description`.\n"]
-    pub fn set_description(self, v: impl Into<PrimField<String>>) -> Self {
-        self.0.data.borrow_mut().description = Some(v.into());
+    #[doc = "Set the field `approved_patches`.\n"]
+    pub fn set_approved_patches(
+        self,
+        v: impl std::convert::Into<terrars::SetField<terrars::PrimField<std::string::String>>>,
+    ) -> Self {
+        self.0.data.borrow_mut().approved_patches = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `id`.\n"]
-    pub fn set_id(self, v: impl Into<PrimField<String>>) -> Self {
-        self.0.data.borrow_mut().id = Some(v.into());
+    #[doc = "Set the field `approved_patches_compliance_level`.\n"]
+    pub fn set_approved_patches_compliance_level(
+        self,
+        v: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.0.data.borrow_mut().approved_patches_compliance_level = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `operating_system`.\n"]
-    pub fn set_operating_system(self, v: impl Into<PrimField<String>>) -> Self {
-        self.0.data.borrow_mut().operating_system = Some(v.into());
+    #[doc = "Set the field `approved_patches_enable_non_security`.\n"]
+    pub fn set_approved_patches_enable_non_security(self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
+        self.0.data.borrow_mut().approved_patches_enable_non_security = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `rejected_patches`.\n"]
-    pub fn set_rejected_patches(self, v: impl Into<SetField<PrimField<String>>>) -> Self {
-        self.0.data.borrow_mut().rejected_patches = Some(v.into());
+    #[doc = "Set the field `description`.\n"]
+    pub fn set_description(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().description = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `rejected_patches_action`.\n"]
-    pub fn set_rejected_patches_action(self, v: impl Into<PrimField<String>>) -> Self {
-        self.0.data.borrow_mut().rejected_patches_action = Some(v.into());
+    #[doc = "Set the field `id`.\n"]
+    pub fn set_id(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().id = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `tags`.\n"]
-    pub fn set_tags(self, v: impl Into<RecField<PrimField<String>>>) -> Self {
-        self.0.data.borrow_mut().tags = Some(v.into());
+    #[doc = "Set the field `operating_system`.\n"]
+    pub fn set_operating_system(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().operating_system = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `tags_all`.\n"]
-    pub fn set_tags_all(self, v: impl Into<RecField<PrimField<String>>>) -> Self {
-        self.0.data.borrow_mut().tags_all = Some(v.into());
+    #[doc = "Set the field `rejected_patches`.\n"]
+    pub fn set_rejected_patches(
+        self,
+        v: impl std::convert::Into<terrars::SetField<terrars::PrimField<std::string::String>>>,
+    ) -> Self {
+        self.0.data.borrow_mut().rejected_patches = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `approval_rule`.\n"]
-    pub fn set_approval_rule(self, v: impl Into<BlockAssignable<SsmPatchBaselineApprovalRuleEl>>) -> Self {
+    #[doc = "Set the field `rejected_patches_action`.\n"]
+    pub fn set_rejected_patches_action(
+        self,
+        v: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.0.data.borrow_mut().rejected_patches_action = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `tags`.\n"]
+    pub fn set_tags(
+        self,
+        v: impl std::convert::Into<terrars::RecField<terrars::PrimField<std::string::String>>>,
+    ) -> Self {
+        self.0.data.borrow_mut().tags = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `tags_all`.\n"]
+    pub fn set_tags_all(
+        self,
+        v: impl std::convert::Into<terrars::RecField<terrars::PrimField<std::string::String>>>,
+    ) -> Self {
+        self.0.data.borrow_mut().tags_all = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `approval_rule`.\n"]
+    pub fn set_approval_rule(
+        self,
+        v: impl std::convert::Into<terrars::BlockAssignable<SsmPatchBaselineApprovalRuleEl>>,
+    ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.0.data.borrow_mut().approval_rule = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.0.data.borrow_mut().approval_rule = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.0.data.borrow_mut().dynamic.approval_rule = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.0.data.borrow_mut().dynamic.approval_rule = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Set the field `global_filter`.\n"]
-    pub fn set_global_filter(self, v: impl Into<BlockAssignable<SsmPatchBaselineGlobalFilterEl>>) -> Self {
+    #[doc = "Set the field `global_filter`.\n"]
+    pub fn set_global_filter(
+        self,
+        v: impl std::convert::Into<terrars::BlockAssignable<SsmPatchBaselineGlobalFilterEl>>,
+    ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.0.data.borrow_mut().global_filter = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.0.data.borrow_mut().global_filter = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.0.data.borrow_mut().dynamic.global_filter = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.0.data.borrow_mut().dynamic.global_filter = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Set the field `source`.\n"]
-    pub fn set_source(self, v: impl Into<BlockAssignable<SsmPatchBaselineSourceEl>>) -> Self {
+    #[doc = "Set the field `source`.\n"]
+    pub fn set_source(self, v: impl std::convert::Into<terrars::BlockAssignable<SsmPatchBaselineSourceEl>>) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.0.data.borrow_mut().source = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.0.data.borrow_mut().source = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.0.data.borrow_mut().dynamic.source = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.0.data.borrow_mut().dynamic.source = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Get a reference to the value of field `approved_patches` after provisioning.\n"]
-    pub fn approved_patches(&self) -> SetRef<PrimExpr<String>> {
-        SetRef::new(self.shared().clone(), format!("{}.approved_patches", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `approved_patches` after provisioning.\n"]
+    pub fn approved_patches(&self) -> terrars::SetRef<terrars::PrimExpr<std::string::String>> {
+        terrars::SetRef::new(self.shared().clone(), format!("{}.approved_patches", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `approved_patches_compliance_level` after provisioning.\n"]
-    pub fn approved_patches_compliance_level(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.approved_patches_compliance_level", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `approved_patches_compliance_level` after provisioning.\n"]
+    pub fn approved_patches_compliance_level(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(
+            self.shared().clone(),
+            format!("{}.approved_patches_compliance_level", self.extract_ref()),
+        )
     }
 
-    #[doc= "Get a reference to the value of field `approved_patches_enable_non_security` after provisioning.\n"]
-    pub fn approved_patches_enable_non_security(&self) -> PrimExpr<bool> {
-        PrimExpr::new(self.shared().clone(), format!("{}.approved_patches_enable_non_security", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `approved_patches_enable_non_security` after provisioning.\n"]
+    pub fn approved_patches_enable_non_security(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(
+            self.shared().clone(),
+            format!("{}.approved_patches_enable_non_security", self.extract_ref()),
+        )
     }
 
-    #[doc= "Get a reference to the value of field `arn` after provisioning.\n"]
-    pub fn arn(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.arn", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `arn` after provisioning.\n"]
+    pub fn arn(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.arn", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `description` after provisioning.\n"]
-    pub fn description(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.description", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `description` after provisioning.\n"]
+    pub fn description(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.description", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `id` after provisioning.\n"]
-    pub fn id(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
+    pub fn id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `name` after provisioning.\n"]
-    pub fn name(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `name` after provisioning.\n"]
+    pub fn name(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `operating_system` after provisioning.\n"]
-    pub fn operating_system(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.operating_system", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `operating_system` after provisioning.\n"]
+    pub fn operating_system(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.operating_system", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `rejected_patches` after provisioning.\n"]
-    pub fn rejected_patches(&self) -> SetRef<PrimExpr<String>> {
-        SetRef::new(self.shared().clone(), format!("{}.rejected_patches", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `rejected_patches` after provisioning.\n"]
+    pub fn rejected_patches(&self) -> terrars::SetRef<terrars::PrimExpr<std::string::String>> {
+        terrars::SetRef::new(self.shared().clone(), format!("{}.rejected_patches", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `rejected_patches_action` after provisioning.\n"]
-    pub fn rejected_patches_action(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.rejected_patches_action", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `rejected_patches_action` after provisioning.\n"]
+    pub fn rejected_patches_action(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.rejected_patches_action", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `tags` after provisioning.\n"]
-    pub fn tags(&self) -> RecRef<PrimExpr<String>> {
-        RecRef::new(self.shared().clone(), format!("{}.tags", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `tags` after provisioning.\n"]
+    pub fn tags(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
+        terrars::RecRef::new(self.shared().clone(), format!("{}.tags", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `tags_all` after provisioning.\n"]
-    pub fn tags_all(&self) -> RecRef<PrimExpr<String>> {
-        RecRef::new(self.shared().clone(), format!("{}.tags_all", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `tags_all` after provisioning.\n"]
+    pub fn tags_all(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
+        terrars::RecRef::new(self.shared().clone(), format!("{}.tags_all", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `approval_rule` after provisioning.\n"]
-    pub fn approval_rule(&self) -> ListRef<SsmPatchBaselineApprovalRuleElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.approval_rule", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `approval_rule` after provisioning.\n"]
+    pub fn approval_rule(&self) -> terrars::ListRef<SsmPatchBaselineApprovalRuleElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.approval_rule", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `global_filter` after provisioning.\n"]
-    pub fn global_filter(&self) -> ListRef<SsmPatchBaselineGlobalFilterElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.global_filter", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `global_filter` after provisioning.\n"]
+    pub fn global_filter(&self) -> terrars::ListRef<SsmPatchBaselineGlobalFilterElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.global_filter", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `source` after provisioning.\n"]
-    pub fn source(&self) -> ListRef<SsmPatchBaselineSourceElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.source", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `source` after provisioning.\n"]
+    pub fn source(&self) -> terrars::ListRef<SsmPatchBaselineSourceElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.source", self.extract_ref()))
     }
 }
 
-impl Referable for SsmPatchBaseline {
-    fn extract_ref(&self) -> String {
+impl terrars::Referable for SsmPatchBaseline {
+    fn extract_ref(&self) -> std::string::String {
         format!("{}.{}", self.0.extract_resource_type(), self.0.extract_tf_id())
     }
 }
 
-impl Resource for SsmPatchBaseline { }
+impl terrars::Resource for SsmPatchBaseline { }
 
-impl ToListMappable for SsmPatchBaseline {
-    type O = ListRef<SsmPatchBaselineRef>;
+impl terrars::ToListMappable for SsmPatchBaseline {
+    type O = terrars::ListRef<SsmPatchBaselineRef>;
 
-    fn do_map(self, base: String) -> Self::O {
-        self.0.data.borrow_mut().for_each = Some(format!("${{{}}}", base));
-        ListRef::new(self.0.shared.clone(), self.extract_ref())
+    fn do_map(self, base: std::string::String) -> Self::O {
+        self.0.data.borrow_mut().for_each = std::option::Option::Some(format!("${{{}}}", base));
+        terrars::ListRef::new(self.0.shared.clone(), self.extract_ref())
     }
 }
 
-impl Resource_ for SsmPatchBaseline_ {
-    fn extract_resource_type(&self) -> String {
+impl terrars::Resource_ for SsmPatchBaseline_ {
+    fn extract_resource_type(&self) -> std::string::String {
         "aws_ssm_patch_baseline".into()
     }
 
-    fn extract_tf_id(&self) -> String {
+    fn extract_tf_id(&self) -> std::string::String {
         self.tf_id.clone()
     }
 
@@ -321,21 +388,22 @@ impl Resource_ for SsmPatchBaseline_ {
 }
 
 pub struct BuildSsmPatchBaseline {
-    pub tf_id: String,
-    #[doc= ""]
-    pub name: PrimField<String>,
+    pub tf_id: std::string::String,
+    #[doc = ""]
+    pub name: terrars::PrimField<std::string::String>,
 }
 
 impl BuildSsmPatchBaseline {
-    pub fn build(self, stack: &mut Stack) -> SsmPatchBaseline {
-        let out = SsmPatchBaseline(Rc::new(SsmPatchBaseline_ {
+    pub fn build(self, stack: &mut terrars::Stack) -> SsmPatchBaseline {
+        let out = SsmPatchBaseline(std::rc::Rc::new(SsmPatchBaseline_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: RefCell::new(SsmPatchBaselineData {
+            data: std::cell::RefCell::new(SsmPatchBaselineData {
                 depends_on: core::default::Default::default(),
-                provider: None,
+                provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
-                for_each: None,
+                for_each: std::option::Option::None,
+                provisioner: core::default::Default::default(),
                 approved_patches: core::default::Default::default(),
                 approved_patches_compliance_level: core::default::Default::default(),
                 approved_patches_enable_non_security: core::default::Default::default(),
@@ -350,7 +418,7 @@ impl BuildSsmPatchBaseline {
                 approval_rule: core::default::Default::default(),
                 global_filter: core::default::Default::default(),
                 source: core::default::Default::default(),
-                dynamic: Default::default(),
+                dynamic: core::default::Default::default(),
             }),
         }));
         stack.add_resource(out.0.clone());
@@ -359,12 +427,12 @@ impl BuildSsmPatchBaseline {
 }
 
 pub struct SsmPatchBaselineRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for SsmPatchBaselineRef {
-    fn new(shared: StackShared, base: String) -> Self {
+impl terrars::Ref for SsmPatchBaselineRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> Self {
         Self {
             shared: shared,
             base: base,
@@ -373,103 +441,109 @@ impl Ref for SsmPatchBaselineRef {
 }
 
 impl SsmPatchBaselineRef {
-    fn extract_ref(&self) -> String {
+    fn extract_ref(&self) -> std::string::String {
         self.base.clone()
     }
 
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `approved_patches` after provisioning.\n"]
-    pub fn approved_patches(&self) -> SetRef<PrimExpr<String>> {
-        SetRef::new(self.shared().clone(), format!("{}.approved_patches", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `approved_patches` after provisioning.\n"]
+    pub fn approved_patches(&self) -> terrars::SetRef<terrars::PrimExpr<std::string::String>> {
+        terrars::SetRef::new(self.shared().clone(), format!("{}.approved_patches", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `approved_patches_compliance_level` after provisioning.\n"]
-    pub fn approved_patches_compliance_level(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.approved_patches_compliance_level", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `approved_patches_compliance_level` after provisioning.\n"]
+    pub fn approved_patches_compliance_level(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(
+            self.shared().clone(),
+            format!("{}.approved_patches_compliance_level", self.extract_ref()),
+        )
     }
 
-    #[doc= "Get a reference to the value of field `approved_patches_enable_non_security` after provisioning.\n"]
-    pub fn approved_patches_enable_non_security(&self) -> PrimExpr<bool> {
-        PrimExpr::new(self.shared().clone(), format!("{}.approved_patches_enable_non_security", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `approved_patches_enable_non_security` after provisioning.\n"]
+    pub fn approved_patches_enable_non_security(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(
+            self.shared().clone(),
+            format!("{}.approved_patches_enable_non_security", self.extract_ref()),
+        )
     }
 
-    #[doc= "Get a reference to the value of field `arn` after provisioning.\n"]
-    pub fn arn(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.arn", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `arn` after provisioning.\n"]
+    pub fn arn(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.arn", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `description` after provisioning.\n"]
-    pub fn description(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.description", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `description` after provisioning.\n"]
+    pub fn description(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.description", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `id` after provisioning.\n"]
-    pub fn id(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
+    pub fn id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `name` after provisioning.\n"]
-    pub fn name(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `name` after provisioning.\n"]
+    pub fn name(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `operating_system` after provisioning.\n"]
-    pub fn operating_system(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.operating_system", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `operating_system` after provisioning.\n"]
+    pub fn operating_system(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.operating_system", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `rejected_patches` after provisioning.\n"]
-    pub fn rejected_patches(&self) -> SetRef<PrimExpr<String>> {
-        SetRef::new(self.shared().clone(), format!("{}.rejected_patches", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `rejected_patches` after provisioning.\n"]
+    pub fn rejected_patches(&self) -> terrars::SetRef<terrars::PrimExpr<std::string::String>> {
+        terrars::SetRef::new(self.shared().clone(), format!("{}.rejected_patches", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `rejected_patches_action` after provisioning.\n"]
-    pub fn rejected_patches_action(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.rejected_patches_action", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `rejected_patches_action` after provisioning.\n"]
+    pub fn rejected_patches_action(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.rejected_patches_action", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `tags` after provisioning.\n"]
-    pub fn tags(&self) -> RecRef<PrimExpr<String>> {
-        RecRef::new(self.shared().clone(), format!("{}.tags", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `tags` after provisioning.\n"]
+    pub fn tags(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
+        terrars::RecRef::new(self.shared().clone(), format!("{}.tags", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `tags_all` after provisioning.\n"]
-    pub fn tags_all(&self) -> RecRef<PrimExpr<String>> {
-        RecRef::new(self.shared().clone(), format!("{}.tags_all", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `tags_all` after provisioning.\n"]
+    pub fn tags_all(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
+        terrars::RecRef::new(self.shared().clone(), format!("{}.tags_all", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `approval_rule` after provisioning.\n"]
-    pub fn approval_rule(&self) -> ListRef<SsmPatchBaselineApprovalRuleElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.approval_rule", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `approval_rule` after provisioning.\n"]
+    pub fn approval_rule(&self) -> terrars::ListRef<SsmPatchBaselineApprovalRuleElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.approval_rule", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `global_filter` after provisioning.\n"]
-    pub fn global_filter(&self) -> ListRef<SsmPatchBaselineGlobalFilterElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.global_filter", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `global_filter` after provisioning.\n"]
+    pub fn global_filter(&self) -> terrars::ListRef<SsmPatchBaselineGlobalFilterElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.global_filter", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `source` after provisioning.\n"]
-    pub fn source(&self) -> ListRef<SsmPatchBaselineSourceElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.source", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `source` after provisioning.\n"]
+    pub fn source(&self) -> terrars::ListRef<SsmPatchBaselineSourceElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.source", self.extract_ref()))
     }
 }
 
 #[derive(Serialize)]
 pub struct SsmPatchBaselineApprovalRuleElPatchFilterEl {
-    key: PrimField<String>,
-    values: ListField<PrimField<String>>,
+    key: terrars::PrimField<std::string::String>,
+    values: terrars::ListField<terrars::PrimField<std::string::String>>,
 }
 
 impl SsmPatchBaselineApprovalRuleElPatchFilterEl { }
 
-impl ToListMappable for SsmPatchBaselineApprovalRuleElPatchFilterEl {
-    type O = BlockAssignable<SsmPatchBaselineApprovalRuleElPatchFilterEl>;
+impl terrars::ToListMappable for SsmPatchBaselineApprovalRuleElPatchFilterEl {
+    type O = terrars::BlockAssignable<SsmPatchBaselineApprovalRuleElPatchFilterEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -478,10 +552,10 @@ impl ToListMappable for SsmPatchBaselineApprovalRuleElPatchFilterEl {
 }
 
 pub struct BuildSsmPatchBaselineApprovalRuleElPatchFilterEl {
-    #[doc= ""]
-    pub key: PrimField<String>,
-    #[doc= ""]
-    pub values: ListField<PrimField<String>>,
+    #[doc = ""]
+    pub key: terrars::PrimField<std::string::String>,
+    #[doc = ""]
+    pub values: terrars::ListField<terrars::PrimField<std::string::String>>,
 }
 
 impl BuildSsmPatchBaselineApprovalRuleElPatchFilterEl {
@@ -494,12 +568,15 @@ impl BuildSsmPatchBaselineApprovalRuleElPatchFilterEl {
 }
 
 pub struct SsmPatchBaselineApprovalRuleElPatchFilterElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for SsmPatchBaselineApprovalRuleElPatchFilterElRef {
-    fn new(shared: StackShared, base: String) -> SsmPatchBaselineApprovalRuleElPatchFilterElRef {
+impl terrars::Ref for SsmPatchBaselineApprovalRuleElPatchFilterElRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> SsmPatchBaselineApprovalRuleElPatchFilterElRef {
         SsmPatchBaselineApprovalRuleElPatchFilterElRef {
             shared: shared,
             base: base.to_string(),
@@ -508,88 +585,91 @@ impl Ref for SsmPatchBaselineApprovalRuleElPatchFilterElRef {
 }
 
 impl SsmPatchBaselineApprovalRuleElPatchFilterElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `key` after provisioning.\n"]
-    pub fn key(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.key", self.base))
+    #[doc = "Get a reference to the value of field `key` after provisioning.\n"]
+    pub fn key(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.key", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `values` after provisioning.\n"]
-    pub fn values(&self) -> ListRef<PrimExpr<String>> {
-        ListRef::new(self.shared().clone(), format!("{}.values", self.base))
+    #[doc = "Get a reference to the value of field `values` after provisioning.\n"]
+    pub fn values(&self) -> terrars::ListRef<terrars::PrimExpr<std::string::String>> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.values", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
 struct SsmPatchBaselineApprovalRuleElDynamic {
-    patch_filter: Option<DynamicBlock<SsmPatchBaselineApprovalRuleElPatchFilterEl>>,
+    patch_filter: std::option::Option<terrars::DynamicBlock<SsmPatchBaselineApprovalRuleElPatchFilterEl>>,
 }
 
 #[derive(Serialize)]
 pub struct SsmPatchBaselineApprovalRuleEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    approve_after_days: Option<PrimField<f64>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    approve_until_date: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    compliance_level: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    enable_non_security: Option<PrimField<bool>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    patch_filter: Option<Vec<SsmPatchBaselineApprovalRuleElPatchFilterEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    approve_after_days: std::option::Option<terrars::PrimField<f64>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    approve_until_date: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    compliance_level: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    enable_non_security: std::option::Option<terrars::PrimField<bool>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    patch_filter: std::option::Option<std::vec::Vec<SsmPatchBaselineApprovalRuleElPatchFilterEl>>,
     dynamic: SsmPatchBaselineApprovalRuleElDynamic,
 }
 
 impl SsmPatchBaselineApprovalRuleEl {
-    #[doc= "Set the field `approve_after_days`.\n"]
-    pub fn set_approve_after_days(mut self, v: impl Into<PrimField<f64>>) -> Self {
-        self.approve_after_days = Some(v.into());
+    #[doc = "Set the field `approve_after_days`.\n"]
+    pub fn set_approve_after_days(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.approve_after_days = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `approve_until_date`.\n"]
-    pub fn set_approve_until_date(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.approve_until_date = Some(v.into());
+    #[doc = "Set the field `approve_until_date`.\n"]
+    pub fn set_approve_until_date(
+        mut self,
+        v: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.approve_until_date = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `compliance_level`.\n"]
-    pub fn set_compliance_level(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.compliance_level = Some(v.into());
+    #[doc = "Set the field `compliance_level`.\n"]
+    pub fn set_compliance_level(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.compliance_level = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `enable_non_security`.\n"]
-    pub fn set_enable_non_security(mut self, v: impl Into<PrimField<bool>>) -> Self {
-        self.enable_non_security = Some(v.into());
+    #[doc = "Set the field `enable_non_security`.\n"]
+    pub fn set_enable_non_security(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
+        self.enable_non_security = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `patch_filter`.\n"]
+    #[doc = "Set the field `patch_filter`.\n"]
     pub fn set_patch_filter(
         mut self,
-        v: impl Into<BlockAssignable<SsmPatchBaselineApprovalRuleElPatchFilterEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<SsmPatchBaselineApprovalRuleElPatchFilterEl>>,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.patch_filter = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.patch_filter = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.patch_filter = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.patch_filter = std::option::Option::Some(d);
             },
         }
         self
     }
 }
 
-impl ToListMappable for SsmPatchBaselineApprovalRuleEl {
-    type O = BlockAssignable<SsmPatchBaselineApprovalRuleEl>;
+impl terrars::ToListMappable for SsmPatchBaselineApprovalRuleEl {
+    type O = terrars::BlockAssignable<SsmPatchBaselineApprovalRuleEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -607,18 +687,18 @@ impl BuildSsmPatchBaselineApprovalRuleEl {
             compliance_level: core::default::Default::default(),
             enable_non_security: core::default::Default::default(),
             patch_filter: core::default::Default::default(),
-            dynamic: Default::default(),
+            dynamic: core::default::Default::default(),
         }
     }
 }
 
 pub struct SsmPatchBaselineApprovalRuleElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for SsmPatchBaselineApprovalRuleElRef {
-    fn new(shared: StackShared, base: String) -> SsmPatchBaselineApprovalRuleElRef {
+impl terrars::Ref for SsmPatchBaselineApprovalRuleElRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> SsmPatchBaselineApprovalRuleElRef {
         SsmPatchBaselineApprovalRuleElRef {
             shared: shared,
             base: base.to_string(),
@@ -627,49 +707,49 @@ impl Ref for SsmPatchBaselineApprovalRuleElRef {
 }
 
 impl SsmPatchBaselineApprovalRuleElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `approve_after_days` after provisioning.\n"]
-    pub fn approve_after_days(&self) -> PrimExpr<f64> {
-        PrimExpr::new(self.shared().clone(), format!("{}.approve_after_days", self.base))
+    #[doc = "Get a reference to the value of field `approve_after_days` after provisioning.\n"]
+    pub fn approve_after_days(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.approve_after_days", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `approve_until_date` after provisioning.\n"]
-    pub fn approve_until_date(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.approve_until_date", self.base))
+    #[doc = "Get a reference to the value of field `approve_until_date` after provisioning.\n"]
+    pub fn approve_until_date(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.approve_until_date", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `compliance_level` after provisioning.\n"]
-    pub fn compliance_level(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.compliance_level", self.base))
+    #[doc = "Get a reference to the value of field `compliance_level` after provisioning.\n"]
+    pub fn compliance_level(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.compliance_level", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `enable_non_security` after provisioning.\n"]
-    pub fn enable_non_security(&self) -> PrimExpr<bool> {
-        PrimExpr::new(self.shared().clone(), format!("{}.enable_non_security", self.base))
+    #[doc = "Get a reference to the value of field `enable_non_security` after provisioning.\n"]
+    pub fn enable_non_security(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.enable_non_security", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `patch_filter` after provisioning.\n"]
-    pub fn patch_filter(&self) -> ListRef<SsmPatchBaselineApprovalRuleElPatchFilterElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.patch_filter", self.base))
+    #[doc = "Get a reference to the value of field `patch_filter` after provisioning.\n"]
+    pub fn patch_filter(&self) -> terrars::ListRef<SsmPatchBaselineApprovalRuleElPatchFilterElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.patch_filter", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct SsmPatchBaselineGlobalFilterEl {
-    key: PrimField<String>,
-    values: ListField<PrimField<String>>,
+    key: terrars::PrimField<std::string::String>,
+    values: terrars::ListField<terrars::PrimField<std::string::String>>,
 }
 
 impl SsmPatchBaselineGlobalFilterEl { }
 
-impl ToListMappable for SsmPatchBaselineGlobalFilterEl {
-    type O = BlockAssignable<SsmPatchBaselineGlobalFilterEl>;
+impl terrars::ToListMappable for SsmPatchBaselineGlobalFilterEl {
+    type O = terrars::BlockAssignable<SsmPatchBaselineGlobalFilterEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -678,10 +758,10 @@ impl ToListMappable for SsmPatchBaselineGlobalFilterEl {
 }
 
 pub struct BuildSsmPatchBaselineGlobalFilterEl {
-    #[doc= ""]
-    pub key: PrimField<String>,
-    #[doc= ""]
-    pub values: ListField<PrimField<String>>,
+    #[doc = ""]
+    pub key: terrars::PrimField<std::string::String>,
+    #[doc = ""]
+    pub values: terrars::ListField<terrars::PrimField<std::string::String>>,
 }
 
 impl BuildSsmPatchBaselineGlobalFilterEl {
@@ -694,12 +774,12 @@ impl BuildSsmPatchBaselineGlobalFilterEl {
 }
 
 pub struct SsmPatchBaselineGlobalFilterElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for SsmPatchBaselineGlobalFilterElRef {
-    fn new(shared: StackShared, base: String) -> SsmPatchBaselineGlobalFilterElRef {
+impl terrars::Ref for SsmPatchBaselineGlobalFilterElRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> SsmPatchBaselineGlobalFilterElRef {
         SsmPatchBaselineGlobalFilterElRef {
             shared: shared,
             base: base.to_string(),
@@ -708,35 +788,35 @@ impl Ref for SsmPatchBaselineGlobalFilterElRef {
 }
 
 impl SsmPatchBaselineGlobalFilterElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `key` after provisioning.\n"]
-    pub fn key(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.key", self.base))
+    #[doc = "Get a reference to the value of field `key` after provisioning.\n"]
+    pub fn key(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.key", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `values` after provisioning.\n"]
-    pub fn values(&self) -> ListRef<PrimExpr<String>> {
-        ListRef::new(self.shared().clone(), format!("{}.values", self.base))
+    #[doc = "Get a reference to the value of field `values` after provisioning.\n"]
+    pub fn values(&self) -> terrars::ListRef<terrars::PrimExpr<std::string::String>> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.values", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct SsmPatchBaselineSourceEl {
-    configuration: PrimField<String>,
-    name: PrimField<String>,
-    products: ListField<PrimField<String>>,
+    configuration: terrars::PrimField<std::string::String>,
+    name: terrars::PrimField<std::string::String>,
+    products: terrars::ListField<terrars::PrimField<std::string::String>>,
 }
 
 impl SsmPatchBaselineSourceEl { }
 
-impl ToListMappable for SsmPatchBaselineSourceEl {
-    type O = BlockAssignable<SsmPatchBaselineSourceEl>;
+impl terrars::ToListMappable for SsmPatchBaselineSourceEl {
+    type O = terrars::BlockAssignable<SsmPatchBaselineSourceEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -745,12 +825,12 @@ impl ToListMappable for SsmPatchBaselineSourceEl {
 }
 
 pub struct BuildSsmPatchBaselineSourceEl {
-    #[doc= ""]
-    pub configuration: PrimField<String>,
-    #[doc= ""]
-    pub name: PrimField<String>,
-    #[doc= ""]
-    pub products: ListField<PrimField<String>>,
+    #[doc = ""]
+    pub configuration: terrars::PrimField<std::string::String>,
+    #[doc = ""]
+    pub name: terrars::PrimField<std::string::String>,
+    #[doc = ""]
+    pub products: terrars::ListField<terrars::PrimField<std::string::String>>,
 }
 
 impl BuildSsmPatchBaselineSourceEl {
@@ -764,12 +844,12 @@ impl BuildSsmPatchBaselineSourceEl {
 }
 
 pub struct SsmPatchBaselineSourceElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for SsmPatchBaselineSourceElRef {
-    fn new(shared: StackShared, base: String) -> SsmPatchBaselineSourceElRef {
+impl terrars::Ref for SsmPatchBaselineSourceElRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> SsmPatchBaselineSourceElRef {
         SsmPatchBaselineSourceElRef {
             shared: shared,
             base: base.to_string(),
@@ -778,29 +858,29 @@ impl Ref for SsmPatchBaselineSourceElRef {
 }
 
 impl SsmPatchBaselineSourceElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `configuration` after provisioning.\n"]
-    pub fn configuration(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.configuration", self.base))
+    #[doc = "Get a reference to the value of field `configuration` after provisioning.\n"]
+    pub fn configuration(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.configuration", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `name` after provisioning.\n"]
-    pub fn name(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.name", self.base))
+    #[doc = "Get a reference to the value of field `name` after provisioning.\n"]
+    pub fn name(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `products` after provisioning.\n"]
-    pub fn products(&self) -> ListRef<PrimExpr<String>> {
-        ListRef::new(self.shared().clone(), format!("{}.products", self.base))
+    #[doc = "Get a reference to the value of field `products` after provisioning.\n"]
+    pub fn products(&self) -> terrars::ListRef<terrars::PrimExpr<std::string::String>> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.products", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
 struct SsmPatchBaselineDynamic {
-    approval_rule: Option<DynamicBlock<SsmPatchBaselineApprovalRuleEl>>,
-    global_filter: Option<DynamicBlock<SsmPatchBaselineGlobalFilterEl>>,
-    source: Option<DynamicBlock<SsmPatchBaselineSourceEl>>,
+    approval_rule: std::option::Option<terrars::DynamicBlock<SsmPatchBaselineApprovalRuleEl>>,
+    global_filter: std::option::Option<terrars::DynamicBlock<SsmPatchBaselineGlobalFilterEl>>,
+    source: std::option::Option<terrars::DynamicBlock<SsmPatchBaselineSourceEl>>,
 }

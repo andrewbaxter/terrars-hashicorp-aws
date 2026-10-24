@@ -1,158 +1,189 @@
 use serde::Serialize;
-use std::cell::RefCell;
-use std::rc::Rc;
-use terrars::*;
+use terrars::{
+    Referable as _,
+    Datasource_ as _,
+    Ref as _,
+};
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
 struct DataIdentitystoreGroupData {
-    #[serde(skip_serializing_if = "Vec::is_empty")]
-    depends_on: Vec<String>,
-    #[serde(skip_serializing_if = "SerdeSkipDefault::is_default")]
-    provider: Option<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    for_each: Option<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    group_id: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    id: Option<PrimField<String>>,
-    identity_store_id: PrimField<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    alternate_identifier: Option<Vec<DataIdentitystoreGroupAlternateIdentifierEl>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    filter: Option<Vec<DataIdentitystoreGroupFilterEl>>,
+    #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
+    depends_on: std::vec::Vec<std::string::String>,
+    #[serde(skip_serializing_if = "terrars::SerdeSkipDefault::is_default")]
+    provider: std::option::Option<std::string::String>,
+    #[serde(skip_serializing_if = "terrars::SerdeSkipDefault::is_default")]
+    lifecycle: terrars::DatasourceLifecycle,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    for_each: std::option::Option<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    group_id: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    id: std::option::Option<terrars::PrimField<std::string::String>>,
+    identity_store_id: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    alternate_identifier: std::option::Option<std::vec::Vec<DataIdentitystoreGroupAlternateIdentifierEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    filter: std::option::Option<std::vec::Vec<DataIdentitystoreGroupFilterEl>>,
     dynamic: DataIdentitystoreGroupDynamic,
 }
 
 struct DataIdentitystoreGroup_ {
-    shared: StackShared,
-    tf_id: String,
-    data: RefCell<DataIdentitystoreGroupData>,
+    shared: terrars::StackShared,
+    tf_id: std::string::String,
+    data: std::cell::RefCell<DataIdentitystoreGroupData>,
 }
 
 #[derive(Clone)]
-pub struct DataIdentitystoreGroup(Rc<DataIdentitystoreGroup_>);
+pub struct DataIdentitystoreGroup(std::rc::Rc<DataIdentitystoreGroup_>);
 
 impl DataIdentitystoreGroup {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.0.shared
     }
 
-    pub fn depends_on(self, dep: &impl Referable) -> Self {
+    pub fn depends_on(self, dep: &impl terrars::Referable) -> Self {
         self.0.data.borrow_mut().depends_on.push(dep.extract_ref());
         self
     }
 
     pub fn set_provider(&self, provider: &ProviderAws) -> &Self {
-        self.0.data.borrow_mut().provider = Some(provider.provider_ref());
+        self.0.data.borrow_mut().provider = std::option::Option::Some(provider.provider_ref());
         self
     }
 
-    #[doc= "Set the field `group_id`.\n"]
-    pub fn set_group_id(self, v: impl Into<PrimField<String>>) -> Self {
-        self.0.data.borrow_mut().group_id = Some(v.into());
+    pub fn add_lifecycle_precondition(
+        self,
+        condition: impl std::convert::Into<terrars::PrimField<bool>>,
+        error_message: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.0.data.borrow_mut().lifecycle.precondition.push(terrars::LifecycleCondition {
+            condition: condition.into(),
+            error_message: error_message.into(),
+        });
         self
     }
 
-    #[doc= "Set the field `id`.\n"]
-    pub fn set_id(self, v: impl Into<PrimField<String>>) -> Self {
-        self.0.data.borrow_mut().id = Some(v.into());
+    pub fn add_lifecycle_postcondition(
+        self,
+        condition: impl std::convert::Into<terrars::PrimField<bool>>,
+        error_message: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.0.data.borrow_mut().lifecycle.postcondition.push(terrars::LifecycleCondition {
+            condition: condition.into(),
+            error_message: error_message.into(),
+        });
         self
     }
 
-    #[doc= "Set the field `alternate_identifier`.\n"]
+    #[doc = "Set the field `group_id`.\n"]
+    pub fn set_group_id(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().group_id = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `id`.\n"]
+    pub fn set_id(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().id = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `alternate_identifier`.\n"]
     pub fn set_alternate_identifier(
         self,
-        v: impl Into<BlockAssignable<DataIdentitystoreGroupAlternateIdentifierEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<DataIdentitystoreGroupAlternateIdentifierEl>>,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.0.data.borrow_mut().alternate_identifier = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.0.data.borrow_mut().alternate_identifier = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.0.data.borrow_mut().dynamic.alternate_identifier = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.0.data.borrow_mut().dynamic.alternate_identifier = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Set the field `filter`.\n"]
-    pub fn set_filter(self, v: impl Into<BlockAssignable<DataIdentitystoreGroupFilterEl>>) -> Self {
+    #[doc = "Set the field `filter`.\n"]
+    pub fn set_filter(
+        self,
+        v: impl std::convert::Into<terrars::BlockAssignable<DataIdentitystoreGroupFilterEl>>,
+    ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.0.data.borrow_mut().filter = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.0.data.borrow_mut().filter = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.0.data.borrow_mut().dynamic.filter = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.0.data.borrow_mut().dynamic.filter = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Get a reference to the value of field `description` after provisioning.\n"]
-    pub fn description(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.description", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `description` after provisioning.\n"]
+    pub fn description(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.description", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `display_name` after provisioning.\n"]
-    pub fn display_name(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.display_name", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `display_name` after provisioning.\n"]
+    pub fn display_name(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.display_name", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `external_ids` after provisioning.\n"]
-    pub fn external_ids(&self) -> ListRef<DataIdentitystoreGroupExternalIdsElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.external_ids", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `external_ids` after provisioning.\n"]
+    pub fn external_ids(&self) -> terrars::ListRef<DataIdentitystoreGroupExternalIdsElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.external_ids", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `group_id` after provisioning.\n"]
-    pub fn group_id(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.group_id", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `group_id` after provisioning.\n"]
+    pub fn group_id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.group_id", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `id` after provisioning.\n"]
-    pub fn id(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
+    pub fn id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `identity_store_id` after provisioning.\n"]
-    pub fn identity_store_id(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.identity_store_id", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `identity_store_id` after provisioning.\n"]
+    pub fn identity_store_id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.identity_store_id", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `alternate_identifier` after provisioning.\n"]
-    pub fn alternate_identifier(&self) -> ListRef<DataIdentitystoreGroupAlternateIdentifierElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.alternate_identifier", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `alternate_identifier` after provisioning.\n"]
+    pub fn alternate_identifier(&self) -> terrars::ListRef<DataIdentitystoreGroupAlternateIdentifierElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.alternate_identifier", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `filter` after provisioning.\n"]
-    pub fn filter(&self) -> ListRef<DataIdentitystoreGroupFilterElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.filter", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `filter` after provisioning.\n"]
+    pub fn filter(&self) -> terrars::ListRef<DataIdentitystoreGroupFilterElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.filter", self.extract_ref()))
     }
 }
 
-impl Referable for DataIdentitystoreGroup {
-    fn extract_ref(&self) -> String {
+impl terrars::Referable for DataIdentitystoreGroup {
+    fn extract_ref(&self) -> std::string::String {
         format!("data.{}.{}", self.0.extract_datasource_type(), self.0.extract_tf_id())
     }
 }
 
-impl Datasource for DataIdentitystoreGroup { }
+impl terrars::Datasource for DataIdentitystoreGroup { }
 
-impl ToListMappable for DataIdentitystoreGroup {
-    type O = ListRef<DataIdentitystoreGroupRef>;
+impl terrars::ToListMappable for DataIdentitystoreGroup {
+    type O = terrars::ListRef<DataIdentitystoreGroupRef>;
 
-    fn do_map(self, base: String) -> Self::O {
-        self.0.data.borrow_mut().for_each = Some(format!("${{{}}}", base));
-        ListRef::new(self.0.shared.clone(), self.extract_ref())
+    fn do_map(self, base: std::string::String) -> Self::O {
+        self.0.data.borrow_mut().for_each = std::option::Option::Some(format!("${{{}}}", base));
+        terrars::ListRef::new(self.0.shared.clone(), self.extract_ref())
     }
 }
 
-impl Datasource_ for DataIdentitystoreGroup_ {
-    fn extract_datasource_type(&self) -> String {
+impl terrars::Datasource_ for DataIdentitystoreGroup_ {
+    fn extract_datasource_type(&self) -> std::string::String {
         "aws_identitystore_group".into()
     }
 
-    fn extract_tf_id(&self) -> String {
+    fn extract_tf_id(&self) -> std::string::String {
         self.tf_id.clone()
     }
 
@@ -162,26 +193,27 @@ impl Datasource_ for DataIdentitystoreGroup_ {
 }
 
 pub struct BuildDataIdentitystoreGroup {
-    pub tf_id: String,
-    #[doc= ""]
-    pub identity_store_id: PrimField<String>,
+    pub tf_id: std::string::String,
+    #[doc = ""]
+    pub identity_store_id: terrars::PrimField<std::string::String>,
 }
 
 impl BuildDataIdentitystoreGroup {
-    pub fn build(self, stack: &mut Stack) -> DataIdentitystoreGroup {
-        let out = DataIdentitystoreGroup(Rc::new(DataIdentitystoreGroup_ {
+    pub fn build(self, stack: &mut terrars::Stack) -> DataIdentitystoreGroup {
+        let out = DataIdentitystoreGroup(std::rc::Rc::new(DataIdentitystoreGroup_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: RefCell::new(DataIdentitystoreGroupData {
+            data: std::cell::RefCell::new(DataIdentitystoreGroupData {
                 depends_on: core::default::Default::default(),
-                provider: None,
-                for_each: None,
+                provider: std::option::Option::None,
+                lifecycle: core::default::Default::default(),
+                for_each: std::option::Option::None,
                 group_id: core::default::Default::default(),
                 id: core::default::Default::default(),
                 identity_store_id: self.identity_store_id,
                 alternate_identifier: core::default::Default::default(),
                 filter: core::default::Default::default(),
-                dynamic: Default::default(),
+                dynamic: core::default::Default::default(),
             }),
         }));
         stack.add_datasource(out.0.clone());
@@ -190,12 +222,12 @@ impl BuildDataIdentitystoreGroup {
 }
 
 pub struct DataIdentitystoreGroupRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for DataIdentitystoreGroupRef {
-    fn new(shared: StackShared, base: String) -> Self {
+impl terrars::Ref for DataIdentitystoreGroupRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> Self {
         Self {
             shared: shared,
             base: base,
@@ -204,82 +236,82 @@ impl Ref for DataIdentitystoreGroupRef {
 }
 
 impl DataIdentitystoreGroupRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    fn extract_ref(&self) -> String {
+    fn extract_ref(&self) -> std::string::String {
         self.base.clone()
     }
 
-    #[doc= "Get a reference to the value of field `description` after provisioning.\n"]
-    pub fn description(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.description", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `description` after provisioning.\n"]
+    pub fn description(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.description", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `display_name` after provisioning.\n"]
-    pub fn display_name(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.display_name", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `display_name` after provisioning.\n"]
+    pub fn display_name(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.display_name", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `external_ids` after provisioning.\n"]
-    pub fn external_ids(&self) -> ListRef<DataIdentitystoreGroupExternalIdsElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.external_ids", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `external_ids` after provisioning.\n"]
+    pub fn external_ids(&self) -> terrars::ListRef<DataIdentitystoreGroupExternalIdsElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.external_ids", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `group_id` after provisioning.\n"]
-    pub fn group_id(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.group_id", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `group_id` after provisioning.\n"]
+    pub fn group_id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.group_id", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `id` after provisioning.\n"]
-    pub fn id(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
+    pub fn id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `identity_store_id` after provisioning.\n"]
-    pub fn identity_store_id(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.identity_store_id", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `identity_store_id` after provisioning.\n"]
+    pub fn identity_store_id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.identity_store_id", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `alternate_identifier` after provisioning.\n"]
-    pub fn alternate_identifier(&self) -> ListRef<DataIdentitystoreGroupAlternateIdentifierElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.alternate_identifier", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `alternate_identifier` after provisioning.\n"]
+    pub fn alternate_identifier(&self) -> terrars::ListRef<DataIdentitystoreGroupAlternateIdentifierElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.alternate_identifier", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `filter` after provisioning.\n"]
-    pub fn filter(&self) -> ListRef<DataIdentitystoreGroupFilterElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.filter", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `filter` after provisioning.\n"]
+    pub fn filter(&self) -> terrars::ListRef<DataIdentitystoreGroupFilterElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.filter", self.extract_ref()))
     }
 }
 
 #[derive(Serialize)]
 pub struct DataIdentitystoreGroupExternalIdsEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    id: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    issuer: Option<PrimField<String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    id: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    issuer: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
 impl DataIdentitystoreGroupExternalIdsEl {
-    #[doc= "Set the field `id`.\n"]
-    pub fn set_id(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.id = Some(v.into());
+    #[doc = "Set the field `id`.\n"]
+    pub fn set_id(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.id = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `issuer`.\n"]
-    pub fn set_issuer(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.issuer = Some(v.into());
+    #[doc = "Set the field `issuer`.\n"]
+    pub fn set_issuer(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.issuer = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl ToListMappable for DataIdentitystoreGroupExternalIdsEl {
-    type O = BlockAssignable<DataIdentitystoreGroupExternalIdsEl>;
+impl terrars::ToListMappable for DataIdentitystoreGroupExternalIdsEl {
+    type O = terrars::BlockAssignable<DataIdentitystoreGroupExternalIdsEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -299,12 +331,12 @@ impl BuildDataIdentitystoreGroupExternalIdsEl {
 }
 
 pub struct DataIdentitystoreGroupExternalIdsElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for DataIdentitystoreGroupExternalIdsElRef {
-    fn new(shared: StackShared, base: String) -> DataIdentitystoreGroupExternalIdsElRef {
+impl terrars::Ref for DataIdentitystoreGroupExternalIdsElRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataIdentitystoreGroupExternalIdsElRef {
         DataIdentitystoreGroupExternalIdsElRef {
             shared: shared,
             base: base.to_string(),
@@ -313,34 +345,34 @@ impl Ref for DataIdentitystoreGroupExternalIdsElRef {
 }
 
 impl DataIdentitystoreGroupExternalIdsElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `id` after provisioning.\n"]
-    pub fn id(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.id", self.base))
+    #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
+    pub fn id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `issuer` after provisioning.\n"]
-    pub fn issuer(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.issuer", self.base))
+    #[doc = "Get a reference to the value of field `issuer` after provisioning.\n"]
+    pub fn issuer(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.issuer", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct DataIdentitystoreGroupAlternateIdentifierElExternalIdEl {
-    id: PrimField<String>,
-    issuer: PrimField<String>,
+    id: terrars::PrimField<std::string::String>,
+    issuer: terrars::PrimField<std::string::String>,
 }
 
 impl DataIdentitystoreGroupAlternateIdentifierElExternalIdEl { }
 
-impl ToListMappable for DataIdentitystoreGroupAlternateIdentifierElExternalIdEl {
-    type O = BlockAssignable<DataIdentitystoreGroupAlternateIdentifierElExternalIdEl>;
+impl terrars::ToListMappable for DataIdentitystoreGroupAlternateIdentifierElExternalIdEl {
+    type O = terrars::BlockAssignable<DataIdentitystoreGroupAlternateIdentifierElExternalIdEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -349,10 +381,10 @@ impl ToListMappable for DataIdentitystoreGroupAlternateIdentifierElExternalIdEl 
 }
 
 pub struct BuildDataIdentitystoreGroupAlternateIdentifierElExternalIdEl {
-    #[doc= ""]
-    pub id: PrimField<String>,
-    #[doc= ""]
-    pub issuer: PrimField<String>,
+    #[doc = ""]
+    pub id: terrars::PrimField<std::string::String>,
+    #[doc = ""]
+    pub issuer: terrars::PrimField<std::string::String>,
 }
 
 impl BuildDataIdentitystoreGroupAlternateIdentifierElExternalIdEl {
@@ -365,12 +397,15 @@ impl BuildDataIdentitystoreGroupAlternateIdentifierElExternalIdEl {
 }
 
 pub struct DataIdentitystoreGroupAlternateIdentifierElExternalIdElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for DataIdentitystoreGroupAlternateIdentifierElExternalIdElRef {
-    fn new(shared: StackShared, base: String) -> DataIdentitystoreGroupAlternateIdentifierElExternalIdElRef {
+impl terrars::Ref for DataIdentitystoreGroupAlternateIdentifierElExternalIdElRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> DataIdentitystoreGroupAlternateIdentifierElExternalIdElRef {
         DataIdentitystoreGroupAlternateIdentifierElExternalIdElRef {
             shared: shared,
             base: base.to_string(),
@@ -379,34 +414,34 @@ impl Ref for DataIdentitystoreGroupAlternateIdentifierElExternalIdElRef {
 }
 
 impl DataIdentitystoreGroupAlternateIdentifierElExternalIdElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `id` after provisioning.\n"]
-    pub fn id(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.id", self.base))
+    #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
+    pub fn id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `issuer` after provisioning.\n"]
-    pub fn issuer(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.issuer", self.base))
+    #[doc = "Get a reference to the value of field `issuer` after provisioning.\n"]
+    pub fn issuer(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.issuer", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct DataIdentitystoreGroupAlternateIdentifierElUniqueAttributeEl {
-    attribute_path: PrimField<String>,
-    attribute_value: PrimField<String>,
+    attribute_path: terrars::PrimField<std::string::String>,
+    attribute_value: terrars::PrimField<std::string::String>,
 }
 
 impl DataIdentitystoreGroupAlternateIdentifierElUniqueAttributeEl { }
 
-impl ToListMappable for DataIdentitystoreGroupAlternateIdentifierElUniqueAttributeEl {
-    type O = BlockAssignable<DataIdentitystoreGroupAlternateIdentifierElUniqueAttributeEl>;
+impl terrars::ToListMappable for DataIdentitystoreGroupAlternateIdentifierElUniqueAttributeEl {
+    type O = terrars::BlockAssignable<DataIdentitystoreGroupAlternateIdentifierElUniqueAttributeEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -415,10 +450,10 @@ impl ToListMappable for DataIdentitystoreGroupAlternateIdentifierElUniqueAttribu
 }
 
 pub struct BuildDataIdentitystoreGroupAlternateIdentifierElUniqueAttributeEl {
-    #[doc= ""]
-    pub attribute_path: PrimField<String>,
-    #[doc= ""]
-    pub attribute_value: PrimField<String>,
+    #[doc = ""]
+    pub attribute_path: terrars::PrimField<std::string::String>,
+    #[doc = ""]
+    pub attribute_value: terrars::PrimField<std::string::String>,
 }
 
 impl BuildDataIdentitystoreGroupAlternateIdentifierElUniqueAttributeEl {
@@ -431,12 +466,15 @@ impl BuildDataIdentitystoreGroupAlternateIdentifierElUniqueAttributeEl {
 }
 
 pub struct DataIdentitystoreGroupAlternateIdentifierElUniqueAttributeElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for DataIdentitystoreGroupAlternateIdentifierElUniqueAttributeElRef {
-    fn new(shared: StackShared, base: String) -> DataIdentitystoreGroupAlternateIdentifierElUniqueAttributeElRef {
+impl terrars::Ref for DataIdentitystoreGroupAlternateIdentifierElUniqueAttributeElRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> DataIdentitystoreGroupAlternateIdentifierElUniqueAttributeElRef {
         DataIdentitystoreGroupAlternateIdentifierElUniqueAttributeElRef {
             shared: shared,
             base: base.to_string(),
@@ -445,75 +483,87 @@ impl Ref for DataIdentitystoreGroupAlternateIdentifierElUniqueAttributeElRef {
 }
 
 impl DataIdentitystoreGroupAlternateIdentifierElUniqueAttributeElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `attribute_path` after provisioning.\n"]
-    pub fn attribute_path(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.attribute_path", self.base))
+    #[doc = "Get a reference to the value of field `attribute_path` after provisioning.\n"]
+    pub fn attribute_path(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.attribute_path", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `attribute_value` after provisioning.\n"]
-    pub fn attribute_value(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.attribute_value", self.base))
+    #[doc = "Get a reference to the value of field `attribute_value` after provisioning.\n"]
+    pub fn attribute_value(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.attribute_value", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
 struct DataIdentitystoreGroupAlternateIdentifierElDynamic {
-    external_id: Option<DynamicBlock<DataIdentitystoreGroupAlternateIdentifierElExternalIdEl>>,
-    unique_attribute: Option<DynamicBlock<DataIdentitystoreGroupAlternateIdentifierElUniqueAttributeEl>>,
+    external_id: std::option::Option<terrars::DynamicBlock<DataIdentitystoreGroupAlternateIdentifierElExternalIdEl>>,
+    unique_attribute: std
+    ::option
+    ::Option<terrars::DynamicBlock<DataIdentitystoreGroupAlternateIdentifierElUniqueAttributeEl>>,
 }
 
 #[derive(Serialize)]
 pub struct DataIdentitystoreGroupAlternateIdentifierEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    external_id: Option<Vec<DataIdentitystoreGroupAlternateIdentifierElExternalIdEl>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    unique_attribute: Option<Vec<DataIdentitystoreGroupAlternateIdentifierElUniqueAttributeEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    external_id: std::option::Option<std::vec::Vec<DataIdentitystoreGroupAlternateIdentifierElExternalIdEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    unique_attribute: std::option::Option<std::vec::Vec<DataIdentitystoreGroupAlternateIdentifierElUniqueAttributeEl>>,
     dynamic: DataIdentitystoreGroupAlternateIdentifierElDynamic,
 }
 
 impl DataIdentitystoreGroupAlternateIdentifierEl {
-    #[doc= "Set the field `external_id`.\n"]
+    #[doc = "Set the field `external_id`.\n"]
     pub fn set_external_id(
         mut self,
-        v: impl Into<BlockAssignable<DataIdentitystoreGroupAlternateIdentifierElExternalIdEl>>,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<terrars::BlockAssignable<DataIdentitystoreGroupAlternateIdentifierElExternalIdEl>>,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.external_id = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.external_id = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.external_id = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.external_id = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Set the field `unique_attribute`.\n"]
+    #[doc = "Set the field `unique_attribute`.\n"]
     pub fn set_unique_attribute(
         mut self,
-        v: impl Into<BlockAssignable<DataIdentitystoreGroupAlternateIdentifierElUniqueAttributeEl>>,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<terrars::BlockAssignable<DataIdentitystoreGroupAlternateIdentifierElUniqueAttributeEl>>,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.unique_attribute = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.unique_attribute = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.unique_attribute = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.unique_attribute = std::option::Option::Some(d);
             },
         }
         self
     }
 }
 
-impl ToListMappable for DataIdentitystoreGroupAlternateIdentifierEl {
-    type O = BlockAssignable<DataIdentitystoreGroupAlternateIdentifierEl>;
+impl terrars::ToListMappable for DataIdentitystoreGroupAlternateIdentifierEl {
+    type O = terrars::BlockAssignable<DataIdentitystoreGroupAlternateIdentifierEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -528,18 +578,21 @@ impl BuildDataIdentitystoreGroupAlternateIdentifierEl {
         DataIdentitystoreGroupAlternateIdentifierEl {
             external_id: core::default::Default::default(),
             unique_attribute: core::default::Default::default(),
-            dynamic: Default::default(),
+            dynamic: core::default::Default::default(),
         }
     }
 }
 
 pub struct DataIdentitystoreGroupAlternateIdentifierElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for DataIdentitystoreGroupAlternateIdentifierElRef {
-    fn new(shared: StackShared, base: String) -> DataIdentitystoreGroupAlternateIdentifierElRef {
+impl terrars::Ref for DataIdentitystoreGroupAlternateIdentifierElRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> DataIdentitystoreGroupAlternateIdentifierElRef {
         DataIdentitystoreGroupAlternateIdentifierElRef {
             shared: shared,
             base: base.to_string(),
@@ -548,34 +601,34 @@ impl Ref for DataIdentitystoreGroupAlternateIdentifierElRef {
 }
 
 impl DataIdentitystoreGroupAlternateIdentifierElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `external_id` after provisioning.\n"]
-    pub fn external_id(&self) -> ListRef<DataIdentitystoreGroupAlternateIdentifierElExternalIdElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.external_id", self.base))
+    #[doc = "Get a reference to the value of field `external_id` after provisioning.\n"]
+    pub fn external_id(&self) -> terrars::ListRef<DataIdentitystoreGroupAlternateIdentifierElExternalIdElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.external_id", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `unique_attribute` after provisioning.\n"]
-    pub fn unique_attribute(&self) -> ListRef<DataIdentitystoreGroupAlternateIdentifierElUniqueAttributeElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.unique_attribute", self.base))
+    #[doc = "Get a reference to the value of field `unique_attribute` after provisioning.\n"]
+    pub fn unique_attribute(&self) -> terrars::ListRef<DataIdentitystoreGroupAlternateIdentifierElUniqueAttributeElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.unique_attribute", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct DataIdentitystoreGroupFilterEl {
-    attribute_path: PrimField<String>,
-    attribute_value: PrimField<String>,
+    attribute_path: terrars::PrimField<std::string::String>,
+    attribute_value: terrars::PrimField<std::string::String>,
 }
 
 impl DataIdentitystoreGroupFilterEl { }
 
-impl ToListMappable for DataIdentitystoreGroupFilterEl {
-    type O = BlockAssignable<DataIdentitystoreGroupFilterEl>;
+impl terrars::ToListMappable for DataIdentitystoreGroupFilterEl {
+    type O = terrars::BlockAssignable<DataIdentitystoreGroupFilterEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -584,10 +637,10 @@ impl ToListMappable for DataIdentitystoreGroupFilterEl {
 }
 
 pub struct BuildDataIdentitystoreGroupFilterEl {
-    #[doc= ""]
-    pub attribute_path: PrimField<String>,
-    #[doc= ""]
-    pub attribute_value: PrimField<String>,
+    #[doc = ""]
+    pub attribute_path: terrars::PrimField<std::string::String>,
+    #[doc = ""]
+    pub attribute_value: terrars::PrimField<std::string::String>,
 }
 
 impl BuildDataIdentitystoreGroupFilterEl {
@@ -600,12 +653,12 @@ impl BuildDataIdentitystoreGroupFilterEl {
 }
 
 pub struct DataIdentitystoreGroupFilterElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for DataIdentitystoreGroupFilterElRef {
-    fn new(shared: StackShared, base: String) -> DataIdentitystoreGroupFilterElRef {
+impl terrars::Ref for DataIdentitystoreGroupFilterElRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataIdentitystoreGroupFilterElRef {
         DataIdentitystoreGroupFilterElRef {
             shared: shared,
             base: base.to_string(),
@@ -614,23 +667,23 @@ impl Ref for DataIdentitystoreGroupFilterElRef {
 }
 
 impl DataIdentitystoreGroupFilterElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `attribute_path` after provisioning.\n"]
-    pub fn attribute_path(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.attribute_path", self.base))
+    #[doc = "Get a reference to the value of field `attribute_path` after provisioning.\n"]
+    pub fn attribute_path(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.attribute_path", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `attribute_value` after provisioning.\n"]
-    pub fn attribute_value(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.attribute_value", self.base))
+    #[doc = "Get a reference to the value of field `attribute_value` after provisioning.\n"]
+    pub fn attribute_value(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.attribute_value", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
 struct DataIdentitystoreGroupDynamic {
-    alternate_identifier: Option<DynamicBlock<DataIdentitystoreGroupAlternateIdentifierEl>>,
-    filter: Option<DynamicBlock<DataIdentitystoreGroupFilterEl>>,
+    alternate_identifier: std::option::Option<terrars::DynamicBlock<DataIdentitystoreGroupAlternateIdentifierEl>>,
+    filter: std::option::Option<terrars::DynamicBlock<DataIdentitystoreGroupFilterEl>>,
 }

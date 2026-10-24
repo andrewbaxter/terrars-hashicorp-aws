@@ -1,67 +1,75 @@
 use serde::Serialize;
-use std::cell::RefCell;
-use std::rc::Rc;
-use terrars::*;
+use terrars::{
+    Referable as _,
+    Resource_ as _,
+    Ref as _,
+};
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
 struct MskconnectConnectorData {
-    #[serde(skip_serializing_if = "Vec::is_empty")]
-    depends_on: Vec<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    provider: Option<String>,
-    #[serde(skip_serializing_if = "SerdeSkipDefault::is_default")]
-    lifecycle: ResourceLifecycle,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    for_each: Option<String>,
-    connector_configuration: RecField<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    description: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    id: Option<PrimField<String>>,
-    kafkaconnect_version: PrimField<String>,
-    name: PrimField<String>,
-    service_execution_role_arn: PrimField<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    capacity: Option<Vec<MskconnectConnectorCapacityEl>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    kafka_cluster: Option<Vec<MskconnectConnectorKafkaClusterEl>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    kafka_cluster_client_authentication: Option<Vec<MskconnectConnectorKafkaClusterClientAuthenticationEl>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    kafka_cluster_encryption_in_transit: Option<Vec<MskconnectConnectorKafkaClusterEncryptionInTransitEl>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    log_delivery: Option<Vec<MskconnectConnectorLogDeliveryEl>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    plugin: Option<Vec<MskconnectConnectorPluginEl>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    timeouts: Option<MskconnectConnectorTimeoutsEl>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    worker_configuration: Option<Vec<MskconnectConnectorWorkerConfigurationEl>>,
+    #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
+    depends_on: std::vec::Vec<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    provider: std::option::Option<std::string::String>,
+    #[serde(skip_serializing_if = "terrars::SerdeSkipDefault::is_default")]
+    lifecycle: terrars::ResourceLifecycle,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    for_each: std::option::Option<std::string::String>,
+    #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
+    provisioner: std::vec::Vec<terrars::Provisioner>,
+    connector_configuration: terrars::RecField<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    description: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    id: std::option::Option<terrars::PrimField<std::string::String>>,
+    kafkaconnect_version: terrars::PrimField<std::string::String>,
+    name: terrars::PrimField<std::string::String>,
+    service_execution_role_arn: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    capacity: std::option::Option<std::vec::Vec<MskconnectConnectorCapacityEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    kafka_cluster: std::option::Option<std::vec::Vec<MskconnectConnectorKafkaClusterEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    kafka_cluster_client_authentication: std
+    ::option
+    ::Option<std::vec::Vec<MskconnectConnectorKafkaClusterClientAuthenticationEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    kafka_cluster_encryption_in_transit: std
+    ::option
+    ::Option<std::vec::Vec<MskconnectConnectorKafkaClusterEncryptionInTransitEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    log_delivery: std::option::Option<std::vec::Vec<MskconnectConnectorLogDeliveryEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    plugin: std::option::Option<std::vec::Vec<MskconnectConnectorPluginEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    timeouts: std::option::Option<MskconnectConnectorTimeoutsEl>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    worker_configuration: std::option::Option<std::vec::Vec<MskconnectConnectorWorkerConfigurationEl>>,
     dynamic: MskconnectConnectorDynamic,
 }
 
 struct MskconnectConnector_ {
-    shared: StackShared,
-    tf_id: String,
-    data: RefCell<MskconnectConnectorData>,
+    shared: terrars::StackShared,
+    tf_id: std::string::String,
+    data: std::cell::RefCell<MskconnectConnectorData>,
 }
 
 #[derive(Clone)]
-pub struct MskconnectConnector(Rc<MskconnectConnector_>);
+pub struct MskconnectConnector(std::rc::Rc<MskconnectConnector_>);
 
 impl MskconnectConnector {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.0.shared
     }
 
-    pub fn depends_on(self, dep: &impl Referable) -> Self {
+    pub fn depends_on(self, dep: &impl terrars::Referable) -> Self {
         self.0.data.borrow_mut().depends_on.push(dep.extract_ref());
         self
     }
 
     pub fn set_provider(self, provider: &ProviderAws) -> Self {
-        self.0.data.borrow_mut().provider = Some(provider.provider_ref());
+        self.0.data.borrow_mut().provider = std::option::Option::Some(provider.provider_ref());
         self
     }
 
@@ -76,262 +84,310 @@ impl MskconnectConnector {
     }
 
     pub fn ignore_changes_to_all(self) -> Self {
-        self.0.data.borrow_mut().lifecycle.ignore_changes = Some(IgnoreChanges::All(IgnoreChangesAll::All));
+        self.0.data.borrow_mut().lifecycle.ignore_changes =
+            std::option::Option::Some(terrars::IgnoreChanges::All(terrars::IgnoreChangesAll::All));
         self
     }
 
-    pub fn ignore_changes_to_attr(self, attr: impl ToString) -> Self {
+    pub fn ignore_changes_to_attr(self, attr: impl std::string::ToString) -> Self {
         {
             let mut d = self.0.data.borrow_mut();
             if match &mut d.lifecycle.ignore_changes {
-                Some(i) => match i {
-                    IgnoreChanges::All(_) => {
+                std::option::Option::Some(i) => match i {
+                    terrars::IgnoreChanges::All(_) => {
                         true
                     },
-                    IgnoreChanges::Refs(r) => {
+                    terrars::IgnoreChanges::Refs(r) => {
                         r.push(attr.to_string());
                         false
                     },
                 },
-                None => true,
+                std::option::Option::None => true,
             } {
-                d.lifecycle.ignore_changes = Some(IgnoreChanges::Refs(vec![attr.to_string()]));
+                d.lifecycle.ignore_changes =
+                    std::option::Option::Some(terrars::IgnoreChanges::Refs(vec![attr.to_string()]));
             }
         }
         self
     }
 
-    pub fn replace_triggered_by_resource(self, r: &impl Resource) -> Self {
+    pub fn replace_triggered_by_resource(self, r: &impl terrars::Resource) -> Self {
         self.0.data.borrow_mut().lifecycle.replace_triggered_by.push(r.extract_ref());
         self
     }
 
-    pub fn replace_triggered_by_attr(self, attr: impl ToString) -> Self {
+    pub fn replace_triggered_by_attr(self, attr: impl std::string::ToString) -> Self {
         self.0.data.borrow_mut().lifecycle.replace_triggered_by.push(attr.to_string());
         self
     }
 
-    #[doc= "Set the field `description`.\n"]
-    pub fn set_description(self, v: impl Into<PrimField<String>>) -> Self {
-        self.0.data.borrow_mut().description = Some(v.into());
+    #[doc = r" Add a provisioner (ex: `local-exec`, `remote-exec`, `file`) to this resource."]
+    #[doc = r" Provisioners run in the order they're added."]
+    pub fn add_provisioner(self, v: impl std::convert::Into<terrars::Provisioner>) -> Self {
+        self.0.data.borrow_mut().provisioner.push(v.into());
         self
     }
 
-    #[doc= "Set the field `id`.\n"]
-    pub fn set_id(self, v: impl Into<PrimField<String>>) -> Self {
-        self.0.data.borrow_mut().id = Some(v.into());
+    pub fn add_lifecycle_precondition(
+        self,
+        condition: impl std::convert::Into<terrars::PrimField<bool>>,
+        error_message: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.0.data.borrow_mut().lifecycle.precondition.push(terrars::LifecycleCondition {
+            condition: condition.into(),
+            error_message: error_message.into(),
+        });
         self
     }
 
-    #[doc= "Set the field `capacity`.\n"]
-    pub fn set_capacity(self, v: impl Into<BlockAssignable<MskconnectConnectorCapacityEl>>) -> Self {
+    pub fn add_lifecycle_postcondition(
+        self,
+        condition: impl std::convert::Into<terrars::PrimField<bool>>,
+        error_message: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.0.data.borrow_mut().lifecycle.postcondition.push(terrars::LifecycleCondition {
+            condition: condition.into(),
+            error_message: error_message.into(),
+        });
+        self
+    }
+
+    #[doc = "Set the field `description`.\n"]
+    pub fn set_description(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().description = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `id`.\n"]
+    pub fn set_id(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().id = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `capacity`.\n"]
+    pub fn set_capacity(
+        self,
+        v: impl std::convert::Into<terrars::BlockAssignable<MskconnectConnectorCapacityEl>>,
+    ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.0.data.borrow_mut().capacity = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.0.data.borrow_mut().capacity = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.0.data.borrow_mut().dynamic.capacity = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.0.data.borrow_mut().dynamic.capacity = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Set the field `kafka_cluster`.\n"]
-    pub fn set_kafka_cluster(self, v: impl Into<BlockAssignable<MskconnectConnectorKafkaClusterEl>>) -> Self {
+    #[doc = "Set the field `kafka_cluster`.\n"]
+    pub fn set_kafka_cluster(
+        self,
+        v: impl std::convert::Into<terrars::BlockAssignable<MskconnectConnectorKafkaClusterEl>>,
+    ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.0.data.borrow_mut().kafka_cluster = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.0.data.borrow_mut().kafka_cluster = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.0.data.borrow_mut().dynamic.kafka_cluster = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.0.data.borrow_mut().dynamic.kafka_cluster = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Set the field `kafka_cluster_client_authentication`.\n"]
+    #[doc = "Set the field `kafka_cluster_client_authentication`.\n"]
     pub fn set_kafka_cluster_client_authentication(
         self,
-        v: impl Into<BlockAssignable<MskconnectConnectorKafkaClusterClientAuthenticationEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<MskconnectConnectorKafkaClusterClientAuthenticationEl>>,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.0.data.borrow_mut().kafka_cluster_client_authentication = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.0.data.borrow_mut().kafka_cluster_client_authentication = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.0.data.borrow_mut().dynamic.kafka_cluster_client_authentication = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.0.data.borrow_mut().dynamic.kafka_cluster_client_authentication = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Set the field `kafka_cluster_encryption_in_transit`.\n"]
+    #[doc = "Set the field `kafka_cluster_encryption_in_transit`.\n"]
     pub fn set_kafka_cluster_encryption_in_transit(
         self,
-        v: impl Into<BlockAssignable<MskconnectConnectorKafkaClusterEncryptionInTransitEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<MskconnectConnectorKafkaClusterEncryptionInTransitEl>>,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.0.data.borrow_mut().kafka_cluster_encryption_in_transit = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.0.data.borrow_mut().kafka_cluster_encryption_in_transit = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.0.data.borrow_mut().dynamic.kafka_cluster_encryption_in_transit = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.0.data.borrow_mut().dynamic.kafka_cluster_encryption_in_transit = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Set the field `log_delivery`.\n"]
-    pub fn set_log_delivery(self, v: impl Into<BlockAssignable<MskconnectConnectorLogDeliveryEl>>) -> Self {
+    #[doc = "Set the field `log_delivery`.\n"]
+    pub fn set_log_delivery(
+        self,
+        v: impl std::convert::Into<terrars::BlockAssignable<MskconnectConnectorLogDeliveryEl>>,
+    ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.0.data.borrow_mut().log_delivery = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.0.data.borrow_mut().log_delivery = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.0.data.borrow_mut().dynamic.log_delivery = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.0.data.borrow_mut().dynamic.log_delivery = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Set the field `plugin`.\n"]
-    pub fn set_plugin(self, v: impl Into<BlockAssignable<MskconnectConnectorPluginEl>>) -> Self {
+    #[doc = "Set the field `plugin`.\n"]
+    pub fn set_plugin(self, v: impl std::convert::Into<terrars::BlockAssignable<MskconnectConnectorPluginEl>>) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.0.data.borrow_mut().plugin = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.0.data.borrow_mut().plugin = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.0.data.borrow_mut().dynamic.plugin = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.0.data.borrow_mut().dynamic.plugin = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Set the field `timeouts`.\n"]
-    pub fn set_timeouts(self, v: impl Into<MskconnectConnectorTimeoutsEl>) -> Self {
-        self.0.data.borrow_mut().timeouts = Some(v.into());
+    #[doc = "Set the field `timeouts`.\n"]
+    pub fn set_timeouts(self, v: impl std::convert::Into<MskconnectConnectorTimeoutsEl>) -> Self {
+        self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `worker_configuration`.\n"]
+    #[doc = "Set the field `worker_configuration`.\n"]
     pub fn set_worker_configuration(
         self,
-        v: impl Into<BlockAssignable<MskconnectConnectorWorkerConfigurationEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<MskconnectConnectorWorkerConfigurationEl>>,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.0.data.borrow_mut().worker_configuration = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.0.data.borrow_mut().worker_configuration = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.0.data.borrow_mut().dynamic.worker_configuration = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.0.data.borrow_mut().dynamic.worker_configuration = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Get a reference to the value of field `arn` after provisioning.\n"]
-    pub fn arn(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.arn", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `arn` after provisioning.\n"]
+    pub fn arn(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.arn", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `connector_configuration` after provisioning.\n"]
-    pub fn connector_configuration(&self) -> RecRef<PrimExpr<String>> {
-        RecRef::new(self.shared().clone(), format!("{}.connector_configuration", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `connector_configuration` after provisioning.\n"]
+    pub fn connector_configuration(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
+        terrars::RecRef::new(self.shared().clone(), format!("{}.connector_configuration", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `description` after provisioning.\n"]
-    pub fn description(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.description", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `description` after provisioning.\n"]
+    pub fn description(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.description", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `id` after provisioning.\n"]
-    pub fn id(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
+    pub fn id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `kafkaconnect_version` after provisioning.\n"]
-    pub fn kafkaconnect_version(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.kafkaconnect_version", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `kafkaconnect_version` after provisioning.\n"]
+    pub fn kafkaconnect_version(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.kafkaconnect_version", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `name` after provisioning.\n"]
-    pub fn name(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `name` after provisioning.\n"]
+    pub fn name(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `service_execution_role_arn` after provisioning.\n"]
-    pub fn service_execution_role_arn(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.service_execution_role_arn", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `service_execution_role_arn` after provisioning.\n"]
+    pub fn service_execution_role_arn(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.service_execution_role_arn", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `version` after provisioning.\n"]
-    pub fn version(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.version", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `version` after provisioning.\n"]
+    pub fn version(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.version", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `capacity` after provisioning.\n"]
-    pub fn capacity(&self) -> ListRef<MskconnectConnectorCapacityElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.capacity", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `capacity` after provisioning.\n"]
+    pub fn capacity(&self) -> terrars::ListRef<MskconnectConnectorCapacityElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.capacity", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `kafka_cluster` after provisioning.\n"]
-    pub fn kafka_cluster(&self) -> ListRef<MskconnectConnectorKafkaClusterElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.kafka_cluster", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `kafka_cluster` after provisioning.\n"]
+    pub fn kafka_cluster(&self) -> terrars::ListRef<MskconnectConnectorKafkaClusterElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.kafka_cluster", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `kafka_cluster_client_authentication` after provisioning.\n"]
+    #[doc = "Get a reference to the value of field `kafka_cluster_client_authentication` after provisioning.\n"]
     pub fn kafka_cluster_client_authentication(
         &self,
-    ) -> ListRef<MskconnectConnectorKafkaClusterClientAuthenticationElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.kafka_cluster_client_authentication", self.extract_ref()))
+    ) -> terrars::ListRef<MskconnectConnectorKafkaClusterClientAuthenticationElRef> {
+        terrars::ListRef::new(
+            self.shared().clone(),
+            format!("{}.kafka_cluster_client_authentication", self.extract_ref()),
+        )
     }
 
-    #[doc= "Get a reference to the value of field `kafka_cluster_encryption_in_transit` after provisioning.\n"]
+    #[doc = "Get a reference to the value of field `kafka_cluster_encryption_in_transit` after provisioning.\n"]
     pub fn kafka_cluster_encryption_in_transit(
         &self,
-    ) -> ListRef<MskconnectConnectorKafkaClusterEncryptionInTransitElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.kafka_cluster_encryption_in_transit", self.extract_ref()))
+    ) -> terrars::ListRef<MskconnectConnectorKafkaClusterEncryptionInTransitElRef> {
+        terrars::ListRef::new(
+            self.shared().clone(),
+            format!("{}.kafka_cluster_encryption_in_transit", self.extract_ref()),
+        )
     }
 
-    #[doc= "Get a reference to the value of field `log_delivery` after provisioning.\n"]
-    pub fn log_delivery(&self) -> ListRef<MskconnectConnectorLogDeliveryElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.log_delivery", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `log_delivery` after provisioning.\n"]
+    pub fn log_delivery(&self) -> terrars::ListRef<MskconnectConnectorLogDeliveryElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.log_delivery", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `timeouts` after provisioning.\n"]
+    #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
     pub fn timeouts(&self) -> MskconnectConnectorTimeoutsElRef {
         MskconnectConnectorTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `worker_configuration` after provisioning.\n"]
-    pub fn worker_configuration(&self) -> ListRef<MskconnectConnectorWorkerConfigurationElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.worker_configuration", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `worker_configuration` after provisioning.\n"]
+    pub fn worker_configuration(&self) -> terrars::ListRef<MskconnectConnectorWorkerConfigurationElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.worker_configuration", self.extract_ref()))
     }
 }
 
-impl Referable for MskconnectConnector {
-    fn extract_ref(&self) -> String {
+impl terrars::Referable for MskconnectConnector {
+    fn extract_ref(&self) -> std::string::String {
         format!("{}.{}", self.0.extract_resource_type(), self.0.extract_tf_id())
     }
 }
 
-impl Resource for MskconnectConnector { }
+impl terrars::Resource for MskconnectConnector { }
 
-impl ToListMappable for MskconnectConnector {
-    type O = ListRef<MskconnectConnectorRef>;
+impl terrars::ToListMappable for MskconnectConnector {
+    type O = terrars::ListRef<MskconnectConnectorRef>;
 
-    fn do_map(self, base: String) -> Self::O {
-        self.0.data.borrow_mut().for_each = Some(format!("${{{}}}", base));
-        ListRef::new(self.0.shared.clone(), self.extract_ref())
+    fn do_map(self, base: std::string::String) -> Self::O {
+        self.0.data.borrow_mut().for_each = std::option::Option::Some(format!("${{{}}}", base));
+        terrars::ListRef::new(self.0.shared.clone(), self.extract_ref())
     }
 }
 
-impl Resource_ for MskconnectConnector_ {
-    fn extract_resource_type(&self) -> String {
+impl terrars::Resource_ for MskconnectConnector_ {
+    fn extract_resource_type(&self) -> std::string::String {
         "aws_mskconnect_connector".into()
     }
 
-    fn extract_tf_id(&self) -> String {
+    fn extract_tf_id(&self) -> std::string::String {
         self.tf_id.clone()
     }
 
@@ -341,27 +397,28 @@ impl Resource_ for MskconnectConnector_ {
 }
 
 pub struct BuildMskconnectConnector {
-    pub tf_id: String,
-    #[doc= ""]
-    pub connector_configuration: RecField<PrimField<String>>,
-    #[doc= ""]
-    pub kafkaconnect_version: PrimField<String>,
-    #[doc= ""]
-    pub name: PrimField<String>,
-    #[doc= ""]
-    pub service_execution_role_arn: PrimField<String>,
+    pub tf_id: std::string::String,
+    #[doc = ""]
+    pub connector_configuration: terrars::RecField<terrars::PrimField<std::string::String>>,
+    #[doc = ""]
+    pub kafkaconnect_version: terrars::PrimField<std::string::String>,
+    #[doc = ""]
+    pub name: terrars::PrimField<std::string::String>,
+    #[doc = ""]
+    pub service_execution_role_arn: terrars::PrimField<std::string::String>,
 }
 
 impl BuildMskconnectConnector {
-    pub fn build(self, stack: &mut Stack) -> MskconnectConnector {
-        let out = MskconnectConnector(Rc::new(MskconnectConnector_ {
+    pub fn build(self, stack: &mut terrars::Stack) -> MskconnectConnector {
+        let out = MskconnectConnector(std::rc::Rc::new(MskconnectConnector_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: RefCell::new(MskconnectConnectorData {
+            data: std::cell::RefCell::new(MskconnectConnectorData {
                 depends_on: core::default::Default::default(),
-                provider: None,
+                provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
-                for_each: None,
+                for_each: std::option::Option::None,
+                provisioner: core::default::Default::default(),
                 connector_configuration: self.connector_configuration,
                 description: core::default::Default::default(),
                 id: core::default::Default::default(),
@@ -376,7 +433,7 @@ impl BuildMskconnectConnector {
                 plugin: core::default::Default::default(),
                 timeouts: core::default::Default::default(),
                 worker_configuration: core::default::Default::default(),
-                dynamic: Default::default(),
+                dynamic: core::default::Default::default(),
             }),
         }));
         stack.add_resource(out.0.clone());
@@ -385,12 +442,12 @@ impl BuildMskconnectConnector {
 }
 
 pub struct MskconnectConnectorRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for MskconnectConnectorRef {
-    fn new(shared: StackShared, base: String) -> Self {
+impl terrars::Ref for MskconnectConnectorRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> Self {
         Self {
             shared: shared,
             base: base,
@@ -399,113 +456,119 @@ impl Ref for MskconnectConnectorRef {
 }
 
 impl MskconnectConnectorRef {
-    fn extract_ref(&self) -> String {
+    fn extract_ref(&self) -> std::string::String {
         self.base.clone()
     }
 
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `arn` after provisioning.\n"]
-    pub fn arn(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.arn", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `arn` after provisioning.\n"]
+    pub fn arn(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.arn", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `connector_configuration` after provisioning.\n"]
-    pub fn connector_configuration(&self) -> RecRef<PrimExpr<String>> {
-        RecRef::new(self.shared().clone(), format!("{}.connector_configuration", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `connector_configuration` after provisioning.\n"]
+    pub fn connector_configuration(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
+        terrars::RecRef::new(self.shared().clone(), format!("{}.connector_configuration", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `description` after provisioning.\n"]
-    pub fn description(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.description", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `description` after provisioning.\n"]
+    pub fn description(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.description", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `id` after provisioning.\n"]
-    pub fn id(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
+    pub fn id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `kafkaconnect_version` after provisioning.\n"]
-    pub fn kafkaconnect_version(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.kafkaconnect_version", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `kafkaconnect_version` after provisioning.\n"]
+    pub fn kafkaconnect_version(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.kafkaconnect_version", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `name` after provisioning.\n"]
-    pub fn name(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `name` after provisioning.\n"]
+    pub fn name(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `service_execution_role_arn` after provisioning.\n"]
-    pub fn service_execution_role_arn(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.service_execution_role_arn", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `service_execution_role_arn` after provisioning.\n"]
+    pub fn service_execution_role_arn(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.service_execution_role_arn", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `version` after provisioning.\n"]
-    pub fn version(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.version", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `version` after provisioning.\n"]
+    pub fn version(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.version", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `capacity` after provisioning.\n"]
-    pub fn capacity(&self) -> ListRef<MskconnectConnectorCapacityElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.capacity", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `capacity` after provisioning.\n"]
+    pub fn capacity(&self) -> terrars::ListRef<MskconnectConnectorCapacityElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.capacity", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `kafka_cluster` after provisioning.\n"]
-    pub fn kafka_cluster(&self) -> ListRef<MskconnectConnectorKafkaClusterElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.kafka_cluster", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `kafka_cluster` after provisioning.\n"]
+    pub fn kafka_cluster(&self) -> terrars::ListRef<MskconnectConnectorKafkaClusterElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.kafka_cluster", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `kafka_cluster_client_authentication` after provisioning.\n"]
+    #[doc = "Get a reference to the value of field `kafka_cluster_client_authentication` after provisioning.\n"]
     pub fn kafka_cluster_client_authentication(
         &self,
-    ) -> ListRef<MskconnectConnectorKafkaClusterClientAuthenticationElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.kafka_cluster_client_authentication", self.extract_ref()))
+    ) -> terrars::ListRef<MskconnectConnectorKafkaClusterClientAuthenticationElRef> {
+        terrars::ListRef::new(
+            self.shared().clone(),
+            format!("{}.kafka_cluster_client_authentication", self.extract_ref()),
+        )
     }
 
-    #[doc= "Get a reference to the value of field `kafka_cluster_encryption_in_transit` after provisioning.\n"]
+    #[doc = "Get a reference to the value of field `kafka_cluster_encryption_in_transit` after provisioning.\n"]
     pub fn kafka_cluster_encryption_in_transit(
         &self,
-    ) -> ListRef<MskconnectConnectorKafkaClusterEncryptionInTransitElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.kafka_cluster_encryption_in_transit", self.extract_ref()))
+    ) -> terrars::ListRef<MskconnectConnectorKafkaClusterEncryptionInTransitElRef> {
+        terrars::ListRef::new(
+            self.shared().clone(),
+            format!("{}.kafka_cluster_encryption_in_transit", self.extract_ref()),
+        )
     }
 
-    #[doc= "Get a reference to the value of field `log_delivery` after provisioning.\n"]
-    pub fn log_delivery(&self) -> ListRef<MskconnectConnectorLogDeliveryElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.log_delivery", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `log_delivery` after provisioning.\n"]
+    pub fn log_delivery(&self) -> terrars::ListRef<MskconnectConnectorLogDeliveryElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.log_delivery", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `timeouts` after provisioning.\n"]
+    #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
     pub fn timeouts(&self) -> MskconnectConnectorTimeoutsElRef {
         MskconnectConnectorTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `worker_configuration` after provisioning.\n"]
-    pub fn worker_configuration(&self) -> ListRef<MskconnectConnectorWorkerConfigurationElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.worker_configuration", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `worker_configuration` after provisioning.\n"]
+    pub fn worker_configuration(&self) -> terrars::ListRef<MskconnectConnectorWorkerConfigurationElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.worker_configuration", self.extract_ref()))
     }
 }
 
 #[derive(Serialize)]
 pub struct MskconnectConnectorCapacityElAutoscalingElScaleInPolicyEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    cpu_utilization_percentage: Option<PrimField<f64>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    cpu_utilization_percentage: std::option::Option<terrars::PrimField<f64>>,
 }
 
 impl MskconnectConnectorCapacityElAutoscalingElScaleInPolicyEl {
-    #[doc= "Set the field `cpu_utilization_percentage`.\n"]
-    pub fn set_cpu_utilization_percentage(mut self, v: impl Into<PrimField<f64>>) -> Self {
-        self.cpu_utilization_percentage = Some(v.into());
+    #[doc = "Set the field `cpu_utilization_percentage`.\n"]
+    pub fn set_cpu_utilization_percentage(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.cpu_utilization_percentage = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl ToListMappable for MskconnectConnectorCapacityElAutoscalingElScaleInPolicyEl {
-    type O = BlockAssignable<MskconnectConnectorCapacityElAutoscalingElScaleInPolicyEl>;
+impl terrars::ToListMappable for MskconnectConnectorCapacityElAutoscalingElScaleInPolicyEl {
+    type O = terrars::BlockAssignable<MskconnectConnectorCapacityElAutoscalingElScaleInPolicyEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -524,12 +587,15 @@ impl BuildMskconnectConnectorCapacityElAutoscalingElScaleInPolicyEl {
 }
 
 pub struct MskconnectConnectorCapacityElAutoscalingElScaleInPolicyElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for MskconnectConnectorCapacityElAutoscalingElScaleInPolicyElRef {
-    fn new(shared: StackShared, base: String) -> MskconnectConnectorCapacityElAutoscalingElScaleInPolicyElRef {
+impl terrars::Ref for MskconnectConnectorCapacityElAutoscalingElScaleInPolicyElRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> MskconnectConnectorCapacityElAutoscalingElScaleInPolicyElRef {
         MskconnectConnectorCapacityElAutoscalingElScaleInPolicyElRef {
             shared: shared,
             base: base.to_string(),
@@ -538,35 +604,35 @@ impl Ref for MskconnectConnectorCapacityElAutoscalingElScaleInPolicyElRef {
 }
 
 impl MskconnectConnectorCapacityElAutoscalingElScaleInPolicyElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `cpu_utilization_percentage` after provisioning.\n"]
-    pub fn cpu_utilization_percentage(&self) -> PrimExpr<f64> {
-        PrimExpr::new(self.shared().clone(), format!("{}.cpu_utilization_percentage", self.base))
+    #[doc = "Get a reference to the value of field `cpu_utilization_percentage` after provisioning.\n"]
+    pub fn cpu_utilization_percentage(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.cpu_utilization_percentage", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct MskconnectConnectorCapacityElAutoscalingElScaleOutPolicyEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    cpu_utilization_percentage: Option<PrimField<f64>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    cpu_utilization_percentage: std::option::Option<terrars::PrimField<f64>>,
 }
 
 impl MskconnectConnectorCapacityElAutoscalingElScaleOutPolicyEl {
-    #[doc= "Set the field `cpu_utilization_percentage`.\n"]
-    pub fn set_cpu_utilization_percentage(mut self, v: impl Into<PrimField<f64>>) -> Self {
-        self.cpu_utilization_percentage = Some(v.into());
+    #[doc = "Set the field `cpu_utilization_percentage`.\n"]
+    pub fn set_cpu_utilization_percentage(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.cpu_utilization_percentage = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl ToListMappable for MskconnectConnectorCapacityElAutoscalingElScaleOutPolicyEl {
-    type O = BlockAssignable<MskconnectConnectorCapacityElAutoscalingElScaleOutPolicyEl>;
+impl terrars::ToListMappable for MskconnectConnectorCapacityElAutoscalingElScaleOutPolicyEl {
+    type O = terrars::BlockAssignable<MskconnectConnectorCapacityElAutoscalingElScaleOutPolicyEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -585,12 +651,15 @@ impl BuildMskconnectConnectorCapacityElAutoscalingElScaleOutPolicyEl {
 }
 
 pub struct MskconnectConnectorCapacityElAutoscalingElScaleOutPolicyElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for MskconnectConnectorCapacityElAutoscalingElScaleOutPolicyElRef {
-    fn new(shared: StackShared, base: String) -> MskconnectConnectorCapacityElAutoscalingElScaleOutPolicyElRef {
+impl terrars::Ref for MskconnectConnectorCapacityElAutoscalingElScaleOutPolicyElRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> MskconnectConnectorCapacityElAutoscalingElScaleOutPolicyElRef {
         MskconnectConnectorCapacityElAutoscalingElScaleOutPolicyElRef {
             shared: shared,
             base: base.to_string(),
@@ -599,80 +668,94 @@ impl Ref for MskconnectConnectorCapacityElAutoscalingElScaleOutPolicyElRef {
 }
 
 impl MskconnectConnectorCapacityElAutoscalingElScaleOutPolicyElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `cpu_utilization_percentage` after provisioning.\n"]
-    pub fn cpu_utilization_percentage(&self) -> PrimExpr<f64> {
-        PrimExpr::new(self.shared().clone(), format!("{}.cpu_utilization_percentage", self.base))
+    #[doc = "Get a reference to the value of field `cpu_utilization_percentage` after provisioning.\n"]
+    pub fn cpu_utilization_percentage(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.cpu_utilization_percentage", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
 struct MskconnectConnectorCapacityElAutoscalingElDynamic {
-    scale_in_policy: Option<DynamicBlock<MskconnectConnectorCapacityElAutoscalingElScaleInPolicyEl>>,
-    scale_out_policy: Option<DynamicBlock<MskconnectConnectorCapacityElAutoscalingElScaleOutPolicyEl>>,
+    scale_in_policy: std
+    ::option
+    ::Option<terrars::DynamicBlock<MskconnectConnectorCapacityElAutoscalingElScaleInPolicyEl>>,
+    scale_out_policy: std
+    ::option
+    ::Option<terrars::DynamicBlock<MskconnectConnectorCapacityElAutoscalingElScaleOutPolicyEl>>,
 }
 
 #[derive(Serialize)]
 pub struct MskconnectConnectorCapacityElAutoscalingEl {
-    max_worker_count: PrimField<f64>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    mcu_count: Option<PrimField<f64>>,
-    min_worker_count: PrimField<f64>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    scale_in_policy: Option<Vec<MskconnectConnectorCapacityElAutoscalingElScaleInPolicyEl>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    scale_out_policy: Option<Vec<MskconnectConnectorCapacityElAutoscalingElScaleOutPolicyEl>>,
+    max_worker_count: terrars::PrimField<f64>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    mcu_count: std::option::Option<terrars::PrimField<f64>>,
+    min_worker_count: terrars::PrimField<f64>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    scale_in_policy: std::option::Option<std::vec::Vec<MskconnectConnectorCapacityElAutoscalingElScaleInPolicyEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    scale_out_policy: std::option::Option<std::vec::Vec<MskconnectConnectorCapacityElAutoscalingElScaleOutPolicyEl>>,
     dynamic: MskconnectConnectorCapacityElAutoscalingElDynamic,
 }
 
 impl MskconnectConnectorCapacityElAutoscalingEl {
-    #[doc= "Set the field `mcu_count`.\n"]
-    pub fn set_mcu_count(mut self, v: impl Into<PrimField<f64>>) -> Self {
-        self.mcu_count = Some(v.into());
+    #[doc = "Set the field `mcu_count`.\n"]
+    pub fn set_mcu_count(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.mcu_count = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `scale_in_policy`.\n"]
+    #[doc = "Set the field `scale_in_policy`.\n"]
     pub fn set_scale_in_policy(
         mut self,
-        v: impl Into<BlockAssignable<MskconnectConnectorCapacityElAutoscalingElScaleInPolicyEl>>,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<terrars::BlockAssignable<MskconnectConnectorCapacityElAutoscalingElScaleInPolicyEl>>,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.scale_in_policy = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.scale_in_policy = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.scale_in_policy = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.scale_in_policy = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Set the field `scale_out_policy`.\n"]
+    #[doc = "Set the field `scale_out_policy`.\n"]
     pub fn set_scale_out_policy(
         mut self,
-        v: impl Into<BlockAssignable<MskconnectConnectorCapacityElAutoscalingElScaleOutPolicyEl>>,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<terrars::BlockAssignable<MskconnectConnectorCapacityElAutoscalingElScaleOutPolicyEl>>,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.scale_out_policy = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.scale_out_policy = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.scale_out_policy = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.scale_out_policy = std::option::Option::Some(d);
             },
         }
         self
     }
 }
 
-impl ToListMappable for MskconnectConnectorCapacityElAutoscalingEl {
-    type O = BlockAssignable<MskconnectConnectorCapacityElAutoscalingEl>;
+impl terrars::ToListMappable for MskconnectConnectorCapacityElAutoscalingEl {
+    type O = terrars::BlockAssignable<MskconnectConnectorCapacityElAutoscalingEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -681,10 +764,10 @@ impl ToListMappable for MskconnectConnectorCapacityElAutoscalingEl {
 }
 
 pub struct BuildMskconnectConnectorCapacityElAutoscalingEl {
-    #[doc= ""]
-    pub max_worker_count: PrimField<f64>,
-    #[doc= ""]
-    pub min_worker_count: PrimField<f64>,
+    #[doc = ""]
+    pub max_worker_count: terrars::PrimField<f64>,
+    #[doc = ""]
+    pub min_worker_count: terrars::PrimField<f64>,
 }
 
 impl BuildMskconnectConnectorCapacityElAutoscalingEl {
@@ -695,18 +778,18 @@ impl BuildMskconnectConnectorCapacityElAutoscalingEl {
             min_worker_count: self.min_worker_count,
             scale_in_policy: core::default::Default::default(),
             scale_out_policy: core::default::Default::default(),
-            dynamic: Default::default(),
+            dynamic: core::default::Default::default(),
         }
     }
 }
 
 pub struct MskconnectConnectorCapacityElAutoscalingElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for MskconnectConnectorCapacityElAutoscalingElRef {
-    fn new(shared: StackShared, base: String) -> MskconnectConnectorCapacityElAutoscalingElRef {
+impl terrars::Ref for MskconnectConnectorCapacityElAutoscalingElRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> MskconnectConnectorCapacityElAutoscalingElRef {
         MskconnectConnectorCapacityElAutoscalingElRef {
             shared: shared,
             base: base.to_string(),
@@ -715,56 +798,56 @@ impl Ref for MskconnectConnectorCapacityElAutoscalingElRef {
 }
 
 impl MskconnectConnectorCapacityElAutoscalingElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `max_worker_count` after provisioning.\n"]
-    pub fn max_worker_count(&self) -> PrimExpr<f64> {
-        PrimExpr::new(self.shared().clone(), format!("{}.max_worker_count", self.base))
+    #[doc = "Get a reference to the value of field `max_worker_count` after provisioning.\n"]
+    pub fn max_worker_count(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.max_worker_count", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `mcu_count` after provisioning.\n"]
-    pub fn mcu_count(&self) -> PrimExpr<f64> {
-        PrimExpr::new(self.shared().clone(), format!("{}.mcu_count", self.base))
+    #[doc = "Get a reference to the value of field `mcu_count` after provisioning.\n"]
+    pub fn mcu_count(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.mcu_count", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `min_worker_count` after provisioning.\n"]
-    pub fn min_worker_count(&self) -> PrimExpr<f64> {
-        PrimExpr::new(self.shared().clone(), format!("{}.min_worker_count", self.base))
+    #[doc = "Get a reference to the value of field `min_worker_count` after provisioning.\n"]
+    pub fn min_worker_count(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.min_worker_count", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `scale_in_policy` after provisioning.\n"]
-    pub fn scale_in_policy(&self) -> ListRef<MskconnectConnectorCapacityElAutoscalingElScaleInPolicyElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.scale_in_policy", self.base))
+    #[doc = "Get a reference to the value of field `scale_in_policy` after provisioning.\n"]
+    pub fn scale_in_policy(&self) -> terrars::ListRef<MskconnectConnectorCapacityElAutoscalingElScaleInPolicyElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.scale_in_policy", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `scale_out_policy` after provisioning.\n"]
-    pub fn scale_out_policy(&self) -> ListRef<MskconnectConnectorCapacityElAutoscalingElScaleOutPolicyElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.scale_out_policy", self.base))
+    #[doc = "Get a reference to the value of field `scale_out_policy` after provisioning.\n"]
+    pub fn scale_out_policy(&self) -> terrars::ListRef<MskconnectConnectorCapacityElAutoscalingElScaleOutPolicyElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.scale_out_policy", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct MskconnectConnectorCapacityElProvisionedCapacityEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    mcu_count: Option<PrimField<f64>>,
-    worker_count: PrimField<f64>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    mcu_count: std::option::Option<terrars::PrimField<f64>>,
+    worker_count: terrars::PrimField<f64>,
 }
 
 impl MskconnectConnectorCapacityElProvisionedCapacityEl {
-    #[doc= "Set the field `mcu_count`.\n"]
-    pub fn set_mcu_count(mut self, v: impl Into<PrimField<f64>>) -> Self {
-        self.mcu_count = Some(v.into());
+    #[doc = "Set the field `mcu_count`.\n"]
+    pub fn set_mcu_count(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.mcu_count = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl ToListMappable for MskconnectConnectorCapacityElProvisionedCapacityEl {
-    type O = BlockAssignable<MskconnectConnectorCapacityElProvisionedCapacityEl>;
+impl terrars::ToListMappable for MskconnectConnectorCapacityElProvisionedCapacityEl {
+    type O = terrars::BlockAssignable<MskconnectConnectorCapacityElProvisionedCapacityEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -773,8 +856,8 @@ impl ToListMappable for MskconnectConnectorCapacityElProvisionedCapacityEl {
 }
 
 pub struct BuildMskconnectConnectorCapacityElProvisionedCapacityEl {
-    #[doc= ""]
-    pub worker_count: PrimField<f64>,
+    #[doc = ""]
+    pub worker_count: terrars::PrimField<f64>,
 }
 
 impl BuildMskconnectConnectorCapacityElProvisionedCapacityEl {
@@ -787,12 +870,15 @@ impl BuildMskconnectConnectorCapacityElProvisionedCapacityEl {
 }
 
 pub struct MskconnectConnectorCapacityElProvisionedCapacityElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for MskconnectConnectorCapacityElProvisionedCapacityElRef {
-    fn new(shared: StackShared, base: String) -> MskconnectConnectorCapacityElProvisionedCapacityElRef {
+impl terrars::Ref for MskconnectConnectorCapacityElProvisionedCapacityElRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> MskconnectConnectorCapacityElProvisionedCapacityElRef {
         MskconnectConnectorCapacityElProvisionedCapacityElRef {
             shared: shared,
             base: base.to_string(),
@@ -801,72 +887,77 @@ impl Ref for MskconnectConnectorCapacityElProvisionedCapacityElRef {
 }
 
 impl MskconnectConnectorCapacityElProvisionedCapacityElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `mcu_count` after provisioning.\n"]
-    pub fn mcu_count(&self) -> PrimExpr<f64> {
-        PrimExpr::new(self.shared().clone(), format!("{}.mcu_count", self.base))
+    #[doc = "Get a reference to the value of field `mcu_count` after provisioning.\n"]
+    pub fn mcu_count(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.mcu_count", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `worker_count` after provisioning.\n"]
-    pub fn worker_count(&self) -> PrimExpr<f64> {
-        PrimExpr::new(self.shared().clone(), format!("{}.worker_count", self.base))
+    #[doc = "Get a reference to the value of field `worker_count` after provisioning.\n"]
+    pub fn worker_count(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.worker_count", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
 struct MskconnectConnectorCapacityElDynamic {
-    autoscaling: Option<DynamicBlock<MskconnectConnectorCapacityElAutoscalingEl>>,
-    provisioned_capacity: Option<DynamicBlock<MskconnectConnectorCapacityElProvisionedCapacityEl>>,
+    autoscaling: std::option::Option<terrars::DynamicBlock<MskconnectConnectorCapacityElAutoscalingEl>>,
+    provisioned_capacity: std
+    ::option
+    ::Option<terrars::DynamicBlock<MskconnectConnectorCapacityElProvisionedCapacityEl>>,
 }
 
 #[derive(Serialize)]
 pub struct MskconnectConnectorCapacityEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    autoscaling: Option<Vec<MskconnectConnectorCapacityElAutoscalingEl>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    provisioned_capacity: Option<Vec<MskconnectConnectorCapacityElProvisionedCapacityEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    autoscaling: std::option::Option<std::vec::Vec<MskconnectConnectorCapacityElAutoscalingEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    provisioned_capacity: std::option::Option<std::vec::Vec<MskconnectConnectorCapacityElProvisionedCapacityEl>>,
     dynamic: MskconnectConnectorCapacityElDynamic,
 }
 
 impl MskconnectConnectorCapacityEl {
-    #[doc= "Set the field `autoscaling`.\n"]
-    pub fn set_autoscaling(mut self, v: impl Into<BlockAssignable<MskconnectConnectorCapacityElAutoscalingEl>>) -> Self {
+    #[doc = "Set the field `autoscaling`.\n"]
+    pub fn set_autoscaling(
+        mut self,
+        v: impl std::convert::Into<terrars::BlockAssignable<MskconnectConnectorCapacityElAutoscalingEl>>,
+    ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.autoscaling = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.autoscaling = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.autoscaling = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.autoscaling = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Set the field `provisioned_capacity`.\n"]
+    #[doc = "Set the field `provisioned_capacity`.\n"]
     pub fn set_provisioned_capacity(
         mut self,
-        v: impl Into<BlockAssignable<MskconnectConnectorCapacityElProvisionedCapacityEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<MskconnectConnectorCapacityElProvisionedCapacityEl>>,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.provisioned_capacity = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.provisioned_capacity = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.provisioned_capacity = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.provisioned_capacity = std::option::Option::Some(d);
             },
         }
         self
     }
 }
 
-impl ToListMappable for MskconnectConnectorCapacityEl {
-    type O = BlockAssignable<MskconnectConnectorCapacityEl>;
+impl terrars::ToListMappable for MskconnectConnectorCapacityEl {
+    type O = terrars::BlockAssignable<MskconnectConnectorCapacityEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -881,18 +972,18 @@ impl BuildMskconnectConnectorCapacityEl {
         MskconnectConnectorCapacityEl {
             autoscaling: core::default::Default::default(),
             provisioned_capacity: core::default::Default::default(),
-            dynamic: Default::default(),
+            dynamic: core::default::Default::default(),
         }
     }
 }
 
 pub struct MskconnectConnectorCapacityElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for MskconnectConnectorCapacityElRef {
-    fn new(shared: StackShared, base: String) -> MskconnectConnectorCapacityElRef {
+impl terrars::Ref for MskconnectConnectorCapacityElRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> MskconnectConnectorCapacityElRef {
         MskconnectConnectorCapacityElRef {
             shared: shared,
             base: base.to_string(),
@@ -901,34 +992,34 @@ impl Ref for MskconnectConnectorCapacityElRef {
 }
 
 impl MskconnectConnectorCapacityElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `autoscaling` after provisioning.\n"]
-    pub fn autoscaling(&self) -> ListRef<MskconnectConnectorCapacityElAutoscalingElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.autoscaling", self.base))
+    #[doc = "Get a reference to the value of field `autoscaling` after provisioning.\n"]
+    pub fn autoscaling(&self) -> terrars::ListRef<MskconnectConnectorCapacityElAutoscalingElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.autoscaling", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `provisioned_capacity` after provisioning.\n"]
-    pub fn provisioned_capacity(&self) -> ListRef<MskconnectConnectorCapacityElProvisionedCapacityElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.provisioned_capacity", self.base))
+    #[doc = "Get a reference to the value of field `provisioned_capacity` after provisioning.\n"]
+    pub fn provisioned_capacity(&self) -> terrars::ListRef<MskconnectConnectorCapacityElProvisionedCapacityElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.provisioned_capacity", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct MskconnectConnectorKafkaClusterElApacheKafkaClusterElVpcEl {
-    security_groups: SetField<PrimField<String>>,
-    subnets: SetField<PrimField<String>>,
+    security_groups: terrars::SetField<terrars::PrimField<std::string::String>>,
+    subnets: terrars::SetField<terrars::PrimField<std::string::String>>,
 }
 
 impl MskconnectConnectorKafkaClusterElApacheKafkaClusterElVpcEl { }
 
-impl ToListMappable for MskconnectConnectorKafkaClusterElApacheKafkaClusterElVpcEl {
-    type O = BlockAssignable<MskconnectConnectorKafkaClusterElApacheKafkaClusterElVpcEl>;
+impl terrars::ToListMappable for MskconnectConnectorKafkaClusterElApacheKafkaClusterElVpcEl {
+    type O = terrars::BlockAssignable<MskconnectConnectorKafkaClusterElApacheKafkaClusterElVpcEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -937,10 +1028,10 @@ impl ToListMappable for MskconnectConnectorKafkaClusterElApacheKafkaClusterElVpc
 }
 
 pub struct BuildMskconnectConnectorKafkaClusterElApacheKafkaClusterElVpcEl {
-    #[doc= ""]
-    pub security_groups: SetField<PrimField<String>>,
-    #[doc= ""]
-    pub subnets: SetField<PrimField<String>>,
+    #[doc = ""]
+    pub security_groups: terrars::SetField<terrars::PrimField<std::string::String>>,
+    #[doc = ""]
+    pub subnets: terrars::SetField<terrars::PrimField<std::string::String>>,
 }
 
 impl BuildMskconnectConnectorKafkaClusterElApacheKafkaClusterElVpcEl {
@@ -953,12 +1044,15 @@ impl BuildMskconnectConnectorKafkaClusterElApacheKafkaClusterElVpcEl {
 }
 
 pub struct MskconnectConnectorKafkaClusterElApacheKafkaClusterElVpcElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for MskconnectConnectorKafkaClusterElApacheKafkaClusterElVpcElRef {
-    fn new(shared: StackShared, base: String) -> MskconnectConnectorKafkaClusterElApacheKafkaClusterElVpcElRef {
+impl terrars::Ref for MskconnectConnectorKafkaClusterElApacheKafkaClusterElVpcElRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> MskconnectConnectorKafkaClusterElApacheKafkaClusterElVpcElRef {
         MskconnectConnectorKafkaClusterElApacheKafkaClusterElVpcElRef {
             shared: shared,
             base: base.to_string(),
@@ -967,57 +1061,62 @@ impl Ref for MskconnectConnectorKafkaClusterElApacheKafkaClusterElVpcElRef {
 }
 
 impl MskconnectConnectorKafkaClusterElApacheKafkaClusterElVpcElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `security_groups` after provisioning.\n"]
-    pub fn security_groups(&self) -> SetRef<PrimExpr<String>> {
-        SetRef::new(self.shared().clone(), format!("{}.security_groups", self.base))
+    #[doc = "Get a reference to the value of field `security_groups` after provisioning.\n"]
+    pub fn security_groups(&self) -> terrars::SetRef<terrars::PrimExpr<std::string::String>> {
+        terrars::SetRef::new(self.shared().clone(), format!("{}.security_groups", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `subnets` after provisioning.\n"]
-    pub fn subnets(&self) -> SetRef<PrimExpr<String>> {
-        SetRef::new(self.shared().clone(), format!("{}.subnets", self.base))
+    #[doc = "Get a reference to the value of field `subnets` after provisioning.\n"]
+    pub fn subnets(&self) -> terrars::SetRef<terrars::PrimExpr<std::string::String>> {
+        terrars::SetRef::new(self.shared().clone(), format!("{}.subnets", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
 struct MskconnectConnectorKafkaClusterElApacheKafkaClusterElDynamic {
-    vpc: Option<DynamicBlock<MskconnectConnectorKafkaClusterElApacheKafkaClusterElVpcEl>>,
+    vpc: std::option::Option<terrars::DynamicBlock<MskconnectConnectorKafkaClusterElApacheKafkaClusterElVpcEl>>,
 }
 
 #[derive(Serialize)]
 pub struct MskconnectConnectorKafkaClusterElApacheKafkaClusterEl {
-    bootstrap_servers: PrimField<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    vpc: Option<Vec<MskconnectConnectorKafkaClusterElApacheKafkaClusterElVpcEl>>,
+    bootstrap_servers: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    vpc: std::option::Option<std::vec::Vec<MskconnectConnectorKafkaClusterElApacheKafkaClusterElVpcEl>>,
     dynamic: MskconnectConnectorKafkaClusterElApacheKafkaClusterElDynamic,
 }
 
 impl MskconnectConnectorKafkaClusterElApacheKafkaClusterEl {
-    #[doc= "Set the field `vpc`.\n"]
+    #[doc = "Set the field `vpc`.\n"]
     pub fn set_vpc(
         mut self,
-        v: impl Into<BlockAssignable<MskconnectConnectorKafkaClusterElApacheKafkaClusterElVpcEl>>,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<terrars::BlockAssignable<MskconnectConnectorKafkaClusterElApacheKafkaClusterElVpcEl>>,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.vpc = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.vpc = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.vpc = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.vpc = std::option::Option::Some(d);
             },
         }
         self
     }
 }
 
-impl ToListMappable for MskconnectConnectorKafkaClusterElApacheKafkaClusterEl {
-    type O = BlockAssignable<MskconnectConnectorKafkaClusterElApacheKafkaClusterEl>;
+impl terrars::ToListMappable for MskconnectConnectorKafkaClusterElApacheKafkaClusterEl {
+    type O = terrars::BlockAssignable<MskconnectConnectorKafkaClusterElApacheKafkaClusterEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -1026,8 +1125,8 @@ impl ToListMappable for MskconnectConnectorKafkaClusterElApacheKafkaClusterEl {
 }
 
 pub struct BuildMskconnectConnectorKafkaClusterElApacheKafkaClusterEl {
-    #[doc= ""]
-    pub bootstrap_servers: PrimField<String>,
+    #[doc = ""]
+    pub bootstrap_servers: terrars::PrimField<std::string::String>,
 }
 
 impl BuildMskconnectConnectorKafkaClusterElApacheKafkaClusterEl {
@@ -1035,18 +1134,21 @@ impl BuildMskconnectConnectorKafkaClusterElApacheKafkaClusterEl {
         MskconnectConnectorKafkaClusterElApacheKafkaClusterEl {
             bootstrap_servers: self.bootstrap_servers,
             vpc: core::default::Default::default(),
-            dynamic: Default::default(),
+            dynamic: core::default::Default::default(),
         }
     }
 }
 
 pub struct MskconnectConnectorKafkaClusterElApacheKafkaClusterElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for MskconnectConnectorKafkaClusterElApacheKafkaClusterElRef {
-    fn new(shared: StackShared, base: String) -> MskconnectConnectorKafkaClusterElApacheKafkaClusterElRef {
+impl terrars::Ref for MskconnectConnectorKafkaClusterElApacheKafkaClusterElRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> MskconnectConnectorKafkaClusterElApacheKafkaClusterElRef {
         MskconnectConnectorKafkaClusterElApacheKafkaClusterElRef {
             shared: shared,
             base: base.to_string(),
@@ -1055,56 +1157,58 @@ impl Ref for MskconnectConnectorKafkaClusterElApacheKafkaClusterElRef {
 }
 
 impl MskconnectConnectorKafkaClusterElApacheKafkaClusterElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `bootstrap_servers` after provisioning.\n"]
-    pub fn bootstrap_servers(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.bootstrap_servers", self.base))
+    #[doc = "Get a reference to the value of field `bootstrap_servers` after provisioning.\n"]
+    pub fn bootstrap_servers(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.bootstrap_servers", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `vpc` after provisioning.\n"]
-    pub fn vpc(&self) -> ListRef<MskconnectConnectorKafkaClusterElApacheKafkaClusterElVpcElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.vpc", self.base))
+    #[doc = "Get a reference to the value of field `vpc` after provisioning.\n"]
+    pub fn vpc(&self) -> terrars::ListRef<MskconnectConnectorKafkaClusterElApacheKafkaClusterElVpcElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.vpc", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
 struct MskconnectConnectorKafkaClusterElDynamic {
-    apache_kafka_cluster: Option<DynamicBlock<MskconnectConnectorKafkaClusterElApacheKafkaClusterEl>>,
+    apache_kafka_cluster: std
+    ::option
+    ::Option<terrars::DynamicBlock<MskconnectConnectorKafkaClusterElApacheKafkaClusterEl>>,
 }
 
 #[derive(Serialize)]
 pub struct MskconnectConnectorKafkaClusterEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    apache_kafka_cluster: Option<Vec<MskconnectConnectorKafkaClusterElApacheKafkaClusterEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    apache_kafka_cluster: std::option::Option<std::vec::Vec<MskconnectConnectorKafkaClusterElApacheKafkaClusterEl>>,
     dynamic: MskconnectConnectorKafkaClusterElDynamic,
 }
 
 impl MskconnectConnectorKafkaClusterEl {
-    #[doc= "Set the field `apache_kafka_cluster`.\n"]
+    #[doc = "Set the field `apache_kafka_cluster`.\n"]
     pub fn set_apache_kafka_cluster(
         mut self,
-        v: impl Into<BlockAssignable<MskconnectConnectorKafkaClusterElApacheKafkaClusterEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<MskconnectConnectorKafkaClusterElApacheKafkaClusterEl>>,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.apache_kafka_cluster = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.apache_kafka_cluster = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.apache_kafka_cluster = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.apache_kafka_cluster = std::option::Option::Some(d);
             },
         }
         self
     }
 }
 
-impl ToListMappable for MskconnectConnectorKafkaClusterEl {
-    type O = BlockAssignable<MskconnectConnectorKafkaClusterEl>;
+impl terrars::ToListMappable for MskconnectConnectorKafkaClusterEl {
+    type O = terrars::BlockAssignable<MskconnectConnectorKafkaClusterEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -1118,18 +1222,18 @@ impl BuildMskconnectConnectorKafkaClusterEl {
     pub fn build(self) -> MskconnectConnectorKafkaClusterEl {
         MskconnectConnectorKafkaClusterEl {
             apache_kafka_cluster: core::default::Default::default(),
-            dynamic: Default::default(),
+            dynamic: core::default::Default::default(),
         }
     }
 }
 
 pub struct MskconnectConnectorKafkaClusterElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for MskconnectConnectorKafkaClusterElRef {
-    fn new(shared: StackShared, base: String) -> MskconnectConnectorKafkaClusterElRef {
+impl terrars::Ref for MskconnectConnectorKafkaClusterElRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> MskconnectConnectorKafkaClusterElRef {
         MskconnectConnectorKafkaClusterElRef {
             shared: shared,
             base: base.to_string(),
@@ -1138,35 +1242,38 @@ impl Ref for MskconnectConnectorKafkaClusterElRef {
 }
 
 impl MskconnectConnectorKafkaClusterElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `apache_kafka_cluster` after provisioning.\n"]
-    pub fn apache_kafka_cluster(&self) -> ListRef<MskconnectConnectorKafkaClusterElApacheKafkaClusterElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.apache_kafka_cluster", self.base))
+    #[doc = "Get a reference to the value of field `apache_kafka_cluster` after provisioning.\n"]
+    pub fn apache_kafka_cluster(&self) -> terrars::ListRef<MskconnectConnectorKafkaClusterElApacheKafkaClusterElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.apache_kafka_cluster", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct MskconnectConnectorKafkaClusterClientAuthenticationEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    authentication_type: Option<PrimField<String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    authentication_type: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
 impl MskconnectConnectorKafkaClusterClientAuthenticationEl {
-    #[doc= "Set the field `authentication_type`.\n"]
-    pub fn set_authentication_type(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.authentication_type = Some(v.into());
+    #[doc = "Set the field `authentication_type`.\n"]
+    pub fn set_authentication_type(
+        mut self,
+        v: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.authentication_type = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl ToListMappable for MskconnectConnectorKafkaClusterClientAuthenticationEl {
-    type O = BlockAssignable<MskconnectConnectorKafkaClusterClientAuthenticationEl>;
+impl terrars::ToListMappable for MskconnectConnectorKafkaClusterClientAuthenticationEl {
+    type O = terrars::BlockAssignable<MskconnectConnectorKafkaClusterClientAuthenticationEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -1185,12 +1292,15 @@ impl BuildMskconnectConnectorKafkaClusterClientAuthenticationEl {
 }
 
 pub struct MskconnectConnectorKafkaClusterClientAuthenticationElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for MskconnectConnectorKafkaClusterClientAuthenticationElRef {
-    fn new(shared: StackShared, base: String) -> MskconnectConnectorKafkaClusterClientAuthenticationElRef {
+impl terrars::Ref for MskconnectConnectorKafkaClusterClientAuthenticationElRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> MskconnectConnectorKafkaClusterClientAuthenticationElRef {
         MskconnectConnectorKafkaClusterClientAuthenticationElRef {
             shared: shared,
             base: base.to_string(),
@@ -1199,35 +1309,35 @@ impl Ref for MskconnectConnectorKafkaClusterClientAuthenticationElRef {
 }
 
 impl MskconnectConnectorKafkaClusterClientAuthenticationElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `authentication_type` after provisioning.\n"]
-    pub fn authentication_type(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.authentication_type", self.base))
+    #[doc = "Get a reference to the value of field `authentication_type` after provisioning.\n"]
+    pub fn authentication_type(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.authentication_type", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct MskconnectConnectorKafkaClusterEncryptionInTransitEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    encryption_type: Option<PrimField<String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    encryption_type: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
 impl MskconnectConnectorKafkaClusterEncryptionInTransitEl {
-    #[doc= "Set the field `encryption_type`.\n"]
-    pub fn set_encryption_type(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.encryption_type = Some(v.into());
+    #[doc = "Set the field `encryption_type`.\n"]
+    pub fn set_encryption_type(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.encryption_type = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl ToListMappable for MskconnectConnectorKafkaClusterEncryptionInTransitEl {
-    type O = BlockAssignable<MskconnectConnectorKafkaClusterEncryptionInTransitEl>;
+impl terrars::ToListMappable for MskconnectConnectorKafkaClusterEncryptionInTransitEl {
+    type O = terrars::BlockAssignable<MskconnectConnectorKafkaClusterEncryptionInTransitEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -1244,12 +1354,15 @@ impl BuildMskconnectConnectorKafkaClusterEncryptionInTransitEl {
 }
 
 pub struct MskconnectConnectorKafkaClusterEncryptionInTransitElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for MskconnectConnectorKafkaClusterEncryptionInTransitElRef {
-    fn new(shared: StackShared, base: String) -> MskconnectConnectorKafkaClusterEncryptionInTransitElRef {
+impl terrars::Ref for MskconnectConnectorKafkaClusterEncryptionInTransitElRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> MskconnectConnectorKafkaClusterEncryptionInTransitElRef {
         MskconnectConnectorKafkaClusterEncryptionInTransitElRef {
             shared: shared,
             base: base.to_string(),
@@ -1258,36 +1371,36 @@ impl Ref for MskconnectConnectorKafkaClusterEncryptionInTransitElRef {
 }
 
 impl MskconnectConnectorKafkaClusterEncryptionInTransitElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `encryption_type` after provisioning.\n"]
-    pub fn encryption_type(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.encryption_type", self.base))
+    #[doc = "Get a reference to the value of field `encryption_type` after provisioning.\n"]
+    pub fn encryption_type(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.encryption_type", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct MskconnectConnectorLogDeliveryElWorkerLogDeliveryElCloudwatchLogsEl {
-    enabled: PrimField<bool>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    log_group: Option<PrimField<String>>,
+    enabled: terrars::PrimField<bool>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    log_group: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
 impl MskconnectConnectorLogDeliveryElWorkerLogDeliveryElCloudwatchLogsEl {
-    #[doc= "Set the field `log_group`.\n"]
-    pub fn set_log_group(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.log_group = Some(v.into());
+    #[doc = "Set the field `log_group`.\n"]
+    pub fn set_log_group(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.log_group = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl ToListMappable for MskconnectConnectorLogDeliveryElWorkerLogDeliveryElCloudwatchLogsEl {
-    type O = BlockAssignable<MskconnectConnectorLogDeliveryElWorkerLogDeliveryElCloudwatchLogsEl>;
+impl terrars::ToListMappable for MskconnectConnectorLogDeliveryElWorkerLogDeliveryElCloudwatchLogsEl {
+    type O = terrars::BlockAssignable<MskconnectConnectorLogDeliveryElWorkerLogDeliveryElCloudwatchLogsEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -1296,8 +1409,8 @@ impl ToListMappable for MskconnectConnectorLogDeliveryElWorkerLogDeliveryElCloud
 }
 
 pub struct BuildMskconnectConnectorLogDeliveryElWorkerLogDeliveryElCloudwatchLogsEl {
-    #[doc= ""]
-    pub enabled: PrimField<bool>,
+    #[doc = ""]
+    pub enabled: terrars::PrimField<bool>,
 }
 
 impl BuildMskconnectConnectorLogDeliveryElWorkerLogDeliveryElCloudwatchLogsEl {
@@ -1310,14 +1423,14 @@ impl BuildMskconnectConnectorLogDeliveryElWorkerLogDeliveryElCloudwatchLogsEl {
 }
 
 pub struct MskconnectConnectorLogDeliveryElWorkerLogDeliveryElCloudwatchLogsElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for MskconnectConnectorLogDeliveryElWorkerLogDeliveryElCloudwatchLogsElRef {
+impl terrars::Ref for MskconnectConnectorLogDeliveryElWorkerLogDeliveryElCloudwatchLogsElRef {
     fn new(
-        shared: StackShared,
-        base: String,
+        shared: terrars::StackShared,
+        base: std::string::String,
     ) -> MskconnectConnectorLogDeliveryElWorkerLogDeliveryElCloudwatchLogsElRef {
         MskconnectConnectorLogDeliveryElWorkerLogDeliveryElCloudwatchLogsElRef {
             shared: shared,
@@ -1327,41 +1440,41 @@ impl Ref for MskconnectConnectorLogDeliveryElWorkerLogDeliveryElCloudwatchLogsEl
 }
 
 impl MskconnectConnectorLogDeliveryElWorkerLogDeliveryElCloudwatchLogsElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `enabled` after provisioning.\n"]
-    pub fn enabled(&self) -> PrimExpr<bool> {
-        PrimExpr::new(self.shared().clone(), format!("{}.enabled", self.base))
+    #[doc = "Get a reference to the value of field `enabled` after provisioning.\n"]
+    pub fn enabled(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.enabled", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `log_group` after provisioning.\n"]
-    pub fn log_group(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.log_group", self.base))
+    #[doc = "Get a reference to the value of field `log_group` after provisioning.\n"]
+    pub fn log_group(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.log_group", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct MskconnectConnectorLogDeliveryElWorkerLogDeliveryElFirehoseEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    delivery_stream: Option<PrimField<String>>,
-    enabled: PrimField<bool>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    delivery_stream: std::option::Option<terrars::PrimField<std::string::String>>,
+    enabled: terrars::PrimField<bool>,
 }
 
 impl MskconnectConnectorLogDeliveryElWorkerLogDeliveryElFirehoseEl {
-    #[doc= "Set the field `delivery_stream`.\n"]
-    pub fn set_delivery_stream(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.delivery_stream = Some(v.into());
+    #[doc = "Set the field `delivery_stream`.\n"]
+    pub fn set_delivery_stream(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.delivery_stream = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl ToListMappable for MskconnectConnectorLogDeliveryElWorkerLogDeliveryElFirehoseEl {
-    type O = BlockAssignable<MskconnectConnectorLogDeliveryElWorkerLogDeliveryElFirehoseEl>;
+impl terrars::ToListMappable for MskconnectConnectorLogDeliveryElWorkerLogDeliveryElFirehoseEl {
+    type O = terrars::BlockAssignable<MskconnectConnectorLogDeliveryElWorkerLogDeliveryElFirehoseEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -1370,8 +1483,8 @@ impl ToListMappable for MskconnectConnectorLogDeliveryElWorkerLogDeliveryElFireh
 }
 
 pub struct BuildMskconnectConnectorLogDeliveryElWorkerLogDeliveryElFirehoseEl {
-    #[doc= ""]
-    pub enabled: PrimField<bool>,
+    #[doc = ""]
+    pub enabled: terrars::PrimField<bool>,
 }
 
 impl BuildMskconnectConnectorLogDeliveryElWorkerLogDeliveryElFirehoseEl {
@@ -1384,12 +1497,15 @@ impl BuildMskconnectConnectorLogDeliveryElWorkerLogDeliveryElFirehoseEl {
 }
 
 pub struct MskconnectConnectorLogDeliveryElWorkerLogDeliveryElFirehoseElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for MskconnectConnectorLogDeliveryElWorkerLogDeliveryElFirehoseElRef {
-    fn new(shared: StackShared, base: String) -> MskconnectConnectorLogDeliveryElWorkerLogDeliveryElFirehoseElRef {
+impl terrars::Ref for MskconnectConnectorLogDeliveryElWorkerLogDeliveryElFirehoseElRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> MskconnectConnectorLogDeliveryElWorkerLogDeliveryElFirehoseElRef {
         MskconnectConnectorLogDeliveryElWorkerLogDeliveryElFirehoseElRef {
             shared: shared,
             base: base.to_string(),
@@ -1398,49 +1514,49 @@ impl Ref for MskconnectConnectorLogDeliveryElWorkerLogDeliveryElFirehoseElRef {
 }
 
 impl MskconnectConnectorLogDeliveryElWorkerLogDeliveryElFirehoseElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `delivery_stream` after provisioning.\n"]
-    pub fn delivery_stream(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.delivery_stream", self.base))
+    #[doc = "Get a reference to the value of field `delivery_stream` after provisioning.\n"]
+    pub fn delivery_stream(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.delivery_stream", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `enabled` after provisioning.\n"]
-    pub fn enabled(&self) -> PrimExpr<bool> {
-        PrimExpr::new(self.shared().clone(), format!("{}.enabled", self.base))
+    #[doc = "Get a reference to the value of field `enabled` after provisioning.\n"]
+    pub fn enabled(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.enabled", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct MskconnectConnectorLogDeliveryElWorkerLogDeliveryElS3El {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    bucket: Option<PrimField<String>>,
-    enabled: PrimField<bool>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    prefix: Option<PrimField<String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    bucket: std::option::Option<terrars::PrimField<std::string::String>>,
+    enabled: terrars::PrimField<bool>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    prefix: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
 impl MskconnectConnectorLogDeliveryElWorkerLogDeliveryElS3El {
-    #[doc= "Set the field `bucket`.\n"]
-    pub fn set_bucket(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.bucket = Some(v.into());
+    #[doc = "Set the field `bucket`.\n"]
+    pub fn set_bucket(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.bucket = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `prefix`.\n"]
-    pub fn set_prefix(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.prefix = Some(v.into());
+    #[doc = "Set the field `prefix`.\n"]
+    pub fn set_prefix(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.prefix = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl ToListMappable for MskconnectConnectorLogDeliveryElWorkerLogDeliveryElS3El {
-    type O = BlockAssignable<MskconnectConnectorLogDeliveryElWorkerLogDeliveryElS3El>;
+impl terrars::ToListMappable for MskconnectConnectorLogDeliveryElWorkerLogDeliveryElS3El {
+    type O = terrars::BlockAssignable<MskconnectConnectorLogDeliveryElWorkerLogDeliveryElS3El>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -1449,8 +1565,8 @@ impl ToListMappable for MskconnectConnectorLogDeliveryElWorkerLogDeliveryElS3El 
 }
 
 pub struct BuildMskconnectConnectorLogDeliveryElWorkerLogDeliveryElS3El {
-    #[doc= ""]
-    pub enabled: PrimField<bool>,
+    #[doc = ""]
+    pub enabled: terrars::PrimField<bool>,
 }
 
 impl BuildMskconnectConnectorLogDeliveryElWorkerLogDeliveryElS3El {
@@ -1464,12 +1580,15 @@ impl BuildMskconnectConnectorLogDeliveryElWorkerLogDeliveryElS3El {
 }
 
 pub struct MskconnectConnectorLogDeliveryElWorkerLogDeliveryElS3ElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for MskconnectConnectorLogDeliveryElWorkerLogDeliveryElS3ElRef {
-    fn new(shared: StackShared, base: String) -> MskconnectConnectorLogDeliveryElWorkerLogDeliveryElS3ElRef {
+impl terrars::Ref for MskconnectConnectorLogDeliveryElWorkerLogDeliveryElS3ElRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> MskconnectConnectorLogDeliveryElWorkerLogDeliveryElS3ElRef {
         MskconnectConnectorLogDeliveryElWorkerLogDeliveryElS3ElRef {
             shared: shared,
             base: base.to_string(),
@@ -1478,99 +1597,122 @@ impl Ref for MskconnectConnectorLogDeliveryElWorkerLogDeliveryElS3ElRef {
 }
 
 impl MskconnectConnectorLogDeliveryElWorkerLogDeliveryElS3ElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `bucket` after provisioning.\n"]
-    pub fn bucket(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.bucket", self.base))
+    #[doc = "Get a reference to the value of field `bucket` after provisioning.\n"]
+    pub fn bucket(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.bucket", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `enabled` after provisioning.\n"]
-    pub fn enabled(&self) -> PrimExpr<bool> {
-        PrimExpr::new(self.shared().clone(), format!("{}.enabled", self.base))
+    #[doc = "Get a reference to the value of field `enabled` after provisioning.\n"]
+    pub fn enabled(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.enabled", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `prefix` after provisioning.\n"]
-    pub fn prefix(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.prefix", self.base))
+    #[doc = "Get a reference to the value of field `prefix` after provisioning.\n"]
+    pub fn prefix(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.prefix", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
 struct MskconnectConnectorLogDeliveryElWorkerLogDeliveryElDynamic {
-    cloudwatch_logs: Option<DynamicBlock<MskconnectConnectorLogDeliveryElWorkerLogDeliveryElCloudwatchLogsEl>>,
-    firehose: Option<DynamicBlock<MskconnectConnectorLogDeliveryElWorkerLogDeliveryElFirehoseEl>>,
-    s3: Option<DynamicBlock<MskconnectConnectorLogDeliveryElWorkerLogDeliveryElS3El>>,
+    cloudwatch_logs: std
+    ::option
+    ::Option<terrars::DynamicBlock<MskconnectConnectorLogDeliveryElWorkerLogDeliveryElCloudwatchLogsEl>>,
+    firehose: std
+    ::option
+    ::Option<terrars::DynamicBlock<MskconnectConnectorLogDeliveryElWorkerLogDeliveryElFirehoseEl>>,
+    s3: std::option::Option<terrars::DynamicBlock<MskconnectConnectorLogDeliveryElWorkerLogDeliveryElS3El>>,
 }
 
 #[derive(Serialize)]
 pub struct MskconnectConnectorLogDeliveryElWorkerLogDeliveryEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    cloudwatch_logs: Option<Vec<MskconnectConnectorLogDeliveryElWorkerLogDeliveryElCloudwatchLogsEl>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    firehose: Option<Vec<MskconnectConnectorLogDeliveryElWorkerLogDeliveryElFirehoseEl>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    s3: Option<Vec<MskconnectConnectorLogDeliveryElWorkerLogDeliveryElS3El>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    cloudwatch_logs: std
+    ::option
+    ::Option<std::vec::Vec<MskconnectConnectorLogDeliveryElWorkerLogDeliveryElCloudwatchLogsEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    firehose: std::option::Option<std::vec::Vec<MskconnectConnectorLogDeliveryElWorkerLogDeliveryElFirehoseEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    s3: std::option::Option<std::vec::Vec<MskconnectConnectorLogDeliveryElWorkerLogDeliveryElS3El>>,
     dynamic: MskconnectConnectorLogDeliveryElWorkerLogDeliveryElDynamic,
 }
 
 impl MskconnectConnectorLogDeliveryElWorkerLogDeliveryEl {
-    #[doc= "Set the field `cloudwatch_logs`.\n"]
+    #[doc = "Set the field `cloudwatch_logs`.\n"]
     pub fn set_cloudwatch_logs(
         mut self,
-        v: impl Into<BlockAssignable<MskconnectConnectorLogDeliveryElWorkerLogDeliveryElCloudwatchLogsEl>>,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<
+                        terrars::BlockAssignable<MskconnectConnectorLogDeliveryElWorkerLogDeliveryElCloudwatchLogsEl>,
+                    >,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.cloudwatch_logs = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.cloudwatch_logs = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.cloudwatch_logs = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.cloudwatch_logs = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Set the field `firehose`.\n"]
+    #[doc = "Set the field `firehose`.\n"]
     pub fn set_firehose(
         mut self,
-        v: impl Into<BlockAssignable<MskconnectConnectorLogDeliveryElWorkerLogDeliveryElFirehoseEl>>,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<terrars::BlockAssignable<MskconnectConnectorLogDeliveryElWorkerLogDeliveryElFirehoseEl>>,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.firehose = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.firehose = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.firehose = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.firehose = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Set the field `s3`.\n"]
+    #[doc = "Set the field `s3`.\n"]
     pub fn set_s3(
         mut self,
-        v: impl Into<BlockAssignable<MskconnectConnectorLogDeliveryElWorkerLogDeliveryElS3El>>,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<terrars::BlockAssignable<MskconnectConnectorLogDeliveryElWorkerLogDeliveryElS3El>>,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.s3 = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.s3 = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.s3 = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.s3 = std::option::Option::Some(d);
             },
         }
         self
     }
 }
 
-impl ToListMappable for MskconnectConnectorLogDeliveryElWorkerLogDeliveryEl {
-    type O = BlockAssignable<MskconnectConnectorLogDeliveryElWorkerLogDeliveryEl>;
+impl terrars::ToListMappable for MskconnectConnectorLogDeliveryElWorkerLogDeliveryEl {
+    type O = terrars::BlockAssignable<MskconnectConnectorLogDeliveryElWorkerLogDeliveryEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -1586,18 +1728,21 @@ impl BuildMskconnectConnectorLogDeliveryElWorkerLogDeliveryEl {
             cloudwatch_logs: core::default::Default::default(),
             firehose: core::default::Default::default(),
             s3: core::default::Default::default(),
-            dynamic: Default::default(),
+            dynamic: core::default::Default::default(),
         }
     }
 }
 
 pub struct MskconnectConnectorLogDeliveryElWorkerLogDeliveryElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for MskconnectConnectorLogDeliveryElWorkerLogDeliveryElRef {
-    fn new(shared: StackShared, base: String) -> MskconnectConnectorLogDeliveryElWorkerLogDeliveryElRef {
+impl terrars::Ref for MskconnectConnectorLogDeliveryElWorkerLogDeliveryElRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> MskconnectConnectorLogDeliveryElWorkerLogDeliveryElRef {
         MskconnectConnectorLogDeliveryElWorkerLogDeliveryElRef {
             shared: shared,
             base: base.to_string(),
@@ -1606,61 +1751,65 @@ impl Ref for MskconnectConnectorLogDeliveryElWorkerLogDeliveryElRef {
 }
 
 impl MskconnectConnectorLogDeliveryElWorkerLogDeliveryElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `cloudwatch_logs` after provisioning.\n"]
-    pub fn cloudwatch_logs(&self) -> ListRef<MskconnectConnectorLogDeliveryElWorkerLogDeliveryElCloudwatchLogsElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.cloudwatch_logs", self.base))
+    #[doc = "Get a reference to the value of field `cloudwatch_logs` after provisioning.\n"]
+    pub fn cloudwatch_logs(
+        &self,
+    ) -> terrars::ListRef<MskconnectConnectorLogDeliveryElWorkerLogDeliveryElCloudwatchLogsElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.cloudwatch_logs", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `firehose` after provisioning.\n"]
-    pub fn firehose(&self) -> ListRef<MskconnectConnectorLogDeliveryElWorkerLogDeliveryElFirehoseElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.firehose", self.base))
+    #[doc = "Get a reference to the value of field `firehose` after provisioning.\n"]
+    pub fn firehose(&self) -> terrars::ListRef<MskconnectConnectorLogDeliveryElWorkerLogDeliveryElFirehoseElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.firehose", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `s3` after provisioning.\n"]
-    pub fn s3(&self) -> ListRef<MskconnectConnectorLogDeliveryElWorkerLogDeliveryElS3ElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.s3", self.base))
+    #[doc = "Get a reference to the value of field `s3` after provisioning.\n"]
+    pub fn s3(&self) -> terrars::ListRef<MskconnectConnectorLogDeliveryElWorkerLogDeliveryElS3ElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.s3", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
 struct MskconnectConnectorLogDeliveryElDynamic {
-    worker_log_delivery: Option<DynamicBlock<MskconnectConnectorLogDeliveryElWorkerLogDeliveryEl>>,
+    worker_log_delivery: std
+    ::option
+    ::Option<terrars::DynamicBlock<MskconnectConnectorLogDeliveryElWorkerLogDeliveryEl>>,
 }
 
 #[derive(Serialize)]
 pub struct MskconnectConnectorLogDeliveryEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    worker_log_delivery: Option<Vec<MskconnectConnectorLogDeliveryElWorkerLogDeliveryEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    worker_log_delivery: std::option::Option<std::vec::Vec<MskconnectConnectorLogDeliveryElWorkerLogDeliveryEl>>,
     dynamic: MskconnectConnectorLogDeliveryElDynamic,
 }
 
 impl MskconnectConnectorLogDeliveryEl {
-    #[doc= "Set the field `worker_log_delivery`.\n"]
+    #[doc = "Set the field `worker_log_delivery`.\n"]
     pub fn set_worker_log_delivery(
         mut self,
-        v: impl Into<BlockAssignable<MskconnectConnectorLogDeliveryElWorkerLogDeliveryEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<MskconnectConnectorLogDeliveryElWorkerLogDeliveryEl>>,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.worker_log_delivery = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.worker_log_delivery = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.worker_log_delivery = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.worker_log_delivery = std::option::Option::Some(d);
             },
         }
         self
     }
 }
 
-impl ToListMappable for MskconnectConnectorLogDeliveryEl {
-    type O = BlockAssignable<MskconnectConnectorLogDeliveryEl>;
+impl terrars::ToListMappable for MskconnectConnectorLogDeliveryEl {
+    type O = terrars::BlockAssignable<MskconnectConnectorLogDeliveryEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -1674,18 +1823,18 @@ impl BuildMskconnectConnectorLogDeliveryEl {
     pub fn build(self) -> MskconnectConnectorLogDeliveryEl {
         MskconnectConnectorLogDeliveryEl {
             worker_log_delivery: core::default::Default::default(),
-            dynamic: Default::default(),
+            dynamic: core::default::Default::default(),
         }
     }
 }
 
 pub struct MskconnectConnectorLogDeliveryElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for MskconnectConnectorLogDeliveryElRef {
-    fn new(shared: StackShared, base: String) -> MskconnectConnectorLogDeliveryElRef {
+impl terrars::Ref for MskconnectConnectorLogDeliveryElRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> MskconnectConnectorLogDeliveryElRef {
         MskconnectConnectorLogDeliveryElRef {
             shared: shared,
             base: base.to_string(),
@@ -1694,29 +1843,29 @@ impl Ref for MskconnectConnectorLogDeliveryElRef {
 }
 
 impl MskconnectConnectorLogDeliveryElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `worker_log_delivery` after provisioning.\n"]
-    pub fn worker_log_delivery(&self) -> ListRef<MskconnectConnectorLogDeliveryElWorkerLogDeliveryElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.worker_log_delivery", self.base))
+    #[doc = "Get a reference to the value of field `worker_log_delivery` after provisioning.\n"]
+    pub fn worker_log_delivery(&self) -> terrars::ListRef<MskconnectConnectorLogDeliveryElWorkerLogDeliveryElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.worker_log_delivery", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct MskconnectConnectorPluginElCustomPluginEl {
-    arn: PrimField<String>,
-    revision: PrimField<f64>,
+    arn: terrars::PrimField<std::string::String>,
+    revision: terrars::PrimField<f64>,
 }
 
 impl MskconnectConnectorPluginElCustomPluginEl { }
 
-impl ToListMappable for MskconnectConnectorPluginElCustomPluginEl {
-    type O = BlockAssignable<MskconnectConnectorPluginElCustomPluginEl>;
+impl terrars::ToListMappable for MskconnectConnectorPluginElCustomPluginEl {
+    type O = terrars::BlockAssignable<MskconnectConnectorPluginElCustomPluginEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -1725,10 +1874,10 @@ impl ToListMappable for MskconnectConnectorPluginElCustomPluginEl {
 }
 
 pub struct BuildMskconnectConnectorPluginElCustomPluginEl {
-    #[doc= ""]
-    pub arn: PrimField<String>,
-    #[doc= ""]
-    pub revision: PrimField<f64>,
+    #[doc = ""]
+    pub arn: terrars::PrimField<std::string::String>,
+    #[doc = ""]
+    pub revision: terrars::PrimField<f64>,
 }
 
 impl BuildMskconnectConnectorPluginElCustomPluginEl {
@@ -1741,12 +1890,12 @@ impl BuildMskconnectConnectorPluginElCustomPluginEl {
 }
 
 pub struct MskconnectConnectorPluginElCustomPluginElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for MskconnectConnectorPluginElCustomPluginElRef {
-    fn new(shared: StackShared, base: String) -> MskconnectConnectorPluginElCustomPluginElRef {
+impl terrars::Ref for MskconnectConnectorPluginElCustomPluginElRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> MskconnectConnectorPluginElCustomPluginElRef {
         MskconnectConnectorPluginElCustomPluginElRef {
             shared: shared,
             base: base.to_string(),
@@ -1755,56 +1904,56 @@ impl Ref for MskconnectConnectorPluginElCustomPluginElRef {
 }
 
 impl MskconnectConnectorPluginElCustomPluginElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `arn` after provisioning.\n"]
-    pub fn arn(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.arn", self.base))
+    #[doc = "Get a reference to the value of field `arn` after provisioning.\n"]
+    pub fn arn(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.arn", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `revision` after provisioning.\n"]
-    pub fn revision(&self) -> PrimExpr<f64> {
-        PrimExpr::new(self.shared().clone(), format!("{}.revision", self.base))
+    #[doc = "Get a reference to the value of field `revision` after provisioning.\n"]
+    pub fn revision(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.revision", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
 struct MskconnectConnectorPluginElDynamic {
-    custom_plugin: Option<DynamicBlock<MskconnectConnectorPluginElCustomPluginEl>>,
+    custom_plugin: std::option::Option<terrars::DynamicBlock<MskconnectConnectorPluginElCustomPluginEl>>,
 }
 
 #[derive(Serialize)]
 pub struct MskconnectConnectorPluginEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    custom_plugin: Option<Vec<MskconnectConnectorPluginElCustomPluginEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    custom_plugin: std::option::Option<std::vec::Vec<MskconnectConnectorPluginElCustomPluginEl>>,
     dynamic: MskconnectConnectorPluginElDynamic,
 }
 
 impl MskconnectConnectorPluginEl {
-    #[doc= "Set the field `custom_plugin`.\n"]
+    #[doc = "Set the field `custom_plugin`.\n"]
     pub fn set_custom_plugin(
         mut self,
-        v: impl Into<BlockAssignable<MskconnectConnectorPluginElCustomPluginEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<MskconnectConnectorPluginElCustomPluginEl>>,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.custom_plugin = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.custom_plugin = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.custom_plugin = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.custom_plugin = std::option::Option::Some(d);
             },
         }
         self
     }
 }
 
-impl ToListMappable for MskconnectConnectorPluginEl {
-    type O = BlockAssignable<MskconnectConnectorPluginEl>;
+impl terrars::ToListMappable for MskconnectConnectorPluginEl {
+    type O = terrars::BlockAssignable<MskconnectConnectorPluginEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -1818,18 +1967,18 @@ impl BuildMskconnectConnectorPluginEl {
     pub fn build(self) -> MskconnectConnectorPluginEl {
         MskconnectConnectorPluginEl {
             custom_plugin: core::default::Default::default(),
-            dynamic: Default::default(),
+            dynamic: core::default::Default::default(),
         }
     }
 }
 
 pub struct MskconnectConnectorPluginElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for MskconnectConnectorPluginElRef {
-    fn new(shared: StackShared, base: String) -> MskconnectConnectorPluginElRef {
+impl terrars::Ref for MskconnectConnectorPluginElRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> MskconnectConnectorPluginElRef {
         MskconnectConnectorPluginElRef {
             shared: shared,
             base: base.to_string(),
@@ -1838,51 +1987,51 @@ impl Ref for MskconnectConnectorPluginElRef {
 }
 
 impl MskconnectConnectorPluginElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `custom_plugin` after provisioning.\n"]
-    pub fn custom_plugin(&self) -> ListRef<MskconnectConnectorPluginElCustomPluginElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.custom_plugin", self.base))
+    #[doc = "Get a reference to the value of field `custom_plugin` after provisioning.\n"]
+    pub fn custom_plugin(&self) -> terrars::ListRef<MskconnectConnectorPluginElCustomPluginElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.custom_plugin", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct MskconnectConnectorTimeoutsEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    create: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    delete: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    update: Option<PrimField<String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    create: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    delete: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    update: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
 impl MskconnectConnectorTimeoutsEl {
-    #[doc= "Set the field `create`.\n"]
-    pub fn set_create(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.create = Some(v.into());
+    #[doc = "Set the field `create`.\n"]
+    pub fn set_create(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.create = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `delete`.\n"]
-    pub fn set_delete(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.delete = Some(v.into());
+    #[doc = "Set the field `delete`.\n"]
+    pub fn set_delete(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.delete = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `update`.\n"]
-    pub fn set_update(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.update = Some(v.into());
+    #[doc = "Set the field `update`.\n"]
+    pub fn set_update(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.update = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl ToListMappable for MskconnectConnectorTimeoutsEl {
-    type O = BlockAssignable<MskconnectConnectorTimeoutsEl>;
+impl terrars::ToListMappable for MskconnectConnectorTimeoutsEl {
+    type O = terrars::BlockAssignable<MskconnectConnectorTimeoutsEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -1903,12 +2052,12 @@ impl BuildMskconnectConnectorTimeoutsEl {
 }
 
 pub struct MskconnectConnectorTimeoutsElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for MskconnectConnectorTimeoutsElRef {
-    fn new(shared: StackShared, base: String) -> MskconnectConnectorTimeoutsElRef {
+impl terrars::Ref for MskconnectConnectorTimeoutsElRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> MskconnectConnectorTimeoutsElRef {
         MskconnectConnectorTimeoutsElRef {
             shared: shared,
             base: base.to_string(),
@@ -1917,39 +2066,39 @@ impl Ref for MskconnectConnectorTimeoutsElRef {
 }
 
 impl MskconnectConnectorTimeoutsElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `create` after provisioning.\n"]
-    pub fn create(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.create", self.base))
+    #[doc = "Get a reference to the value of field `create` after provisioning.\n"]
+    pub fn create(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.create", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `delete` after provisioning.\n"]
-    pub fn delete(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.delete", self.base))
+    #[doc = "Get a reference to the value of field `delete` after provisioning.\n"]
+    pub fn delete(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.delete", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `update` after provisioning.\n"]
-    pub fn update(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.update", self.base))
+    #[doc = "Get a reference to the value of field `update` after provisioning.\n"]
+    pub fn update(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.update", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct MskconnectConnectorWorkerConfigurationEl {
-    arn: PrimField<String>,
-    revision: PrimField<f64>,
+    arn: terrars::PrimField<std::string::String>,
+    revision: terrars::PrimField<f64>,
 }
 
 impl MskconnectConnectorWorkerConfigurationEl { }
 
-impl ToListMappable for MskconnectConnectorWorkerConfigurationEl {
-    type O = BlockAssignable<MskconnectConnectorWorkerConfigurationEl>;
+impl terrars::ToListMappable for MskconnectConnectorWorkerConfigurationEl {
+    type O = terrars::BlockAssignable<MskconnectConnectorWorkerConfigurationEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -1958,10 +2107,10 @@ impl ToListMappable for MskconnectConnectorWorkerConfigurationEl {
 }
 
 pub struct BuildMskconnectConnectorWorkerConfigurationEl {
-    #[doc= ""]
-    pub arn: PrimField<String>,
-    #[doc= ""]
-    pub revision: PrimField<f64>,
+    #[doc = ""]
+    pub arn: terrars::PrimField<std::string::String>,
+    #[doc = ""]
+    pub revision: terrars::PrimField<f64>,
 }
 
 impl BuildMskconnectConnectorWorkerConfigurationEl {
@@ -1974,12 +2123,12 @@ impl BuildMskconnectConnectorWorkerConfigurationEl {
 }
 
 pub struct MskconnectConnectorWorkerConfigurationElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for MskconnectConnectorWorkerConfigurationElRef {
-    fn new(shared: StackShared, base: String) -> MskconnectConnectorWorkerConfigurationElRef {
+impl terrars::Ref for MskconnectConnectorWorkerConfigurationElRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> MskconnectConnectorWorkerConfigurationElRef {
         MskconnectConnectorWorkerConfigurationElRef {
             shared: shared,
             base: base.to_string(),
@@ -1988,28 +2137,32 @@ impl Ref for MskconnectConnectorWorkerConfigurationElRef {
 }
 
 impl MskconnectConnectorWorkerConfigurationElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `arn` after provisioning.\n"]
-    pub fn arn(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.arn", self.base))
+    #[doc = "Get a reference to the value of field `arn` after provisioning.\n"]
+    pub fn arn(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.arn", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `revision` after provisioning.\n"]
-    pub fn revision(&self) -> PrimExpr<f64> {
-        PrimExpr::new(self.shared().clone(), format!("{}.revision", self.base))
+    #[doc = "Get a reference to the value of field `revision` after provisioning.\n"]
+    pub fn revision(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.revision", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
 struct MskconnectConnectorDynamic {
-    capacity: Option<DynamicBlock<MskconnectConnectorCapacityEl>>,
-    kafka_cluster: Option<DynamicBlock<MskconnectConnectorKafkaClusterEl>>,
-    kafka_cluster_client_authentication: Option<DynamicBlock<MskconnectConnectorKafkaClusterClientAuthenticationEl>>,
-    kafka_cluster_encryption_in_transit: Option<DynamicBlock<MskconnectConnectorKafkaClusterEncryptionInTransitEl>>,
-    log_delivery: Option<DynamicBlock<MskconnectConnectorLogDeliveryEl>>,
-    plugin: Option<DynamicBlock<MskconnectConnectorPluginEl>>,
-    worker_configuration: Option<DynamicBlock<MskconnectConnectorWorkerConfigurationEl>>,
+    capacity: std::option::Option<terrars::DynamicBlock<MskconnectConnectorCapacityEl>>,
+    kafka_cluster: std::option::Option<terrars::DynamicBlock<MskconnectConnectorKafkaClusterEl>>,
+    kafka_cluster_client_authentication: std
+    ::option
+    ::Option<terrars::DynamicBlock<MskconnectConnectorKafkaClusterClientAuthenticationEl>>,
+    kafka_cluster_encryption_in_transit: std
+    ::option
+    ::Option<terrars::DynamicBlock<MskconnectConnectorKafkaClusterEncryptionInTransitEl>>,
+    log_delivery: std::option::Option<terrars::DynamicBlock<MskconnectConnectorLogDeliveryEl>>,
+    plugin: std::option::Option<terrars::DynamicBlock<MskconnectConnectorPluginEl>>,
+    worker_configuration: std::option::Option<terrars::DynamicBlock<MskconnectConnectorWorkerConfigurationEl>>,
 }

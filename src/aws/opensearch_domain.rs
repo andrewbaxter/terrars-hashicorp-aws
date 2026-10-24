@@ -1,80 +1,84 @@
 use serde::Serialize;
-use std::cell::RefCell;
-use std::rc::Rc;
-use terrars::*;
+use terrars::{
+    Referable as _,
+    Resource_ as _,
+    Ref as _,
+};
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
 struct OpensearchDomainData {
-    #[serde(skip_serializing_if = "Vec::is_empty")]
-    depends_on: Vec<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    provider: Option<String>,
-    #[serde(skip_serializing_if = "SerdeSkipDefault::is_default")]
-    lifecycle: ResourceLifecycle,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    for_each: Option<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    access_policies: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    advanced_options: Option<RecField<PrimField<String>>>,
-    domain_name: PrimField<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    engine_version: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    id: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    tags: Option<RecField<PrimField<String>>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    tags_all: Option<RecField<PrimField<String>>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    advanced_security_options: Option<Vec<OpensearchDomainAdvancedSecurityOptionsEl>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    auto_tune_options: Option<Vec<OpensearchDomainAutoTuneOptionsEl>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    cluster_config: Option<Vec<OpensearchDomainClusterConfigEl>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    cognito_options: Option<Vec<OpensearchDomainCognitoOptionsEl>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    domain_endpoint_options: Option<Vec<OpensearchDomainDomainEndpointOptionsEl>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    ebs_options: Option<Vec<OpensearchDomainEbsOptionsEl>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    encrypt_at_rest: Option<Vec<OpensearchDomainEncryptAtRestEl>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    log_publishing_options: Option<Vec<OpensearchDomainLogPublishingOptionsEl>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    node_to_node_encryption: Option<Vec<OpensearchDomainNodeToNodeEncryptionEl>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    snapshot_options: Option<Vec<OpensearchDomainSnapshotOptionsEl>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    timeouts: Option<OpensearchDomainTimeoutsEl>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    vpc_options: Option<Vec<OpensearchDomainVpcOptionsEl>>,
+    #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
+    depends_on: std::vec::Vec<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    provider: std::option::Option<std::string::String>,
+    #[serde(skip_serializing_if = "terrars::SerdeSkipDefault::is_default")]
+    lifecycle: terrars::ResourceLifecycle,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    for_each: std::option::Option<std::string::String>,
+    #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
+    provisioner: std::vec::Vec<terrars::Provisioner>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    access_policies: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    advanced_options: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
+    domain_name: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    engine_version: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    id: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    tags: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    tags_all: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    advanced_security_options: std::option::Option<std::vec::Vec<OpensearchDomainAdvancedSecurityOptionsEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    auto_tune_options: std::option::Option<std::vec::Vec<OpensearchDomainAutoTuneOptionsEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    cluster_config: std::option::Option<std::vec::Vec<OpensearchDomainClusterConfigEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    cognito_options: std::option::Option<std::vec::Vec<OpensearchDomainCognitoOptionsEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    domain_endpoint_options: std::option::Option<std::vec::Vec<OpensearchDomainDomainEndpointOptionsEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    ebs_options: std::option::Option<std::vec::Vec<OpensearchDomainEbsOptionsEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    encrypt_at_rest: std::option::Option<std::vec::Vec<OpensearchDomainEncryptAtRestEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    log_publishing_options: std::option::Option<std::vec::Vec<OpensearchDomainLogPublishingOptionsEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    node_to_node_encryption: std::option::Option<std::vec::Vec<OpensearchDomainNodeToNodeEncryptionEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    snapshot_options: std::option::Option<std::vec::Vec<OpensearchDomainSnapshotOptionsEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    timeouts: std::option::Option<OpensearchDomainTimeoutsEl>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    vpc_options: std::option::Option<std::vec::Vec<OpensearchDomainVpcOptionsEl>>,
     dynamic: OpensearchDomainDynamic,
 }
 
 struct OpensearchDomain_ {
-    shared: StackShared,
-    tf_id: String,
-    data: RefCell<OpensearchDomainData>,
+    shared: terrars::StackShared,
+    tf_id: std::string::String,
+    data: std::cell::RefCell<OpensearchDomainData>,
 }
 
 #[derive(Clone)]
-pub struct OpensearchDomain(Rc<OpensearchDomain_>);
+pub struct OpensearchDomain(std::rc::Rc<OpensearchDomain_>);
 
 impl OpensearchDomain {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.0.shared
     }
 
-    pub fn depends_on(self, dep: &impl Referable) -> Self {
+    pub fn depends_on(self, dep: &impl terrars::Referable) -> Self {
         self.0.data.borrow_mut().depends_on.push(dep.extract_ref());
         self
     }
 
     pub fn set_provider(self, provider: &ProviderAws) -> Self {
-        self.0.data.borrow_mut().provider = Some(provider.provider_ref());
+        self.0.data.borrow_mut().provider = std::option::Option::Some(provider.provider_ref());
         self
     }
 
@@ -89,372 +93,435 @@ impl OpensearchDomain {
     }
 
     pub fn ignore_changes_to_all(self) -> Self {
-        self.0.data.borrow_mut().lifecycle.ignore_changes = Some(IgnoreChanges::All(IgnoreChangesAll::All));
+        self.0.data.borrow_mut().lifecycle.ignore_changes =
+            std::option::Option::Some(terrars::IgnoreChanges::All(terrars::IgnoreChangesAll::All));
         self
     }
 
-    pub fn ignore_changes_to_attr(self, attr: impl ToString) -> Self {
+    pub fn ignore_changes_to_attr(self, attr: impl std::string::ToString) -> Self {
         {
             let mut d = self.0.data.borrow_mut();
             if match &mut d.lifecycle.ignore_changes {
-                Some(i) => match i {
-                    IgnoreChanges::All(_) => {
+                std::option::Option::Some(i) => match i {
+                    terrars::IgnoreChanges::All(_) => {
                         true
                     },
-                    IgnoreChanges::Refs(r) => {
+                    terrars::IgnoreChanges::Refs(r) => {
                         r.push(attr.to_string());
                         false
                     },
                 },
-                None => true,
+                std::option::Option::None => true,
             } {
-                d.lifecycle.ignore_changes = Some(IgnoreChanges::Refs(vec![attr.to_string()]));
+                d.lifecycle.ignore_changes =
+                    std::option::Option::Some(terrars::IgnoreChanges::Refs(vec![attr.to_string()]));
             }
         }
         self
     }
 
-    pub fn replace_triggered_by_resource(self, r: &impl Resource) -> Self {
+    pub fn replace_triggered_by_resource(self, r: &impl terrars::Resource) -> Self {
         self.0.data.borrow_mut().lifecycle.replace_triggered_by.push(r.extract_ref());
         self
     }
 
-    pub fn replace_triggered_by_attr(self, attr: impl ToString) -> Self {
+    pub fn replace_triggered_by_attr(self, attr: impl std::string::ToString) -> Self {
         self.0.data.borrow_mut().lifecycle.replace_triggered_by.push(attr.to_string());
         self
     }
 
-    #[doc= "Set the field `access_policies`.\n"]
-    pub fn set_access_policies(self, v: impl Into<PrimField<String>>) -> Self {
-        self.0.data.borrow_mut().access_policies = Some(v.into());
+    #[doc = r" Add a provisioner (ex: `local-exec`, `remote-exec`, `file`) to this resource."]
+    #[doc = r" Provisioners run in the order they're added."]
+    pub fn add_provisioner(self, v: impl std::convert::Into<terrars::Provisioner>) -> Self {
+        self.0.data.borrow_mut().provisioner.push(v.into());
         self
     }
 
-    #[doc= "Set the field `advanced_options`.\n"]
-    pub fn set_advanced_options(self, v: impl Into<RecField<PrimField<String>>>) -> Self {
-        self.0.data.borrow_mut().advanced_options = Some(v.into());
+    pub fn add_lifecycle_precondition(
+        self,
+        condition: impl std::convert::Into<terrars::PrimField<bool>>,
+        error_message: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.0.data.borrow_mut().lifecycle.precondition.push(terrars::LifecycleCondition {
+            condition: condition.into(),
+            error_message: error_message.into(),
+        });
         self
     }
 
-    #[doc= "Set the field `engine_version`.\n"]
-    pub fn set_engine_version(self, v: impl Into<PrimField<String>>) -> Self {
-        self.0.data.borrow_mut().engine_version = Some(v.into());
+    pub fn add_lifecycle_postcondition(
+        self,
+        condition: impl std::convert::Into<terrars::PrimField<bool>>,
+        error_message: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.0.data.borrow_mut().lifecycle.postcondition.push(terrars::LifecycleCondition {
+            condition: condition.into(),
+            error_message: error_message.into(),
+        });
         self
     }
 
-    #[doc= "Set the field `id`.\n"]
-    pub fn set_id(self, v: impl Into<PrimField<String>>) -> Self {
-        self.0.data.borrow_mut().id = Some(v.into());
+    #[doc = "Set the field `access_policies`.\n"]
+    pub fn set_access_policies(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().access_policies = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `tags`.\n"]
-    pub fn set_tags(self, v: impl Into<RecField<PrimField<String>>>) -> Self {
-        self.0.data.borrow_mut().tags = Some(v.into());
+    #[doc = "Set the field `advanced_options`.\n"]
+    pub fn set_advanced_options(
+        self,
+        v: impl std::convert::Into<terrars::RecField<terrars::PrimField<std::string::String>>>,
+    ) -> Self {
+        self.0.data.borrow_mut().advanced_options = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `tags_all`.\n"]
-    pub fn set_tags_all(self, v: impl Into<RecField<PrimField<String>>>) -> Self {
-        self.0.data.borrow_mut().tags_all = Some(v.into());
+    #[doc = "Set the field `engine_version`.\n"]
+    pub fn set_engine_version(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().engine_version = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `advanced_security_options`.\n"]
+    #[doc = "Set the field `id`.\n"]
+    pub fn set_id(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().id = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `tags`.\n"]
+    pub fn set_tags(
+        self,
+        v: impl std::convert::Into<terrars::RecField<terrars::PrimField<std::string::String>>>,
+    ) -> Self {
+        self.0.data.borrow_mut().tags = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `tags_all`.\n"]
+    pub fn set_tags_all(
+        self,
+        v: impl std::convert::Into<terrars::RecField<terrars::PrimField<std::string::String>>>,
+    ) -> Self {
+        self.0.data.borrow_mut().tags_all = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `advanced_security_options`.\n"]
     pub fn set_advanced_security_options(
         self,
-        v: impl Into<BlockAssignable<OpensearchDomainAdvancedSecurityOptionsEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<OpensearchDomainAdvancedSecurityOptionsEl>>,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.0.data.borrow_mut().advanced_security_options = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.0.data.borrow_mut().advanced_security_options = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.0.data.borrow_mut().dynamic.advanced_security_options = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.0.data.borrow_mut().dynamic.advanced_security_options = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Set the field `auto_tune_options`.\n"]
-    pub fn set_auto_tune_options(self, v: impl Into<BlockAssignable<OpensearchDomainAutoTuneOptionsEl>>) -> Self {
+    #[doc = "Set the field `auto_tune_options`.\n"]
+    pub fn set_auto_tune_options(
+        self,
+        v: impl std::convert::Into<terrars::BlockAssignable<OpensearchDomainAutoTuneOptionsEl>>,
+    ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.0.data.borrow_mut().auto_tune_options = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.0.data.borrow_mut().auto_tune_options = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.0.data.borrow_mut().dynamic.auto_tune_options = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.0.data.borrow_mut().dynamic.auto_tune_options = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Set the field `cluster_config`.\n"]
-    pub fn set_cluster_config(self, v: impl Into<BlockAssignable<OpensearchDomainClusterConfigEl>>) -> Self {
+    #[doc = "Set the field `cluster_config`.\n"]
+    pub fn set_cluster_config(
+        self,
+        v: impl std::convert::Into<terrars::BlockAssignable<OpensearchDomainClusterConfigEl>>,
+    ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.0.data.borrow_mut().cluster_config = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.0.data.borrow_mut().cluster_config = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.0.data.borrow_mut().dynamic.cluster_config = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.0.data.borrow_mut().dynamic.cluster_config = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Set the field `cognito_options`.\n"]
-    pub fn set_cognito_options(self, v: impl Into<BlockAssignable<OpensearchDomainCognitoOptionsEl>>) -> Self {
+    #[doc = "Set the field `cognito_options`.\n"]
+    pub fn set_cognito_options(
+        self,
+        v: impl std::convert::Into<terrars::BlockAssignable<OpensearchDomainCognitoOptionsEl>>,
+    ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.0.data.borrow_mut().cognito_options = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.0.data.borrow_mut().cognito_options = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.0.data.borrow_mut().dynamic.cognito_options = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.0.data.borrow_mut().dynamic.cognito_options = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Set the field `domain_endpoint_options`.\n"]
+    #[doc = "Set the field `domain_endpoint_options`.\n"]
     pub fn set_domain_endpoint_options(
         self,
-        v: impl Into<BlockAssignable<OpensearchDomainDomainEndpointOptionsEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<OpensearchDomainDomainEndpointOptionsEl>>,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.0.data.borrow_mut().domain_endpoint_options = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.0.data.borrow_mut().domain_endpoint_options = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.0.data.borrow_mut().dynamic.domain_endpoint_options = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.0.data.borrow_mut().dynamic.domain_endpoint_options = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Set the field `ebs_options`.\n"]
-    pub fn set_ebs_options(self, v: impl Into<BlockAssignable<OpensearchDomainEbsOptionsEl>>) -> Self {
+    #[doc = "Set the field `ebs_options`.\n"]
+    pub fn set_ebs_options(
+        self,
+        v: impl std::convert::Into<terrars::BlockAssignable<OpensearchDomainEbsOptionsEl>>,
+    ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.0.data.borrow_mut().ebs_options = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.0.data.borrow_mut().ebs_options = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.0.data.borrow_mut().dynamic.ebs_options = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.0.data.borrow_mut().dynamic.ebs_options = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Set the field `encrypt_at_rest`.\n"]
-    pub fn set_encrypt_at_rest(self, v: impl Into<BlockAssignable<OpensearchDomainEncryptAtRestEl>>) -> Self {
+    #[doc = "Set the field `encrypt_at_rest`.\n"]
+    pub fn set_encrypt_at_rest(
+        self,
+        v: impl std::convert::Into<terrars::BlockAssignable<OpensearchDomainEncryptAtRestEl>>,
+    ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.0.data.borrow_mut().encrypt_at_rest = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.0.data.borrow_mut().encrypt_at_rest = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.0.data.borrow_mut().dynamic.encrypt_at_rest = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.0.data.borrow_mut().dynamic.encrypt_at_rest = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Set the field `log_publishing_options`.\n"]
+    #[doc = "Set the field `log_publishing_options`.\n"]
     pub fn set_log_publishing_options(
         self,
-        v: impl Into<BlockAssignable<OpensearchDomainLogPublishingOptionsEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<OpensearchDomainLogPublishingOptionsEl>>,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.0.data.borrow_mut().log_publishing_options = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.0.data.borrow_mut().log_publishing_options = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.0.data.borrow_mut().dynamic.log_publishing_options = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.0.data.borrow_mut().dynamic.log_publishing_options = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Set the field `node_to_node_encryption`.\n"]
+    #[doc = "Set the field `node_to_node_encryption`.\n"]
     pub fn set_node_to_node_encryption(
         self,
-        v: impl Into<BlockAssignable<OpensearchDomainNodeToNodeEncryptionEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<OpensearchDomainNodeToNodeEncryptionEl>>,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.0.data.borrow_mut().node_to_node_encryption = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.0.data.borrow_mut().node_to_node_encryption = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.0.data.borrow_mut().dynamic.node_to_node_encryption = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.0.data.borrow_mut().dynamic.node_to_node_encryption = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Set the field `snapshot_options`.\n"]
-    pub fn set_snapshot_options(self, v: impl Into<BlockAssignable<OpensearchDomainSnapshotOptionsEl>>) -> Self {
+    #[doc = "Set the field `snapshot_options`.\n"]
+    pub fn set_snapshot_options(
+        self,
+        v: impl std::convert::Into<terrars::BlockAssignable<OpensearchDomainSnapshotOptionsEl>>,
+    ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.0.data.borrow_mut().snapshot_options = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.0.data.borrow_mut().snapshot_options = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.0.data.borrow_mut().dynamic.snapshot_options = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.0.data.borrow_mut().dynamic.snapshot_options = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Set the field `timeouts`.\n"]
-    pub fn set_timeouts(self, v: impl Into<OpensearchDomainTimeoutsEl>) -> Self {
-        self.0.data.borrow_mut().timeouts = Some(v.into());
+    #[doc = "Set the field `timeouts`.\n"]
+    pub fn set_timeouts(self, v: impl std::convert::Into<OpensearchDomainTimeoutsEl>) -> Self {
+        self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `vpc_options`.\n"]
-    pub fn set_vpc_options(self, v: impl Into<BlockAssignable<OpensearchDomainVpcOptionsEl>>) -> Self {
+    #[doc = "Set the field `vpc_options`.\n"]
+    pub fn set_vpc_options(
+        self,
+        v: impl std::convert::Into<terrars::BlockAssignable<OpensearchDomainVpcOptionsEl>>,
+    ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.0.data.borrow_mut().vpc_options = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.0.data.borrow_mut().vpc_options = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.0.data.borrow_mut().dynamic.vpc_options = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.0.data.borrow_mut().dynamic.vpc_options = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Get a reference to the value of field `access_policies` after provisioning.\n"]
-    pub fn access_policies(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.access_policies", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `access_policies` after provisioning.\n"]
+    pub fn access_policies(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.access_policies", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `advanced_options` after provisioning.\n"]
-    pub fn advanced_options(&self) -> RecRef<PrimExpr<String>> {
-        RecRef::new(self.shared().clone(), format!("{}.advanced_options", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `advanced_options` after provisioning.\n"]
+    pub fn advanced_options(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
+        terrars::RecRef::new(self.shared().clone(), format!("{}.advanced_options", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `arn` after provisioning.\n"]
-    pub fn arn(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.arn", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `arn` after provisioning.\n"]
+    pub fn arn(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.arn", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `domain_id` after provisioning.\n"]
-    pub fn domain_id(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.domain_id", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `domain_id` after provisioning.\n"]
+    pub fn domain_id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.domain_id", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `domain_name` after provisioning.\n"]
-    pub fn domain_name(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.domain_name", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `domain_name` after provisioning.\n"]
+    pub fn domain_name(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.domain_name", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `endpoint` after provisioning.\n"]
-    pub fn endpoint(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.endpoint", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `endpoint` after provisioning.\n"]
+    pub fn endpoint(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.endpoint", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `engine_version` after provisioning.\n"]
-    pub fn engine_version(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.engine_version", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `engine_version` after provisioning.\n"]
+    pub fn engine_version(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.engine_version", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `id` after provisioning.\n"]
-    pub fn id(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
+    pub fn id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `kibana_endpoint` after provisioning.\n"]
-    pub fn kibana_endpoint(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.kibana_endpoint", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `kibana_endpoint` after provisioning.\n"]
+    pub fn kibana_endpoint(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.kibana_endpoint", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `tags` after provisioning.\n"]
-    pub fn tags(&self) -> RecRef<PrimExpr<String>> {
-        RecRef::new(self.shared().clone(), format!("{}.tags", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `tags` after provisioning.\n"]
+    pub fn tags(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
+        terrars::RecRef::new(self.shared().clone(), format!("{}.tags", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `tags_all` after provisioning.\n"]
-    pub fn tags_all(&self) -> RecRef<PrimExpr<String>> {
-        RecRef::new(self.shared().clone(), format!("{}.tags_all", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `tags_all` after provisioning.\n"]
+    pub fn tags_all(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
+        terrars::RecRef::new(self.shared().clone(), format!("{}.tags_all", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `advanced_security_options` after provisioning.\n"]
-    pub fn advanced_security_options(&self) -> ListRef<OpensearchDomainAdvancedSecurityOptionsElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.advanced_security_options", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `advanced_security_options` after provisioning.\n"]
+    pub fn advanced_security_options(&self) -> terrars::ListRef<OpensearchDomainAdvancedSecurityOptionsElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.advanced_security_options", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `auto_tune_options` after provisioning.\n"]
-    pub fn auto_tune_options(&self) -> ListRef<OpensearchDomainAutoTuneOptionsElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.auto_tune_options", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `auto_tune_options` after provisioning.\n"]
+    pub fn auto_tune_options(&self) -> terrars::ListRef<OpensearchDomainAutoTuneOptionsElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.auto_tune_options", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `cluster_config` after provisioning.\n"]
-    pub fn cluster_config(&self) -> ListRef<OpensearchDomainClusterConfigElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.cluster_config", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `cluster_config` after provisioning.\n"]
+    pub fn cluster_config(&self) -> terrars::ListRef<OpensearchDomainClusterConfigElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.cluster_config", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `cognito_options` after provisioning.\n"]
-    pub fn cognito_options(&self) -> ListRef<OpensearchDomainCognitoOptionsElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.cognito_options", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `cognito_options` after provisioning.\n"]
+    pub fn cognito_options(&self) -> terrars::ListRef<OpensearchDomainCognitoOptionsElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.cognito_options", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `domain_endpoint_options` after provisioning.\n"]
-    pub fn domain_endpoint_options(&self) -> ListRef<OpensearchDomainDomainEndpointOptionsElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.domain_endpoint_options", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `domain_endpoint_options` after provisioning.\n"]
+    pub fn domain_endpoint_options(&self) -> terrars::ListRef<OpensearchDomainDomainEndpointOptionsElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.domain_endpoint_options", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `ebs_options` after provisioning.\n"]
-    pub fn ebs_options(&self) -> ListRef<OpensearchDomainEbsOptionsElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.ebs_options", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `ebs_options` after provisioning.\n"]
+    pub fn ebs_options(&self) -> terrars::ListRef<OpensearchDomainEbsOptionsElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.ebs_options", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `encrypt_at_rest` after provisioning.\n"]
-    pub fn encrypt_at_rest(&self) -> ListRef<OpensearchDomainEncryptAtRestElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.encrypt_at_rest", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `encrypt_at_rest` after provisioning.\n"]
+    pub fn encrypt_at_rest(&self) -> terrars::ListRef<OpensearchDomainEncryptAtRestElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.encrypt_at_rest", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `node_to_node_encryption` after provisioning.\n"]
-    pub fn node_to_node_encryption(&self) -> ListRef<OpensearchDomainNodeToNodeEncryptionElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.node_to_node_encryption", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `node_to_node_encryption` after provisioning.\n"]
+    pub fn node_to_node_encryption(&self) -> terrars::ListRef<OpensearchDomainNodeToNodeEncryptionElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.node_to_node_encryption", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `snapshot_options` after provisioning.\n"]
-    pub fn snapshot_options(&self) -> ListRef<OpensearchDomainSnapshotOptionsElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.snapshot_options", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `snapshot_options` after provisioning.\n"]
+    pub fn snapshot_options(&self) -> terrars::ListRef<OpensearchDomainSnapshotOptionsElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.snapshot_options", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `timeouts` after provisioning.\n"]
+    #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
     pub fn timeouts(&self) -> OpensearchDomainTimeoutsElRef {
         OpensearchDomainTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `vpc_options` after provisioning.\n"]
-    pub fn vpc_options(&self) -> ListRef<OpensearchDomainVpcOptionsElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.vpc_options", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `vpc_options` after provisioning.\n"]
+    pub fn vpc_options(&self) -> terrars::ListRef<OpensearchDomainVpcOptionsElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.vpc_options", self.extract_ref()))
     }
 }
 
-impl Referable for OpensearchDomain {
-    fn extract_ref(&self) -> String {
+impl terrars::Referable for OpensearchDomain {
+    fn extract_ref(&self) -> std::string::String {
         format!("{}.{}", self.0.extract_resource_type(), self.0.extract_tf_id())
     }
 }
 
-impl Resource for OpensearchDomain { }
+impl terrars::Resource for OpensearchDomain { }
 
-impl ToListMappable for OpensearchDomain {
-    type O = ListRef<OpensearchDomainRef>;
+impl terrars::ToListMappable for OpensearchDomain {
+    type O = terrars::ListRef<OpensearchDomainRef>;
 
-    fn do_map(self, base: String) -> Self::O {
-        self.0.data.borrow_mut().for_each = Some(format!("${{{}}}", base));
-        ListRef::new(self.0.shared.clone(), self.extract_ref())
+    fn do_map(self, base: std::string::String) -> Self::O {
+        self.0.data.borrow_mut().for_each = std::option::Option::Some(format!("${{{}}}", base));
+        terrars::ListRef::new(self.0.shared.clone(), self.extract_ref())
     }
 }
 
-impl Resource_ for OpensearchDomain_ {
-    fn extract_resource_type(&self) -> String {
+impl terrars::Resource_ for OpensearchDomain_ {
+    fn extract_resource_type(&self) -> std::string::String {
         "aws_opensearch_domain".into()
     }
 
-    fn extract_tf_id(&self) -> String {
+    fn extract_tf_id(&self) -> std::string::String {
         self.tf_id.clone()
     }
 
@@ -464,21 +531,22 @@ impl Resource_ for OpensearchDomain_ {
 }
 
 pub struct BuildOpensearchDomain {
-    pub tf_id: String,
-    #[doc= ""]
-    pub domain_name: PrimField<String>,
+    pub tf_id: std::string::String,
+    #[doc = ""]
+    pub domain_name: terrars::PrimField<std::string::String>,
 }
 
 impl BuildOpensearchDomain {
-    pub fn build(self, stack: &mut Stack) -> OpensearchDomain {
-        let out = OpensearchDomain(Rc::new(OpensearchDomain_ {
+    pub fn build(self, stack: &mut terrars::Stack) -> OpensearchDomain {
+        let out = OpensearchDomain(std::rc::Rc::new(OpensearchDomain_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: RefCell::new(OpensearchDomainData {
+            data: std::cell::RefCell::new(OpensearchDomainData {
                 depends_on: core::default::Default::default(),
-                provider: None,
+                provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
-                for_each: None,
+                for_each: std::option::Option::None,
+                provisioner: core::default::Default::default(),
                 access_policies: core::default::Default::default(),
                 advanced_options: core::default::Default::default(),
                 domain_name: self.domain_name,
@@ -498,7 +566,7 @@ impl BuildOpensearchDomain {
                 snapshot_options: core::default::Default::default(),
                 timeouts: core::default::Default::default(),
                 vpc_options: core::default::Default::default(),
-                dynamic: Default::default(),
+                dynamic: core::default::Default::default(),
             }),
         }));
         stack.add_resource(out.0.clone());
@@ -507,12 +575,12 @@ impl BuildOpensearchDomain {
 }
 
 pub struct OpensearchDomainRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for OpensearchDomainRef {
-    fn new(shared: StackShared, base: String) -> Self {
+impl terrars::Ref for OpensearchDomainRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> Self {
         Self {
             shared: shared,
             base: base,
@@ -521,160 +589,163 @@ impl Ref for OpensearchDomainRef {
 }
 
 impl OpensearchDomainRef {
-    fn extract_ref(&self) -> String {
+    fn extract_ref(&self) -> std::string::String {
         self.base.clone()
     }
 
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `access_policies` after provisioning.\n"]
-    pub fn access_policies(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.access_policies", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `access_policies` after provisioning.\n"]
+    pub fn access_policies(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.access_policies", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `advanced_options` after provisioning.\n"]
-    pub fn advanced_options(&self) -> RecRef<PrimExpr<String>> {
-        RecRef::new(self.shared().clone(), format!("{}.advanced_options", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `advanced_options` after provisioning.\n"]
+    pub fn advanced_options(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
+        terrars::RecRef::new(self.shared().clone(), format!("{}.advanced_options", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `arn` after provisioning.\n"]
-    pub fn arn(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.arn", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `arn` after provisioning.\n"]
+    pub fn arn(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.arn", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `domain_id` after provisioning.\n"]
-    pub fn domain_id(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.domain_id", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `domain_id` after provisioning.\n"]
+    pub fn domain_id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.domain_id", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `domain_name` after provisioning.\n"]
-    pub fn domain_name(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.domain_name", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `domain_name` after provisioning.\n"]
+    pub fn domain_name(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.domain_name", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `endpoint` after provisioning.\n"]
-    pub fn endpoint(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.endpoint", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `endpoint` after provisioning.\n"]
+    pub fn endpoint(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.endpoint", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `engine_version` after provisioning.\n"]
-    pub fn engine_version(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.engine_version", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `engine_version` after provisioning.\n"]
+    pub fn engine_version(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.engine_version", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `id` after provisioning.\n"]
-    pub fn id(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
+    pub fn id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `kibana_endpoint` after provisioning.\n"]
-    pub fn kibana_endpoint(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.kibana_endpoint", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `kibana_endpoint` after provisioning.\n"]
+    pub fn kibana_endpoint(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.kibana_endpoint", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `tags` after provisioning.\n"]
-    pub fn tags(&self) -> RecRef<PrimExpr<String>> {
-        RecRef::new(self.shared().clone(), format!("{}.tags", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `tags` after provisioning.\n"]
+    pub fn tags(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
+        terrars::RecRef::new(self.shared().clone(), format!("{}.tags", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `tags_all` after provisioning.\n"]
-    pub fn tags_all(&self) -> RecRef<PrimExpr<String>> {
-        RecRef::new(self.shared().clone(), format!("{}.tags_all", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `tags_all` after provisioning.\n"]
+    pub fn tags_all(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
+        terrars::RecRef::new(self.shared().clone(), format!("{}.tags_all", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `advanced_security_options` after provisioning.\n"]
-    pub fn advanced_security_options(&self) -> ListRef<OpensearchDomainAdvancedSecurityOptionsElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.advanced_security_options", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `advanced_security_options` after provisioning.\n"]
+    pub fn advanced_security_options(&self) -> terrars::ListRef<OpensearchDomainAdvancedSecurityOptionsElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.advanced_security_options", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `auto_tune_options` after provisioning.\n"]
-    pub fn auto_tune_options(&self) -> ListRef<OpensearchDomainAutoTuneOptionsElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.auto_tune_options", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `auto_tune_options` after provisioning.\n"]
+    pub fn auto_tune_options(&self) -> terrars::ListRef<OpensearchDomainAutoTuneOptionsElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.auto_tune_options", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `cluster_config` after provisioning.\n"]
-    pub fn cluster_config(&self) -> ListRef<OpensearchDomainClusterConfigElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.cluster_config", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `cluster_config` after provisioning.\n"]
+    pub fn cluster_config(&self) -> terrars::ListRef<OpensearchDomainClusterConfigElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.cluster_config", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `cognito_options` after provisioning.\n"]
-    pub fn cognito_options(&self) -> ListRef<OpensearchDomainCognitoOptionsElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.cognito_options", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `cognito_options` after provisioning.\n"]
+    pub fn cognito_options(&self) -> terrars::ListRef<OpensearchDomainCognitoOptionsElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.cognito_options", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `domain_endpoint_options` after provisioning.\n"]
-    pub fn domain_endpoint_options(&self) -> ListRef<OpensearchDomainDomainEndpointOptionsElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.domain_endpoint_options", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `domain_endpoint_options` after provisioning.\n"]
+    pub fn domain_endpoint_options(&self) -> terrars::ListRef<OpensearchDomainDomainEndpointOptionsElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.domain_endpoint_options", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `ebs_options` after provisioning.\n"]
-    pub fn ebs_options(&self) -> ListRef<OpensearchDomainEbsOptionsElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.ebs_options", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `ebs_options` after provisioning.\n"]
+    pub fn ebs_options(&self) -> terrars::ListRef<OpensearchDomainEbsOptionsElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.ebs_options", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `encrypt_at_rest` after provisioning.\n"]
-    pub fn encrypt_at_rest(&self) -> ListRef<OpensearchDomainEncryptAtRestElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.encrypt_at_rest", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `encrypt_at_rest` after provisioning.\n"]
+    pub fn encrypt_at_rest(&self) -> terrars::ListRef<OpensearchDomainEncryptAtRestElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.encrypt_at_rest", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `node_to_node_encryption` after provisioning.\n"]
-    pub fn node_to_node_encryption(&self) -> ListRef<OpensearchDomainNodeToNodeEncryptionElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.node_to_node_encryption", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `node_to_node_encryption` after provisioning.\n"]
+    pub fn node_to_node_encryption(&self) -> terrars::ListRef<OpensearchDomainNodeToNodeEncryptionElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.node_to_node_encryption", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `snapshot_options` after provisioning.\n"]
-    pub fn snapshot_options(&self) -> ListRef<OpensearchDomainSnapshotOptionsElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.snapshot_options", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `snapshot_options` after provisioning.\n"]
+    pub fn snapshot_options(&self) -> terrars::ListRef<OpensearchDomainSnapshotOptionsElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.snapshot_options", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `timeouts` after provisioning.\n"]
+    #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
     pub fn timeouts(&self) -> OpensearchDomainTimeoutsElRef {
         OpensearchDomainTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `vpc_options` after provisioning.\n"]
-    pub fn vpc_options(&self) -> ListRef<OpensearchDomainVpcOptionsElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.vpc_options", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `vpc_options` after provisioning.\n"]
+    pub fn vpc_options(&self) -> terrars::ListRef<OpensearchDomainVpcOptionsElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.vpc_options", self.extract_ref()))
     }
 }
 
 #[derive(Serialize)]
 pub struct OpensearchDomainAdvancedSecurityOptionsElMasterUserOptionsEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    master_user_arn: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    master_user_name: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    master_user_password: Option<PrimField<String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    master_user_arn: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    master_user_name: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    master_user_password: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
 impl OpensearchDomainAdvancedSecurityOptionsElMasterUserOptionsEl {
-    #[doc= "Set the field `master_user_arn`.\n"]
-    pub fn set_master_user_arn(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.master_user_arn = Some(v.into());
+    #[doc = "Set the field `master_user_arn`.\n"]
+    pub fn set_master_user_arn(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.master_user_arn = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `master_user_name`.\n"]
-    pub fn set_master_user_name(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.master_user_name = Some(v.into());
+    #[doc = "Set the field `master_user_name`.\n"]
+    pub fn set_master_user_name(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.master_user_name = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `master_user_password`.\n"]
-    pub fn set_master_user_password(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.master_user_password = Some(v.into());
+    #[doc = "Set the field `master_user_password`.\n"]
+    pub fn set_master_user_password(
+        mut self,
+        v: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.master_user_password = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl ToListMappable for OpensearchDomainAdvancedSecurityOptionsElMasterUserOptionsEl {
-    type O = BlockAssignable<OpensearchDomainAdvancedSecurityOptionsElMasterUserOptionsEl>;
+impl terrars::ToListMappable for OpensearchDomainAdvancedSecurityOptionsElMasterUserOptionsEl {
+    type O = terrars::BlockAssignable<OpensearchDomainAdvancedSecurityOptionsElMasterUserOptionsEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -695,12 +766,15 @@ impl BuildOpensearchDomainAdvancedSecurityOptionsElMasterUserOptionsEl {
 }
 
 pub struct OpensearchDomainAdvancedSecurityOptionsElMasterUserOptionsElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for OpensearchDomainAdvancedSecurityOptionsElMasterUserOptionsElRef {
-    fn new(shared: StackShared, base: String) -> OpensearchDomainAdvancedSecurityOptionsElMasterUserOptionsElRef {
+impl terrars::Ref for OpensearchDomainAdvancedSecurityOptionsElMasterUserOptionsElRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> OpensearchDomainAdvancedSecurityOptionsElMasterUserOptionsElRef {
         OpensearchDomainAdvancedSecurityOptionsElMasterUserOptionsElRef {
             shared: shared,
             base: base.to_string(),
@@ -709,78 +783,85 @@ impl Ref for OpensearchDomainAdvancedSecurityOptionsElMasterUserOptionsElRef {
 }
 
 impl OpensearchDomainAdvancedSecurityOptionsElMasterUserOptionsElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `master_user_arn` after provisioning.\n"]
-    pub fn master_user_arn(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.master_user_arn", self.base))
+    #[doc = "Get a reference to the value of field `master_user_arn` after provisioning.\n"]
+    pub fn master_user_arn(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.master_user_arn", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `master_user_name` after provisioning.\n"]
-    pub fn master_user_name(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.master_user_name", self.base))
+    #[doc = "Get a reference to the value of field `master_user_name` after provisioning.\n"]
+    pub fn master_user_name(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.master_user_name", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `master_user_password` after provisioning.\n"]
-    pub fn master_user_password(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.master_user_password", self.base))
+    #[doc = "Get a reference to the value of field `master_user_password` after provisioning.\n"]
+    pub fn master_user_password(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.master_user_password", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
 struct OpensearchDomainAdvancedSecurityOptionsElDynamic {
-    master_user_options: Option<DynamicBlock<OpensearchDomainAdvancedSecurityOptionsElMasterUserOptionsEl>>,
+    master_user_options: std
+    ::option
+    ::Option<terrars::DynamicBlock<OpensearchDomainAdvancedSecurityOptionsElMasterUserOptionsEl>>,
 }
 
 #[derive(Serialize)]
 pub struct OpensearchDomainAdvancedSecurityOptionsEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    anonymous_auth_enabled: Option<PrimField<bool>>,
-    enabled: PrimField<bool>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    internal_user_database_enabled: Option<PrimField<bool>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    master_user_options: Option<Vec<OpensearchDomainAdvancedSecurityOptionsElMasterUserOptionsEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    anonymous_auth_enabled: std::option::Option<terrars::PrimField<bool>>,
+    enabled: terrars::PrimField<bool>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    internal_user_database_enabled: std::option::Option<terrars::PrimField<bool>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    master_user_options: std::option::Option<std::vec::Vec<OpensearchDomainAdvancedSecurityOptionsElMasterUserOptionsEl>>,
     dynamic: OpensearchDomainAdvancedSecurityOptionsElDynamic,
 }
 
 impl OpensearchDomainAdvancedSecurityOptionsEl {
-    #[doc= "Set the field `anonymous_auth_enabled`.\n"]
-    pub fn set_anonymous_auth_enabled(mut self, v: impl Into<PrimField<bool>>) -> Self {
-        self.anonymous_auth_enabled = Some(v.into());
+    #[doc = "Set the field `anonymous_auth_enabled`.\n"]
+    pub fn set_anonymous_auth_enabled(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
+        self.anonymous_auth_enabled = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `internal_user_database_enabled`.\n"]
-    pub fn set_internal_user_database_enabled(mut self, v: impl Into<PrimField<bool>>) -> Self {
-        self.internal_user_database_enabled = Some(v.into());
+    #[doc = "Set the field `internal_user_database_enabled`.\n"]
+    pub fn set_internal_user_database_enabled(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
+        self.internal_user_database_enabled = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `master_user_options`.\n"]
+    #[doc = "Set the field `master_user_options`.\n"]
     pub fn set_master_user_options(
         mut self,
-        v: impl Into<BlockAssignable<OpensearchDomainAdvancedSecurityOptionsElMasterUserOptionsEl>>,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<terrars::BlockAssignable<OpensearchDomainAdvancedSecurityOptionsElMasterUserOptionsEl>>,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.master_user_options = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.master_user_options = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.master_user_options = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.master_user_options = std::option::Option::Some(d);
             },
         }
         self
     }
 }
 
-impl ToListMappable for OpensearchDomainAdvancedSecurityOptionsEl {
-    type O = BlockAssignable<OpensearchDomainAdvancedSecurityOptionsEl>;
+impl terrars::ToListMappable for OpensearchDomainAdvancedSecurityOptionsEl {
+    type O = terrars::BlockAssignable<OpensearchDomainAdvancedSecurityOptionsEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -789,8 +870,8 @@ impl ToListMappable for OpensearchDomainAdvancedSecurityOptionsEl {
 }
 
 pub struct BuildOpensearchDomainAdvancedSecurityOptionsEl {
-    #[doc= ""]
-    pub enabled: PrimField<bool>,
+    #[doc = ""]
+    pub enabled: terrars::PrimField<bool>,
 }
 
 impl BuildOpensearchDomainAdvancedSecurityOptionsEl {
@@ -800,18 +881,18 @@ impl BuildOpensearchDomainAdvancedSecurityOptionsEl {
             enabled: self.enabled,
             internal_user_database_enabled: core::default::Default::default(),
             master_user_options: core::default::Default::default(),
-            dynamic: Default::default(),
+            dynamic: core::default::Default::default(),
         }
     }
 }
 
 pub struct OpensearchDomainAdvancedSecurityOptionsElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for OpensearchDomainAdvancedSecurityOptionsElRef {
-    fn new(shared: StackShared, base: String) -> OpensearchDomainAdvancedSecurityOptionsElRef {
+impl terrars::Ref for OpensearchDomainAdvancedSecurityOptionsElRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> OpensearchDomainAdvancedSecurityOptionsElRef {
         OpensearchDomainAdvancedSecurityOptionsElRef {
             shared: shared,
             base: base.to_string(),
@@ -820,44 +901,46 @@ impl Ref for OpensearchDomainAdvancedSecurityOptionsElRef {
 }
 
 impl OpensearchDomainAdvancedSecurityOptionsElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `anonymous_auth_enabled` after provisioning.\n"]
-    pub fn anonymous_auth_enabled(&self) -> PrimExpr<bool> {
-        PrimExpr::new(self.shared().clone(), format!("{}.anonymous_auth_enabled", self.base))
+    #[doc = "Get a reference to the value of field `anonymous_auth_enabled` after provisioning.\n"]
+    pub fn anonymous_auth_enabled(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.anonymous_auth_enabled", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `enabled` after provisioning.\n"]
-    pub fn enabled(&self) -> PrimExpr<bool> {
-        PrimExpr::new(self.shared().clone(), format!("{}.enabled", self.base))
+    #[doc = "Get a reference to the value of field `enabled` after provisioning.\n"]
+    pub fn enabled(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.enabled", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `internal_user_database_enabled` after provisioning.\n"]
-    pub fn internal_user_database_enabled(&self) -> PrimExpr<bool> {
-        PrimExpr::new(self.shared().clone(), format!("{}.internal_user_database_enabled", self.base))
+    #[doc = "Get a reference to the value of field `internal_user_database_enabled` after provisioning.\n"]
+    pub fn internal_user_database_enabled(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.internal_user_database_enabled", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `master_user_options` after provisioning.\n"]
-    pub fn master_user_options(&self) -> ListRef<OpensearchDomainAdvancedSecurityOptionsElMasterUserOptionsElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.master_user_options", self.base))
+    #[doc = "Get a reference to the value of field `master_user_options` after provisioning.\n"]
+    pub fn master_user_options(
+        &self,
+    ) -> terrars::ListRef<OpensearchDomainAdvancedSecurityOptionsElMasterUserOptionsElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.master_user_options", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct OpensearchDomainAutoTuneOptionsElMaintenanceScheduleElDurationEl {
-    unit: PrimField<String>,
-    value: PrimField<f64>,
+    unit: terrars::PrimField<std::string::String>,
+    value: terrars::PrimField<f64>,
 }
 
 impl OpensearchDomainAutoTuneOptionsElMaintenanceScheduleElDurationEl { }
 
-impl ToListMappable for OpensearchDomainAutoTuneOptionsElMaintenanceScheduleElDurationEl {
-    type O = BlockAssignable<OpensearchDomainAutoTuneOptionsElMaintenanceScheduleElDurationEl>;
+impl terrars::ToListMappable for OpensearchDomainAutoTuneOptionsElMaintenanceScheduleElDurationEl {
+    type O = terrars::BlockAssignable<OpensearchDomainAutoTuneOptionsElMaintenanceScheduleElDurationEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -866,10 +949,10 @@ impl ToListMappable for OpensearchDomainAutoTuneOptionsElMaintenanceScheduleElDu
 }
 
 pub struct BuildOpensearchDomainAutoTuneOptionsElMaintenanceScheduleElDurationEl {
-    #[doc= ""]
-    pub unit: PrimField<String>,
-    #[doc= ""]
-    pub value: PrimField<f64>,
+    #[doc = ""]
+    pub unit: terrars::PrimField<std::string::String>,
+    #[doc = ""]
+    pub value: terrars::PrimField<f64>,
 }
 
 impl BuildOpensearchDomainAutoTuneOptionsElMaintenanceScheduleElDurationEl {
@@ -882,12 +965,15 @@ impl BuildOpensearchDomainAutoTuneOptionsElMaintenanceScheduleElDurationEl {
 }
 
 pub struct OpensearchDomainAutoTuneOptionsElMaintenanceScheduleElDurationElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for OpensearchDomainAutoTuneOptionsElMaintenanceScheduleElDurationElRef {
-    fn new(shared: StackShared, base: String) -> OpensearchDomainAutoTuneOptionsElMaintenanceScheduleElDurationElRef {
+impl terrars::Ref for OpensearchDomainAutoTuneOptionsElMaintenanceScheduleElDurationElRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> OpensearchDomainAutoTuneOptionsElMaintenanceScheduleElDurationElRef {
         OpensearchDomainAutoTuneOptionsElMaintenanceScheduleElDurationElRef {
             shared: shared,
             base: base.to_string(),
@@ -896,58 +982,67 @@ impl Ref for OpensearchDomainAutoTuneOptionsElMaintenanceScheduleElDurationElRef
 }
 
 impl OpensearchDomainAutoTuneOptionsElMaintenanceScheduleElDurationElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `unit` after provisioning.\n"]
-    pub fn unit(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.unit", self.base))
+    #[doc = "Get a reference to the value of field `unit` after provisioning.\n"]
+    pub fn unit(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.unit", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `value` after provisioning.\n"]
-    pub fn value(&self) -> PrimExpr<f64> {
-        PrimExpr::new(self.shared().clone(), format!("{}.value", self.base))
+    #[doc = "Get a reference to the value of field `value` after provisioning.\n"]
+    pub fn value(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.value", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
 struct OpensearchDomainAutoTuneOptionsElMaintenanceScheduleElDynamic {
-    duration: Option<DynamicBlock<OpensearchDomainAutoTuneOptionsElMaintenanceScheduleElDurationEl>>,
+    duration: std
+    ::option
+    ::Option<terrars::DynamicBlock<OpensearchDomainAutoTuneOptionsElMaintenanceScheduleElDurationEl>>,
 }
 
 #[derive(Serialize)]
 pub struct OpensearchDomainAutoTuneOptionsElMaintenanceScheduleEl {
-    cron_expression_for_recurrence: PrimField<String>,
-    start_at: PrimField<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    duration: Option<Vec<OpensearchDomainAutoTuneOptionsElMaintenanceScheduleElDurationEl>>,
+    cron_expression_for_recurrence: terrars::PrimField<std::string::String>,
+    start_at: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    duration: std::option::Option<std::vec::Vec<OpensearchDomainAutoTuneOptionsElMaintenanceScheduleElDurationEl>>,
     dynamic: OpensearchDomainAutoTuneOptionsElMaintenanceScheduleElDynamic,
 }
 
 impl OpensearchDomainAutoTuneOptionsElMaintenanceScheduleEl {
-    #[doc= "Set the field `duration`.\n"]
+    #[doc = "Set the field `duration`.\n"]
     pub fn set_duration(
         mut self,
-        v: impl Into<BlockAssignable<OpensearchDomainAutoTuneOptionsElMaintenanceScheduleElDurationEl>>,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<
+                        terrars::BlockAssignable<OpensearchDomainAutoTuneOptionsElMaintenanceScheduleElDurationEl>,
+                    >,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.duration = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.duration = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.duration = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.duration = std::option::Option::Some(d);
             },
         }
         self
     }
 }
 
-impl ToListMappable for OpensearchDomainAutoTuneOptionsElMaintenanceScheduleEl {
-    type O = BlockAssignable<OpensearchDomainAutoTuneOptionsElMaintenanceScheduleEl>;
+impl terrars::ToListMappable for OpensearchDomainAutoTuneOptionsElMaintenanceScheduleEl {
+    type O = terrars::BlockAssignable<OpensearchDomainAutoTuneOptionsElMaintenanceScheduleEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -956,10 +1051,10 @@ impl ToListMappable for OpensearchDomainAutoTuneOptionsElMaintenanceScheduleEl {
 }
 
 pub struct BuildOpensearchDomainAutoTuneOptionsElMaintenanceScheduleEl {
-    #[doc= ""]
-    pub cron_expression_for_recurrence: PrimField<String>,
-    #[doc= ""]
-    pub start_at: PrimField<String>,
+    #[doc = ""]
+    pub cron_expression_for_recurrence: terrars::PrimField<std::string::String>,
+    #[doc = ""]
+    pub start_at: terrars::PrimField<std::string::String>,
 }
 
 impl BuildOpensearchDomainAutoTuneOptionsElMaintenanceScheduleEl {
@@ -968,18 +1063,21 @@ impl BuildOpensearchDomainAutoTuneOptionsElMaintenanceScheduleEl {
             cron_expression_for_recurrence: self.cron_expression_for_recurrence,
             start_at: self.start_at,
             duration: core::default::Default::default(),
-            dynamic: Default::default(),
+            dynamic: core::default::Default::default(),
         }
     }
 }
 
 pub struct OpensearchDomainAutoTuneOptionsElMaintenanceScheduleElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for OpensearchDomainAutoTuneOptionsElMaintenanceScheduleElRef {
-    fn new(shared: StackShared, base: String) -> OpensearchDomainAutoTuneOptionsElMaintenanceScheduleElRef {
+impl terrars::Ref for OpensearchDomainAutoTuneOptionsElMaintenanceScheduleElRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> OpensearchDomainAutoTuneOptionsElMaintenanceScheduleElRef {
         OpensearchDomainAutoTuneOptionsElMaintenanceScheduleElRef {
             shared: shared,
             base: base.to_string(),
@@ -988,70 +1086,75 @@ impl Ref for OpensearchDomainAutoTuneOptionsElMaintenanceScheduleElRef {
 }
 
 impl OpensearchDomainAutoTuneOptionsElMaintenanceScheduleElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `cron_expression_for_recurrence` after provisioning.\n"]
-    pub fn cron_expression_for_recurrence(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.cron_expression_for_recurrence", self.base))
+    #[doc = "Get a reference to the value of field `cron_expression_for_recurrence` after provisioning.\n"]
+    pub fn cron_expression_for_recurrence(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.cron_expression_for_recurrence", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `start_at` after provisioning.\n"]
-    pub fn start_at(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.start_at", self.base))
+    #[doc = "Get a reference to the value of field `start_at` after provisioning.\n"]
+    pub fn start_at(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.start_at", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `duration` after provisioning.\n"]
-    pub fn duration(&self) -> ListRef<OpensearchDomainAutoTuneOptionsElMaintenanceScheduleElDurationElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.duration", self.base))
+    #[doc = "Get a reference to the value of field `duration` after provisioning.\n"]
+    pub fn duration(&self) -> terrars::ListRef<OpensearchDomainAutoTuneOptionsElMaintenanceScheduleElDurationElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.duration", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
 struct OpensearchDomainAutoTuneOptionsElDynamic {
-    maintenance_schedule: Option<DynamicBlock<OpensearchDomainAutoTuneOptionsElMaintenanceScheduleEl>>,
+    maintenance_schedule: std
+    ::option
+    ::Option<terrars::DynamicBlock<OpensearchDomainAutoTuneOptionsElMaintenanceScheduleEl>>,
 }
 
 #[derive(Serialize)]
 pub struct OpensearchDomainAutoTuneOptionsEl {
-    desired_state: PrimField<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    rollback_on_disable: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    maintenance_schedule: Option<Vec<OpensearchDomainAutoTuneOptionsElMaintenanceScheduleEl>>,
+    desired_state: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    rollback_on_disable: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    maintenance_schedule: std::option::Option<std::vec::Vec<OpensearchDomainAutoTuneOptionsElMaintenanceScheduleEl>>,
     dynamic: OpensearchDomainAutoTuneOptionsElDynamic,
 }
 
 impl OpensearchDomainAutoTuneOptionsEl {
-    #[doc= "Set the field `rollback_on_disable`.\n"]
-    pub fn set_rollback_on_disable(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.rollback_on_disable = Some(v.into());
+    #[doc = "Set the field `rollback_on_disable`.\n"]
+    pub fn set_rollback_on_disable(
+        mut self,
+        v: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.rollback_on_disable = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `maintenance_schedule`.\n"]
+    #[doc = "Set the field `maintenance_schedule`.\n"]
     pub fn set_maintenance_schedule(
         mut self,
-        v: impl Into<BlockAssignable<OpensearchDomainAutoTuneOptionsElMaintenanceScheduleEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<OpensearchDomainAutoTuneOptionsElMaintenanceScheduleEl>>,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.maintenance_schedule = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.maintenance_schedule = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.maintenance_schedule = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.maintenance_schedule = std::option::Option::Some(d);
             },
         }
         self
     }
 }
 
-impl ToListMappable for OpensearchDomainAutoTuneOptionsEl {
-    type O = BlockAssignable<OpensearchDomainAutoTuneOptionsEl>;
+impl terrars::ToListMappable for OpensearchDomainAutoTuneOptionsEl {
+    type O = terrars::BlockAssignable<OpensearchDomainAutoTuneOptionsEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -1060,8 +1163,8 @@ impl ToListMappable for OpensearchDomainAutoTuneOptionsEl {
 }
 
 pub struct BuildOpensearchDomainAutoTuneOptionsEl {
-    #[doc= ""]
-    pub desired_state: PrimField<String>,
+    #[doc = ""]
+    pub desired_state: terrars::PrimField<std::string::String>,
 }
 
 impl BuildOpensearchDomainAutoTuneOptionsEl {
@@ -1070,18 +1173,18 @@ impl BuildOpensearchDomainAutoTuneOptionsEl {
             desired_state: self.desired_state,
             rollback_on_disable: core::default::Default::default(),
             maintenance_schedule: core::default::Default::default(),
-            dynamic: Default::default(),
+            dynamic: core::default::Default::default(),
         }
     }
 }
 
 pub struct OpensearchDomainAutoTuneOptionsElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for OpensearchDomainAutoTuneOptionsElRef {
-    fn new(shared: StackShared, base: String) -> OpensearchDomainAutoTuneOptionsElRef {
+impl terrars::Ref for OpensearchDomainAutoTuneOptionsElRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> OpensearchDomainAutoTuneOptionsElRef {
         OpensearchDomainAutoTuneOptionsElRef {
             shared: shared,
             base: base.to_string(),
@@ -1090,40 +1193,40 @@ impl Ref for OpensearchDomainAutoTuneOptionsElRef {
 }
 
 impl OpensearchDomainAutoTuneOptionsElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `desired_state` after provisioning.\n"]
-    pub fn desired_state(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.desired_state", self.base))
+    #[doc = "Get a reference to the value of field `desired_state` after provisioning.\n"]
+    pub fn desired_state(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.desired_state", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `rollback_on_disable` after provisioning.\n"]
-    pub fn rollback_on_disable(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.rollback_on_disable", self.base))
+    #[doc = "Get a reference to the value of field `rollback_on_disable` after provisioning.\n"]
+    pub fn rollback_on_disable(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.rollback_on_disable", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct OpensearchDomainClusterConfigElColdStorageOptionsEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    enabled: Option<PrimField<bool>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    enabled: std::option::Option<terrars::PrimField<bool>>,
 }
 
 impl OpensearchDomainClusterConfigElColdStorageOptionsEl {
-    #[doc= "Set the field `enabled`.\n"]
-    pub fn set_enabled(mut self, v: impl Into<PrimField<bool>>) -> Self {
-        self.enabled = Some(v.into());
+    #[doc = "Set the field `enabled`.\n"]
+    pub fn set_enabled(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
+        self.enabled = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl ToListMappable for OpensearchDomainClusterConfigElColdStorageOptionsEl {
-    type O = BlockAssignable<OpensearchDomainClusterConfigElColdStorageOptionsEl>;
+impl terrars::ToListMappable for OpensearchDomainClusterConfigElColdStorageOptionsEl {
+    type O = terrars::BlockAssignable<OpensearchDomainClusterConfigElColdStorageOptionsEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -1140,12 +1243,15 @@ impl BuildOpensearchDomainClusterConfigElColdStorageOptionsEl {
 }
 
 pub struct OpensearchDomainClusterConfigElColdStorageOptionsElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for OpensearchDomainClusterConfigElColdStorageOptionsElRef {
-    fn new(shared: StackShared, base: String) -> OpensearchDomainClusterConfigElColdStorageOptionsElRef {
+impl terrars::Ref for OpensearchDomainClusterConfigElColdStorageOptionsElRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> OpensearchDomainClusterConfigElColdStorageOptionsElRef {
         OpensearchDomainClusterConfigElColdStorageOptionsElRef {
             shared: shared,
             base: base.to_string(),
@@ -1154,35 +1260,35 @@ impl Ref for OpensearchDomainClusterConfigElColdStorageOptionsElRef {
 }
 
 impl OpensearchDomainClusterConfigElColdStorageOptionsElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `enabled` after provisioning.\n"]
-    pub fn enabled(&self) -> PrimExpr<bool> {
-        PrimExpr::new(self.shared().clone(), format!("{}.enabled", self.base))
+    #[doc = "Get a reference to the value of field `enabled` after provisioning.\n"]
+    pub fn enabled(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.enabled", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct OpensearchDomainClusterConfigElZoneAwarenessConfigEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    availability_zone_count: Option<PrimField<f64>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    availability_zone_count: std::option::Option<terrars::PrimField<f64>>,
 }
 
 impl OpensearchDomainClusterConfigElZoneAwarenessConfigEl {
-    #[doc= "Set the field `availability_zone_count`.\n"]
-    pub fn set_availability_zone_count(mut self, v: impl Into<PrimField<f64>>) -> Self {
-        self.availability_zone_count = Some(v.into());
+    #[doc = "Set the field `availability_zone_count`.\n"]
+    pub fn set_availability_zone_count(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.availability_zone_count = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl ToListMappable for OpensearchDomainClusterConfigElZoneAwarenessConfigEl {
-    type O = BlockAssignable<OpensearchDomainClusterConfigElZoneAwarenessConfigEl>;
+impl terrars::ToListMappable for OpensearchDomainClusterConfigElZoneAwarenessConfigEl {
+    type O = terrars::BlockAssignable<OpensearchDomainClusterConfigElZoneAwarenessConfigEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -1201,12 +1307,15 @@ impl BuildOpensearchDomainClusterConfigElZoneAwarenessConfigEl {
 }
 
 pub struct OpensearchDomainClusterConfigElZoneAwarenessConfigElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for OpensearchDomainClusterConfigElZoneAwarenessConfigElRef {
-    fn new(shared: StackShared, base: String) -> OpensearchDomainClusterConfigElZoneAwarenessConfigElRef {
+impl terrars::Ref for OpensearchDomainClusterConfigElZoneAwarenessConfigElRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> OpensearchDomainClusterConfigElZoneAwarenessConfigElRef {
         OpensearchDomainClusterConfigElZoneAwarenessConfigElRef {
             shared: shared,
             base: base.to_string(),
@@ -1215,142 +1324,149 @@ impl Ref for OpensearchDomainClusterConfigElZoneAwarenessConfigElRef {
 }
 
 impl OpensearchDomainClusterConfigElZoneAwarenessConfigElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `availability_zone_count` after provisioning.\n"]
-    pub fn availability_zone_count(&self) -> PrimExpr<f64> {
-        PrimExpr::new(self.shared().clone(), format!("{}.availability_zone_count", self.base))
+    #[doc = "Get a reference to the value of field `availability_zone_count` after provisioning.\n"]
+    pub fn availability_zone_count(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.availability_zone_count", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
 struct OpensearchDomainClusterConfigElDynamic {
-    cold_storage_options: Option<DynamicBlock<OpensearchDomainClusterConfigElColdStorageOptionsEl>>,
-    zone_awareness_config: Option<DynamicBlock<OpensearchDomainClusterConfigElZoneAwarenessConfigEl>>,
+    cold_storage_options: std
+    ::option
+    ::Option<terrars::DynamicBlock<OpensearchDomainClusterConfigElColdStorageOptionsEl>>,
+    zone_awareness_config: std
+    ::option
+    ::Option<terrars::DynamicBlock<OpensearchDomainClusterConfigElZoneAwarenessConfigEl>>,
 }
 
 #[derive(Serialize)]
 pub struct OpensearchDomainClusterConfigEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    dedicated_master_count: Option<PrimField<f64>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    dedicated_master_enabled: Option<PrimField<bool>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    dedicated_master_type: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    instance_count: Option<PrimField<f64>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    instance_type: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    warm_count: Option<PrimField<f64>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    warm_enabled: Option<PrimField<bool>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    warm_type: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    zone_awareness_enabled: Option<PrimField<bool>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    cold_storage_options: Option<Vec<OpensearchDomainClusterConfigElColdStorageOptionsEl>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    zone_awareness_config: Option<Vec<OpensearchDomainClusterConfigElZoneAwarenessConfigEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    dedicated_master_count: std::option::Option<terrars::PrimField<f64>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    dedicated_master_enabled: std::option::Option<terrars::PrimField<bool>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    dedicated_master_type: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    instance_count: std::option::Option<terrars::PrimField<f64>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    instance_type: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    warm_count: std::option::Option<terrars::PrimField<f64>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    warm_enabled: std::option::Option<terrars::PrimField<bool>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    warm_type: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    zone_awareness_enabled: std::option::Option<terrars::PrimField<bool>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    cold_storage_options: std::option::Option<std::vec::Vec<OpensearchDomainClusterConfigElColdStorageOptionsEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    zone_awareness_config: std::option::Option<std::vec::Vec<OpensearchDomainClusterConfigElZoneAwarenessConfigEl>>,
     dynamic: OpensearchDomainClusterConfigElDynamic,
 }
 
 impl OpensearchDomainClusterConfigEl {
-    #[doc= "Set the field `dedicated_master_count`.\n"]
-    pub fn set_dedicated_master_count(mut self, v: impl Into<PrimField<f64>>) -> Self {
-        self.dedicated_master_count = Some(v.into());
+    #[doc = "Set the field `dedicated_master_count`.\n"]
+    pub fn set_dedicated_master_count(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.dedicated_master_count = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `dedicated_master_enabled`.\n"]
-    pub fn set_dedicated_master_enabled(mut self, v: impl Into<PrimField<bool>>) -> Self {
-        self.dedicated_master_enabled = Some(v.into());
+    #[doc = "Set the field `dedicated_master_enabled`.\n"]
+    pub fn set_dedicated_master_enabled(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
+        self.dedicated_master_enabled = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `dedicated_master_type`.\n"]
-    pub fn set_dedicated_master_type(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.dedicated_master_type = Some(v.into());
+    #[doc = "Set the field `dedicated_master_type`.\n"]
+    pub fn set_dedicated_master_type(
+        mut self,
+        v: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.dedicated_master_type = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `instance_count`.\n"]
-    pub fn set_instance_count(mut self, v: impl Into<PrimField<f64>>) -> Self {
-        self.instance_count = Some(v.into());
+    #[doc = "Set the field `instance_count`.\n"]
+    pub fn set_instance_count(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.instance_count = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `instance_type`.\n"]
-    pub fn set_instance_type(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.instance_type = Some(v.into());
+    #[doc = "Set the field `instance_type`.\n"]
+    pub fn set_instance_type(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.instance_type = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `warm_count`.\n"]
-    pub fn set_warm_count(mut self, v: impl Into<PrimField<f64>>) -> Self {
-        self.warm_count = Some(v.into());
+    #[doc = "Set the field `warm_count`.\n"]
+    pub fn set_warm_count(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.warm_count = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `warm_enabled`.\n"]
-    pub fn set_warm_enabled(mut self, v: impl Into<PrimField<bool>>) -> Self {
-        self.warm_enabled = Some(v.into());
+    #[doc = "Set the field `warm_enabled`.\n"]
+    pub fn set_warm_enabled(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
+        self.warm_enabled = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `warm_type`.\n"]
-    pub fn set_warm_type(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.warm_type = Some(v.into());
+    #[doc = "Set the field `warm_type`.\n"]
+    pub fn set_warm_type(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.warm_type = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `zone_awareness_enabled`.\n"]
-    pub fn set_zone_awareness_enabled(mut self, v: impl Into<PrimField<bool>>) -> Self {
-        self.zone_awareness_enabled = Some(v.into());
+    #[doc = "Set the field `zone_awareness_enabled`.\n"]
+    pub fn set_zone_awareness_enabled(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
+        self.zone_awareness_enabled = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `cold_storage_options`.\n"]
+    #[doc = "Set the field `cold_storage_options`.\n"]
     pub fn set_cold_storage_options(
         mut self,
-        v: impl Into<BlockAssignable<OpensearchDomainClusterConfigElColdStorageOptionsEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<OpensearchDomainClusterConfigElColdStorageOptionsEl>>,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.cold_storage_options = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.cold_storage_options = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.cold_storage_options = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.cold_storage_options = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Set the field `zone_awareness_config`.\n"]
+    #[doc = "Set the field `zone_awareness_config`.\n"]
     pub fn set_zone_awareness_config(
         mut self,
-        v: impl Into<BlockAssignable<OpensearchDomainClusterConfigElZoneAwarenessConfigEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<OpensearchDomainClusterConfigElZoneAwarenessConfigEl>>,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.zone_awareness_config = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.zone_awareness_config = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.zone_awareness_config = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.zone_awareness_config = std::option::Option::Some(d);
             },
         }
         self
     }
 }
 
-impl ToListMappable for OpensearchDomainClusterConfigEl {
-    type O = BlockAssignable<OpensearchDomainClusterConfigEl>;
+impl terrars::ToListMappable for OpensearchDomainClusterConfigEl {
+    type O = terrars::BlockAssignable<OpensearchDomainClusterConfigEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -1374,18 +1490,18 @@ impl BuildOpensearchDomainClusterConfigEl {
             zone_awareness_enabled: core::default::Default::default(),
             cold_storage_options: core::default::Default::default(),
             zone_awareness_config: core::default::Default::default(),
-            dynamic: Default::default(),
+            dynamic: core::default::Default::default(),
         }
     }
 }
 
 pub struct OpensearchDomainClusterConfigElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for OpensearchDomainClusterConfigElRef {
-    fn new(shared: StackShared, base: String) -> OpensearchDomainClusterConfigElRef {
+impl terrars::Ref for OpensearchDomainClusterConfigElRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> OpensearchDomainClusterConfigElRef {
         OpensearchDomainClusterConfigElRef {
             shared: shared,
             base: base.to_string(),
@@ -1394,88 +1510,88 @@ impl Ref for OpensearchDomainClusterConfigElRef {
 }
 
 impl OpensearchDomainClusterConfigElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `dedicated_master_count` after provisioning.\n"]
-    pub fn dedicated_master_count(&self) -> PrimExpr<f64> {
-        PrimExpr::new(self.shared().clone(), format!("{}.dedicated_master_count", self.base))
+    #[doc = "Get a reference to the value of field `dedicated_master_count` after provisioning.\n"]
+    pub fn dedicated_master_count(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.dedicated_master_count", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `dedicated_master_enabled` after provisioning.\n"]
-    pub fn dedicated_master_enabled(&self) -> PrimExpr<bool> {
-        PrimExpr::new(self.shared().clone(), format!("{}.dedicated_master_enabled", self.base))
+    #[doc = "Get a reference to the value of field `dedicated_master_enabled` after provisioning.\n"]
+    pub fn dedicated_master_enabled(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.dedicated_master_enabled", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `dedicated_master_type` after provisioning.\n"]
-    pub fn dedicated_master_type(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.dedicated_master_type", self.base))
+    #[doc = "Get a reference to the value of field `dedicated_master_type` after provisioning.\n"]
+    pub fn dedicated_master_type(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.dedicated_master_type", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `instance_count` after provisioning.\n"]
-    pub fn instance_count(&self) -> PrimExpr<f64> {
-        PrimExpr::new(self.shared().clone(), format!("{}.instance_count", self.base))
+    #[doc = "Get a reference to the value of field `instance_count` after provisioning.\n"]
+    pub fn instance_count(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.instance_count", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `instance_type` after provisioning.\n"]
-    pub fn instance_type(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.instance_type", self.base))
+    #[doc = "Get a reference to the value of field `instance_type` after provisioning.\n"]
+    pub fn instance_type(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.instance_type", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `warm_count` after provisioning.\n"]
-    pub fn warm_count(&self) -> PrimExpr<f64> {
-        PrimExpr::new(self.shared().clone(), format!("{}.warm_count", self.base))
+    #[doc = "Get a reference to the value of field `warm_count` after provisioning.\n"]
+    pub fn warm_count(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.warm_count", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `warm_enabled` after provisioning.\n"]
-    pub fn warm_enabled(&self) -> PrimExpr<bool> {
-        PrimExpr::new(self.shared().clone(), format!("{}.warm_enabled", self.base))
+    #[doc = "Get a reference to the value of field `warm_enabled` after provisioning.\n"]
+    pub fn warm_enabled(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.warm_enabled", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `warm_type` after provisioning.\n"]
-    pub fn warm_type(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.warm_type", self.base))
+    #[doc = "Get a reference to the value of field `warm_type` after provisioning.\n"]
+    pub fn warm_type(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.warm_type", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `zone_awareness_enabled` after provisioning.\n"]
-    pub fn zone_awareness_enabled(&self) -> PrimExpr<bool> {
-        PrimExpr::new(self.shared().clone(), format!("{}.zone_awareness_enabled", self.base))
+    #[doc = "Get a reference to the value of field `zone_awareness_enabled` after provisioning.\n"]
+    pub fn zone_awareness_enabled(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.zone_awareness_enabled", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `cold_storage_options` after provisioning.\n"]
-    pub fn cold_storage_options(&self) -> ListRef<OpensearchDomainClusterConfigElColdStorageOptionsElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.cold_storage_options", self.base))
+    #[doc = "Get a reference to the value of field `cold_storage_options` after provisioning.\n"]
+    pub fn cold_storage_options(&self) -> terrars::ListRef<OpensearchDomainClusterConfigElColdStorageOptionsElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.cold_storage_options", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `zone_awareness_config` after provisioning.\n"]
-    pub fn zone_awareness_config(&self) -> ListRef<OpensearchDomainClusterConfigElZoneAwarenessConfigElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.zone_awareness_config", self.base))
+    #[doc = "Get a reference to the value of field `zone_awareness_config` after provisioning.\n"]
+    pub fn zone_awareness_config(&self) -> terrars::ListRef<OpensearchDomainClusterConfigElZoneAwarenessConfigElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.zone_awareness_config", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct OpensearchDomainCognitoOptionsEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    enabled: Option<PrimField<bool>>,
-    identity_pool_id: PrimField<String>,
-    role_arn: PrimField<String>,
-    user_pool_id: PrimField<String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    enabled: std::option::Option<terrars::PrimField<bool>>,
+    identity_pool_id: terrars::PrimField<std::string::String>,
+    role_arn: terrars::PrimField<std::string::String>,
+    user_pool_id: terrars::PrimField<std::string::String>,
 }
 
 impl OpensearchDomainCognitoOptionsEl {
-    #[doc= "Set the field `enabled`.\n"]
-    pub fn set_enabled(mut self, v: impl Into<PrimField<bool>>) -> Self {
-        self.enabled = Some(v.into());
+    #[doc = "Set the field `enabled`.\n"]
+    pub fn set_enabled(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
+        self.enabled = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl ToListMappable for OpensearchDomainCognitoOptionsEl {
-    type O = BlockAssignable<OpensearchDomainCognitoOptionsEl>;
+impl terrars::ToListMappable for OpensearchDomainCognitoOptionsEl {
+    type O = terrars::BlockAssignable<OpensearchDomainCognitoOptionsEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -1484,12 +1600,12 @@ impl ToListMappable for OpensearchDomainCognitoOptionsEl {
 }
 
 pub struct BuildOpensearchDomainCognitoOptionsEl {
-    #[doc= ""]
-    pub identity_pool_id: PrimField<String>,
-    #[doc= ""]
-    pub role_arn: PrimField<String>,
-    #[doc= ""]
-    pub user_pool_id: PrimField<String>,
+    #[doc = ""]
+    pub identity_pool_id: terrars::PrimField<std::string::String>,
+    #[doc = ""]
+    pub role_arn: terrars::PrimField<std::string::String>,
+    #[doc = ""]
+    pub user_pool_id: terrars::PrimField<std::string::String>,
 }
 
 impl BuildOpensearchDomainCognitoOptionsEl {
@@ -1504,12 +1620,12 @@ impl BuildOpensearchDomainCognitoOptionsEl {
 }
 
 pub struct OpensearchDomainCognitoOptionsElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for OpensearchDomainCognitoOptionsElRef {
-    fn new(shared: StackShared, base: String) -> OpensearchDomainCognitoOptionsElRef {
+impl terrars::Ref for OpensearchDomainCognitoOptionsElRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> OpensearchDomainCognitoOptionsElRef {
         OpensearchDomainCognitoOptionsElRef {
             shared: shared,
             base: base.to_string(),
@@ -1518,82 +1634,88 @@ impl Ref for OpensearchDomainCognitoOptionsElRef {
 }
 
 impl OpensearchDomainCognitoOptionsElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `enabled` after provisioning.\n"]
-    pub fn enabled(&self) -> PrimExpr<bool> {
-        PrimExpr::new(self.shared().clone(), format!("{}.enabled", self.base))
+    #[doc = "Get a reference to the value of field `enabled` after provisioning.\n"]
+    pub fn enabled(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.enabled", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `identity_pool_id` after provisioning.\n"]
-    pub fn identity_pool_id(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.identity_pool_id", self.base))
+    #[doc = "Get a reference to the value of field `identity_pool_id` after provisioning.\n"]
+    pub fn identity_pool_id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.identity_pool_id", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `role_arn` after provisioning.\n"]
-    pub fn role_arn(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.role_arn", self.base))
+    #[doc = "Get a reference to the value of field `role_arn` after provisioning.\n"]
+    pub fn role_arn(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.role_arn", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `user_pool_id` after provisioning.\n"]
-    pub fn user_pool_id(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.user_pool_id", self.base))
+    #[doc = "Get a reference to the value of field `user_pool_id` after provisioning.\n"]
+    pub fn user_pool_id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.user_pool_id", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct OpensearchDomainDomainEndpointOptionsEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    custom_endpoint: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    custom_endpoint_certificate_arn: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    custom_endpoint_enabled: Option<PrimField<bool>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    enforce_https: Option<PrimField<bool>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    tls_security_policy: Option<PrimField<String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    custom_endpoint: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    custom_endpoint_certificate_arn: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    custom_endpoint_enabled: std::option::Option<terrars::PrimField<bool>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    enforce_https: std::option::Option<terrars::PrimField<bool>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    tls_security_policy: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
 impl OpensearchDomainDomainEndpointOptionsEl {
-    #[doc= "Set the field `custom_endpoint`.\n"]
-    pub fn set_custom_endpoint(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.custom_endpoint = Some(v.into());
+    #[doc = "Set the field `custom_endpoint`.\n"]
+    pub fn set_custom_endpoint(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.custom_endpoint = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `custom_endpoint_certificate_arn`.\n"]
-    pub fn set_custom_endpoint_certificate_arn(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.custom_endpoint_certificate_arn = Some(v.into());
+    #[doc = "Set the field `custom_endpoint_certificate_arn`.\n"]
+    pub fn set_custom_endpoint_certificate_arn(
+        mut self,
+        v: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.custom_endpoint_certificate_arn = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `custom_endpoint_enabled`.\n"]
-    pub fn set_custom_endpoint_enabled(mut self, v: impl Into<PrimField<bool>>) -> Self {
-        self.custom_endpoint_enabled = Some(v.into());
+    #[doc = "Set the field `custom_endpoint_enabled`.\n"]
+    pub fn set_custom_endpoint_enabled(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
+        self.custom_endpoint_enabled = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `enforce_https`.\n"]
-    pub fn set_enforce_https(mut self, v: impl Into<PrimField<bool>>) -> Self {
-        self.enforce_https = Some(v.into());
+    #[doc = "Set the field `enforce_https`.\n"]
+    pub fn set_enforce_https(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
+        self.enforce_https = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `tls_security_policy`.\n"]
-    pub fn set_tls_security_policy(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.tls_security_policy = Some(v.into());
+    #[doc = "Set the field `tls_security_policy`.\n"]
+    pub fn set_tls_security_policy(
+        mut self,
+        v: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.tls_security_policy = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl ToListMappable for OpensearchDomainDomainEndpointOptionsEl {
-    type O = BlockAssignable<OpensearchDomainDomainEndpointOptionsEl>;
+impl terrars::ToListMappable for OpensearchDomainDomainEndpointOptionsEl {
+    type O = terrars::BlockAssignable<OpensearchDomainDomainEndpointOptionsEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -1616,12 +1738,12 @@ impl BuildOpensearchDomainDomainEndpointOptionsEl {
 }
 
 pub struct OpensearchDomainDomainEndpointOptionsElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for OpensearchDomainDomainEndpointOptionsElRef {
-    fn new(shared: StackShared, base: String) -> OpensearchDomainDomainEndpointOptionsElRef {
+impl terrars::Ref for OpensearchDomainDomainEndpointOptionsElRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> OpensearchDomainDomainEndpointOptionsElRef {
         OpensearchDomainDomainEndpointOptionsElRef {
             shared: shared,
             base: base.to_string(),
@@ -1630,80 +1752,80 @@ impl Ref for OpensearchDomainDomainEndpointOptionsElRef {
 }
 
 impl OpensearchDomainDomainEndpointOptionsElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `custom_endpoint` after provisioning.\n"]
-    pub fn custom_endpoint(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.custom_endpoint", self.base))
+    #[doc = "Get a reference to the value of field `custom_endpoint` after provisioning.\n"]
+    pub fn custom_endpoint(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.custom_endpoint", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `custom_endpoint_certificate_arn` after provisioning.\n"]
-    pub fn custom_endpoint_certificate_arn(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.custom_endpoint_certificate_arn", self.base))
+    #[doc = "Get a reference to the value of field `custom_endpoint_certificate_arn` after provisioning.\n"]
+    pub fn custom_endpoint_certificate_arn(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.custom_endpoint_certificate_arn", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `custom_endpoint_enabled` after provisioning.\n"]
-    pub fn custom_endpoint_enabled(&self) -> PrimExpr<bool> {
-        PrimExpr::new(self.shared().clone(), format!("{}.custom_endpoint_enabled", self.base))
+    #[doc = "Get a reference to the value of field `custom_endpoint_enabled` after provisioning.\n"]
+    pub fn custom_endpoint_enabled(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.custom_endpoint_enabled", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `enforce_https` after provisioning.\n"]
-    pub fn enforce_https(&self) -> PrimExpr<bool> {
-        PrimExpr::new(self.shared().clone(), format!("{}.enforce_https", self.base))
+    #[doc = "Get a reference to the value of field `enforce_https` after provisioning.\n"]
+    pub fn enforce_https(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.enforce_https", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `tls_security_policy` after provisioning.\n"]
-    pub fn tls_security_policy(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.tls_security_policy", self.base))
+    #[doc = "Get a reference to the value of field `tls_security_policy` after provisioning.\n"]
+    pub fn tls_security_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.tls_security_policy", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct OpensearchDomainEbsOptionsEl {
-    ebs_enabled: PrimField<bool>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    iops: Option<PrimField<f64>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    throughput: Option<PrimField<f64>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    volume_size: Option<PrimField<f64>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    volume_type: Option<PrimField<String>>,
+    ebs_enabled: terrars::PrimField<bool>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    iops: std::option::Option<terrars::PrimField<f64>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    throughput: std::option::Option<terrars::PrimField<f64>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    volume_size: std::option::Option<terrars::PrimField<f64>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    volume_type: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
 impl OpensearchDomainEbsOptionsEl {
-    #[doc= "Set the field `iops`.\n"]
-    pub fn set_iops(mut self, v: impl Into<PrimField<f64>>) -> Self {
-        self.iops = Some(v.into());
+    #[doc = "Set the field `iops`.\n"]
+    pub fn set_iops(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.iops = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `throughput`.\n"]
-    pub fn set_throughput(mut self, v: impl Into<PrimField<f64>>) -> Self {
-        self.throughput = Some(v.into());
+    #[doc = "Set the field `throughput`.\n"]
+    pub fn set_throughput(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.throughput = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `volume_size`.\n"]
-    pub fn set_volume_size(mut self, v: impl Into<PrimField<f64>>) -> Self {
-        self.volume_size = Some(v.into());
+    #[doc = "Set the field `volume_size`.\n"]
+    pub fn set_volume_size(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.volume_size = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `volume_type`.\n"]
-    pub fn set_volume_type(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.volume_type = Some(v.into());
+    #[doc = "Set the field `volume_type`.\n"]
+    pub fn set_volume_type(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.volume_type = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl ToListMappable for OpensearchDomainEbsOptionsEl {
-    type O = BlockAssignable<OpensearchDomainEbsOptionsEl>;
+impl terrars::ToListMappable for OpensearchDomainEbsOptionsEl {
+    type O = terrars::BlockAssignable<OpensearchDomainEbsOptionsEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -1712,8 +1834,8 @@ impl ToListMappable for OpensearchDomainEbsOptionsEl {
 }
 
 pub struct BuildOpensearchDomainEbsOptionsEl {
-    #[doc= ""]
-    pub ebs_enabled: PrimField<bool>,
+    #[doc = ""]
+    pub ebs_enabled: terrars::PrimField<bool>,
 }
 
 impl BuildOpensearchDomainEbsOptionsEl {
@@ -1729,12 +1851,12 @@ impl BuildOpensearchDomainEbsOptionsEl {
 }
 
 pub struct OpensearchDomainEbsOptionsElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for OpensearchDomainEbsOptionsElRef {
-    fn new(shared: StackShared, base: String) -> OpensearchDomainEbsOptionsElRef {
+impl terrars::Ref for OpensearchDomainEbsOptionsElRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> OpensearchDomainEbsOptionsElRef {
         OpensearchDomainEbsOptionsElRef {
             shared: shared,
             base: base.to_string(),
@@ -1743,56 +1865,56 @@ impl Ref for OpensearchDomainEbsOptionsElRef {
 }
 
 impl OpensearchDomainEbsOptionsElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `ebs_enabled` after provisioning.\n"]
-    pub fn ebs_enabled(&self) -> PrimExpr<bool> {
-        PrimExpr::new(self.shared().clone(), format!("{}.ebs_enabled", self.base))
+    #[doc = "Get a reference to the value of field `ebs_enabled` after provisioning.\n"]
+    pub fn ebs_enabled(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.ebs_enabled", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `iops` after provisioning.\n"]
-    pub fn iops(&self) -> PrimExpr<f64> {
-        PrimExpr::new(self.shared().clone(), format!("{}.iops", self.base))
+    #[doc = "Get a reference to the value of field `iops` after provisioning.\n"]
+    pub fn iops(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.iops", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `throughput` after provisioning.\n"]
-    pub fn throughput(&self) -> PrimExpr<f64> {
-        PrimExpr::new(self.shared().clone(), format!("{}.throughput", self.base))
+    #[doc = "Get a reference to the value of field `throughput` after provisioning.\n"]
+    pub fn throughput(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.throughput", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `volume_size` after provisioning.\n"]
-    pub fn volume_size(&self) -> PrimExpr<f64> {
-        PrimExpr::new(self.shared().clone(), format!("{}.volume_size", self.base))
+    #[doc = "Get a reference to the value of field `volume_size` after provisioning.\n"]
+    pub fn volume_size(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.volume_size", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `volume_type` after provisioning.\n"]
-    pub fn volume_type(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.volume_type", self.base))
+    #[doc = "Get a reference to the value of field `volume_type` after provisioning.\n"]
+    pub fn volume_type(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.volume_type", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct OpensearchDomainEncryptAtRestEl {
-    enabled: PrimField<bool>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    kms_key_id: Option<PrimField<String>>,
+    enabled: terrars::PrimField<bool>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    kms_key_id: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
 impl OpensearchDomainEncryptAtRestEl {
-    #[doc= "Set the field `kms_key_id`.\n"]
-    pub fn set_kms_key_id(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.kms_key_id = Some(v.into());
+    #[doc = "Set the field `kms_key_id`.\n"]
+    pub fn set_kms_key_id(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.kms_key_id = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl ToListMappable for OpensearchDomainEncryptAtRestEl {
-    type O = BlockAssignable<OpensearchDomainEncryptAtRestEl>;
+impl terrars::ToListMappable for OpensearchDomainEncryptAtRestEl {
+    type O = terrars::BlockAssignable<OpensearchDomainEncryptAtRestEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -1801,8 +1923,8 @@ impl ToListMappable for OpensearchDomainEncryptAtRestEl {
 }
 
 pub struct BuildOpensearchDomainEncryptAtRestEl {
-    #[doc= ""]
-    pub enabled: PrimField<bool>,
+    #[doc = ""]
+    pub enabled: terrars::PrimField<bool>,
 }
 
 impl BuildOpensearchDomainEncryptAtRestEl {
@@ -1815,12 +1937,12 @@ impl BuildOpensearchDomainEncryptAtRestEl {
 }
 
 pub struct OpensearchDomainEncryptAtRestElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for OpensearchDomainEncryptAtRestElRef {
-    fn new(shared: StackShared, base: String) -> OpensearchDomainEncryptAtRestElRef {
+impl terrars::Ref for OpensearchDomainEncryptAtRestElRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> OpensearchDomainEncryptAtRestElRef {
         OpensearchDomainEncryptAtRestElRef {
             shared: shared,
             base: base.to_string(),
@@ -1829,42 +1951,42 @@ impl Ref for OpensearchDomainEncryptAtRestElRef {
 }
 
 impl OpensearchDomainEncryptAtRestElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `enabled` after provisioning.\n"]
-    pub fn enabled(&self) -> PrimExpr<bool> {
-        PrimExpr::new(self.shared().clone(), format!("{}.enabled", self.base))
+    #[doc = "Get a reference to the value of field `enabled` after provisioning.\n"]
+    pub fn enabled(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.enabled", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `kms_key_id` after provisioning.\n"]
-    pub fn kms_key_id(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.kms_key_id", self.base))
+    #[doc = "Get a reference to the value of field `kms_key_id` after provisioning.\n"]
+    pub fn kms_key_id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.kms_key_id", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct OpensearchDomainLogPublishingOptionsEl {
-    cloudwatch_log_group_arn: PrimField<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    enabled: Option<PrimField<bool>>,
-    log_type: PrimField<String>,
+    cloudwatch_log_group_arn: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    enabled: std::option::Option<terrars::PrimField<bool>>,
+    log_type: terrars::PrimField<std::string::String>,
 }
 
 impl OpensearchDomainLogPublishingOptionsEl {
-    #[doc= "Set the field `enabled`.\n"]
-    pub fn set_enabled(mut self, v: impl Into<PrimField<bool>>) -> Self {
-        self.enabled = Some(v.into());
+    #[doc = "Set the field `enabled`.\n"]
+    pub fn set_enabled(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
+        self.enabled = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl ToListMappable for OpensearchDomainLogPublishingOptionsEl {
-    type O = BlockAssignable<OpensearchDomainLogPublishingOptionsEl>;
+impl terrars::ToListMappable for OpensearchDomainLogPublishingOptionsEl {
+    type O = terrars::BlockAssignable<OpensearchDomainLogPublishingOptionsEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -1873,10 +1995,10 @@ impl ToListMappable for OpensearchDomainLogPublishingOptionsEl {
 }
 
 pub struct BuildOpensearchDomainLogPublishingOptionsEl {
-    #[doc= ""]
-    pub cloudwatch_log_group_arn: PrimField<String>,
-    #[doc= ""]
-    pub log_type: PrimField<String>,
+    #[doc = ""]
+    pub cloudwatch_log_group_arn: terrars::PrimField<std::string::String>,
+    #[doc = ""]
+    pub log_type: terrars::PrimField<std::string::String>,
 }
 
 impl BuildOpensearchDomainLogPublishingOptionsEl {
@@ -1890,12 +2012,12 @@ impl BuildOpensearchDomainLogPublishingOptionsEl {
 }
 
 pub struct OpensearchDomainLogPublishingOptionsElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for OpensearchDomainLogPublishingOptionsElRef {
-    fn new(shared: StackShared, base: String) -> OpensearchDomainLogPublishingOptionsElRef {
+impl terrars::Ref for OpensearchDomainLogPublishingOptionsElRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> OpensearchDomainLogPublishingOptionsElRef {
         OpensearchDomainLogPublishingOptionsElRef {
             shared: shared,
             base: base.to_string(),
@@ -1904,38 +2026,38 @@ impl Ref for OpensearchDomainLogPublishingOptionsElRef {
 }
 
 impl OpensearchDomainLogPublishingOptionsElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `cloudwatch_log_group_arn` after provisioning.\n"]
-    pub fn cloudwatch_log_group_arn(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.cloudwatch_log_group_arn", self.base))
+    #[doc = "Get a reference to the value of field `cloudwatch_log_group_arn` after provisioning.\n"]
+    pub fn cloudwatch_log_group_arn(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.cloudwatch_log_group_arn", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `enabled` after provisioning.\n"]
-    pub fn enabled(&self) -> PrimExpr<bool> {
-        PrimExpr::new(self.shared().clone(), format!("{}.enabled", self.base))
+    #[doc = "Get a reference to the value of field `enabled` after provisioning.\n"]
+    pub fn enabled(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.enabled", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `log_type` after provisioning.\n"]
-    pub fn log_type(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.log_type", self.base))
+    #[doc = "Get a reference to the value of field `log_type` after provisioning.\n"]
+    pub fn log_type(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.log_type", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct OpensearchDomainNodeToNodeEncryptionEl {
-    enabled: PrimField<bool>,
+    enabled: terrars::PrimField<bool>,
 }
 
 impl OpensearchDomainNodeToNodeEncryptionEl { }
 
-impl ToListMappable for OpensearchDomainNodeToNodeEncryptionEl {
-    type O = BlockAssignable<OpensearchDomainNodeToNodeEncryptionEl>;
+impl terrars::ToListMappable for OpensearchDomainNodeToNodeEncryptionEl {
+    type O = terrars::BlockAssignable<OpensearchDomainNodeToNodeEncryptionEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -1944,8 +2066,8 @@ impl ToListMappable for OpensearchDomainNodeToNodeEncryptionEl {
 }
 
 pub struct BuildOpensearchDomainNodeToNodeEncryptionEl {
-    #[doc= ""]
-    pub enabled: PrimField<bool>,
+    #[doc = ""]
+    pub enabled: terrars::PrimField<bool>,
 }
 
 impl BuildOpensearchDomainNodeToNodeEncryptionEl {
@@ -1955,12 +2077,12 @@ impl BuildOpensearchDomainNodeToNodeEncryptionEl {
 }
 
 pub struct OpensearchDomainNodeToNodeEncryptionElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for OpensearchDomainNodeToNodeEncryptionElRef {
-    fn new(shared: StackShared, base: String) -> OpensearchDomainNodeToNodeEncryptionElRef {
+impl terrars::Ref for OpensearchDomainNodeToNodeEncryptionElRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> OpensearchDomainNodeToNodeEncryptionElRef {
         OpensearchDomainNodeToNodeEncryptionElRef {
             shared: shared,
             base: base.to_string(),
@@ -1969,28 +2091,28 @@ impl Ref for OpensearchDomainNodeToNodeEncryptionElRef {
 }
 
 impl OpensearchDomainNodeToNodeEncryptionElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `enabled` after provisioning.\n"]
-    pub fn enabled(&self) -> PrimExpr<bool> {
-        PrimExpr::new(self.shared().clone(), format!("{}.enabled", self.base))
+    #[doc = "Get a reference to the value of field `enabled` after provisioning.\n"]
+    pub fn enabled(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.enabled", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct OpensearchDomainSnapshotOptionsEl {
-    automated_snapshot_start_hour: PrimField<f64>,
+    automated_snapshot_start_hour: terrars::PrimField<f64>,
 }
 
 impl OpensearchDomainSnapshotOptionsEl { }
 
-impl ToListMappable for OpensearchDomainSnapshotOptionsEl {
-    type O = BlockAssignable<OpensearchDomainSnapshotOptionsEl>;
+impl terrars::ToListMappable for OpensearchDomainSnapshotOptionsEl {
+    type O = terrars::BlockAssignable<OpensearchDomainSnapshotOptionsEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -1999,8 +2121,8 @@ impl ToListMappable for OpensearchDomainSnapshotOptionsEl {
 }
 
 pub struct BuildOpensearchDomainSnapshotOptionsEl {
-    #[doc= ""]
-    pub automated_snapshot_start_hour: PrimField<f64>,
+    #[doc = ""]
+    pub automated_snapshot_start_hour: terrars::PrimField<f64>,
 }
 
 impl BuildOpensearchDomainSnapshotOptionsEl {
@@ -2010,12 +2132,12 @@ impl BuildOpensearchDomainSnapshotOptionsEl {
 }
 
 pub struct OpensearchDomainSnapshotOptionsElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for OpensearchDomainSnapshotOptionsElRef {
-    fn new(shared: StackShared, base: String) -> OpensearchDomainSnapshotOptionsElRef {
+impl terrars::Ref for OpensearchDomainSnapshotOptionsElRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> OpensearchDomainSnapshotOptionsElRef {
         OpensearchDomainSnapshotOptionsElRef {
             shared: shared,
             base: base.to_string(),
@@ -2024,51 +2146,51 @@ impl Ref for OpensearchDomainSnapshotOptionsElRef {
 }
 
 impl OpensearchDomainSnapshotOptionsElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `automated_snapshot_start_hour` after provisioning.\n"]
-    pub fn automated_snapshot_start_hour(&self) -> PrimExpr<f64> {
-        PrimExpr::new(self.shared().clone(), format!("{}.automated_snapshot_start_hour", self.base))
+    #[doc = "Get a reference to the value of field `automated_snapshot_start_hour` after provisioning.\n"]
+    pub fn automated_snapshot_start_hour(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.automated_snapshot_start_hour", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct OpensearchDomainTimeoutsEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    create: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    delete: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    update: Option<PrimField<String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    create: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    delete: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    update: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
 impl OpensearchDomainTimeoutsEl {
-    #[doc= "Set the field `create`.\n"]
-    pub fn set_create(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.create = Some(v.into());
+    #[doc = "Set the field `create`.\n"]
+    pub fn set_create(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.create = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `delete`.\n"]
-    pub fn set_delete(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.delete = Some(v.into());
+    #[doc = "Set the field `delete`.\n"]
+    pub fn set_delete(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.delete = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `update`.\n"]
-    pub fn set_update(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.update = Some(v.into());
+    #[doc = "Set the field `update`.\n"]
+    pub fn set_update(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.update = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl ToListMappable for OpensearchDomainTimeoutsEl {
-    type O = BlockAssignable<OpensearchDomainTimeoutsEl>;
+impl terrars::ToListMappable for OpensearchDomainTimeoutsEl {
+    type O = terrars::BlockAssignable<OpensearchDomainTimeoutsEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -2089,12 +2211,12 @@ impl BuildOpensearchDomainTimeoutsEl {
 }
 
 pub struct OpensearchDomainTimeoutsElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for OpensearchDomainTimeoutsElRef {
-    fn new(shared: StackShared, base: String) -> OpensearchDomainTimeoutsElRef {
+impl terrars::Ref for OpensearchDomainTimeoutsElRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> OpensearchDomainTimeoutsElRef {
         OpensearchDomainTimeoutsElRef {
             shared: shared,
             base: base.to_string(),
@@ -2103,53 +2225,59 @@ impl Ref for OpensearchDomainTimeoutsElRef {
 }
 
 impl OpensearchDomainTimeoutsElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `create` after provisioning.\n"]
-    pub fn create(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.create", self.base))
+    #[doc = "Get a reference to the value of field `create` after provisioning.\n"]
+    pub fn create(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.create", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `delete` after provisioning.\n"]
-    pub fn delete(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.delete", self.base))
+    #[doc = "Get a reference to the value of field `delete` after provisioning.\n"]
+    pub fn delete(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.delete", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `update` after provisioning.\n"]
-    pub fn update(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.update", self.base))
+    #[doc = "Get a reference to the value of field `update` after provisioning.\n"]
+    pub fn update(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.update", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct OpensearchDomainVpcOptionsEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    security_group_ids: Option<SetField<PrimField<String>>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    subnet_ids: Option<SetField<PrimField<String>>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    security_group_ids: std::option::Option<terrars::SetField<terrars::PrimField<std::string::String>>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    subnet_ids: std::option::Option<terrars::SetField<terrars::PrimField<std::string::String>>>,
 }
 
 impl OpensearchDomainVpcOptionsEl {
-    #[doc= "Set the field `security_group_ids`.\n"]
-    pub fn set_security_group_ids(mut self, v: impl Into<SetField<PrimField<String>>>) -> Self {
-        self.security_group_ids = Some(v.into());
+    #[doc = "Set the field `security_group_ids`.\n"]
+    pub fn set_security_group_ids(
+        mut self,
+        v: impl std::convert::Into<terrars::SetField<terrars::PrimField<std::string::String>>>,
+    ) -> Self {
+        self.security_group_ids = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `subnet_ids`.\n"]
-    pub fn set_subnet_ids(mut self, v: impl Into<SetField<PrimField<String>>>) -> Self {
-        self.subnet_ids = Some(v.into());
+    #[doc = "Set the field `subnet_ids`.\n"]
+    pub fn set_subnet_ids(
+        mut self,
+        v: impl std::convert::Into<terrars::SetField<terrars::PrimField<std::string::String>>>,
+    ) -> Self {
+        self.subnet_ids = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl ToListMappable for OpensearchDomainVpcOptionsEl {
-    type O = BlockAssignable<OpensearchDomainVpcOptionsEl>;
+impl terrars::ToListMappable for OpensearchDomainVpcOptionsEl {
+    type O = terrars::BlockAssignable<OpensearchDomainVpcOptionsEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -2169,12 +2297,12 @@ impl BuildOpensearchDomainVpcOptionsEl {
 }
 
 pub struct OpensearchDomainVpcOptionsElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for OpensearchDomainVpcOptionsElRef {
-    fn new(shared: StackShared, base: String) -> OpensearchDomainVpcOptionsElRef {
+impl terrars::Ref for OpensearchDomainVpcOptionsElRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> OpensearchDomainVpcOptionsElRef {
         OpensearchDomainVpcOptionsElRef {
             shared: shared,
             base: base.to_string(),
@@ -2183,42 +2311,42 @@ impl Ref for OpensearchDomainVpcOptionsElRef {
 }
 
 impl OpensearchDomainVpcOptionsElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `availability_zones` after provisioning.\n"]
-    pub fn availability_zones(&self) -> SetRef<PrimExpr<String>> {
-        SetRef::new(self.shared().clone(), format!("{}.availability_zones", self.base))
+    #[doc = "Get a reference to the value of field `availability_zones` after provisioning.\n"]
+    pub fn availability_zones(&self) -> terrars::SetRef<terrars::PrimExpr<std::string::String>> {
+        terrars::SetRef::new(self.shared().clone(), format!("{}.availability_zones", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `security_group_ids` after provisioning.\n"]
-    pub fn security_group_ids(&self) -> SetRef<PrimExpr<String>> {
-        SetRef::new(self.shared().clone(), format!("{}.security_group_ids", self.base))
+    #[doc = "Get a reference to the value of field `security_group_ids` after provisioning.\n"]
+    pub fn security_group_ids(&self) -> terrars::SetRef<terrars::PrimExpr<std::string::String>> {
+        terrars::SetRef::new(self.shared().clone(), format!("{}.security_group_ids", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `subnet_ids` after provisioning.\n"]
-    pub fn subnet_ids(&self) -> SetRef<PrimExpr<String>> {
-        SetRef::new(self.shared().clone(), format!("{}.subnet_ids", self.base))
+    #[doc = "Get a reference to the value of field `subnet_ids` after provisioning.\n"]
+    pub fn subnet_ids(&self) -> terrars::SetRef<terrars::PrimExpr<std::string::String>> {
+        terrars::SetRef::new(self.shared().clone(), format!("{}.subnet_ids", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `vpc_id` after provisioning.\n"]
-    pub fn vpc_id(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.vpc_id", self.base))
+    #[doc = "Get a reference to the value of field `vpc_id` after provisioning.\n"]
+    pub fn vpc_id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.vpc_id", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
 struct OpensearchDomainDynamic {
-    advanced_security_options: Option<DynamicBlock<OpensearchDomainAdvancedSecurityOptionsEl>>,
-    auto_tune_options: Option<DynamicBlock<OpensearchDomainAutoTuneOptionsEl>>,
-    cluster_config: Option<DynamicBlock<OpensearchDomainClusterConfigEl>>,
-    cognito_options: Option<DynamicBlock<OpensearchDomainCognitoOptionsEl>>,
-    domain_endpoint_options: Option<DynamicBlock<OpensearchDomainDomainEndpointOptionsEl>>,
-    ebs_options: Option<DynamicBlock<OpensearchDomainEbsOptionsEl>>,
-    encrypt_at_rest: Option<DynamicBlock<OpensearchDomainEncryptAtRestEl>>,
-    log_publishing_options: Option<DynamicBlock<OpensearchDomainLogPublishingOptionsEl>>,
-    node_to_node_encryption: Option<DynamicBlock<OpensearchDomainNodeToNodeEncryptionEl>>,
-    snapshot_options: Option<DynamicBlock<OpensearchDomainSnapshotOptionsEl>>,
-    vpc_options: Option<DynamicBlock<OpensearchDomainVpcOptionsEl>>,
+    advanced_security_options: std::option::Option<terrars::DynamicBlock<OpensearchDomainAdvancedSecurityOptionsEl>>,
+    auto_tune_options: std::option::Option<terrars::DynamicBlock<OpensearchDomainAutoTuneOptionsEl>>,
+    cluster_config: std::option::Option<terrars::DynamicBlock<OpensearchDomainClusterConfigEl>>,
+    cognito_options: std::option::Option<terrars::DynamicBlock<OpensearchDomainCognitoOptionsEl>>,
+    domain_endpoint_options: std::option::Option<terrars::DynamicBlock<OpensearchDomainDomainEndpointOptionsEl>>,
+    ebs_options: std::option::Option<terrars::DynamicBlock<OpensearchDomainEbsOptionsEl>>,
+    encrypt_at_rest: std::option::Option<terrars::DynamicBlock<OpensearchDomainEncryptAtRestEl>>,
+    log_publishing_options: std::option::Option<terrars::DynamicBlock<OpensearchDomainLogPublishingOptionsEl>>,
+    node_to_node_encryption: std::option::Option<terrars::DynamicBlock<OpensearchDomainNodeToNodeEncryptionEl>>,
+    snapshot_options: std::option::Option<terrars::DynamicBlock<OpensearchDomainSnapshotOptionsEl>>,
+    vpc_options: std::option::Option<terrars::DynamicBlock<OpensearchDomainVpcOptionsEl>>,
 }

@@ -1,56 +1,60 @@
 use serde::Serialize;
-use std::cell::RefCell;
-use std::rc::Rc;
-use terrars::*;
+use terrars::{
+    Referable as _,
+    Resource_ as _,
+    Ref as _,
+};
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
 struct MskServerlessClusterData {
-    #[serde(skip_serializing_if = "Vec::is_empty")]
-    depends_on: Vec<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    provider: Option<String>,
-    #[serde(skip_serializing_if = "SerdeSkipDefault::is_default")]
-    lifecycle: ResourceLifecycle,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    for_each: Option<String>,
-    cluster_name: PrimField<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    id: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    tags: Option<RecField<PrimField<String>>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    tags_all: Option<RecField<PrimField<String>>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    client_authentication: Option<Vec<MskServerlessClusterClientAuthenticationEl>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    timeouts: Option<MskServerlessClusterTimeoutsEl>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    vpc_config: Option<Vec<MskServerlessClusterVpcConfigEl>>,
+    #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
+    depends_on: std::vec::Vec<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    provider: std::option::Option<std::string::String>,
+    #[serde(skip_serializing_if = "terrars::SerdeSkipDefault::is_default")]
+    lifecycle: terrars::ResourceLifecycle,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    for_each: std::option::Option<std::string::String>,
+    #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
+    provisioner: std::vec::Vec<terrars::Provisioner>,
+    cluster_name: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    id: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    tags: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    tags_all: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    client_authentication: std::option::Option<std::vec::Vec<MskServerlessClusterClientAuthenticationEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    timeouts: std::option::Option<MskServerlessClusterTimeoutsEl>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    vpc_config: std::option::Option<std::vec::Vec<MskServerlessClusterVpcConfigEl>>,
     dynamic: MskServerlessClusterDynamic,
 }
 
 struct MskServerlessCluster_ {
-    shared: StackShared,
-    tf_id: String,
-    data: RefCell<MskServerlessClusterData>,
+    shared: terrars::StackShared,
+    tf_id: std::string::String,
+    data: std::cell::RefCell<MskServerlessClusterData>,
 }
 
 #[derive(Clone)]
-pub struct MskServerlessCluster(Rc<MskServerlessCluster_>);
+pub struct MskServerlessCluster(std::rc::Rc<MskServerlessCluster_>);
 
 impl MskServerlessCluster {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.0.shared
     }
 
-    pub fn depends_on(self, dep: &impl Referable) -> Self {
+    pub fn depends_on(self, dep: &impl terrars::Referable) -> Self {
         self.0.data.borrow_mut().depends_on.push(dep.extract_ref());
         self
     }
 
     pub fn set_provider(self, provider: &ProviderAws) -> Self {
-        self.0.data.borrow_mut().provider = Some(provider.provider_ref());
+        self.0.data.borrow_mut().provider = std::option::Option::Some(provider.provider_ref());
         self
     }
 
@@ -65,158 +69,200 @@ impl MskServerlessCluster {
     }
 
     pub fn ignore_changes_to_all(self) -> Self {
-        self.0.data.borrow_mut().lifecycle.ignore_changes = Some(IgnoreChanges::All(IgnoreChangesAll::All));
+        self.0.data.borrow_mut().lifecycle.ignore_changes =
+            std::option::Option::Some(terrars::IgnoreChanges::All(terrars::IgnoreChangesAll::All));
         self
     }
 
-    pub fn ignore_changes_to_attr(self, attr: impl ToString) -> Self {
+    pub fn ignore_changes_to_attr(self, attr: impl std::string::ToString) -> Self {
         {
             let mut d = self.0.data.borrow_mut();
             if match &mut d.lifecycle.ignore_changes {
-                Some(i) => match i {
-                    IgnoreChanges::All(_) => {
+                std::option::Option::Some(i) => match i {
+                    terrars::IgnoreChanges::All(_) => {
                         true
                     },
-                    IgnoreChanges::Refs(r) => {
+                    terrars::IgnoreChanges::Refs(r) => {
                         r.push(attr.to_string());
                         false
                     },
                 },
-                None => true,
+                std::option::Option::None => true,
             } {
-                d.lifecycle.ignore_changes = Some(IgnoreChanges::Refs(vec![attr.to_string()]));
+                d.lifecycle.ignore_changes =
+                    std::option::Option::Some(terrars::IgnoreChanges::Refs(vec![attr.to_string()]));
             }
         }
         self
     }
 
-    pub fn replace_triggered_by_resource(self, r: &impl Resource) -> Self {
+    pub fn replace_triggered_by_resource(self, r: &impl terrars::Resource) -> Self {
         self.0.data.borrow_mut().lifecycle.replace_triggered_by.push(r.extract_ref());
         self
     }
 
-    pub fn replace_triggered_by_attr(self, attr: impl ToString) -> Self {
+    pub fn replace_triggered_by_attr(self, attr: impl std::string::ToString) -> Self {
         self.0.data.borrow_mut().lifecycle.replace_triggered_by.push(attr.to_string());
         self
     }
 
-    #[doc= "Set the field `id`.\n"]
-    pub fn set_id(self, v: impl Into<PrimField<String>>) -> Self {
-        self.0.data.borrow_mut().id = Some(v.into());
+    #[doc = r" Add a provisioner (ex: `local-exec`, `remote-exec`, `file`) to this resource."]
+    #[doc = r" Provisioners run in the order they're added."]
+    pub fn add_provisioner(self, v: impl std::convert::Into<terrars::Provisioner>) -> Self {
+        self.0.data.borrow_mut().provisioner.push(v.into());
         self
     }
 
-    #[doc= "Set the field `tags`.\n"]
-    pub fn set_tags(self, v: impl Into<RecField<PrimField<String>>>) -> Self {
-        self.0.data.borrow_mut().tags = Some(v.into());
+    pub fn add_lifecycle_precondition(
+        self,
+        condition: impl std::convert::Into<terrars::PrimField<bool>>,
+        error_message: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.0.data.borrow_mut().lifecycle.precondition.push(terrars::LifecycleCondition {
+            condition: condition.into(),
+            error_message: error_message.into(),
+        });
         self
     }
 
-    #[doc= "Set the field `tags_all`.\n"]
-    pub fn set_tags_all(self, v: impl Into<RecField<PrimField<String>>>) -> Self {
-        self.0.data.borrow_mut().tags_all = Some(v.into());
+    pub fn add_lifecycle_postcondition(
+        self,
+        condition: impl std::convert::Into<terrars::PrimField<bool>>,
+        error_message: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.0.data.borrow_mut().lifecycle.postcondition.push(terrars::LifecycleCondition {
+            condition: condition.into(),
+            error_message: error_message.into(),
+        });
         self
     }
 
-    #[doc= "Set the field `client_authentication`.\n"]
+    #[doc = "Set the field `id`.\n"]
+    pub fn set_id(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().id = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `tags`.\n"]
+    pub fn set_tags(
+        self,
+        v: impl std::convert::Into<terrars::RecField<terrars::PrimField<std::string::String>>>,
+    ) -> Self {
+        self.0.data.borrow_mut().tags = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `tags_all`.\n"]
+    pub fn set_tags_all(
+        self,
+        v: impl std::convert::Into<terrars::RecField<terrars::PrimField<std::string::String>>>,
+    ) -> Self {
+        self.0.data.borrow_mut().tags_all = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `client_authentication`.\n"]
     pub fn set_client_authentication(
         self,
-        v: impl Into<BlockAssignable<MskServerlessClusterClientAuthenticationEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<MskServerlessClusterClientAuthenticationEl>>,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.0.data.borrow_mut().client_authentication = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.0.data.borrow_mut().client_authentication = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.0.data.borrow_mut().dynamic.client_authentication = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.0.data.borrow_mut().dynamic.client_authentication = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Set the field `timeouts`.\n"]
-    pub fn set_timeouts(self, v: impl Into<MskServerlessClusterTimeoutsEl>) -> Self {
-        self.0.data.borrow_mut().timeouts = Some(v.into());
+    #[doc = "Set the field `timeouts`.\n"]
+    pub fn set_timeouts(self, v: impl std::convert::Into<MskServerlessClusterTimeoutsEl>) -> Self {
+        self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `vpc_config`.\n"]
-    pub fn set_vpc_config(self, v: impl Into<BlockAssignable<MskServerlessClusterVpcConfigEl>>) -> Self {
+    #[doc = "Set the field `vpc_config`.\n"]
+    pub fn set_vpc_config(
+        self,
+        v: impl std::convert::Into<terrars::BlockAssignable<MskServerlessClusterVpcConfigEl>>,
+    ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.0.data.borrow_mut().vpc_config = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.0.data.borrow_mut().vpc_config = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.0.data.borrow_mut().dynamic.vpc_config = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.0.data.borrow_mut().dynamic.vpc_config = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Get a reference to the value of field `arn` after provisioning.\n"]
-    pub fn arn(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.arn", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `arn` after provisioning.\n"]
+    pub fn arn(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.arn", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `cluster_name` after provisioning.\n"]
-    pub fn cluster_name(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.cluster_name", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `cluster_name` after provisioning.\n"]
+    pub fn cluster_name(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.cluster_name", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `id` after provisioning.\n"]
-    pub fn id(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
+    pub fn id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `tags` after provisioning.\n"]
-    pub fn tags(&self) -> RecRef<PrimExpr<String>> {
-        RecRef::new(self.shared().clone(), format!("{}.tags", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `tags` after provisioning.\n"]
+    pub fn tags(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
+        terrars::RecRef::new(self.shared().clone(), format!("{}.tags", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `tags_all` after provisioning.\n"]
-    pub fn tags_all(&self) -> RecRef<PrimExpr<String>> {
-        RecRef::new(self.shared().clone(), format!("{}.tags_all", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `tags_all` after provisioning.\n"]
+    pub fn tags_all(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
+        terrars::RecRef::new(self.shared().clone(), format!("{}.tags_all", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `client_authentication` after provisioning.\n"]
-    pub fn client_authentication(&self) -> ListRef<MskServerlessClusterClientAuthenticationElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.client_authentication", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `client_authentication` after provisioning.\n"]
+    pub fn client_authentication(&self) -> terrars::ListRef<MskServerlessClusterClientAuthenticationElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.client_authentication", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `timeouts` after provisioning.\n"]
+    #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
     pub fn timeouts(&self) -> MskServerlessClusterTimeoutsElRef {
         MskServerlessClusterTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `vpc_config` after provisioning.\n"]
-    pub fn vpc_config(&self) -> ListRef<MskServerlessClusterVpcConfigElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.vpc_config", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `vpc_config` after provisioning.\n"]
+    pub fn vpc_config(&self) -> terrars::ListRef<MskServerlessClusterVpcConfigElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.vpc_config", self.extract_ref()))
     }
 }
 
-impl Referable for MskServerlessCluster {
-    fn extract_ref(&self) -> String {
+impl terrars::Referable for MskServerlessCluster {
+    fn extract_ref(&self) -> std::string::String {
         format!("{}.{}", self.0.extract_resource_type(), self.0.extract_tf_id())
     }
 }
 
-impl Resource for MskServerlessCluster { }
+impl terrars::Resource for MskServerlessCluster { }
 
-impl ToListMappable for MskServerlessCluster {
-    type O = ListRef<MskServerlessClusterRef>;
+impl terrars::ToListMappable for MskServerlessCluster {
+    type O = terrars::ListRef<MskServerlessClusterRef>;
 
-    fn do_map(self, base: String) -> Self::O {
-        self.0.data.borrow_mut().for_each = Some(format!("${{{}}}", base));
-        ListRef::new(self.0.shared.clone(), self.extract_ref())
+    fn do_map(self, base: std::string::String) -> Self::O {
+        self.0.data.borrow_mut().for_each = std::option::Option::Some(format!("${{{}}}", base));
+        terrars::ListRef::new(self.0.shared.clone(), self.extract_ref())
     }
 }
 
-impl Resource_ for MskServerlessCluster_ {
-    fn extract_resource_type(&self) -> String {
+impl terrars::Resource_ for MskServerlessCluster_ {
+    fn extract_resource_type(&self) -> std::string::String {
         "aws_msk_serverless_cluster".into()
     }
 
-    fn extract_tf_id(&self) -> String {
+    fn extract_tf_id(&self) -> std::string::String {
         self.tf_id.clone()
     }
 
@@ -226,21 +272,22 @@ impl Resource_ for MskServerlessCluster_ {
 }
 
 pub struct BuildMskServerlessCluster {
-    pub tf_id: String,
-    #[doc= ""]
-    pub cluster_name: PrimField<String>,
+    pub tf_id: std::string::String,
+    #[doc = ""]
+    pub cluster_name: terrars::PrimField<std::string::String>,
 }
 
 impl BuildMskServerlessCluster {
-    pub fn build(self, stack: &mut Stack) -> MskServerlessCluster {
-        let out = MskServerlessCluster(Rc::new(MskServerlessCluster_ {
+    pub fn build(self, stack: &mut terrars::Stack) -> MskServerlessCluster {
+        let out = MskServerlessCluster(std::rc::Rc::new(MskServerlessCluster_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: RefCell::new(MskServerlessClusterData {
+            data: std::cell::RefCell::new(MskServerlessClusterData {
                 depends_on: core::default::Default::default(),
-                provider: None,
+                provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
-                for_each: None,
+                for_each: std::option::Option::None,
+                provisioner: core::default::Default::default(),
                 cluster_name: self.cluster_name,
                 id: core::default::Default::default(),
                 tags: core::default::Default::default(),
@@ -248,7 +295,7 @@ impl BuildMskServerlessCluster {
                 client_authentication: core::default::Default::default(),
                 timeouts: core::default::Default::default(),
                 vpc_config: core::default::Default::default(),
-                dynamic: Default::default(),
+                dynamic: core::default::Default::default(),
             }),
         }));
         stack.add_resource(out.0.clone());
@@ -257,12 +304,12 @@ impl BuildMskServerlessCluster {
 }
 
 pub struct MskServerlessClusterRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for MskServerlessClusterRef {
-    fn new(shared: StackShared, base: String) -> Self {
+impl terrars::Ref for MskServerlessClusterRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> Self {
         Self {
             shared: shared,
             base: base,
@@ -271,67 +318,67 @@ impl Ref for MskServerlessClusterRef {
 }
 
 impl MskServerlessClusterRef {
-    fn extract_ref(&self) -> String {
+    fn extract_ref(&self) -> std::string::String {
         self.base.clone()
     }
 
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `arn` after provisioning.\n"]
-    pub fn arn(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.arn", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `arn` after provisioning.\n"]
+    pub fn arn(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.arn", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `cluster_name` after provisioning.\n"]
-    pub fn cluster_name(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.cluster_name", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `cluster_name` after provisioning.\n"]
+    pub fn cluster_name(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.cluster_name", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `id` after provisioning.\n"]
-    pub fn id(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
+    pub fn id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `tags` after provisioning.\n"]
-    pub fn tags(&self) -> RecRef<PrimExpr<String>> {
-        RecRef::new(self.shared().clone(), format!("{}.tags", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `tags` after provisioning.\n"]
+    pub fn tags(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
+        terrars::RecRef::new(self.shared().clone(), format!("{}.tags", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `tags_all` after provisioning.\n"]
-    pub fn tags_all(&self) -> RecRef<PrimExpr<String>> {
-        RecRef::new(self.shared().clone(), format!("{}.tags_all", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `tags_all` after provisioning.\n"]
+    pub fn tags_all(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
+        terrars::RecRef::new(self.shared().clone(), format!("{}.tags_all", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `client_authentication` after provisioning.\n"]
-    pub fn client_authentication(&self) -> ListRef<MskServerlessClusterClientAuthenticationElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.client_authentication", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `client_authentication` after provisioning.\n"]
+    pub fn client_authentication(&self) -> terrars::ListRef<MskServerlessClusterClientAuthenticationElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.client_authentication", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `timeouts` after provisioning.\n"]
+    #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
     pub fn timeouts(&self) -> MskServerlessClusterTimeoutsElRef {
         MskServerlessClusterTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `vpc_config` after provisioning.\n"]
-    pub fn vpc_config(&self) -> ListRef<MskServerlessClusterVpcConfigElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.vpc_config", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `vpc_config` after provisioning.\n"]
+    pub fn vpc_config(&self) -> terrars::ListRef<MskServerlessClusterVpcConfigElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.vpc_config", self.extract_ref()))
     }
 }
 
 #[derive(Serialize)]
 pub struct MskServerlessClusterClientAuthenticationElSaslElIamEl {
-    enabled: PrimField<bool>,
+    enabled: terrars::PrimField<bool>,
 }
 
 impl MskServerlessClusterClientAuthenticationElSaslElIamEl { }
 
-impl ToListMappable for MskServerlessClusterClientAuthenticationElSaslElIamEl {
-    type O = BlockAssignable<MskServerlessClusterClientAuthenticationElSaslElIamEl>;
+impl terrars::ToListMappable for MskServerlessClusterClientAuthenticationElSaslElIamEl {
+    type O = terrars::BlockAssignable<MskServerlessClusterClientAuthenticationElSaslElIamEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -340,8 +387,8 @@ impl ToListMappable for MskServerlessClusterClientAuthenticationElSaslElIamEl {
 }
 
 pub struct BuildMskServerlessClusterClientAuthenticationElSaslElIamEl {
-    #[doc= ""]
-    pub enabled: PrimField<bool>,
+    #[doc = ""]
+    pub enabled: terrars::PrimField<bool>,
 }
 
 impl BuildMskServerlessClusterClientAuthenticationElSaslElIamEl {
@@ -351,12 +398,15 @@ impl BuildMskServerlessClusterClientAuthenticationElSaslElIamEl {
 }
 
 pub struct MskServerlessClusterClientAuthenticationElSaslElIamElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for MskServerlessClusterClientAuthenticationElSaslElIamElRef {
-    fn new(shared: StackShared, base: String) -> MskServerlessClusterClientAuthenticationElSaslElIamElRef {
+impl terrars::Ref for MskServerlessClusterClientAuthenticationElSaslElIamElRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> MskServerlessClusterClientAuthenticationElSaslElIamElRef {
         MskServerlessClusterClientAuthenticationElSaslElIamElRef {
             shared: shared,
             base: base.to_string(),
@@ -365,51 +415,51 @@ impl Ref for MskServerlessClusterClientAuthenticationElSaslElIamElRef {
 }
 
 impl MskServerlessClusterClientAuthenticationElSaslElIamElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `enabled` after provisioning.\n"]
-    pub fn enabled(&self) -> PrimExpr<bool> {
-        PrimExpr::new(self.shared().clone(), format!("{}.enabled", self.base))
+    #[doc = "Get a reference to the value of field `enabled` after provisioning.\n"]
+    pub fn enabled(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.enabled", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
 struct MskServerlessClusterClientAuthenticationElSaslElDynamic {
-    iam: Option<DynamicBlock<MskServerlessClusterClientAuthenticationElSaslElIamEl>>,
+    iam: std::option::Option<terrars::DynamicBlock<MskServerlessClusterClientAuthenticationElSaslElIamEl>>,
 }
 
 #[derive(Serialize)]
 pub struct MskServerlessClusterClientAuthenticationElSaslEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    iam: Option<Vec<MskServerlessClusterClientAuthenticationElSaslElIamEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    iam: std::option::Option<std::vec::Vec<MskServerlessClusterClientAuthenticationElSaslElIamEl>>,
     dynamic: MskServerlessClusterClientAuthenticationElSaslElDynamic,
 }
 
 impl MskServerlessClusterClientAuthenticationElSaslEl {
-    #[doc= "Set the field `iam`.\n"]
+    #[doc = "Set the field `iam`.\n"]
     pub fn set_iam(
         mut self,
-        v: impl Into<BlockAssignable<MskServerlessClusterClientAuthenticationElSaslElIamEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<MskServerlessClusterClientAuthenticationElSaslElIamEl>>,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.iam = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.iam = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.iam = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.iam = std::option::Option::Some(d);
             },
         }
         self
     }
 }
 
-impl ToListMappable for MskServerlessClusterClientAuthenticationElSaslEl {
-    type O = BlockAssignable<MskServerlessClusterClientAuthenticationElSaslEl>;
+impl terrars::ToListMappable for MskServerlessClusterClientAuthenticationElSaslEl {
+    type O = terrars::BlockAssignable<MskServerlessClusterClientAuthenticationElSaslEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -423,18 +473,21 @@ impl BuildMskServerlessClusterClientAuthenticationElSaslEl {
     pub fn build(self) -> MskServerlessClusterClientAuthenticationElSaslEl {
         MskServerlessClusterClientAuthenticationElSaslEl {
             iam: core::default::Default::default(),
-            dynamic: Default::default(),
+            dynamic: core::default::Default::default(),
         }
     }
 }
 
 pub struct MskServerlessClusterClientAuthenticationElSaslElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for MskServerlessClusterClientAuthenticationElSaslElRef {
-    fn new(shared: StackShared, base: String) -> MskServerlessClusterClientAuthenticationElSaslElRef {
+impl terrars::Ref for MskServerlessClusterClientAuthenticationElSaslElRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> MskServerlessClusterClientAuthenticationElSaslElRef {
         MskServerlessClusterClientAuthenticationElSaslElRef {
             shared: shared,
             base: base.to_string(),
@@ -443,48 +496,51 @@ impl Ref for MskServerlessClusterClientAuthenticationElSaslElRef {
 }
 
 impl MskServerlessClusterClientAuthenticationElSaslElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `iam` after provisioning.\n"]
-    pub fn iam(&self) -> ListRef<MskServerlessClusterClientAuthenticationElSaslElIamElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.iam", self.base))
+    #[doc = "Get a reference to the value of field `iam` after provisioning.\n"]
+    pub fn iam(&self) -> terrars::ListRef<MskServerlessClusterClientAuthenticationElSaslElIamElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.iam", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
 struct MskServerlessClusterClientAuthenticationElDynamic {
-    sasl: Option<DynamicBlock<MskServerlessClusterClientAuthenticationElSaslEl>>,
+    sasl: std::option::Option<terrars::DynamicBlock<MskServerlessClusterClientAuthenticationElSaslEl>>,
 }
 
 #[derive(Serialize)]
 pub struct MskServerlessClusterClientAuthenticationEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    sasl: Option<Vec<MskServerlessClusterClientAuthenticationElSaslEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    sasl: std::option::Option<std::vec::Vec<MskServerlessClusterClientAuthenticationElSaslEl>>,
     dynamic: MskServerlessClusterClientAuthenticationElDynamic,
 }
 
 impl MskServerlessClusterClientAuthenticationEl {
-    #[doc= "Set the field `sasl`.\n"]
-    pub fn set_sasl(mut self, v: impl Into<BlockAssignable<MskServerlessClusterClientAuthenticationElSaslEl>>) -> Self {
+    #[doc = "Set the field `sasl`.\n"]
+    pub fn set_sasl(
+        mut self,
+        v: impl std::convert::Into<terrars::BlockAssignable<MskServerlessClusterClientAuthenticationElSaslEl>>,
+    ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.sasl = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.sasl = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.sasl = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.sasl = std::option::Option::Some(d);
             },
         }
         self
     }
 }
 
-impl ToListMappable for MskServerlessClusterClientAuthenticationEl {
-    type O = BlockAssignable<MskServerlessClusterClientAuthenticationEl>;
+impl terrars::ToListMappable for MskServerlessClusterClientAuthenticationEl {
+    type O = terrars::BlockAssignable<MskServerlessClusterClientAuthenticationEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -498,18 +554,18 @@ impl BuildMskServerlessClusterClientAuthenticationEl {
     pub fn build(self) -> MskServerlessClusterClientAuthenticationEl {
         MskServerlessClusterClientAuthenticationEl {
             sasl: core::default::Default::default(),
-            dynamic: Default::default(),
+            dynamic: core::default::Default::default(),
         }
     }
 }
 
 pub struct MskServerlessClusterClientAuthenticationElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for MskServerlessClusterClientAuthenticationElRef {
-    fn new(shared: StackShared, base: String) -> MskServerlessClusterClientAuthenticationElRef {
+impl terrars::Ref for MskServerlessClusterClientAuthenticationElRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> MskServerlessClusterClientAuthenticationElRef {
         MskServerlessClusterClientAuthenticationElRef {
             shared: shared,
             base: base.to_string(),
@@ -518,43 +574,43 @@ impl Ref for MskServerlessClusterClientAuthenticationElRef {
 }
 
 impl MskServerlessClusterClientAuthenticationElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `sasl` after provisioning.\n"]
-    pub fn sasl(&self) -> ListRef<MskServerlessClusterClientAuthenticationElSaslElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.sasl", self.base))
+    #[doc = "Get a reference to the value of field `sasl` after provisioning.\n"]
+    pub fn sasl(&self) -> terrars::ListRef<MskServerlessClusterClientAuthenticationElSaslElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.sasl", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct MskServerlessClusterTimeoutsEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    create: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    delete: Option<PrimField<String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    create: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    delete: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
 impl MskServerlessClusterTimeoutsEl {
-    #[doc= "Set the field `create`.\n"]
-    pub fn set_create(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.create = Some(v.into());
+    #[doc = "Set the field `create`.\n"]
+    pub fn set_create(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.create = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `delete`.\n"]
-    pub fn set_delete(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.delete = Some(v.into());
+    #[doc = "Set the field `delete`.\n"]
+    pub fn set_delete(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.delete = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl ToListMappable for MskServerlessClusterTimeoutsEl {
-    type O = BlockAssignable<MskServerlessClusterTimeoutsEl>;
+impl terrars::ToListMappable for MskServerlessClusterTimeoutsEl {
+    type O = terrars::BlockAssignable<MskServerlessClusterTimeoutsEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -574,12 +630,12 @@ impl BuildMskServerlessClusterTimeoutsEl {
 }
 
 pub struct MskServerlessClusterTimeoutsElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for MskServerlessClusterTimeoutsElRef {
-    fn new(shared: StackShared, base: String) -> MskServerlessClusterTimeoutsElRef {
+impl terrars::Ref for MskServerlessClusterTimeoutsElRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> MskServerlessClusterTimeoutsElRef {
         MskServerlessClusterTimeoutsElRef {
             shared: shared,
             base: base.to_string(),
@@ -588,41 +644,44 @@ impl Ref for MskServerlessClusterTimeoutsElRef {
 }
 
 impl MskServerlessClusterTimeoutsElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `create` after provisioning.\n"]
-    pub fn create(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.create", self.base))
+    #[doc = "Get a reference to the value of field `create` after provisioning.\n"]
+    pub fn create(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.create", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `delete` after provisioning.\n"]
-    pub fn delete(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.delete", self.base))
+    #[doc = "Get a reference to the value of field `delete` after provisioning.\n"]
+    pub fn delete(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.delete", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct MskServerlessClusterVpcConfigEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    security_group_ids: Option<SetField<PrimField<String>>>,
-    subnet_ids: SetField<PrimField<String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    security_group_ids: std::option::Option<terrars::SetField<terrars::PrimField<std::string::String>>>,
+    subnet_ids: terrars::SetField<terrars::PrimField<std::string::String>>,
 }
 
 impl MskServerlessClusterVpcConfigEl {
-    #[doc= "Set the field `security_group_ids`.\n"]
-    pub fn set_security_group_ids(mut self, v: impl Into<SetField<PrimField<String>>>) -> Self {
-        self.security_group_ids = Some(v.into());
+    #[doc = "Set the field `security_group_ids`.\n"]
+    pub fn set_security_group_ids(
+        mut self,
+        v: impl std::convert::Into<terrars::SetField<terrars::PrimField<std::string::String>>>,
+    ) -> Self {
+        self.security_group_ids = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl ToListMappable for MskServerlessClusterVpcConfigEl {
-    type O = BlockAssignable<MskServerlessClusterVpcConfigEl>;
+impl terrars::ToListMappable for MskServerlessClusterVpcConfigEl {
+    type O = terrars::BlockAssignable<MskServerlessClusterVpcConfigEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -631,8 +690,8 @@ impl ToListMappable for MskServerlessClusterVpcConfigEl {
 }
 
 pub struct BuildMskServerlessClusterVpcConfigEl {
-    #[doc= ""]
-    pub subnet_ids: SetField<PrimField<String>>,
+    #[doc = ""]
+    pub subnet_ids: terrars::SetField<terrars::PrimField<std::string::String>>,
 }
 
 impl BuildMskServerlessClusterVpcConfigEl {
@@ -645,12 +704,12 @@ impl BuildMskServerlessClusterVpcConfigEl {
 }
 
 pub struct MskServerlessClusterVpcConfigElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for MskServerlessClusterVpcConfigElRef {
-    fn new(shared: StackShared, base: String) -> MskServerlessClusterVpcConfigElRef {
+impl terrars::Ref for MskServerlessClusterVpcConfigElRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> MskServerlessClusterVpcConfigElRef {
         MskServerlessClusterVpcConfigElRef {
             shared: shared,
             base: base.to_string(),
@@ -659,23 +718,23 @@ impl Ref for MskServerlessClusterVpcConfigElRef {
 }
 
 impl MskServerlessClusterVpcConfigElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `security_group_ids` after provisioning.\n"]
-    pub fn security_group_ids(&self) -> SetRef<PrimExpr<String>> {
-        SetRef::new(self.shared().clone(), format!("{}.security_group_ids", self.base))
+    #[doc = "Get a reference to the value of field `security_group_ids` after provisioning.\n"]
+    pub fn security_group_ids(&self) -> terrars::SetRef<terrars::PrimExpr<std::string::String>> {
+        terrars::SetRef::new(self.shared().clone(), format!("{}.security_group_ids", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `subnet_ids` after provisioning.\n"]
-    pub fn subnet_ids(&self) -> SetRef<PrimExpr<String>> {
-        SetRef::new(self.shared().clone(), format!("{}.subnet_ids", self.base))
+    #[doc = "Get a reference to the value of field `subnet_ids` after provisioning.\n"]
+    pub fn subnet_ids(&self) -> terrars::SetRef<terrars::PrimExpr<std::string::String>> {
+        terrars::SetRef::new(self.shared().clone(), format!("{}.subnet_ids", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
 struct MskServerlessClusterDynamic {
-    client_authentication: Option<DynamicBlock<MskServerlessClusterClientAuthenticationEl>>,
-    vpc_config: Option<DynamicBlock<MskServerlessClusterVpcConfigEl>>,
+    client_authentication: std::option::Option<terrars::DynamicBlock<MskServerlessClusterClientAuthenticationEl>>,
+    vpc_config: std::option::Option<terrars::DynamicBlock<MskServerlessClusterVpcConfigEl>>,
 }

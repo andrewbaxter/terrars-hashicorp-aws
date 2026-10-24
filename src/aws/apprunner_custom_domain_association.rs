@@ -1,48 +1,52 @@
 use serde::Serialize;
-use std::cell::RefCell;
-use std::rc::Rc;
-use terrars::*;
+use terrars::{
+    Referable as _,
+    Resource_ as _,
+    Ref as _,
+};
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
 struct ApprunnerCustomDomainAssociationData {
-    #[serde(skip_serializing_if = "Vec::is_empty")]
-    depends_on: Vec<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    provider: Option<String>,
-    #[serde(skip_serializing_if = "SerdeSkipDefault::is_default")]
-    lifecycle: ResourceLifecycle,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    for_each: Option<String>,
-    domain_name: PrimField<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    enable_www_subdomain: Option<PrimField<bool>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    id: Option<PrimField<String>>,
-    service_arn: PrimField<String>,
+    #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
+    depends_on: std::vec::Vec<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    provider: std::option::Option<std::string::String>,
+    #[serde(skip_serializing_if = "terrars::SerdeSkipDefault::is_default")]
+    lifecycle: terrars::ResourceLifecycle,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    for_each: std::option::Option<std::string::String>,
+    #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
+    provisioner: std::vec::Vec<terrars::Provisioner>,
+    domain_name: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    enable_www_subdomain: std::option::Option<terrars::PrimField<bool>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    id: std::option::Option<terrars::PrimField<std::string::String>>,
+    service_arn: terrars::PrimField<std::string::String>,
 }
 
 struct ApprunnerCustomDomainAssociation_ {
-    shared: StackShared,
-    tf_id: String,
-    data: RefCell<ApprunnerCustomDomainAssociationData>,
+    shared: terrars::StackShared,
+    tf_id: std::string::String,
+    data: std::cell::RefCell<ApprunnerCustomDomainAssociationData>,
 }
 
 #[derive(Clone)]
-pub struct ApprunnerCustomDomainAssociation(Rc<ApprunnerCustomDomainAssociation_>);
+pub struct ApprunnerCustomDomainAssociation(std::rc::Rc<ApprunnerCustomDomainAssociation_>);
 
 impl ApprunnerCustomDomainAssociation {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.0.shared
     }
 
-    pub fn depends_on(self, dep: &impl Referable) -> Self {
+    pub fn depends_on(self, dep: &impl terrars::Referable) -> Self {
         self.0.data.borrow_mut().depends_on.push(dep.extract_ref());
         self
     }
 
     pub fn set_provider(self, provider: &ProviderAws) -> Self {
-        self.0.data.borrow_mut().provider = Some(provider.provider_ref());
+        self.0.data.borrow_mut().provider = std::option::Option::Some(provider.provider_ref());
         self
     }
 
@@ -57,114 +61,147 @@ impl ApprunnerCustomDomainAssociation {
     }
 
     pub fn ignore_changes_to_all(self) -> Self {
-        self.0.data.borrow_mut().lifecycle.ignore_changes = Some(IgnoreChanges::All(IgnoreChangesAll::All));
+        self.0.data.borrow_mut().lifecycle.ignore_changes =
+            std::option::Option::Some(terrars::IgnoreChanges::All(terrars::IgnoreChangesAll::All));
         self
     }
 
-    pub fn ignore_changes_to_attr(self, attr: impl ToString) -> Self {
+    pub fn ignore_changes_to_attr(self, attr: impl std::string::ToString) -> Self {
         {
             let mut d = self.0.data.borrow_mut();
             if match &mut d.lifecycle.ignore_changes {
-                Some(i) => match i {
-                    IgnoreChanges::All(_) => {
+                std::option::Option::Some(i) => match i {
+                    terrars::IgnoreChanges::All(_) => {
                         true
                     },
-                    IgnoreChanges::Refs(r) => {
+                    terrars::IgnoreChanges::Refs(r) => {
                         r.push(attr.to_string());
                         false
                     },
                 },
-                None => true,
+                std::option::Option::None => true,
             } {
-                d.lifecycle.ignore_changes = Some(IgnoreChanges::Refs(vec![attr.to_string()]));
+                d.lifecycle.ignore_changes =
+                    std::option::Option::Some(terrars::IgnoreChanges::Refs(vec![attr.to_string()]));
             }
         }
         self
     }
 
-    pub fn replace_triggered_by_resource(self, r: &impl Resource) -> Self {
+    pub fn replace_triggered_by_resource(self, r: &impl terrars::Resource) -> Self {
         self.0.data.borrow_mut().lifecycle.replace_triggered_by.push(r.extract_ref());
         self
     }
 
-    pub fn replace_triggered_by_attr(self, attr: impl ToString) -> Self {
+    pub fn replace_triggered_by_attr(self, attr: impl std::string::ToString) -> Self {
         self.0.data.borrow_mut().lifecycle.replace_triggered_by.push(attr.to_string());
         self
     }
 
-    #[doc= "Set the field `enable_www_subdomain`.\n"]
-    pub fn set_enable_www_subdomain(self, v: impl Into<PrimField<bool>>) -> Self {
-        self.0.data.borrow_mut().enable_www_subdomain = Some(v.into());
+    #[doc = r" Add a provisioner (ex: `local-exec`, `remote-exec`, `file`) to this resource."]
+    #[doc = r" Provisioners run in the order they're added."]
+    pub fn add_provisioner(self, v: impl std::convert::Into<terrars::Provisioner>) -> Self {
+        self.0.data.borrow_mut().provisioner.push(v.into());
         self
     }
 
-    #[doc= "Set the field `id`.\n"]
-    pub fn set_id(self, v: impl Into<PrimField<String>>) -> Self {
-        self.0.data.borrow_mut().id = Some(v.into());
+    pub fn add_lifecycle_precondition(
+        self,
+        condition: impl std::convert::Into<terrars::PrimField<bool>>,
+        error_message: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.0.data.borrow_mut().lifecycle.precondition.push(terrars::LifecycleCondition {
+            condition: condition.into(),
+            error_message: error_message.into(),
+        });
         self
     }
 
-    #[doc= "Get a reference to the value of field `certificate_validation_records` after provisioning.\n"]
+    pub fn add_lifecycle_postcondition(
+        self,
+        condition: impl std::convert::Into<terrars::PrimField<bool>>,
+        error_message: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.0.data.borrow_mut().lifecycle.postcondition.push(terrars::LifecycleCondition {
+            condition: condition.into(),
+            error_message: error_message.into(),
+        });
+        self
+    }
+
+    #[doc = "Set the field `enable_www_subdomain`.\n"]
+    pub fn set_enable_www_subdomain(self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
+        self.0.data.borrow_mut().enable_www_subdomain = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `id`.\n"]
+    pub fn set_id(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().id = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Get a reference to the value of field `certificate_validation_records` after provisioning.\n"]
     pub fn certificate_validation_records(
         &self,
-    ) -> SetRef<ApprunnerCustomDomainAssociationCertificateValidationRecordsElRef> {
-        SetRef::new(self.shared().clone(), format!("{}.certificate_validation_records", self.extract_ref()))
+    ) -> terrars::SetRef<ApprunnerCustomDomainAssociationCertificateValidationRecordsElRef> {
+        terrars::SetRef::new(self.shared().clone(), format!("{}.certificate_validation_records", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `dns_target` after provisioning.\n"]
-    pub fn dns_target(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.dns_target", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `dns_target` after provisioning.\n"]
+    pub fn dns_target(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.dns_target", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `domain_name` after provisioning.\n"]
-    pub fn domain_name(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.domain_name", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `domain_name` after provisioning.\n"]
+    pub fn domain_name(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.domain_name", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `enable_www_subdomain` after provisioning.\n"]
-    pub fn enable_www_subdomain(&self) -> PrimExpr<bool> {
-        PrimExpr::new(self.shared().clone(), format!("{}.enable_www_subdomain", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `enable_www_subdomain` after provisioning.\n"]
+    pub fn enable_www_subdomain(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.enable_www_subdomain", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `id` after provisioning.\n"]
-    pub fn id(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
+    pub fn id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `service_arn` after provisioning.\n"]
-    pub fn service_arn(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.service_arn", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `service_arn` after provisioning.\n"]
+    pub fn service_arn(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.service_arn", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `status` after provisioning.\n"]
-    pub fn status(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.status", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `status` after provisioning.\n"]
+    pub fn status(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.status", self.extract_ref()))
     }
 }
 
-impl Referable for ApprunnerCustomDomainAssociation {
-    fn extract_ref(&self) -> String {
+impl terrars::Referable for ApprunnerCustomDomainAssociation {
+    fn extract_ref(&self) -> std::string::String {
         format!("{}.{}", self.0.extract_resource_type(), self.0.extract_tf_id())
     }
 }
 
-impl Resource for ApprunnerCustomDomainAssociation { }
+impl terrars::Resource for ApprunnerCustomDomainAssociation { }
 
-impl ToListMappable for ApprunnerCustomDomainAssociation {
-    type O = ListRef<ApprunnerCustomDomainAssociationRef>;
+impl terrars::ToListMappable for ApprunnerCustomDomainAssociation {
+    type O = terrars::ListRef<ApprunnerCustomDomainAssociationRef>;
 
-    fn do_map(self, base: String) -> Self::O {
-        self.0.data.borrow_mut().for_each = Some(format!("${{{}}}", base));
-        ListRef::new(self.0.shared.clone(), self.extract_ref())
+    fn do_map(self, base: std::string::String) -> Self::O {
+        self.0.data.borrow_mut().for_each = std::option::Option::Some(format!("${{{}}}", base));
+        terrars::ListRef::new(self.0.shared.clone(), self.extract_ref())
     }
 }
 
-impl Resource_ for ApprunnerCustomDomainAssociation_ {
-    fn extract_resource_type(&self) -> String {
+impl terrars::Resource_ for ApprunnerCustomDomainAssociation_ {
+    fn extract_resource_type(&self) -> std::string::String {
         "aws_apprunner_custom_domain_association".into()
     }
 
-    fn extract_tf_id(&self) -> String {
+    fn extract_tf_id(&self) -> std::string::String {
         self.tf_id.clone()
     }
 
@@ -174,23 +211,24 @@ impl Resource_ for ApprunnerCustomDomainAssociation_ {
 }
 
 pub struct BuildApprunnerCustomDomainAssociation {
-    pub tf_id: String,
-    #[doc= ""]
-    pub domain_name: PrimField<String>,
-    #[doc= ""]
-    pub service_arn: PrimField<String>,
+    pub tf_id: std::string::String,
+    #[doc = ""]
+    pub domain_name: terrars::PrimField<std::string::String>,
+    #[doc = ""]
+    pub service_arn: terrars::PrimField<std::string::String>,
 }
 
 impl BuildApprunnerCustomDomainAssociation {
-    pub fn build(self, stack: &mut Stack) -> ApprunnerCustomDomainAssociation {
-        let out = ApprunnerCustomDomainAssociation(Rc::new(ApprunnerCustomDomainAssociation_ {
+    pub fn build(self, stack: &mut terrars::Stack) -> ApprunnerCustomDomainAssociation {
+        let out = ApprunnerCustomDomainAssociation(std::rc::Rc::new(ApprunnerCustomDomainAssociation_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: RefCell::new(ApprunnerCustomDomainAssociationData {
+            data: std::cell::RefCell::new(ApprunnerCustomDomainAssociationData {
                 depends_on: core::default::Default::default(),
-                provider: None,
+                provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
-                for_each: None,
+                for_each: std::option::Option::None,
+                provisioner: core::default::Default::default(),
                 domain_name: self.domain_name,
                 enable_www_subdomain: core::default::Default::default(),
                 id: core::default::Default::default(),
@@ -203,12 +241,12 @@ impl BuildApprunnerCustomDomainAssociation {
 }
 
 pub struct ApprunnerCustomDomainAssociationRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for ApprunnerCustomDomainAssociationRef {
-    fn new(shared: StackShared, base: String) -> Self {
+impl terrars::Ref for ApprunnerCustomDomainAssociationRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> Self {
         Self {
             shared: shared,
             base: base,
@@ -217,95 +255,95 @@ impl Ref for ApprunnerCustomDomainAssociationRef {
 }
 
 impl ApprunnerCustomDomainAssociationRef {
-    fn extract_ref(&self) -> String {
+    fn extract_ref(&self) -> std::string::String {
         self.base.clone()
     }
 
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `certificate_validation_records` after provisioning.\n"]
+    #[doc = "Get a reference to the value of field `certificate_validation_records` after provisioning.\n"]
     pub fn certificate_validation_records(
         &self,
-    ) -> SetRef<ApprunnerCustomDomainAssociationCertificateValidationRecordsElRef> {
-        SetRef::new(self.shared().clone(), format!("{}.certificate_validation_records", self.extract_ref()))
+    ) -> terrars::SetRef<ApprunnerCustomDomainAssociationCertificateValidationRecordsElRef> {
+        terrars::SetRef::new(self.shared().clone(), format!("{}.certificate_validation_records", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `dns_target` after provisioning.\n"]
-    pub fn dns_target(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.dns_target", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `dns_target` after provisioning.\n"]
+    pub fn dns_target(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.dns_target", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `domain_name` after provisioning.\n"]
-    pub fn domain_name(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.domain_name", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `domain_name` after provisioning.\n"]
+    pub fn domain_name(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.domain_name", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `enable_www_subdomain` after provisioning.\n"]
-    pub fn enable_www_subdomain(&self) -> PrimExpr<bool> {
-        PrimExpr::new(self.shared().clone(), format!("{}.enable_www_subdomain", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `enable_www_subdomain` after provisioning.\n"]
+    pub fn enable_www_subdomain(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.enable_www_subdomain", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `id` after provisioning.\n"]
-    pub fn id(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
+    pub fn id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `service_arn` after provisioning.\n"]
-    pub fn service_arn(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.service_arn", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `service_arn` after provisioning.\n"]
+    pub fn service_arn(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.service_arn", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `status` after provisioning.\n"]
-    pub fn status(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.status", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `status` after provisioning.\n"]
+    pub fn status(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.status", self.extract_ref()))
     }
 }
 
 #[derive(Serialize)]
 pub struct ApprunnerCustomDomainAssociationCertificateValidationRecordsEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    name: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    status: Option<PrimField<String>>,
-    #[serde(rename = "type", skip_serializing_if = "Option::is_none")]
-    type_: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    value: Option<PrimField<String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    name: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    status: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(rename = "type", skip_serializing_if = "std::option::Option::is_none")]
+    type_: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    value: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
 impl ApprunnerCustomDomainAssociationCertificateValidationRecordsEl {
-    #[doc= "Set the field `name`.\n"]
-    pub fn set_name(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.name = Some(v.into());
+    #[doc = "Set the field `name`.\n"]
+    pub fn set_name(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.name = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `status`.\n"]
-    pub fn set_status(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.status = Some(v.into());
+    #[doc = "Set the field `status`.\n"]
+    pub fn set_status(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.status = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `type_`.\n"]
-    pub fn set_type(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.type_ = Some(v.into());
+    #[doc = "Set the field `type_`.\n"]
+    pub fn set_type(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.type_ = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `value`.\n"]
-    pub fn set_value(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.value = Some(v.into());
+    #[doc = "Set the field `value`.\n"]
+    pub fn set_value(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.value = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl ToListMappable for ApprunnerCustomDomainAssociationCertificateValidationRecordsEl {
-    type O = BlockAssignable<ApprunnerCustomDomainAssociationCertificateValidationRecordsEl>;
+impl terrars::ToListMappable for ApprunnerCustomDomainAssociationCertificateValidationRecordsEl {
+    type O = terrars::BlockAssignable<ApprunnerCustomDomainAssociationCertificateValidationRecordsEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -327,12 +365,15 @@ impl BuildApprunnerCustomDomainAssociationCertificateValidationRecordsEl {
 }
 
 pub struct ApprunnerCustomDomainAssociationCertificateValidationRecordsElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for ApprunnerCustomDomainAssociationCertificateValidationRecordsElRef {
-    fn new(shared: StackShared, base: String) -> ApprunnerCustomDomainAssociationCertificateValidationRecordsElRef {
+impl terrars::Ref for ApprunnerCustomDomainAssociationCertificateValidationRecordsElRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> ApprunnerCustomDomainAssociationCertificateValidationRecordsElRef {
         ApprunnerCustomDomainAssociationCertificateValidationRecordsElRef {
             shared: shared,
             base: base.to_string(),
@@ -341,27 +382,27 @@ impl Ref for ApprunnerCustomDomainAssociationCertificateValidationRecordsElRef {
 }
 
 impl ApprunnerCustomDomainAssociationCertificateValidationRecordsElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `name` after provisioning.\n"]
-    pub fn name(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.name", self.base))
+    #[doc = "Get a reference to the value of field `name` after provisioning.\n"]
+    pub fn name(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `status` after provisioning.\n"]
-    pub fn status(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.status", self.base))
+    #[doc = "Get a reference to the value of field `status` after provisioning.\n"]
+    pub fn status(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.status", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `type_` after provisioning.\n"]
-    pub fn type_(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.type", self.base))
+    #[doc = "Get a reference to the value of field `type_` after provisioning.\n"]
+    pub fn type_(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.type", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `value` after provisioning.\n"]
-    pub fn value(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.value", self.base))
+    #[doc = "Get a reference to the value of field `value` after provisioning.\n"]
+    pub fn value(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.value", self.base))
     }
 }

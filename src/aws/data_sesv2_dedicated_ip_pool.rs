@@ -1,114 +1,145 @@
 use serde::Serialize;
-use std::cell::RefCell;
-use std::rc::Rc;
-use terrars::*;
+use terrars::{
+    Referable as _,
+    Datasource_ as _,
+    Ref as _,
+};
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
 struct DataSesv2DedicatedIpPoolData {
-    #[serde(skip_serializing_if = "Vec::is_empty")]
-    depends_on: Vec<String>,
-    #[serde(skip_serializing_if = "SerdeSkipDefault::is_default")]
-    provider: Option<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    for_each: Option<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    id: Option<PrimField<String>>,
-    pool_name: PrimField<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    tags: Option<RecField<PrimField<String>>>,
+    #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
+    depends_on: std::vec::Vec<std::string::String>,
+    #[serde(skip_serializing_if = "terrars::SerdeSkipDefault::is_default")]
+    provider: std::option::Option<std::string::String>,
+    #[serde(skip_serializing_if = "terrars::SerdeSkipDefault::is_default")]
+    lifecycle: terrars::DatasourceLifecycle,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    for_each: std::option::Option<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    id: std::option::Option<terrars::PrimField<std::string::String>>,
+    pool_name: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    tags: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
 }
 
 struct DataSesv2DedicatedIpPool_ {
-    shared: StackShared,
-    tf_id: String,
-    data: RefCell<DataSesv2DedicatedIpPoolData>,
+    shared: terrars::StackShared,
+    tf_id: std::string::String,
+    data: std::cell::RefCell<DataSesv2DedicatedIpPoolData>,
 }
 
 #[derive(Clone)]
-pub struct DataSesv2DedicatedIpPool(Rc<DataSesv2DedicatedIpPool_>);
+pub struct DataSesv2DedicatedIpPool(std::rc::Rc<DataSesv2DedicatedIpPool_>);
 
 impl DataSesv2DedicatedIpPool {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.0.shared
     }
 
-    pub fn depends_on(self, dep: &impl Referable) -> Self {
+    pub fn depends_on(self, dep: &impl terrars::Referable) -> Self {
         self.0.data.borrow_mut().depends_on.push(dep.extract_ref());
         self
     }
 
     pub fn set_provider(&self, provider: &ProviderAws) -> &Self {
-        self.0.data.borrow_mut().provider = Some(provider.provider_ref());
+        self.0.data.borrow_mut().provider = std::option::Option::Some(provider.provider_ref());
         self
     }
 
-    #[doc= "Set the field `id`.\n"]
-    pub fn set_id(self, v: impl Into<PrimField<String>>) -> Self {
-        self.0.data.borrow_mut().id = Some(v.into());
+    pub fn add_lifecycle_precondition(
+        self,
+        condition: impl std::convert::Into<terrars::PrimField<bool>>,
+        error_message: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.0.data.borrow_mut().lifecycle.precondition.push(terrars::LifecycleCondition {
+            condition: condition.into(),
+            error_message: error_message.into(),
+        });
         self
     }
 
-    #[doc= "Set the field `tags`.\n"]
-    pub fn set_tags(self, v: impl Into<RecField<PrimField<String>>>) -> Self {
-        self.0.data.borrow_mut().tags = Some(v.into());
+    pub fn add_lifecycle_postcondition(
+        self,
+        condition: impl std::convert::Into<terrars::PrimField<bool>>,
+        error_message: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.0.data.borrow_mut().lifecycle.postcondition.push(terrars::LifecycleCondition {
+            condition: condition.into(),
+            error_message: error_message.into(),
+        });
         self
     }
 
-    #[doc= "Get a reference to the value of field `arn` after provisioning.\n"]
-    pub fn arn(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.arn", self.extract_ref()))
+    #[doc = "Set the field `id`.\n"]
+    pub fn set_id(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().id = std::option::Option::Some(v.into());
+        self
     }
 
-    #[doc= "Get a reference to the value of field `dedicated_ips` after provisioning.\n"]
-    pub fn dedicated_ips(&self) -> ListRef<DataSesv2DedicatedIpPoolDedicatedIpsElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.dedicated_ips", self.extract_ref()))
+    #[doc = "Set the field `tags`.\n"]
+    pub fn set_tags(
+        self,
+        v: impl std::convert::Into<terrars::RecField<terrars::PrimField<std::string::String>>>,
+    ) -> Self {
+        self.0.data.borrow_mut().tags = std::option::Option::Some(v.into());
+        self
     }
 
-    #[doc= "Get a reference to the value of field `id` after provisioning.\n"]
-    pub fn id(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `arn` after provisioning.\n"]
+    pub fn arn(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.arn", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `pool_name` after provisioning.\n"]
-    pub fn pool_name(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.pool_name", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `dedicated_ips` after provisioning.\n"]
+    pub fn dedicated_ips(&self) -> terrars::ListRef<DataSesv2DedicatedIpPoolDedicatedIpsElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.dedicated_ips", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `scaling_mode` after provisioning.\n"]
-    pub fn scaling_mode(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.scaling_mode", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
+    pub fn id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `tags` after provisioning.\n"]
-    pub fn tags(&self) -> RecRef<PrimExpr<String>> {
-        RecRef::new(self.shared().clone(), format!("{}.tags", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `pool_name` after provisioning.\n"]
+    pub fn pool_name(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.pool_name", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `scaling_mode` after provisioning.\n"]
+    pub fn scaling_mode(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.scaling_mode", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `tags` after provisioning.\n"]
+    pub fn tags(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
+        terrars::RecRef::new(self.shared().clone(), format!("{}.tags", self.extract_ref()))
     }
 }
 
-impl Referable for DataSesv2DedicatedIpPool {
-    fn extract_ref(&self) -> String {
+impl terrars::Referable for DataSesv2DedicatedIpPool {
+    fn extract_ref(&self) -> std::string::String {
         format!("data.{}.{}", self.0.extract_datasource_type(), self.0.extract_tf_id())
     }
 }
 
-impl Datasource for DataSesv2DedicatedIpPool { }
+impl terrars::Datasource for DataSesv2DedicatedIpPool { }
 
-impl ToListMappable for DataSesv2DedicatedIpPool {
-    type O = ListRef<DataSesv2DedicatedIpPoolRef>;
+impl terrars::ToListMappable for DataSesv2DedicatedIpPool {
+    type O = terrars::ListRef<DataSesv2DedicatedIpPoolRef>;
 
-    fn do_map(self, base: String) -> Self::O {
-        self.0.data.borrow_mut().for_each = Some(format!("${{{}}}", base));
-        ListRef::new(self.0.shared.clone(), self.extract_ref())
+    fn do_map(self, base: std::string::String) -> Self::O {
+        self.0.data.borrow_mut().for_each = std::option::Option::Some(format!("${{{}}}", base));
+        terrars::ListRef::new(self.0.shared.clone(), self.extract_ref())
     }
 }
 
-impl Datasource_ for DataSesv2DedicatedIpPool_ {
-    fn extract_datasource_type(&self) -> String {
+impl terrars::Datasource_ for DataSesv2DedicatedIpPool_ {
+    fn extract_datasource_type(&self) -> std::string::String {
         "aws_sesv2_dedicated_ip_pool".into()
     }
 
-    fn extract_tf_id(&self) -> String {
+    fn extract_tf_id(&self) -> std::string::String {
         self.tf_id.clone()
     }
 
@@ -118,20 +149,21 @@ impl Datasource_ for DataSesv2DedicatedIpPool_ {
 }
 
 pub struct BuildDataSesv2DedicatedIpPool {
-    pub tf_id: String,
-    #[doc= ""]
-    pub pool_name: PrimField<String>,
+    pub tf_id: std::string::String,
+    #[doc = ""]
+    pub pool_name: terrars::PrimField<std::string::String>,
 }
 
 impl BuildDataSesv2DedicatedIpPool {
-    pub fn build(self, stack: &mut Stack) -> DataSesv2DedicatedIpPool {
-        let out = DataSesv2DedicatedIpPool(Rc::new(DataSesv2DedicatedIpPool_ {
+    pub fn build(self, stack: &mut terrars::Stack) -> DataSesv2DedicatedIpPool {
+        let out = DataSesv2DedicatedIpPool(std::rc::Rc::new(DataSesv2DedicatedIpPool_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: RefCell::new(DataSesv2DedicatedIpPoolData {
+            data: std::cell::RefCell::new(DataSesv2DedicatedIpPoolData {
                 depends_on: core::default::Default::default(),
-                provider: None,
-                for_each: None,
+                provider: std::option::Option::None,
+                lifecycle: core::default::Default::default(),
+                for_each: std::option::Option::None,
                 id: core::default::Default::default(),
                 pool_name: self.pool_name,
                 tags: core::default::Default::default(),
@@ -143,12 +175,12 @@ impl BuildDataSesv2DedicatedIpPool {
 }
 
 pub struct DataSesv2DedicatedIpPoolRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for DataSesv2DedicatedIpPoolRef {
-    fn new(shared: StackShared, base: String) -> Self {
+impl terrars::Ref for DataSesv2DedicatedIpPoolRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> Self {
         Self {
             shared: shared,
             base: base,
@@ -157,80 +189,80 @@ impl Ref for DataSesv2DedicatedIpPoolRef {
 }
 
 impl DataSesv2DedicatedIpPoolRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    fn extract_ref(&self) -> String {
+    fn extract_ref(&self) -> std::string::String {
         self.base.clone()
     }
 
-    #[doc= "Get a reference to the value of field `arn` after provisioning.\n"]
-    pub fn arn(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.arn", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `arn` after provisioning.\n"]
+    pub fn arn(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.arn", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `dedicated_ips` after provisioning.\n"]
-    pub fn dedicated_ips(&self) -> ListRef<DataSesv2DedicatedIpPoolDedicatedIpsElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.dedicated_ips", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `dedicated_ips` after provisioning.\n"]
+    pub fn dedicated_ips(&self) -> terrars::ListRef<DataSesv2DedicatedIpPoolDedicatedIpsElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.dedicated_ips", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `id` after provisioning.\n"]
-    pub fn id(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
+    pub fn id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `pool_name` after provisioning.\n"]
-    pub fn pool_name(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.pool_name", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `pool_name` after provisioning.\n"]
+    pub fn pool_name(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.pool_name", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `scaling_mode` after provisioning.\n"]
-    pub fn scaling_mode(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.scaling_mode", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `scaling_mode` after provisioning.\n"]
+    pub fn scaling_mode(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.scaling_mode", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `tags` after provisioning.\n"]
-    pub fn tags(&self) -> RecRef<PrimExpr<String>> {
-        RecRef::new(self.shared().clone(), format!("{}.tags", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `tags` after provisioning.\n"]
+    pub fn tags(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
+        terrars::RecRef::new(self.shared().clone(), format!("{}.tags", self.extract_ref()))
     }
 }
 
 #[derive(Serialize)]
 pub struct DataSesv2DedicatedIpPoolDedicatedIpsEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    ip: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    warmup_percentage: Option<PrimField<f64>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    warmup_status: Option<PrimField<String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    ip: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    warmup_percentage: std::option::Option<terrars::PrimField<f64>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    warmup_status: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
 impl DataSesv2DedicatedIpPoolDedicatedIpsEl {
-    #[doc= "Set the field `ip`.\n"]
-    pub fn set_ip(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.ip = Some(v.into());
+    #[doc = "Set the field `ip`.\n"]
+    pub fn set_ip(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.ip = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `warmup_percentage`.\n"]
-    pub fn set_warmup_percentage(mut self, v: impl Into<PrimField<f64>>) -> Self {
-        self.warmup_percentage = Some(v.into());
+    #[doc = "Set the field `warmup_percentage`.\n"]
+    pub fn set_warmup_percentage(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.warmup_percentage = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `warmup_status`.\n"]
-    pub fn set_warmup_status(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.warmup_status = Some(v.into());
+    #[doc = "Set the field `warmup_status`.\n"]
+    pub fn set_warmup_status(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.warmup_status = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl ToListMappable for DataSesv2DedicatedIpPoolDedicatedIpsEl {
-    type O = BlockAssignable<DataSesv2DedicatedIpPoolDedicatedIpsEl>;
+impl terrars::ToListMappable for DataSesv2DedicatedIpPoolDedicatedIpsEl {
+    type O = terrars::BlockAssignable<DataSesv2DedicatedIpPoolDedicatedIpsEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -251,12 +283,12 @@ impl BuildDataSesv2DedicatedIpPoolDedicatedIpsEl {
 }
 
 pub struct DataSesv2DedicatedIpPoolDedicatedIpsElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for DataSesv2DedicatedIpPoolDedicatedIpsElRef {
-    fn new(shared: StackShared, base: String) -> DataSesv2DedicatedIpPoolDedicatedIpsElRef {
+impl terrars::Ref for DataSesv2DedicatedIpPoolDedicatedIpsElRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataSesv2DedicatedIpPoolDedicatedIpsElRef {
         DataSesv2DedicatedIpPoolDedicatedIpsElRef {
             shared: shared,
             base: base.to_string(),
@@ -265,22 +297,22 @@ impl Ref for DataSesv2DedicatedIpPoolDedicatedIpsElRef {
 }
 
 impl DataSesv2DedicatedIpPoolDedicatedIpsElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `ip` after provisioning.\n"]
-    pub fn ip(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.ip", self.base))
+    #[doc = "Get a reference to the value of field `ip` after provisioning.\n"]
+    pub fn ip(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.ip", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `warmup_percentage` after provisioning.\n"]
-    pub fn warmup_percentage(&self) -> PrimExpr<f64> {
-        PrimExpr::new(self.shared().clone(), format!("{}.warmup_percentage", self.base))
+    #[doc = "Get a reference to the value of field `warmup_percentage` after provisioning.\n"]
+    pub fn warmup_percentage(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.warmup_percentage", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `warmup_status` after provisioning.\n"]
-    pub fn warmup_status(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.warmup_status", self.base))
+    #[doc = "Get a reference to the value of field `warmup_status` after provisioning.\n"]
+    pub fn warmup_status(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.warmup_status", self.base))
     }
 }

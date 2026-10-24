@@ -1,50 +1,54 @@
 use serde::Serialize;
-use std::cell::RefCell;
-use std::rc::Rc;
-use terrars::*;
+use terrars::{
+    Referable as _,
+    Resource_ as _,
+    Ref as _,
+};
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
 struct S3BucketLifecycleConfigurationData {
-    #[serde(skip_serializing_if = "Vec::is_empty")]
-    depends_on: Vec<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    provider: Option<String>,
-    #[serde(skip_serializing_if = "SerdeSkipDefault::is_default")]
-    lifecycle: ResourceLifecycle,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    for_each: Option<String>,
-    bucket: PrimField<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    expected_bucket_owner: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    id: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    rule: Option<Vec<S3BucketLifecycleConfigurationRuleEl>>,
+    #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
+    depends_on: std::vec::Vec<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    provider: std::option::Option<std::string::String>,
+    #[serde(skip_serializing_if = "terrars::SerdeSkipDefault::is_default")]
+    lifecycle: terrars::ResourceLifecycle,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    for_each: std::option::Option<std::string::String>,
+    #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
+    provisioner: std::vec::Vec<terrars::Provisioner>,
+    bucket: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    expected_bucket_owner: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    id: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    rule: std::option::Option<std::vec::Vec<S3BucketLifecycleConfigurationRuleEl>>,
     dynamic: S3BucketLifecycleConfigurationDynamic,
 }
 
 struct S3BucketLifecycleConfiguration_ {
-    shared: StackShared,
-    tf_id: String,
-    data: RefCell<S3BucketLifecycleConfigurationData>,
+    shared: terrars::StackShared,
+    tf_id: std::string::String,
+    data: std::cell::RefCell<S3BucketLifecycleConfigurationData>,
 }
 
 #[derive(Clone)]
-pub struct S3BucketLifecycleConfiguration(Rc<S3BucketLifecycleConfiguration_>);
+pub struct S3BucketLifecycleConfiguration(std::rc::Rc<S3BucketLifecycleConfiguration_>);
 
 impl S3BucketLifecycleConfiguration {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.0.shared
     }
 
-    pub fn depends_on(self, dep: &impl Referable) -> Self {
+    pub fn depends_on(self, dep: &impl terrars::Referable) -> Self {
         self.0.data.borrow_mut().depends_on.push(dep.extract_ref());
         self
     }
 
     pub fn set_provider(self, provider: &ProviderAws) -> Self {
-        self.0.data.borrow_mut().provider = Some(provider.provider_ref());
+        self.0.data.borrow_mut().provider = std::option::Option::Some(provider.provider_ref());
         self
     }
 
@@ -59,110 +63,146 @@ impl S3BucketLifecycleConfiguration {
     }
 
     pub fn ignore_changes_to_all(self) -> Self {
-        self.0.data.borrow_mut().lifecycle.ignore_changes = Some(IgnoreChanges::All(IgnoreChangesAll::All));
+        self.0.data.borrow_mut().lifecycle.ignore_changes =
+            std::option::Option::Some(terrars::IgnoreChanges::All(terrars::IgnoreChangesAll::All));
         self
     }
 
-    pub fn ignore_changes_to_attr(self, attr: impl ToString) -> Self {
+    pub fn ignore_changes_to_attr(self, attr: impl std::string::ToString) -> Self {
         {
             let mut d = self.0.data.borrow_mut();
             if match &mut d.lifecycle.ignore_changes {
-                Some(i) => match i {
-                    IgnoreChanges::All(_) => {
+                std::option::Option::Some(i) => match i {
+                    terrars::IgnoreChanges::All(_) => {
                         true
                     },
-                    IgnoreChanges::Refs(r) => {
+                    terrars::IgnoreChanges::Refs(r) => {
                         r.push(attr.to_string());
                         false
                     },
                 },
-                None => true,
+                std::option::Option::None => true,
             } {
-                d.lifecycle.ignore_changes = Some(IgnoreChanges::Refs(vec![attr.to_string()]));
+                d.lifecycle.ignore_changes =
+                    std::option::Option::Some(terrars::IgnoreChanges::Refs(vec![attr.to_string()]));
             }
         }
         self
     }
 
-    pub fn replace_triggered_by_resource(self, r: &impl Resource) -> Self {
+    pub fn replace_triggered_by_resource(self, r: &impl terrars::Resource) -> Self {
         self.0.data.borrow_mut().lifecycle.replace_triggered_by.push(r.extract_ref());
         self
     }
 
-    pub fn replace_triggered_by_attr(self, attr: impl ToString) -> Self {
+    pub fn replace_triggered_by_attr(self, attr: impl std::string::ToString) -> Self {
         self.0.data.borrow_mut().lifecycle.replace_triggered_by.push(attr.to_string());
         self
     }
 
-    #[doc= "Set the field `expected_bucket_owner`.\n"]
-    pub fn set_expected_bucket_owner(self, v: impl Into<PrimField<String>>) -> Self {
-        self.0.data.borrow_mut().expected_bucket_owner = Some(v.into());
+    #[doc = r" Add a provisioner (ex: `local-exec`, `remote-exec`, `file`) to this resource."]
+    #[doc = r" Provisioners run in the order they're added."]
+    pub fn add_provisioner(self, v: impl std::convert::Into<terrars::Provisioner>) -> Self {
+        self.0.data.borrow_mut().provisioner.push(v.into());
         self
     }
 
-    #[doc= "Set the field `id`.\n"]
-    pub fn set_id(self, v: impl Into<PrimField<String>>) -> Self {
-        self.0.data.borrow_mut().id = Some(v.into());
+    pub fn add_lifecycle_precondition(
+        self,
+        condition: impl std::convert::Into<terrars::PrimField<bool>>,
+        error_message: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.0.data.borrow_mut().lifecycle.precondition.push(terrars::LifecycleCondition {
+            condition: condition.into(),
+            error_message: error_message.into(),
+        });
         self
     }
 
-    #[doc= "Set the field `rule`.\n"]
-    pub fn set_rule(self, v: impl Into<BlockAssignable<S3BucketLifecycleConfigurationRuleEl>>) -> Self {
+    pub fn add_lifecycle_postcondition(
+        self,
+        condition: impl std::convert::Into<terrars::PrimField<bool>>,
+        error_message: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.0.data.borrow_mut().lifecycle.postcondition.push(terrars::LifecycleCondition {
+            condition: condition.into(),
+            error_message: error_message.into(),
+        });
+        self
+    }
+
+    #[doc = "Set the field `expected_bucket_owner`.\n"]
+    pub fn set_expected_bucket_owner(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().expected_bucket_owner = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `id`.\n"]
+    pub fn set_id(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().id = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `rule`.\n"]
+    pub fn set_rule(
+        self,
+        v: impl std::convert::Into<terrars::BlockAssignable<S3BucketLifecycleConfigurationRuleEl>>,
+    ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.0.data.borrow_mut().rule = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.0.data.borrow_mut().rule = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.0.data.borrow_mut().dynamic.rule = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.0.data.borrow_mut().dynamic.rule = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Get a reference to the value of field `bucket` after provisioning.\n"]
-    pub fn bucket(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.bucket", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `bucket` after provisioning.\n"]
+    pub fn bucket(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.bucket", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `expected_bucket_owner` after provisioning.\n"]
-    pub fn expected_bucket_owner(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.expected_bucket_owner", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `expected_bucket_owner` after provisioning.\n"]
+    pub fn expected_bucket_owner(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.expected_bucket_owner", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `id` after provisioning.\n"]
-    pub fn id(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
+    pub fn id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `rule` after provisioning.\n"]
-    pub fn rule(&self) -> ListRef<S3BucketLifecycleConfigurationRuleElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.rule", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `rule` after provisioning.\n"]
+    pub fn rule(&self) -> terrars::ListRef<S3BucketLifecycleConfigurationRuleElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.rule", self.extract_ref()))
     }
 }
 
-impl Referable for S3BucketLifecycleConfiguration {
-    fn extract_ref(&self) -> String {
+impl terrars::Referable for S3BucketLifecycleConfiguration {
+    fn extract_ref(&self) -> std::string::String {
         format!("{}.{}", self.0.extract_resource_type(), self.0.extract_tf_id())
     }
 }
 
-impl Resource for S3BucketLifecycleConfiguration { }
+impl terrars::Resource for S3BucketLifecycleConfiguration { }
 
-impl ToListMappable for S3BucketLifecycleConfiguration {
-    type O = ListRef<S3BucketLifecycleConfigurationRef>;
+impl terrars::ToListMappable for S3BucketLifecycleConfiguration {
+    type O = terrars::ListRef<S3BucketLifecycleConfigurationRef>;
 
-    fn do_map(self, base: String) -> Self::O {
-        self.0.data.borrow_mut().for_each = Some(format!("${{{}}}", base));
-        ListRef::new(self.0.shared.clone(), self.extract_ref())
+    fn do_map(self, base: std::string::String) -> Self::O {
+        self.0.data.borrow_mut().for_each = std::option::Option::Some(format!("${{{}}}", base));
+        terrars::ListRef::new(self.0.shared.clone(), self.extract_ref())
     }
 }
 
-impl Resource_ for S3BucketLifecycleConfiguration_ {
-    fn extract_resource_type(&self) -> String {
+impl terrars::Resource_ for S3BucketLifecycleConfiguration_ {
+    fn extract_resource_type(&self) -> std::string::String {
         "aws_s3_bucket_lifecycle_configuration".into()
     }
 
-    fn extract_tf_id(&self) -> String {
+    fn extract_tf_id(&self) -> std::string::String {
         self.tf_id.clone()
     }
 
@@ -172,26 +212,27 @@ impl Resource_ for S3BucketLifecycleConfiguration_ {
 }
 
 pub struct BuildS3BucketLifecycleConfiguration {
-    pub tf_id: String,
-    #[doc= ""]
-    pub bucket: PrimField<String>,
+    pub tf_id: std::string::String,
+    #[doc = ""]
+    pub bucket: terrars::PrimField<std::string::String>,
 }
 
 impl BuildS3BucketLifecycleConfiguration {
-    pub fn build(self, stack: &mut Stack) -> S3BucketLifecycleConfiguration {
-        let out = S3BucketLifecycleConfiguration(Rc::new(S3BucketLifecycleConfiguration_ {
+    pub fn build(self, stack: &mut terrars::Stack) -> S3BucketLifecycleConfiguration {
+        let out = S3BucketLifecycleConfiguration(std::rc::Rc::new(S3BucketLifecycleConfiguration_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: RefCell::new(S3BucketLifecycleConfigurationData {
+            data: std::cell::RefCell::new(S3BucketLifecycleConfigurationData {
                 depends_on: core::default::Default::default(),
-                provider: None,
+                provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
-                for_each: None,
+                for_each: std::option::Option::None,
+                provisioner: core::default::Default::default(),
                 bucket: self.bucket,
                 expected_bucket_owner: core::default::Default::default(),
                 id: core::default::Default::default(),
                 rule: core::default::Default::default(),
-                dynamic: Default::default(),
+                dynamic: core::default::Default::default(),
             }),
         }));
         stack.add_resource(out.0.clone());
@@ -200,12 +241,12 @@ impl BuildS3BucketLifecycleConfiguration {
 }
 
 pub struct S3BucketLifecycleConfigurationRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for S3BucketLifecycleConfigurationRef {
-    fn new(shared: StackShared, base: String) -> Self {
+impl terrars::Ref for S3BucketLifecycleConfigurationRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> Self {
         Self {
             shared: shared,
             base: base,
@@ -214,54 +255,54 @@ impl Ref for S3BucketLifecycleConfigurationRef {
 }
 
 impl S3BucketLifecycleConfigurationRef {
-    fn extract_ref(&self) -> String {
+    fn extract_ref(&self) -> std::string::String {
         self.base.clone()
     }
 
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `bucket` after provisioning.\n"]
-    pub fn bucket(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.bucket", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `bucket` after provisioning.\n"]
+    pub fn bucket(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.bucket", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `expected_bucket_owner` after provisioning.\n"]
-    pub fn expected_bucket_owner(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.expected_bucket_owner", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `expected_bucket_owner` after provisioning.\n"]
+    pub fn expected_bucket_owner(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.expected_bucket_owner", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `id` after provisioning.\n"]
-    pub fn id(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
+    pub fn id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `rule` after provisioning.\n"]
-    pub fn rule(&self) -> ListRef<S3BucketLifecycleConfigurationRuleElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.rule", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `rule` after provisioning.\n"]
+    pub fn rule(&self) -> terrars::ListRef<S3BucketLifecycleConfigurationRuleElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.rule", self.extract_ref()))
     }
 }
 
 #[derive(Serialize)]
 pub struct S3BucketLifecycleConfigurationRuleElAbortIncompleteMultipartUploadEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    days_after_initiation: Option<PrimField<f64>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    days_after_initiation: std::option::Option<terrars::PrimField<f64>>,
 }
 
 impl S3BucketLifecycleConfigurationRuleElAbortIncompleteMultipartUploadEl {
-    #[doc= "Set the field `days_after_initiation`.\n"]
-    pub fn set_days_after_initiation(mut self, v: impl Into<PrimField<f64>>) -> Self {
-        self.days_after_initiation = Some(v.into());
+    #[doc = "Set the field `days_after_initiation`.\n"]
+    pub fn set_days_after_initiation(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.days_after_initiation = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl ToListMappable for S3BucketLifecycleConfigurationRuleElAbortIncompleteMultipartUploadEl {
-    type O = BlockAssignable<S3BucketLifecycleConfigurationRuleElAbortIncompleteMultipartUploadEl>;
+impl terrars::ToListMappable for S3BucketLifecycleConfigurationRuleElAbortIncompleteMultipartUploadEl {
+    type O = terrars::BlockAssignable<S3BucketLifecycleConfigurationRuleElAbortIncompleteMultipartUploadEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -280,14 +321,14 @@ impl BuildS3BucketLifecycleConfigurationRuleElAbortIncompleteMultipartUploadEl {
 }
 
 pub struct S3BucketLifecycleConfigurationRuleElAbortIncompleteMultipartUploadElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for S3BucketLifecycleConfigurationRuleElAbortIncompleteMultipartUploadElRef {
+impl terrars::Ref for S3BucketLifecycleConfigurationRuleElAbortIncompleteMultipartUploadElRef {
     fn new(
-        shared: StackShared,
-        base: String,
+        shared: terrars::StackShared,
+        base: std::string::String,
     ) -> S3BucketLifecycleConfigurationRuleElAbortIncompleteMultipartUploadElRef {
         S3BucketLifecycleConfigurationRuleElAbortIncompleteMultipartUploadElRef {
             shared: shared,
@@ -297,51 +338,51 @@ impl Ref for S3BucketLifecycleConfigurationRuleElAbortIncompleteMultipartUploadE
 }
 
 impl S3BucketLifecycleConfigurationRuleElAbortIncompleteMultipartUploadElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `days_after_initiation` after provisioning.\n"]
-    pub fn days_after_initiation(&self) -> PrimExpr<f64> {
-        PrimExpr::new(self.shared().clone(), format!("{}.days_after_initiation", self.base))
+    #[doc = "Get a reference to the value of field `days_after_initiation` after provisioning.\n"]
+    pub fn days_after_initiation(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.days_after_initiation", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct S3BucketLifecycleConfigurationRuleElExpirationEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    date: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    days: Option<PrimField<f64>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    expired_object_delete_marker: Option<PrimField<bool>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    date: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    days: std::option::Option<terrars::PrimField<f64>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    expired_object_delete_marker: std::option::Option<terrars::PrimField<bool>>,
 }
 
 impl S3BucketLifecycleConfigurationRuleElExpirationEl {
-    #[doc= "Set the field `date`.\n"]
-    pub fn set_date(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.date = Some(v.into());
+    #[doc = "Set the field `date`.\n"]
+    pub fn set_date(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.date = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `days`.\n"]
-    pub fn set_days(mut self, v: impl Into<PrimField<f64>>) -> Self {
-        self.days = Some(v.into());
+    #[doc = "Set the field `days`.\n"]
+    pub fn set_days(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.days = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `expired_object_delete_marker`.\n"]
-    pub fn set_expired_object_delete_marker(mut self, v: impl Into<PrimField<bool>>) -> Self {
-        self.expired_object_delete_marker = Some(v.into());
+    #[doc = "Set the field `expired_object_delete_marker`.\n"]
+    pub fn set_expired_object_delete_marker(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
+        self.expired_object_delete_marker = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl ToListMappable for S3BucketLifecycleConfigurationRuleElExpirationEl {
-    type O = BlockAssignable<S3BucketLifecycleConfigurationRuleElExpirationEl>;
+impl terrars::ToListMappable for S3BucketLifecycleConfigurationRuleElExpirationEl {
+    type O = terrars::BlockAssignable<S3BucketLifecycleConfigurationRuleElExpirationEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -362,12 +403,15 @@ impl BuildS3BucketLifecycleConfigurationRuleElExpirationEl {
 }
 
 pub struct S3BucketLifecycleConfigurationRuleElExpirationElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for S3BucketLifecycleConfigurationRuleElExpirationElRef {
-    fn new(shared: StackShared, base: String) -> S3BucketLifecycleConfigurationRuleElExpirationElRef {
+impl terrars::Ref for S3BucketLifecycleConfigurationRuleElExpirationElRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> S3BucketLifecycleConfigurationRuleElExpirationElRef {
         S3BucketLifecycleConfigurationRuleElExpirationElRef {
             shared: shared,
             base: base.to_string(),
@@ -376,69 +420,72 @@ impl Ref for S3BucketLifecycleConfigurationRuleElExpirationElRef {
 }
 
 impl S3BucketLifecycleConfigurationRuleElExpirationElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `date` after provisioning.\n"]
-    pub fn date(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.date", self.base))
+    #[doc = "Get a reference to the value of field `date` after provisioning.\n"]
+    pub fn date(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.date", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `days` after provisioning.\n"]
-    pub fn days(&self) -> PrimExpr<f64> {
-        PrimExpr::new(self.shared().clone(), format!("{}.days", self.base))
+    #[doc = "Get a reference to the value of field `days` after provisioning.\n"]
+    pub fn days(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.days", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `expired_object_delete_marker` after provisioning.\n"]
-    pub fn expired_object_delete_marker(&self) -> PrimExpr<bool> {
-        PrimExpr::new(self.shared().clone(), format!("{}.expired_object_delete_marker", self.base))
+    #[doc = "Get a reference to the value of field `expired_object_delete_marker` after provisioning.\n"]
+    pub fn expired_object_delete_marker(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.expired_object_delete_marker", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct S3BucketLifecycleConfigurationRuleElFilterElAndEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    object_size_greater_than: Option<PrimField<f64>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    object_size_less_than: Option<PrimField<f64>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    prefix: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    tags: Option<RecField<PrimField<String>>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    object_size_greater_than: std::option::Option<terrars::PrimField<f64>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    object_size_less_than: std::option::Option<terrars::PrimField<f64>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    prefix: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    tags: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
 }
 
 impl S3BucketLifecycleConfigurationRuleElFilterElAndEl {
-    #[doc= "Set the field `object_size_greater_than`.\n"]
-    pub fn set_object_size_greater_than(mut self, v: impl Into<PrimField<f64>>) -> Self {
-        self.object_size_greater_than = Some(v.into());
+    #[doc = "Set the field `object_size_greater_than`.\n"]
+    pub fn set_object_size_greater_than(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.object_size_greater_than = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `object_size_less_than`.\n"]
-    pub fn set_object_size_less_than(mut self, v: impl Into<PrimField<f64>>) -> Self {
-        self.object_size_less_than = Some(v.into());
+    #[doc = "Set the field `object_size_less_than`.\n"]
+    pub fn set_object_size_less_than(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.object_size_less_than = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `prefix`.\n"]
-    pub fn set_prefix(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.prefix = Some(v.into());
+    #[doc = "Set the field `prefix`.\n"]
+    pub fn set_prefix(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.prefix = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `tags`.\n"]
-    pub fn set_tags(mut self, v: impl Into<RecField<PrimField<String>>>) -> Self {
-        self.tags = Some(v.into());
+    #[doc = "Set the field `tags`.\n"]
+    pub fn set_tags(
+        mut self,
+        v: impl std::convert::Into<terrars::RecField<terrars::PrimField<std::string::String>>>,
+    ) -> Self {
+        self.tags = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl ToListMappable for S3BucketLifecycleConfigurationRuleElFilterElAndEl {
-    type O = BlockAssignable<S3BucketLifecycleConfigurationRuleElFilterElAndEl>;
+impl terrars::ToListMappable for S3BucketLifecycleConfigurationRuleElFilterElAndEl {
+    type O = terrars::BlockAssignable<S3BucketLifecycleConfigurationRuleElFilterElAndEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -460,12 +507,15 @@ impl BuildS3BucketLifecycleConfigurationRuleElFilterElAndEl {
 }
 
 pub struct S3BucketLifecycleConfigurationRuleElFilterElAndElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for S3BucketLifecycleConfigurationRuleElFilterElAndElRef {
-    fn new(shared: StackShared, base: String) -> S3BucketLifecycleConfigurationRuleElFilterElAndElRef {
+impl terrars::Ref for S3BucketLifecycleConfigurationRuleElFilterElAndElRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> S3BucketLifecycleConfigurationRuleElFilterElAndElRef {
         S3BucketLifecycleConfigurationRuleElFilterElAndElRef {
             shared: shared,
             base: base.to_string(),
@@ -474,44 +524,44 @@ impl Ref for S3BucketLifecycleConfigurationRuleElFilterElAndElRef {
 }
 
 impl S3BucketLifecycleConfigurationRuleElFilterElAndElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `object_size_greater_than` after provisioning.\n"]
-    pub fn object_size_greater_than(&self) -> PrimExpr<f64> {
-        PrimExpr::new(self.shared().clone(), format!("{}.object_size_greater_than", self.base))
+    #[doc = "Get a reference to the value of field `object_size_greater_than` after provisioning.\n"]
+    pub fn object_size_greater_than(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.object_size_greater_than", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `object_size_less_than` after provisioning.\n"]
-    pub fn object_size_less_than(&self) -> PrimExpr<f64> {
-        PrimExpr::new(self.shared().clone(), format!("{}.object_size_less_than", self.base))
+    #[doc = "Get a reference to the value of field `object_size_less_than` after provisioning.\n"]
+    pub fn object_size_less_than(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.object_size_less_than", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `prefix` after provisioning.\n"]
-    pub fn prefix(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.prefix", self.base))
+    #[doc = "Get a reference to the value of field `prefix` after provisioning.\n"]
+    pub fn prefix(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.prefix", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `tags` after provisioning.\n"]
-    pub fn tags(&self) -> RecRef<PrimExpr<String>> {
-        RecRef::new(self.shared().clone(), format!("{}.tags", self.base))
+    #[doc = "Get a reference to the value of field `tags` after provisioning.\n"]
+    pub fn tags(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
+        terrars::RecRef::new(self.shared().clone(), format!("{}.tags", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct S3BucketLifecycleConfigurationRuleElFilterElTagEl {
-    key: PrimField<String>,
-    value: PrimField<String>,
+    key: terrars::PrimField<std::string::String>,
+    value: terrars::PrimField<std::string::String>,
 }
 
 impl S3BucketLifecycleConfigurationRuleElFilterElTagEl { }
 
-impl ToListMappable for S3BucketLifecycleConfigurationRuleElFilterElTagEl {
-    type O = BlockAssignable<S3BucketLifecycleConfigurationRuleElFilterElTagEl>;
+impl terrars::ToListMappable for S3BucketLifecycleConfigurationRuleElFilterElTagEl {
+    type O = terrars::BlockAssignable<S3BucketLifecycleConfigurationRuleElFilterElTagEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -520,10 +570,10 @@ impl ToListMappable for S3BucketLifecycleConfigurationRuleElFilterElTagEl {
 }
 
 pub struct BuildS3BucketLifecycleConfigurationRuleElFilterElTagEl {
-    #[doc= ""]
-    pub key: PrimField<String>,
-    #[doc= ""]
-    pub value: PrimField<String>,
+    #[doc = ""]
+    pub key: terrars::PrimField<std::string::String>,
+    #[doc = ""]
+    pub value: terrars::PrimField<std::string::String>,
 }
 
 impl BuildS3BucketLifecycleConfigurationRuleElFilterElTagEl {
@@ -536,12 +586,15 @@ impl BuildS3BucketLifecycleConfigurationRuleElFilterElTagEl {
 }
 
 pub struct S3BucketLifecycleConfigurationRuleElFilterElTagElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for S3BucketLifecycleConfigurationRuleElFilterElTagElRef {
-    fn new(shared: StackShared, base: String) -> S3BucketLifecycleConfigurationRuleElFilterElTagElRef {
+impl terrars::Ref for S3BucketLifecycleConfigurationRuleElFilterElTagElRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> S3BucketLifecycleConfigurationRuleElFilterElTagElRef {
         S3BucketLifecycleConfigurationRuleElFilterElTagElRef {
             shared: shared,
             base: base.to_string(),
@@ -550,93 +603,105 @@ impl Ref for S3BucketLifecycleConfigurationRuleElFilterElTagElRef {
 }
 
 impl S3BucketLifecycleConfigurationRuleElFilterElTagElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `key` after provisioning.\n"]
-    pub fn key(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.key", self.base))
+    #[doc = "Get a reference to the value of field `key` after provisioning.\n"]
+    pub fn key(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.key", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `value` after provisioning.\n"]
-    pub fn value(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.value", self.base))
+    #[doc = "Get a reference to the value of field `value` after provisioning.\n"]
+    pub fn value(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.value", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
 struct S3BucketLifecycleConfigurationRuleElFilterElDynamic {
-    and: Option<DynamicBlock<S3BucketLifecycleConfigurationRuleElFilterElAndEl>>,
-    tag: Option<DynamicBlock<S3BucketLifecycleConfigurationRuleElFilterElTagEl>>,
+    and: std::option::Option<terrars::DynamicBlock<S3BucketLifecycleConfigurationRuleElFilterElAndEl>>,
+    tag: std::option::Option<terrars::DynamicBlock<S3BucketLifecycleConfigurationRuleElFilterElTagEl>>,
 }
 
 #[derive(Serialize)]
 pub struct S3BucketLifecycleConfigurationRuleElFilterEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    object_size_greater_than: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    object_size_less_than: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    prefix: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    and: Option<Vec<S3BucketLifecycleConfigurationRuleElFilterElAndEl>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    tag: Option<Vec<S3BucketLifecycleConfigurationRuleElFilterElTagEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    object_size_greater_than: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    object_size_less_than: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    prefix: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    and: std::option::Option<std::vec::Vec<S3BucketLifecycleConfigurationRuleElFilterElAndEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    tag: std::option::Option<std::vec::Vec<S3BucketLifecycleConfigurationRuleElFilterElTagEl>>,
     dynamic: S3BucketLifecycleConfigurationRuleElFilterElDynamic,
 }
 
 impl S3BucketLifecycleConfigurationRuleElFilterEl {
-    #[doc= "Set the field `object_size_greater_than`.\n"]
-    pub fn set_object_size_greater_than(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.object_size_greater_than = Some(v.into());
+    #[doc = "Set the field `object_size_greater_than`.\n"]
+    pub fn set_object_size_greater_than(
+        mut self,
+        v: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.object_size_greater_than = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `object_size_less_than`.\n"]
-    pub fn set_object_size_less_than(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.object_size_less_than = Some(v.into());
+    #[doc = "Set the field `object_size_less_than`.\n"]
+    pub fn set_object_size_less_than(
+        mut self,
+        v: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.object_size_less_than = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `prefix`.\n"]
-    pub fn set_prefix(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.prefix = Some(v.into());
+    #[doc = "Set the field `prefix`.\n"]
+    pub fn set_prefix(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.prefix = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `and`.\n"]
-    pub fn set_and(mut self, v: impl Into<BlockAssignable<S3BucketLifecycleConfigurationRuleElFilterElAndEl>>) -> Self {
+    #[doc = "Set the field `and`.\n"]
+    pub fn set_and(
+        mut self,
+        v: impl std::convert::Into<terrars::BlockAssignable<S3BucketLifecycleConfigurationRuleElFilterElAndEl>>,
+    ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.and = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.and = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.and = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.and = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Set the field `tag`.\n"]
-    pub fn set_tag(mut self, v: impl Into<BlockAssignable<S3BucketLifecycleConfigurationRuleElFilterElTagEl>>) -> Self {
+    #[doc = "Set the field `tag`.\n"]
+    pub fn set_tag(
+        mut self,
+        v: impl std::convert::Into<terrars::BlockAssignable<S3BucketLifecycleConfigurationRuleElFilterElTagEl>>,
+    ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.tag = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.tag = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.tag = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.tag = std::option::Option::Some(d);
             },
         }
         self
     }
 }
 
-impl ToListMappable for S3BucketLifecycleConfigurationRuleElFilterEl {
-    type O = BlockAssignable<S3BucketLifecycleConfigurationRuleElFilterEl>;
+impl terrars::ToListMappable for S3BucketLifecycleConfigurationRuleElFilterEl {
+    type O = terrars::BlockAssignable<S3BucketLifecycleConfigurationRuleElFilterEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -654,18 +719,21 @@ impl BuildS3BucketLifecycleConfigurationRuleElFilterEl {
             prefix: core::default::Default::default(),
             and: core::default::Default::default(),
             tag: core::default::Default::default(),
-            dynamic: Default::default(),
+            dynamic: core::default::Default::default(),
         }
     }
 }
 
 pub struct S3BucketLifecycleConfigurationRuleElFilterElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for S3BucketLifecycleConfigurationRuleElFilterElRef {
-    fn new(shared: StackShared, base: String) -> S3BucketLifecycleConfigurationRuleElFilterElRef {
+impl terrars::Ref for S3BucketLifecycleConfigurationRuleElFilterElRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> S3BucketLifecycleConfigurationRuleElFilterElRef {
         S3BucketLifecycleConfigurationRuleElFilterElRef {
             shared: shared,
             base: base.to_string(),
@@ -674,63 +742,66 @@ impl Ref for S3BucketLifecycleConfigurationRuleElFilterElRef {
 }
 
 impl S3BucketLifecycleConfigurationRuleElFilterElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `object_size_greater_than` after provisioning.\n"]
-    pub fn object_size_greater_than(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.object_size_greater_than", self.base))
+    #[doc = "Get a reference to the value of field `object_size_greater_than` after provisioning.\n"]
+    pub fn object_size_greater_than(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.object_size_greater_than", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `object_size_less_than` after provisioning.\n"]
-    pub fn object_size_less_than(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.object_size_less_than", self.base))
+    #[doc = "Get a reference to the value of field `object_size_less_than` after provisioning.\n"]
+    pub fn object_size_less_than(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.object_size_less_than", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `prefix` after provisioning.\n"]
-    pub fn prefix(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.prefix", self.base))
+    #[doc = "Get a reference to the value of field `prefix` after provisioning.\n"]
+    pub fn prefix(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.prefix", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `and` after provisioning.\n"]
-    pub fn and(&self) -> ListRef<S3BucketLifecycleConfigurationRuleElFilterElAndElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.and", self.base))
+    #[doc = "Get a reference to the value of field `and` after provisioning.\n"]
+    pub fn and(&self) -> terrars::ListRef<S3BucketLifecycleConfigurationRuleElFilterElAndElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.and", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `tag` after provisioning.\n"]
-    pub fn tag(&self) -> ListRef<S3BucketLifecycleConfigurationRuleElFilterElTagElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.tag", self.base))
+    #[doc = "Get a reference to the value of field `tag` after provisioning.\n"]
+    pub fn tag(&self) -> terrars::ListRef<S3BucketLifecycleConfigurationRuleElFilterElTagElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.tag", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct S3BucketLifecycleConfigurationRuleElNoncurrentVersionExpirationEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    newer_noncurrent_versions: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    noncurrent_days: Option<PrimField<f64>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    newer_noncurrent_versions: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    noncurrent_days: std::option::Option<terrars::PrimField<f64>>,
 }
 
 impl S3BucketLifecycleConfigurationRuleElNoncurrentVersionExpirationEl {
-    #[doc= "Set the field `newer_noncurrent_versions`.\n"]
-    pub fn set_newer_noncurrent_versions(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.newer_noncurrent_versions = Some(v.into());
+    #[doc = "Set the field `newer_noncurrent_versions`.\n"]
+    pub fn set_newer_noncurrent_versions(
+        mut self,
+        v: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.newer_noncurrent_versions = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `noncurrent_days`.\n"]
-    pub fn set_noncurrent_days(mut self, v: impl Into<PrimField<f64>>) -> Self {
-        self.noncurrent_days = Some(v.into());
+    #[doc = "Set the field `noncurrent_days`.\n"]
+    pub fn set_noncurrent_days(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.noncurrent_days = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl ToListMappable for S3BucketLifecycleConfigurationRuleElNoncurrentVersionExpirationEl {
-    type O = BlockAssignable<S3BucketLifecycleConfigurationRuleElNoncurrentVersionExpirationEl>;
+impl terrars::ToListMappable for S3BucketLifecycleConfigurationRuleElNoncurrentVersionExpirationEl {
+    type O = terrars::BlockAssignable<S3BucketLifecycleConfigurationRuleElNoncurrentVersionExpirationEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -750,14 +821,14 @@ impl BuildS3BucketLifecycleConfigurationRuleElNoncurrentVersionExpirationEl {
 }
 
 pub struct S3BucketLifecycleConfigurationRuleElNoncurrentVersionExpirationElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for S3BucketLifecycleConfigurationRuleElNoncurrentVersionExpirationElRef {
+impl terrars::Ref for S3BucketLifecycleConfigurationRuleElNoncurrentVersionExpirationElRef {
     fn new(
-        shared: StackShared,
-        base: String,
+        shared: terrars::StackShared,
+        base: std::string::String,
     ) -> S3BucketLifecycleConfigurationRuleElNoncurrentVersionExpirationElRef {
         S3BucketLifecycleConfigurationRuleElNoncurrentVersionExpirationElRef {
             shared: shared,
@@ -767,49 +838,52 @@ impl Ref for S3BucketLifecycleConfigurationRuleElNoncurrentVersionExpirationElRe
 }
 
 impl S3BucketLifecycleConfigurationRuleElNoncurrentVersionExpirationElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `newer_noncurrent_versions` after provisioning.\n"]
-    pub fn newer_noncurrent_versions(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.newer_noncurrent_versions", self.base))
+    #[doc = "Get a reference to the value of field `newer_noncurrent_versions` after provisioning.\n"]
+    pub fn newer_noncurrent_versions(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.newer_noncurrent_versions", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `noncurrent_days` after provisioning.\n"]
-    pub fn noncurrent_days(&self) -> PrimExpr<f64> {
-        PrimExpr::new(self.shared().clone(), format!("{}.noncurrent_days", self.base))
+    #[doc = "Get a reference to the value of field `noncurrent_days` after provisioning.\n"]
+    pub fn noncurrent_days(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.noncurrent_days", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct S3BucketLifecycleConfigurationRuleElNoncurrentVersionTransitionEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    newer_noncurrent_versions: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    noncurrent_days: Option<PrimField<f64>>,
-    storage_class: PrimField<String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    newer_noncurrent_versions: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    noncurrent_days: std::option::Option<terrars::PrimField<f64>>,
+    storage_class: terrars::PrimField<std::string::String>,
 }
 
 impl S3BucketLifecycleConfigurationRuleElNoncurrentVersionTransitionEl {
-    #[doc= "Set the field `newer_noncurrent_versions`.\n"]
-    pub fn set_newer_noncurrent_versions(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.newer_noncurrent_versions = Some(v.into());
+    #[doc = "Set the field `newer_noncurrent_versions`.\n"]
+    pub fn set_newer_noncurrent_versions(
+        mut self,
+        v: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.newer_noncurrent_versions = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `noncurrent_days`.\n"]
-    pub fn set_noncurrent_days(mut self, v: impl Into<PrimField<f64>>) -> Self {
-        self.noncurrent_days = Some(v.into());
+    #[doc = "Set the field `noncurrent_days`.\n"]
+    pub fn set_noncurrent_days(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.noncurrent_days = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl ToListMappable for S3BucketLifecycleConfigurationRuleElNoncurrentVersionTransitionEl {
-    type O = BlockAssignable<S3BucketLifecycleConfigurationRuleElNoncurrentVersionTransitionEl>;
+impl terrars::ToListMappable for S3BucketLifecycleConfigurationRuleElNoncurrentVersionTransitionEl {
+    type O = terrars::BlockAssignable<S3BucketLifecycleConfigurationRuleElNoncurrentVersionTransitionEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -818,8 +892,8 @@ impl ToListMappable for S3BucketLifecycleConfigurationRuleElNoncurrentVersionTra
 }
 
 pub struct BuildS3BucketLifecycleConfigurationRuleElNoncurrentVersionTransitionEl {
-    #[doc= ""]
-    pub storage_class: PrimField<String>,
+    #[doc = ""]
+    pub storage_class: terrars::PrimField<std::string::String>,
 }
 
 impl BuildS3BucketLifecycleConfigurationRuleElNoncurrentVersionTransitionEl {
@@ -833,14 +907,14 @@ impl BuildS3BucketLifecycleConfigurationRuleElNoncurrentVersionTransitionEl {
 }
 
 pub struct S3BucketLifecycleConfigurationRuleElNoncurrentVersionTransitionElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for S3BucketLifecycleConfigurationRuleElNoncurrentVersionTransitionElRef {
+impl terrars::Ref for S3BucketLifecycleConfigurationRuleElNoncurrentVersionTransitionElRef {
     fn new(
-        shared: StackShared,
-        base: String,
+        shared: terrars::StackShared,
+        base: std::string::String,
     ) -> S3BucketLifecycleConfigurationRuleElNoncurrentVersionTransitionElRef {
         S3BucketLifecycleConfigurationRuleElNoncurrentVersionTransitionElRef {
             shared: shared,
@@ -850,54 +924,54 @@ impl Ref for S3BucketLifecycleConfigurationRuleElNoncurrentVersionTransitionElRe
 }
 
 impl S3BucketLifecycleConfigurationRuleElNoncurrentVersionTransitionElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `newer_noncurrent_versions` after provisioning.\n"]
-    pub fn newer_noncurrent_versions(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.newer_noncurrent_versions", self.base))
+    #[doc = "Get a reference to the value of field `newer_noncurrent_versions` after provisioning.\n"]
+    pub fn newer_noncurrent_versions(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.newer_noncurrent_versions", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `noncurrent_days` after provisioning.\n"]
-    pub fn noncurrent_days(&self) -> PrimExpr<f64> {
-        PrimExpr::new(self.shared().clone(), format!("{}.noncurrent_days", self.base))
+    #[doc = "Get a reference to the value of field `noncurrent_days` after provisioning.\n"]
+    pub fn noncurrent_days(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.noncurrent_days", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `storage_class` after provisioning.\n"]
-    pub fn storage_class(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.storage_class", self.base))
+    #[doc = "Get a reference to the value of field `storage_class` after provisioning.\n"]
+    pub fn storage_class(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.storage_class", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct S3BucketLifecycleConfigurationRuleElTransitionEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    date: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    days: Option<PrimField<f64>>,
-    storage_class: PrimField<String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    date: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    days: std::option::Option<terrars::PrimField<f64>>,
+    storage_class: terrars::PrimField<std::string::String>,
 }
 
 impl S3BucketLifecycleConfigurationRuleElTransitionEl {
-    #[doc= "Set the field `date`.\n"]
-    pub fn set_date(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.date = Some(v.into());
+    #[doc = "Set the field `date`.\n"]
+    pub fn set_date(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.date = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `days`.\n"]
-    pub fn set_days(mut self, v: impl Into<PrimField<f64>>) -> Self {
-        self.days = Some(v.into());
+    #[doc = "Set the field `days`.\n"]
+    pub fn set_days(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.days = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl ToListMappable for S3BucketLifecycleConfigurationRuleElTransitionEl {
-    type O = BlockAssignable<S3BucketLifecycleConfigurationRuleElTransitionEl>;
+impl terrars::ToListMappable for S3BucketLifecycleConfigurationRuleElTransitionEl {
+    type O = terrars::BlockAssignable<S3BucketLifecycleConfigurationRuleElTransitionEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -906,8 +980,8 @@ impl ToListMappable for S3BucketLifecycleConfigurationRuleElTransitionEl {
 }
 
 pub struct BuildS3BucketLifecycleConfigurationRuleElTransitionEl {
-    #[doc= ""]
-    pub storage_class: PrimField<String>,
+    #[doc = ""]
+    pub storage_class: terrars::PrimField<std::string::String>,
 }
 
 impl BuildS3BucketLifecycleConfigurationRuleElTransitionEl {
@@ -921,12 +995,15 @@ impl BuildS3BucketLifecycleConfigurationRuleElTransitionEl {
 }
 
 pub struct S3BucketLifecycleConfigurationRuleElTransitionElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for S3BucketLifecycleConfigurationRuleElTransitionElRef {
-    fn new(shared: StackShared, base: String) -> S3BucketLifecycleConfigurationRuleElTransitionElRef {
+impl terrars::Ref for S3BucketLifecycleConfigurationRuleElTransitionElRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> S3BucketLifecycleConfigurationRuleElTransitionElRef {
         S3BucketLifecycleConfigurationRuleElTransitionElRef {
             shared: shared,
             base: base.to_string(),
@@ -935,169 +1012,199 @@ impl Ref for S3BucketLifecycleConfigurationRuleElTransitionElRef {
 }
 
 impl S3BucketLifecycleConfigurationRuleElTransitionElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `date` after provisioning.\n"]
-    pub fn date(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.date", self.base))
+    #[doc = "Get a reference to the value of field `date` after provisioning.\n"]
+    pub fn date(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.date", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `days` after provisioning.\n"]
-    pub fn days(&self) -> PrimExpr<f64> {
-        PrimExpr::new(self.shared().clone(), format!("{}.days", self.base))
+    #[doc = "Get a reference to the value of field `days` after provisioning.\n"]
+    pub fn days(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.days", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `storage_class` after provisioning.\n"]
-    pub fn storage_class(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.storage_class", self.base))
+    #[doc = "Get a reference to the value of field `storage_class` after provisioning.\n"]
+    pub fn storage_class(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.storage_class", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
 struct S3BucketLifecycleConfigurationRuleElDynamic {
-    abort_incomplete_multipart_upload: Option<
-        DynamicBlock<S3BucketLifecycleConfigurationRuleElAbortIncompleteMultipartUploadEl>,
-    >,
-    expiration: Option<DynamicBlock<S3BucketLifecycleConfigurationRuleElExpirationEl>>,
-    filter: Option<DynamicBlock<S3BucketLifecycleConfigurationRuleElFilterEl>>,
-    noncurrent_version_expiration: Option<
-        DynamicBlock<S3BucketLifecycleConfigurationRuleElNoncurrentVersionExpirationEl>,
-    >,
-    noncurrent_version_transition: Option<
-        DynamicBlock<S3BucketLifecycleConfigurationRuleElNoncurrentVersionTransitionEl>,
-    >,
-    transition: Option<DynamicBlock<S3BucketLifecycleConfigurationRuleElTransitionEl>>,
+    abort_incomplete_multipart_upload: std
+    ::option
+    ::Option<terrars::DynamicBlock<S3BucketLifecycleConfigurationRuleElAbortIncompleteMultipartUploadEl>>,
+    expiration: std::option::Option<terrars::DynamicBlock<S3BucketLifecycleConfigurationRuleElExpirationEl>>,
+    filter: std::option::Option<terrars::DynamicBlock<S3BucketLifecycleConfigurationRuleElFilterEl>>,
+    noncurrent_version_expiration: std
+    ::option
+    ::Option<terrars::DynamicBlock<S3BucketLifecycleConfigurationRuleElNoncurrentVersionExpirationEl>>,
+    noncurrent_version_transition: std
+    ::option
+    ::Option<terrars::DynamicBlock<S3BucketLifecycleConfigurationRuleElNoncurrentVersionTransitionEl>>,
+    transition: std::option::Option<terrars::DynamicBlock<S3BucketLifecycleConfigurationRuleElTransitionEl>>,
 }
 
 #[derive(Serialize)]
 pub struct S3BucketLifecycleConfigurationRuleEl {
-    id: PrimField<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    prefix: Option<PrimField<String>>,
-    status: PrimField<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    abort_incomplete_multipart_upload: Option<Vec<S3BucketLifecycleConfigurationRuleElAbortIncompleteMultipartUploadEl>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    expiration: Option<Vec<S3BucketLifecycleConfigurationRuleElExpirationEl>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    filter: Option<Vec<S3BucketLifecycleConfigurationRuleElFilterEl>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    noncurrent_version_expiration: Option<Vec<S3BucketLifecycleConfigurationRuleElNoncurrentVersionExpirationEl>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    noncurrent_version_transition: Option<Vec<S3BucketLifecycleConfigurationRuleElNoncurrentVersionTransitionEl>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    transition: Option<Vec<S3BucketLifecycleConfigurationRuleElTransitionEl>>,
+    id: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    prefix: std::option::Option<terrars::PrimField<std::string::String>>,
+    status: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    abort_incomplete_multipart_upload: std
+    ::option
+    ::Option<std::vec::Vec<S3BucketLifecycleConfigurationRuleElAbortIncompleteMultipartUploadEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    expiration: std::option::Option<std::vec::Vec<S3BucketLifecycleConfigurationRuleElExpirationEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    filter: std::option::Option<std::vec::Vec<S3BucketLifecycleConfigurationRuleElFilterEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    noncurrent_version_expiration: std
+    ::option
+    ::Option<std::vec::Vec<S3BucketLifecycleConfigurationRuleElNoncurrentVersionExpirationEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    noncurrent_version_transition: std
+    ::option
+    ::Option<std::vec::Vec<S3BucketLifecycleConfigurationRuleElNoncurrentVersionTransitionEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    transition: std::option::Option<std::vec::Vec<S3BucketLifecycleConfigurationRuleElTransitionEl>>,
     dynamic: S3BucketLifecycleConfigurationRuleElDynamic,
 }
 
 impl S3BucketLifecycleConfigurationRuleEl {
-    #[doc= "Set the field `prefix`.\n"]
-    pub fn set_prefix(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.prefix = Some(v.into());
+    #[doc = "Set the field `prefix`.\n"]
+    pub fn set_prefix(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.prefix = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `abort_incomplete_multipart_upload`.\n"]
+    #[doc = "Set the field `abort_incomplete_multipart_upload`.\n"]
     pub fn set_abort_incomplete_multipart_upload(
         mut self,
-        v: impl Into<BlockAssignable<S3BucketLifecycleConfigurationRuleElAbortIncompleteMultipartUploadEl>>,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<
+                        terrars::BlockAssignable<S3BucketLifecycleConfigurationRuleElAbortIncompleteMultipartUploadEl>,
+                    >,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.abort_incomplete_multipart_upload = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.abort_incomplete_multipart_upload = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.abort_incomplete_multipart_upload = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.abort_incomplete_multipart_upload = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Set the field `expiration`.\n"]
+    #[doc = "Set the field `expiration`.\n"]
     pub fn set_expiration(
         mut self,
-        v: impl Into<BlockAssignable<S3BucketLifecycleConfigurationRuleElExpirationEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<S3BucketLifecycleConfigurationRuleElExpirationEl>>,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.expiration = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.expiration = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.expiration = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.expiration = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Set the field `filter`.\n"]
-    pub fn set_filter(mut self, v: impl Into<BlockAssignable<S3BucketLifecycleConfigurationRuleElFilterEl>>) -> Self {
+    #[doc = "Set the field `filter`.\n"]
+    pub fn set_filter(
+        mut self,
+        v: impl std::convert::Into<terrars::BlockAssignable<S3BucketLifecycleConfigurationRuleElFilterEl>>,
+    ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.filter = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.filter = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.filter = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.filter = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Set the field `noncurrent_version_expiration`.\n"]
+    #[doc = "Set the field `noncurrent_version_expiration`.\n"]
     pub fn set_noncurrent_version_expiration(
         mut self,
-        v: impl Into<BlockAssignable<S3BucketLifecycleConfigurationRuleElNoncurrentVersionExpirationEl>>,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<
+                        terrars::BlockAssignable<S3BucketLifecycleConfigurationRuleElNoncurrentVersionExpirationEl>,
+                    >,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.noncurrent_version_expiration = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.noncurrent_version_expiration = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.noncurrent_version_expiration = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.noncurrent_version_expiration = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Set the field `noncurrent_version_transition`.\n"]
+    #[doc = "Set the field `noncurrent_version_transition`.\n"]
     pub fn set_noncurrent_version_transition(
         mut self,
-        v: impl Into<BlockAssignable<S3BucketLifecycleConfigurationRuleElNoncurrentVersionTransitionEl>>,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<
+                        terrars::BlockAssignable<S3BucketLifecycleConfigurationRuleElNoncurrentVersionTransitionEl>,
+                    >,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.noncurrent_version_transition = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.noncurrent_version_transition = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.noncurrent_version_transition = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.noncurrent_version_transition = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Set the field `transition`.\n"]
+    #[doc = "Set the field `transition`.\n"]
     pub fn set_transition(
         mut self,
-        v: impl Into<BlockAssignable<S3BucketLifecycleConfigurationRuleElTransitionEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<S3BucketLifecycleConfigurationRuleElTransitionEl>>,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.transition = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.transition = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.transition = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.transition = std::option::Option::Some(d);
             },
         }
         self
     }
 }
 
-impl ToListMappable for S3BucketLifecycleConfigurationRuleEl {
-    type O = BlockAssignable<S3BucketLifecycleConfigurationRuleEl>;
+impl terrars::ToListMappable for S3BucketLifecycleConfigurationRuleEl {
+    type O = terrars::BlockAssignable<S3BucketLifecycleConfigurationRuleEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -1106,10 +1213,10 @@ impl ToListMappable for S3BucketLifecycleConfigurationRuleEl {
 }
 
 pub struct BuildS3BucketLifecycleConfigurationRuleEl {
-    #[doc= ""]
-    pub id: PrimField<String>,
-    #[doc= ""]
-    pub status: PrimField<String>,
+    #[doc = ""]
+    pub id: terrars::PrimField<std::string::String>,
+    #[doc = ""]
+    pub status: terrars::PrimField<std::string::String>,
 }
 
 impl BuildS3BucketLifecycleConfigurationRuleEl {
@@ -1124,18 +1231,18 @@ impl BuildS3BucketLifecycleConfigurationRuleEl {
             noncurrent_version_expiration: core::default::Default::default(),
             noncurrent_version_transition: core::default::Default::default(),
             transition: core::default::Default::default(),
-            dynamic: Default::default(),
+            dynamic: core::default::Default::default(),
         }
     }
 }
 
 pub struct S3BucketLifecycleConfigurationRuleElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for S3BucketLifecycleConfigurationRuleElRef {
-    fn new(shared: StackShared, base: String) -> S3BucketLifecycleConfigurationRuleElRef {
+impl terrars::Ref for S3BucketLifecycleConfigurationRuleElRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> S3BucketLifecycleConfigurationRuleElRef {
         S3BucketLifecycleConfigurationRuleElRef {
             shared: shared,
             base: base.to_string(),
@@ -1144,51 +1251,51 @@ impl Ref for S3BucketLifecycleConfigurationRuleElRef {
 }
 
 impl S3BucketLifecycleConfigurationRuleElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `id` after provisioning.\n"]
-    pub fn id(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.id", self.base))
+    #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
+    pub fn id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `prefix` after provisioning.\n"]
-    pub fn prefix(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.prefix", self.base))
+    #[doc = "Get a reference to the value of field `prefix` after provisioning.\n"]
+    pub fn prefix(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.prefix", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `status` after provisioning.\n"]
-    pub fn status(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.status", self.base))
+    #[doc = "Get a reference to the value of field `status` after provisioning.\n"]
+    pub fn status(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.status", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `abort_incomplete_multipart_upload` after provisioning.\n"]
+    #[doc = "Get a reference to the value of field `abort_incomplete_multipart_upload` after provisioning.\n"]
     pub fn abort_incomplete_multipart_upload(
         &self,
-    ) -> ListRef<S3BucketLifecycleConfigurationRuleElAbortIncompleteMultipartUploadElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.abort_incomplete_multipart_upload", self.base))
+    ) -> terrars::ListRef<S3BucketLifecycleConfigurationRuleElAbortIncompleteMultipartUploadElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.abort_incomplete_multipart_upload", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `expiration` after provisioning.\n"]
-    pub fn expiration(&self) -> ListRef<S3BucketLifecycleConfigurationRuleElExpirationElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.expiration", self.base))
+    #[doc = "Get a reference to the value of field `expiration` after provisioning.\n"]
+    pub fn expiration(&self) -> terrars::ListRef<S3BucketLifecycleConfigurationRuleElExpirationElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.expiration", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `filter` after provisioning.\n"]
-    pub fn filter(&self) -> ListRef<S3BucketLifecycleConfigurationRuleElFilterElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.filter", self.base))
+    #[doc = "Get a reference to the value of field `filter` after provisioning.\n"]
+    pub fn filter(&self) -> terrars::ListRef<S3BucketLifecycleConfigurationRuleElFilterElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.filter", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `noncurrent_version_expiration` after provisioning.\n"]
+    #[doc = "Get a reference to the value of field `noncurrent_version_expiration` after provisioning.\n"]
     pub fn noncurrent_version_expiration(
         &self,
-    ) -> ListRef<S3BucketLifecycleConfigurationRuleElNoncurrentVersionExpirationElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.noncurrent_version_expiration", self.base))
+    ) -> terrars::ListRef<S3BucketLifecycleConfigurationRuleElNoncurrentVersionExpirationElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.noncurrent_version_expiration", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
 struct S3BucketLifecycleConfigurationDynamic {
-    rule: Option<DynamicBlock<S3BucketLifecycleConfigurationRuleEl>>,
+    rule: std::option::Option<terrars::DynamicBlock<S3BucketLifecycleConfigurationRuleEl>>,
 }

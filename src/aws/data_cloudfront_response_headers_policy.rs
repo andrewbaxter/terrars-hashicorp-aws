@@ -1,125 +1,155 @@
 use serde::Serialize;
-use std::cell::RefCell;
-use std::rc::Rc;
-use terrars::*;
+use terrars::{
+    Referable as _,
+    Datasource_ as _,
+    Ref as _,
+};
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
 struct DataCloudfrontResponseHeadersPolicyData {
-    #[serde(skip_serializing_if = "Vec::is_empty")]
-    depends_on: Vec<String>,
-    #[serde(skip_serializing_if = "SerdeSkipDefault::is_default")]
-    provider: Option<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    for_each: Option<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    id: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    name: Option<PrimField<String>>,
+    #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
+    depends_on: std::vec::Vec<std::string::String>,
+    #[serde(skip_serializing_if = "terrars::SerdeSkipDefault::is_default")]
+    provider: std::option::Option<std::string::String>,
+    #[serde(skip_serializing_if = "terrars::SerdeSkipDefault::is_default")]
+    lifecycle: terrars::DatasourceLifecycle,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    for_each: std::option::Option<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    id: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    name: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
 struct DataCloudfrontResponseHeadersPolicy_ {
-    shared: StackShared,
-    tf_id: String,
-    data: RefCell<DataCloudfrontResponseHeadersPolicyData>,
+    shared: terrars::StackShared,
+    tf_id: std::string::String,
+    data: std::cell::RefCell<DataCloudfrontResponseHeadersPolicyData>,
 }
 
 #[derive(Clone)]
-pub struct DataCloudfrontResponseHeadersPolicy(Rc<DataCloudfrontResponseHeadersPolicy_>);
+pub struct DataCloudfrontResponseHeadersPolicy(std::rc::Rc<DataCloudfrontResponseHeadersPolicy_>);
 
 impl DataCloudfrontResponseHeadersPolicy {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.0.shared
     }
 
-    pub fn depends_on(self, dep: &impl Referable) -> Self {
+    pub fn depends_on(self, dep: &impl terrars::Referable) -> Self {
         self.0.data.borrow_mut().depends_on.push(dep.extract_ref());
         self
     }
 
     pub fn set_provider(&self, provider: &ProviderAws) -> &Self {
-        self.0.data.borrow_mut().provider = Some(provider.provider_ref());
+        self.0.data.borrow_mut().provider = std::option::Option::Some(provider.provider_ref());
         self
     }
 
-    #[doc= "Set the field `id`.\n"]
-    pub fn set_id(self, v: impl Into<PrimField<String>>) -> Self {
-        self.0.data.borrow_mut().id = Some(v.into());
+    pub fn add_lifecycle_precondition(
+        self,
+        condition: impl std::convert::Into<terrars::PrimField<bool>>,
+        error_message: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.0.data.borrow_mut().lifecycle.precondition.push(terrars::LifecycleCondition {
+            condition: condition.into(),
+            error_message: error_message.into(),
+        });
         self
     }
 
-    #[doc= "Set the field `name`.\n"]
-    pub fn set_name(self, v: impl Into<PrimField<String>>) -> Self {
-        self.0.data.borrow_mut().name = Some(v.into());
+    pub fn add_lifecycle_postcondition(
+        self,
+        condition: impl std::convert::Into<terrars::PrimField<bool>>,
+        error_message: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.0.data.borrow_mut().lifecycle.postcondition.push(terrars::LifecycleCondition {
+            condition: condition.into(),
+            error_message: error_message.into(),
+        });
         self
     }
 
-    #[doc= "Get a reference to the value of field `comment` after provisioning.\n"]
-    pub fn comment(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.comment", self.extract_ref()))
+    #[doc = "Set the field `id`.\n"]
+    pub fn set_id(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().id = std::option::Option::Some(v.into());
+        self
     }
 
-    #[doc= "Get a reference to the value of field `cors_config` after provisioning.\n"]
-    pub fn cors_config(&self) -> ListRef<DataCloudfrontResponseHeadersPolicyCorsConfigElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.cors_config", self.extract_ref()))
+    #[doc = "Set the field `name`.\n"]
+    pub fn set_name(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().name = std::option::Option::Some(v.into());
+        self
     }
 
-    #[doc= "Get a reference to the value of field `custom_headers_config` after provisioning.\n"]
-    pub fn custom_headers_config(&self) -> ListRef<DataCloudfrontResponseHeadersPolicyCustomHeadersConfigElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.custom_headers_config", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `comment` after provisioning.\n"]
+    pub fn comment(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.comment", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `etag` after provisioning.\n"]
-    pub fn etag(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.etag", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `cors_config` after provisioning.\n"]
+    pub fn cors_config(&self) -> terrars::ListRef<DataCloudfrontResponseHeadersPolicyCorsConfigElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.cors_config", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `id` after provisioning.\n"]
-    pub fn id(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `custom_headers_config` after provisioning.\n"]
+    pub fn custom_headers_config(&self) -> terrars::ListRef<DataCloudfrontResponseHeadersPolicyCustomHeadersConfigElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.custom_headers_config", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `name` after provisioning.\n"]
-    pub fn name(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `etag` after provisioning.\n"]
+    pub fn etag(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.etag", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `security_headers_config` after provisioning.\n"]
-    pub fn security_headers_config(&self) -> ListRef<DataCloudfrontResponseHeadersPolicySecurityHeadersConfigElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.security_headers_config", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
+    pub fn id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `server_timing_headers_config` after provisioning.\n"]
+    #[doc = "Get a reference to the value of field `name` after provisioning.\n"]
+    pub fn name(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `security_headers_config` after provisioning.\n"]
+    pub fn security_headers_config(
+        &self,
+    ) -> terrars::ListRef<DataCloudfrontResponseHeadersPolicySecurityHeadersConfigElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.security_headers_config", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `server_timing_headers_config` after provisioning.\n"]
     pub fn server_timing_headers_config(
         &self,
-    ) -> ListRef<DataCloudfrontResponseHeadersPolicyServerTimingHeadersConfigElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.server_timing_headers_config", self.extract_ref()))
+    ) -> terrars::ListRef<DataCloudfrontResponseHeadersPolicyServerTimingHeadersConfigElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.server_timing_headers_config", self.extract_ref()))
     }
 }
 
-impl Referable for DataCloudfrontResponseHeadersPolicy {
-    fn extract_ref(&self) -> String {
+impl terrars::Referable for DataCloudfrontResponseHeadersPolicy {
+    fn extract_ref(&self) -> std::string::String {
         format!("data.{}.{}", self.0.extract_datasource_type(), self.0.extract_tf_id())
     }
 }
 
-impl Datasource for DataCloudfrontResponseHeadersPolicy { }
+impl terrars::Datasource for DataCloudfrontResponseHeadersPolicy { }
 
-impl ToListMappable for DataCloudfrontResponseHeadersPolicy {
-    type O = ListRef<DataCloudfrontResponseHeadersPolicyRef>;
+impl terrars::ToListMappable for DataCloudfrontResponseHeadersPolicy {
+    type O = terrars::ListRef<DataCloudfrontResponseHeadersPolicyRef>;
 
-    fn do_map(self, base: String) -> Self::O {
-        self.0.data.borrow_mut().for_each = Some(format!("${{{}}}", base));
-        ListRef::new(self.0.shared.clone(), self.extract_ref())
+    fn do_map(self, base: std::string::String) -> Self::O {
+        self.0.data.borrow_mut().for_each = std::option::Option::Some(format!("${{{}}}", base));
+        terrars::ListRef::new(self.0.shared.clone(), self.extract_ref())
     }
 }
 
-impl Datasource_ for DataCloudfrontResponseHeadersPolicy_ {
-    fn extract_datasource_type(&self) -> String {
+impl terrars::Datasource_ for DataCloudfrontResponseHeadersPolicy_ {
+    fn extract_datasource_type(&self) -> std::string::String {
         "aws_cloudfront_response_headers_policy".into()
     }
 
-    fn extract_tf_id(&self) -> String {
+    fn extract_tf_id(&self) -> std::string::String {
         self.tf_id.clone()
     }
 
@@ -129,18 +159,19 @@ impl Datasource_ for DataCloudfrontResponseHeadersPolicy_ {
 }
 
 pub struct BuildDataCloudfrontResponseHeadersPolicy {
-    pub tf_id: String,
+    pub tf_id: std::string::String,
 }
 
 impl BuildDataCloudfrontResponseHeadersPolicy {
-    pub fn build(self, stack: &mut Stack) -> DataCloudfrontResponseHeadersPolicy {
-        let out = DataCloudfrontResponseHeadersPolicy(Rc::new(DataCloudfrontResponseHeadersPolicy_ {
+    pub fn build(self, stack: &mut terrars::Stack) -> DataCloudfrontResponseHeadersPolicy {
+        let out = DataCloudfrontResponseHeadersPolicy(std::rc::Rc::new(DataCloudfrontResponseHeadersPolicy_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: RefCell::new(DataCloudfrontResponseHeadersPolicyData {
+            data: std::cell::RefCell::new(DataCloudfrontResponseHeadersPolicyData {
                 depends_on: core::default::Default::default(),
-                provider: None,
-                for_each: None,
+                provider: std::option::Option::None,
+                lifecycle: core::default::Default::default(),
+                for_each: std::option::Option::None,
                 id: core::default::Default::default(),
                 name: core::default::Default::default(),
             }),
@@ -151,12 +182,12 @@ impl BuildDataCloudfrontResponseHeadersPolicy {
 }
 
 pub struct DataCloudfrontResponseHeadersPolicyRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for DataCloudfrontResponseHeadersPolicyRef {
-    fn new(shared: StackShared, base: String) -> Self {
+impl terrars::Ref for DataCloudfrontResponseHeadersPolicyRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> Self {
         Self {
             shared: shared,
             base: base,
@@ -165,76 +196,81 @@ impl Ref for DataCloudfrontResponseHeadersPolicyRef {
 }
 
 impl DataCloudfrontResponseHeadersPolicyRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    fn extract_ref(&self) -> String {
+    fn extract_ref(&self) -> std::string::String {
         self.base.clone()
     }
 
-    #[doc= "Get a reference to the value of field `comment` after provisioning.\n"]
-    pub fn comment(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.comment", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `comment` after provisioning.\n"]
+    pub fn comment(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.comment", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `cors_config` after provisioning.\n"]
-    pub fn cors_config(&self) -> ListRef<DataCloudfrontResponseHeadersPolicyCorsConfigElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.cors_config", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `cors_config` after provisioning.\n"]
+    pub fn cors_config(&self) -> terrars::ListRef<DataCloudfrontResponseHeadersPolicyCorsConfigElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.cors_config", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `custom_headers_config` after provisioning.\n"]
-    pub fn custom_headers_config(&self) -> ListRef<DataCloudfrontResponseHeadersPolicyCustomHeadersConfigElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.custom_headers_config", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `custom_headers_config` after provisioning.\n"]
+    pub fn custom_headers_config(&self) -> terrars::ListRef<DataCloudfrontResponseHeadersPolicyCustomHeadersConfigElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.custom_headers_config", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `etag` after provisioning.\n"]
-    pub fn etag(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.etag", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `etag` after provisioning.\n"]
+    pub fn etag(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.etag", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `id` after provisioning.\n"]
-    pub fn id(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
+    pub fn id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `name` after provisioning.\n"]
-    pub fn name(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `name` after provisioning.\n"]
+    pub fn name(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `security_headers_config` after provisioning.\n"]
-    pub fn security_headers_config(&self) -> ListRef<DataCloudfrontResponseHeadersPolicySecurityHeadersConfigElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.security_headers_config", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `security_headers_config` after provisioning.\n"]
+    pub fn security_headers_config(
+        &self,
+    ) -> terrars::ListRef<DataCloudfrontResponseHeadersPolicySecurityHeadersConfigElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.security_headers_config", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `server_timing_headers_config` after provisioning.\n"]
+    #[doc = "Get a reference to the value of field `server_timing_headers_config` after provisioning.\n"]
     pub fn server_timing_headers_config(
         &self,
-    ) -> ListRef<DataCloudfrontResponseHeadersPolicyServerTimingHeadersConfigElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.server_timing_headers_config", self.extract_ref()))
+    ) -> terrars::ListRef<DataCloudfrontResponseHeadersPolicyServerTimingHeadersConfigElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.server_timing_headers_config", self.extract_ref()))
     }
 }
 
 #[derive(Serialize)]
 pub struct DataCloudfrontResponseHeadersPolicyCorsConfigElAccessControlAllowHeadersEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    items: Option<SetField<PrimField<String>>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    items: std::option::Option<terrars::SetField<terrars::PrimField<std::string::String>>>,
 }
 
 impl DataCloudfrontResponseHeadersPolicyCorsConfigElAccessControlAllowHeadersEl {
-    #[doc= "Set the field `items`.\n"]
-    pub fn set_items(mut self, v: impl Into<SetField<PrimField<String>>>) -> Self {
-        self.items = Some(v.into());
+    #[doc = "Set the field `items`.\n"]
+    pub fn set_items(
+        mut self,
+        v: impl std::convert::Into<terrars::SetField<terrars::PrimField<std::string::String>>>,
+    ) -> Self {
+        self.items = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl ToListMappable for DataCloudfrontResponseHeadersPolicyCorsConfigElAccessControlAllowHeadersEl {
-    type O = BlockAssignable<DataCloudfrontResponseHeadersPolicyCorsConfigElAccessControlAllowHeadersEl>;
+impl terrars::ToListMappable for DataCloudfrontResponseHeadersPolicyCorsConfigElAccessControlAllowHeadersEl {
+    type O = terrars::BlockAssignable<DataCloudfrontResponseHeadersPolicyCorsConfigElAccessControlAllowHeadersEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -253,14 +289,14 @@ impl BuildDataCloudfrontResponseHeadersPolicyCorsConfigElAccessControlAllowHeade
 }
 
 pub struct DataCloudfrontResponseHeadersPolicyCorsConfigElAccessControlAllowHeadersElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for DataCloudfrontResponseHeadersPolicyCorsConfigElAccessControlAllowHeadersElRef {
+impl terrars::Ref for DataCloudfrontResponseHeadersPolicyCorsConfigElAccessControlAllowHeadersElRef {
     fn new(
-        shared: StackShared,
-        base: String,
+        shared: terrars::StackShared,
+        base: std::string::String,
     ) -> DataCloudfrontResponseHeadersPolicyCorsConfigElAccessControlAllowHeadersElRef {
         DataCloudfrontResponseHeadersPolicyCorsConfigElAccessControlAllowHeadersElRef {
             shared: shared,
@@ -270,35 +306,38 @@ impl Ref for DataCloudfrontResponseHeadersPolicyCorsConfigElAccessControlAllowHe
 }
 
 impl DataCloudfrontResponseHeadersPolicyCorsConfigElAccessControlAllowHeadersElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `items` after provisioning.\n"]
-    pub fn items(&self) -> SetRef<PrimExpr<String>> {
-        SetRef::new(self.shared().clone(), format!("{}.items", self.base))
+    #[doc = "Get a reference to the value of field `items` after provisioning.\n"]
+    pub fn items(&self) -> terrars::SetRef<terrars::PrimExpr<std::string::String>> {
+        terrars::SetRef::new(self.shared().clone(), format!("{}.items", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct DataCloudfrontResponseHeadersPolicyCorsConfigElAccessControlAllowMethodsEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    items: Option<SetField<PrimField<String>>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    items: std::option::Option<terrars::SetField<terrars::PrimField<std::string::String>>>,
 }
 
 impl DataCloudfrontResponseHeadersPolicyCorsConfigElAccessControlAllowMethodsEl {
-    #[doc= "Set the field `items`.\n"]
-    pub fn set_items(mut self, v: impl Into<SetField<PrimField<String>>>) -> Self {
-        self.items = Some(v.into());
+    #[doc = "Set the field `items`.\n"]
+    pub fn set_items(
+        mut self,
+        v: impl std::convert::Into<terrars::SetField<terrars::PrimField<std::string::String>>>,
+    ) -> Self {
+        self.items = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl ToListMappable for DataCloudfrontResponseHeadersPolicyCorsConfigElAccessControlAllowMethodsEl {
-    type O = BlockAssignable<DataCloudfrontResponseHeadersPolicyCorsConfigElAccessControlAllowMethodsEl>;
+impl terrars::ToListMappable for DataCloudfrontResponseHeadersPolicyCorsConfigElAccessControlAllowMethodsEl {
+    type O = terrars::BlockAssignable<DataCloudfrontResponseHeadersPolicyCorsConfigElAccessControlAllowMethodsEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -317,14 +356,14 @@ impl BuildDataCloudfrontResponseHeadersPolicyCorsConfigElAccessControlAllowMetho
 }
 
 pub struct DataCloudfrontResponseHeadersPolicyCorsConfigElAccessControlAllowMethodsElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for DataCloudfrontResponseHeadersPolicyCorsConfigElAccessControlAllowMethodsElRef {
+impl terrars::Ref for DataCloudfrontResponseHeadersPolicyCorsConfigElAccessControlAllowMethodsElRef {
     fn new(
-        shared: StackShared,
-        base: String,
+        shared: terrars::StackShared,
+        base: std::string::String,
     ) -> DataCloudfrontResponseHeadersPolicyCorsConfigElAccessControlAllowMethodsElRef {
         DataCloudfrontResponseHeadersPolicyCorsConfigElAccessControlAllowMethodsElRef {
             shared: shared,
@@ -334,35 +373,38 @@ impl Ref for DataCloudfrontResponseHeadersPolicyCorsConfigElAccessControlAllowMe
 }
 
 impl DataCloudfrontResponseHeadersPolicyCorsConfigElAccessControlAllowMethodsElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `items` after provisioning.\n"]
-    pub fn items(&self) -> SetRef<PrimExpr<String>> {
-        SetRef::new(self.shared().clone(), format!("{}.items", self.base))
+    #[doc = "Get a reference to the value of field `items` after provisioning.\n"]
+    pub fn items(&self) -> terrars::SetRef<terrars::PrimExpr<std::string::String>> {
+        terrars::SetRef::new(self.shared().clone(), format!("{}.items", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct DataCloudfrontResponseHeadersPolicyCorsConfigElAccessControlAllowOriginsEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    items: Option<SetField<PrimField<String>>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    items: std::option::Option<terrars::SetField<terrars::PrimField<std::string::String>>>,
 }
 
 impl DataCloudfrontResponseHeadersPolicyCorsConfigElAccessControlAllowOriginsEl {
-    #[doc= "Set the field `items`.\n"]
-    pub fn set_items(mut self, v: impl Into<SetField<PrimField<String>>>) -> Self {
-        self.items = Some(v.into());
+    #[doc = "Set the field `items`.\n"]
+    pub fn set_items(
+        mut self,
+        v: impl std::convert::Into<terrars::SetField<terrars::PrimField<std::string::String>>>,
+    ) -> Self {
+        self.items = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl ToListMappable for DataCloudfrontResponseHeadersPolicyCorsConfigElAccessControlAllowOriginsEl {
-    type O = BlockAssignable<DataCloudfrontResponseHeadersPolicyCorsConfigElAccessControlAllowOriginsEl>;
+impl terrars::ToListMappable for DataCloudfrontResponseHeadersPolicyCorsConfigElAccessControlAllowOriginsEl {
+    type O = terrars::BlockAssignable<DataCloudfrontResponseHeadersPolicyCorsConfigElAccessControlAllowOriginsEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -381,14 +423,14 @@ impl BuildDataCloudfrontResponseHeadersPolicyCorsConfigElAccessControlAllowOrigi
 }
 
 pub struct DataCloudfrontResponseHeadersPolicyCorsConfigElAccessControlAllowOriginsElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for DataCloudfrontResponseHeadersPolicyCorsConfigElAccessControlAllowOriginsElRef {
+impl terrars::Ref for DataCloudfrontResponseHeadersPolicyCorsConfigElAccessControlAllowOriginsElRef {
     fn new(
-        shared: StackShared,
-        base: String,
+        shared: terrars::StackShared,
+        base: std::string::String,
     ) -> DataCloudfrontResponseHeadersPolicyCorsConfigElAccessControlAllowOriginsElRef {
         DataCloudfrontResponseHeadersPolicyCorsConfigElAccessControlAllowOriginsElRef {
             shared: shared,
@@ -398,35 +440,38 @@ impl Ref for DataCloudfrontResponseHeadersPolicyCorsConfigElAccessControlAllowOr
 }
 
 impl DataCloudfrontResponseHeadersPolicyCorsConfigElAccessControlAllowOriginsElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `items` after provisioning.\n"]
-    pub fn items(&self) -> SetRef<PrimExpr<String>> {
-        SetRef::new(self.shared().clone(), format!("{}.items", self.base))
+    #[doc = "Get a reference to the value of field `items` after provisioning.\n"]
+    pub fn items(&self) -> terrars::SetRef<terrars::PrimExpr<std::string::String>> {
+        terrars::SetRef::new(self.shared().clone(), format!("{}.items", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct DataCloudfrontResponseHeadersPolicyCorsConfigElAccessControlExposeHeadersEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    items: Option<SetField<PrimField<String>>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    items: std::option::Option<terrars::SetField<terrars::PrimField<std::string::String>>>,
 }
 
 impl DataCloudfrontResponseHeadersPolicyCorsConfigElAccessControlExposeHeadersEl {
-    #[doc= "Set the field `items`.\n"]
-    pub fn set_items(mut self, v: impl Into<SetField<PrimField<String>>>) -> Self {
-        self.items = Some(v.into());
+    #[doc = "Set the field `items`.\n"]
+    pub fn set_items(
+        mut self,
+        v: impl std::convert::Into<terrars::SetField<terrars::PrimField<std::string::String>>>,
+    ) -> Self {
+        self.items = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl ToListMappable for DataCloudfrontResponseHeadersPolicyCorsConfigElAccessControlExposeHeadersEl {
-    type O = BlockAssignable<DataCloudfrontResponseHeadersPolicyCorsConfigElAccessControlExposeHeadersEl>;
+impl terrars::ToListMappable for DataCloudfrontResponseHeadersPolicyCorsConfigElAccessControlExposeHeadersEl {
+    type O = terrars::BlockAssignable<DataCloudfrontResponseHeadersPolicyCorsConfigElAccessControlExposeHeadersEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -445,14 +490,14 @@ impl BuildDataCloudfrontResponseHeadersPolicyCorsConfigElAccessControlExposeHead
 }
 
 pub struct DataCloudfrontResponseHeadersPolicyCorsConfigElAccessControlExposeHeadersElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for DataCloudfrontResponseHeadersPolicyCorsConfigElAccessControlExposeHeadersElRef {
+impl terrars::Ref for DataCloudfrontResponseHeadersPolicyCorsConfigElAccessControlExposeHeadersElRef {
     fn new(
-        shared: StackShared,
-        base: String,
+        shared: terrars::StackShared,
+        base: std::string::String,
     ) -> DataCloudfrontResponseHeadersPolicyCorsConfigElAccessControlExposeHeadersElRef {
         DataCloudfrontResponseHeadersPolicyCorsConfigElAccessControlExposeHeadersElRef {
             shared: shared,
@@ -462,103 +507,132 @@ impl Ref for DataCloudfrontResponseHeadersPolicyCorsConfigElAccessControlExposeH
 }
 
 impl DataCloudfrontResponseHeadersPolicyCorsConfigElAccessControlExposeHeadersElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `items` after provisioning.\n"]
-    pub fn items(&self) -> SetRef<PrimExpr<String>> {
-        SetRef::new(self.shared().clone(), format!("{}.items", self.base))
+    #[doc = "Get a reference to the value of field `items` after provisioning.\n"]
+    pub fn items(&self) -> terrars::SetRef<terrars::PrimExpr<std::string::String>> {
+        terrars::SetRef::new(self.shared().clone(), format!("{}.items", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct DataCloudfrontResponseHeadersPolicyCorsConfigEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    access_control_allow_credentials: Option<PrimField<bool>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    access_control_allow_headers: Option<
-        ListField<DataCloudfrontResponseHeadersPolicyCorsConfigElAccessControlAllowHeadersEl>,
-    >,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    access_control_allow_methods: Option<
-        ListField<DataCloudfrontResponseHeadersPolicyCorsConfigElAccessControlAllowMethodsEl>,
-    >,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    access_control_allow_origins: Option<
-        ListField<DataCloudfrontResponseHeadersPolicyCorsConfigElAccessControlAllowOriginsEl>,
-    >,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    access_control_expose_headers: Option<
-        ListField<DataCloudfrontResponseHeadersPolicyCorsConfigElAccessControlExposeHeadersEl>,
-    >,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    access_control_max_age_sec: Option<PrimField<f64>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    origin_override: Option<PrimField<bool>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    access_control_allow_credentials: std::option::Option<terrars::PrimField<bool>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    access_control_allow_headers: std
+    ::option
+    ::Option<terrars::ListField<DataCloudfrontResponseHeadersPolicyCorsConfigElAccessControlAllowHeadersEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    access_control_allow_methods: std
+    ::option
+    ::Option<terrars::ListField<DataCloudfrontResponseHeadersPolicyCorsConfigElAccessControlAllowMethodsEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    access_control_allow_origins: std
+    ::option
+    ::Option<terrars::ListField<DataCloudfrontResponseHeadersPolicyCorsConfigElAccessControlAllowOriginsEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    access_control_expose_headers: std
+    ::option
+    ::Option<terrars::ListField<DataCloudfrontResponseHeadersPolicyCorsConfigElAccessControlExposeHeadersEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    access_control_max_age_sec: std::option::Option<terrars::PrimField<f64>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    origin_override: std::option::Option<terrars::PrimField<bool>>,
 }
 
 impl DataCloudfrontResponseHeadersPolicyCorsConfigEl {
-    #[doc= "Set the field `access_control_allow_credentials`.\n"]
-    pub fn set_access_control_allow_credentials(mut self, v: impl Into<PrimField<bool>>) -> Self {
-        self.access_control_allow_credentials = Some(v.into());
+    #[doc = "Set the field `access_control_allow_credentials`.\n"]
+    pub fn set_access_control_allow_credentials(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
+        self.access_control_allow_credentials = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `access_control_allow_headers`.\n"]
+    #[doc = "Set the field `access_control_allow_headers`.\n"]
     pub fn set_access_control_allow_headers(
         mut self,
-        v: impl Into<ListField<DataCloudfrontResponseHeadersPolicyCorsConfigElAccessControlAllowHeadersEl>>,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<
+                        terrars::ListField<DataCloudfrontResponseHeadersPolicyCorsConfigElAccessControlAllowHeadersEl>,
+                    >,
     ) -> Self {
-        self.access_control_allow_headers = Some(v.into());
+        self.access_control_allow_headers = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `access_control_allow_methods`.\n"]
+    #[doc = "Set the field `access_control_allow_methods`.\n"]
     pub fn set_access_control_allow_methods(
         mut self,
-        v: impl Into<ListField<DataCloudfrontResponseHeadersPolicyCorsConfigElAccessControlAllowMethodsEl>>,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<
+                        terrars::ListField<DataCloudfrontResponseHeadersPolicyCorsConfigElAccessControlAllowMethodsEl>,
+                    >,
     ) -> Self {
-        self.access_control_allow_methods = Some(v.into());
+        self.access_control_allow_methods = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `access_control_allow_origins`.\n"]
+    #[doc = "Set the field `access_control_allow_origins`.\n"]
     pub fn set_access_control_allow_origins(
         mut self,
-        v: impl Into<ListField<DataCloudfrontResponseHeadersPolicyCorsConfigElAccessControlAllowOriginsEl>>,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<
+                        terrars::ListField<DataCloudfrontResponseHeadersPolicyCorsConfigElAccessControlAllowOriginsEl>,
+                    >,
     ) -> Self {
-        self.access_control_allow_origins = Some(v.into());
+        self.access_control_allow_origins = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `access_control_expose_headers`.\n"]
+    #[doc = "Set the field `access_control_expose_headers`.\n"]
     pub fn set_access_control_expose_headers(
         mut self,
-        v: impl Into<ListField<DataCloudfrontResponseHeadersPolicyCorsConfigElAccessControlExposeHeadersEl>>,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<
+                        terrars
+                        ::ListField<DataCloudfrontResponseHeadersPolicyCorsConfigElAccessControlExposeHeadersEl>,
+                    >,
     ) -> Self {
-        self.access_control_expose_headers = Some(v.into());
+        self.access_control_expose_headers = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `access_control_max_age_sec`.\n"]
-    pub fn set_access_control_max_age_sec(mut self, v: impl Into<PrimField<f64>>) -> Self {
-        self.access_control_max_age_sec = Some(v.into());
+    #[doc = "Set the field `access_control_max_age_sec`.\n"]
+    pub fn set_access_control_max_age_sec(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.access_control_max_age_sec = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `origin_override`.\n"]
-    pub fn set_origin_override(mut self, v: impl Into<PrimField<bool>>) -> Self {
-        self.origin_override = Some(v.into());
+    #[doc = "Set the field `origin_override`.\n"]
+    pub fn set_origin_override(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
+        self.origin_override = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl ToListMappable for DataCloudfrontResponseHeadersPolicyCorsConfigEl {
-    type O = BlockAssignable<DataCloudfrontResponseHeadersPolicyCorsConfigEl>;
+impl terrars::ToListMappable for DataCloudfrontResponseHeadersPolicyCorsConfigEl {
+    type O = terrars::BlockAssignable<DataCloudfrontResponseHeadersPolicyCorsConfigEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -583,12 +657,15 @@ impl BuildDataCloudfrontResponseHeadersPolicyCorsConfigEl {
 }
 
 pub struct DataCloudfrontResponseHeadersPolicyCorsConfigElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for DataCloudfrontResponseHeadersPolicyCorsConfigElRef {
-    fn new(shared: StackShared, base: String) -> DataCloudfrontResponseHeadersPolicyCorsConfigElRef {
+impl terrars::Ref for DataCloudfrontResponseHeadersPolicyCorsConfigElRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> DataCloudfrontResponseHeadersPolicyCorsConfigElRef {
         DataCloudfrontResponseHeadersPolicyCorsConfigElRef {
             shared: shared,
             base: base.to_string(),
@@ -597,89 +674,89 @@ impl Ref for DataCloudfrontResponseHeadersPolicyCorsConfigElRef {
 }
 
 impl DataCloudfrontResponseHeadersPolicyCorsConfigElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `access_control_allow_credentials` after provisioning.\n"]
-    pub fn access_control_allow_credentials(&self) -> PrimExpr<bool> {
-        PrimExpr::new(self.shared().clone(), format!("{}.access_control_allow_credentials", self.base))
+    #[doc = "Get a reference to the value of field `access_control_allow_credentials` after provisioning.\n"]
+    pub fn access_control_allow_credentials(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.access_control_allow_credentials", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `access_control_allow_headers` after provisioning.\n"]
+    #[doc = "Get a reference to the value of field `access_control_allow_headers` after provisioning.\n"]
     pub fn access_control_allow_headers(
         &self,
-    ) -> ListRef<DataCloudfrontResponseHeadersPolicyCorsConfigElAccessControlAllowHeadersElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.access_control_allow_headers", self.base))
+    ) -> terrars::ListRef<DataCloudfrontResponseHeadersPolicyCorsConfigElAccessControlAllowHeadersElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.access_control_allow_headers", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `access_control_allow_methods` after provisioning.\n"]
+    #[doc = "Get a reference to the value of field `access_control_allow_methods` after provisioning.\n"]
     pub fn access_control_allow_methods(
         &self,
-    ) -> ListRef<DataCloudfrontResponseHeadersPolicyCorsConfigElAccessControlAllowMethodsElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.access_control_allow_methods", self.base))
+    ) -> terrars::ListRef<DataCloudfrontResponseHeadersPolicyCorsConfigElAccessControlAllowMethodsElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.access_control_allow_methods", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `access_control_allow_origins` after provisioning.\n"]
+    #[doc = "Get a reference to the value of field `access_control_allow_origins` after provisioning.\n"]
     pub fn access_control_allow_origins(
         &self,
-    ) -> ListRef<DataCloudfrontResponseHeadersPolicyCorsConfigElAccessControlAllowOriginsElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.access_control_allow_origins", self.base))
+    ) -> terrars::ListRef<DataCloudfrontResponseHeadersPolicyCorsConfigElAccessControlAllowOriginsElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.access_control_allow_origins", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `access_control_expose_headers` after provisioning.\n"]
+    #[doc = "Get a reference to the value of field `access_control_expose_headers` after provisioning.\n"]
     pub fn access_control_expose_headers(
         &self,
-    ) -> ListRef<DataCloudfrontResponseHeadersPolicyCorsConfigElAccessControlExposeHeadersElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.access_control_expose_headers", self.base))
+    ) -> terrars::ListRef<DataCloudfrontResponseHeadersPolicyCorsConfigElAccessControlExposeHeadersElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.access_control_expose_headers", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `access_control_max_age_sec` after provisioning.\n"]
-    pub fn access_control_max_age_sec(&self) -> PrimExpr<f64> {
-        PrimExpr::new(self.shared().clone(), format!("{}.access_control_max_age_sec", self.base))
+    #[doc = "Get a reference to the value of field `access_control_max_age_sec` after provisioning.\n"]
+    pub fn access_control_max_age_sec(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.access_control_max_age_sec", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `origin_override` after provisioning.\n"]
-    pub fn origin_override(&self) -> PrimExpr<bool> {
-        PrimExpr::new(self.shared().clone(), format!("{}.origin_override", self.base))
+    #[doc = "Get a reference to the value of field `origin_override` after provisioning.\n"]
+    pub fn origin_override(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.origin_override", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct DataCloudfrontResponseHeadersPolicyCustomHeadersConfigElItemsEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    header: Option<PrimField<String>>,
-    #[serde(rename = "override", skip_serializing_if = "Option::is_none")]
-    override_: Option<PrimField<bool>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    value: Option<PrimField<String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    header: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(rename = "override", skip_serializing_if = "std::option::Option::is_none")]
+    override_: std::option::Option<terrars::PrimField<bool>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    value: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
 impl DataCloudfrontResponseHeadersPolicyCustomHeadersConfigElItemsEl {
-    #[doc= "Set the field `header`.\n"]
-    pub fn set_header(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.header = Some(v.into());
+    #[doc = "Set the field `header`.\n"]
+    pub fn set_header(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.header = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `override_`.\n"]
-    pub fn set_override(mut self, v: impl Into<PrimField<bool>>) -> Self {
-        self.override_ = Some(v.into());
+    #[doc = "Set the field `override_`.\n"]
+    pub fn set_override(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
+        self.override_ = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `value`.\n"]
-    pub fn set_value(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.value = Some(v.into());
+    #[doc = "Set the field `value`.\n"]
+    pub fn set_value(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.value = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl ToListMappable for DataCloudfrontResponseHeadersPolicyCustomHeadersConfigElItemsEl {
-    type O = BlockAssignable<DataCloudfrontResponseHeadersPolicyCustomHeadersConfigElItemsEl>;
+impl terrars::ToListMappable for DataCloudfrontResponseHeadersPolicyCustomHeadersConfigElItemsEl {
+    type O = terrars::BlockAssignable<DataCloudfrontResponseHeadersPolicyCustomHeadersConfigElItemsEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -700,12 +777,15 @@ impl BuildDataCloudfrontResponseHeadersPolicyCustomHeadersConfigElItemsEl {
 }
 
 pub struct DataCloudfrontResponseHeadersPolicyCustomHeadersConfigElItemsElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for DataCloudfrontResponseHeadersPolicyCustomHeadersConfigElItemsElRef {
-    fn new(shared: StackShared, base: String) -> DataCloudfrontResponseHeadersPolicyCustomHeadersConfigElItemsElRef {
+impl terrars::Ref for DataCloudfrontResponseHeadersPolicyCustomHeadersConfigElItemsElRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> DataCloudfrontResponseHeadersPolicyCustomHeadersConfigElItemsElRef {
         DataCloudfrontResponseHeadersPolicyCustomHeadersConfigElItemsElRef {
             shared: shared,
             base: base.to_string(),
@@ -714,48 +794,53 @@ impl Ref for DataCloudfrontResponseHeadersPolicyCustomHeadersConfigElItemsElRef 
 }
 
 impl DataCloudfrontResponseHeadersPolicyCustomHeadersConfigElItemsElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `header` after provisioning.\n"]
-    pub fn header(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.header", self.base))
+    #[doc = "Get a reference to the value of field `header` after provisioning.\n"]
+    pub fn header(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.header", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `override_` after provisioning.\n"]
-    pub fn override_(&self) -> PrimExpr<bool> {
-        PrimExpr::new(self.shared().clone(), format!("{}.override", self.base))
+    #[doc = "Get a reference to the value of field `override_` after provisioning.\n"]
+    pub fn override_(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.override", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `value` after provisioning.\n"]
-    pub fn value(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.value", self.base))
+    #[doc = "Get a reference to the value of field `value` after provisioning.\n"]
+    pub fn value(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.value", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct DataCloudfrontResponseHeadersPolicyCustomHeadersConfigEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    items: Option<SetField<DataCloudfrontResponseHeadersPolicyCustomHeadersConfigElItemsEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    items: std::option::Option<terrars::SetField<DataCloudfrontResponseHeadersPolicyCustomHeadersConfigElItemsEl>>,
 }
 
 impl DataCloudfrontResponseHeadersPolicyCustomHeadersConfigEl {
-    #[doc= "Set the field `items`.\n"]
+    #[doc = "Set the field `items`.\n"]
     pub fn set_items(
         mut self,
-        v: impl Into<SetField<DataCloudfrontResponseHeadersPolicyCustomHeadersConfigElItemsEl>>,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<terrars::SetField<DataCloudfrontResponseHeadersPolicyCustomHeadersConfigElItemsEl>>,
     ) -> Self {
-        self.items = Some(v.into());
+        self.items = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl ToListMappable for DataCloudfrontResponseHeadersPolicyCustomHeadersConfigEl {
-    type O = BlockAssignable<DataCloudfrontResponseHeadersPolicyCustomHeadersConfigEl>;
+impl terrars::ToListMappable for DataCloudfrontResponseHeadersPolicyCustomHeadersConfigEl {
+    type O = terrars::BlockAssignable<DataCloudfrontResponseHeadersPolicyCustomHeadersConfigEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -772,12 +857,15 @@ impl BuildDataCloudfrontResponseHeadersPolicyCustomHeadersConfigEl {
 }
 
 pub struct DataCloudfrontResponseHeadersPolicyCustomHeadersConfigElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for DataCloudfrontResponseHeadersPolicyCustomHeadersConfigElRef {
-    fn new(shared: StackShared, base: String) -> DataCloudfrontResponseHeadersPolicyCustomHeadersConfigElRef {
+impl terrars::Ref for DataCloudfrontResponseHeadersPolicyCustomHeadersConfigElRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> DataCloudfrontResponseHeadersPolicyCustomHeadersConfigElRef {
         DataCloudfrontResponseHeadersPolicyCustomHeadersConfigElRef {
             shared: shared,
             base: base.to_string(),
@@ -786,43 +874,47 @@ impl Ref for DataCloudfrontResponseHeadersPolicyCustomHeadersConfigElRef {
 }
 
 impl DataCloudfrontResponseHeadersPolicyCustomHeadersConfigElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `items` after provisioning.\n"]
-    pub fn items(&self) -> SetRef<DataCloudfrontResponseHeadersPolicyCustomHeadersConfigElItemsElRef> {
-        SetRef::new(self.shared().clone(), format!("{}.items", self.base))
+    #[doc = "Get a reference to the value of field `items` after provisioning.\n"]
+    pub fn items(&self) -> terrars::SetRef<DataCloudfrontResponseHeadersPolicyCustomHeadersConfigElItemsElRef> {
+        terrars::SetRef::new(self.shared().clone(), format!("{}.items", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct DataCloudfrontResponseHeadersPolicySecurityHeadersConfigElContentSecurityPolicyEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    content_security_policy: Option<PrimField<String>>,
-    #[serde(rename = "override", skip_serializing_if = "Option::is_none")]
-    override_: Option<PrimField<bool>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    content_security_policy: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(rename = "override", skip_serializing_if = "std::option::Option::is_none")]
+    override_: std::option::Option<terrars::PrimField<bool>>,
 }
 
 impl DataCloudfrontResponseHeadersPolicySecurityHeadersConfigElContentSecurityPolicyEl {
-    #[doc= "Set the field `content_security_policy`.\n"]
-    pub fn set_content_security_policy(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.content_security_policy = Some(v.into());
+    #[doc = "Set the field `content_security_policy`.\n"]
+    pub fn set_content_security_policy(
+        mut self,
+        v: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.content_security_policy = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `override_`.\n"]
-    pub fn set_override(mut self, v: impl Into<PrimField<bool>>) -> Self {
-        self.override_ = Some(v.into());
+    #[doc = "Set the field `override_`.\n"]
+    pub fn set_override(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
+        self.override_ = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl ToListMappable for DataCloudfrontResponseHeadersPolicySecurityHeadersConfigElContentSecurityPolicyEl {
-    type O = BlockAssignable<DataCloudfrontResponseHeadersPolicySecurityHeadersConfigElContentSecurityPolicyEl>;
+impl terrars::ToListMappable for DataCloudfrontResponseHeadersPolicySecurityHeadersConfigElContentSecurityPolicyEl {
+    type O =
+        terrars::BlockAssignable<DataCloudfrontResponseHeadersPolicySecurityHeadersConfigElContentSecurityPolicyEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -842,14 +934,14 @@ impl BuildDataCloudfrontResponseHeadersPolicySecurityHeadersConfigElContentSecur
 }
 
 pub struct DataCloudfrontResponseHeadersPolicySecurityHeadersConfigElContentSecurityPolicyElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for DataCloudfrontResponseHeadersPolicySecurityHeadersConfigElContentSecurityPolicyElRef {
+impl terrars::Ref for DataCloudfrontResponseHeadersPolicySecurityHeadersConfigElContentSecurityPolicyElRef {
     fn new(
-        shared: StackShared,
-        base: String,
+        shared: terrars::StackShared,
+        base: std::string::String,
     ) -> DataCloudfrontResponseHeadersPolicySecurityHeadersConfigElContentSecurityPolicyElRef {
         DataCloudfrontResponseHeadersPolicySecurityHeadersConfigElContentSecurityPolicyElRef {
             shared: shared,
@@ -859,40 +951,41 @@ impl Ref for DataCloudfrontResponseHeadersPolicySecurityHeadersConfigElContentSe
 }
 
 impl DataCloudfrontResponseHeadersPolicySecurityHeadersConfigElContentSecurityPolicyElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `content_security_policy` after provisioning.\n"]
-    pub fn content_security_policy(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.content_security_policy", self.base))
+    #[doc = "Get a reference to the value of field `content_security_policy` after provisioning.\n"]
+    pub fn content_security_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.content_security_policy", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `override_` after provisioning.\n"]
-    pub fn override_(&self) -> PrimExpr<bool> {
-        PrimExpr::new(self.shared().clone(), format!("{}.override", self.base))
+    #[doc = "Get a reference to the value of field `override_` after provisioning.\n"]
+    pub fn override_(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.override", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct DataCloudfrontResponseHeadersPolicySecurityHeadersConfigElContentTypeOptionsEl {
-    #[serde(rename = "override", skip_serializing_if = "Option::is_none")]
-    override_: Option<PrimField<bool>>,
+    #[serde(rename = "override", skip_serializing_if = "std::option::Option::is_none")]
+    override_: std::option::Option<terrars::PrimField<bool>>,
 }
 
 impl DataCloudfrontResponseHeadersPolicySecurityHeadersConfigElContentTypeOptionsEl {
-    #[doc= "Set the field `override_`.\n"]
-    pub fn set_override(mut self, v: impl Into<PrimField<bool>>) -> Self {
-        self.override_ = Some(v.into());
+    #[doc = "Set the field `override_`.\n"]
+    pub fn set_override(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
+        self.override_ = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl ToListMappable for DataCloudfrontResponseHeadersPolicySecurityHeadersConfigElContentTypeOptionsEl {
-    type O = BlockAssignable<DataCloudfrontResponseHeadersPolicySecurityHeadersConfigElContentTypeOptionsEl>;
+impl terrars::ToListMappable for DataCloudfrontResponseHeadersPolicySecurityHeadersConfigElContentTypeOptionsEl {
+    type O =
+        terrars::BlockAssignable<DataCloudfrontResponseHeadersPolicySecurityHeadersConfigElContentTypeOptionsEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -911,14 +1004,14 @@ impl BuildDataCloudfrontResponseHeadersPolicySecurityHeadersConfigElContentTypeO
 }
 
 pub struct DataCloudfrontResponseHeadersPolicySecurityHeadersConfigElContentTypeOptionsElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for DataCloudfrontResponseHeadersPolicySecurityHeadersConfigElContentTypeOptionsElRef {
+impl terrars::Ref for DataCloudfrontResponseHeadersPolicySecurityHeadersConfigElContentTypeOptionsElRef {
     fn new(
-        shared: StackShared,
-        base: String,
+        shared: terrars::StackShared,
+        base: std::string::String,
     ) -> DataCloudfrontResponseHeadersPolicySecurityHeadersConfigElContentTypeOptionsElRef {
         DataCloudfrontResponseHeadersPolicySecurityHeadersConfigElContentTypeOptionsElRef {
             shared: shared,
@@ -928,43 +1021,43 @@ impl Ref for DataCloudfrontResponseHeadersPolicySecurityHeadersConfigElContentTy
 }
 
 impl DataCloudfrontResponseHeadersPolicySecurityHeadersConfigElContentTypeOptionsElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `override_` after provisioning.\n"]
-    pub fn override_(&self) -> PrimExpr<bool> {
-        PrimExpr::new(self.shared().clone(), format!("{}.override", self.base))
+    #[doc = "Get a reference to the value of field `override_` after provisioning.\n"]
+    pub fn override_(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.override", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct DataCloudfrontResponseHeadersPolicySecurityHeadersConfigElFrameOptionsEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    frame_option: Option<PrimField<String>>,
-    #[serde(rename = "override", skip_serializing_if = "Option::is_none")]
-    override_: Option<PrimField<bool>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    frame_option: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(rename = "override", skip_serializing_if = "std::option::Option::is_none")]
+    override_: std::option::Option<terrars::PrimField<bool>>,
 }
 
 impl DataCloudfrontResponseHeadersPolicySecurityHeadersConfigElFrameOptionsEl {
-    #[doc= "Set the field `frame_option`.\n"]
-    pub fn set_frame_option(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.frame_option = Some(v.into());
+    #[doc = "Set the field `frame_option`.\n"]
+    pub fn set_frame_option(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.frame_option = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `override_`.\n"]
-    pub fn set_override(mut self, v: impl Into<PrimField<bool>>) -> Self {
-        self.override_ = Some(v.into());
+    #[doc = "Set the field `override_`.\n"]
+    pub fn set_override(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
+        self.override_ = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl ToListMappable for DataCloudfrontResponseHeadersPolicySecurityHeadersConfigElFrameOptionsEl {
-    type O = BlockAssignable<DataCloudfrontResponseHeadersPolicySecurityHeadersConfigElFrameOptionsEl>;
+impl terrars::ToListMappable for DataCloudfrontResponseHeadersPolicySecurityHeadersConfigElFrameOptionsEl {
+    type O = terrars::BlockAssignable<DataCloudfrontResponseHeadersPolicySecurityHeadersConfigElFrameOptionsEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -984,14 +1077,14 @@ impl BuildDataCloudfrontResponseHeadersPolicySecurityHeadersConfigElFrameOptions
 }
 
 pub struct DataCloudfrontResponseHeadersPolicySecurityHeadersConfigElFrameOptionsElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for DataCloudfrontResponseHeadersPolicySecurityHeadersConfigElFrameOptionsElRef {
+impl terrars::Ref for DataCloudfrontResponseHeadersPolicySecurityHeadersConfigElFrameOptionsElRef {
     fn new(
-        shared: StackShared,
-        base: String,
+        shared: terrars::StackShared,
+        base: std::string::String,
     ) -> DataCloudfrontResponseHeadersPolicySecurityHeadersConfigElFrameOptionsElRef {
         DataCloudfrontResponseHeadersPolicySecurityHeadersConfigElFrameOptionsElRef {
             shared: shared,
@@ -1001,48 +1094,48 @@ impl Ref for DataCloudfrontResponseHeadersPolicySecurityHeadersConfigElFrameOpti
 }
 
 impl DataCloudfrontResponseHeadersPolicySecurityHeadersConfigElFrameOptionsElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `frame_option` after provisioning.\n"]
-    pub fn frame_option(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.frame_option", self.base))
+    #[doc = "Get a reference to the value of field `frame_option` after provisioning.\n"]
+    pub fn frame_option(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.frame_option", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `override_` after provisioning.\n"]
-    pub fn override_(&self) -> PrimExpr<bool> {
-        PrimExpr::new(self.shared().clone(), format!("{}.override", self.base))
+    #[doc = "Get a reference to the value of field `override_` after provisioning.\n"]
+    pub fn override_(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.override", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct DataCloudfrontResponseHeadersPolicySecurityHeadersConfigElReferrerPolicyEl {
-    #[serde(rename = "override", skip_serializing_if = "Option::is_none")]
-    override_: Option<PrimField<bool>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    referrer_policy: Option<PrimField<String>>,
+    #[serde(rename = "override", skip_serializing_if = "std::option::Option::is_none")]
+    override_: std::option::Option<terrars::PrimField<bool>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    referrer_policy: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
 impl DataCloudfrontResponseHeadersPolicySecurityHeadersConfigElReferrerPolicyEl {
-    #[doc= "Set the field `override_`.\n"]
-    pub fn set_override(mut self, v: impl Into<PrimField<bool>>) -> Self {
-        self.override_ = Some(v.into());
+    #[doc = "Set the field `override_`.\n"]
+    pub fn set_override(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
+        self.override_ = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `referrer_policy`.\n"]
-    pub fn set_referrer_policy(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.referrer_policy = Some(v.into());
+    #[doc = "Set the field `referrer_policy`.\n"]
+    pub fn set_referrer_policy(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.referrer_policy = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl ToListMappable for DataCloudfrontResponseHeadersPolicySecurityHeadersConfigElReferrerPolicyEl {
-    type O = BlockAssignable<DataCloudfrontResponseHeadersPolicySecurityHeadersConfigElReferrerPolicyEl>;
+impl terrars::ToListMappable for DataCloudfrontResponseHeadersPolicySecurityHeadersConfigElReferrerPolicyEl {
+    type O = terrars::BlockAssignable<DataCloudfrontResponseHeadersPolicySecurityHeadersConfigElReferrerPolicyEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -1062,14 +1155,14 @@ impl BuildDataCloudfrontResponseHeadersPolicySecurityHeadersConfigElReferrerPoli
 }
 
 pub struct DataCloudfrontResponseHeadersPolicySecurityHeadersConfigElReferrerPolicyElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for DataCloudfrontResponseHeadersPolicySecurityHeadersConfigElReferrerPolicyElRef {
+impl terrars::Ref for DataCloudfrontResponseHeadersPolicySecurityHeadersConfigElReferrerPolicyElRef {
     fn new(
-        shared: StackShared,
-        base: String,
+        shared: terrars::StackShared,
+        base: std::string::String,
     ) -> DataCloudfrontResponseHeadersPolicySecurityHeadersConfigElReferrerPolicyElRef {
         DataCloudfrontResponseHeadersPolicySecurityHeadersConfigElReferrerPolicyElRef {
             shared: shared,
@@ -1079,64 +1172,66 @@ impl Ref for DataCloudfrontResponseHeadersPolicySecurityHeadersConfigElReferrerP
 }
 
 impl DataCloudfrontResponseHeadersPolicySecurityHeadersConfigElReferrerPolicyElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `override_` after provisioning.\n"]
-    pub fn override_(&self) -> PrimExpr<bool> {
-        PrimExpr::new(self.shared().clone(), format!("{}.override", self.base))
+    #[doc = "Get a reference to the value of field `override_` after provisioning.\n"]
+    pub fn override_(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.override", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `referrer_policy` after provisioning.\n"]
-    pub fn referrer_policy(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.referrer_policy", self.base))
+    #[doc = "Get a reference to the value of field `referrer_policy` after provisioning.\n"]
+    pub fn referrer_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.referrer_policy", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct DataCloudfrontResponseHeadersPolicySecurityHeadersConfigElStrictTransportSecurityEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    access_control_max_age_sec: Option<PrimField<f64>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    include_subdomains: Option<PrimField<bool>>,
-    #[serde(rename = "override", skip_serializing_if = "Option::is_none")]
-    override_: Option<PrimField<bool>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    preload: Option<PrimField<bool>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    access_control_max_age_sec: std::option::Option<terrars::PrimField<f64>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    include_subdomains: std::option::Option<terrars::PrimField<bool>>,
+    #[serde(rename = "override", skip_serializing_if = "std::option::Option::is_none")]
+    override_: std::option::Option<terrars::PrimField<bool>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    preload: std::option::Option<terrars::PrimField<bool>>,
 }
 
 impl DataCloudfrontResponseHeadersPolicySecurityHeadersConfigElStrictTransportSecurityEl {
-    #[doc= "Set the field `access_control_max_age_sec`.\n"]
-    pub fn set_access_control_max_age_sec(mut self, v: impl Into<PrimField<f64>>) -> Self {
-        self.access_control_max_age_sec = Some(v.into());
+    #[doc = "Set the field `access_control_max_age_sec`.\n"]
+    pub fn set_access_control_max_age_sec(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.access_control_max_age_sec = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `include_subdomains`.\n"]
-    pub fn set_include_subdomains(mut self, v: impl Into<PrimField<bool>>) -> Self {
-        self.include_subdomains = Some(v.into());
+    #[doc = "Set the field `include_subdomains`.\n"]
+    pub fn set_include_subdomains(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
+        self.include_subdomains = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `override_`.\n"]
-    pub fn set_override(mut self, v: impl Into<PrimField<bool>>) -> Self {
-        self.override_ = Some(v.into());
+    #[doc = "Set the field `override_`.\n"]
+    pub fn set_override(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
+        self.override_ = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `preload`.\n"]
-    pub fn set_preload(mut self, v: impl Into<PrimField<bool>>) -> Self {
-        self.preload = Some(v.into());
+    #[doc = "Set the field `preload`.\n"]
+    pub fn set_preload(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
+        self.preload = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl ToListMappable for DataCloudfrontResponseHeadersPolicySecurityHeadersConfigElStrictTransportSecurityEl {
-    type O = BlockAssignable<DataCloudfrontResponseHeadersPolicySecurityHeadersConfigElStrictTransportSecurityEl>;
+impl terrars::ToListMappable for DataCloudfrontResponseHeadersPolicySecurityHeadersConfigElStrictTransportSecurityEl {
+    type O =
+        terrars
+        ::BlockAssignable<DataCloudfrontResponseHeadersPolicySecurityHeadersConfigElStrictTransportSecurityEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -1158,14 +1253,14 @@ impl BuildDataCloudfrontResponseHeadersPolicySecurityHeadersConfigElStrictTransp
 }
 
 pub struct DataCloudfrontResponseHeadersPolicySecurityHeadersConfigElStrictTransportSecurityElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for DataCloudfrontResponseHeadersPolicySecurityHeadersConfigElStrictTransportSecurityElRef {
+impl terrars::Ref for DataCloudfrontResponseHeadersPolicySecurityHeadersConfigElStrictTransportSecurityElRef {
     fn new(
-        shared: StackShared,
-        base: String,
+        shared: terrars::StackShared,
+        base: std::string::String,
     ) -> DataCloudfrontResponseHeadersPolicySecurityHeadersConfigElStrictTransportSecurityElRef {
         DataCloudfrontResponseHeadersPolicySecurityHeadersConfigElStrictTransportSecurityElRef {
             shared: shared,
@@ -1175,74 +1270,74 @@ impl Ref for DataCloudfrontResponseHeadersPolicySecurityHeadersConfigElStrictTra
 }
 
 impl DataCloudfrontResponseHeadersPolicySecurityHeadersConfigElStrictTransportSecurityElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `access_control_max_age_sec` after provisioning.\n"]
-    pub fn access_control_max_age_sec(&self) -> PrimExpr<f64> {
-        PrimExpr::new(self.shared().clone(), format!("{}.access_control_max_age_sec", self.base))
+    #[doc = "Get a reference to the value of field `access_control_max_age_sec` after provisioning.\n"]
+    pub fn access_control_max_age_sec(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.access_control_max_age_sec", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `include_subdomains` after provisioning.\n"]
-    pub fn include_subdomains(&self) -> PrimExpr<bool> {
-        PrimExpr::new(self.shared().clone(), format!("{}.include_subdomains", self.base))
+    #[doc = "Get a reference to the value of field `include_subdomains` after provisioning.\n"]
+    pub fn include_subdomains(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.include_subdomains", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `override_` after provisioning.\n"]
-    pub fn override_(&self) -> PrimExpr<bool> {
-        PrimExpr::new(self.shared().clone(), format!("{}.override", self.base))
+    #[doc = "Get a reference to the value of field `override_` after provisioning.\n"]
+    pub fn override_(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.override", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `preload` after provisioning.\n"]
-    pub fn preload(&self) -> PrimExpr<bool> {
-        PrimExpr::new(self.shared().clone(), format!("{}.preload", self.base))
+    #[doc = "Get a reference to the value of field `preload` after provisioning.\n"]
+    pub fn preload(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.preload", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct DataCloudfrontResponseHeadersPolicySecurityHeadersConfigElXssProtectionEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    mode_block: Option<PrimField<bool>>,
-    #[serde(rename = "override", skip_serializing_if = "Option::is_none")]
-    override_: Option<PrimField<bool>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    protection: Option<PrimField<bool>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    report_uri: Option<PrimField<String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    mode_block: std::option::Option<terrars::PrimField<bool>>,
+    #[serde(rename = "override", skip_serializing_if = "std::option::Option::is_none")]
+    override_: std::option::Option<terrars::PrimField<bool>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    protection: std::option::Option<terrars::PrimField<bool>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    report_uri: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
 impl DataCloudfrontResponseHeadersPolicySecurityHeadersConfigElXssProtectionEl {
-    #[doc= "Set the field `mode_block`.\n"]
-    pub fn set_mode_block(mut self, v: impl Into<PrimField<bool>>) -> Self {
-        self.mode_block = Some(v.into());
+    #[doc = "Set the field `mode_block`.\n"]
+    pub fn set_mode_block(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
+        self.mode_block = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `override_`.\n"]
-    pub fn set_override(mut self, v: impl Into<PrimField<bool>>) -> Self {
-        self.override_ = Some(v.into());
+    #[doc = "Set the field `override_`.\n"]
+    pub fn set_override(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
+        self.override_ = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `protection`.\n"]
-    pub fn set_protection(mut self, v: impl Into<PrimField<bool>>) -> Self {
-        self.protection = Some(v.into());
+    #[doc = "Set the field `protection`.\n"]
+    pub fn set_protection(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
+        self.protection = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `report_uri`.\n"]
-    pub fn set_report_uri(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.report_uri = Some(v.into());
+    #[doc = "Set the field `report_uri`.\n"]
+    pub fn set_report_uri(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.report_uri = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl ToListMappable for DataCloudfrontResponseHeadersPolicySecurityHeadersConfigElXssProtectionEl {
-    type O = BlockAssignable<DataCloudfrontResponseHeadersPolicySecurityHeadersConfigElXssProtectionEl>;
+impl terrars::ToListMappable for DataCloudfrontResponseHeadersPolicySecurityHeadersConfigElXssProtectionEl {
+    type O = terrars::BlockAssignable<DataCloudfrontResponseHeadersPolicySecurityHeadersConfigElXssProtectionEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -1264,14 +1359,14 @@ impl BuildDataCloudfrontResponseHeadersPolicySecurityHeadersConfigElXssProtectio
 }
 
 pub struct DataCloudfrontResponseHeadersPolicySecurityHeadersConfigElXssProtectionElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for DataCloudfrontResponseHeadersPolicySecurityHeadersConfigElXssProtectionElRef {
+impl terrars::Ref for DataCloudfrontResponseHeadersPolicySecurityHeadersConfigElXssProtectionElRef {
     fn new(
-        shared: StackShared,
-        base: String,
+        shared: terrars::StackShared,
+        base: std::string::String,
     ) -> DataCloudfrontResponseHeadersPolicySecurityHeadersConfigElXssProtectionElRef {
         DataCloudfrontResponseHeadersPolicySecurityHeadersConfigElXssProtectionElRef {
             shared: shared,
@@ -1281,114 +1376,167 @@ impl Ref for DataCloudfrontResponseHeadersPolicySecurityHeadersConfigElXssProtec
 }
 
 impl DataCloudfrontResponseHeadersPolicySecurityHeadersConfigElXssProtectionElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `mode_block` after provisioning.\n"]
-    pub fn mode_block(&self) -> PrimExpr<bool> {
-        PrimExpr::new(self.shared().clone(), format!("{}.mode_block", self.base))
+    #[doc = "Get a reference to the value of field `mode_block` after provisioning.\n"]
+    pub fn mode_block(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.mode_block", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `override_` after provisioning.\n"]
-    pub fn override_(&self) -> PrimExpr<bool> {
-        PrimExpr::new(self.shared().clone(), format!("{}.override", self.base))
+    #[doc = "Get a reference to the value of field `override_` after provisioning.\n"]
+    pub fn override_(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.override", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `protection` after provisioning.\n"]
-    pub fn protection(&self) -> PrimExpr<bool> {
-        PrimExpr::new(self.shared().clone(), format!("{}.protection", self.base))
+    #[doc = "Get a reference to the value of field `protection` after provisioning.\n"]
+    pub fn protection(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.protection", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `report_uri` after provisioning.\n"]
-    pub fn report_uri(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.report_uri", self.base))
+    #[doc = "Get a reference to the value of field `report_uri` after provisioning.\n"]
+    pub fn report_uri(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.report_uri", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct DataCloudfrontResponseHeadersPolicySecurityHeadersConfigEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    content_security_policy: Option<
-        ListField<DataCloudfrontResponseHeadersPolicySecurityHeadersConfigElContentSecurityPolicyEl>,
-    >,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    content_type_options: Option<
-        ListField<DataCloudfrontResponseHeadersPolicySecurityHeadersConfigElContentTypeOptionsEl>,
-    >,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    frame_options: Option<ListField<DataCloudfrontResponseHeadersPolicySecurityHeadersConfigElFrameOptionsEl>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    referrer_policy: Option<ListField<DataCloudfrontResponseHeadersPolicySecurityHeadersConfigElReferrerPolicyEl>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    strict_transport_security: Option<
-        ListField<DataCloudfrontResponseHeadersPolicySecurityHeadersConfigElStrictTransportSecurityEl>,
-    >,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    xss_protection: Option<ListField<DataCloudfrontResponseHeadersPolicySecurityHeadersConfigElXssProtectionEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    content_security_policy: std
+    ::option
+    ::Option<terrars::ListField<DataCloudfrontResponseHeadersPolicySecurityHeadersConfigElContentSecurityPolicyEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    content_type_options: std
+    ::option
+    ::Option<terrars::ListField<DataCloudfrontResponseHeadersPolicySecurityHeadersConfigElContentTypeOptionsEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    frame_options: std
+    ::option
+    ::Option<terrars::ListField<DataCloudfrontResponseHeadersPolicySecurityHeadersConfigElFrameOptionsEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    referrer_policy: std
+    ::option
+    ::Option<terrars::ListField<DataCloudfrontResponseHeadersPolicySecurityHeadersConfigElReferrerPolicyEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    strict_transport_security: std
+    ::option
+    ::Option<terrars::ListField<DataCloudfrontResponseHeadersPolicySecurityHeadersConfigElStrictTransportSecurityEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    xss_protection: std
+    ::option
+    ::Option<terrars::ListField<DataCloudfrontResponseHeadersPolicySecurityHeadersConfigElXssProtectionEl>>,
 }
 
 impl DataCloudfrontResponseHeadersPolicySecurityHeadersConfigEl {
-    #[doc= "Set the field `content_security_policy`.\n"]
+    #[doc = "Set the field `content_security_policy`.\n"]
     pub fn set_content_security_policy(
         mut self,
-        v: impl Into<ListField<DataCloudfrontResponseHeadersPolicySecurityHeadersConfigElContentSecurityPolicyEl>>,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<
+                        terrars
+                        ::ListField<DataCloudfrontResponseHeadersPolicySecurityHeadersConfigElContentSecurityPolicyEl>,
+                    >,
     ) -> Self {
-        self.content_security_policy = Some(v.into());
+        self.content_security_policy = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `content_type_options`.\n"]
+    #[doc = "Set the field `content_type_options`.\n"]
     pub fn set_content_type_options(
         mut self,
-        v: impl Into<ListField<DataCloudfrontResponseHeadersPolicySecurityHeadersConfigElContentTypeOptionsEl>>,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<
+                        terrars
+                        ::ListField<DataCloudfrontResponseHeadersPolicySecurityHeadersConfigElContentTypeOptionsEl>,
+                    >,
     ) -> Self {
-        self.content_type_options = Some(v.into());
+        self.content_type_options = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `frame_options`.\n"]
+    #[doc = "Set the field `frame_options`.\n"]
     pub fn set_frame_options(
         mut self,
-        v: impl Into<ListField<DataCloudfrontResponseHeadersPolicySecurityHeadersConfigElFrameOptionsEl>>,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<
+                        terrars::ListField<DataCloudfrontResponseHeadersPolicySecurityHeadersConfigElFrameOptionsEl>,
+                    >,
     ) -> Self {
-        self.frame_options = Some(v.into());
+        self.frame_options = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `referrer_policy`.\n"]
+    #[doc = "Set the field `referrer_policy`.\n"]
     pub fn set_referrer_policy(
         mut self,
-        v: impl Into<ListField<DataCloudfrontResponseHeadersPolicySecurityHeadersConfigElReferrerPolicyEl>>,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<
+                        terrars::ListField<DataCloudfrontResponseHeadersPolicySecurityHeadersConfigElReferrerPolicyEl>,
+                    >,
     ) -> Self {
-        self.referrer_policy = Some(v.into());
+        self.referrer_policy = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `strict_transport_security`.\n"]
+    #[doc = "Set the field `strict_transport_security`.\n"]
     pub fn set_strict_transport_security(
         mut self,
-        v: impl Into<ListField<DataCloudfrontResponseHeadersPolicySecurityHeadersConfigElStrictTransportSecurityEl>>,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<
+                        terrars
+                        ::ListField<
+                            DataCloudfrontResponseHeadersPolicySecurityHeadersConfigElStrictTransportSecurityEl,
+                        >,
+                    >,
     ) -> Self {
-        self.strict_transport_security = Some(v.into());
+        self.strict_transport_security = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `xss_protection`.\n"]
+    #[doc = "Set the field `xss_protection`.\n"]
     pub fn set_xss_protection(
         mut self,
-        v: impl Into<ListField<DataCloudfrontResponseHeadersPolicySecurityHeadersConfigElXssProtectionEl>>,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<
+                        terrars::ListField<DataCloudfrontResponseHeadersPolicySecurityHeadersConfigElXssProtectionEl>,
+                    >,
     ) -> Self {
-        self.xss_protection = Some(v.into());
+        self.xss_protection = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl ToListMappable for DataCloudfrontResponseHeadersPolicySecurityHeadersConfigEl {
-    type O = BlockAssignable<DataCloudfrontResponseHeadersPolicySecurityHeadersConfigEl>;
+impl terrars::ToListMappable for DataCloudfrontResponseHeadersPolicySecurityHeadersConfigEl {
+    type O = terrars::BlockAssignable<DataCloudfrontResponseHeadersPolicySecurityHeadersConfigEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -1412,12 +1560,15 @@ impl BuildDataCloudfrontResponseHeadersPolicySecurityHeadersConfigEl {
 }
 
 pub struct DataCloudfrontResponseHeadersPolicySecurityHeadersConfigElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for DataCloudfrontResponseHeadersPolicySecurityHeadersConfigElRef {
-    fn new(shared: StackShared, base: String) -> DataCloudfrontResponseHeadersPolicySecurityHeadersConfigElRef {
+impl terrars::Ref for DataCloudfrontResponseHeadersPolicySecurityHeadersConfigElRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> DataCloudfrontResponseHeadersPolicySecurityHeadersConfigElRef {
         DataCloudfrontResponseHeadersPolicySecurityHeadersConfigElRef {
             shared: shared,
             base: base.to_string(),
@@ -1426,78 +1577,80 @@ impl Ref for DataCloudfrontResponseHeadersPolicySecurityHeadersConfigElRef {
 }
 
 impl DataCloudfrontResponseHeadersPolicySecurityHeadersConfigElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `content_security_policy` after provisioning.\n"]
+    #[doc = "Get a reference to the value of field `content_security_policy` after provisioning.\n"]
     pub fn content_security_policy(
         &self,
-    ) -> ListRef<DataCloudfrontResponseHeadersPolicySecurityHeadersConfigElContentSecurityPolicyElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.content_security_policy", self.base))
+    ) -> terrars::ListRef<DataCloudfrontResponseHeadersPolicySecurityHeadersConfigElContentSecurityPolicyElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.content_security_policy", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `content_type_options` after provisioning.\n"]
+    #[doc = "Get a reference to the value of field `content_type_options` after provisioning.\n"]
     pub fn content_type_options(
         &self,
-    ) -> ListRef<DataCloudfrontResponseHeadersPolicySecurityHeadersConfigElContentTypeOptionsElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.content_type_options", self.base))
+    ) -> terrars::ListRef<DataCloudfrontResponseHeadersPolicySecurityHeadersConfigElContentTypeOptionsElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.content_type_options", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `frame_options` after provisioning.\n"]
-    pub fn frame_options(&self) -> ListRef<DataCloudfrontResponseHeadersPolicySecurityHeadersConfigElFrameOptionsElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.frame_options", self.base))
+    #[doc = "Get a reference to the value of field `frame_options` after provisioning.\n"]
+    pub fn frame_options(
+        &self,
+    ) -> terrars::ListRef<DataCloudfrontResponseHeadersPolicySecurityHeadersConfigElFrameOptionsElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.frame_options", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `referrer_policy` after provisioning.\n"]
+    #[doc = "Get a reference to the value of field `referrer_policy` after provisioning.\n"]
     pub fn referrer_policy(
         &self,
-    ) -> ListRef<DataCloudfrontResponseHeadersPolicySecurityHeadersConfigElReferrerPolicyElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.referrer_policy", self.base))
+    ) -> terrars::ListRef<DataCloudfrontResponseHeadersPolicySecurityHeadersConfigElReferrerPolicyElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.referrer_policy", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `strict_transport_security` after provisioning.\n"]
+    #[doc = "Get a reference to the value of field `strict_transport_security` after provisioning.\n"]
     pub fn strict_transport_security(
         &self,
-    ) -> ListRef<DataCloudfrontResponseHeadersPolicySecurityHeadersConfigElStrictTransportSecurityElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.strict_transport_security", self.base))
+    ) -> terrars::ListRef<DataCloudfrontResponseHeadersPolicySecurityHeadersConfigElStrictTransportSecurityElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.strict_transport_security", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `xss_protection` after provisioning.\n"]
+    #[doc = "Get a reference to the value of field `xss_protection` after provisioning.\n"]
     pub fn xss_protection(
         &self,
-    ) -> ListRef<DataCloudfrontResponseHeadersPolicySecurityHeadersConfigElXssProtectionElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.xss_protection", self.base))
+    ) -> terrars::ListRef<DataCloudfrontResponseHeadersPolicySecurityHeadersConfigElXssProtectionElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.xss_protection", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct DataCloudfrontResponseHeadersPolicyServerTimingHeadersConfigEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    enabled: Option<PrimField<bool>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    sampling_rate: Option<PrimField<f64>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    enabled: std::option::Option<terrars::PrimField<bool>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    sampling_rate: std::option::Option<terrars::PrimField<f64>>,
 }
 
 impl DataCloudfrontResponseHeadersPolicyServerTimingHeadersConfigEl {
-    #[doc= "Set the field `enabled`.\n"]
-    pub fn set_enabled(mut self, v: impl Into<PrimField<bool>>) -> Self {
-        self.enabled = Some(v.into());
+    #[doc = "Set the field `enabled`.\n"]
+    pub fn set_enabled(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
+        self.enabled = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `sampling_rate`.\n"]
-    pub fn set_sampling_rate(mut self, v: impl Into<PrimField<f64>>) -> Self {
-        self.sampling_rate = Some(v.into());
+    #[doc = "Set the field `sampling_rate`.\n"]
+    pub fn set_sampling_rate(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.sampling_rate = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl ToListMappable for DataCloudfrontResponseHeadersPolicyServerTimingHeadersConfigEl {
-    type O = BlockAssignable<DataCloudfrontResponseHeadersPolicyServerTimingHeadersConfigEl>;
+impl terrars::ToListMappable for DataCloudfrontResponseHeadersPolicyServerTimingHeadersConfigEl {
+    type O = terrars::BlockAssignable<DataCloudfrontResponseHeadersPolicyServerTimingHeadersConfigEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -1517,12 +1670,15 @@ impl BuildDataCloudfrontResponseHeadersPolicyServerTimingHeadersConfigEl {
 }
 
 pub struct DataCloudfrontResponseHeadersPolicyServerTimingHeadersConfigElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for DataCloudfrontResponseHeadersPolicyServerTimingHeadersConfigElRef {
-    fn new(shared: StackShared, base: String) -> DataCloudfrontResponseHeadersPolicyServerTimingHeadersConfigElRef {
+impl terrars::Ref for DataCloudfrontResponseHeadersPolicyServerTimingHeadersConfigElRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> DataCloudfrontResponseHeadersPolicyServerTimingHeadersConfigElRef {
         DataCloudfrontResponseHeadersPolicyServerTimingHeadersConfigElRef {
             shared: shared,
             base: base.to_string(),
@@ -1531,17 +1687,17 @@ impl Ref for DataCloudfrontResponseHeadersPolicyServerTimingHeadersConfigElRef {
 }
 
 impl DataCloudfrontResponseHeadersPolicyServerTimingHeadersConfigElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `enabled` after provisioning.\n"]
-    pub fn enabled(&self) -> PrimExpr<bool> {
-        PrimExpr::new(self.shared().clone(), format!("{}.enabled", self.base))
+    #[doc = "Get a reference to the value of field `enabled` after provisioning.\n"]
+    pub fn enabled(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.enabled", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `sampling_rate` after provisioning.\n"]
-    pub fn sampling_rate(&self) -> PrimExpr<f64> {
-        PrimExpr::new(self.shared().clone(), format!("{}.sampling_rate", self.base))
+    #[doc = "Get a reference to the value of field `sampling_rate` after provisioning.\n"]
+    pub fn sampling_rate(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.sampling_rate", self.base))
     }
 }

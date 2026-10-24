@@ -1,106 +1,134 @@
 use serde::Serialize;
-use std::cell::RefCell;
-use std::rc::Rc;
-use terrars::*;
+use terrars::{
+    Referable as _,
+    Datasource_ as _,
+    Ref as _,
+};
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
 struct DataCloudfrontRealtimeLogConfigData {
-    #[serde(skip_serializing_if = "Vec::is_empty")]
-    depends_on: Vec<String>,
-    #[serde(skip_serializing_if = "SerdeSkipDefault::is_default")]
-    provider: Option<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    for_each: Option<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    id: Option<PrimField<String>>,
-    name: PrimField<String>,
+    #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
+    depends_on: std::vec::Vec<std::string::String>,
+    #[serde(skip_serializing_if = "terrars::SerdeSkipDefault::is_default")]
+    provider: std::option::Option<std::string::String>,
+    #[serde(skip_serializing_if = "terrars::SerdeSkipDefault::is_default")]
+    lifecycle: terrars::DatasourceLifecycle,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    for_each: std::option::Option<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    id: std::option::Option<terrars::PrimField<std::string::String>>,
+    name: terrars::PrimField<std::string::String>,
 }
 
 struct DataCloudfrontRealtimeLogConfig_ {
-    shared: StackShared,
-    tf_id: String,
-    data: RefCell<DataCloudfrontRealtimeLogConfigData>,
+    shared: terrars::StackShared,
+    tf_id: std::string::String,
+    data: std::cell::RefCell<DataCloudfrontRealtimeLogConfigData>,
 }
 
 #[derive(Clone)]
-pub struct DataCloudfrontRealtimeLogConfig(Rc<DataCloudfrontRealtimeLogConfig_>);
+pub struct DataCloudfrontRealtimeLogConfig(std::rc::Rc<DataCloudfrontRealtimeLogConfig_>);
 
 impl DataCloudfrontRealtimeLogConfig {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.0.shared
     }
 
-    pub fn depends_on(self, dep: &impl Referable) -> Self {
+    pub fn depends_on(self, dep: &impl terrars::Referable) -> Self {
         self.0.data.borrow_mut().depends_on.push(dep.extract_ref());
         self
     }
 
     pub fn set_provider(&self, provider: &ProviderAws) -> &Self {
-        self.0.data.borrow_mut().provider = Some(provider.provider_ref());
+        self.0.data.borrow_mut().provider = std::option::Option::Some(provider.provider_ref());
         self
     }
 
-    #[doc= "Set the field `id`.\n"]
-    pub fn set_id(self, v: impl Into<PrimField<String>>) -> Self {
-        self.0.data.borrow_mut().id = Some(v.into());
+    pub fn add_lifecycle_precondition(
+        self,
+        condition: impl std::convert::Into<terrars::PrimField<bool>>,
+        error_message: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.0.data.borrow_mut().lifecycle.precondition.push(terrars::LifecycleCondition {
+            condition: condition.into(),
+            error_message: error_message.into(),
+        });
         self
     }
 
-    #[doc= "Get a reference to the value of field `arn` after provisioning.\n"]
-    pub fn arn(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.arn", self.extract_ref()))
+    pub fn add_lifecycle_postcondition(
+        self,
+        condition: impl std::convert::Into<terrars::PrimField<bool>>,
+        error_message: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.0.data.borrow_mut().lifecycle.postcondition.push(terrars::LifecycleCondition {
+            condition: condition.into(),
+            error_message: error_message.into(),
+        });
+        self
     }
 
-    #[doc= "Get a reference to the value of field `endpoint` after provisioning.\n"]
-    pub fn endpoint(&self) -> ListRef<DataCloudfrontRealtimeLogConfigEndpointElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.endpoint", self.extract_ref()))
+    #[doc = "Set the field `id`.\n"]
+    pub fn set_id(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().id = std::option::Option::Some(v.into());
+        self
     }
 
-    #[doc= "Get a reference to the value of field `fields` after provisioning.\n"]
-    pub fn fields(&self) -> SetRef<PrimExpr<String>> {
-        SetRef::new(self.shared().clone(), format!("{}.fields", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `arn` after provisioning.\n"]
+    pub fn arn(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.arn", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `id` after provisioning.\n"]
-    pub fn id(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `endpoint` after provisioning.\n"]
+    pub fn endpoint(&self) -> terrars::ListRef<DataCloudfrontRealtimeLogConfigEndpointElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.endpoint", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `name` after provisioning.\n"]
-    pub fn name(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `fields` after provisioning.\n"]
+    pub fn fields(&self) -> terrars::SetRef<terrars::PrimExpr<std::string::String>> {
+        terrars::SetRef::new(self.shared().clone(), format!("{}.fields", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `sampling_rate` after provisioning.\n"]
-    pub fn sampling_rate(&self) -> PrimExpr<f64> {
-        PrimExpr::new(self.shared().clone(), format!("{}.sampling_rate", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
+    pub fn id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `name` after provisioning.\n"]
+    pub fn name(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `sampling_rate` after provisioning.\n"]
+    pub fn sampling_rate(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.sampling_rate", self.extract_ref()))
     }
 }
 
-impl Referable for DataCloudfrontRealtimeLogConfig {
-    fn extract_ref(&self) -> String {
+impl terrars::Referable for DataCloudfrontRealtimeLogConfig {
+    fn extract_ref(&self) -> std::string::String {
         format!("data.{}.{}", self.0.extract_datasource_type(), self.0.extract_tf_id())
     }
 }
 
-impl Datasource for DataCloudfrontRealtimeLogConfig { }
+impl terrars::Datasource for DataCloudfrontRealtimeLogConfig { }
 
-impl ToListMappable for DataCloudfrontRealtimeLogConfig {
-    type O = ListRef<DataCloudfrontRealtimeLogConfigRef>;
+impl terrars::ToListMappable for DataCloudfrontRealtimeLogConfig {
+    type O = terrars::ListRef<DataCloudfrontRealtimeLogConfigRef>;
 
-    fn do_map(self, base: String) -> Self::O {
-        self.0.data.borrow_mut().for_each = Some(format!("${{{}}}", base));
-        ListRef::new(self.0.shared.clone(), self.extract_ref())
+    fn do_map(self, base: std::string::String) -> Self::O {
+        self.0.data.borrow_mut().for_each = std::option::Option::Some(format!("${{{}}}", base));
+        terrars::ListRef::new(self.0.shared.clone(), self.extract_ref())
     }
 }
 
-impl Datasource_ for DataCloudfrontRealtimeLogConfig_ {
-    fn extract_datasource_type(&self) -> String {
+impl terrars::Datasource_ for DataCloudfrontRealtimeLogConfig_ {
+    fn extract_datasource_type(&self) -> std::string::String {
         "aws_cloudfront_realtime_log_config".into()
     }
 
-    fn extract_tf_id(&self) -> String {
+    fn extract_tf_id(&self) -> std::string::String {
         self.tf_id.clone()
     }
 
@@ -110,20 +138,21 @@ impl Datasource_ for DataCloudfrontRealtimeLogConfig_ {
 }
 
 pub struct BuildDataCloudfrontRealtimeLogConfig {
-    pub tf_id: String,
-    #[doc= ""]
-    pub name: PrimField<String>,
+    pub tf_id: std::string::String,
+    #[doc = ""]
+    pub name: terrars::PrimField<std::string::String>,
 }
 
 impl BuildDataCloudfrontRealtimeLogConfig {
-    pub fn build(self, stack: &mut Stack) -> DataCloudfrontRealtimeLogConfig {
-        let out = DataCloudfrontRealtimeLogConfig(Rc::new(DataCloudfrontRealtimeLogConfig_ {
+    pub fn build(self, stack: &mut terrars::Stack) -> DataCloudfrontRealtimeLogConfig {
+        let out = DataCloudfrontRealtimeLogConfig(std::rc::Rc::new(DataCloudfrontRealtimeLogConfig_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: RefCell::new(DataCloudfrontRealtimeLogConfigData {
+            data: std::cell::RefCell::new(DataCloudfrontRealtimeLogConfigData {
                 depends_on: core::default::Default::default(),
-                provider: None,
-                for_each: None,
+                provider: std::option::Option::None,
+                lifecycle: core::default::Default::default(),
+                for_each: std::option::Option::None,
                 id: core::default::Default::default(),
                 name: self.name,
             }),
@@ -134,12 +163,12 @@ impl BuildDataCloudfrontRealtimeLogConfig {
 }
 
 pub struct DataCloudfrontRealtimeLogConfigRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for DataCloudfrontRealtimeLogConfigRef {
-    fn new(shared: StackShared, base: String) -> Self {
+impl terrars::Ref for DataCloudfrontRealtimeLogConfigRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> Self {
         Self {
             shared: shared,
             base: base,
@@ -148,72 +177,72 @@ impl Ref for DataCloudfrontRealtimeLogConfigRef {
 }
 
 impl DataCloudfrontRealtimeLogConfigRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    fn extract_ref(&self) -> String {
+    fn extract_ref(&self) -> std::string::String {
         self.base.clone()
     }
 
-    #[doc= "Get a reference to the value of field `arn` after provisioning.\n"]
-    pub fn arn(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.arn", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `arn` after provisioning.\n"]
+    pub fn arn(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.arn", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `endpoint` after provisioning.\n"]
-    pub fn endpoint(&self) -> ListRef<DataCloudfrontRealtimeLogConfigEndpointElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.endpoint", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `endpoint` after provisioning.\n"]
+    pub fn endpoint(&self) -> terrars::ListRef<DataCloudfrontRealtimeLogConfigEndpointElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.endpoint", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `fields` after provisioning.\n"]
-    pub fn fields(&self) -> SetRef<PrimExpr<String>> {
-        SetRef::new(self.shared().clone(), format!("{}.fields", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `fields` after provisioning.\n"]
+    pub fn fields(&self) -> terrars::SetRef<terrars::PrimExpr<std::string::String>> {
+        terrars::SetRef::new(self.shared().clone(), format!("{}.fields", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `id` after provisioning.\n"]
-    pub fn id(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
+    pub fn id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `name` after provisioning.\n"]
-    pub fn name(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `name` after provisioning.\n"]
+    pub fn name(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `sampling_rate` after provisioning.\n"]
-    pub fn sampling_rate(&self) -> PrimExpr<f64> {
-        PrimExpr::new(self.shared().clone(), format!("{}.sampling_rate", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `sampling_rate` after provisioning.\n"]
+    pub fn sampling_rate(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.sampling_rate", self.extract_ref()))
     }
 }
 
 #[derive(Serialize)]
 pub struct DataCloudfrontRealtimeLogConfigEndpointElKinesisStreamConfigEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    role_arn: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    stream_arn: Option<PrimField<String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    role_arn: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    stream_arn: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
 impl DataCloudfrontRealtimeLogConfigEndpointElKinesisStreamConfigEl {
-    #[doc= "Set the field `role_arn`.\n"]
-    pub fn set_role_arn(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.role_arn = Some(v.into());
+    #[doc = "Set the field `role_arn`.\n"]
+    pub fn set_role_arn(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.role_arn = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `stream_arn`.\n"]
-    pub fn set_stream_arn(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.stream_arn = Some(v.into());
+    #[doc = "Set the field `stream_arn`.\n"]
+    pub fn set_stream_arn(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.stream_arn = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl ToListMappable for DataCloudfrontRealtimeLogConfigEndpointElKinesisStreamConfigEl {
-    type O = BlockAssignable<DataCloudfrontRealtimeLogConfigEndpointElKinesisStreamConfigEl>;
+impl terrars::ToListMappable for DataCloudfrontRealtimeLogConfigEndpointElKinesisStreamConfigEl {
+    type O = terrars::BlockAssignable<DataCloudfrontRealtimeLogConfigEndpointElKinesisStreamConfigEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -233,12 +262,15 @@ impl BuildDataCloudfrontRealtimeLogConfigEndpointElKinesisStreamConfigEl {
 }
 
 pub struct DataCloudfrontRealtimeLogConfigEndpointElKinesisStreamConfigElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for DataCloudfrontRealtimeLogConfigEndpointElKinesisStreamConfigElRef {
-    fn new(shared: StackShared, base: String) -> DataCloudfrontRealtimeLogConfigEndpointElKinesisStreamConfigElRef {
+impl terrars::Ref for DataCloudfrontRealtimeLogConfigEndpointElKinesisStreamConfigElRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> DataCloudfrontRealtimeLogConfigEndpointElKinesisStreamConfigElRef {
         DataCloudfrontRealtimeLogConfigEndpointElKinesisStreamConfigElRef {
             shared: shared,
             base: base.to_string(),
@@ -247,51 +279,58 @@ impl Ref for DataCloudfrontRealtimeLogConfigEndpointElKinesisStreamConfigElRef {
 }
 
 impl DataCloudfrontRealtimeLogConfigEndpointElKinesisStreamConfigElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `role_arn` after provisioning.\n"]
-    pub fn role_arn(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.role_arn", self.base))
+    #[doc = "Get a reference to the value of field `role_arn` after provisioning.\n"]
+    pub fn role_arn(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.role_arn", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `stream_arn` after provisioning.\n"]
-    pub fn stream_arn(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.stream_arn", self.base))
+    #[doc = "Get a reference to the value of field `stream_arn` after provisioning.\n"]
+    pub fn stream_arn(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.stream_arn", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct DataCloudfrontRealtimeLogConfigEndpointEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    kinesis_stream_config: Option<ListField<DataCloudfrontRealtimeLogConfigEndpointElKinesisStreamConfigEl>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    stream_type: Option<PrimField<String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    kinesis_stream_config: std
+    ::option
+    ::Option<terrars::ListField<DataCloudfrontRealtimeLogConfigEndpointElKinesisStreamConfigEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    stream_type: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
 impl DataCloudfrontRealtimeLogConfigEndpointEl {
-    #[doc= "Set the field `kinesis_stream_config`.\n"]
+    #[doc = "Set the field `kinesis_stream_config`.\n"]
     pub fn set_kinesis_stream_config(
         mut self,
-        v: impl Into<ListField<DataCloudfrontRealtimeLogConfigEndpointElKinesisStreamConfigEl>>,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<terrars::ListField<DataCloudfrontRealtimeLogConfigEndpointElKinesisStreamConfigEl>>,
     ) -> Self {
-        self.kinesis_stream_config = Some(v.into());
+        self.kinesis_stream_config = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `stream_type`.\n"]
-    pub fn set_stream_type(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.stream_type = Some(v.into());
+    #[doc = "Set the field `stream_type`.\n"]
+    pub fn set_stream_type(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.stream_type = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl ToListMappable for DataCloudfrontRealtimeLogConfigEndpointEl {
-    type O = BlockAssignable<DataCloudfrontRealtimeLogConfigEndpointEl>;
+impl terrars::ToListMappable for DataCloudfrontRealtimeLogConfigEndpointEl {
+    type O = terrars::BlockAssignable<DataCloudfrontRealtimeLogConfigEndpointEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -311,12 +350,12 @@ impl BuildDataCloudfrontRealtimeLogConfigEndpointEl {
 }
 
 pub struct DataCloudfrontRealtimeLogConfigEndpointElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for DataCloudfrontRealtimeLogConfigEndpointElRef {
-    fn new(shared: StackShared, base: String) -> DataCloudfrontRealtimeLogConfigEndpointElRef {
+impl terrars::Ref for DataCloudfrontRealtimeLogConfigEndpointElRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataCloudfrontRealtimeLogConfigEndpointElRef {
         DataCloudfrontRealtimeLogConfigEndpointElRef {
             shared: shared,
             base: base.to_string(),
@@ -325,17 +364,19 @@ impl Ref for DataCloudfrontRealtimeLogConfigEndpointElRef {
 }
 
 impl DataCloudfrontRealtimeLogConfigEndpointElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `kinesis_stream_config` after provisioning.\n"]
-    pub fn kinesis_stream_config(&self) -> ListRef<DataCloudfrontRealtimeLogConfigEndpointElKinesisStreamConfigElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.kinesis_stream_config", self.base))
+    #[doc = "Get a reference to the value of field `kinesis_stream_config` after provisioning.\n"]
+    pub fn kinesis_stream_config(
+        &self,
+    ) -> terrars::ListRef<DataCloudfrontRealtimeLogConfigEndpointElKinesisStreamConfigElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.kinesis_stream_config", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `stream_type` after provisioning.\n"]
-    pub fn stream_type(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.stream_type", self.base))
+    #[doc = "Get a reference to the value of field `stream_type` after provisioning.\n"]
+    pub fn stream_type(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.stream_type", self.base))
     }
 }

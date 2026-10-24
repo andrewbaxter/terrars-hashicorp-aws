@@ -1,88 +1,116 @@
 use serde::Serialize;
-use std::cell::RefCell;
-use std::rc::Rc;
-use terrars::*;
+use terrars::{
+    Referable as _,
+    Datasource_ as _,
+    Ref as _,
+};
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
 struct DataRoute53DelegationSetData {
-    #[serde(skip_serializing_if = "Vec::is_empty")]
-    depends_on: Vec<String>,
-    #[serde(skip_serializing_if = "SerdeSkipDefault::is_default")]
-    provider: Option<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    for_each: Option<String>,
-    id: PrimField<String>,
+    #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
+    depends_on: std::vec::Vec<std::string::String>,
+    #[serde(skip_serializing_if = "terrars::SerdeSkipDefault::is_default")]
+    provider: std::option::Option<std::string::String>,
+    #[serde(skip_serializing_if = "terrars::SerdeSkipDefault::is_default")]
+    lifecycle: terrars::DatasourceLifecycle,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    for_each: std::option::Option<std::string::String>,
+    id: terrars::PrimField<std::string::String>,
 }
 
 struct DataRoute53DelegationSet_ {
-    shared: StackShared,
-    tf_id: String,
-    data: RefCell<DataRoute53DelegationSetData>,
+    shared: terrars::StackShared,
+    tf_id: std::string::String,
+    data: std::cell::RefCell<DataRoute53DelegationSetData>,
 }
 
 #[derive(Clone)]
-pub struct DataRoute53DelegationSet(Rc<DataRoute53DelegationSet_>);
+pub struct DataRoute53DelegationSet(std::rc::Rc<DataRoute53DelegationSet_>);
 
 impl DataRoute53DelegationSet {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.0.shared
     }
 
-    pub fn depends_on(self, dep: &impl Referable) -> Self {
+    pub fn depends_on(self, dep: &impl terrars::Referable) -> Self {
         self.0.data.borrow_mut().depends_on.push(dep.extract_ref());
         self
     }
 
     pub fn set_provider(&self, provider: &ProviderAws) -> &Self {
-        self.0.data.borrow_mut().provider = Some(provider.provider_ref());
+        self.0.data.borrow_mut().provider = std::option::Option::Some(provider.provider_ref());
         self
     }
 
-    #[doc= "Get a reference to the value of field `arn` after provisioning.\n"]
-    pub fn arn(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.arn", self.extract_ref()))
+    pub fn add_lifecycle_precondition(
+        self,
+        condition: impl std::convert::Into<terrars::PrimField<bool>>,
+        error_message: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.0.data.borrow_mut().lifecycle.precondition.push(terrars::LifecycleCondition {
+            condition: condition.into(),
+            error_message: error_message.into(),
+        });
+        self
     }
 
-    #[doc= "Get a reference to the value of field `caller_reference` after provisioning.\n"]
-    pub fn caller_reference(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.caller_reference", self.extract_ref()))
+    pub fn add_lifecycle_postcondition(
+        self,
+        condition: impl std::convert::Into<terrars::PrimField<bool>>,
+        error_message: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.0.data.borrow_mut().lifecycle.postcondition.push(terrars::LifecycleCondition {
+            condition: condition.into(),
+            error_message: error_message.into(),
+        });
+        self
     }
 
-    #[doc= "Get a reference to the value of field `id` after provisioning.\n"]
-    pub fn id(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `arn` after provisioning.\n"]
+    pub fn arn(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.arn", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `name_servers` after provisioning.\n"]
-    pub fn name_servers(&self) -> ListRef<PrimExpr<String>> {
-        ListRef::new(self.shared().clone(), format!("{}.name_servers", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `caller_reference` after provisioning.\n"]
+    pub fn caller_reference(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.caller_reference", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
+    pub fn id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `name_servers` after provisioning.\n"]
+    pub fn name_servers(&self) -> terrars::ListRef<terrars::PrimExpr<std::string::String>> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.name_servers", self.extract_ref()))
     }
 }
 
-impl Referable for DataRoute53DelegationSet {
-    fn extract_ref(&self) -> String {
+impl terrars::Referable for DataRoute53DelegationSet {
+    fn extract_ref(&self) -> std::string::String {
         format!("data.{}.{}", self.0.extract_datasource_type(), self.0.extract_tf_id())
     }
 }
 
-impl Datasource for DataRoute53DelegationSet { }
+impl terrars::Datasource for DataRoute53DelegationSet { }
 
-impl ToListMappable for DataRoute53DelegationSet {
-    type O = ListRef<DataRoute53DelegationSetRef>;
+impl terrars::ToListMappable for DataRoute53DelegationSet {
+    type O = terrars::ListRef<DataRoute53DelegationSetRef>;
 
-    fn do_map(self, base: String) -> Self::O {
-        self.0.data.borrow_mut().for_each = Some(format!("${{{}}}", base));
-        ListRef::new(self.0.shared.clone(), self.extract_ref())
+    fn do_map(self, base: std::string::String) -> Self::O {
+        self.0.data.borrow_mut().for_each = std::option::Option::Some(format!("${{{}}}", base));
+        terrars::ListRef::new(self.0.shared.clone(), self.extract_ref())
     }
 }
 
-impl Datasource_ for DataRoute53DelegationSet_ {
-    fn extract_datasource_type(&self) -> String {
+impl terrars::Datasource_ for DataRoute53DelegationSet_ {
+    fn extract_datasource_type(&self) -> std::string::String {
         "aws_route53_delegation_set".into()
     }
 
-    fn extract_tf_id(&self) -> String {
+    fn extract_tf_id(&self) -> std::string::String {
         self.tf_id.clone()
     }
 
@@ -92,20 +120,21 @@ impl Datasource_ for DataRoute53DelegationSet_ {
 }
 
 pub struct BuildDataRoute53DelegationSet {
-    pub tf_id: String,
-    #[doc= ""]
-    pub id: PrimField<String>,
+    pub tf_id: std::string::String,
+    #[doc = ""]
+    pub id: terrars::PrimField<std::string::String>,
 }
 
 impl BuildDataRoute53DelegationSet {
-    pub fn build(self, stack: &mut Stack) -> DataRoute53DelegationSet {
-        let out = DataRoute53DelegationSet(Rc::new(DataRoute53DelegationSet_ {
+    pub fn build(self, stack: &mut terrars::Stack) -> DataRoute53DelegationSet {
+        let out = DataRoute53DelegationSet(std::rc::Rc::new(DataRoute53DelegationSet_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: RefCell::new(DataRoute53DelegationSetData {
+            data: std::cell::RefCell::new(DataRoute53DelegationSetData {
                 depends_on: core::default::Default::default(),
-                provider: None,
-                for_each: None,
+                provider: std::option::Option::None,
+                lifecycle: core::default::Default::default(),
+                for_each: std::option::Option::None,
                 id: self.id,
             }),
         }));
@@ -115,12 +144,12 @@ impl BuildDataRoute53DelegationSet {
 }
 
 pub struct DataRoute53DelegationSetRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for DataRoute53DelegationSetRef {
-    fn new(shared: StackShared, base: String) -> Self {
+impl terrars::Ref for DataRoute53DelegationSetRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> Self {
         Self {
             shared: shared,
             base: base,
@@ -129,31 +158,31 @@ impl Ref for DataRoute53DelegationSetRef {
 }
 
 impl DataRoute53DelegationSetRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    fn extract_ref(&self) -> String {
+    fn extract_ref(&self) -> std::string::String {
         self.base.clone()
     }
 
-    #[doc= "Get a reference to the value of field `arn` after provisioning.\n"]
-    pub fn arn(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.arn", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `arn` after provisioning.\n"]
+    pub fn arn(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.arn", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `caller_reference` after provisioning.\n"]
-    pub fn caller_reference(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.caller_reference", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `caller_reference` after provisioning.\n"]
+    pub fn caller_reference(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.caller_reference", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `id` after provisioning.\n"]
-    pub fn id(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
+    pub fn id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `name_servers` after provisioning.\n"]
-    pub fn name_servers(&self) -> ListRef<PrimExpr<String>> {
-        ListRef::new(self.shared().clone(), format!("{}.name_servers", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `name_servers` after provisioning.\n"]
+    pub fn name_servers(&self) -> terrars::ListRef<terrars::PrimExpr<std::string::String>> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.name_servers", self.extract_ref()))
     }
 }

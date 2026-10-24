@@ -1,143 +1,174 @@
 use serde::Serialize;
-use std::cell::RefCell;
-use std::rc::Rc;
-use terrars::*;
+use terrars::{
+    Referable as _,
+    Datasource_ as _,
+    Ref as _,
+};
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
 struct DataAppmeshVirtualServiceData {
-    #[serde(skip_serializing_if = "Vec::is_empty")]
-    depends_on: Vec<String>,
-    #[serde(skip_serializing_if = "SerdeSkipDefault::is_default")]
-    provider: Option<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    for_each: Option<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    id: Option<PrimField<String>>,
-    mesh_name: PrimField<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    mesh_owner: Option<PrimField<String>>,
-    name: PrimField<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    tags: Option<RecField<PrimField<String>>>,
+    #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
+    depends_on: std::vec::Vec<std::string::String>,
+    #[serde(skip_serializing_if = "terrars::SerdeSkipDefault::is_default")]
+    provider: std::option::Option<std::string::String>,
+    #[serde(skip_serializing_if = "terrars::SerdeSkipDefault::is_default")]
+    lifecycle: terrars::DatasourceLifecycle,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    for_each: std::option::Option<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    id: std::option::Option<terrars::PrimField<std::string::String>>,
+    mesh_name: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    mesh_owner: std::option::Option<terrars::PrimField<std::string::String>>,
+    name: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    tags: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
 }
 
 struct DataAppmeshVirtualService_ {
-    shared: StackShared,
-    tf_id: String,
-    data: RefCell<DataAppmeshVirtualServiceData>,
+    shared: terrars::StackShared,
+    tf_id: std::string::String,
+    data: std::cell::RefCell<DataAppmeshVirtualServiceData>,
 }
 
 #[derive(Clone)]
-pub struct DataAppmeshVirtualService(Rc<DataAppmeshVirtualService_>);
+pub struct DataAppmeshVirtualService(std::rc::Rc<DataAppmeshVirtualService_>);
 
 impl DataAppmeshVirtualService {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.0.shared
     }
 
-    pub fn depends_on(self, dep: &impl Referable) -> Self {
+    pub fn depends_on(self, dep: &impl terrars::Referable) -> Self {
         self.0.data.borrow_mut().depends_on.push(dep.extract_ref());
         self
     }
 
     pub fn set_provider(&self, provider: &ProviderAws) -> &Self {
-        self.0.data.borrow_mut().provider = Some(provider.provider_ref());
+        self.0.data.borrow_mut().provider = std::option::Option::Some(provider.provider_ref());
         self
     }
 
-    #[doc= "Set the field `id`.\n"]
-    pub fn set_id(self, v: impl Into<PrimField<String>>) -> Self {
-        self.0.data.borrow_mut().id = Some(v.into());
+    pub fn add_lifecycle_precondition(
+        self,
+        condition: impl std::convert::Into<terrars::PrimField<bool>>,
+        error_message: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.0.data.borrow_mut().lifecycle.precondition.push(terrars::LifecycleCondition {
+            condition: condition.into(),
+            error_message: error_message.into(),
+        });
         self
     }
 
-    #[doc= "Set the field `mesh_owner`.\n"]
-    pub fn set_mesh_owner(self, v: impl Into<PrimField<String>>) -> Self {
-        self.0.data.borrow_mut().mesh_owner = Some(v.into());
+    pub fn add_lifecycle_postcondition(
+        self,
+        condition: impl std::convert::Into<terrars::PrimField<bool>>,
+        error_message: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.0.data.borrow_mut().lifecycle.postcondition.push(terrars::LifecycleCondition {
+            condition: condition.into(),
+            error_message: error_message.into(),
+        });
         self
     }
 
-    #[doc= "Set the field `tags`.\n"]
-    pub fn set_tags(self, v: impl Into<RecField<PrimField<String>>>) -> Self {
-        self.0.data.borrow_mut().tags = Some(v.into());
+    #[doc = "Set the field `id`.\n"]
+    pub fn set_id(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().id = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Get a reference to the value of field `arn` after provisioning.\n"]
-    pub fn arn(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.arn", self.extract_ref()))
+    #[doc = "Set the field `mesh_owner`.\n"]
+    pub fn set_mesh_owner(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().mesh_owner = std::option::Option::Some(v.into());
+        self
     }
 
-    #[doc= "Get a reference to the value of field `created_date` after provisioning.\n"]
-    pub fn created_date(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.created_date", self.extract_ref()))
+    #[doc = "Set the field `tags`.\n"]
+    pub fn set_tags(
+        self,
+        v: impl std::convert::Into<terrars::RecField<terrars::PrimField<std::string::String>>>,
+    ) -> Self {
+        self.0.data.borrow_mut().tags = std::option::Option::Some(v.into());
+        self
     }
 
-    #[doc= "Get a reference to the value of field `id` after provisioning.\n"]
-    pub fn id(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `arn` after provisioning.\n"]
+    pub fn arn(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.arn", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `last_updated_date` after provisioning.\n"]
-    pub fn last_updated_date(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.last_updated_date", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `created_date` after provisioning.\n"]
+    pub fn created_date(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.created_date", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `mesh_name` after provisioning.\n"]
-    pub fn mesh_name(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.mesh_name", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
+    pub fn id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `mesh_owner` after provisioning.\n"]
-    pub fn mesh_owner(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.mesh_owner", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `last_updated_date` after provisioning.\n"]
+    pub fn last_updated_date(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.last_updated_date", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `name` after provisioning.\n"]
-    pub fn name(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `mesh_name` after provisioning.\n"]
+    pub fn mesh_name(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.mesh_name", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `resource_owner` after provisioning.\n"]
-    pub fn resource_owner(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.resource_owner", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `mesh_owner` after provisioning.\n"]
+    pub fn mesh_owner(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.mesh_owner", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `spec` after provisioning.\n"]
-    pub fn spec(&self) -> ListRef<DataAppmeshVirtualServiceSpecElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.spec", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `name` after provisioning.\n"]
+    pub fn name(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `tags` after provisioning.\n"]
-    pub fn tags(&self) -> RecRef<PrimExpr<String>> {
-        RecRef::new(self.shared().clone(), format!("{}.tags", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `resource_owner` after provisioning.\n"]
+    pub fn resource_owner(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.resource_owner", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `spec` after provisioning.\n"]
+    pub fn spec(&self) -> terrars::ListRef<DataAppmeshVirtualServiceSpecElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.spec", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `tags` after provisioning.\n"]
+    pub fn tags(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
+        terrars::RecRef::new(self.shared().clone(), format!("{}.tags", self.extract_ref()))
     }
 }
 
-impl Referable for DataAppmeshVirtualService {
-    fn extract_ref(&self) -> String {
+impl terrars::Referable for DataAppmeshVirtualService {
+    fn extract_ref(&self) -> std::string::String {
         format!("data.{}.{}", self.0.extract_datasource_type(), self.0.extract_tf_id())
     }
 }
 
-impl Datasource for DataAppmeshVirtualService { }
+impl terrars::Datasource for DataAppmeshVirtualService { }
 
-impl ToListMappable for DataAppmeshVirtualService {
-    type O = ListRef<DataAppmeshVirtualServiceRef>;
+impl terrars::ToListMappable for DataAppmeshVirtualService {
+    type O = terrars::ListRef<DataAppmeshVirtualServiceRef>;
 
-    fn do_map(self, base: String) -> Self::O {
-        self.0.data.borrow_mut().for_each = Some(format!("${{{}}}", base));
-        ListRef::new(self.0.shared.clone(), self.extract_ref())
+    fn do_map(self, base: std::string::String) -> Self::O {
+        self.0.data.borrow_mut().for_each = std::option::Option::Some(format!("${{{}}}", base));
+        terrars::ListRef::new(self.0.shared.clone(), self.extract_ref())
     }
 }
 
-impl Datasource_ for DataAppmeshVirtualService_ {
-    fn extract_datasource_type(&self) -> String {
+impl terrars::Datasource_ for DataAppmeshVirtualService_ {
+    fn extract_datasource_type(&self) -> std::string::String {
         "aws_appmesh_virtual_service".into()
     }
 
-    fn extract_tf_id(&self) -> String {
+    fn extract_tf_id(&self) -> std::string::String {
         self.tf_id.clone()
     }
 
@@ -147,22 +178,23 @@ impl Datasource_ for DataAppmeshVirtualService_ {
 }
 
 pub struct BuildDataAppmeshVirtualService {
-    pub tf_id: String,
-    #[doc= ""]
-    pub mesh_name: PrimField<String>,
-    #[doc= ""]
-    pub name: PrimField<String>,
+    pub tf_id: std::string::String,
+    #[doc = ""]
+    pub mesh_name: terrars::PrimField<std::string::String>,
+    #[doc = ""]
+    pub name: terrars::PrimField<std::string::String>,
 }
 
 impl BuildDataAppmeshVirtualService {
-    pub fn build(self, stack: &mut Stack) -> DataAppmeshVirtualService {
-        let out = DataAppmeshVirtualService(Rc::new(DataAppmeshVirtualService_ {
+    pub fn build(self, stack: &mut terrars::Stack) -> DataAppmeshVirtualService {
+        let out = DataAppmeshVirtualService(std::rc::Rc::new(DataAppmeshVirtualService_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: RefCell::new(DataAppmeshVirtualServiceData {
+            data: std::cell::RefCell::new(DataAppmeshVirtualServiceData {
                 depends_on: core::default::Default::default(),
-                provider: None,
-                for_each: None,
+                provider: std::option::Option::None,
+                lifecycle: core::default::Default::default(),
+                for_each: std::option::Option::None,
                 id: core::default::Default::default(),
                 mesh_name: self.mesh_name,
                 mesh_owner: core::default::Default::default(),
@@ -176,12 +208,12 @@ impl BuildDataAppmeshVirtualService {
 }
 
 pub struct DataAppmeshVirtualServiceRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for DataAppmeshVirtualServiceRef {
-    fn new(shared: StackShared, base: String) -> Self {
+impl terrars::Ref for DataAppmeshVirtualServiceRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> Self {
         Self {
             shared: shared,
             base: base,
@@ -190,84 +222,84 @@ impl Ref for DataAppmeshVirtualServiceRef {
 }
 
 impl DataAppmeshVirtualServiceRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    fn extract_ref(&self) -> String {
+    fn extract_ref(&self) -> std::string::String {
         self.base.clone()
     }
 
-    #[doc= "Get a reference to the value of field `arn` after provisioning.\n"]
-    pub fn arn(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.arn", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `arn` after provisioning.\n"]
+    pub fn arn(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.arn", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `created_date` after provisioning.\n"]
-    pub fn created_date(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.created_date", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `created_date` after provisioning.\n"]
+    pub fn created_date(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.created_date", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `id` after provisioning.\n"]
-    pub fn id(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
+    pub fn id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `last_updated_date` after provisioning.\n"]
-    pub fn last_updated_date(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.last_updated_date", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `last_updated_date` after provisioning.\n"]
+    pub fn last_updated_date(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.last_updated_date", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `mesh_name` after provisioning.\n"]
-    pub fn mesh_name(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.mesh_name", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `mesh_name` after provisioning.\n"]
+    pub fn mesh_name(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.mesh_name", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `mesh_owner` after provisioning.\n"]
-    pub fn mesh_owner(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.mesh_owner", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `mesh_owner` after provisioning.\n"]
+    pub fn mesh_owner(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.mesh_owner", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `name` after provisioning.\n"]
-    pub fn name(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `name` after provisioning.\n"]
+    pub fn name(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `resource_owner` after provisioning.\n"]
-    pub fn resource_owner(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.resource_owner", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `resource_owner` after provisioning.\n"]
+    pub fn resource_owner(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.resource_owner", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `spec` after provisioning.\n"]
-    pub fn spec(&self) -> ListRef<DataAppmeshVirtualServiceSpecElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.spec", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `spec` after provisioning.\n"]
+    pub fn spec(&self) -> terrars::ListRef<DataAppmeshVirtualServiceSpecElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.spec", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `tags` after provisioning.\n"]
-    pub fn tags(&self) -> RecRef<PrimExpr<String>> {
-        RecRef::new(self.shared().clone(), format!("{}.tags", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `tags` after provisioning.\n"]
+    pub fn tags(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
+        terrars::RecRef::new(self.shared().clone(), format!("{}.tags", self.extract_ref()))
     }
 }
 
 #[derive(Serialize)]
 pub struct DataAppmeshVirtualServiceSpecElProviderElVirtualNodeEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    virtual_node_name: Option<PrimField<String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    virtual_node_name: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
 impl DataAppmeshVirtualServiceSpecElProviderElVirtualNodeEl {
-    #[doc= "Set the field `virtual_node_name`.\n"]
-    pub fn set_virtual_node_name(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.virtual_node_name = Some(v.into());
+    #[doc = "Set the field `virtual_node_name`.\n"]
+    pub fn set_virtual_node_name(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.virtual_node_name = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl ToListMappable for DataAppmeshVirtualServiceSpecElProviderElVirtualNodeEl {
-    type O = BlockAssignable<DataAppmeshVirtualServiceSpecElProviderElVirtualNodeEl>;
+impl terrars::ToListMappable for DataAppmeshVirtualServiceSpecElProviderElVirtualNodeEl {
+    type O = terrars::BlockAssignable<DataAppmeshVirtualServiceSpecElProviderElVirtualNodeEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -286,12 +318,15 @@ impl BuildDataAppmeshVirtualServiceSpecElProviderElVirtualNodeEl {
 }
 
 pub struct DataAppmeshVirtualServiceSpecElProviderElVirtualNodeElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for DataAppmeshVirtualServiceSpecElProviderElVirtualNodeElRef {
-    fn new(shared: StackShared, base: String) -> DataAppmeshVirtualServiceSpecElProviderElVirtualNodeElRef {
+impl terrars::Ref for DataAppmeshVirtualServiceSpecElProviderElVirtualNodeElRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> DataAppmeshVirtualServiceSpecElProviderElVirtualNodeElRef {
         DataAppmeshVirtualServiceSpecElProviderElVirtualNodeElRef {
             shared: shared,
             base: base.to_string(),
@@ -300,35 +335,38 @@ impl Ref for DataAppmeshVirtualServiceSpecElProviderElVirtualNodeElRef {
 }
 
 impl DataAppmeshVirtualServiceSpecElProviderElVirtualNodeElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `virtual_node_name` after provisioning.\n"]
-    pub fn virtual_node_name(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.virtual_node_name", self.base))
+    #[doc = "Get a reference to the value of field `virtual_node_name` after provisioning.\n"]
+    pub fn virtual_node_name(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.virtual_node_name", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct DataAppmeshVirtualServiceSpecElProviderElVirtualRouterEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    virtual_router_name: Option<PrimField<String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    virtual_router_name: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
 impl DataAppmeshVirtualServiceSpecElProviderElVirtualRouterEl {
-    #[doc= "Set the field `virtual_router_name`.\n"]
-    pub fn set_virtual_router_name(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.virtual_router_name = Some(v.into());
+    #[doc = "Set the field `virtual_router_name`.\n"]
+    pub fn set_virtual_router_name(
+        mut self,
+        v: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.virtual_router_name = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl ToListMappable for DataAppmeshVirtualServiceSpecElProviderElVirtualRouterEl {
-    type O = BlockAssignable<DataAppmeshVirtualServiceSpecElProviderElVirtualRouterEl>;
+impl terrars::ToListMappable for DataAppmeshVirtualServiceSpecElProviderElVirtualRouterEl {
+    type O = terrars::BlockAssignable<DataAppmeshVirtualServiceSpecElProviderElVirtualRouterEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -347,12 +385,15 @@ impl BuildDataAppmeshVirtualServiceSpecElProviderElVirtualRouterEl {
 }
 
 pub struct DataAppmeshVirtualServiceSpecElProviderElVirtualRouterElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for DataAppmeshVirtualServiceSpecElProviderElVirtualRouterElRef {
-    fn new(shared: StackShared, base: String) -> DataAppmeshVirtualServiceSpecElProviderElVirtualRouterElRef {
+impl terrars::Ref for DataAppmeshVirtualServiceSpecElProviderElVirtualRouterElRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> DataAppmeshVirtualServiceSpecElProviderElVirtualRouterElRef {
         DataAppmeshVirtualServiceSpecElProviderElVirtualRouterElRef {
             shared: shared,
             base: base.to_string(),
@@ -361,49 +402,49 @@ impl Ref for DataAppmeshVirtualServiceSpecElProviderElVirtualRouterElRef {
 }
 
 impl DataAppmeshVirtualServiceSpecElProviderElVirtualRouterElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `virtual_router_name` after provisioning.\n"]
-    pub fn virtual_router_name(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.virtual_router_name", self.base))
+    #[doc = "Get a reference to the value of field `virtual_router_name` after provisioning.\n"]
+    pub fn virtual_router_name(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.virtual_router_name", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct DataAppmeshVirtualServiceSpecElProviderEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    virtual_node: Option<ListField<DataAppmeshVirtualServiceSpecElProviderElVirtualNodeEl>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    virtual_router: Option<ListField<DataAppmeshVirtualServiceSpecElProviderElVirtualRouterEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    virtual_node: std::option::Option<terrars::ListField<DataAppmeshVirtualServiceSpecElProviderElVirtualNodeEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    virtual_router: std::option::Option<terrars::ListField<DataAppmeshVirtualServiceSpecElProviderElVirtualRouterEl>>,
 }
 
 impl DataAppmeshVirtualServiceSpecElProviderEl {
-    #[doc= "Set the field `virtual_node`.\n"]
+    #[doc = "Set the field `virtual_node`.\n"]
     pub fn set_virtual_node(
         mut self,
-        v: impl Into<ListField<DataAppmeshVirtualServiceSpecElProviderElVirtualNodeEl>>,
+        v: impl std::convert::Into<terrars::ListField<DataAppmeshVirtualServiceSpecElProviderElVirtualNodeEl>>,
     ) -> Self {
-        self.virtual_node = Some(v.into());
+        self.virtual_node = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `virtual_router`.\n"]
+    #[doc = "Set the field `virtual_router`.\n"]
     pub fn set_virtual_router(
         mut self,
-        v: impl Into<ListField<DataAppmeshVirtualServiceSpecElProviderElVirtualRouterEl>>,
+        v: impl std::convert::Into<terrars::ListField<DataAppmeshVirtualServiceSpecElProviderElVirtualRouterEl>>,
     ) -> Self {
-        self.virtual_router = Some(v.into());
+        self.virtual_router = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl ToListMappable for DataAppmeshVirtualServiceSpecElProviderEl {
-    type O = BlockAssignable<DataAppmeshVirtualServiceSpecElProviderEl>;
+impl terrars::ToListMappable for DataAppmeshVirtualServiceSpecElProviderEl {
+    type O = terrars::BlockAssignable<DataAppmeshVirtualServiceSpecElProviderEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -423,12 +464,12 @@ impl BuildDataAppmeshVirtualServiceSpecElProviderEl {
 }
 
 pub struct DataAppmeshVirtualServiceSpecElProviderElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for DataAppmeshVirtualServiceSpecElProviderElRef {
-    fn new(shared: StackShared, base: String) -> DataAppmeshVirtualServiceSpecElProviderElRef {
+impl terrars::Ref for DataAppmeshVirtualServiceSpecElProviderElRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataAppmeshVirtualServiceSpecElProviderElRef {
         DataAppmeshVirtualServiceSpecElProviderElRef {
             shared: shared,
             base: base.to_string(),
@@ -437,40 +478,43 @@ impl Ref for DataAppmeshVirtualServiceSpecElProviderElRef {
 }
 
 impl DataAppmeshVirtualServiceSpecElProviderElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `virtual_node` after provisioning.\n"]
-    pub fn virtual_node(&self) -> ListRef<DataAppmeshVirtualServiceSpecElProviderElVirtualNodeElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.virtual_node", self.base))
+    #[doc = "Get a reference to the value of field `virtual_node` after provisioning.\n"]
+    pub fn virtual_node(&self) -> terrars::ListRef<DataAppmeshVirtualServiceSpecElProviderElVirtualNodeElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.virtual_node", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `virtual_router` after provisioning.\n"]
-    pub fn virtual_router(&self) -> ListRef<DataAppmeshVirtualServiceSpecElProviderElVirtualRouterElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.virtual_router", self.base))
+    #[doc = "Get a reference to the value of field `virtual_router` after provisioning.\n"]
+    pub fn virtual_router(&self) -> terrars::ListRef<DataAppmeshVirtualServiceSpecElProviderElVirtualRouterElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.virtual_router", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct DataAppmeshVirtualServiceSpecEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    provider: Option<ListField<DataAppmeshVirtualServiceSpecElProviderEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    provider: std::option::Option<terrars::ListField<DataAppmeshVirtualServiceSpecElProviderEl>>,
 }
 
 impl DataAppmeshVirtualServiceSpecEl {
-    #[doc= "Set the field `provider`.\n"]
-    pub fn set_provider(mut self, v: impl Into<ListField<DataAppmeshVirtualServiceSpecElProviderEl>>) -> Self {
-        self.provider = Some(v.into());
+    #[doc = "Set the field `provider`.\n"]
+    pub fn set_provider(
+        mut self,
+        v: impl std::convert::Into<terrars::ListField<DataAppmeshVirtualServiceSpecElProviderEl>>,
+    ) -> Self {
+        self.provider = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl ToListMappable for DataAppmeshVirtualServiceSpecEl {
-    type O = BlockAssignable<DataAppmeshVirtualServiceSpecEl>;
+impl terrars::ToListMappable for DataAppmeshVirtualServiceSpecEl {
+    type O = terrars::BlockAssignable<DataAppmeshVirtualServiceSpecEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -487,12 +531,12 @@ impl BuildDataAppmeshVirtualServiceSpecEl {
 }
 
 pub struct DataAppmeshVirtualServiceSpecElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for DataAppmeshVirtualServiceSpecElRef {
-    fn new(shared: StackShared, base: String) -> DataAppmeshVirtualServiceSpecElRef {
+impl terrars::Ref for DataAppmeshVirtualServiceSpecElRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataAppmeshVirtualServiceSpecElRef {
         DataAppmeshVirtualServiceSpecElRef {
             shared: shared,
             base: base.to_string(),
@@ -501,12 +545,12 @@ impl Ref for DataAppmeshVirtualServiceSpecElRef {
 }
 
 impl DataAppmeshVirtualServiceSpecElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `provider` after provisioning.\n"]
-    pub fn provider(&self) -> ListRef<DataAppmeshVirtualServiceSpecElProviderElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.provider", self.base))
+    #[doc = "Get a reference to the value of field `provider` after provisioning.\n"]
+    pub fn provider(&self) -> terrars::ListRef<DataAppmeshVirtualServiceSpecElProviderElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.provider", self.base))
     }
 }

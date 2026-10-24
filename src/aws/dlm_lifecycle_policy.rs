@@ -1,55 +1,59 @@
 use serde::Serialize;
-use std::cell::RefCell;
-use std::rc::Rc;
-use terrars::*;
+use terrars::{
+    Referable as _,
+    Resource_ as _,
+    Ref as _,
+};
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
 struct DlmLifecyclePolicyData {
-    #[serde(skip_serializing_if = "Vec::is_empty")]
-    depends_on: Vec<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    provider: Option<String>,
-    #[serde(skip_serializing_if = "SerdeSkipDefault::is_default")]
-    lifecycle: ResourceLifecycle,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    for_each: Option<String>,
-    description: PrimField<String>,
-    execution_role_arn: PrimField<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    id: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    state: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    tags: Option<RecField<PrimField<String>>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    tags_all: Option<RecField<PrimField<String>>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    policy_details: Option<Vec<DlmLifecyclePolicyPolicyDetailsEl>>,
+    #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
+    depends_on: std::vec::Vec<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    provider: std::option::Option<std::string::String>,
+    #[serde(skip_serializing_if = "terrars::SerdeSkipDefault::is_default")]
+    lifecycle: terrars::ResourceLifecycle,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    for_each: std::option::Option<std::string::String>,
+    #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
+    provisioner: std::vec::Vec<terrars::Provisioner>,
+    description: terrars::PrimField<std::string::String>,
+    execution_role_arn: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    id: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    state: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    tags: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    tags_all: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    policy_details: std::option::Option<std::vec::Vec<DlmLifecyclePolicyPolicyDetailsEl>>,
     dynamic: DlmLifecyclePolicyDynamic,
 }
 
 struct DlmLifecyclePolicy_ {
-    shared: StackShared,
-    tf_id: String,
-    data: RefCell<DlmLifecyclePolicyData>,
+    shared: terrars::StackShared,
+    tf_id: std::string::String,
+    data: std::cell::RefCell<DlmLifecyclePolicyData>,
 }
 
 #[derive(Clone)]
-pub struct DlmLifecyclePolicy(Rc<DlmLifecyclePolicy_>);
+pub struct DlmLifecyclePolicy(std::rc::Rc<DlmLifecyclePolicy_>);
 
 impl DlmLifecyclePolicy {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.0.shared
     }
 
-    pub fn depends_on(self, dep: &impl Referable) -> Self {
+    pub fn depends_on(self, dep: &impl terrars::Referable) -> Self {
         self.0.data.borrow_mut().depends_on.push(dep.extract_ref());
         self
     }
 
     pub fn set_provider(self, provider: &ProviderAws) -> Self {
-        self.0.data.borrow_mut().provider = Some(provider.provider_ref());
+        self.0.data.borrow_mut().provider = std::option::Option::Some(provider.provider_ref());
         self
     }
 
@@ -64,142 +68,184 @@ impl DlmLifecyclePolicy {
     }
 
     pub fn ignore_changes_to_all(self) -> Self {
-        self.0.data.borrow_mut().lifecycle.ignore_changes = Some(IgnoreChanges::All(IgnoreChangesAll::All));
+        self.0.data.borrow_mut().lifecycle.ignore_changes =
+            std::option::Option::Some(terrars::IgnoreChanges::All(terrars::IgnoreChangesAll::All));
         self
     }
 
-    pub fn ignore_changes_to_attr(self, attr: impl ToString) -> Self {
+    pub fn ignore_changes_to_attr(self, attr: impl std::string::ToString) -> Self {
         {
             let mut d = self.0.data.borrow_mut();
             if match &mut d.lifecycle.ignore_changes {
-                Some(i) => match i {
-                    IgnoreChanges::All(_) => {
+                std::option::Option::Some(i) => match i {
+                    terrars::IgnoreChanges::All(_) => {
                         true
                     },
-                    IgnoreChanges::Refs(r) => {
+                    terrars::IgnoreChanges::Refs(r) => {
                         r.push(attr.to_string());
                         false
                     },
                 },
-                None => true,
+                std::option::Option::None => true,
             } {
-                d.lifecycle.ignore_changes = Some(IgnoreChanges::Refs(vec![attr.to_string()]));
+                d.lifecycle.ignore_changes =
+                    std::option::Option::Some(terrars::IgnoreChanges::Refs(vec![attr.to_string()]));
             }
         }
         self
     }
 
-    pub fn replace_triggered_by_resource(self, r: &impl Resource) -> Self {
+    pub fn replace_triggered_by_resource(self, r: &impl terrars::Resource) -> Self {
         self.0.data.borrow_mut().lifecycle.replace_triggered_by.push(r.extract_ref());
         self
     }
 
-    pub fn replace_triggered_by_attr(self, attr: impl ToString) -> Self {
+    pub fn replace_triggered_by_attr(self, attr: impl std::string::ToString) -> Self {
         self.0.data.borrow_mut().lifecycle.replace_triggered_by.push(attr.to_string());
         self
     }
 
-    #[doc= "Set the field `id`.\n"]
-    pub fn set_id(self, v: impl Into<PrimField<String>>) -> Self {
-        self.0.data.borrow_mut().id = Some(v.into());
+    #[doc = r" Add a provisioner (ex: `local-exec`, `remote-exec`, `file`) to this resource."]
+    #[doc = r" Provisioners run in the order they're added."]
+    pub fn add_provisioner(self, v: impl std::convert::Into<terrars::Provisioner>) -> Self {
+        self.0.data.borrow_mut().provisioner.push(v.into());
         self
     }
 
-    #[doc= "Set the field `state`.\n"]
-    pub fn set_state(self, v: impl Into<PrimField<String>>) -> Self {
-        self.0.data.borrow_mut().state = Some(v.into());
+    pub fn add_lifecycle_precondition(
+        self,
+        condition: impl std::convert::Into<terrars::PrimField<bool>>,
+        error_message: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.0.data.borrow_mut().lifecycle.precondition.push(terrars::LifecycleCondition {
+            condition: condition.into(),
+            error_message: error_message.into(),
+        });
         self
     }
 
-    #[doc= "Set the field `tags`.\n"]
-    pub fn set_tags(self, v: impl Into<RecField<PrimField<String>>>) -> Self {
-        self.0.data.borrow_mut().tags = Some(v.into());
+    pub fn add_lifecycle_postcondition(
+        self,
+        condition: impl std::convert::Into<terrars::PrimField<bool>>,
+        error_message: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.0.data.borrow_mut().lifecycle.postcondition.push(terrars::LifecycleCondition {
+            condition: condition.into(),
+            error_message: error_message.into(),
+        });
         self
     }
 
-    #[doc= "Set the field `tags_all`.\n"]
-    pub fn set_tags_all(self, v: impl Into<RecField<PrimField<String>>>) -> Self {
-        self.0.data.borrow_mut().tags_all = Some(v.into());
+    #[doc = "Set the field `id`.\n"]
+    pub fn set_id(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().id = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `policy_details`.\n"]
-    pub fn set_policy_details(self, v: impl Into<BlockAssignable<DlmLifecyclePolicyPolicyDetailsEl>>) -> Self {
+    #[doc = "Set the field `state`.\n"]
+    pub fn set_state(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().state = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `tags`.\n"]
+    pub fn set_tags(
+        self,
+        v: impl std::convert::Into<terrars::RecField<terrars::PrimField<std::string::String>>>,
+    ) -> Self {
+        self.0.data.borrow_mut().tags = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `tags_all`.\n"]
+    pub fn set_tags_all(
+        self,
+        v: impl std::convert::Into<terrars::RecField<terrars::PrimField<std::string::String>>>,
+    ) -> Self {
+        self.0.data.borrow_mut().tags_all = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `policy_details`.\n"]
+    pub fn set_policy_details(
+        self,
+        v: impl std::convert::Into<terrars::BlockAssignable<DlmLifecyclePolicyPolicyDetailsEl>>,
+    ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.0.data.borrow_mut().policy_details = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.0.data.borrow_mut().policy_details = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.0.data.borrow_mut().dynamic.policy_details = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.0.data.borrow_mut().dynamic.policy_details = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Get a reference to the value of field `arn` after provisioning.\n"]
-    pub fn arn(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.arn", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `arn` after provisioning.\n"]
+    pub fn arn(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.arn", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `description` after provisioning.\n"]
-    pub fn description(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.description", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `description` after provisioning.\n"]
+    pub fn description(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.description", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `execution_role_arn` after provisioning.\n"]
-    pub fn execution_role_arn(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.execution_role_arn", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `execution_role_arn` after provisioning.\n"]
+    pub fn execution_role_arn(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.execution_role_arn", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `id` after provisioning.\n"]
-    pub fn id(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
+    pub fn id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `state` after provisioning.\n"]
-    pub fn state(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.state", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `state` after provisioning.\n"]
+    pub fn state(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.state", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `tags` after provisioning.\n"]
-    pub fn tags(&self) -> RecRef<PrimExpr<String>> {
-        RecRef::new(self.shared().clone(), format!("{}.tags", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `tags` after provisioning.\n"]
+    pub fn tags(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
+        terrars::RecRef::new(self.shared().clone(), format!("{}.tags", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `tags_all` after provisioning.\n"]
-    pub fn tags_all(&self) -> RecRef<PrimExpr<String>> {
-        RecRef::new(self.shared().clone(), format!("{}.tags_all", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `tags_all` after provisioning.\n"]
+    pub fn tags_all(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
+        terrars::RecRef::new(self.shared().clone(), format!("{}.tags_all", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `policy_details` after provisioning.\n"]
-    pub fn policy_details(&self) -> ListRef<DlmLifecyclePolicyPolicyDetailsElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.policy_details", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `policy_details` after provisioning.\n"]
+    pub fn policy_details(&self) -> terrars::ListRef<DlmLifecyclePolicyPolicyDetailsElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.policy_details", self.extract_ref()))
     }
 }
 
-impl Referable for DlmLifecyclePolicy {
-    fn extract_ref(&self) -> String {
+impl terrars::Referable for DlmLifecyclePolicy {
+    fn extract_ref(&self) -> std::string::String {
         format!("{}.{}", self.0.extract_resource_type(), self.0.extract_tf_id())
     }
 }
 
-impl Resource for DlmLifecyclePolicy { }
+impl terrars::Resource for DlmLifecyclePolicy { }
 
-impl ToListMappable for DlmLifecyclePolicy {
-    type O = ListRef<DlmLifecyclePolicyRef>;
+impl terrars::ToListMappable for DlmLifecyclePolicy {
+    type O = terrars::ListRef<DlmLifecyclePolicyRef>;
 
-    fn do_map(self, base: String) -> Self::O {
-        self.0.data.borrow_mut().for_each = Some(format!("${{{}}}", base));
-        ListRef::new(self.0.shared.clone(), self.extract_ref())
+    fn do_map(self, base: std::string::String) -> Self::O {
+        self.0.data.borrow_mut().for_each = std::option::Option::Some(format!("${{{}}}", base));
+        terrars::ListRef::new(self.0.shared.clone(), self.extract_ref())
     }
 }
 
-impl Resource_ for DlmLifecyclePolicy_ {
-    fn extract_resource_type(&self) -> String {
+impl terrars::Resource_ for DlmLifecyclePolicy_ {
+    fn extract_resource_type(&self) -> std::string::String {
         "aws_dlm_lifecycle_policy".into()
     }
 
-    fn extract_tf_id(&self) -> String {
+    fn extract_tf_id(&self) -> std::string::String {
         self.tf_id.clone()
     }
 
@@ -209,23 +255,24 @@ impl Resource_ for DlmLifecyclePolicy_ {
 }
 
 pub struct BuildDlmLifecyclePolicy {
-    pub tf_id: String,
-    #[doc= ""]
-    pub description: PrimField<String>,
-    #[doc= ""]
-    pub execution_role_arn: PrimField<String>,
+    pub tf_id: std::string::String,
+    #[doc = ""]
+    pub description: terrars::PrimField<std::string::String>,
+    #[doc = ""]
+    pub execution_role_arn: terrars::PrimField<std::string::String>,
 }
 
 impl BuildDlmLifecyclePolicy {
-    pub fn build(self, stack: &mut Stack) -> DlmLifecyclePolicy {
-        let out = DlmLifecyclePolicy(Rc::new(DlmLifecyclePolicy_ {
+    pub fn build(self, stack: &mut terrars::Stack) -> DlmLifecyclePolicy {
+        let out = DlmLifecyclePolicy(std::rc::Rc::new(DlmLifecyclePolicy_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: RefCell::new(DlmLifecyclePolicyData {
+            data: std::cell::RefCell::new(DlmLifecyclePolicyData {
                 depends_on: core::default::Default::default(),
-                provider: None,
+                provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
-                for_each: None,
+                for_each: std::option::Option::None,
+                provisioner: core::default::Default::default(),
                 description: self.description,
                 execution_role_arn: self.execution_role_arn,
                 id: core::default::Default::default(),
@@ -233,7 +280,7 @@ impl BuildDlmLifecyclePolicy {
                 tags: core::default::Default::default(),
                 tags_all: core::default::Default::default(),
                 policy_details: core::default::Default::default(),
-                dynamic: Default::default(),
+                dynamic: core::default::Default::default(),
             }),
         }));
         stack.add_resource(out.0.clone());
@@ -242,12 +289,12 @@ impl BuildDlmLifecyclePolicy {
 }
 
 pub struct DlmLifecyclePolicyRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for DlmLifecyclePolicyRef {
-    fn new(shared: StackShared, base: String) -> Self {
+impl terrars::Ref for DlmLifecyclePolicyRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> Self {
         Self {
             shared: shared,
             base: base,
@@ -256,82 +303,84 @@ impl Ref for DlmLifecyclePolicyRef {
 }
 
 impl DlmLifecyclePolicyRef {
-    fn extract_ref(&self) -> String {
+    fn extract_ref(&self) -> std::string::String {
         self.base.clone()
     }
 
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `arn` after provisioning.\n"]
-    pub fn arn(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.arn", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `arn` after provisioning.\n"]
+    pub fn arn(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.arn", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `description` after provisioning.\n"]
-    pub fn description(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.description", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `description` after provisioning.\n"]
+    pub fn description(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.description", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `execution_role_arn` after provisioning.\n"]
-    pub fn execution_role_arn(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.execution_role_arn", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `execution_role_arn` after provisioning.\n"]
+    pub fn execution_role_arn(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.execution_role_arn", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `id` after provisioning.\n"]
-    pub fn id(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
+    pub fn id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `state` after provisioning.\n"]
-    pub fn state(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.state", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `state` after provisioning.\n"]
+    pub fn state(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.state", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `tags` after provisioning.\n"]
-    pub fn tags(&self) -> RecRef<PrimExpr<String>> {
-        RecRef::new(self.shared().clone(), format!("{}.tags", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `tags` after provisioning.\n"]
+    pub fn tags(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
+        terrars::RecRef::new(self.shared().clone(), format!("{}.tags", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `tags_all` after provisioning.\n"]
-    pub fn tags_all(&self) -> RecRef<PrimExpr<String>> {
-        RecRef::new(self.shared().clone(), format!("{}.tags_all", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `tags_all` after provisioning.\n"]
+    pub fn tags_all(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
+        terrars::RecRef::new(self.shared().clone(), format!("{}.tags_all", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `policy_details` after provisioning.\n"]
-    pub fn policy_details(&self) -> ListRef<DlmLifecyclePolicyPolicyDetailsElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.policy_details", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `policy_details` after provisioning.\n"]
+    pub fn policy_details(&self) -> terrars::ListRef<DlmLifecyclePolicyPolicyDetailsElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.policy_details", self.extract_ref()))
     }
 }
 
 #[derive(Serialize)]
 pub struct DlmLifecyclePolicyPolicyDetailsElActionElCrossRegionCopyElEncryptionConfigurationEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    cmk_arn: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    encrypted: Option<PrimField<bool>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    cmk_arn: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    encrypted: std::option::Option<terrars::PrimField<bool>>,
 }
 
 impl DlmLifecyclePolicyPolicyDetailsElActionElCrossRegionCopyElEncryptionConfigurationEl {
-    #[doc= "Set the field `cmk_arn`.\n"]
-    pub fn set_cmk_arn(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.cmk_arn = Some(v.into());
+    #[doc = "Set the field `cmk_arn`.\n"]
+    pub fn set_cmk_arn(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.cmk_arn = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `encrypted`.\n"]
-    pub fn set_encrypted(mut self, v: impl Into<PrimField<bool>>) -> Self {
-        self.encrypted = Some(v.into());
+    #[doc = "Set the field `encrypted`.\n"]
+    pub fn set_encrypted(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
+        self.encrypted = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl ToListMappable for DlmLifecyclePolicyPolicyDetailsElActionElCrossRegionCopyElEncryptionConfigurationEl {
-    type O = BlockAssignable<DlmLifecyclePolicyPolicyDetailsElActionElCrossRegionCopyElEncryptionConfigurationEl>;
+impl terrars::ToListMappable for DlmLifecyclePolicyPolicyDetailsElActionElCrossRegionCopyElEncryptionConfigurationEl {
+    type O =
+        terrars
+        ::BlockAssignable<DlmLifecyclePolicyPolicyDetailsElActionElCrossRegionCopyElEncryptionConfigurationEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -351,14 +400,14 @@ impl BuildDlmLifecyclePolicyPolicyDetailsElActionElCrossRegionCopyElEncryptionCo
 }
 
 pub struct DlmLifecyclePolicyPolicyDetailsElActionElCrossRegionCopyElEncryptionConfigurationElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for DlmLifecyclePolicyPolicyDetailsElActionElCrossRegionCopyElEncryptionConfigurationElRef {
+impl terrars::Ref for DlmLifecyclePolicyPolicyDetailsElActionElCrossRegionCopyElEncryptionConfigurationElRef {
     fn new(
-        shared: StackShared,
-        base: String,
+        shared: terrars::StackShared,
+        base: std::string::String,
     ) -> DlmLifecyclePolicyPolicyDetailsElActionElCrossRegionCopyElEncryptionConfigurationElRef {
         DlmLifecyclePolicyPolicyDetailsElActionElCrossRegionCopyElEncryptionConfigurationElRef {
             shared: shared,
@@ -368,34 +417,34 @@ impl Ref for DlmLifecyclePolicyPolicyDetailsElActionElCrossRegionCopyElEncryptio
 }
 
 impl DlmLifecyclePolicyPolicyDetailsElActionElCrossRegionCopyElEncryptionConfigurationElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `cmk_arn` after provisioning.\n"]
-    pub fn cmk_arn(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.cmk_arn", self.base))
+    #[doc = "Get a reference to the value of field `cmk_arn` after provisioning.\n"]
+    pub fn cmk_arn(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.cmk_arn", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `encrypted` after provisioning.\n"]
-    pub fn encrypted(&self) -> PrimExpr<bool> {
-        PrimExpr::new(self.shared().clone(), format!("{}.encrypted", self.base))
+    #[doc = "Get a reference to the value of field `encrypted` after provisioning.\n"]
+    pub fn encrypted(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.encrypted", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct DlmLifecyclePolicyPolicyDetailsElActionElCrossRegionCopyElRetainRuleEl {
-    interval: PrimField<f64>,
-    interval_unit: PrimField<String>,
+    interval: terrars::PrimField<f64>,
+    interval_unit: terrars::PrimField<std::string::String>,
 }
 
 impl DlmLifecyclePolicyPolicyDetailsElActionElCrossRegionCopyElRetainRuleEl { }
 
-impl ToListMappable for DlmLifecyclePolicyPolicyDetailsElActionElCrossRegionCopyElRetainRuleEl {
-    type O = BlockAssignable<DlmLifecyclePolicyPolicyDetailsElActionElCrossRegionCopyElRetainRuleEl>;
+impl terrars::ToListMappable for DlmLifecyclePolicyPolicyDetailsElActionElCrossRegionCopyElRetainRuleEl {
+    type O = terrars::BlockAssignable<DlmLifecyclePolicyPolicyDetailsElActionElCrossRegionCopyElRetainRuleEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -404,10 +453,10 @@ impl ToListMappable for DlmLifecyclePolicyPolicyDetailsElActionElCrossRegionCopy
 }
 
 pub struct BuildDlmLifecyclePolicyPolicyDetailsElActionElCrossRegionCopyElRetainRuleEl {
-    #[doc= ""]
-    pub interval: PrimField<f64>,
-    #[doc= ""]
-    pub interval_unit: PrimField<String>,
+    #[doc = ""]
+    pub interval: terrars::PrimField<f64>,
+    #[doc = ""]
+    pub interval_unit: terrars::PrimField<std::string::String>,
 }
 
 impl BuildDlmLifecyclePolicyPolicyDetailsElActionElCrossRegionCopyElRetainRuleEl {
@@ -420,14 +469,14 @@ impl BuildDlmLifecyclePolicyPolicyDetailsElActionElCrossRegionCopyElRetainRuleEl
 }
 
 pub struct DlmLifecyclePolicyPolicyDetailsElActionElCrossRegionCopyElRetainRuleElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for DlmLifecyclePolicyPolicyDetailsElActionElCrossRegionCopyElRetainRuleElRef {
+impl terrars::Ref for DlmLifecyclePolicyPolicyDetailsElActionElCrossRegionCopyElRetainRuleElRef {
     fn new(
-        shared: StackShared,
-        base: String,
+        shared: terrars::StackShared,
+        base: std::string::String,
     ) -> DlmLifecyclePolicyPolicyDetailsElActionElCrossRegionCopyElRetainRuleElRef {
         DlmLifecyclePolicyPolicyDetailsElActionElCrossRegionCopyElRetainRuleElRef {
             shared: shared,
@@ -437,87 +486,104 @@ impl Ref for DlmLifecyclePolicyPolicyDetailsElActionElCrossRegionCopyElRetainRul
 }
 
 impl DlmLifecyclePolicyPolicyDetailsElActionElCrossRegionCopyElRetainRuleElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `interval` after provisioning.\n"]
-    pub fn interval(&self) -> PrimExpr<f64> {
-        PrimExpr::new(self.shared().clone(), format!("{}.interval", self.base))
+    #[doc = "Get a reference to the value of field `interval` after provisioning.\n"]
+    pub fn interval(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.interval", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `interval_unit` after provisioning.\n"]
-    pub fn interval_unit(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.interval_unit", self.base))
+    #[doc = "Get a reference to the value of field `interval_unit` after provisioning.\n"]
+    pub fn interval_unit(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.interval_unit", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
 struct DlmLifecyclePolicyPolicyDetailsElActionElCrossRegionCopyElDynamic {
-    encryption_configuration: Option<
-        DynamicBlock<DlmLifecyclePolicyPolicyDetailsElActionElCrossRegionCopyElEncryptionConfigurationEl>,
+    encryption_configuration: std
+    ::option
+    ::Option<
+        terrars::DynamicBlock<DlmLifecyclePolicyPolicyDetailsElActionElCrossRegionCopyElEncryptionConfigurationEl>,
     >,
-    retain_rule: Option<DynamicBlock<DlmLifecyclePolicyPolicyDetailsElActionElCrossRegionCopyElRetainRuleEl>>,
+    retain_rule: std
+    ::option
+    ::Option<terrars::DynamicBlock<DlmLifecyclePolicyPolicyDetailsElActionElCrossRegionCopyElRetainRuleEl>>,
 }
 
 #[derive(Serialize)]
 pub struct DlmLifecyclePolicyPolicyDetailsElActionElCrossRegionCopyEl {
-    target: PrimField<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    encryption_configuration: Option<
-        Vec<DlmLifecyclePolicyPolicyDetailsElActionElCrossRegionCopyElEncryptionConfigurationEl>,
-    >,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    retain_rule: Option<Vec<DlmLifecyclePolicyPolicyDetailsElActionElCrossRegionCopyElRetainRuleEl>>,
+    target: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    encryption_configuration: std
+    ::option
+    ::Option<std::vec::Vec<DlmLifecyclePolicyPolicyDetailsElActionElCrossRegionCopyElEncryptionConfigurationEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    retain_rule: std
+    ::option
+    ::Option<std::vec::Vec<DlmLifecyclePolicyPolicyDetailsElActionElCrossRegionCopyElRetainRuleEl>>,
     dynamic: DlmLifecyclePolicyPolicyDetailsElActionElCrossRegionCopyElDynamic,
 }
 
 impl DlmLifecyclePolicyPolicyDetailsElActionElCrossRegionCopyEl {
-    #[doc= "Set the field `encryption_configuration`.\n"]
+    #[doc = "Set the field `encryption_configuration`.\n"]
     pub fn set_encryption_configuration(
         mut self,
         v:
             impl
 
-                    Into<
-                        BlockAssignable<
+                    std
+                    ::convert
+                    ::Into<
+                        terrars
+                        ::BlockAssignable<
                             DlmLifecyclePolicyPolicyDetailsElActionElCrossRegionCopyElEncryptionConfigurationEl,
                         >,
                     >,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.encryption_configuration = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.encryption_configuration = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.encryption_configuration = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.encryption_configuration = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Set the field `retain_rule`.\n"]
+    #[doc = "Set the field `retain_rule`.\n"]
     pub fn set_retain_rule(
         mut self,
-        v: impl Into<BlockAssignable<DlmLifecyclePolicyPolicyDetailsElActionElCrossRegionCopyElRetainRuleEl>>,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<
+                        terrars
+                        ::BlockAssignable<DlmLifecyclePolicyPolicyDetailsElActionElCrossRegionCopyElRetainRuleEl>,
+                    >,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.retain_rule = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.retain_rule = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.retain_rule = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.retain_rule = std::option::Option::Some(d);
             },
         }
         self
     }
 }
 
-impl ToListMappable for DlmLifecyclePolicyPolicyDetailsElActionElCrossRegionCopyEl {
-    type O = BlockAssignable<DlmLifecyclePolicyPolicyDetailsElActionElCrossRegionCopyEl>;
+impl terrars::ToListMappable for DlmLifecyclePolicyPolicyDetailsElActionElCrossRegionCopyEl {
+    type O = terrars::BlockAssignable<DlmLifecyclePolicyPolicyDetailsElActionElCrossRegionCopyEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -526,8 +592,8 @@ impl ToListMappable for DlmLifecyclePolicyPolicyDetailsElActionElCrossRegionCopy
 }
 
 pub struct BuildDlmLifecyclePolicyPolicyDetailsElActionElCrossRegionCopyEl {
-    #[doc= ""]
-    pub target: PrimField<String>,
+    #[doc = ""]
+    pub target: terrars::PrimField<std::string::String>,
 }
 
 impl BuildDlmLifecyclePolicyPolicyDetailsElActionElCrossRegionCopyEl {
@@ -536,18 +602,21 @@ impl BuildDlmLifecyclePolicyPolicyDetailsElActionElCrossRegionCopyEl {
             target: self.target,
             encryption_configuration: core::default::Default::default(),
             retain_rule: core::default::Default::default(),
-            dynamic: Default::default(),
+            dynamic: core::default::Default::default(),
         }
     }
 }
 
 pub struct DlmLifecyclePolicyPolicyDetailsElActionElCrossRegionCopyElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for DlmLifecyclePolicyPolicyDetailsElActionElCrossRegionCopyElRef {
-    fn new(shared: StackShared, base: String) -> DlmLifecyclePolicyPolicyDetailsElActionElCrossRegionCopyElRef {
+impl terrars::Ref for DlmLifecyclePolicyPolicyDetailsElActionElCrossRegionCopyElRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> DlmLifecyclePolicyPolicyDetailsElActionElCrossRegionCopyElRef {
         DlmLifecyclePolicyPolicyDetailsElActionElCrossRegionCopyElRef {
             shared: shared,
             base: base.to_string(),
@@ -556,64 +625,73 @@ impl Ref for DlmLifecyclePolicyPolicyDetailsElActionElCrossRegionCopyElRef {
 }
 
 impl DlmLifecyclePolicyPolicyDetailsElActionElCrossRegionCopyElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `target` after provisioning.\n"]
-    pub fn target(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.target", self.base))
+    #[doc = "Get a reference to the value of field `target` after provisioning.\n"]
+    pub fn target(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.target", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `encryption_configuration` after provisioning.\n"]
+    #[doc = "Get a reference to the value of field `encryption_configuration` after provisioning.\n"]
     pub fn encryption_configuration(
         &self,
-    ) -> ListRef<DlmLifecyclePolicyPolicyDetailsElActionElCrossRegionCopyElEncryptionConfigurationElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.encryption_configuration", self.base))
+    ) -> terrars::ListRef<DlmLifecyclePolicyPolicyDetailsElActionElCrossRegionCopyElEncryptionConfigurationElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.encryption_configuration", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `retain_rule` after provisioning.\n"]
-    pub fn retain_rule(&self) -> ListRef<DlmLifecyclePolicyPolicyDetailsElActionElCrossRegionCopyElRetainRuleElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.retain_rule", self.base))
+    #[doc = "Get a reference to the value of field `retain_rule` after provisioning.\n"]
+    pub fn retain_rule(
+        &self,
+    ) -> terrars::ListRef<DlmLifecyclePolicyPolicyDetailsElActionElCrossRegionCopyElRetainRuleElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.retain_rule", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
 struct DlmLifecyclePolicyPolicyDetailsElActionElDynamic {
-    cross_region_copy: Option<DynamicBlock<DlmLifecyclePolicyPolicyDetailsElActionElCrossRegionCopyEl>>,
+    cross_region_copy: std
+    ::option
+    ::Option<terrars::DynamicBlock<DlmLifecyclePolicyPolicyDetailsElActionElCrossRegionCopyEl>>,
 }
 
 #[derive(Serialize)]
 pub struct DlmLifecyclePolicyPolicyDetailsElActionEl {
-    name: PrimField<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    cross_region_copy: Option<Vec<DlmLifecyclePolicyPolicyDetailsElActionElCrossRegionCopyEl>>,
+    name: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    cross_region_copy: std::option::Option<std::vec::Vec<DlmLifecyclePolicyPolicyDetailsElActionElCrossRegionCopyEl>>,
     dynamic: DlmLifecyclePolicyPolicyDetailsElActionElDynamic,
 }
 
 impl DlmLifecyclePolicyPolicyDetailsElActionEl {
-    #[doc= "Set the field `cross_region_copy`.\n"]
+    #[doc = "Set the field `cross_region_copy`.\n"]
     pub fn set_cross_region_copy(
         mut self,
-        v: impl Into<BlockAssignable<DlmLifecyclePolicyPolicyDetailsElActionElCrossRegionCopyEl>>,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<terrars::BlockAssignable<DlmLifecyclePolicyPolicyDetailsElActionElCrossRegionCopyEl>>,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.cross_region_copy = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.cross_region_copy = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.cross_region_copy = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.cross_region_copy = std::option::Option::Some(d);
             },
         }
         self
     }
 }
 
-impl ToListMappable for DlmLifecyclePolicyPolicyDetailsElActionEl {
-    type O = BlockAssignable<DlmLifecyclePolicyPolicyDetailsElActionEl>;
+impl terrars::ToListMappable for DlmLifecyclePolicyPolicyDetailsElActionEl {
+    type O = terrars::BlockAssignable<DlmLifecyclePolicyPolicyDetailsElActionEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -622,8 +700,8 @@ impl ToListMappable for DlmLifecyclePolicyPolicyDetailsElActionEl {
 }
 
 pub struct BuildDlmLifecyclePolicyPolicyDetailsElActionEl {
-    #[doc= ""]
-    pub name: PrimField<String>,
+    #[doc = ""]
+    pub name: terrars::PrimField<std::string::String>,
 }
 
 impl BuildDlmLifecyclePolicyPolicyDetailsElActionEl {
@@ -631,18 +709,18 @@ impl BuildDlmLifecyclePolicyPolicyDetailsElActionEl {
         DlmLifecyclePolicyPolicyDetailsElActionEl {
             name: self.name,
             cross_region_copy: core::default::Default::default(),
-            dynamic: Default::default(),
+            dynamic: core::default::Default::default(),
         }
     }
 }
 
 pub struct DlmLifecyclePolicyPolicyDetailsElActionElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for DlmLifecyclePolicyPolicyDetailsElActionElRef {
-    fn new(shared: StackShared, base: String) -> DlmLifecyclePolicyPolicyDetailsElActionElRef {
+impl terrars::Ref for DlmLifecyclePolicyPolicyDetailsElActionElRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DlmLifecyclePolicyPolicyDetailsElActionElRef {
         DlmLifecyclePolicyPolicyDetailsElActionElRef {
             shared: shared,
             base: base.to_string(),
@@ -651,30 +729,30 @@ impl Ref for DlmLifecyclePolicyPolicyDetailsElActionElRef {
 }
 
 impl DlmLifecyclePolicyPolicyDetailsElActionElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `name` after provisioning.\n"]
-    pub fn name(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.name", self.base))
+    #[doc = "Get a reference to the value of field `name` after provisioning.\n"]
+    pub fn name(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct DlmLifecyclePolicyPolicyDetailsElEventSourceElParametersEl {
-    description_regex: PrimField<String>,
-    event_type: PrimField<String>,
-    snapshot_owner: SetField<PrimField<String>>,
+    description_regex: terrars::PrimField<std::string::String>,
+    event_type: terrars::PrimField<std::string::String>,
+    snapshot_owner: terrars::SetField<terrars::PrimField<std::string::String>>,
 }
 
 impl DlmLifecyclePolicyPolicyDetailsElEventSourceElParametersEl { }
 
-impl ToListMappable for DlmLifecyclePolicyPolicyDetailsElEventSourceElParametersEl {
-    type O = BlockAssignable<DlmLifecyclePolicyPolicyDetailsElEventSourceElParametersEl>;
+impl terrars::ToListMappable for DlmLifecyclePolicyPolicyDetailsElEventSourceElParametersEl {
+    type O = terrars::BlockAssignable<DlmLifecyclePolicyPolicyDetailsElEventSourceElParametersEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -683,12 +761,12 @@ impl ToListMappable for DlmLifecyclePolicyPolicyDetailsElEventSourceElParameters
 }
 
 pub struct BuildDlmLifecyclePolicyPolicyDetailsElEventSourceElParametersEl {
-    #[doc= ""]
-    pub description_regex: PrimField<String>,
-    #[doc= ""]
-    pub event_type: PrimField<String>,
-    #[doc= ""]
-    pub snapshot_owner: SetField<PrimField<String>>,
+    #[doc = ""]
+    pub description_regex: terrars::PrimField<std::string::String>,
+    #[doc = ""]
+    pub event_type: terrars::PrimField<std::string::String>,
+    #[doc = ""]
+    pub snapshot_owner: terrars::SetField<terrars::PrimField<std::string::String>>,
 }
 
 impl BuildDlmLifecyclePolicyPolicyDetailsElEventSourceElParametersEl {
@@ -702,12 +780,15 @@ impl BuildDlmLifecyclePolicyPolicyDetailsElEventSourceElParametersEl {
 }
 
 pub struct DlmLifecyclePolicyPolicyDetailsElEventSourceElParametersElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for DlmLifecyclePolicyPolicyDetailsElEventSourceElParametersElRef {
-    fn new(shared: StackShared, base: String) -> DlmLifecyclePolicyPolicyDetailsElEventSourceElParametersElRef {
+impl terrars::Ref for DlmLifecyclePolicyPolicyDetailsElEventSourceElParametersElRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> DlmLifecyclePolicyPolicyDetailsElEventSourceElParametersElRef {
         DlmLifecyclePolicyPolicyDetailsElEventSourceElParametersElRef {
             shared: shared,
             base: base.to_string(),
@@ -716,63 +797,70 @@ impl Ref for DlmLifecyclePolicyPolicyDetailsElEventSourceElParametersElRef {
 }
 
 impl DlmLifecyclePolicyPolicyDetailsElEventSourceElParametersElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `description_regex` after provisioning.\n"]
-    pub fn description_regex(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.description_regex", self.base))
+    #[doc = "Get a reference to the value of field `description_regex` after provisioning.\n"]
+    pub fn description_regex(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.description_regex", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `event_type` after provisioning.\n"]
-    pub fn event_type(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.event_type", self.base))
+    #[doc = "Get a reference to the value of field `event_type` after provisioning.\n"]
+    pub fn event_type(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.event_type", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `snapshot_owner` after provisioning.\n"]
-    pub fn snapshot_owner(&self) -> SetRef<PrimExpr<String>> {
-        SetRef::new(self.shared().clone(), format!("{}.snapshot_owner", self.base))
+    #[doc = "Get a reference to the value of field `snapshot_owner` after provisioning.\n"]
+    pub fn snapshot_owner(&self) -> terrars::SetRef<terrars::PrimExpr<std::string::String>> {
+        terrars::SetRef::new(self.shared().clone(), format!("{}.snapshot_owner", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
 struct DlmLifecyclePolicyPolicyDetailsElEventSourceElDynamic {
-    parameters: Option<DynamicBlock<DlmLifecyclePolicyPolicyDetailsElEventSourceElParametersEl>>,
+    parameters: std
+    ::option
+    ::Option<terrars::DynamicBlock<DlmLifecyclePolicyPolicyDetailsElEventSourceElParametersEl>>,
 }
 
 #[derive(Serialize)]
 pub struct DlmLifecyclePolicyPolicyDetailsElEventSourceEl {
     #[serde(rename = "type")]
-    type_: PrimField<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    parameters: Option<Vec<DlmLifecyclePolicyPolicyDetailsElEventSourceElParametersEl>>,
+    type_: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    parameters: std::option::Option<std::vec::Vec<DlmLifecyclePolicyPolicyDetailsElEventSourceElParametersEl>>,
     dynamic: DlmLifecyclePolicyPolicyDetailsElEventSourceElDynamic,
 }
 
 impl DlmLifecyclePolicyPolicyDetailsElEventSourceEl {
-    #[doc= "Set the field `parameters`.\n"]
+    #[doc = "Set the field `parameters`.\n"]
     pub fn set_parameters(
         mut self,
-        v: impl Into<BlockAssignable<DlmLifecyclePolicyPolicyDetailsElEventSourceElParametersEl>>,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<terrars::BlockAssignable<DlmLifecyclePolicyPolicyDetailsElEventSourceElParametersEl>>,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.parameters = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.parameters = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.parameters = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.parameters = std::option::Option::Some(d);
             },
         }
         self
     }
 }
 
-impl ToListMappable for DlmLifecyclePolicyPolicyDetailsElEventSourceEl {
-    type O = BlockAssignable<DlmLifecyclePolicyPolicyDetailsElEventSourceEl>;
+impl terrars::ToListMappable for DlmLifecyclePolicyPolicyDetailsElEventSourceEl {
+    type O = terrars::BlockAssignable<DlmLifecyclePolicyPolicyDetailsElEventSourceEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -781,8 +869,8 @@ impl ToListMappable for DlmLifecyclePolicyPolicyDetailsElEventSourceEl {
 }
 
 pub struct BuildDlmLifecyclePolicyPolicyDetailsElEventSourceEl {
-    #[doc= ""]
-    pub type_: PrimField<String>,
+    #[doc = ""]
+    pub type_: terrars::PrimField<std::string::String>,
 }
 
 impl BuildDlmLifecyclePolicyPolicyDetailsElEventSourceEl {
@@ -790,18 +878,21 @@ impl BuildDlmLifecyclePolicyPolicyDetailsElEventSourceEl {
         DlmLifecyclePolicyPolicyDetailsElEventSourceEl {
             type_: self.type_,
             parameters: core::default::Default::default(),
-            dynamic: Default::default(),
+            dynamic: core::default::Default::default(),
         }
     }
 }
 
 pub struct DlmLifecyclePolicyPolicyDetailsElEventSourceElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for DlmLifecyclePolicyPolicyDetailsElEventSourceElRef {
-    fn new(shared: StackShared, base: String) -> DlmLifecyclePolicyPolicyDetailsElEventSourceElRef {
+impl terrars::Ref for DlmLifecyclePolicyPolicyDetailsElEventSourceElRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> DlmLifecyclePolicyPolicyDetailsElEventSourceElRef {
         DlmLifecyclePolicyPolicyDetailsElEventSourceElRef {
             shared: shared,
             base: base.to_string(),
@@ -810,48 +901,48 @@ impl Ref for DlmLifecyclePolicyPolicyDetailsElEventSourceElRef {
 }
 
 impl DlmLifecyclePolicyPolicyDetailsElEventSourceElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `type_` after provisioning.\n"]
-    pub fn type_(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.type", self.base))
+    #[doc = "Get a reference to the value of field `type_` after provisioning.\n"]
+    pub fn type_(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.type", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `parameters` after provisioning.\n"]
-    pub fn parameters(&self) -> ListRef<DlmLifecyclePolicyPolicyDetailsElEventSourceElParametersElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.parameters", self.base))
+    #[doc = "Get a reference to the value of field `parameters` after provisioning.\n"]
+    pub fn parameters(&self) -> terrars::ListRef<DlmLifecyclePolicyPolicyDetailsElEventSourceElParametersElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.parameters", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct DlmLifecyclePolicyPolicyDetailsElParametersEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    exclude_boot_volume: Option<PrimField<bool>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    no_reboot: Option<PrimField<bool>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    exclude_boot_volume: std::option::Option<terrars::PrimField<bool>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    no_reboot: std::option::Option<terrars::PrimField<bool>>,
 }
 
 impl DlmLifecyclePolicyPolicyDetailsElParametersEl {
-    #[doc= "Set the field `exclude_boot_volume`.\n"]
-    pub fn set_exclude_boot_volume(mut self, v: impl Into<PrimField<bool>>) -> Self {
-        self.exclude_boot_volume = Some(v.into());
+    #[doc = "Set the field `exclude_boot_volume`.\n"]
+    pub fn set_exclude_boot_volume(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
+        self.exclude_boot_volume = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `no_reboot`.\n"]
-    pub fn set_no_reboot(mut self, v: impl Into<PrimField<bool>>) -> Self {
-        self.no_reboot = Some(v.into());
+    #[doc = "Set the field `no_reboot`.\n"]
+    pub fn set_no_reboot(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
+        self.no_reboot = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl ToListMappable for DlmLifecyclePolicyPolicyDetailsElParametersEl {
-    type O = BlockAssignable<DlmLifecyclePolicyPolicyDetailsElParametersEl>;
+impl terrars::ToListMappable for DlmLifecyclePolicyPolicyDetailsElParametersEl {
+    type O = terrars::BlockAssignable<DlmLifecyclePolicyPolicyDetailsElParametersEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -871,12 +962,15 @@ impl BuildDlmLifecyclePolicyPolicyDetailsElParametersEl {
 }
 
 pub struct DlmLifecyclePolicyPolicyDetailsElParametersElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for DlmLifecyclePolicyPolicyDetailsElParametersElRef {
-    fn new(shared: StackShared, base: String) -> DlmLifecyclePolicyPolicyDetailsElParametersElRef {
+impl terrars::Ref for DlmLifecyclePolicyPolicyDetailsElParametersElRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> DlmLifecyclePolicyPolicyDetailsElParametersElRef {
         DlmLifecyclePolicyPolicyDetailsElParametersElRef {
             shared: shared,
             base: base.to_string(),
@@ -885,72 +979,75 @@ impl Ref for DlmLifecyclePolicyPolicyDetailsElParametersElRef {
 }
 
 impl DlmLifecyclePolicyPolicyDetailsElParametersElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `exclude_boot_volume` after provisioning.\n"]
-    pub fn exclude_boot_volume(&self) -> PrimExpr<bool> {
-        PrimExpr::new(self.shared().clone(), format!("{}.exclude_boot_volume", self.base))
+    #[doc = "Get a reference to the value of field `exclude_boot_volume` after provisioning.\n"]
+    pub fn exclude_boot_volume(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.exclude_boot_volume", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `no_reboot` after provisioning.\n"]
-    pub fn no_reboot(&self) -> PrimExpr<bool> {
-        PrimExpr::new(self.shared().clone(), format!("{}.no_reboot", self.base))
+    #[doc = "Get a reference to the value of field `no_reboot` after provisioning.\n"]
+    pub fn no_reboot(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.no_reboot", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct DlmLifecyclePolicyPolicyDetailsElScheduleElCreateRuleEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    cron_expression: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    interval: Option<PrimField<f64>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    interval_unit: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    location: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    times: Option<ListField<PrimField<String>>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    cron_expression: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    interval: std::option::Option<terrars::PrimField<f64>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    interval_unit: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    location: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    times: std::option::Option<terrars::ListField<terrars::PrimField<std::string::String>>>,
 }
 
 impl DlmLifecyclePolicyPolicyDetailsElScheduleElCreateRuleEl {
-    #[doc= "Set the field `cron_expression`.\n"]
-    pub fn set_cron_expression(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.cron_expression = Some(v.into());
+    #[doc = "Set the field `cron_expression`.\n"]
+    pub fn set_cron_expression(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.cron_expression = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `interval`.\n"]
-    pub fn set_interval(mut self, v: impl Into<PrimField<f64>>) -> Self {
-        self.interval = Some(v.into());
+    #[doc = "Set the field `interval`.\n"]
+    pub fn set_interval(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.interval = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `interval_unit`.\n"]
-    pub fn set_interval_unit(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.interval_unit = Some(v.into());
+    #[doc = "Set the field `interval_unit`.\n"]
+    pub fn set_interval_unit(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.interval_unit = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `location`.\n"]
-    pub fn set_location(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.location = Some(v.into());
+    #[doc = "Set the field `location`.\n"]
+    pub fn set_location(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.location = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `times`.\n"]
-    pub fn set_times(mut self, v: impl Into<ListField<PrimField<String>>>) -> Self {
-        self.times = Some(v.into());
+    #[doc = "Set the field `times`.\n"]
+    pub fn set_times(
+        mut self,
+        v: impl std::convert::Into<terrars::ListField<terrars::PrimField<std::string::String>>>,
+    ) -> Self {
+        self.times = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl ToListMappable for DlmLifecyclePolicyPolicyDetailsElScheduleElCreateRuleEl {
-    type O = BlockAssignable<DlmLifecyclePolicyPolicyDetailsElScheduleElCreateRuleEl>;
+impl terrars::ToListMappable for DlmLifecyclePolicyPolicyDetailsElScheduleElCreateRuleEl {
+    type O = terrars::BlockAssignable<DlmLifecyclePolicyPolicyDetailsElScheduleElCreateRuleEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -973,12 +1070,15 @@ impl BuildDlmLifecyclePolicyPolicyDetailsElScheduleElCreateRuleEl {
 }
 
 pub struct DlmLifecyclePolicyPolicyDetailsElScheduleElCreateRuleElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for DlmLifecyclePolicyPolicyDetailsElScheduleElCreateRuleElRef {
-    fn new(shared: StackShared, base: String) -> DlmLifecyclePolicyPolicyDetailsElScheduleElCreateRuleElRef {
+impl terrars::Ref for DlmLifecyclePolicyPolicyDetailsElScheduleElCreateRuleElRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> DlmLifecyclePolicyPolicyDetailsElScheduleElCreateRuleElRef {
         DlmLifecyclePolicyPolicyDetailsElScheduleElCreateRuleElRef {
             shared: shared,
             base: base.to_string(),
@@ -987,49 +1087,50 @@ impl Ref for DlmLifecyclePolicyPolicyDetailsElScheduleElCreateRuleElRef {
 }
 
 impl DlmLifecyclePolicyPolicyDetailsElScheduleElCreateRuleElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `cron_expression` after provisioning.\n"]
-    pub fn cron_expression(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.cron_expression", self.base))
+    #[doc = "Get a reference to the value of field `cron_expression` after provisioning.\n"]
+    pub fn cron_expression(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.cron_expression", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `interval` after provisioning.\n"]
-    pub fn interval(&self) -> PrimExpr<f64> {
-        PrimExpr::new(self.shared().clone(), format!("{}.interval", self.base))
+    #[doc = "Get a reference to the value of field `interval` after provisioning.\n"]
+    pub fn interval(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.interval", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `interval_unit` after provisioning.\n"]
-    pub fn interval_unit(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.interval_unit", self.base))
+    #[doc = "Get a reference to the value of field `interval_unit` after provisioning.\n"]
+    pub fn interval_unit(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.interval_unit", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `location` after provisioning.\n"]
-    pub fn location(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.location", self.base))
+    #[doc = "Get a reference to the value of field `location` after provisioning.\n"]
+    pub fn location(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.location", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `times` after provisioning.\n"]
-    pub fn times(&self) -> ListRef<PrimExpr<String>> {
-        ListRef::new(self.shared().clone(), format!("{}.times", self.base))
+    #[doc = "Get a reference to the value of field `times` after provisioning.\n"]
+    pub fn times(&self) -> terrars::ListRef<terrars::PrimExpr<std::string::String>> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.times", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct DlmLifecyclePolicyPolicyDetailsElScheduleElCrossRegionCopyRuleElDeprecateRuleEl {
-    interval: PrimField<f64>,
-    interval_unit: PrimField<String>,
+    interval: terrars::PrimField<f64>,
+    interval_unit: terrars::PrimField<std::string::String>,
 }
 
 impl DlmLifecyclePolicyPolicyDetailsElScheduleElCrossRegionCopyRuleElDeprecateRuleEl { }
 
-impl ToListMappable for DlmLifecyclePolicyPolicyDetailsElScheduleElCrossRegionCopyRuleElDeprecateRuleEl {
-    type O = BlockAssignable<DlmLifecyclePolicyPolicyDetailsElScheduleElCrossRegionCopyRuleElDeprecateRuleEl>;
+impl terrars::ToListMappable for DlmLifecyclePolicyPolicyDetailsElScheduleElCrossRegionCopyRuleElDeprecateRuleEl {
+    type O =
+        terrars::BlockAssignable<DlmLifecyclePolicyPolicyDetailsElScheduleElCrossRegionCopyRuleElDeprecateRuleEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -1038,10 +1139,10 @@ impl ToListMappable for DlmLifecyclePolicyPolicyDetailsElScheduleElCrossRegionCo
 }
 
 pub struct BuildDlmLifecyclePolicyPolicyDetailsElScheduleElCrossRegionCopyRuleElDeprecateRuleEl {
-    #[doc= ""]
-    pub interval: PrimField<f64>,
-    #[doc= ""]
-    pub interval_unit: PrimField<String>,
+    #[doc = ""]
+    pub interval: terrars::PrimField<f64>,
+    #[doc = ""]
+    pub interval_unit: terrars::PrimField<std::string::String>,
 }
 
 impl BuildDlmLifecyclePolicyPolicyDetailsElScheduleElCrossRegionCopyRuleElDeprecateRuleEl {
@@ -1054,14 +1155,14 @@ impl BuildDlmLifecyclePolicyPolicyDetailsElScheduleElCrossRegionCopyRuleElDeprec
 }
 
 pub struct DlmLifecyclePolicyPolicyDetailsElScheduleElCrossRegionCopyRuleElDeprecateRuleElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for DlmLifecyclePolicyPolicyDetailsElScheduleElCrossRegionCopyRuleElDeprecateRuleElRef {
+impl terrars::Ref for DlmLifecyclePolicyPolicyDetailsElScheduleElCrossRegionCopyRuleElDeprecateRuleElRef {
     fn new(
-        shared: StackShared,
-        base: String,
+        shared: terrars::StackShared,
+        base: std::string::String,
     ) -> DlmLifecyclePolicyPolicyDetailsElScheduleElCrossRegionCopyRuleElDeprecateRuleElRef {
         DlmLifecyclePolicyPolicyDetailsElScheduleElCrossRegionCopyRuleElDeprecateRuleElRef {
             shared: shared,
@@ -1071,34 +1172,34 @@ impl Ref for DlmLifecyclePolicyPolicyDetailsElScheduleElCrossRegionCopyRuleElDep
 }
 
 impl DlmLifecyclePolicyPolicyDetailsElScheduleElCrossRegionCopyRuleElDeprecateRuleElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `interval` after provisioning.\n"]
-    pub fn interval(&self) -> PrimExpr<f64> {
-        PrimExpr::new(self.shared().clone(), format!("{}.interval", self.base))
+    #[doc = "Get a reference to the value of field `interval` after provisioning.\n"]
+    pub fn interval(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.interval", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `interval_unit` after provisioning.\n"]
-    pub fn interval_unit(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.interval_unit", self.base))
+    #[doc = "Get a reference to the value of field `interval_unit` after provisioning.\n"]
+    pub fn interval_unit(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.interval_unit", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct DlmLifecyclePolicyPolicyDetailsElScheduleElCrossRegionCopyRuleElRetainRuleEl {
-    interval: PrimField<f64>,
-    interval_unit: PrimField<String>,
+    interval: terrars::PrimField<f64>,
+    interval_unit: terrars::PrimField<std::string::String>,
 }
 
 impl DlmLifecyclePolicyPolicyDetailsElScheduleElCrossRegionCopyRuleElRetainRuleEl { }
 
-impl ToListMappable for DlmLifecyclePolicyPolicyDetailsElScheduleElCrossRegionCopyRuleElRetainRuleEl {
-    type O = BlockAssignable<DlmLifecyclePolicyPolicyDetailsElScheduleElCrossRegionCopyRuleElRetainRuleEl>;
+impl terrars::ToListMappable for DlmLifecyclePolicyPolicyDetailsElScheduleElCrossRegionCopyRuleElRetainRuleEl {
+    type O = terrars::BlockAssignable<DlmLifecyclePolicyPolicyDetailsElScheduleElCrossRegionCopyRuleElRetainRuleEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -1107,10 +1208,10 @@ impl ToListMappable for DlmLifecyclePolicyPolicyDetailsElScheduleElCrossRegionCo
 }
 
 pub struct BuildDlmLifecyclePolicyPolicyDetailsElScheduleElCrossRegionCopyRuleElRetainRuleEl {
-    #[doc= ""]
-    pub interval: PrimField<f64>,
-    #[doc= ""]
-    pub interval_unit: PrimField<String>,
+    #[doc = ""]
+    pub interval: terrars::PrimField<f64>,
+    #[doc = ""]
+    pub interval_unit: terrars::PrimField<std::string::String>,
 }
 
 impl BuildDlmLifecyclePolicyPolicyDetailsElScheduleElCrossRegionCopyRuleElRetainRuleEl {
@@ -1123,14 +1224,14 @@ impl BuildDlmLifecyclePolicyPolicyDetailsElScheduleElCrossRegionCopyRuleElRetain
 }
 
 pub struct DlmLifecyclePolicyPolicyDetailsElScheduleElCrossRegionCopyRuleElRetainRuleElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for DlmLifecyclePolicyPolicyDetailsElScheduleElCrossRegionCopyRuleElRetainRuleElRef {
+impl terrars::Ref for DlmLifecyclePolicyPolicyDetailsElScheduleElCrossRegionCopyRuleElRetainRuleElRef {
     fn new(
-        shared: StackShared,
-        base: String,
+        shared: terrars::StackShared,
+        base: std::string::String,
     ) -> DlmLifecyclePolicyPolicyDetailsElScheduleElCrossRegionCopyRuleElRetainRuleElRef {
         DlmLifecyclePolicyPolicyDetailsElScheduleElCrossRegionCopyRuleElRetainRuleElRef {
             shared: shared,
@@ -1140,102 +1241,121 @@ impl Ref for DlmLifecyclePolicyPolicyDetailsElScheduleElCrossRegionCopyRuleElRet
 }
 
 impl DlmLifecyclePolicyPolicyDetailsElScheduleElCrossRegionCopyRuleElRetainRuleElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `interval` after provisioning.\n"]
-    pub fn interval(&self) -> PrimExpr<f64> {
-        PrimExpr::new(self.shared().clone(), format!("{}.interval", self.base))
+    #[doc = "Get a reference to the value of field `interval` after provisioning.\n"]
+    pub fn interval(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.interval", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `interval_unit` after provisioning.\n"]
-    pub fn interval_unit(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.interval_unit", self.base))
+    #[doc = "Get a reference to the value of field `interval_unit` after provisioning.\n"]
+    pub fn interval_unit(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.interval_unit", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
 struct DlmLifecyclePolicyPolicyDetailsElScheduleElCrossRegionCopyRuleElDynamic {
-    deprecate_rule: Option<
-        DynamicBlock<DlmLifecyclePolicyPolicyDetailsElScheduleElCrossRegionCopyRuleElDeprecateRuleEl>,
-    >,
-    retain_rule: Option<DynamicBlock<DlmLifecyclePolicyPolicyDetailsElScheduleElCrossRegionCopyRuleElRetainRuleEl>>,
+    deprecate_rule: std
+    ::option
+    ::Option<terrars::DynamicBlock<DlmLifecyclePolicyPolicyDetailsElScheduleElCrossRegionCopyRuleElDeprecateRuleEl>>,
+    retain_rule: std
+    ::option
+    ::Option<terrars::DynamicBlock<DlmLifecyclePolicyPolicyDetailsElScheduleElCrossRegionCopyRuleElRetainRuleEl>>,
 }
 
 #[derive(Serialize)]
 pub struct DlmLifecyclePolicyPolicyDetailsElScheduleElCrossRegionCopyRuleEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    cmk_arn: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    copy_tags: Option<PrimField<bool>>,
-    encrypted: PrimField<bool>,
-    target: PrimField<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    deprecate_rule: Option<Vec<DlmLifecyclePolicyPolicyDetailsElScheduleElCrossRegionCopyRuleElDeprecateRuleEl>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    retain_rule: Option<Vec<DlmLifecyclePolicyPolicyDetailsElScheduleElCrossRegionCopyRuleElRetainRuleEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    cmk_arn: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    copy_tags: std::option::Option<terrars::PrimField<bool>>,
+    encrypted: terrars::PrimField<bool>,
+    target: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    deprecate_rule: std
+    ::option
+    ::Option<std::vec::Vec<DlmLifecyclePolicyPolicyDetailsElScheduleElCrossRegionCopyRuleElDeprecateRuleEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    retain_rule: std
+    ::option
+    ::Option<std::vec::Vec<DlmLifecyclePolicyPolicyDetailsElScheduleElCrossRegionCopyRuleElRetainRuleEl>>,
     dynamic: DlmLifecyclePolicyPolicyDetailsElScheduleElCrossRegionCopyRuleElDynamic,
 }
 
 impl DlmLifecyclePolicyPolicyDetailsElScheduleElCrossRegionCopyRuleEl {
-    #[doc= "Set the field `cmk_arn`.\n"]
-    pub fn set_cmk_arn(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.cmk_arn = Some(v.into());
+    #[doc = "Set the field `cmk_arn`.\n"]
+    pub fn set_cmk_arn(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.cmk_arn = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `copy_tags`.\n"]
-    pub fn set_copy_tags(mut self, v: impl Into<PrimField<bool>>) -> Self {
-        self.copy_tags = Some(v.into());
+    #[doc = "Set the field `copy_tags`.\n"]
+    pub fn set_copy_tags(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
+        self.copy_tags = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `deprecate_rule`.\n"]
+    #[doc = "Set the field `deprecate_rule`.\n"]
     pub fn set_deprecate_rule(
         mut self,
         v:
             impl
 
-                    Into<
-                        BlockAssignable<
+                    std
+                    ::convert
+                    ::Into<
+                        terrars
+                        ::BlockAssignable<
                             DlmLifecyclePolicyPolicyDetailsElScheduleElCrossRegionCopyRuleElDeprecateRuleEl,
                         >,
                     >,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.deprecate_rule = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.deprecate_rule = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.deprecate_rule = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.deprecate_rule = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Set the field `retain_rule`.\n"]
+    #[doc = "Set the field `retain_rule`.\n"]
     pub fn set_retain_rule(
         mut self,
-        v: impl Into<BlockAssignable<DlmLifecyclePolicyPolicyDetailsElScheduleElCrossRegionCopyRuleElRetainRuleEl>>,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<
+                        terrars
+                        ::BlockAssignable<
+                            DlmLifecyclePolicyPolicyDetailsElScheduleElCrossRegionCopyRuleElRetainRuleEl,
+                        >,
+                    >,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.retain_rule = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.retain_rule = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.retain_rule = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.retain_rule = std::option::Option::Some(d);
             },
         }
         self
     }
 }
 
-impl ToListMappable for DlmLifecyclePolicyPolicyDetailsElScheduleElCrossRegionCopyRuleEl {
-    type O = BlockAssignable<DlmLifecyclePolicyPolicyDetailsElScheduleElCrossRegionCopyRuleEl>;
+impl terrars::ToListMappable for DlmLifecyclePolicyPolicyDetailsElScheduleElCrossRegionCopyRuleEl {
+    type O = terrars::BlockAssignable<DlmLifecyclePolicyPolicyDetailsElScheduleElCrossRegionCopyRuleEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -1244,10 +1364,10 @@ impl ToListMappable for DlmLifecyclePolicyPolicyDetailsElScheduleElCrossRegionCo
 }
 
 pub struct BuildDlmLifecyclePolicyPolicyDetailsElScheduleElCrossRegionCopyRuleEl {
-    #[doc= ""]
-    pub encrypted: PrimField<bool>,
-    #[doc= ""]
-    pub target: PrimField<String>,
+    #[doc = ""]
+    pub encrypted: terrars::PrimField<bool>,
+    #[doc = ""]
+    pub target: terrars::PrimField<std::string::String>,
 }
 
 impl BuildDlmLifecyclePolicyPolicyDetailsElScheduleElCrossRegionCopyRuleEl {
@@ -1259,18 +1379,21 @@ impl BuildDlmLifecyclePolicyPolicyDetailsElScheduleElCrossRegionCopyRuleEl {
             target: self.target,
             deprecate_rule: core::default::Default::default(),
             retain_rule: core::default::Default::default(),
-            dynamic: Default::default(),
+            dynamic: core::default::Default::default(),
         }
     }
 }
 
 pub struct DlmLifecyclePolicyPolicyDetailsElScheduleElCrossRegionCopyRuleElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for DlmLifecyclePolicyPolicyDetailsElScheduleElCrossRegionCopyRuleElRef {
-    fn new(shared: StackShared, base: String) -> DlmLifecyclePolicyPolicyDetailsElScheduleElCrossRegionCopyRuleElRef {
+impl terrars::Ref for DlmLifecyclePolicyPolicyDetailsElScheduleElCrossRegionCopyRuleElRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> DlmLifecyclePolicyPolicyDetailsElScheduleElCrossRegionCopyRuleElRef {
         DlmLifecyclePolicyPolicyDetailsElScheduleElCrossRegionCopyRuleElRef {
             shared: shared,
             base: base.to_string(),
@@ -1279,80 +1402,80 @@ impl Ref for DlmLifecyclePolicyPolicyDetailsElScheduleElCrossRegionCopyRuleElRef
 }
 
 impl DlmLifecyclePolicyPolicyDetailsElScheduleElCrossRegionCopyRuleElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `cmk_arn` after provisioning.\n"]
-    pub fn cmk_arn(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.cmk_arn", self.base))
+    #[doc = "Get a reference to the value of field `cmk_arn` after provisioning.\n"]
+    pub fn cmk_arn(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.cmk_arn", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `copy_tags` after provisioning.\n"]
-    pub fn copy_tags(&self) -> PrimExpr<bool> {
-        PrimExpr::new(self.shared().clone(), format!("{}.copy_tags", self.base))
+    #[doc = "Get a reference to the value of field `copy_tags` after provisioning.\n"]
+    pub fn copy_tags(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.copy_tags", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `encrypted` after provisioning.\n"]
-    pub fn encrypted(&self) -> PrimExpr<bool> {
-        PrimExpr::new(self.shared().clone(), format!("{}.encrypted", self.base))
+    #[doc = "Get a reference to the value of field `encrypted` after provisioning.\n"]
+    pub fn encrypted(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.encrypted", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `target` after provisioning.\n"]
-    pub fn target(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.target", self.base))
+    #[doc = "Get a reference to the value of field `target` after provisioning.\n"]
+    pub fn target(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.target", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `deprecate_rule` after provisioning.\n"]
+    #[doc = "Get a reference to the value of field `deprecate_rule` after provisioning.\n"]
     pub fn deprecate_rule(
         &self,
-    ) -> ListRef<DlmLifecyclePolicyPolicyDetailsElScheduleElCrossRegionCopyRuleElDeprecateRuleElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.deprecate_rule", self.base))
+    ) -> terrars::ListRef<DlmLifecyclePolicyPolicyDetailsElScheduleElCrossRegionCopyRuleElDeprecateRuleElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.deprecate_rule", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `retain_rule` after provisioning.\n"]
+    #[doc = "Get a reference to the value of field `retain_rule` after provisioning.\n"]
     pub fn retain_rule(
         &self,
-    ) -> ListRef<DlmLifecyclePolicyPolicyDetailsElScheduleElCrossRegionCopyRuleElRetainRuleElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.retain_rule", self.base))
+    ) -> terrars::ListRef<DlmLifecyclePolicyPolicyDetailsElScheduleElCrossRegionCopyRuleElRetainRuleElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.retain_rule", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct DlmLifecyclePolicyPolicyDetailsElScheduleElDeprecateRuleEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    count: Option<PrimField<f64>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    interval: Option<PrimField<f64>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    interval_unit: Option<PrimField<String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    count: std::option::Option<terrars::PrimField<f64>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    interval: std::option::Option<terrars::PrimField<f64>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    interval_unit: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
 impl DlmLifecyclePolicyPolicyDetailsElScheduleElDeprecateRuleEl {
-    #[doc= "Set the field `count`.\n"]
-    pub fn set_count(mut self, v: impl Into<PrimField<f64>>) -> Self {
-        self.count = Some(v.into());
+    #[doc = "Set the field `count`.\n"]
+    pub fn set_count(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.count = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `interval`.\n"]
-    pub fn set_interval(mut self, v: impl Into<PrimField<f64>>) -> Self {
-        self.interval = Some(v.into());
+    #[doc = "Set the field `interval`.\n"]
+    pub fn set_interval(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.interval = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `interval_unit`.\n"]
-    pub fn set_interval_unit(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.interval_unit = Some(v.into());
+    #[doc = "Set the field `interval_unit`.\n"]
+    pub fn set_interval_unit(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.interval_unit = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl ToListMappable for DlmLifecyclePolicyPolicyDetailsElScheduleElDeprecateRuleEl {
-    type O = BlockAssignable<DlmLifecyclePolicyPolicyDetailsElScheduleElDeprecateRuleEl>;
+impl terrars::ToListMappable for DlmLifecyclePolicyPolicyDetailsElScheduleElDeprecateRuleEl {
+    type O = terrars::BlockAssignable<DlmLifecyclePolicyPolicyDetailsElScheduleElDeprecateRuleEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -1373,12 +1496,15 @@ impl BuildDlmLifecyclePolicyPolicyDetailsElScheduleElDeprecateRuleEl {
 }
 
 pub struct DlmLifecyclePolicyPolicyDetailsElScheduleElDeprecateRuleElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for DlmLifecyclePolicyPolicyDetailsElScheduleElDeprecateRuleElRef {
-    fn new(shared: StackShared, base: String) -> DlmLifecyclePolicyPolicyDetailsElScheduleElDeprecateRuleElRef {
+impl terrars::Ref for DlmLifecyclePolicyPolicyDetailsElScheduleElDeprecateRuleElRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> DlmLifecyclePolicyPolicyDetailsElScheduleElDeprecateRuleElRef {
         DlmLifecyclePolicyPolicyDetailsElScheduleElDeprecateRuleElRef {
             shared: shared,
             base: base.to_string(),
@@ -1387,62 +1513,62 @@ impl Ref for DlmLifecyclePolicyPolicyDetailsElScheduleElDeprecateRuleElRef {
 }
 
 impl DlmLifecyclePolicyPolicyDetailsElScheduleElDeprecateRuleElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `count` after provisioning.\n"]
-    pub fn count(&self) -> PrimExpr<f64> {
-        PrimExpr::new(self.shared().clone(), format!("{}.count", self.base))
+    #[doc = "Get a reference to the value of field `count` after provisioning.\n"]
+    pub fn count(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.count", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `interval` after provisioning.\n"]
-    pub fn interval(&self) -> PrimExpr<f64> {
-        PrimExpr::new(self.shared().clone(), format!("{}.interval", self.base))
+    #[doc = "Get a reference to the value of field `interval` after provisioning.\n"]
+    pub fn interval(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.interval", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `interval_unit` after provisioning.\n"]
-    pub fn interval_unit(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.interval_unit", self.base))
+    #[doc = "Get a reference to the value of field `interval_unit` after provisioning.\n"]
+    pub fn interval_unit(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.interval_unit", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct DlmLifecyclePolicyPolicyDetailsElScheduleElFastRestoreRuleEl {
-    availability_zones: SetField<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    count: Option<PrimField<f64>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    interval: Option<PrimField<f64>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    interval_unit: Option<PrimField<String>>,
+    availability_zones: terrars::SetField<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    count: std::option::Option<terrars::PrimField<f64>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    interval: std::option::Option<terrars::PrimField<f64>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    interval_unit: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
 impl DlmLifecyclePolicyPolicyDetailsElScheduleElFastRestoreRuleEl {
-    #[doc= "Set the field `count`.\n"]
-    pub fn set_count(mut self, v: impl Into<PrimField<f64>>) -> Self {
-        self.count = Some(v.into());
+    #[doc = "Set the field `count`.\n"]
+    pub fn set_count(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.count = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `interval`.\n"]
-    pub fn set_interval(mut self, v: impl Into<PrimField<f64>>) -> Self {
-        self.interval = Some(v.into());
+    #[doc = "Set the field `interval`.\n"]
+    pub fn set_interval(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.interval = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `interval_unit`.\n"]
-    pub fn set_interval_unit(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.interval_unit = Some(v.into());
+    #[doc = "Set the field `interval_unit`.\n"]
+    pub fn set_interval_unit(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.interval_unit = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl ToListMappable for DlmLifecyclePolicyPolicyDetailsElScheduleElFastRestoreRuleEl {
-    type O = BlockAssignable<DlmLifecyclePolicyPolicyDetailsElScheduleElFastRestoreRuleEl>;
+impl terrars::ToListMappable for DlmLifecyclePolicyPolicyDetailsElScheduleElFastRestoreRuleEl {
+    type O = terrars::BlockAssignable<DlmLifecyclePolicyPolicyDetailsElScheduleElFastRestoreRuleEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -1451,8 +1577,8 @@ impl ToListMappable for DlmLifecyclePolicyPolicyDetailsElScheduleElFastRestoreRu
 }
 
 pub struct BuildDlmLifecyclePolicyPolicyDetailsElScheduleElFastRestoreRuleEl {
-    #[doc= ""]
-    pub availability_zones: SetField<PrimField<String>>,
+    #[doc = ""]
+    pub availability_zones: terrars::SetField<terrars::PrimField<std::string::String>>,
 }
 
 impl BuildDlmLifecyclePolicyPolicyDetailsElScheduleElFastRestoreRuleEl {
@@ -1467,12 +1593,15 @@ impl BuildDlmLifecyclePolicyPolicyDetailsElScheduleElFastRestoreRuleEl {
 }
 
 pub struct DlmLifecyclePolicyPolicyDetailsElScheduleElFastRestoreRuleElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for DlmLifecyclePolicyPolicyDetailsElScheduleElFastRestoreRuleElRef {
-    fn new(shared: StackShared, base: String) -> DlmLifecyclePolicyPolicyDetailsElScheduleElFastRestoreRuleElRef {
+impl terrars::Ref for DlmLifecyclePolicyPolicyDetailsElScheduleElFastRestoreRuleElRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> DlmLifecyclePolicyPolicyDetailsElScheduleElFastRestoreRuleElRef {
         DlmLifecyclePolicyPolicyDetailsElScheduleElFastRestoreRuleElRef {
             shared: shared,
             base: base.to_string(),
@@ -1481,66 +1610,66 @@ impl Ref for DlmLifecyclePolicyPolicyDetailsElScheduleElFastRestoreRuleElRef {
 }
 
 impl DlmLifecyclePolicyPolicyDetailsElScheduleElFastRestoreRuleElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `availability_zones` after provisioning.\n"]
-    pub fn availability_zones(&self) -> SetRef<PrimExpr<String>> {
-        SetRef::new(self.shared().clone(), format!("{}.availability_zones", self.base))
+    #[doc = "Get a reference to the value of field `availability_zones` after provisioning.\n"]
+    pub fn availability_zones(&self) -> terrars::SetRef<terrars::PrimExpr<std::string::String>> {
+        terrars::SetRef::new(self.shared().clone(), format!("{}.availability_zones", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `count` after provisioning.\n"]
-    pub fn count(&self) -> PrimExpr<f64> {
-        PrimExpr::new(self.shared().clone(), format!("{}.count", self.base))
+    #[doc = "Get a reference to the value of field `count` after provisioning.\n"]
+    pub fn count(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.count", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `interval` after provisioning.\n"]
-    pub fn interval(&self) -> PrimExpr<f64> {
-        PrimExpr::new(self.shared().clone(), format!("{}.interval", self.base))
+    #[doc = "Get a reference to the value of field `interval` after provisioning.\n"]
+    pub fn interval(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.interval", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `interval_unit` after provisioning.\n"]
-    pub fn interval_unit(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.interval_unit", self.base))
+    #[doc = "Get a reference to the value of field `interval_unit` after provisioning.\n"]
+    pub fn interval_unit(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.interval_unit", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct DlmLifecyclePolicyPolicyDetailsElScheduleElRetainRuleEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    count: Option<PrimField<f64>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    interval: Option<PrimField<f64>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    interval_unit: Option<PrimField<String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    count: std::option::Option<terrars::PrimField<f64>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    interval: std::option::Option<terrars::PrimField<f64>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    interval_unit: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
 impl DlmLifecyclePolicyPolicyDetailsElScheduleElRetainRuleEl {
-    #[doc= "Set the field `count`.\n"]
-    pub fn set_count(mut self, v: impl Into<PrimField<f64>>) -> Self {
-        self.count = Some(v.into());
+    #[doc = "Set the field `count`.\n"]
+    pub fn set_count(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.count = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `interval`.\n"]
-    pub fn set_interval(mut self, v: impl Into<PrimField<f64>>) -> Self {
-        self.interval = Some(v.into());
+    #[doc = "Set the field `interval`.\n"]
+    pub fn set_interval(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.interval = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `interval_unit`.\n"]
-    pub fn set_interval_unit(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.interval_unit = Some(v.into());
+    #[doc = "Set the field `interval_unit`.\n"]
+    pub fn set_interval_unit(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.interval_unit = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl ToListMappable for DlmLifecyclePolicyPolicyDetailsElScheduleElRetainRuleEl {
-    type O = BlockAssignable<DlmLifecyclePolicyPolicyDetailsElScheduleElRetainRuleEl>;
+impl terrars::ToListMappable for DlmLifecyclePolicyPolicyDetailsElScheduleElRetainRuleEl {
+    type O = terrars::BlockAssignable<DlmLifecyclePolicyPolicyDetailsElScheduleElRetainRuleEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -1561,12 +1690,15 @@ impl BuildDlmLifecyclePolicyPolicyDetailsElScheduleElRetainRuleEl {
 }
 
 pub struct DlmLifecyclePolicyPolicyDetailsElScheduleElRetainRuleElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for DlmLifecyclePolicyPolicyDetailsElScheduleElRetainRuleElRef {
-    fn new(shared: StackShared, base: String) -> DlmLifecyclePolicyPolicyDetailsElScheduleElRetainRuleElRef {
+impl terrars::Ref for DlmLifecyclePolicyPolicyDetailsElScheduleElRetainRuleElRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> DlmLifecyclePolicyPolicyDetailsElScheduleElRetainRuleElRef {
         DlmLifecyclePolicyPolicyDetailsElScheduleElRetainRuleElRef {
             shared: shared,
             base: base.to_string(),
@@ -1575,54 +1707,57 @@ impl Ref for DlmLifecyclePolicyPolicyDetailsElScheduleElRetainRuleElRef {
 }
 
 impl DlmLifecyclePolicyPolicyDetailsElScheduleElRetainRuleElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `count` after provisioning.\n"]
-    pub fn count(&self) -> PrimExpr<f64> {
-        PrimExpr::new(self.shared().clone(), format!("{}.count", self.base))
+    #[doc = "Get a reference to the value of field `count` after provisioning.\n"]
+    pub fn count(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.count", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `interval` after provisioning.\n"]
-    pub fn interval(&self) -> PrimExpr<f64> {
-        PrimExpr::new(self.shared().clone(), format!("{}.interval", self.base))
+    #[doc = "Get a reference to the value of field `interval` after provisioning.\n"]
+    pub fn interval(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.interval", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `interval_unit` after provisioning.\n"]
-    pub fn interval_unit(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.interval_unit", self.base))
+    #[doc = "Get a reference to the value of field `interval_unit` after provisioning.\n"]
+    pub fn interval_unit(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.interval_unit", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct DlmLifecyclePolicyPolicyDetailsElScheduleElShareRuleEl {
-    target_accounts: SetField<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    unshare_interval: Option<PrimField<f64>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    unshare_interval_unit: Option<PrimField<String>>,
+    target_accounts: terrars::SetField<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    unshare_interval: std::option::Option<terrars::PrimField<f64>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    unshare_interval_unit: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
 impl DlmLifecyclePolicyPolicyDetailsElScheduleElShareRuleEl {
-    #[doc= "Set the field `unshare_interval`.\n"]
-    pub fn set_unshare_interval(mut self, v: impl Into<PrimField<f64>>) -> Self {
-        self.unshare_interval = Some(v.into());
+    #[doc = "Set the field `unshare_interval`.\n"]
+    pub fn set_unshare_interval(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.unshare_interval = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `unshare_interval_unit`.\n"]
-    pub fn set_unshare_interval_unit(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.unshare_interval_unit = Some(v.into());
+    #[doc = "Set the field `unshare_interval_unit`.\n"]
+    pub fn set_unshare_interval_unit(
+        mut self,
+        v: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.unshare_interval_unit = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl ToListMappable for DlmLifecyclePolicyPolicyDetailsElScheduleElShareRuleEl {
-    type O = BlockAssignable<DlmLifecyclePolicyPolicyDetailsElScheduleElShareRuleEl>;
+impl terrars::ToListMappable for DlmLifecyclePolicyPolicyDetailsElScheduleElShareRuleEl {
+    type O = terrars::BlockAssignable<DlmLifecyclePolicyPolicyDetailsElScheduleElShareRuleEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -1631,8 +1766,8 @@ impl ToListMappable for DlmLifecyclePolicyPolicyDetailsElScheduleElShareRuleEl {
 }
 
 pub struct BuildDlmLifecyclePolicyPolicyDetailsElScheduleElShareRuleEl {
-    #[doc= ""]
-    pub target_accounts: SetField<PrimField<String>>,
+    #[doc = ""]
+    pub target_accounts: terrars::SetField<terrars::PrimField<std::string::String>>,
 }
 
 impl BuildDlmLifecyclePolicyPolicyDetailsElScheduleElShareRuleEl {
@@ -1646,12 +1781,15 @@ impl BuildDlmLifecyclePolicyPolicyDetailsElScheduleElShareRuleEl {
 }
 
 pub struct DlmLifecyclePolicyPolicyDetailsElScheduleElShareRuleElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for DlmLifecyclePolicyPolicyDetailsElScheduleElShareRuleElRef {
-    fn new(shared: StackShared, base: String) -> DlmLifecyclePolicyPolicyDetailsElScheduleElShareRuleElRef {
+impl terrars::Ref for DlmLifecyclePolicyPolicyDetailsElScheduleElShareRuleElRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> DlmLifecyclePolicyPolicyDetailsElScheduleElShareRuleElRef {
         DlmLifecyclePolicyPolicyDetailsElScheduleElShareRuleElRef {
             shared: shared,
             base: base.to_string(),
@@ -1660,181 +1798,222 @@ impl Ref for DlmLifecyclePolicyPolicyDetailsElScheduleElShareRuleElRef {
 }
 
 impl DlmLifecyclePolicyPolicyDetailsElScheduleElShareRuleElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `target_accounts` after provisioning.\n"]
-    pub fn target_accounts(&self) -> SetRef<PrimExpr<String>> {
-        SetRef::new(self.shared().clone(), format!("{}.target_accounts", self.base))
+    #[doc = "Get a reference to the value of field `target_accounts` after provisioning.\n"]
+    pub fn target_accounts(&self) -> terrars::SetRef<terrars::PrimExpr<std::string::String>> {
+        terrars::SetRef::new(self.shared().clone(), format!("{}.target_accounts", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `unshare_interval` after provisioning.\n"]
-    pub fn unshare_interval(&self) -> PrimExpr<f64> {
-        PrimExpr::new(self.shared().clone(), format!("{}.unshare_interval", self.base))
+    #[doc = "Get a reference to the value of field `unshare_interval` after provisioning.\n"]
+    pub fn unshare_interval(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.unshare_interval", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `unshare_interval_unit` after provisioning.\n"]
-    pub fn unshare_interval_unit(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.unshare_interval_unit", self.base))
+    #[doc = "Get a reference to the value of field `unshare_interval_unit` after provisioning.\n"]
+    pub fn unshare_interval_unit(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.unshare_interval_unit", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
 struct DlmLifecyclePolicyPolicyDetailsElScheduleElDynamic {
-    create_rule: Option<DynamicBlock<DlmLifecyclePolicyPolicyDetailsElScheduleElCreateRuleEl>>,
-    cross_region_copy_rule: Option<DynamicBlock<DlmLifecyclePolicyPolicyDetailsElScheduleElCrossRegionCopyRuleEl>>,
-    deprecate_rule: Option<DynamicBlock<DlmLifecyclePolicyPolicyDetailsElScheduleElDeprecateRuleEl>>,
-    fast_restore_rule: Option<DynamicBlock<DlmLifecyclePolicyPolicyDetailsElScheduleElFastRestoreRuleEl>>,
-    retain_rule: Option<DynamicBlock<DlmLifecyclePolicyPolicyDetailsElScheduleElRetainRuleEl>>,
-    share_rule: Option<DynamicBlock<DlmLifecyclePolicyPolicyDetailsElScheduleElShareRuleEl>>,
+    create_rule: std::option::Option<terrars::DynamicBlock<DlmLifecyclePolicyPolicyDetailsElScheduleElCreateRuleEl>>,
+    cross_region_copy_rule: std
+    ::option
+    ::Option<terrars::DynamicBlock<DlmLifecyclePolicyPolicyDetailsElScheduleElCrossRegionCopyRuleEl>>,
+    deprecate_rule: std
+    ::option
+    ::Option<terrars::DynamicBlock<DlmLifecyclePolicyPolicyDetailsElScheduleElDeprecateRuleEl>>,
+    fast_restore_rule: std
+    ::option
+    ::Option<terrars::DynamicBlock<DlmLifecyclePolicyPolicyDetailsElScheduleElFastRestoreRuleEl>>,
+    retain_rule: std::option::Option<terrars::DynamicBlock<DlmLifecyclePolicyPolicyDetailsElScheduleElRetainRuleEl>>,
+    share_rule: std::option::Option<terrars::DynamicBlock<DlmLifecyclePolicyPolicyDetailsElScheduleElShareRuleEl>>,
 }
 
 #[derive(Serialize)]
 pub struct DlmLifecyclePolicyPolicyDetailsElScheduleEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    copy_tags: Option<PrimField<bool>>,
-    name: PrimField<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    tags_to_add: Option<RecField<PrimField<String>>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    variable_tags: Option<RecField<PrimField<String>>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    create_rule: Option<Vec<DlmLifecyclePolicyPolicyDetailsElScheduleElCreateRuleEl>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    cross_region_copy_rule: Option<Vec<DlmLifecyclePolicyPolicyDetailsElScheduleElCrossRegionCopyRuleEl>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    deprecate_rule: Option<Vec<DlmLifecyclePolicyPolicyDetailsElScheduleElDeprecateRuleEl>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    fast_restore_rule: Option<Vec<DlmLifecyclePolicyPolicyDetailsElScheduleElFastRestoreRuleEl>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    retain_rule: Option<Vec<DlmLifecyclePolicyPolicyDetailsElScheduleElRetainRuleEl>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    share_rule: Option<Vec<DlmLifecyclePolicyPolicyDetailsElScheduleElShareRuleEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    copy_tags: std::option::Option<terrars::PrimField<bool>>,
+    name: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    tags_to_add: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    variable_tags: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    create_rule: std::option::Option<std::vec::Vec<DlmLifecyclePolicyPolicyDetailsElScheduleElCreateRuleEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    cross_region_copy_rule: std
+    ::option
+    ::Option<std::vec::Vec<DlmLifecyclePolicyPolicyDetailsElScheduleElCrossRegionCopyRuleEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    deprecate_rule: std::option::Option<std::vec::Vec<DlmLifecyclePolicyPolicyDetailsElScheduleElDeprecateRuleEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    fast_restore_rule: std::option::Option<std::vec::Vec<DlmLifecyclePolicyPolicyDetailsElScheduleElFastRestoreRuleEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    retain_rule: std::option::Option<std::vec::Vec<DlmLifecyclePolicyPolicyDetailsElScheduleElRetainRuleEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    share_rule: std::option::Option<std::vec::Vec<DlmLifecyclePolicyPolicyDetailsElScheduleElShareRuleEl>>,
     dynamic: DlmLifecyclePolicyPolicyDetailsElScheduleElDynamic,
 }
 
 impl DlmLifecyclePolicyPolicyDetailsElScheduleEl {
-    #[doc= "Set the field `copy_tags`.\n"]
-    pub fn set_copy_tags(mut self, v: impl Into<PrimField<bool>>) -> Self {
-        self.copy_tags = Some(v.into());
+    #[doc = "Set the field `copy_tags`.\n"]
+    pub fn set_copy_tags(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
+        self.copy_tags = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `tags_to_add`.\n"]
-    pub fn set_tags_to_add(mut self, v: impl Into<RecField<PrimField<String>>>) -> Self {
-        self.tags_to_add = Some(v.into());
+    #[doc = "Set the field `tags_to_add`.\n"]
+    pub fn set_tags_to_add(
+        mut self,
+        v: impl std::convert::Into<terrars::RecField<terrars::PrimField<std::string::String>>>,
+    ) -> Self {
+        self.tags_to_add = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `variable_tags`.\n"]
-    pub fn set_variable_tags(mut self, v: impl Into<RecField<PrimField<String>>>) -> Self {
-        self.variable_tags = Some(v.into());
+    #[doc = "Set the field `variable_tags`.\n"]
+    pub fn set_variable_tags(
+        mut self,
+        v: impl std::convert::Into<terrars::RecField<terrars::PrimField<std::string::String>>>,
+    ) -> Self {
+        self.variable_tags = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `create_rule`.\n"]
+    #[doc = "Set the field `create_rule`.\n"]
     pub fn set_create_rule(
         mut self,
-        v: impl Into<BlockAssignable<DlmLifecyclePolicyPolicyDetailsElScheduleElCreateRuleEl>>,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<terrars::BlockAssignable<DlmLifecyclePolicyPolicyDetailsElScheduleElCreateRuleEl>>,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.create_rule = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.create_rule = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.create_rule = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.create_rule = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Set the field `cross_region_copy_rule`.\n"]
+    #[doc = "Set the field `cross_region_copy_rule`.\n"]
     pub fn set_cross_region_copy_rule(
         mut self,
-        v: impl Into<BlockAssignable<DlmLifecyclePolicyPolicyDetailsElScheduleElCrossRegionCopyRuleEl>>,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<
+                        terrars::BlockAssignable<DlmLifecyclePolicyPolicyDetailsElScheduleElCrossRegionCopyRuleEl>,
+                    >,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.cross_region_copy_rule = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.cross_region_copy_rule = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.cross_region_copy_rule = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.cross_region_copy_rule = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Set the field `deprecate_rule`.\n"]
+    #[doc = "Set the field `deprecate_rule`.\n"]
     pub fn set_deprecate_rule(
         mut self,
-        v: impl Into<BlockAssignable<DlmLifecyclePolicyPolicyDetailsElScheduleElDeprecateRuleEl>>,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<terrars::BlockAssignable<DlmLifecyclePolicyPolicyDetailsElScheduleElDeprecateRuleEl>>,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.deprecate_rule = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.deprecate_rule = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.deprecate_rule = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.deprecate_rule = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Set the field `fast_restore_rule`.\n"]
+    #[doc = "Set the field `fast_restore_rule`.\n"]
     pub fn set_fast_restore_rule(
         mut self,
-        v: impl Into<BlockAssignable<DlmLifecyclePolicyPolicyDetailsElScheduleElFastRestoreRuleEl>>,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<terrars::BlockAssignable<DlmLifecyclePolicyPolicyDetailsElScheduleElFastRestoreRuleEl>>,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.fast_restore_rule = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.fast_restore_rule = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.fast_restore_rule = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.fast_restore_rule = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Set the field `retain_rule`.\n"]
+    #[doc = "Set the field `retain_rule`.\n"]
     pub fn set_retain_rule(
         mut self,
-        v: impl Into<BlockAssignable<DlmLifecyclePolicyPolicyDetailsElScheduleElRetainRuleEl>>,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<terrars::BlockAssignable<DlmLifecyclePolicyPolicyDetailsElScheduleElRetainRuleEl>>,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.retain_rule = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.retain_rule = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.retain_rule = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.retain_rule = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Set the field `share_rule`.\n"]
+    #[doc = "Set the field `share_rule`.\n"]
     pub fn set_share_rule(
         mut self,
-        v: impl Into<BlockAssignable<DlmLifecyclePolicyPolicyDetailsElScheduleElShareRuleEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<DlmLifecyclePolicyPolicyDetailsElScheduleElShareRuleEl>>,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.share_rule = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.share_rule = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.share_rule = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.share_rule = std::option::Option::Some(d);
             },
         }
         self
     }
 }
 
-impl ToListMappable for DlmLifecyclePolicyPolicyDetailsElScheduleEl {
-    type O = BlockAssignable<DlmLifecyclePolicyPolicyDetailsElScheduleEl>;
+impl terrars::ToListMappable for DlmLifecyclePolicyPolicyDetailsElScheduleEl {
+    type O = terrars::BlockAssignable<DlmLifecyclePolicyPolicyDetailsElScheduleEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -1843,8 +2022,8 @@ impl ToListMappable for DlmLifecyclePolicyPolicyDetailsElScheduleEl {
 }
 
 pub struct BuildDlmLifecyclePolicyPolicyDetailsElScheduleEl {
-    #[doc= ""]
-    pub name: PrimField<String>,
+    #[doc = ""]
+    pub name: terrars::PrimField<std::string::String>,
 }
 
 impl BuildDlmLifecyclePolicyPolicyDetailsElScheduleEl {
@@ -1860,18 +2039,21 @@ impl BuildDlmLifecyclePolicyPolicyDetailsElScheduleEl {
             fast_restore_rule: core::default::Default::default(),
             retain_rule: core::default::Default::default(),
             share_rule: core::default::Default::default(),
-            dynamic: Default::default(),
+            dynamic: core::default::Default::default(),
         }
     }
 }
 
 pub struct DlmLifecyclePolicyPolicyDetailsElScheduleElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for DlmLifecyclePolicyPolicyDetailsElScheduleElRef {
-    fn new(shared: StackShared, base: String) -> DlmLifecyclePolicyPolicyDetailsElScheduleElRef {
+impl terrars::Ref for DlmLifecyclePolicyPolicyDetailsElScheduleElRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> DlmLifecyclePolicyPolicyDetailsElScheduleElRef {
         DlmLifecyclePolicyPolicyDetailsElScheduleElRef {
             shared: shared,
             base: base.to_string(),
@@ -1880,174 +2062,189 @@ impl Ref for DlmLifecyclePolicyPolicyDetailsElScheduleElRef {
 }
 
 impl DlmLifecyclePolicyPolicyDetailsElScheduleElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `copy_tags` after provisioning.\n"]
-    pub fn copy_tags(&self) -> PrimExpr<bool> {
-        PrimExpr::new(self.shared().clone(), format!("{}.copy_tags", self.base))
+    #[doc = "Get a reference to the value of field `copy_tags` after provisioning.\n"]
+    pub fn copy_tags(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.copy_tags", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `name` after provisioning.\n"]
-    pub fn name(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.name", self.base))
+    #[doc = "Get a reference to the value of field `name` after provisioning.\n"]
+    pub fn name(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `tags_to_add` after provisioning.\n"]
-    pub fn tags_to_add(&self) -> RecRef<PrimExpr<String>> {
-        RecRef::new(self.shared().clone(), format!("{}.tags_to_add", self.base))
+    #[doc = "Get a reference to the value of field `tags_to_add` after provisioning.\n"]
+    pub fn tags_to_add(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
+        terrars::RecRef::new(self.shared().clone(), format!("{}.tags_to_add", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `variable_tags` after provisioning.\n"]
-    pub fn variable_tags(&self) -> RecRef<PrimExpr<String>> {
-        RecRef::new(self.shared().clone(), format!("{}.variable_tags", self.base))
+    #[doc = "Get a reference to the value of field `variable_tags` after provisioning.\n"]
+    pub fn variable_tags(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
+        terrars::RecRef::new(self.shared().clone(), format!("{}.variable_tags", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `create_rule` after provisioning.\n"]
-    pub fn create_rule(&self) -> ListRef<DlmLifecyclePolicyPolicyDetailsElScheduleElCreateRuleElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.create_rule", self.base))
+    #[doc = "Get a reference to the value of field `create_rule` after provisioning.\n"]
+    pub fn create_rule(&self) -> terrars::ListRef<DlmLifecyclePolicyPolicyDetailsElScheduleElCreateRuleElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.create_rule", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `deprecate_rule` after provisioning.\n"]
-    pub fn deprecate_rule(&self) -> ListRef<DlmLifecyclePolicyPolicyDetailsElScheduleElDeprecateRuleElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.deprecate_rule", self.base))
+    #[doc = "Get a reference to the value of field `deprecate_rule` after provisioning.\n"]
+    pub fn deprecate_rule(&self) -> terrars::ListRef<DlmLifecyclePolicyPolicyDetailsElScheduleElDeprecateRuleElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.deprecate_rule", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `fast_restore_rule` after provisioning.\n"]
-    pub fn fast_restore_rule(&self) -> ListRef<DlmLifecyclePolicyPolicyDetailsElScheduleElFastRestoreRuleElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.fast_restore_rule", self.base))
+    #[doc = "Get a reference to the value of field `fast_restore_rule` after provisioning.\n"]
+    pub fn fast_restore_rule(&self) -> terrars::ListRef<DlmLifecyclePolicyPolicyDetailsElScheduleElFastRestoreRuleElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.fast_restore_rule", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `retain_rule` after provisioning.\n"]
-    pub fn retain_rule(&self) -> ListRef<DlmLifecyclePolicyPolicyDetailsElScheduleElRetainRuleElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.retain_rule", self.base))
+    #[doc = "Get a reference to the value of field `retain_rule` after provisioning.\n"]
+    pub fn retain_rule(&self) -> terrars::ListRef<DlmLifecyclePolicyPolicyDetailsElScheduleElRetainRuleElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.retain_rule", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `share_rule` after provisioning.\n"]
-    pub fn share_rule(&self) -> ListRef<DlmLifecyclePolicyPolicyDetailsElScheduleElShareRuleElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.share_rule", self.base))
+    #[doc = "Get a reference to the value of field `share_rule` after provisioning.\n"]
+    pub fn share_rule(&self) -> terrars::ListRef<DlmLifecyclePolicyPolicyDetailsElScheduleElShareRuleElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.share_rule", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
 struct DlmLifecyclePolicyPolicyDetailsElDynamic {
-    action: Option<DynamicBlock<DlmLifecyclePolicyPolicyDetailsElActionEl>>,
-    event_source: Option<DynamicBlock<DlmLifecyclePolicyPolicyDetailsElEventSourceEl>>,
-    parameters: Option<DynamicBlock<DlmLifecyclePolicyPolicyDetailsElParametersEl>>,
-    schedule: Option<DynamicBlock<DlmLifecyclePolicyPolicyDetailsElScheduleEl>>,
+    action: std::option::Option<terrars::DynamicBlock<DlmLifecyclePolicyPolicyDetailsElActionEl>>,
+    event_source: std::option::Option<terrars::DynamicBlock<DlmLifecyclePolicyPolicyDetailsElEventSourceEl>>,
+    parameters: std::option::Option<terrars::DynamicBlock<DlmLifecyclePolicyPolicyDetailsElParametersEl>>,
+    schedule: std::option::Option<terrars::DynamicBlock<DlmLifecyclePolicyPolicyDetailsElScheduleEl>>,
 }
 
 #[derive(Serialize)]
 pub struct DlmLifecyclePolicyPolicyDetailsEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    policy_type: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    resource_locations: Option<ListField<PrimField<String>>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    resource_types: Option<ListField<PrimField<String>>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    target_tags: Option<RecField<PrimField<String>>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    action: Option<Vec<DlmLifecyclePolicyPolicyDetailsElActionEl>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    event_source: Option<Vec<DlmLifecyclePolicyPolicyDetailsElEventSourceEl>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    parameters: Option<Vec<DlmLifecyclePolicyPolicyDetailsElParametersEl>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    schedule: Option<Vec<DlmLifecyclePolicyPolicyDetailsElScheduleEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    policy_type: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    resource_locations: std::option::Option<terrars::ListField<terrars::PrimField<std::string::String>>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    resource_types: std::option::Option<terrars::ListField<terrars::PrimField<std::string::String>>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    target_tags: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    action: std::option::Option<std::vec::Vec<DlmLifecyclePolicyPolicyDetailsElActionEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    event_source: std::option::Option<std::vec::Vec<DlmLifecyclePolicyPolicyDetailsElEventSourceEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    parameters: std::option::Option<std::vec::Vec<DlmLifecyclePolicyPolicyDetailsElParametersEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    schedule: std::option::Option<std::vec::Vec<DlmLifecyclePolicyPolicyDetailsElScheduleEl>>,
     dynamic: DlmLifecyclePolicyPolicyDetailsElDynamic,
 }
 
 impl DlmLifecyclePolicyPolicyDetailsEl {
-    #[doc= "Set the field `policy_type`.\n"]
-    pub fn set_policy_type(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.policy_type = Some(v.into());
+    #[doc = "Set the field `policy_type`.\n"]
+    pub fn set_policy_type(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.policy_type = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `resource_locations`.\n"]
-    pub fn set_resource_locations(mut self, v: impl Into<ListField<PrimField<String>>>) -> Self {
-        self.resource_locations = Some(v.into());
+    #[doc = "Set the field `resource_locations`.\n"]
+    pub fn set_resource_locations(
+        mut self,
+        v: impl std::convert::Into<terrars::ListField<terrars::PrimField<std::string::String>>>,
+    ) -> Self {
+        self.resource_locations = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `resource_types`.\n"]
-    pub fn set_resource_types(mut self, v: impl Into<ListField<PrimField<String>>>) -> Self {
-        self.resource_types = Some(v.into());
+    #[doc = "Set the field `resource_types`.\n"]
+    pub fn set_resource_types(
+        mut self,
+        v: impl std::convert::Into<terrars::ListField<terrars::PrimField<std::string::String>>>,
+    ) -> Self {
+        self.resource_types = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `target_tags`.\n"]
-    pub fn set_target_tags(mut self, v: impl Into<RecField<PrimField<String>>>) -> Self {
-        self.target_tags = Some(v.into());
+    #[doc = "Set the field `target_tags`.\n"]
+    pub fn set_target_tags(
+        mut self,
+        v: impl std::convert::Into<terrars::RecField<terrars::PrimField<std::string::String>>>,
+    ) -> Self {
+        self.target_tags = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `action`.\n"]
-    pub fn set_action(mut self, v: impl Into<BlockAssignable<DlmLifecyclePolicyPolicyDetailsElActionEl>>) -> Self {
+    #[doc = "Set the field `action`.\n"]
+    pub fn set_action(
+        mut self,
+        v: impl std::convert::Into<terrars::BlockAssignable<DlmLifecyclePolicyPolicyDetailsElActionEl>>,
+    ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.action = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.action = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.action = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.action = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Set the field `event_source`.\n"]
+    #[doc = "Set the field `event_source`.\n"]
     pub fn set_event_source(
         mut self,
-        v: impl Into<BlockAssignable<DlmLifecyclePolicyPolicyDetailsElEventSourceEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<DlmLifecyclePolicyPolicyDetailsElEventSourceEl>>,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.event_source = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.event_source = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.event_source = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.event_source = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Set the field `parameters`.\n"]
+    #[doc = "Set the field `parameters`.\n"]
     pub fn set_parameters(
         mut self,
-        v: impl Into<BlockAssignable<DlmLifecyclePolicyPolicyDetailsElParametersEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<DlmLifecyclePolicyPolicyDetailsElParametersEl>>,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.parameters = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.parameters = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.parameters = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.parameters = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Set the field `schedule`.\n"]
-    pub fn set_schedule(mut self, v: impl Into<BlockAssignable<DlmLifecyclePolicyPolicyDetailsElScheduleEl>>) -> Self {
+    #[doc = "Set the field `schedule`.\n"]
+    pub fn set_schedule(
+        mut self,
+        v: impl std::convert::Into<terrars::BlockAssignable<DlmLifecyclePolicyPolicyDetailsElScheduleEl>>,
+    ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.schedule = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.schedule = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.schedule = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.schedule = std::option::Option::Some(d);
             },
         }
         self
     }
 }
 
-impl ToListMappable for DlmLifecyclePolicyPolicyDetailsEl {
-    type O = BlockAssignable<DlmLifecyclePolicyPolicyDetailsEl>;
+impl terrars::ToListMappable for DlmLifecyclePolicyPolicyDetailsEl {
+    type O = terrars::BlockAssignable<DlmLifecyclePolicyPolicyDetailsEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -2068,18 +2265,18 @@ impl BuildDlmLifecyclePolicyPolicyDetailsEl {
             event_source: core::default::Default::default(),
             parameters: core::default::Default::default(),
             schedule: core::default::Default::default(),
-            dynamic: Default::default(),
+            dynamic: core::default::Default::default(),
         }
     }
 }
 
 pub struct DlmLifecyclePolicyPolicyDetailsElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for DlmLifecyclePolicyPolicyDetailsElRef {
-    fn new(shared: StackShared, base: String) -> DlmLifecyclePolicyPolicyDetailsElRef {
+impl terrars::Ref for DlmLifecyclePolicyPolicyDetailsElRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DlmLifecyclePolicyPolicyDetailsElRef {
         DlmLifecyclePolicyPolicyDetailsElRef {
             shared: shared,
             base: base.to_string(),
@@ -2088,52 +2285,52 @@ impl Ref for DlmLifecyclePolicyPolicyDetailsElRef {
 }
 
 impl DlmLifecyclePolicyPolicyDetailsElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `policy_type` after provisioning.\n"]
-    pub fn policy_type(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.policy_type", self.base))
+    #[doc = "Get a reference to the value of field `policy_type` after provisioning.\n"]
+    pub fn policy_type(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.policy_type", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `resource_locations` after provisioning.\n"]
-    pub fn resource_locations(&self) -> ListRef<PrimExpr<String>> {
-        ListRef::new(self.shared().clone(), format!("{}.resource_locations", self.base))
+    #[doc = "Get a reference to the value of field `resource_locations` after provisioning.\n"]
+    pub fn resource_locations(&self) -> terrars::ListRef<terrars::PrimExpr<std::string::String>> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.resource_locations", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `resource_types` after provisioning.\n"]
-    pub fn resource_types(&self) -> ListRef<PrimExpr<String>> {
-        ListRef::new(self.shared().clone(), format!("{}.resource_types", self.base))
+    #[doc = "Get a reference to the value of field `resource_types` after provisioning.\n"]
+    pub fn resource_types(&self) -> terrars::ListRef<terrars::PrimExpr<std::string::String>> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.resource_types", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `target_tags` after provisioning.\n"]
-    pub fn target_tags(&self) -> RecRef<PrimExpr<String>> {
-        RecRef::new(self.shared().clone(), format!("{}.target_tags", self.base))
+    #[doc = "Get a reference to the value of field `target_tags` after provisioning.\n"]
+    pub fn target_tags(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
+        terrars::RecRef::new(self.shared().clone(), format!("{}.target_tags", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `action` after provisioning.\n"]
-    pub fn action(&self) -> ListRef<DlmLifecyclePolicyPolicyDetailsElActionElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.action", self.base))
+    #[doc = "Get a reference to the value of field `action` after provisioning.\n"]
+    pub fn action(&self) -> terrars::ListRef<DlmLifecyclePolicyPolicyDetailsElActionElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.action", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `event_source` after provisioning.\n"]
-    pub fn event_source(&self) -> ListRef<DlmLifecyclePolicyPolicyDetailsElEventSourceElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.event_source", self.base))
+    #[doc = "Get a reference to the value of field `event_source` after provisioning.\n"]
+    pub fn event_source(&self) -> terrars::ListRef<DlmLifecyclePolicyPolicyDetailsElEventSourceElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.event_source", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `parameters` after provisioning.\n"]
-    pub fn parameters(&self) -> ListRef<DlmLifecyclePolicyPolicyDetailsElParametersElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.parameters", self.base))
+    #[doc = "Get a reference to the value of field `parameters` after provisioning.\n"]
+    pub fn parameters(&self) -> terrars::ListRef<DlmLifecyclePolicyPolicyDetailsElParametersElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.parameters", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `schedule` after provisioning.\n"]
-    pub fn schedule(&self) -> ListRef<DlmLifecyclePolicyPolicyDetailsElScheduleElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.schedule", self.base))
+    #[doc = "Get a reference to the value of field `schedule` after provisioning.\n"]
+    pub fn schedule(&self) -> terrars::ListRef<DlmLifecyclePolicyPolicyDetailsElScheduleElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.schedule", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
 struct DlmLifecyclePolicyDynamic {
-    policy_details: Option<DynamicBlock<DlmLifecyclePolicyPolicyDetailsEl>>,
+    policy_details: std::option::Option<terrars::DynamicBlock<DlmLifecyclePolicyPolicyDetailsEl>>,
 }

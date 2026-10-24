@@ -1,50 +1,54 @@
 use serde::Serialize;
-use std::cell::RefCell;
-use std::rc::Rc;
-use terrars::*;
+use terrars::{
+    Referable as _,
+    Resource_ as _,
+    Ref as _,
+};
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
 struct S3controlObjectLambdaAccessPointData {
-    #[serde(skip_serializing_if = "Vec::is_empty")]
-    depends_on: Vec<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    provider: Option<String>,
-    #[serde(skip_serializing_if = "SerdeSkipDefault::is_default")]
-    lifecycle: ResourceLifecycle,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    for_each: Option<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    account_id: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    id: Option<PrimField<String>>,
-    name: PrimField<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    configuration: Option<Vec<S3controlObjectLambdaAccessPointConfigurationEl>>,
+    #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
+    depends_on: std::vec::Vec<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    provider: std::option::Option<std::string::String>,
+    #[serde(skip_serializing_if = "terrars::SerdeSkipDefault::is_default")]
+    lifecycle: terrars::ResourceLifecycle,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    for_each: std::option::Option<std::string::String>,
+    #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
+    provisioner: std::vec::Vec<terrars::Provisioner>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    account_id: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    id: std::option::Option<terrars::PrimField<std::string::String>>,
+    name: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    configuration: std::option::Option<std::vec::Vec<S3controlObjectLambdaAccessPointConfigurationEl>>,
     dynamic: S3controlObjectLambdaAccessPointDynamic,
 }
 
 struct S3controlObjectLambdaAccessPoint_ {
-    shared: StackShared,
-    tf_id: String,
-    data: RefCell<S3controlObjectLambdaAccessPointData>,
+    shared: terrars::StackShared,
+    tf_id: std::string::String,
+    data: std::cell::RefCell<S3controlObjectLambdaAccessPointData>,
 }
 
 #[derive(Clone)]
-pub struct S3controlObjectLambdaAccessPoint(Rc<S3controlObjectLambdaAccessPoint_>);
+pub struct S3controlObjectLambdaAccessPoint(std::rc::Rc<S3controlObjectLambdaAccessPoint_>);
 
 impl S3controlObjectLambdaAccessPoint {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.0.shared
     }
 
-    pub fn depends_on(self, dep: &impl Referable) -> Self {
+    pub fn depends_on(self, dep: &impl terrars::Referable) -> Self {
         self.0.data.borrow_mut().depends_on.push(dep.extract_ref());
         self
     }
 
     pub fn set_provider(self, provider: &ProviderAws) -> Self {
-        self.0.data.borrow_mut().provider = Some(provider.provider_ref());
+        self.0.data.borrow_mut().provider = std::option::Option::Some(provider.provider_ref());
         self
     }
 
@@ -59,118 +63,151 @@ impl S3controlObjectLambdaAccessPoint {
     }
 
     pub fn ignore_changes_to_all(self) -> Self {
-        self.0.data.borrow_mut().lifecycle.ignore_changes = Some(IgnoreChanges::All(IgnoreChangesAll::All));
+        self.0.data.borrow_mut().lifecycle.ignore_changes =
+            std::option::Option::Some(terrars::IgnoreChanges::All(terrars::IgnoreChangesAll::All));
         self
     }
 
-    pub fn ignore_changes_to_attr(self, attr: impl ToString) -> Self {
+    pub fn ignore_changes_to_attr(self, attr: impl std::string::ToString) -> Self {
         {
             let mut d = self.0.data.borrow_mut();
             if match &mut d.lifecycle.ignore_changes {
-                Some(i) => match i {
-                    IgnoreChanges::All(_) => {
+                std::option::Option::Some(i) => match i {
+                    terrars::IgnoreChanges::All(_) => {
                         true
                     },
-                    IgnoreChanges::Refs(r) => {
+                    terrars::IgnoreChanges::Refs(r) => {
                         r.push(attr.to_string());
                         false
                     },
                 },
-                None => true,
+                std::option::Option::None => true,
             } {
-                d.lifecycle.ignore_changes = Some(IgnoreChanges::Refs(vec![attr.to_string()]));
+                d.lifecycle.ignore_changes =
+                    std::option::Option::Some(terrars::IgnoreChanges::Refs(vec![attr.to_string()]));
             }
         }
         self
     }
 
-    pub fn replace_triggered_by_resource(self, r: &impl Resource) -> Self {
+    pub fn replace_triggered_by_resource(self, r: &impl terrars::Resource) -> Self {
         self.0.data.borrow_mut().lifecycle.replace_triggered_by.push(r.extract_ref());
         self
     }
 
-    pub fn replace_triggered_by_attr(self, attr: impl ToString) -> Self {
+    pub fn replace_triggered_by_attr(self, attr: impl std::string::ToString) -> Self {
         self.0.data.borrow_mut().lifecycle.replace_triggered_by.push(attr.to_string());
         self
     }
 
-    #[doc= "Set the field `account_id`.\n"]
-    pub fn set_account_id(self, v: impl Into<PrimField<String>>) -> Self {
-        self.0.data.borrow_mut().account_id = Some(v.into());
+    #[doc = r" Add a provisioner (ex: `local-exec`, `remote-exec`, `file`) to this resource."]
+    #[doc = r" Provisioners run in the order they're added."]
+    pub fn add_provisioner(self, v: impl std::convert::Into<terrars::Provisioner>) -> Self {
+        self.0.data.borrow_mut().provisioner.push(v.into());
         self
     }
 
-    #[doc= "Set the field `id`.\n"]
-    pub fn set_id(self, v: impl Into<PrimField<String>>) -> Self {
-        self.0.data.borrow_mut().id = Some(v.into());
+    pub fn add_lifecycle_precondition(
+        self,
+        condition: impl std::convert::Into<terrars::PrimField<bool>>,
+        error_message: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.0.data.borrow_mut().lifecycle.precondition.push(terrars::LifecycleCondition {
+            condition: condition.into(),
+            error_message: error_message.into(),
+        });
         self
     }
 
-    #[doc= "Set the field `configuration`.\n"]
+    pub fn add_lifecycle_postcondition(
+        self,
+        condition: impl std::convert::Into<terrars::PrimField<bool>>,
+        error_message: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.0.data.borrow_mut().lifecycle.postcondition.push(terrars::LifecycleCondition {
+            condition: condition.into(),
+            error_message: error_message.into(),
+        });
+        self
+    }
+
+    #[doc = "Set the field `account_id`.\n"]
+    pub fn set_account_id(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().account_id = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `id`.\n"]
+    pub fn set_id(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().id = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `configuration`.\n"]
     pub fn set_configuration(
         self,
-        v: impl Into<BlockAssignable<S3controlObjectLambdaAccessPointConfigurationEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<S3controlObjectLambdaAccessPointConfigurationEl>>,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.0.data.borrow_mut().configuration = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.0.data.borrow_mut().configuration = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.0.data.borrow_mut().dynamic.configuration = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.0.data.borrow_mut().dynamic.configuration = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Get a reference to the value of field `account_id` after provisioning.\n"]
-    pub fn account_id(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.account_id", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `account_id` after provisioning.\n"]
+    pub fn account_id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.account_id", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `arn` after provisioning.\n"]
-    pub fn arn(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.arn", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `arn` after provisioning.\n"]
+    pub fn arn(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.arn", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `id` after provisioning.\n"]
-    pub fn id(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
+    pub fn id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `name` after provisioning.\n"]
-    pub fn name(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `name` after provisioning.\n"]
+    pub fn name(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `configuration` after provisioning.\n"]
-    pub fn configuration(&self) -> ListRef<S3controlObjectLambdaAccessPointConfigurationElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.configuration", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `configuration` after provisioning.\n"]
+    pub fn configuration(&self) -> terrars::ListRef<S3controlObjectLambdaAccessPointConfigurationElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.configuration", self.extract_ref()))
     }
 }
 
-impl Referable for S3controlObjectLambdaAccessPoint {
-    fn extract_ref(&self) -> String {
+impl terrars::Referable for S3controlObjectLambdaAccessPoint {
+    fn extract_ref(&self) -> std::string::String {
         format!("{}.{}", self.0.extract_resource_type(), self.0.extract_tf_id())
     }
 }
 
-impl Resource for S3controlObjectLambdaAccessPoint { }
+impl terrars::Resource for S3controlObjectLambdaAccessPoint { }
 
-impl ToListMappable for S3controlObjectLambdaAccessPoint {
-    type O = ListRef<S3controlObjectLambdaAccessPointRef>;
+impl terrars::ToListMappable for S3controlObjectLambdaAccessPoint {
+    type O = terrars::ListRef<S3controlObjectLambdaAccessPointRef>;
 
-    fn do_map(self, base: String) -> Self::O {
-        self.0.data.borrow_mut().for_each = Some(format!("${{{}}}", base));
-        ListRef::new(self.0.shared.clone(), self.extract_ref())
+    fn do_map(self, base: std::string::String) -> Self::O {
+        self.0.data.borrow_mut().for_each = std::option::Option::Some(format!("${{{}}}", base));
+        terrars::ListRef::new(self.0.shared.clone(), self.extract_ref())
     }
 }
 
-impl Resource_ for S3controlObjectLambdaAccessPoint_ {
-    fn extract_resource_type(&self) -> String {
+impl terrars::Resource_ for S3controlObjectLambdaAccessPoint_ {
+    fn extract_resource_type(&self) -> std::string::String {
         "aws_s3control_object_lambda_access_point".into()
     }
 
-    fn extract_tf_id(&self) -> String {
+    fn extract_tf_id(&self) -> std::string::String {
         self.tf_id.clone()
     }
 
@@ -180,26 +217,27 @@ impl Resource_ for S3controlObjectLambdaAccessPoint_ {
 }
 
 pub struct BuildS3controlObjectLambdaAccessPoint {
-    pub tf_id: String,
-    #[doc= ""]
-    pub name: PrimField<String>,
+    pub tf_id: std::string::String,
+    #[doc = ""]
+    pub name: terrars::PrimField<std::string::String>,
 }
 
 impl BuildS3controlObjectLambdaAccessPoint {
-    pub fn build(self, stack: &mut Stack) -> S3controlObjectLambdaAccessPoint {
-        let out = S3controlObjectLambdaAccessPoint(Rc::new(S3controlObjectLambdaAccessPoint_ {
+    pub fn build(self, stack: &mut terrars::Stack) -> S3controlObjectLambdaAccessPoint {
+        let out = S3controlObjectLambdaAccessPoint(std::rc::Rc::new(S3controlObjectLambdaAccessPoint_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: RefCell::new(S3controlObjectLambdaAccessPointData {
+            data: std::cell::RefCell::new(S3controlObjectLambdaAccessPointData {
                 depends_on: core::default::Default::default(),
-                provider: None,
+                provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
-                for_each: None,
+                for_each: std::option::Option::None,
+                provisioner: core::default::Default::default(),
                 account_id: core::default::Default::default(),
                 id: core::default::Default::default(),
                 name: self.name,
                 configuration: core::default::Default::default(),
-                dynamic: Default::default(),
+                dynamic: core::default::Default::default(),
             }),
         }));
         stack.add_resource(out.0.clone());
@@ -208,12 +246,12 @@ impl BuildS3controlObjectLambdaAccessPoint {
 }
 
 pub struct S3controlObjectLambdaAccessPointRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for S3controlObjectLambdaAccessPointRef {
-    fn new(shared: StackShared, base: String) -> Self {
+impl terrars::Ref for S3controlObjectLambdaAccessPointRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> Self {
         Self {
             shared: shared,
             base: base,
@@ -222,63 +260,65 @@ impl Ref for S3controlObjectLambdaAccessPointRef {
 }
 
 impl S3controlObjectLambdaAccessPointRef {
-    fn extract_ref(&self) -> String {
+    fn extract_ref(&self) -> std::string::String {
         self.base.clone()
     }
 
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `account_id` after provisioning.\n"]
-    pub fn account_id(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.account_id", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `account_id` after provisioning.\n"]
+    pub fn account_id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.account_id", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `arn` after provisioning.\n"]
-    pub fn arn(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.arn", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `arn` after provisioning.\n"]
+    pub fn arn(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.arn", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `id` after provisioning.\n"]
-    pub fn id(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
+    pub fn id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `name` after provisioning.\n"]
-    pub fn name(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `name` after provisioning.\n"]
+    pub fn name(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `configuration` after provisioning.\n"]
-    pub fn configuration(&self) -> ListRef<S3controlObjectLambdaAccessPointConfigurationElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.configuration", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `configuration` after provisioning.\n"]
+    pub fn configuration(&self) -> terrars::ListRef<S3controlObjectLambdaAccessPointConfigurationElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.configuration", self.extract_ref()))
     }
 }
 
 #[derive(Serialize)]
 pub struct S3controlObjectLambdaAccessPointConfigurationElTransformationConfigurationElContentTransformationElAwsLambdaEl {
-    function_arn: PrimField<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    function_payload: Option<PrimField<String>>,
+    function_arn: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    function_payload: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
 impl S3controlObjectLambdaAccessPointConfigurationElTransformationConfigurationElContentTransformationElAwsLambdaEl {
-    #[doc= "Set the field `function_payload`.\n"]
-    pub fn set_function_payload(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.function_payload = Some(v.into());
+    #[doc = "Set the field `function_payload`.\n"]
+    pub fn set_function_payload(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.function_payload = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl ToListMappable for S3controlObjectLambdaAccessPointConfigurationElTransformationConfigurationElContentTransformationElAwsLambdaEl {
+impl terrars
+::ToListMappable for S3controlObjectLambdaAccessPointConfigurationElTransformationConfigurationElContentTransformationElAwsLambdaEl {
     type O =
-        BlockAssignable<
+        terrars
+        ::BlockAssignable<
             S3controlObjectLambdaAccessPointConfigurationElTransformationConfigurationElContentTransformationElAwsLambdaEl,
         >;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -287,8 +327,8 @@ impl ToListMappable for S3controlObjectLambdaAccessPointConfigurationElTransform
 }
 
 pub struct BuildS3controlObjectLambdaAccessPointConfigurationElTransformationConfigurationElContentTransformationElAwsLambdaEl {
-    #[doc= ""]
-    pub function_arn: PrimField<String>,
+    #[doc = ""]
+    pub function_arn: terrars::PrimField<std::string::String>,
 }
 
 impl BuildS3controlObjectLambdaAccessPointConfigurationElTransformationConfigurationElContentTransformationElAwsLambdaEl {
@@ -303,14 +343,15 @@ impl BuildS3controlObjectLambdaAccessPointConfigurationElTransformationConfigura
 }
 
 pub struct S3controlObjectLambdaAccessPointConfigurationElTransformationConfigurationElContentTransformationElAwsLambdaElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for S3controlObjectLambdaAccessPointConfigurationElTransformationConfigurationElContentTransformationElAwsLambdaElRef {
+impl terrars
+::Ref for S3controlObjectLambdaAccessPointConfigurationElTransformationConfigurationElContentTransformationElAwsLambdaElRef {
     fn new(
-        shared: StackShared,
-        base: String,
+        shared: terrars::StackShared,
+        base: std::string::String,
     ) -> S3controlObjectLambdaAccessPointConfigurationElTransformationConfigurationElContentTransformationElAwsLambdaElRef {
         S3controlObjectLambdaAccessPointConfigurationElTransformationConfigurationElContentTransformationElAwsLambdaElRef {
             shared: shared,
@@ -320,25 +361,28 @@ impl Ref for S3controlObjectLambdaAccessPointConfigurationElTransformationConfig
 }
 
 impl S3controlObjectLambdaAccessPointConfigurationElTransformationConfigurationElContentTransformationElAwsLambdaElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `function_arn` after provisioning.\n"]
-    pub fn function_arn(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.function_arn", self.base))
+    #[doc = "Get a reference to the value of field `function_arn` after provisioning.\n"]
+    pub fn function_arn(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.function_arn", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `function_payload` after provisioning.\n"]
-    pub fn function_payload(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.function_payload", self.base))
+    #[doc = "Get a reference to the value of field `function_payload` after provisioning.\n"]
+    pub fn function_payload(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.function_payload", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
 struct S3controlObjectLambdaAccessPointConfigurationElTransformationConfigurationElContentTransformationElDynamic {
-    aws_lambda: Option<
-        DynamicBlock<
+    aws_lambda: std
+    ::option
+    ::Option<
+        terrars
+        ::DynamicBlock<
             S3controlObjectLambdaAccessPointConfigurationElTransformationConfigurationElContentTransformationElAwsLambdaEl,
         >,
     >,
@@ -346,9 +390,13 @@ struct S3controlObjectLambdaAccessPointConfigurationElTransformationConfiguratio
 
 #[derive(Serialize)]
 pub struct S3controlObjectLambdaAccessPointConfigurationElTransformationConfigurationElContentTransformationEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    aws_lambda: Option<
-        Vec<
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    aws_lambda: std
+    ::option
+    ::Option<
+        std
+        ::vec
+        ::Vec<
             S3controlObjectLambdaAccessPointConfigurationElTransformationConfigurationElContentTransformationElAwsLambdaEl,
         >,
     >,
@@ -356,38 +404,43 @@ pub struct S3controlObjectLambdaAccessPointConfigurationElTransformationConfigur
 }
 
 impl S3controlObjectLambdaAccessPointConfigurationElTransformationConfigurationElContentTransformationEl {
-    #[doc= "Set the field `aws_lambda`.\n"]
+    #[doc = "Set the field `aws_lambda`.\n"]
     pub fn set_aws_lambda(
         mut self,
         v:
             impl
 
-                    Into<
-                        BlockAssignable<
+                    std
+                    ::convert
+                    ::Into<
+                        terrars
+                        ::BlockAssignable<
                             S3controlObjectLambdaAccessPointConfigurationElTransformationConfigurationElContentTransformationElAwsLambdaEl,
                         >,
                     >,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.aws_lambda = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.aws_lambda = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.aws_lambda = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.aws_lambda = std::option::Option::Some(d);
             },
         }
         self
     }
 }
 
-impl ToListMappable for S3controlObjectLambdaAccessPointConfigurationElTransformationConfigurationElContentTransformationEl {
+impl terrars
+::ToListMappable for S3controlObjectLambdaAccessPointConfigurationElTransformationConfigurationElContentTransformationEl {
     type O =
-        BlockAssignable<
+        terrars
+        ::BlockAssignable<
             S3controlObjectLambdaAccessPointConfigurationElTransformationConfigurationElContentTransformationEl,
         >;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -403,20 +456,21 @@ impl BuildS3controlObjectLambdaAccessPointConfigurationElTransformationConfigura
     ) -> S3controlObjectLambdaAccessPointConfigurationElTransformationConfigurationElContentTransformationEl {
         S3controlObjectLambdaAccessPointConfigurationElTransformationConfigurationElContentTransformationEl {
             aws_lambda: core::default::Default::default(),
-            dynamic: Default::default(),
+            dynamic: core::default::Default::default(),
         }
     }
 }
 
 pub struct S3controlObjectLambdaAccessPointConfigurationElTransformationConfigurationElContentTransformationElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for S3controlObjectLambdaAccessPointConfigurationElTransformationConfigurationElContentTransformationElRef {
+impl terrars
+::Ref for S3controlObjectLambdaAccessPointConfigurationElTransformationConfigurationElContentTransformationElRef {
     fn new(
-        shared: StackShared,
-        base: String,
+        shared: terrars::StackShared,
+        base: std::string::String,
     ) -> S3controlObjectLambdaAccessPointConfigurationElTransformationConfigurationElContentTransformationElRef {
         S3controlObjectLambdaAccessPointConfigurationElTransformationConfigurationElContentTransformationElRef {
             shared: shared,
@@ -426,24 +480,28 @@ impl Ref for S3controlObjectLambdaAccessPointConfigurationElTransformationConfig
 }
 
 impl S3controlObjectLambdaAccessPointConfigurationElTransformationConfigurationElContentTransformationElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `aws_lambda` after provisioning.\n"]
+    #[doc = "Get a reference to the value of field `aws_lambda` after provisioning.\n"]
     pub fn aws_lambda(
         &self,
-    ) -> ListRef<
+    ) -> terrars
+    ::ListRef<
         S3controlObjectLambdaAccessPointConfigurationElTransformationConfigurationElContentTransformationElAwsLambdaElRef,
     > {
-        ListRef::new(self.shared().clone(), format!("{}.aws_lambda", self.base))
+        terrars::ListRef::new(self.shared().clone(), format!("{}.aws_lambda", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
 struct S3controlObjectLambdaAccessPointConfigurationElTransformationConfigurationElDynamic {
-    content_transformation: Option<
-        DynamicBlock<
+    content_transformation: std
+    ::option
+    ::Option<
+        terrars
+        ::DynamicBlock<
             S3controlObjectLambdaAccessPointConfigurationElTransformationConfigurationElContentTransformationEl,
         >,
     >,
@@ -451,44 +509,51 @@ struct S3controlObjectLambdaAccessPointConfigurationElTransformationConfiguratio
 
 #[derive(Serialize)]
 pub struct S3controlObjectLambdaAccessPointConfigurationElTransformationConfigurationEl {
-    actions: SetField<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    content_transformation: Option<
-        Vec<S3controlObjectLambdaAccessPointConfigurationElTransformationConfigurationElContentTransformationEl>,
+    actions: terrars::SetField<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    content_transformation: std
+    ::option
+    ::Option<
+        std
+        ::vec
+        ::Vec<S3controlObjectLambdaAccessPointConfigurationElTransformationConfigurationElContentTransformationEl>,
     >,
     dynamic: S3controlObjectLambdaAccessPointConfigurationElTransformationConfigurationElDynamic,
 }
 
 impl S3controlObjectLambdaAccessPointConfigurationElTransformationConfigurationEl {
-    #[doc= "Set the field `content_transformation`.\n"]
+    #[doc = "Set the field `content_transformation`.\n"]
     pub fn set_content_transformation(
         mut self,
         v:
             impl
 
-                    Into<
-                        BlockAssignable<
+                    std
+                    ::convert
+                    ::Into<
+                        terrars
+                        ::BlockAssignable<
                             S3controlObjectLambdaAccessPointConfigurationElTransformationConfigurationElContentTransformationEl,
                         >,
                     >,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.content_transformation = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.content_transformation = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.content_transformation = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.content_transformation = std::option::Option::Some(d);
             },
         }
         self
     }
 }
 
-impl ToListMappable for S3controlObjectLambdaAccessPointConfigurationElTransformationConfigurationEl {
-    type O = BlockAssignable<S3controlObjectLambdaAccessPointConfigurationElTransformationConfigurationEl>;
+impl terrars::ToListMappable for S3controlObjectLambdaAccessPointConfigurationElTransformationConfigurationEl {
+    type O = terrars::BlockAssignable<S3controlObjectLambdaAccessPointConfigurationElTransformationConfigurationEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -497,8 +562,8 @@ impl ToListMappable for S3controlObjectLambdaAccessPointConfigurationElTransform
 }
 
 pub struct BuildS3controlObjectLambdaAccessPointConfigurationElTransformationConfigurationEl {
-    #[doc= ""]
-    pub actions: SetField<PrimField<String>>,
+    #[doc = ""]
+    pub actions: terrars::SetField<terrars::PrimField<std::string::String>>,
 }
 
 impl BuildS3controlObjectLambdaAccessPointConfigurationElTransformationConfigurationEl {
@@ -506,20 +571,20 @@ impl BuildS3controlObjectLambdaAccessPointConfigurationElTransformationConfigura
         S3controlObjectLambdaAccessPointConfigurationElTransformationConfigurationEl {
             actions: self.actions,
             content_transformation: core::default::Default::default(),
-            dynamic: Default::default(),
+            dynamic: core::default::Default::default(),
         }
     }
 }
 
 pub struct S3controlObjectLambdaAccessPointConfigurationElTransformationConfigurationElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for S3controlObjectLambdaAccessPointConfigurationElTransformationConfigurationElRef {
+impl terrars::Ref for S3controlObjectLambdaAccessPointConfigurationElTransformationConfigurationElRef {
     fn new(
-        shared: StackShared,
-        base: String,
+        shared: terrars::StackShared,
+        base: std::string::String,
     ) -> S3controlObjectLambdaAccessPointConfigurationElTransformationConfigurationElRef {
         S3controlObjectLambdaAccessPointConfigurationElTransformationConfigurationElRef {
             shared: shared,
@@ -529,81 +594,93 @@ impl Ref for S3controlObjectLambdaAccessPointConfigurationElTransformationConfig
 }
 
 impl S3controlObjectLambdaAccessPointConfigurationElTransformationConfigurationElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `actions` after provisioning.\n"]
-    pub fn actions(&self) -> SetRef<PrimExpr<String>> {
-        SetRef::new(self.shared().clone(), format!("{}.actions", self.base))
+    #[doc = "Get a reference to the value of field `actions` after provisioning.\n"]
+    pub fn actions(&self) -> terrars::SetRef<terrars::PrimExpr<std::string::String>> {
+        terrars::SetRef::new(self.shared().clone(), format!("{}.actions", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `content_transformation` after provisioning.\n"]
+    #[doc = "Get a reference to the value of field `content_transformation` after provisioning.\n"]
     pub fn content_transformation(
         &self,
-    ) -> ListRef<
-        S3controlObjectLambdaAccessPointConfigurationElTransformationConfigurationElContentTransformationElRef,
-    > {
-        ListRef::new(self.shared().clone(), format!("{}.content_transformation", self.base))
+    ) -> terrars
+    ::ListRef<S3controlObjectLambdaAccessPointConfigurationElTransformationConfigurationElContentTransformationElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.content_transformation", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
 struct S3controlObjectLambdaAccessPointConfigurationElDynamic {
-    transformation_configuration: Option<
-        DynamicBlock<S3controlObjectLambdaAccessPointConfigurationElTransformationConfigurationEl>,
-    >,
+    transformation_configuration: std
+    ::option
+    ::Option<terrars::DynamicBlock<S3controlObjectLambdaAccessPointConfigurationElTransformationConfigurationEl>>,
 }
 
 #[derive(Serialize)]
 pub struct S3controlObjectLambdaAccessPointConfigurationEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    allowed_features: Option<SetField<PrimField<String>>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    cloud_watch_metrics_enabled: Option<PrimField<bool>>,
-    supporting_access_point: PrimField<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    transformation_configuration: Option<
-        Vec<S3controlObjectLambdaAccessPointConfigurationElTransformationConfigurationEl>,
-    >,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    allowed_features: std::option::Option<terrars::SetField<terrars::PrimField<std::string::String>>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    cloud_watch_metrics_enabled: std::option::Option<terrars::PrimField<bool>>,
+    supporting_access_point: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    transformation_configuration: std
+    ::option
+    ::Option<std::vec::Vec<S3controlObjectLambdaAccessPointConfigurationElTransformationConfigurationEl>>,
     dynamic: S3controlObjectLambdaAccessPointConfigurationElDynamic,
 }
 
 impl S3controlObjectLambdaAccessPointConfigurationEl {
-    #[doc= "Set the field `allowed_features`.\n"]
-    pub fn set_allowed_features(mut self, v: impl Into<SetField<PrimField<String>>>) -> Self {
-        self.allowed_features = Some(v.into());
+    #[doc = "Set the field `allowed_features`.\n"]
+    pub fn set_allowed_features(
+        mut self,
+        v: impl std::convert::Into<terrars::SetField<terrars::PrimField<std::string::String>>>,
+    ) -> Self {
+        self.allowed_features = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `cloud_watch_metrics_enabled`.\n"]
-    pub fn set_cloud_watch_metrics_enabled(mut self, v: impl Into<PrimField<bool>>) -> Self {
-        self.cloud_watch_metrics_enabled = Some(v.into());
+    #[doc = "Set the field `cloud_watch_metrics_enabled`.\n"]
+    pub fn set_cloud_watch_metrics_enabled(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
+        self.cloud_watch_metrics_enabled = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `transformation_configuration`.\n"]
+    #[doc = "Set the field `transformation_configuration`.\n"]
     pub fn set_transformation_configuration(
         mut self,
-        v: impl Into<BlockAssignable<S3controlObjectLambdaAccessPointConfigurationElTransformationConfigurationEl>>,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<
+                        terrars
+                        ::BlockAssignable<
+                            S3controlObjectLambdaAccessPointConfigurationElTransformationConfigurationEl,
+                        >,
+                    >,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.transformation_configuration = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.transformation_configuration = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.transformation_configuration = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.transformation_configuration = std::option::Option::Some(d);
             },
         }
         self
     }
 }
 
-impl ToListMappable for S3controlObjectLambdaAccessPointConfigurationEl {
-    type O = BlockAssignable<S3controlObjectLambdaAccessPointConfigurationEl>;
+impl terrars::ToListMappable for S3controlObjectLambdaAccessPointConfigurationEl {
+    type O = terrars::BlockAssignable<S3controlObjectLambdaAccessPointConfigurationEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -612,8 +689,8 @@ impl ToListMappable for S3controlObjectLambdaAccessPointConfigurationEl {
 }
 
 pub struct BuildS3controlObjectLambdaAccessPointConfigurationEl {
-    #[doc= ""]
-    pub supporting_access_point: PrimField<String>,
+    #[doc = ""]
+    pub supporting_access_point: terrars::PrimField<std::string::String>,
 }
 
 impl BuildS3controlObjectLambdaAccessPointConfigurationEl {
@@ -623,18 +700,21 @@ impl BuildS3controlObjectLambdaAccessPointConfigurationEl {
             cloud_watch_metrics_enabled: core::default::Default::default(),
             supporting_access_point: self.supporting_access_point,
             transformation_configuration: core::default::Default::default(),
-            dynamic: Default::default(),
+            dynamic: core::default::Default::default(),
         }
     }
 }
 
 pub struct S3controlObjectLambdaAccessPointConfigurationElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for S3controlObjectLambdaAccessPointConfigurationElRef {
-    fn new(shared: StackShared, base: String) -> S3controlObjectLambdaAccessPointConfigurationElRef {
+impl terrars::Ref for S3controlObjectLambdaAccessPointConfigurationElRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> S3controlObjectLambdaAccessPointConfigurationElRef {
         S3controlObjectLambdaAccessPointConfigurationElRef {
             shared: shared,
             base: base.to_string(),
@@ -643,27 +723,27 @@ impl Ref for S3controlObjectLambdaAccessPointConfigurationElRef {
 }
 
 impl S3controlObjectLambdaAccessPointConfigurationElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `allowed_features` after provisioning.\n"]
-    pub fn allowed_features(&self) -> SetRef<PrimExpr<String>> {
-        SetRef::new(self.shared().clone(), format!("{}.allowed_features", self.base))
+    #[doc = "Get a reference to the value of field `allowed_features` after provisioning.\n"]
+    pub fn allowed_features(&self) -> terrars::SetRef<terrars::PrimExpr<std::string::String>> {
+        terrars::SetRef::new(self.shared().clone(), format!("{}.allowed_features", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `cloud_watch_metrics_enabled` after provisioning.\n"]
-    pub fn cloud_watch_metrics_enabled(&self) -> PrimExpr<bool> {
-        PrimExpr::new(self.shared().clone(), format!("{}.cloud_watch_metrics_enabled", self.base))
+    #[doc = "Get a reference to the value of field `cloud_watch_metrics_enabled` after provisioning.\n"]
+    pub fn cloud_watch_metrics_enabled(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.cloud_watch_metrics_enabled", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `supporting_access_point` after provisioning.\n"]
-    pub fn supporting_access_point(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.supporting_access_point", self.base))
+    #[doc = "Get a reference to the value of field `supporting_access_point` after provisioning.\n"]
+    pub fn supporting_access_point(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.supporting_access_point", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
 struct S3controlObjectLambdaAccessPointDynamic {
-    configuration: Option<DynamicBlock<S3controlObjectLambdaAccessPointConfigurationEl>>,
+    configuration: std::option::Option<terrars::DynamicBlock<S3controlObjectLambdaAccessPointConfigurationEl>>,
 }

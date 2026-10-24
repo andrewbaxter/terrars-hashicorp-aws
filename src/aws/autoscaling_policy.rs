@@ -1,69 +1,75 @@
 use serde::Serialize;
-use std::cell::RefCell;
-use std::rc::Rc;
-use terrars::*;
+use terrars::{
+    Referable as _,
+    Resource_ as _,
+    Ref as _,
+};
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
 struct AutoscalingPolicyData {
-    #[serde(skip_serializing_if = "Vec::is_empty")]
-    depends_on: Vec<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    provider: Option<String>,
-    #[serde(skip_serializing_if = "SerdeSkipDefault::is_default")]
-    lifecycle: ResourceLifecycle,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    for_each: Option<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    adjustment_type: Option<PrimField<String>>,
-    autoscaling_group_name: PrimField<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    cooldown: Option<PrimField<f64>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    enabled: Option<PrimField<bool>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    estimated_instance_warmup: Option<PrimField<f64>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    id: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    metric_aggregation_type: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    min_adjustment_magnitude: Option<PrimField<f64>>,
-    name: PrimField<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    policy_type: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    scaling_adjustment: Option<PrimField<f64>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    predictive_scaling_configuration: Option<Vec<AutoscalingPolicyPredictiveScalingConfigurationEl>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    step_adjustment: Option<Vec<AutoscalingPolicyStepAdjustmentEl>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    target_tracking_configuration: Option<Vec<AutoscalingPolicyTargetTrackingConfigurationEl>>,
+    #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
+    depends_on: std::vec::Vec<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    provider: std::option::Option<std::string::String>,
+    #[serde(skip_serializing_if = "terrars::SerdeSkipDefault::is_default")]
+    lifecycle: terrars::ResourceLifecycle,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    for_each: std::option::Option<std::string::String>,
+    #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
+    provisioner: std::vec::Vec<terrars::Provisioner>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    adjustment_type: std::option::Option<terrars::PrimField<std::string::String>>,
+    autoscaling_group_name: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    cooldown: std::option::Option<terrars::PrimField<f64>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    enabled: std::option::Option<terrars::PrimField<bool>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    estimated_instance_warmup: std::option::Option<terrars::PrimField<f64>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    id: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    metric_aggregation_type: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    min_adjustment_magnitude: std::option::Option<terrars::PrimField<f64>>,
+    name: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    policy_type: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    scaling_adjustment: std::option::Option<terrars::PrimField<f64>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    predictive_scaling_configuration: std
+    ::option
+    ::Option<std::vec::Vec<AutoscalingPolicyPredictiveScalingConfigurationEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    step_adjustment: std::option::Option<std::vec::Vec<AutoscalingPolicyStepAdjustmentEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    target_tracking_configuration: std::option::Option<std::vec::Vec<AutoscalingPolicyTargetTrackingConfigurationEl>>,
     dynamic: AutoscalingPolicyDynamic,
 }
 
 struct AutoscalingPolicy_ {
-    shared: StackShared,
-    tf_id: String,
-    data: RefCell<AutoscalingPolicyData>,
+    shared: terrars::StackShared,
+    tf_id: std::string::String,
+    data: std::cell::RefCell<AutoscalingPolicyData>,
 }
 
 #[derive(Clone)]
-pub struct AutoscalingPolicy(Rc<AutoscalingPolicy_>);
+pub struct AutoscalingPolicy(std::rc::Rc<AutoscalingPolicy_>);
 
 impl AutoscalingPolicy {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.0.shared
     }
 
-    pub fn depends_on(self, dep: &impl Referable) -> Self {
+    pub fn depends_on(self, dep: &impl terrars::Referable) -> Self {
         self.0.data.borrow_mut().depends_on.push(dep.extract_ref());
         self
     }
 
     pub fn set_provider(self, provider: &ProviderAws) -> Self {
-        self.0.data.borrow_mut().provider = Some(provider.provider_ref());
+        self.0.data.borrow_mut().provider = std::option::Option::Some(provider.provider_ref());
         self
     }
 
@@ -78,234 +84,278 @@ impl AutoscalingPolicy {
     }
 
     pub fn ignore_changes_to_all(self) -> Self {
-        self.0.data.borrow_mut().lifecycle.ignore_changes = Some(IgnoreChanges::All(IgnoreChangesAll::All));
+        self.0.data.borrow_mut().lifecycle.ignore_changes =
+            std::option::Option::Some(terrars::IgnoreChanges::All(terrars::IgnoreChangesAll::All));
         self
     }
 
-    pub fn ignore_changes_to_attr(self, attr: impl ToString) -> Self {
+    pub fn ignore_changes_to_attr(self, attr: impl std::string::ToString) -> Self {
         {
             let mut d = self.0.data.borrow_mut();
             if match &mut d.lifecycle.ignore_changes {
-                Some(i) => match i {
-                    IgnoreChanges::All(_) => {
+                std::option::Option::Some(i) => match i {
+                    terrars::IgnoreChanges::All(_) => {
                         true
                     },
-                    IgnoreChanges::Refs(r) => {
+                    terrars::IgnoreChanges::Refs(r) => {
                         r.push(attr.to_string());
                         false
                     },
                 },
-                None => true,
+                std::option::Option::None => true,
             } {
-                d.lifecycle.ignore_changes = Some(IgnoreChanges::Refs(vec![attr.to_string()]));
+                d.lifecycle.ignore_changes =
+                    std::option::Option::Some(terrars::IgnoreChanges::Refs(vec![attr.to_string()]));
             }
         }
         self
     }
 
-    pub fn replace_triggered_by_resource(self, r: &impl Resource) -> Self {
+    pub fn replace_triggered_by_resource(self, r: &impl terrars::Resource) -> Self {
         self.0.data.borrow_mut().lifecycle.replace_triggered_by.push(r.extract_ref());
         self
     }
 
-    pub fn replace_triggered_by_attr(self, attr: impl ToString) -> Self {
+    pub fn replace_triggered_by_attr(self, attr: impl std::string::ToString) -> Self {
         self.0.data.borrow_mut().lifecycle.replace_triggered_by.push(attr.to_string());
         self
     }
 
-    #[doc= "Set the field `adjustment_type`.\n"]
-    pub fn set_adjustment_type(self, v: impl Into<PrimField<String>>) -> Self {
-        self.0.data.borrow_mut().adjustment_type = Some(v.into());
+    #[doc = r" Add a provisioner (ex: `local-exec`, `remote-exec`, `file`) to this resource."]
+    #[doc = r" Provisioners run in the order they're added."]
+    pub fn add_provisioner(self, v: impl std::convert::Into<terrars::Provisioner>) -> Self {
+        self.0.data.borrow_mut().provisioner.push(v.into());
         self
     }
 
-    #[doc= "Set the field `cooldown`.\n"]
-    pub fn set_cooldown(self, v: impl Into<PrimField<f64>>) -> Self {
-        self.0.data.borrow_mut().cooldown = Some(v.into());
+    pub fn add_lifecycle_precondition(
+        self,
+        condition: impl std::convert::Into<terrars::PrimField<bool>>,
+        error_message: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.0.data.borrow_mut().lifecycle.precondition.push(terrars::LifecycleCondition {
+            condition: condition.into(),
+            error_message: error_message.into(),
+        });
         self
     }
 
-    #[doc= "Set the field `enabled`.\n"]
-    pub fn set_enabled(self, v: impl Into<PrimField<bool>>) -> Self {
-        self.0.data.borrow_mut().enabled = Some(v.into());
+    pub fn add_lifecycle_postcondition(
+        self,
+        condition: impl std::convert::Into<terrars::PrimField<bool>>,
+        error_message: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.0.data.borrow_mut().lifecycle.postcondition.push(terrars::LifecycleCondition {
+            condition: condition.into(),
+            error_message: error_message.into(),
+        });
         self
     }
 
-    #[doc= "Set the field `estimated_instance_warmup`.\n"]
-    pub fn set_estimated_instance_warmup(self, v: impl Into<PrimField<f64>>) -> Self {
-        self.0.data.borrow_mut().estimated_instance_warmup = Some(v.into());
+    #[doc = "Set the field `adjustment_type`.\n"]
+    pub fn set_adjustment_type(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().adjustment_type = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `id`.\n"]
-    pub fn set_id(self, v: impl Into<PrimField<String>>) -> Self {
-        self.0.data.borrow_mut().id = Some(v.into());
+    #[doc = "Set the field `cooldown`.\n"]
+    pub fn set_cooldown(self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.0.data.borrow_mut().cooldown = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `metric_aggregation_type`.\n"]
-    pub fn set_metric_aggregation_type(self, v: impl Into<PrimField<String>>) -> Self {
-        self.0.data.borrow_mut().metric_aggregation_type = Some(v.into());
+    #[doc = "Set the field `enabled`.\n"]
+    pub fn set_enabled(self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
+        self.0.data.borrow_mut().enabled = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `min_adjustment_magnitude`.\n"]
-    pub fn set_min_adjustment_magnitude(self, v: impl Into<PrimField<f64>>) -> Self {
-        self.0.data.borrow_mut().min_adjustment_magnitude = Some(v.into());
+    #[doc = "Set the field `estimated_instance_warmup`.\n"]
+    pub fn set_estimated_instance_warmup(self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.0.data.borrow_mut().estimated_instance_warmup = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `policy_type`.\n"]
-    pub fn set_policy_type(self, v: impl Into<PrimField<String>>) -> Self {
-        self.0.data.borrow_mut().policy_type = Some(v.into());
+    #[doc = "Set the field `id`.\n"]
+    pub fn set_id(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().id = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `scaling_adjustment`.\n"]
-    pub fn set_scaling_adjustment(self, v: impl Into<PrimField<f64>>) -> Self {
-        self.0.data.borrow_mut().scaling_adjustment = Some(v.into());
+    #[doc = "Set the field `metric_aggregation_type`.\n"]
+    pub fn set_metric_aggregation_type(
+        self,
+        v: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.0.data.borrow_mut().metric_aggregation_type = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `predictive_scaling_configuration`.\n"]
+    #[doc = "Set the field `min_adjustment_magnitude`.\n"]
+    pub fn set_min_adjustment_magnitude(self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.0.data.borrow_mut().min_adjustment_magnitude = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `policy_type`.\n"]
+    pub fn set_policy_type(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().policy_type = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `scaling_adjustment`.\n"]
+    pub fn set_scaling_adjustment(self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.0.data.borrow_mut().scaling_adjustment = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `predictive_scaling_configuration`.\n"]
     pub fn set_predictive_scaling_configuration(
         self,
-        v: impl Into<BlockAssignable<AutoscalingPolicyPredictiveScalingConfigurationEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<AutoscalingPolicyPredictiveScalingConfigurationEl>>,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.0.data.borrow_mut().predictive_scaling_configuration = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.0.data.borrow_mut().predictive_scaling_configuration = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.0.data.borrow_mut().dynamic.predictive_scaling_configuration = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.0.data.borrow_mut().dynamic.predictive_scaling_configuration = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Set the field `step_adjustment`.\n"]
-    pub fn set_step_adjustment(self, v: impl Into<BlockAssignable<AutoscalingPolicyStepAdjustmentEl>>) -> Self {
+    #[doc = "Set the field `step_adjustment`.\n"]
+    pub fn set_step_adjustment(
+        self,
+        v: impl std::convert::Into<terrars::BlockAssignable<AutoscalingPolicyStepAdjustmentEl>>,
+    ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.0.data.borrow_mut().step_adjustment = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.0.data.borrow_mut().step_adjustment = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.0.data.borrow_mut().dynamic.step_adjustment = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.0.data.borrow_mut().dynamic.step_adjustment = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Set the field `target_tracking_configuration`.\n"]
+    #[doc = "Set the field `target_tracking_configuration`.\n"]
     pub fn set_target_tracking_configuration(
         self,
-        v: impl Into<BlockAssignable<AutoscalingPolicyTargetTrackingConfigurationEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<AutoscalingPolicyTargetTrackingConfigurationEl>>,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.0.data.borrow_mut().target_tracking_configuration = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.0.data.borrow_mut().target_tracking_configuration = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.0.data.borrow_mut().dynamic.target_tracking_configuration = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.0.data.borrow_mut().dynamic.target_tracking_configuration = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Get a reference to the value of field `adjustment_type` after provisioning.\n"]
-    pub fn adjustment_type(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.adjustment_type", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `adjustment_type` after provisioning.\n"]
+    pub fn adjustment_type(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.adjustment_type", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `arn` after provisioning.\n"]
-    pub fn arn(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.arn", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `arn` after provisioning.\n"]
+    pub fn arn(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.arn", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `autoscaling_group_name` after provisioning.\n"]
-    pub fn autoscaling_group_name(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.autoscaling_group_name", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `autoscaling_group_name` after provisioning.\n"]
+    pub fn autoscaling_group_name(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.autoscaling_group_name", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `cooldown` after provisioning.\n"]
-    pub fn cooldown(&self) -> PrimExpr<f64> {
-        PrimExpr::new(self.shared().clone(), format!("{}.cooldown", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `cooldown` after provisioning.\n"]
+    pub fn cooldown(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.cooldown", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `enabled` after provisioning.\n"]
-    pub fn enabled(&self) -> PrimExpr<bool> {
-        PrimExpr::new(self.shared().clone(), format!("{}.enabled", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `enabled` after provisioning.\n"]
+    pub fn enabled(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.enabled", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `estimated_instance_warmup` after provisioning.\n"]
-    pub fn estimated_instance_warmup(&self) -> PrimExpr<f64> {
-        PrimExpr::new(self.shared().clone(), format!("{}.estimated_instance_warmup", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `estimated_instance_warmup` after provisioning.\n"]
+    pub fn estimated_instance_warmup(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.estimated_instance_warmup", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `id` after provisioning.\n"]
-    pub fn id(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
+    pub fn id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `metric_aggregation_type` after provisioning.\n"]
-    pub fn metric_aggregation_type(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.metric_aggregation_type", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `metric_aggregation_type` after provisioning.\n"]
+    pub fn metric_aggregation_type(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.metric_aggregation_type", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `min_adjustment_magnitude` after provisioning.\n"]
-    pub fn min_adjustment_magnitude(&self) -> PrimExpr<f64> {
-        PrimExpr::new(self.shared().clone(), format!("{}.min_adjustment_magnitude", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `min_adjustment_magnitude` after provisioning.\n"]
+    pub fn min_adjustment_magnitude(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.min_adjustment_magnitude", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `name` after provisioning.\n"]
-    pub fn name(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `name` after provisioning.\n"]
+    pub fn name(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `policy_type` after provisioning.\n"]
-    pub fn policy_type(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.policy_type", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `policy_type` after provisioning.\n"]
+    pub fn policy_type(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.policy_type", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `scaling_adjustment` after provisioning.\n"]
-    pub fn scaling_adjustment(&self) -> PrimExpr<f64> {
-        PrimExpr::new(self.shared().clone(), format!("{}.scaling_adjustment", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `scaling_adjustment` after provisioning.\n"]
+    pub fn scaling_adjustment(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.scaling_adjustment", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `predictive_scaling_configuration` after provisioning.\n"]
-    pub fn predictive_scaling_configuration(&self) -> ListRef<AutoscalingPolicyPredictiveScalingConfigurationElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.predictive_scaling_configuration", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `predictive_scaling_configuration` after provisioning.\n"]
+    pub fn predictive_scaling_configuration(
+        &self,
+    ) -> terrars::ListRef<AutoscalingPolicyPredictiveScalingConfigurationElRef> {
+        terrars::ListRef::new(
+            self.shared().clone(),
+            format!("{}.predictive_scaling_configuration", self.extract_ref()),
+        )
     }
 
-    #[doc= "Get a reference to the value of field `target_tracking_configuration` after provisioning.\n"]
-    pub fn target_tracking_configuration(&self) -> ListRef<AutoscalingPolicyTargetTrackingConfigurationElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.target_tracking_configuration", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `target_tracking_configuration` after provisioning.\n"]
+    pub fn target_tracking_configuration(&self) -> terrars::ListRef<AutoscalingPolicyTargetTrackingConfigurationElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.target_tracking_configuration", self.extract_ref()))
     }
 }
 
-impl Referable for AutoscalingPolicy {
-    fn extract_ref(&self) -> String {
+impl terrars::Referable for AutoscalingPolicy {
+    fn extract_ref(&self) -> std::string::String {
         format!("{}.{}", self.0.extract_resource_type(), self.0.extract_tf_id())
     }
 }
 
-impl Resource for AutoscalingPolicy { }
+impl terrars::Resource for AutoscalingPolicy { }
 
-impl ToListMappable for AutoscalingPolicy {
-    type O = ListRef<AutoscalingPolicyRef>;
+impl terrars::ToListMappable for AutoscalingPolicy {
+    type O = terrars::ListRef<AutoscalingPolicyRef>;
 
-    fn do_map(self, base: String) -> Self::O {
-        self.0.data.borrow_mut().for_each = Some(format!("${{{}}}", base));
-        ListRef::new(self.0.shared.clone(), self.extract_ref())
+    fn do_map(self, base: std::string::String) -> Self::O {
+        self.0.data.borrow_mut().for_each = std::option::Option::Some(format!("${{{}}}", base));
+        terrars::ListRef::new(self.0.shared.clone(), self.extract_ref())
     }
 }
 
-impl Resource_ for AutoscalingPolicy_ {
-    fn extract_resource_type(&self) -> String {
+impl terrars::Resource_ for AutoscalingPolicy_ {
+    fn extract_resource_type(&self) -> std::string::String {
         "aws_autoscaling_policy".into()
     }
 
-    fn extract_tf_id(&self) -> String {
+    fn extract_tf_id(&self) -> std::string::String {
         self.tf_id.clone()
     }
 
@@ -315,23 +365,24 @@ impl Resource_ for AutoscalingPolicy_ {
 }
 
 pub struct BuildAutoscalingPolicy {
-    pub tf_id: String,
-    #[doc= ""]
-    pub autoscaling_group_name: PrimField<String>,
-    #[doc= ""]
-    pub name: PrimField<String>,
+    pub tf_id: std::string::String,
+    #[doc = ""]
+    pub autoscaling_group_name: terrars::PrimField<std::string::String>,
+    #[doc = ""]
+    pub name: terrars::PrimField<std::string::String>,
 }
 
 impl BuildAutoscalingPolicy {
-    pub fn build(self, stack: &mut Stack) -> AutoscalingPolicy {
-        let out = AutoscalingPolicy(Rc::new(AutoscalingPolicy_ {
+    pub fn build(self, stack: &mut terrars::Stack) -> AutoscalingPolicy {
+        let out = AutoscalingPolicy(std::rc::Rc::new(AutoscalingPolicy_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: RefCell::new(AutoscalingPolicyData {
+            data: std::cell::RefCell::new(AutoscalingPolicyData {
                 depends_on: core::default::Default::default(),
-                provider: None,
+                provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
-                for_each: None,
+                for_each: std::option::Option::None,
+                provisioner: core::default::Default::default(),
                 adjustment_type: core::default::Default::default(),
                 autoscaling_group_name: self.autoscaling_group_name,
                 cooldown: core::default::Default::default(),
@@ -346,7 +397,7 @@ impl BuildAutoscalingPolicy {
                 predictive_scaling_configuration: core::default::Default::default(),
                 step_adjustment: core::default::Default::default(),
                 target_tracking_configuration: core::default::Default::default(),
-                dynamic: Default::default(),
+                dynamic: core::default::Default::default(),
             }),
         }));
         stack.add_resource(out.0.clone());
@@ -355,12 +406,12 @@ impl BuildAutoscalingPolicy {
 }
 
 pub struct AutoscalingPolicyRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for AutoscalingPolicyRef {
-    fn new(shared: StackShared, base: String) -> Self {
+impl terrars::Ref for AutoscalingPolicyRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> Self {
         Self {
             shared: shared,
             base: base,
@@ -369,103 +420,110 @@ impl Ref for AutoscalingPolicyRef {
 }
 
 impl AutoscalingPolicyRef {
-    fn extract_ref(&self) -> String {
+    fn extract_ref(&self) -> std::string::String {
         self.base.clone()
     }
 
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `adjustment_type` after provisioning.\n"]
-    pub fn adjustment_type(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.adjustment_type", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `adjustment_type` after provisioning.\n"]
+    pub fn adjustment_type(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.adjustment_type", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `arn` after provisioning.\n"]
-    pub fn arn(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.arn", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `arn` after provisioning.\n"]
+    pub fn arn(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.arn", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `autoscaling_group_name` after provisioning.\n"]
-    pub fn autoscaling_group_name(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.autoscaling_group_name", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `autoscaling_group_name` after provisioning.\n"]
+    pub fn autoscaling_group_name(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.autoscaling_group_name", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `cooldown` after provisioning.\n"]
-    pub fn cooldown(&self) -> PrimExpr<f64> {
-        PrimExpr::new(self.shared().clone(), format!("{}.cooldown", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `cooldown` after provisioning.\n"]
+    pub fn cooldown(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.cooldown", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `enabled` after provisioning.\n"]
-    pub fn enabled(&self) -> PrimExpr<bool> {
-        PrimExpr::new(self.shared().clone(), format!("{}.enabled", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `enabled` after provisioning.\n"]
+    pub fn enabled(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.enabled", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `estimated_instance_warmup` after provisioning.\n"]
-    pub fn estimated_instance_warmup(&self) -> PrimExpr<f64> {
-        PrimExpr::new(self.shared().clone(), format!("{}.estimated_instance_warmup", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `estimated_instance_warmup` after provisioning.\n"]
+    pub fn estimated_instance_warmup(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.estimated_instance_warmup", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `id` after provisioning.\n"]
-    pub fn id(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
+    pub fn id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `metric_aggregation_type` after provisioning.\n"]
-    pub fn metric_aggregation_type(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.metric_aggregation_type", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `metric_aggregation_type` after provisioning.\n"]
+    pub fn metric_aggregation_type(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.metric_aggregation_type", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `min_adjustment_magnitude` after provisioning.\n"]
-    pub fn min_adjustment_magnitude(&self) -> PrimExpr<f64> {
-        PrimExpr::new(self.shared().clone(), format!("{}.min_adjustment_magnitude", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `min_adjustment_magnitude` after provisioning.\n"]
+    pub fn min_adjustment_magnitude(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.min_adjustment_magnitude", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `name` after provisioning.\n"]
-    pub fn name(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `name` after provisioning.\n"]
+    pub fn name(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `policy_type` after provisioning.\n"]
-    pub fn policy_type(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.policy_type", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `policy_type` after provisioning.\n"]
+    pub fn policy_type(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.policy_type", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `scaling_adjustment` after provisioning.\n"]
-    pub fn scaling_adjustment(&self) -> PrimExpr<f64> {
-        PrimExpr::new(self.shared().clone(), format!("{}.scaling_adjustment", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `scaling_adjustment` after provisioning.\n"]
+    pub fn scaling_adjustment(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.scaling_adjustment", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `predictive_scaling_configuration` after provisioning.\n"]
-    pub fn predictive_scaling_configuration(&self) -> ListRef<AutoscalingPolicyPredictiveScalingConfigurationElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.predictive_scaling_configuration", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `predictive_scaling_configuration` after provisioning.\n"]
+    pub fn predictive_scaling_configuration(
+        &self,
+    ) -> terrars::ListRef<AutoscalingPolicyPredictiveScalingConfigurationElRef> {
+        terrars::ListRef::new(
+            self.shared().clone(),
+            format!("{}.predictive_scaling_configuration", self.extract_ref()),
+        )
     }
 
-    #[doc= "Get a reference to the value of field `target_tracking_configuration` after provisioning.\n"]
-    pub fn target_tracking_configuration(&self) -> ListRef<AutoscalingPolicyTargetTrackingConfigurationElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.target_tracking_configuration", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `target_tracking_configuration` after provisioning.\n"]
+    pub fn target_tracking_configuration(&self) -> terrars::ListRef<AutoscalingPolicyTargetTrackingConfigurationElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.target_tracking_configuration", self.extract_ref()))
     }
 }
 
 #[derive(Serialize)]
 pub struct AutoscalingPolicyPredictiveScalingConfigurationElMetricSpecificationElCustomizedCapacityMetricSpecificationElMetricDataQueriesElMetricStatElMetricElDimensionsEl {
-    name: PrimField<String>,
-    value: PrimField<String>,
+    name: terrars::PrimField<std::string::String>,
+    value: terrars::PrimField<std::string::String>,
 }
 
 impl AutoscalingPolicyPredictiveScalingConfigurationElMetricSpecificationElCustomizedCapacityMetricSpecificationElMetricDataQueriesElMetricStatElMetricElDimensionsEl {
 
 }
 
-impl ToListMappable for AutoscalingPolicyPredictiveScalingConfigurationElMetricSpecificationElCustomizedCapacityMetricSpecificationElMetricDataQueriesElMetricStatElMetricElDimensionsEl {
+impl terrars
+::ToListMappable for AutoscalingPolicyPredictiveScalingConfigurationElMetricSpecificationElCustomizedCapacityMetricSpecificationElMetricDataQueriesElMetricStatElMetricElDimensionsEl {
     type O =
-        BlockAssignable<
+        terrars
+        ::BlockAssignable<
             AutoscalingPolicyPredictiveScalingConfigurationElMetricSpecificationElCustomizedCapacityMetricSpecificationElMetricDataQueriesElMetricStatElMetricElDimensionsEl,
         >;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -474,10 +532,10 @@ impl ToListMappable for AutoscalingPolicyPredictiveScalingConfigurationElMetricS
 }
 
 pub struct BuildAutoscalingPolicyPredictiveScalingConfigurationElMetricSpecificationElCustomizedCapacityMetricSpecificationElMetricDataQueriesElMetricStatElMetricElDimensionsEl {
-    #[doc= ""]
-    pub name: PrimField<String>,
-    #[doc= ""]
-    pub value: PrimField<String>,
+    #[doc = ""]
+    pub name: terrars::PrimField<std::string::String>,
+    #[doc = ""]
+    pub value: terrars::PrimField<std::string::String>,
 }
 
 impl BuildAutoscalingPolicyPredictiveScalingConfigurationElMetricSpecificationElCustomizedCapacityMetricSpecificationElMetricDataQueriesElMetricStatElMetricElDimensionsEl {
@@ -492,14 +550,15 @@ impl BuildAutoscalingPolicyPredictiveScalingConfigurationElMetricSpecificationEl
 }
 
 pub struct AutoscalingPolicyPredictiveScalingConfigurationElMetricSpecificationElCustomizedCapacityMetricSpecificationElMetricDataQueriesElMetricStatElMetricElDimensionsElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for AutoscalingPolicyPredictiveScalingConfigurationElMetricSpecificationElCustomizedCapacityMetricSpecificationElMetricDataQueriesElMetricStatElMetricElDimensionsElRef {
+impl terrars
+::Ref for AutoscalingPolicyPredictiveScalingConfigurationElMetricSpecificationElCustomizedCapacityMetricSpecificationElMetricDataQueriesElMetricStatElMetricElDimensionsElRef {
     fn new(
-        shared: StackShared,
-        base: String,
+        shared: terrars::StackShared,
+        base: std::string::String,
     ) -> AutoscalingPolicyPredictiveScalingConfigurationElMetricSpecificationElCustomizedCapacityMetricSpecificationElMetricDataQueriesElMetricStatElMetricElDimensionsElRef {
         AutoscalingPolicyPredictiveScalingConfigurationElMetricSpecificationElCustomizedCapacityMetricSpecificationElMetricDataQueriesElMetricStatElMetricElDimensionsElRef {
             shared: shared,
@@ -509,25 +568,28 @@ impl Ref for AutoscalingPolicyPredictiveScalingConfigurationElMetricSpecificatio
 }
 
 impl AutoscalingPolicyPredictiveScalingConfigurationElMetricSpecificationElCustomizedCapacityMetricSpecificationElMetricDataQueriesElMetricStatElMetricElDimensionsElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `name` after provisioning.\n"]
-    pub fn name(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.name", self.base))
+    #[doc = "Get a reference to the value of field `name` after provisioning.\n"]
+    pub fn name(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `value` after provisioning.\n"]
-    pub fn value(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.value", self.base))
+    #[doc = "Get a reference to the value of field `value` after provisioning.\n"]
+    pub fn value(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.value", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
 struct AutoscalingPolicyPredictiveScalingConfigurationElMetricSpecificationElCustomizedCapacityMetricSpecificationElMetricDataQueriesElMetricStatElMetricElDynamic {
-    dimensions: Option<
-        DynamicBlock<
+    dimensions: std
+    ::option
+    ::Option<
+        terrars
+        ::DynamicBlock<
             AutoscalingPolicyPredictiveScalingConfigurationElMetricSpecificationElCustomizedCapacityMetricSpecificationElMetricDataQueriesElMetricStatElMetricElDimensionsEl,
         >,
     >,
@@ -535,11 +597,15 @@ struct AutoscalingPolicyPredictiveScalingConfigurationElMetricSpecificationElCus
 
 #[derive(Serialize)]
 pub struct AutoscalingPolicyPredictiveScalingConfigurationElMetricSpecificationElCustomizedCapacityMetricSpecificationElMetricDataQueriesElMetricStatElMetricEl {
-    metric_name: PrimField<String>,
-    namespace: PrimField<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    dimensions: Option<
-        Vec<
+    metric_name: terrars::PrimField<std::string::String>,
+    namespace: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    dimensions: std
+    ::option
+    ::Option<
+        std
+        ::vec
+        ::Vec<
             AutoscalingPolicyPredictiveScalingConfigurationElMetricSpecificationElCustomizedCapacityMetricSpecificationElMetricDataQueriesElMetricStatElMetricElDimensionsEl,
         >,
     >,
@@ -547,38 +613,43 @@ pub struct AutoscalingPolicyPredictiveScalingConfigurationElMetricSpecificationE
 }
 
 impl AutoscalingPolicyPredictiveScalingConfigurationElMetricSpecificationElCustomizedCapacityMetricSpecificationElMetricDataQueriesElMetricStatElMetricEl {
-    #[doc= "Set the field `dimensions`.\n"]
+    #[doc = "Set the field `dimensions`.\n"]
     pub fn set_dimensions(
         mut self,
         v:
             impl
 
-                    Into<
-                        BlockAssignable<
+                    std
+                    ::convert
+                    ::Into<
+                        terrars
+                        ::BlockAssignable<
                             AutoscalingPolicyPredictiveScalingConfigurationElMetricSpecificationElCustomizedCapacityMetricSpecificationElMetricDataQueriesElMetricStatElMetricElDimensionsEl,
                         >,
                     >,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.dimensions = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.dimensions = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.dimensions = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.dimensions = std::option::Option::Some(d);
             },
         }
         self
     }
 }
 
-impl ToListMappable for AutoscalingPolicyPredictiveScalingConfigurationElMetricSpecificationElCustomizedCapacityMetricSpecificationElMetricDataQueriesElMetricStatElMetricEl {
+impl terrars
+::ToListMappable for AutoscalingPolicyPredictiveScalingConfigurationElMetricSpecificationElCustomizedCapacityMetricSpecificationElMetricDataQueriesElMetricStatElMetricEl {
     type O =
-        BlockAssignable<
+        terrars
+        ::BlockAssignable<
             AutoscalingPolicyPredictiveScalingConfigurationElMetricSpecificationElCustomizedCapacityMetricSpecificationElMetricDataQueriesElMetricStatElMetricEl,
         >;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -587,10 +658,10 @@ impl ToListMappable for AutoscalingPolicyPredictiveScalingConfigurationElMetricS
 }
 
 pub struct BuildAutoscalingPolicyPredictiveScalingConfigurationElMetricSpecificationElCustomizedCapacityMetricSpecificationElMetricDataQueriesElMetricStatElMetricEl {
-    #[doc= ""]
-    pub metric_name: PrimField<String>,
-    #[doc= ""]
-    pub namespace: PrimField<String>,
+    #[doc = ""]
+    pub metric_name: terrars::PrimField<std::string::String>,
+    #[doc = ""]
+    pub namespace: terrars::PrimField<std::string::String>,
 }
 
 impl BuildAutoscalingPolicyPredictiveScalingConfigurationElMetricSpecificationElCustomizedCapacityMetricSpecificationElMetricDataQueriesElMetricStatElMetricEl {
@@ -601,20 +672,21 @@ impl BuildAutoscalingPolicyPredictiveScalingConfigurationElMetricSpecificationEl
             metric_name: self.metric_name,
             namespace: self.namespace,
             dimensions: core::default::Default::default(),
-            dynamic: Default::default(),
+            dynamic: core::default::Default::default(),
         }
     }
 }
 
 pub struct AutoscalingPolicyPredictiveScalingConfigurationElMetricSpecificationElCustomizedCapacityMetricSpecificationElMetricDataQueriesElMetricStatElMetricElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for AutoscalingPolicyPredictiveScalingConfigurationElMetricSpecificationElCustomizedCapacityMetricSpecificationElMetricDataQueriesElMetricStatElMetricElRef {
+impl terrars
+::Ref for AutoscalingPolicyPredictiveScalingConfigurationElMetricSpecificationElCustomizedCapacityMetricSpecificationElMetricDataQueriesElMetricStatElMetricElRef {
     fn new(
-        shared: StackShared,
-        base: String,
+        shared: terrars::StackShared,
+        base: std::string::String,
     ) -> AutoscalingPolicyPredictiveScalingConfigurationElMetricSpecificationElCustomizedCapacityMetricSpecificationElMetricDataQueriesElMetricStatElMetricElRef {
         AutoscalingPolicyPredictiveScalingConfigurationElMetricSpecificationElCustomizedCapacityMetricSpecificationElMetricDataQueriesElMetricStatElMetricElRef {
             shared: shared,
@@ -624,25 +696,28 @@ impl Ref for AutoscalingPolicyPredictiveScalingConfigurationElMetricSpecificatio
 }
 
 impl AutoscalingPolicyPredictiveScalingConfigurationElMetricSpecificationElCustomizedCapacityMetricSpecificationElMetricDataQueriesElMetricStatElMetricElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `metric_name` after provisioning.\n"]
-    pub fn metric_name(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.metric_name", self.base))
+    #[doc = "Get a reference to the value of field `metric_name` after provisioning.\n"]
+    pub fn metric_name(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.metric_name", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `namespace` after provisioning.\n"]
-    pub fn namespace(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.namespace", self.base))
+    #[doc = "Get a reference to the value of field `namespace` after provisioning.\n"]
+    pub fn namespace(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.namespace", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
 struct AutoscalingPolicyPredictiveScalingConfigurationElMetricSpecificationElCustomizedCapacityMetricSpecificationElMetricDataQueriesElMetricStatElDynamic {
-    metric: Option<
-        DynamicBlock<
+    metric: std
+    ::option
+    ::Option<
+        terrars
+        ::DynamicBlock<
             AutoscalingPolicyPredictiveScalingConfigurationElMetricSpecificationElCustomizedCapacityMetricSpecificationElMetricDataQueriesElMetricStatElMetricEl,
         >,
     >,
@@ -650,12 +725,16 @@ struct AutoscalingPolicyPredictiveScalingConfigurationElMetricSpecificationElCus
 
 #[derive(Serialize)]
 pub struct AutoscalingPolicyPredictiveScalingConfigurationElMetricSpecificationElCustomizedCapacityMetricSpecificationElMetricDataQueriesElMetricStatEl {
-    stat: PrimField<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    unit: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    metric: Option<
-        Vec<
+    stat: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    unit: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    metric: std
+    ::option
+    ::Option<
+        std
+        ::vec
+        ::Vec<
             AutoscalingPolicyPredictiveScalingConfigurationElMetricSpecificationElCustomizedCapacityMetricSpecificationElMetricDataQueriesElMetricStatElMetricEl,
         >,
     >,
@@ -663,44 +742,49 @@ pub struct AutoscalingPolicyPredictiveScalingConfigurationElMetricSpecificationE
 }
 
 impl AutoscalingPolicyPredictiveScalingConfigurationElMetricSpecificationElCustomizedCapacityMetricSpecificationElMetricDataQueriesElMetricStatEl {
-    #[doc= "Set the field `unit`.\n"]
-    pub fn set_unit(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.unit = Some(v.into());
+    #[doc = "Set the field `unit`.\n"]
+    pub fn set_unit(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.unit = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `metric`.\n"]
+    #[doc = "Set the field `metric`.\n"]
     pub fn set_metric(
         mut self,
         v:
             impl
 
-                    Into<
-                        BlockAssignable<
+                    std
+                    ::convert
+                    ::Into<
+                        terrars
+                        ::BlockAssignable<
                             AutoscalingPolicyPredictiveScalingConfigurationElMetricSpecificationElCustomizedCapacityMetricSpecificationElMetricDataQueriesElMetricStatElMetricEl,
                         >,
                     >,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.metric = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.metric = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.metric = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.metric = std::option::Option::Some(d);
             },
         }
         self
     }
 }
 
-impl ToListMappable for AutoscalingPolicyPredictiveScalingConfigurationElMetricSpecificationElCustomizedCapacityMetricSpecificationElMetricDataQueriesElMetricStatEl {
+impl terrars
+::ToListMappable for AutoscalingPolicyPredictiveScalingConfigurationElMetricSpecificationElCustomizedCapacityMetricSpecificationElMetricDataQueriesElMetricStatEl {
     type O =
-        BlockAssignable<
+        terrars
+        ::BlockAssignable<
             AutoscalingPolicyPredictiveScalingConfigurationElMetricSpecificationElCustomizedCapacityMetricSpecificationElMetricDataQueriesElMetricStatEl,
         >;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -709,8 +793,8 @@ impl ToListMappable for AutoscalingPolicyPredictiveScalingConfigurationElMetricS
 }
 
 pub struct BuildAutoscalingPolicyPredictiveScalingConfigurationElMetricSpecificationElCustomizedCapacityMetricSpecificationElMetricDataQueriesElMetricStatEl {
-    #[doc= ""]
-    pub stat: PrimField<String>,
+    #[doc = ""]
+    pub stat: terrars::PrimField<std::string::String>,
 }
 
 impl BuildAutoscalingPolicyPredictiveScalingConfigurationElMetricSpecificationElCustomizedCapacityMetricSpecificationElMetricDataQueriesElMetricStatEl {
@@ -721,20 +805,21 @@ impl BuildAutoscalingPolicyPredictiveScalingConfigurationElMetricSpecificationEl
             stat: self.stat,
             unit: core::default::Default::default(),
             metric: core::default::Default::default(),
-            dynamic: Default::default(),
+            dynamic: core::default::Default::default(),
         }
     }
 }
 
 pub struct AutoscalingPolicyPredictiveScalingConfigurationElMetricSpecificationElCustomizedCapacityMetricSpecificationElMetricDataQueriesElMetricStatElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for AutoscalingPolicyPredictiveScalingConfigurationElMetricSpecificationElCustomizedCapacityMetricSpecificationElMetricDataQueriesElMetricStatElRef {
+impl terrars
+::Ref for AutoscalingPolicyPredictiveScalingConfigurationElMetricSpecificationElCustomizedCapacityMetricSpecificationElMetricDataQueriesElMetricStatElRef {
     fn new(
-        shared: StackShared,
-        base: String,
+        shared: terrars::StackShared,
+        base: std::string::String,
     ) -> AutoscalingPolicyPredictiveScalingConfigurationElMetricSpecificationElCustomizedCapacityMetricSpecificationElMetricDataQueriesElMetricStatElRef {
         AutoscalingPolicyPredictiveScalingConfigurationElMetricSpecificationElCustomizedCapacityMetricSpecificationElMetricDataQueriesElMetricStatElRef {
             shared: shared,
@@ -744,34 +829,38 @@ impl Ref for AutoscalingPolicyPredictiveScalingConfigurationElMetricSpecificatio
 }
 
 impl AutoscalingPolicyPredictiveScalingConfigurationElMetricSpecificationElCustomizedCapacityMetricSpecificationElMetricDataQueriesElMetricStatElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `stat` after provisioning.\n"]
-    pub fn stat(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.stat", self.base))
+    #[doc = "Get a reference to the value of field `stat` after provisioning.\n"]
+    pub fn stat(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.stat", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `unit` after provisioning.\n"]
-    pub fn unit(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.unit", self.base))
+    #[doc = "Get a reference to the value of field `unit` after provisioning.\n"]
+    pub fn unit(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.unit", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `metric` after provisioning.\n"]
+    #[doc = "Get a reference to the value of field `metric` after provisioning.\n"]
     pub fn metric(
         &self,
-    ) -> ListRef<
+    ) -> terrars
+    ::ListRef<
         AutoscalingPolicyPredictiveScalingConfigurationElMetricSpecificationElCustomizedCapacityMetricSpecificationElMetricDataQueriesElMetricStatElMetricElRef,
     > {
-        ListRef::new(self.shared().clone(), format!("{}.metric", self.base))
+        terrars::ListRef::new(self.shared().clone(), format!("{}.metric", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
 struct AutoscalingPolicyPredictiveScalingConfigurationElMetricSpecificationElCustomizedCapacityMetricSpecificationElMetricDataQueriesElDynamic {
-    metric_stat: Option<
-        DynamicBlock<
+    metric_stat: std
+    ::option
+    ::Option<
+        terrars
+        ::DynamicBlock<
             AutoscalingPolicyPredictiveScalingConfigurationElMetricSpecificationElCustomizedCapacityMetricSpecificationElMetricDataQueriesElMetricStatEl,
         >,
     >,
@@ -779,16 +868,20 @@ struct AutoscalingPolicyPredictiveScalingConfigurationElMetricSpecificationElCus
 
 #[derive(Serialize)]
 pub struct AutoscalingPolicyPredictiveScalingConfigurationElMetricSpecificationElCustomizedCapacityMetricSpecificationElMetricDataQueriesEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    expression: Option<PrimField<String>>,
-    id: PrimField<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    label: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    return_data: Option<PrimField<bool>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    metric_stat: Option<
-        Vec<
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    expression: std::option::Option<terrars::PrimField<std::string::String>>,
+    id: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    label: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    return_data: std::option::Option<terrars::PrimField<bool>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    metric_stat: std
+    ::option
+    ::Option<
+        std
+        ::vec
+        ::Vec<
             AutoscalingPolicyPredictiveScalingConfigurationElMetricSpecificationElCustomizedCapacityMetricSpecificationElMetricDataQueriesElMetricStatEl,
         >,
     >,
@@ -796,56 +889,61 @@ pub struct AutoscalingPolicyPredictiveScalingConfigurationElMetricSpecificationE
 }
 
 impl AutoscalingPolicyPredictiveScalingConfigurationElMetricSpecificationElCustomizedCapacityMetricSpecificationElMetricDataQueriesEl {
-    #[doc= "Set the field `expression`.\n"]
-    pub fn set_expression(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.expression = Some(v.into());
+    #[doc = "Set the field `expression`.\n"]
+    pub fn set_expression(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.expression = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `label`.\n"]
-    pub fn set_label(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.label = Some(v.into());
+    #[doc = "Set the field `label`.\n"]
+    pub fn set_label(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.label = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `return_data`.\n"]
-    pub fn set_return_data(mut self, v: impl Into<PrimField<bool>>) -> Self {
-        self.return_data = Some(v.into());
+    #[doc = "Set the field `return_data`.\n"]
+    pub fn set_return_data(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
+        self.return_data = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `metric_stat`.\n"]
+    #[doc = "Set the field `metric_stat`.\n"]
     pub fn set_metric_stat(
         mut self,
         v:
             impl
 
-                    Into<
-                        BlockAssignable<
+                    std
+                    ::convert
+                    ::Into<
+                        terrars
+                        ::BlockAssignable<
                             AutoscalingPolicyPredictiveScalingConfigurationElMetricSpecificationElCustomizedCapacityMetricSpecificationElMetricDataQueriesElMetricStatEl,
                         >,
                     >,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.metric_stat = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.metric_stat = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.metric_stat = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.metric_stat = std::option::Option::Some(d);
             },
         }
         self
     }
 }
 
-impl ToListMappable for AutoscalingPolicyPredictiveScalingConfigurationElMetricSpecificationElCustomizedCapacityMetricSpecificationElMetricDataQueriesEl {
+impl terrars
+::ToListMappable for AutoscalingPolicyPredictiveScalingConfigurationElMetricSpecificationElCustomizedCapacityMetricSpecificationElMetricDataQueriesEl {
     type O =
-        BlockAssignable<
+        terrars
+        ::BlockAssignable<
             AutoscalingPolicyPredictiveScalingConfigurationElMetricSpecificationElCustomizedCapacityMetricSpecificationElMetricDataQueriesEl,
         >;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -854,8 +952,8 @@ impl ToListMappable for AutoscalingPolicyPredictiveScalingConfigurationElMetricS
 }
 
 pub struct BuildAutoscalingPolicyPredictiveScalingConfigurationElMetricSpecificationElCustomizedCapacityMetricSpecificationElMetricDataQueriesEl {
-    #[doc= ""]
-    pub id: PrimField<String>,
+    #[doc = ""]
+    pub id: terrars::PrimField<std::string::String>,
 }
 
 impl BuildAutoscalingPolicyPredictiveScalingConfigurationElMetricSpecificationElCustomizedCapacityMetricSpecificationElMetricDataQueriesEl {
@@ -868,20 +966,21 @@ impl BuildAutoscalingPolicyPredictiveScalingConfigurationElMetricSpecificationEl
             label: core::default::Default::default(),
             return_data: core::default::Default::default(),
             metric_stat: core::default::Default::default(),
-            dynamic: Default::default(),
+            dynamic: core::default::Default::default(),
         }
     }
 }
 
 pub struct AutoscalingPolicyPredictiveScalingConfigurationElMetricSpecificationElCustomizedCapacityMetricSpecificationElMetricDataQueriesElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for AutoscalingPolicyPredictiveScalingConfigurationElMetricSpecificationElCustomizedCapacityMetricSpecificationElMetricDataQueriesElRef {
+impl terrars
+::Ref for AutoscalingPolicyPredictiveScalingConfigurationElMetricSpecificationElCustomizedCapacityMetricSpecificationElMetricDataQueriesElRef {
     fn new(
-        shared: StackShared,
-        base: String,
+        shared: terrars::StackShared,
+        base: std::string::String,
     ) -> AutoscalingPolicyPredictiveScalingConfigurationElMetricSpecificationElCustomizedCapacityMetricSpecificationElMetricDataQueriesElRef {
         AutoscalingPolicyPredictiveScalingConfigurationElMetricSpecificationElCustomizedCapacityMetricSpecificationElMetricDataQueriesElRef {
             shared: shared,
@@ -891,44 +990,48 @@ impl Ref for AutoscalingPolicyPredictiveScalingConfigurationElMetricSpecificatio
 }
 
 impl AutoscalingPolicyPredictiveScalingConfigurationElMetricSpecificationElCustomizedCapacityMetricSpecificationElMetricDataQueriesElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `expression` after provisioning.\n"]
-    pub fn expression(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.expression", self.base))
+    #[doc = "Get a reference to the value of field `expression` after provisioning.\n"]
+    pub fn expression(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.expression", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `id` after provisioning.\n"]
-    pub fn id(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.id", self.base))
+    #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
+    pub fn id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `label` after provisioning.\n"]
-    pub fn label(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.label", self.base))
+    #[doc = "Get a reference to the value of field `label` after provisioning.\n"]
+    pub fn label(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.label", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `return_data` after provisioning.\n"]
-    pub fn return_data(&self) -> PrimExpr<bool> {
-        PrimExpr::new(self.shared().clone(), format!("{}.return_data", self.base))
+    #[doc = "Get a reference to the value of field `return_data` after provisioning.\n"]
+    pub fn return_data(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.return_data", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `metric_stat` after provisioning.\n"]
+    #[doc = "Get a reference to the value of field `metric_stat` after provisioning.\n"]
     pub fn metric_stat(
         &self,
-    ) -> ListRef<
+    ) -> terrars
+    ::ListRef<
         AutoscalingPolicyPredictiveScalingConfigurationElMetricSpecificationElCustomizedCapacityMetricSpecificationElMetricDataQueriesElMetricStatElRef,
     > {
-        ListRef::new(self.shared().clone(), format!("{}.metric_stat", self.base))
+        terrars::ListRef::new(self.shared().clone(), format!("{}.metric_stat", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
 struct AutoscalingPolicyPredictiveScalingConfigurationElMetricSpecificationElCustomizedCapacityMetricSpecificationElDynamic {
-    metric_data_queries: Option<
-        DynamicBlock<
+    metric_data_queries: std
+    ::option
+    ::Option<
+        terrars
+        ::DynamicBlock<
             AutoscalingPolicyPredictiveScalingConfigurationElMetricSpecificationElCustomizedCapacityMetricSpecificationElMetricDataQueriesEl,
         >,
     >,
@@ -936,9 +1039,13 @@ struct AutoscalingPolicyPredictiveScalingConfigurationElMetricSpecificationElCus
 
 #[derive(Serialize)]
 pub struct AutoscalingPolicyPredictiveScalingConfigurationElMetricSpecificationElCustomizedCapacityMetricSpecificationEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    metric_data_queries: Option<
-        Vec<
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    metric_data_queries: std
+    ::option
+    ::Option<
+        std
+        ::vec
+        ::Vec<
             AutoscalingPolicyPredictiveScalingConfigurationElMetricSpecificationElCustomizedCapacityMetricSpecificationElMetricDataQueriesEl,
         >,
     >,
@@ -946,38 +1053,43 @@ pub struct AutoscalingPolicyPredictiveScalingConfigurationElMetricSpecificationE
 }
 
 impl AutoscalingPolicyPredictiveScalingConfigurationElMetricSpecificationElCustomizedCapacityMetricSpecificationEl {
-    #[doc= "Set the field `metric_data_queries`.\n"]
+    #[doc = "Set the field `metric_data_queries`.\n"]
     pub fn set_metric_data_queries(
         mut self,
         v:
             impl
 
-                    Into<
-                        BlockAssignable<
+                    std
+                    ::convert
+                    ::Into<
+                        terrars
+                        ::BlockAssignable<
                             AutoscalingPolicyPredictiveScalingConfigurationElMetricSpecificationElCustomizedCapacityMetricSpecificationElMetricDataQueriesEl,
                         >,
                     >,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.metric_data_queries = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.metric_data_queries = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.metric_data_queries = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.metric_data_queries = std::option::Option::Some(d);
             },
         }
         self
     }
 }
 
-impl ToListMappable for AutoscalingPolicyPredictiveScalingConfigurationElMetricSpecificationElCustomizedCapacityMetricSpecificationEl {
+impl terrars
+::ToListMappable for AutoscalingPolicyPredictiveScalingConfigurationElMetricSpecificationElCustomizedCapacityMetricSpecificationEl {
     type O =
-        BlockAssignable<
+        terrars
+        ::BlockAssignable<
             AutoscalingPolicyPredictiveScalingConfigurationElMetricSpecificationElCustomizedCapacityMetricSpecificationEl,
         >;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -993,20 +1105,21 @@ impl BuildAutoscalingPolicyPredictiveScalingConfigurationElMetricSpecificationEl
     ) -> AutoscalingPolicyPredictiveScalingConfigurationElMetricSpecificationElCustomizedCapacityMetricSpecificationEl {
         AutoscalingPolicyPredictiveScalingConfigurationElMetricSpecificationElCustomizedCapacityMetricSpecificationEl {
             metric_data_queries: core::default::Default::default(),
-            dynamic: Default::default(),
+            dynamic: core::default::Default::default(),
         }
     }
 }
 
 pub struct AutoscalingPolicyPredictiveScalingConfigurationElMetricSpecificationElCustomizedCapacityMetricSpecificationElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for AutoscalingPolicyPredictiveScalingConfigurationElMetricSpecificationElCustomizedCapacityMetricSpecificationElRef {
+impl terrars
+::Ref for AutoscalingPolicyPredictiveScalingConfigurationElMetricSpecificationElCustomizedCapacityMetricSpecificationElRef {
     fn new(
-        shared: StackShared,
-        base: String,
+        shared: terrars::StackShared,
+        base: std::string::String,
     ) -> AutoscalingPolicyPredictiveScalingConfigurationElMetricSpecificationElCustomizedCapacityMetricSpecificationElRef {
         AutoscalingPolicyPredictiveScalingConfigurationElMetricSpecificationElCustomizedCapacityMetricSpecificationElRef {
             shared: shared,
@@ -1016,38 +1129,41 @@ impl Ref for AutoscalingPolicyPredictiveScalingConfigurationElMetricSpecificatio
 }
 
 impl AutoscalingPolicyPredictiveScalingConfigurationElMetricSpecificationElCustomizedCapacityMetricSpecificationElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `metric_data_queries` after provisioning.\n"]
+    #[doc = "Get a reference to the value of field `metric_data_queries` after provisioning.\n"]
     pub fn metric_data_queries(
         &self,
-    ) -> ListRef<
+    ) -> terrars
+    ::ListRef<
         AutoscalingPolicyPredictiveScalingConfigurationElMetricSpecificationElCustomizedCapacityMetricSpecificationElMetricDataQueriesElRef,
     > {
-        ListRef::new(self.shared().clone(), format!("{}.metric_data_queries", self.base))
+        terrars::ListRef::new(self.shared().clone(), format!("{}.metric_data_queries", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct AutoscalingPolicyPredictiveScalingConfigurationElMetricSpecificationElCustomizedLoadMetricSpecificationElMetricDataQueriesElMetricStatElMetricElDimensionsEl {
-    name: PrimField<String>,
-    value: PrimField<String>,
+    name: terrars::PrimField<std::string::String>,
+    value: terrars::PrimField<std::string::String>,
 }
 
 impl AutoscalingPolicyPredictiveScalingConfigurationElMetricSpecificationElCustomizedLoadMetricSpecificationElMetricDataQueriesElMetricStatElMetricElDimensionsEl {
 
 }
 
-impl ToListMappable for AutoscalingPolicyPredictiveScalingConfigurationElMetricSpecificationElCustomizedLoadMetricSpecificationElMetricDataQueriesElMetricStatElMetricElDimensionsEl {
+impl terrars
+::ToListMappable for AutoscalingPolicyPredictiveScalingConfigurationElMetricSpecificationElCustomizedLoadMetricSpecificationElMetricDataQueriesElMetricStatElMetricElDimensionsEl {
     type O =
-        BlockAssignable<
+        terrars
+        ::BlockAssignable<
             AutoscalingPolicyPredictiveScalingConfigurationElMetricSpecificationElCustomizedLoadMetricSpecificationElMetricDataQueriesElMetricStatElMetricElDimensionsEl,
         >;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -1056,10 +1172,10 @@ impl ToListMappable for AutoscalingPolicyPredictiveScalingConfigurationElMetricS
 }
 
 pub struct BuildAutoscalingPolicyPredictiveScalingConfigurationElMetricSpecificationElCustomizedLoadMetricSpecificationElMetricDataQueriesElMetricStatElMetricElDimensionsEl {
-    #[doc= ""]
-    pub name: PrimField<String>,
-    #[doc= ""]
-    pub value: PrimField<String>,
+    #[doc = ""]
+    pub name: terrars::PrimField<std::string::String>,
+    #[doc = ""]
+    pub value: terrars::PrimField<std::string::String>,
 }
 
 impl BuildAutoscalingPolicyPredictiveScalingConfigurationElMetricSpecificationElCustomizedLoadMetricSpecificationElMetricDataQueriesElMetricStatElMetricElDimensionsEl {
@@ -1074,14 +1190,15 @@ impl BuildAutoscalingPolicyPredictiveScalingConfigurationElMetricSpecificationEl
 }
 
 pub struct AutoscalingPolicyPredictiveScalingConfigurationElMetricSpecificationElCustomizedLoadMetricSpecificationElMetricDataQueriesElMetricStatElMetricElDimensionsElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for AutoscalingPolicyPredictiveScalingConfigurationElMetricSpecificationElCustomizedLoadMetricSpecificationElMetricDataQueriesElMetricStatElMetricElDimensionsElRef {
+impl terrars
+::Ref for AutoscalingPolicyPredictiveScalingConfigurationElMetricSpecificationElCustomizedLoadMetricSpecificationElMetricDataQueriesElMetricStatElMetricElDimensionsElRef {
     fn new(
-        shared: StackShared,
-        base: String,
+        shared: terrars::StackShared,
+        base: std::string::String,
     ) -> AutoscalingPolicyPredictiveScalingConfigurationElMetricSpecificationElCustomizedLoadMetricSpecificationElMetricDataQueriesElMetricStatElMetricElDimensionsElRef {
         AutoscalingPolicyPredictiveScalingConfigurationElMetricSpecificationElCustomizedLoadMetricSpecificationElMetricDataQueriesElMetricStatElMetricElDimensionsElRef {
             shared: shared,
@@ -1091,25 +1208,28 @@ impl Ref for AutoscalingPolicyPredictiveScalingConfigurationElMetricSpecificatio
 }
 
 impl AutoscalingPolicyPredictiveScalingConfigurationElMetricSpecificationElCustomizedLoadMetricSpecificationElMetricDataQueriesElMetricStatElMetricElDimensionsElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `name` after provisioning.\n"]
-    pub fn name(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.name", self.base))
+    #[doc = "Get a reference to the value of field `name` after provisioning.\n"]
+    pub fn name(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `value` after provisioning.\n"]
-    pub fn value(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.value", self.base))
+    #[doc = "Get a reference to the value of field `value` after provisioning.\n"]
+    pub fn value(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.value", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
 struct AutoscalingPolicyPredictiveScalingConfigurationElMetricSpecificationElCustomizedLoadMetricSpecificationElMetricDataQueriesElMetricStatElMetricElDynamic {
-    dimensions: Option<
-        DynamicBlock<
+    dimensions: std
+    ::option
+    ::Option<
+        terrars
+        ::DynamicBlock<
             AutoscalingPolicyPredictiveScalingConfigurationElMetricSpecificationElCustomizedLoadMetricSpecificationElMetricDataQueriesElMetricStatElMetricElDimensionsEl,
         >,
     >,
@@ -1117,11 +1237,15 @@ struct AutoscalingPolicyPredictiveScalingConfigurationElMetricSpecificationElCus
 
 #[derive(Serialize)]
 pub struct AutoscalingPolicyPredictiveScalingConfigurationElMetricSpecificationElCustomizedLoadMetricSpecificationElMetricDataQueriesElMetricStatElMetricEl {
-    metric_name: PrimField<String>,
-    namespace: PrimField<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    dimensions: Option<
-        Vec<
+    metric_name: terrars::PrimField<std::string::String>,
+    namespace: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    dimensions: std
+    ::option
+    ::Option<
+        std
+        ::vec
+        ::Vec<
             AutoscalingPolicyPredictiveScalingConfigurationElMetricSpecificationElCustomizedLoadMetricSpecificationElMetricDataQueriesElMetricStatElMetricElDimensionsEl,
         >,
     >,
@@ -1129,38 +1253,43 @@ pub struct AutoscalingPolicyPredictiveScalingConfigurationElMetricSpecificationE
 }
 
 impl AutoscalingPolicyPredictiveScalingConfigurationElMetricSpecificationElCustomizedLoadMetricSpecificationElMetricDataQueriesElMetricStatElMetricEl {
-    #[doc= "Set the field `dimensions`.\n"]
+    #[doc = "Set the field `dimensions`.\n"]
     pub fn set_dimensions(
         mut self,
         v:
             impl
 
-                    Into<
-                        BlockAssignable<
+                    std
+                    ::convert
+                    ::Into<
+                        terrars
+                        ::BlockAssignable<
                             AutoscalingPolicyPredictiveScalingConfigurationElMetricSpecificationElCustomizedLoadMetricSpecificationElMetricDataQueriesElMetricStatElMetricElDimensionsEl,
                         >,
                     >,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.dimensions = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.dimensions = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.dimensions = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.dimensions = std::option::Option::Some(d);
             },
         }
         self
     }
 }
 
-impl ToListMappable for AutoscalingPolicyPredictiveScalingConfigurationElMetricSpecificationElCustomizedLoadMetricSpecificationElMetricDataQueriesElMetricStatElMetricEl {
+impl terrars
+::ToListMappable for AutoscalingPolicyPredictiveScalingConfigurationElMetricSpecificationElCustomizedLoadMetricSpecificationElMetricDataQueriesElMetricStatElMetricEl {
     type O =
-        BlockAssignable<
+        terrars
+        ::BlockAssignable<
             AutoscalingPolicyPredictiveScalingConfigurationElMetricSpecificationElCustomizedLoadMetricSpecificationElMetricDataQueriesElMetricStatElMetricEl,
         >;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -1169,10 +1298,10 @@ impl ToListMappable for AutoscalingPolicyPredictiveScalingConfigurationElMetricS
 }
 
 pub struct BuildAutoscalingPolicyPredictiveScalingConfigurationElMetricSpecificationElCustomizedLoadMetricSpecificationElMetricDataQueriesElMetricStatElMetricEl {
-    #[doc= ""]
-    pub metric_name: PrimField<String>,
-    #[doc= ""]
-    pub namespace: PrimField<String>,
+    #[doc = ""]
+    pub metric_name: terrars::PrimField<std::string::String>,
+    #[doc = ""]
+    pub namespace: terrars::PrimField<std::string::String>,
 }
 
 impl BuildAutoscalingPolicyPredictiveScalingConfigurationElMetricSpecificationElCustomizedLoadMetricSpecificationElMetricDataQueriesElMetricStatElMetricEl {
@@ -1183,20 +1312,21 @@ impl BuildAutoscalingPolicyPredictiveScalingConfigurationElMetricSpecificationEl
             metric_name: self.metric_name,
             namespace: self.namespace,
             dimensions: core::default::Default::default(),
-            dynamic: Default::default(),
+            dynamic: core::default::Default::default(),
         }
     }
 }
 
 pub struct AutoscalingPolicyPredictiveScalingConfigurationElMetricSpecificationElCustomizedLoadMetricSpecificationElMetricDataQueriesElMetricStatElMetricElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for AutoscalingPolicyPredictiveScalingConfigurationElMetricSpecificationElCustomizedLoadMetricSpecificationElMetricDataQueriesElMetricStatElMetricElRef {
+impl terrars
+::Ref for AutoscalingPolicyPredictiveScalingConfigurationElMetricSpecificationElCustomizedLoadMetricSpecificationElMetricDataQueriesElMetricStatElMetricElRef {
     fn new(
-        shared: StackShared,
-        base: String,
+        shared: terrars::StackShared,
+        base: std::string::String,
     ) -> AutoscalingPolicyPredictiveScalingConfigurationElMetricSpecificationElCustomizedLoadMetricSpecificationElMetricDataQueriesElMetricStatElMetricElRef {
         AutoscalingPolicyPredictiveScalingConfigurationElMetricSpecificationElCustomizedLoadMetricSpecificationElMetricDataQueriesElMetricStatElMetricElRef {
             shared: shared,
@@ -1206,25 +1336,28 @@ impl Ref for AutoscalingPolicyPredictiveScalingConfigurationElMetricSpecificatio
 }
 
 impl AutoscalingPolicyPredictiveScalingConfigurationElMetricSpecificationElCustomizedLoadMetricSpecificationElMetricDataQueriesElMetricStatElMetricElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `metric_name` after provisioning.\n"]
-    pub fn metric_name(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.metric_name", self.base))
+    #[doc = "Get a reference to the value of field `metric_name` after provisioning.\n"]
+    pub fn metric_name(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.metric_name", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `namespace` after provisioning.\n"]
-    pub fn namespace(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.namespace", self.base))
+    #[doc = "Get a reference to the value of field `namespace` after provisioning.\n"]
+    pub fn namespace(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.namespace", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
 struct AutoscalingPolicyPredictiveScalingConfigurationElMetricSpecificationElCustomizedLoadMetricSpecificationElMetricDataQueriesElMetricStatElDynamic {
-    metric: Option<
-        DynamicBlock<
+    metric: std
+    ::option
+    ::Option<
+        terrars
+        ::DynamicBlock<
             AutoscalingPolicyPredictiveScalingConfigurationElMetricSpecificationElCustomizedLoadMetricSpecificationElMetricDataQueriesElMetricStatElMetricEl,
         >,
     >,
@@ -1232,12 +1365,16 @@ struct AutoscalingPolicyPredictiveScalingConfigurationElMetricSpecificationElCus
 
 #[derive(Serialize)]
 pub struct AutoscalingPolicyPredictiveScalingConfigurationElMetricSpecificationElCustomizedLoadMetricSpecificationElMetricDataQueriesElMetricStatEl {
-    stat: PrimField<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    unit: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    metric: Option<
-        Vec<
+    stat: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    unit: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    metric: std
+    ::option
+    ::Option<
+        std
+        ::vec
+        ::Vec<
             AutoscalingPolicyPredictiveScalingConfigurationElMetricSpecificationElCustomizedLoadMetricSpecificationElMetricDataQueriesElMetricStatElMetricEl,
         >,
     >,
@@ -1245,44 +1382,49 @@ pub struct AutoscalingPolicyPredictiveScalingConfigurationElMetricSpecificationE
 }
 
 impl AutoscalingPolicyPredictiveScalingConfigurationElMetricSpecificationElCustomizedLoadMetricSpecificationElMetricDataQueriesElMetricStatEl {
-    #[doc= "Set the field `unit`.\n"]
-    pub fn set_unit(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.unit = Some(v.into());
+    #[doc = "Set the field `unit`.\n"]
+    pub fn set_unit(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.unit = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `metric`.\n"]
+    #[doc = "Set the field `metric`.\n"]
     pub fn set_metric(
         mut self,
         v:
             impl
 
-                    Into<
-                        BlockAssignable<
+                    std
+                    ::convert
+                    ::Into<
+                        terrars
+                        ::BlockAssignable<
                             AutoscalingPolicyPredictiveScalingConfigurationElMetricSpecificationElCustomizedLoadMetricSpecificationElMetricDataQueriesElMetricStatElMetricEl,
                         >,
                     >,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.metric = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.metric = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.metric = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.metric = std::option::Option::Some(d);
             },
         }
         self
     }
 }
 
-impl ToListMappable for AutoscalingPolicyPredictiveScalingConfigurationElMetricSpecificationElCustomizedLoadMetricSpecificationElMetricDataQueriesElMetricStatEl {
+impl terrars
+::ToListMappable for AutoscalingPolicyPredictiveScalingConfigurationElMetricSpecificationElCustomizedLoadMetricSpecificationElMetricDataQueriesElMetricStatEl {
     type O =
-        BlockAssignable<
+        terrars
+        ::BlockAssignable<
             AutoscalingPolicyPredictiveScalingConfigurationElMetricSpecificationElCustomizedLoadMetricSpecificationElMetricDataQueriesElMetricStatEl,
         >;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -1291,8 +1433,8 @@ impl ToListMappable for AutoscalingPolicyPredictiveScalingConfigurationElMetricS
 }
 
 pub struct BuildAutoscalingPolicyPredictiveScalingConfigurationElMetricSpecificationElCustomizedLoadMetricSpecificationElMetricDataQueriesElMetricStatEl {
-    #[doc= ""]
-    pub stat: PrimField<String>,
+    #[doc = ""]
+    pub stat: terrars::PrimField<std::string::String>,
 }
 
 impl BuildAutoscalingPolicyPredictiveScalingConfigurationElMetricSpecificationElCustomizedLoadMetricSpecificationElMetricDataQueriesElMetricStatEl {
@@ -1303,20 +1445,21 @@ impl BuildAutoscalingPolicyPredictiveScalingConfigurationElMetricSpecificationEl
             stat: self.stat,
             unit: core::default::Default::default(),
             metric: core::default::Default::default(),
-            dynamic: Default::default(),
+            dynamic: core::default::Default::default(),
         }
     }
 }
 
 pub struct AutoscalingPolicyPredictiveScalingConfigurationElMetricSpecificationElCustomizedLoadMetricSpecificationElMetricDataQueriesElMetricStatElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for AutoscalingPolicyPredictiveScalingConfigurationElMetricSpecificationElCustomizedLoadMetricSpecificationElMetricDataQueriesElMetricStatElRef {
+impl terrars
+::Ref for AutoscalingPolicyPredictiveScalingConfigurationElMetricSpecificationElCustomizedLoadMetricSpecificationElMetricDataQueriesElMetricStatElRef {
     fn new(
-        shared: StackShared,
-        base: String,
+        shared: terrars::StackShared,
+        base: std::string::String,
     ) -> AutoscalingPolicyPredictiveScalingConfigurationElMetricSpecificationElCustomizedLoadMetricSpecificationElMetricDataQueriesElMetricStatElRef {
         AutoscalingPolicyPredictiveScalingConfigurationElMetricSpecificationElCustomizedLoadMetricSpecificationElMetricDataQueriesElMetricStatElRef {
             shared: shared,
@@ -1326,34 +1469,38 @@ impl Ref for AutoscalingPolicyPredictiveScalingConfigurationElMetricSpecificatio
 }
 
 impl AutoscalingPolicyPredictiveScalingConfigurationElMetricSpecificationElCustomizedLoadMetricSpecificationElMetricDataQueriesElMetricStatElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `stat` after provisioning.\n"]
-    pub fn stat(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.stat", self.base))
+    #[doc = "Get a reference to the value of field `stat` after provisioning.\n"]
+    pub fn stat(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.stat", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `unit` after provisioning.\n"]
-    pub fn unit(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.unit", self.base))
+    #[doc = "Get a reference to the value of field `unit` after provisioning.\n"]
+    pub fn unit(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.unit", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `metric` after provisioning.\n"]
+    #[doc = "Get a reference to the value of field `metric` after provisioning.\n"]
     pub fn metric(
         &self,
-    ) -> ListRef<
+    ) -> terrars
+    ::ListRef<
         AutoscalingPolicyPredictiveScalingConfigurationElMetricSpecificationElCustomizedLoadMetricSpecificationElMetricDataQueriesElMetricStatElMetricElRef,
     > {
-        ListRef::new(self.shared().clone(), format!("{}.metric", self.base))
+        terrars::ListRef::new(self.shared().clone(), format!("{}.metric", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
 struct AutoscalingPolicyPredictiveScalingConfigurationElMetricSpecificationElCustomizedLoadMetricSpecificationElMetricDataQueriesElDynamic {
-    metric_stat: Option<
-        DynamicBlock<
+    metric_stat: std
+    ::option
+    ::Option<
+        terrars
+        ::DynamicBlock<
             AutoscalingPolicyPredictiveScalingConfigurationElMetricSpecificationElCustomizedLoadMetricSpecificationElMetricDataQueriesElMetricStatEl,
         >,
     >,
@@ -1361,16 +1508,20 @@ struct AutoscalingPolicyPredictiveScalingConfigurationElMetricSpecificationElCus
 
 #[derive(Serialize)]
 pub struct AutoscalingPolicyPredictiveScalingConfigurationElMetricSpecificationElCustomizedLoadMetricSpecificationElMetricDataQueriesEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    expression: Option<PrimField<String>>,
-    id: PrimField<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    label: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    return_data: Option<PrimField<bool>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    metric_stat: Option<
-        Vec<
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    expression: std::option::Option<terrars::PrimField<std::string::String>>,
+    id: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    label: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    return_data: std::option::Option<terrars::PrimField<bool>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    metric_stat: std
+    ::option
+    ::Option<
+        std
+        ::vec
+        ::Vec<
             AutoscalingPolicyPredictiveScalingConfigurationElMetricSpecificationElCustomizedLoadMetricSpecificationElMetricDataQueriesElMetricStatEl,
         >,
     >,
@@ -1378,56 +1529,61 @@ pub struct AutoscalingPolicyPredictiveScalingConfigurationElMetricSpecificationE
 }
 
 impl AutoscalingPolicyPredictiveScalingConfigurationElMetricSpecificationElCustomizedLoadMetricSpecificationElMetricDataQueriesEl {
-    #[doc= "Set the field `expression`.\n"]
-    pub fn set_expression(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.expression = Some(v.into());
+    #[doc = "Set the field `expression`.\n"]
+    pub fn set_expression(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.expression = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `label`.\n"]
-    pub fn set_label(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.label = Some(v.into());
+    #[doc = "Set the field `label`.\n"]
+    pub fn set_label(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.label = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `return_data`.\n"]
-    pub fn set_return_data(mut self, v: impl Into<PrimField<bool>>) -> Self {
-        self.return_data = Some(v.into());
+    #[doc = "Set the field `return_data`.\n"]
+    pub fn set_return_data(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
+        self.return_data = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `metric_stat`.\n"]
+    #[doc = "Set the field `metric_stat`.\n"]
     pub fn set_metric_stat(
         mut self,
         v:
             impl
 
-                    Into<
-                        BlockAssignable<
+                    std
+                    ::convert
+                    ::Into<
+                        terrars
+                        ::BlockAssignable<
                             AutoscalingPolicyPredictiveScalingConfigurationElMetricSpecificationElCustomizedLoadMetricSpecificationElMetricDataQueriesElMetricStatEl,
                         >,
                     >,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.metric_stat = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.metric_stat = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.metric_stat = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.metric_stat = std::option::Option::Some(d);
             },
         }
         self
     }
 }
 
-impl ToListMappable for AutoscalingPolicyPredictiveScalingConfigurationElMetricSpecificationElCustomizedLoadMetricSpecificationElMetricDataQueriesEl {
+impl terrars
+::ToListMappable for AutoscalingPolicyPredictiveScalingConfigurationElMetricSpecificationElCustomizedLoadMetricSpecificationElMetricDataQueriesEl {
     type O =
-        BlockAssignable<
+        terrars
+        ::BlockAssignable<
             AutoscalingPolicyPredictiveScalingConfigurationElMetricSpecificationElCustomizedLoadMetricSpecificationElMetricDataQueriesEl,
         >;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -1436,8 +1592,8 @@ impl ToListMappable for AutoscalingPolicyPredictiveScalingConfigurationElMetricS
 }
 
 pub struct BuildAutoscalingPolicyPredictiveScalingConfigurationElMetricSpecificationElCustomizedLoadMetricSpecificationElMetricDataQueriesEl {
-    #[doc= ""]
-    pub id: PrimField<String>,
+    #[doc = ""]
+    pub id: terrars::PrimField<std::string::String>,
 }
 
 impl BuildAutoscalingPolicyPredictiveScalingConfigurationElMetricSpecificationElCustomizedLoadMetricSpecificationElMetricDataQueriesEl {
@@ -1450,20 +1606,21 @@ impl BuildAutoscalingPolicyPredictiveScalingConfigurationElMetricSpecificationEl
             label: core::default::Default::default(),
             return_data: core::default::Default::default(),
             metric_stat: core::default::Default::default(),
-            dynamic: Default::default(),
+            dynamic: core::default::Default::default(),
         }
     }
 }
 
 pub struct AutoscalingPolicyPredictiveScalingConfigurationElMetricSpecificationElCustomizedLoadMetricSpecificationElMetricDataQueriesElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for AutoscalingPolicyPredictiveScalingConfigurationElMetricSpecificationElCustomizedLoadMetricSpecificationElMetricDataQueriesElRef {
+impl terrars
+::Ref for AutoscalingPolicyPredictiveScalingConfigurationElMetricSpecificationElCustomizedLoadMetricSpecificationElMetricDataQueriesElRef {
     fn new(
-        shared: StackShared,
-        base: String,
+        shared: terrars::StackShared,
+        base: std::string::String,
     ) -> AutoscalingPolicyPredictiveScalingConfigurationElMetricSpecificationElCustomizedLoadMetricSpecificationElMetricDataQueriesElRef {
         AutoscalingPolicyPredictiveScalingConfigurationElMetricSpecificationElCustomizedLoadMetricSpecificationElMetricDataQueriesElRef {
             shared: shared,
@@ -1473,44 +1630,48 @@ impl Ref for AutoscalingPolicyPredictiveScalingConfigurationElMetricSpecificatio
 }
 
 impl AutoscalingPolicyPredictiveScalingConfigurationElMetricSpecificationElCustomizedLoadMetricSpecificationElMetricDataQueriesElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `expression` after provisioning.\n"]
-    pub fn expression(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.expression", self.base))
+    #[doc = "Get a reference to the value of field `expression` after provisioning.\n"]
+    pub fn expression(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.expression", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `id` after provisioning.\n"]
-    pub fn id(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.id", self.base))
+    #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
+    pub fn id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `label` after provisioning.\n"]
-    pub fn label(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.label", self.base))
+    #[doc = "Get a reference to the value of field `label` after provisioning.\n"]
+    pub fn label(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.label", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `return_data` after provisioning.\n"]
-    pub fn return_data(&self) -> PrimExpr<bool> {
-        PrimExpr::new(self.shared().clone(), format!("{}.return_data", self.base))
+    #[doc = "Get a reference to the value of field `return_data` after provisioning.\n"]
+    pub fn return_data(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.return_data", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `metric_stat` after provisioning.\n"]
+    #[doc = "Get a reference to the value of field `metric_stat` after provisioning.\n"]
     pub fn metric_stat(
         &self,
-    ) -> ListRef<
+    ) -> terrars
+    ::ListRef<
         AutoscalingPolicyPredictiveScalingConfigurationElMetricSpecificationElCustomizedLoadMetricSpecificationElMetricDataQueriesElMetricStatElRef,
     > {
-        ListRef::new(self.shared().clone(), format!("{}.metric_stat", self.base))
+        terrars::ListRef::new(self.shared().clone(), format!("{}.metric_stat", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
 struct AutoscalingPolicyPredictiveScalingConfigurationElMetricSpecificationElCustomizedLoadMetricSpecificationElDynamic {
-    metric_data_queries: Option<
-        DynamicBlock<
+    metric_data_queries: std
+    ::option
+    ::Option<
+        terrars
+        ::DynamicBlock<
             AutoscalingPolicyPredictiveScalingConfigurationElMetricSpecificationElCustomizedLoadMetricSpecificationElMetricDataQueriesEl,
         >,
     >,
@@ -1518,9 +1679,13 @@ struct AutoscalingPolicyPredictiveScalingConfigurationElMetricSpecificationElCus
 
 #[derive(Serialize)]
 pub struct AutoscalingPolicyPredictiveScalingConfigurationElMetricSpecificationElCustomizedLoadMetricSpecificationEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    metric_data_queries: Option<
-        Vec<
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    metric_data_queries: std
+    ::option
+    ::Option<
+        std
+        ::vec
+        ::Vec<
             AutoscalingPolicyPredictiveScalingConfigurationElMetricSpecificationElCustomizedLoadMetricSpecificationElMetricDataQueriesEl,
         >,
     >,
@@ -1528,38 +1693,43 @@ pub struct AutoscalingPolicyPredictiveScalingConfigurationElMetricSpecificationE
 }
 
 impl AutoscalingPolicyPredictiveScalingConfigurationElMetricSpecificationElCustomizedLoadMetricSpecificationEl {
-    #[doc= "Set the field `metric_data_queries`.\n"]
+    #[doc = "Set the field `metric_data_queries`.\n"]
     pub fn set_metric_data_queries(
         mut self,
         v:
             impl
 
-                    Into<
-                        BlockAssignable<
+                    std
+                    ::convert
+                    ::Into<
+                        terrars
+                        ::BlockAssignable<
                             AutoscalingPolicyPredictiveScalingConfigurationElMetricSpecificationElCustomizedLoadMetricSpecificationElMetricDataQueriesEl,
                         >,
                     >,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.metric_data_queries = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.metric_data_queries = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.metric_data_queries = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.metric_data_queries = std::option::Option::Some(d);
             },
         }
         self
     }
 }
 
-impl ToListMappable for AutoscalingPolicyPredictiveScalingConfigurationElMetricSpecificationElCustomizedLoadMetricSpecificationEl {
+impl terrars
+::ToListMappable for AutoscalingPolicyPredictiveScalingConfigurationElMetricSpecificationElCustomizedLoadMetricSpecificationEl {
     type O =
-        BlockAssignable<
+        terrars
+        ::BlockAssignable<
             AutoscalingPolicyPredictiveScalingConfigurationElMetricSpecificationElCustomizedLoadMetricSpecificationEl,
         >;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -1575,20 +1745,21 @@ impl BuildAutoscalingPolicyPredictiveScalingConfigurationElMetricSpecificationEl
     ) -> AutoscalingPolicyPredictiveScalingConfigurationElMetricSpecificationElCustomizedLoadMetricSpecificationEl {
         AutoscalingPolicyPredictiveScalingConfigurationElMetricSpecificationElCustomizedLoadMetricSpecificationEl {
             metric_data_queries: core::default::Default::default(),
-            dynamic: Default::default(),
+            dynamic: core::default::Default::default(),
         }
     }
 }
 
 pub struct AutoscalingPolicyPredictiveScalingConfigurationElMetricSpecificationElCustomizedLoadMetricSpecificationElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for AutoscalingPolicyPredictiveScalingConfigurationElMetricSpecificationElCustomizedLoadMetricSpecificationElRef {
+impl terrars
+::Ref for AutoscalingPolicyPredictiveScalingConfigurationElMetricSpecificationElCustomizedLoadMetricSpecificationElRef {
     fn new(
-        shared: StackShared,
-        base: String,
+        shared: terrars::StackShared,
+        base: std::string::String,
     ) -> AutoscalingPolicyPredictiveScalingConfigurationElMetricSpecificationElCustomizedLoadMetricSpecificationElRef {
         AutoscalingPolicyPredictiveScalingConfigurationElMetricSpecificationElCustomizedLoadMetricSpecificationElRef {
             shared: shared,
@@ -1598,38 +1769,41 @@ impl Ref for AutoscalingPolicyPredictiveScalingConfigurationElMetricSpecificatio
 }
 
 impl AutoscalingPolicyPredictiveScalingConfigurationElMetricSpecificationElCustomizedLoadMetricSpecificationElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `metric_data_queries` after provisioning.\n"]
+    #[doc = "Get a reference to the value of field `metric_data_queries` after provisioning.\n"]
     pub fn metric_data_queries(
         &self,
-    ) -> ListRef<
+    ) -> terrars
+    ::ListRef<
         AutoscalingPolicyPredictiveScalingConfigurationElMetricSpecificationElCustomizedLoadMetricSpecificationElMetricDataQueriesElRef,
     > {
-        ListRef::new(self.shared().clone(), format!("{}.metric_data_queries", self.base))
+        terrars::ListRef::new(self.shared().clone(), format!("{}.metric_data_queries", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct AutoscalingPolicyPredictiveScalingConfigurationElMetricSpecificationElCustomizedScalingMetricSpecificationElMetricDataQueriesElMetricStatElMetricElDimensionsEl {
-    name: PrimField<String>,
-    value: PrimField<String>,
+    name: terrars::PrimField<std::string::String>,
+    value: terrars::PrimField<std::string::String>,
 }
 
 impl AutoscalingPolicyPredictiveScalingConfigurationElMetricSpecificationElCustomizedScalingMetricSpecificationElMetricDataQueriesElMetricStatElMetricElDimensionsEl {
 
 }
 
-impl ToListMappable for AutoscalingPolicyPredictiveScalingConfigurationElMetricSpecificationElCustomizedScalingMetricSpecificationElMetricDataQueriesElMetricStatElMetricElDimensionsEl {
+impl terrars
+::ToListMappable for AutoscalingPolicyPredictiveScalingConfigurationElMetricSpecificationElCustomizedScalingMetricSpecificationElMetricDataQueriesElMetricStatElMetricElDimensionsEl {
     type O =
-        BlockAssignable<
+        terrars
+        ::BlockAssignable<
             AutoscalingPolicyPredictiveScalingConfigurationElMetricSpecificationElCustomizedScalingMetricSpecificationElMetricDataQueriesElMetricStatElMetricElDimensionsEl,
         >;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -1638,10 +1812,10 @@ impl ToListMappable for AutoscalingPolicyPredictiveScalingConfigurationElMetricS
 }
 
 pub struct BuildAutoscalingPolicyPredictiveScalingConfigurationElMetricSpecificationElCustomizedScalingMetricSpecificationElMetricDataQueriesElMetricStatElMetricElDimensionsEl {
-    #[doc= ""]
-    pub name: PrimField<String>,
-    #[doc= ""]
-    pub value: PrimField<String>,
+    #[doc = ""]
+    pub name: terrars::PrimField<std::string::String>,
+    #[doc = ""]
+    pub value: terrars::PrimField<std::string::String>,
 }
 
 impl BuildAutoscalingPolicyPredictiveScalingConfigurationElMetricSpecificationElCustomizedScalingMetricSpecificationElMetricDataQueriesElMetricStatElMetricElDimensionsEl {
@@ -1656,14 +1830,15 @@ impl BuildAutoscalingPolicyPredictiveScalingConfigurationElMetricSpecificationEl
 }
 
 pub struct AutoscalingPolicyPredictiveScalingConfigurationElMetricSpecificationElCustomizedScalingMetricSpecificationElMetricDataQueriesElMetricStatElMetricElDimensionsElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for AutoscalingPolicyPredictiveScalingConfigurationElMetricSpecificationElCustomizedScalingMetricSpecificationElMetricDataQueriesElMetricStatElMetricElDimensionsElRef {
+impl terrars
+::Ref for AutoscalingPolicyPredictiveScalingConfigurationElMetricSpecificationElCustomizedScalingMetricSpecificationElMetricDataQueriesElMetricStatElMetricElDimensionsElRef {
     fn new(
-        shared: StackShared,
-        base: String,
+        shared: terrars::StackShared,
+        base: std::string::String,
     ) -> AutoscalingPolicyPredictiveScalingConfigurationElMetricSpecificationElCustomizedScalingMetricSpecificationElMetricDataQueriesElMetricStatElMetricElDimensionsElRef {
         AutoscalingPolicyPredictiveScalingConfigurationElMetricSpecificationElCustomizedScalingMetricSpecificationElMetricDataQueriesElMetricStatElMetricElDimensionsElRef {
             shared: shared,
@@ -1673,25 +1848,28 @@ impl Ref for AutoscalingPolicyPredictiveScalingConfigurationElMetricSpecificatio
 }
 
 impl AutoscalingPolicyPredictiveScalingConfigurationElMetricSpecificationElCustomizedScalingMetricSpecificationElMetricDataQueriesElMetricStatElMetricElDimensionsElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `name` after provisioning.\n"]
-    pub fn name(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.name", self.base))
+    #[doc = "Get a reference to the value of field `name` after provisioning.\n"]
+    pub fn name(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `value` after provisioning.\n"]
-    pub fn value(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.value", self.base))
+    #[doc = "Get a reference to the value of field `value` after provisioning.\n"]
+    pub fn value(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.value", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
 struct AutoscalingPolicyPredictiveScalingConfigurationElMetricSpecificationElCustomizedScalingMetricSpecificationElMetricDataQueriesElMetricStatElMetricElDynamic {
-    dimensions: Option<
-        DynamicBlock<
+    dimensions: std
+    ::option
+    ::Option<
+        terrars
+        ::DynamicBlock<
             AutoscalingPolicyPredictiveScalingConfigurationElMetricSpecificationElCustomizedScalingMetricSpecificationElMetricDataQueriesElMetricStatElMetricElDimensionsEl,
         >,
     >,
@@ -1699,11 +1877,15 @@ struct AutoscalingPolicyPredictiveScalingConfigurationElMetricSpecificationElCus
 
 #[derive(Serialize)]
 pub struct AutoscalingPolicyPredictiveScalingConfigurationElMetricSpecificationElCustomizedScalingMetricSpecificationElMetricDataQueriesElMetricStatElMetricEl {
-    metric_name: PrimField<String>,
-    namespace: PrimField<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    dimensions: Option<
-        Vec<
+    metric_name: terrars::PrimField<std::string::String>,
+    namespace: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    dimensions: std
+    ::option
+    ::Option<
+        std
+        ::vec
+        ::Vec<
             AutoscalingPolicyPredictiveScalingConfigurationElMetricSpecificationElCustomizedScalingMetricSpecificationElMetricDataQueriesElMetricStatElMetricElDimensionsEl,
         >,
     >,
@@ -1711,38 +1893,43 @@ pub struct AutoscalingPolicyPredictiveScalingConfigurationElMetricSpecificationE
 }
 
 impl AutoscalingPolicyPredictiveScalingConfigurationElMetricSpecificationElCustomizedScalingMetricSpecificationElMetricDataQueriesElMetricStatElMetricEl {
-    #[doc= "Set the field `dimensions`.\n"]
+    #[doc = "Set the field `dimensions`.\n"]
     pub fn set_dimensions(
         mut self,
         v:
             impl
 
-                    Into<
-                        BlockAssignable<
+                    std
+                    ::convert
+                    ::Into<
+                        terrars
+                        ::BlockAssignable<
                             AutoscalingPolicyPredictiveScalingConfigurationElMetricSpecificationElCustomizedScalingMetricSpecificationElMetricDataQueriesElMetricStatElMetricElDimensionsEl,
                         >,
                     >,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.dimensions = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.dimensions = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.dimensions = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.dimensions = std::option::Option::Some(d);
             },
         }
         self
     }
 }
 
-impl ToListMappable for AutoscalingPolicyPredictiveScalingConfigurationElMetricSpecificationElCustomizedScalingMetricSpecificationElMetricDataQueriesElMetricStatElMetricEl {
+impl terrars
+::ToListMappable for AutoscalingPolicyPredictiveScalingConfigurationElMetricSpecificationElCustomizedScalingMetricSpecificationElMetricDataQueriesElMetricStatElMetricEl {
     type O =
-        BlockAssignable<
+        terrars
+        ::BlockAssignable<
             AutoscalingPolicyPredictiveScalingConfigurationElMetricSpecificationElCustomizedScalingMetricSpecificationElMetricDataQueriesElMetricStatElMetricEl,
         >;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -1751,10 +1938,10 @@ impl ToListMappable for AutoscalingPolicyPredictiveScalingConfigurationElMetricS
 }
 
 pub struct BuildAutoscalingPolicyPredictiveScalingConfigurationElMetricSpecificationElCustomizedScalingMetricSpecificationElMetricDataQueriesElMetricStatElMetricEl {
-    #[doc= ""]
-    pub metric_name: PrimField<String>,
-    #[doc= ""]
-    pub namespace: PrimField<String>,
+    #[doc = ""]
+    pub metric_name: terrars::PrimField<std::string::String>,
+    #[doc = ""]
+    pub namespace: terrars::PrimField<std::string::String>,
 }
 
 impl BuildAutoscalingPolicyPredictiveScalingConfigurationElMetricSpecificationElCustomizedScalingMetricSpecificationElMetricDataQueriesElMetricStatElMetricEl {
@@ -1765,20 +1952,21 @@ impl BuildAutoscalingPolicyPredictiveScalingConfigurationElMetricSpecificationEl
             metric_name: self.metric_name,
             namespace: self.namespace,
             dimensions: core::default::Default::default(),
-            dynamic: Default::default(),
+            dynamic: core::default::Default::default(),
         }
     }
 }
 
 pub struct AutoscalingPolicyPredictiveScalingConfigurationElMetricSpecificationElCustomizedScalingMetricSpecificationElMetricDataQueriesElMetricStatElMetricElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for AutoscalingPolicyPredictiveScalingConfigurationElMetricSpecificationElCustomizedScalingMetricSpecificationElMetricDataQueriesElMetricStatElMetricElRef {
+impl terrars
+::Ref for AutoscalingPolicyPredictiveScalingConfigurationElMetricSpecificationElCustomizedScalingMetricSpecificationElMetricDataQueriesElMetricStatElMetricElRef {
     fn new(
-        shared: StackShared,
-        base: String,
+        shared: terrars::StackShared,
+        base: std::string::String,
     ) -> AutoscalingPolicyPredictiveScalingConfigurationElMetricSpecificationElCustomizedScalingMetricSpecificationElMetricDataQueriesElMetricStatElMetricElRef {
         AutoscalingPolicyPredictiveScalingConfigurationElMetricSpecificationElCustomizedScalingMetricSpecificationElMetricDataQueriesElMetricStatElMetricElRef {
             shared: shared,
@@ -1788,25 +1976,28 @@ impl Ref for AutoscalingPolicyPredictiveScalingConfigurationElMetricSpecificatio
 }
 
 impl AutoscalingPolicyPredictiveScalingConfigurationElMetricSpecificationElCustomizedScalingMetricSpecificationElMetricDataQueriesElMetricStatElMetricElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `metric_name` after provisioning.\n"]
-    pub fn metric_name(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.metric_name", self.base))
+    #[doc = "Get a reference to the value of field `metric_name` after provisioning.\n"]
+    pub fn metric_name(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.metric_name", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `namespace` after provisioning.\n"]
-    pub fn namespace(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.namespace", self.base))
+    #[doc = "Get a reference to the value of field `namespace` after provisioning.\n"]
+    pub fn namespace(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.namespace", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
 struct AutoscalingPolicyPredictiveScalingConfigurationElMetricSpecificationElCustomizedScalingMetricSpecificationElMetricDataQueriesElMetricStatElDynamic {
-    metric: Option<
-        DynamicBlock<
+    metric: std
+    ::option
+    ::Option<
+        terrars
+        ::DynamicBlock<
             AutoscalingPolicyPredictiveScalingConfigurationElMetricSpecificationElCustomizedScalingMetricSpecificationElMetricDataQueriesElMetricStatElMetricEl,
         >,
     >,
@@ -1814,12 +2005,16 @@ struct AutoscalingPolicyPredictiveScalingConfigurationElMetricSpecificationElCus
 
 #[derive(Serialize)]
 pub struct AutoscalingPolicyPredictiveScalingConfigurationElMetricSpecificationElCustomizedScalingMetricSpecificationElMetricDataQueriesElMetricStatEl {
-    stat: PrimField<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    unit: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    metric: Option<
-        Vec<
+    stat: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    unit: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    metric: std
+    ::option
+    ::Option<
+        std
+        ::vec
+        ::Vec<
             AutoscalingPolicyPredictiveScalingConfigurationElMetricSpecificationElCustomizedScalingMetricSpecificationElMetricDataQueriesElMetricStatElMetricEl,
         >,
     >,
@@ -1827,44 +2022,49 @@ pub struct AutoscalingPolicyPredictiveScalingConfigurationElMetricSpecificationE
 }
 
 impl AutoscalingPolicyPredictiveScalingConfigurationElMetricSpecificationElCustomizedScalingMetricSpecificationElMetricDataQueriesElMetricStatEl {
-    #[doc= "Set the field `unit`.\n"]
-    pub fn set_unit(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.unit = Some(v.into());
+    #[doc = "Set the field `unit`.\n"]
+    pub fn set_unit(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.unit = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `metric`.\n"]
+    #[doc = "Set the field `metric`.\n"]
     pub fn set_metric(
         mut self,
         v:
             impl
 
-                    Into<
-                        BlockAssignable<
+                    std
+                    ::convert
+                    ::Into<
+                        terrars
+                        ::BlockAssignable<
                             AutoscalingPolicyPredictiveScalingConfigurationElMetricSpecificationElCustomizedScalingMetricSpecificationElMetricDataQueriesElMetricStatElMetricEl,
                         >,
                     >,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.metric = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.metric = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.metric = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.metric = std::option::Option::Some(d);
             },
         }
         self
     }
 }
 
-impl ToListMappable for AutoscalingPolicyPredictiveScalingConfigurationElMetricSpecificationElCustomizedScalingMetricSpecificationElMetricDataQueriesElMetricStatEl {
+impl terrars
+::ToListMappable for AutoscalingPolicyPredictiveScalingConfigurationElMetricSpecificationElCustomizedScalingMetricSpecificationElMetricDataQueriesElMetricStatEl {
     type O =
-        BlockAssignable<
+        terrars
+        ::BlockAssignable<
             AutoscalingPolicyPredictiveScalingConfigurationElMetricSpecificationElCustomizedScalingMetricSpecificationElMetricDataQueriesElMetricStatEl,
         >;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -1873,8 +2073,8 @@ impl ToListMappable for AutoscalingPolicyPredictiveScalingConfigurationElMetricS
 }
 
 pub struct BuildAutoscalingPolicyPredictiveScalingConfigurationElMetricSpecificationElCustomizedScalingMetricSpecificationElMetricDataQueriesElMetricStatEl {
-    #[doc= ""]
-    pub stat: PrimField<String>,
+    #[doc = ""]
+    pub stat: terrars::PrimField<std::string::String>,
 }
 
 impl BuildAutoscalingPolicyPredictiveScalingConfigurationElMetricSpecificationElCustomizedScalingMetricSpecificationElMetricDataQueriesElMetricStatEl {
@@ -1885,20 +2085,21 @@ impl BuildAutoscalingPolicyPredictiveScalingConfigurationElMetricSpecificationEl
             stat: self.stat,
             unit: core::default::Default::default(),
             metric: core::default::Default::default(),
-            dynamic: Default::default(),
+            dynamic: core::default::Default::default(),
         }
     }
 }
 
 pub struct AutoscalingPolicyPredictiveScalingConfigurationElMetricSpecificationElCustomizedScalingMetricSpecificationElMetricDataQueriesElMetricStatElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for AutoscalingPolicyPredictiveScalingConfigurationElMetricSpecificationElCustomizedScalingMetricSpecificationElMetricDataQueriesElMetricStatElRef {
+impl terrars
+::Ref for AutoscalingPolicyPredictiveScalingConfigurationElMetricSpecificationElCustomizedScalingMetricSpecificationElMetricDataQueriesElMetricStatElRef {
     fn new(
-        shared: StackShared,
-        base: String,
+        shared: terrars::StackShared,
+        base: std::string::String,
     ) -> AutoscalingPolicyPredictiveScalingConfigurationElMetricSpecificationElCustomizedScalingMetricSpecificationElMetricDataQueriesElMetricStatElRef {
         AutoscalingPolicyPredictiveScalingConfigurationElMetricSpecificationElCustomizedScalingMetricSpecificationElMetricDataQueriesElMetricStatElRef {
             shared: shared,
@@ -1908,34 +2109,38 @@ impl Ref for AutoscalingPolicyPredictiveScalingConfigurationElMetricSpecificatio
 }
 
 impl AutoscalingPolicyPredictiveScalingConfigurationElMetricSpecificationElCustomizedScalingMetricSpecificationElMetricDataQueriesElMetricStatElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `stat` after provisioning.\n"]
-    pub fn stat(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.stat", self.base))
+    #[doc = "Get a reference to the value of field `stat` after provisioning.\n"]
+    pub fn stat(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.stat", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `unit` after provisioning.\n"]
-    pub fn unit(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.unit", self.base))
+    #[doc = "Get a reference to the value of field `unit` after provisioning.\n"]
+    pub fn unit(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.unit", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `metric` after provisioning.\n"]
+    #[doc = "Get a reference to the value of field `metric` after provisioning.\n"]
     pub fn metric(
         &self,
-    ) -> ListRef<
+    ) -> terrars
+    ::ListRef<
         AutoscalingPolicyPredictiveScalingConfigurationElMetricSpecificationElCustomizedScalingMetricSpecificationElMetricDataQueriesElMetricStatElMetricElRef,
     > {
-        ListRef::new(self.shared().clone(), format!("{}.metric", self.base))
+        terrars::ListRef::new(self.shared().clone(), format!("{}.metric", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
 struct AutoscalingPolicyPredictiveScalingConfigurationElMetricSpecificationElCustomizedScalingMetricSpecificationElMetricDataQueriesElDynamic {
-    metric_stat: Option<
-        DynamicBlock<
+    metric_stat: std
+    ::option
+    ::Option<
+        terrars
+        ::DynamicBlock<
             AutoscalingPolicyPredictiveScalingConfigurationElMetricSpecificationElCustomizedScalingMetricSpecificationElMetricDataQueriesElMetricStatEl,
         >,
     >,
@@ -1943,16 +2148,20 @@ struct AutoscalingPolicyPredictiveScalingConfigurationElMetricSpecificationElCus
 
 #[derive(Serialize)]
 pub struct AutoscalingPolicyPredictiveScalingConfigurationElMetricSpecificationElCustomizedScalingMetricSpecificationElMetricDataQueriesEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    expression: Option<PrimField<String>>,
-    id: PrimField<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    label: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    return_data: Option<PrimField<bool>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    metric_stat: Option<
-        Vec<
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    expression: std::option::Option<terrars::PrimField<std::string::String>>,
+    id: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    label: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    return_data: std::option::Option<terrars::PrimField<bool>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    metric_stat: std
+    ::option
+    ::Option<
+        std
+        ::vec
+        ::Vec<
             AutoscalingPolicyPredictiveScalingConfigurationElMetricSpecificationElCustomizedScalingMetricSpecificationElMetricDataQueriesElMetricStatEl,
         >,
     >,
@@ -1960,56 +2169,61 @@ pub struct AutoscalingPolicyPredictiveScalingConfigurationElMetricSpecificationE
 }
 
 impl AutoscalingPolicyPredictiveScalingConfigurationElMetricSpecificationElCustomizedScalingMetricSpecificationElMetricDataQueriesEl {
-    #[doc= "Set the field `expression`.\n"]
-    pub fn set_expression(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.expression = Some(v.into());
+    #[doc = "Set the field `expression`.\n"]
+    pub fn set_expression(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.expression = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `label`.\n"]
-    pub fn set_label(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.label = Some(v.into());
+    #[doc = "Set the field `label`.\n"]
+    pub fn set_label(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.label = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `return_data`.\n"]
-    pub fn set_return_data(mut self, v: impl Into<PrimField<bool>>) -> Self {
-        self.return_data = Some(v.into());
+    #[doc = "Set the field `return_data`.\n"]
+    pub fn set_return_data(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
+        self.return_data = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `metric_stat`.\n"]
+    #[doc = "Set the field `metric_stat`.\n"]
     pub fn set_metric_stat(
         mut self,
         v:
             impl
 
-                    Into<
-                        BlockAssignable<
+                    std
+                    ::convert
+                    ::Into<
+                        terrars
+                        ::BlockAssignable<
                             AutoscalingPolicyPredictiveScalingConfigurationElMetricSpecificationElCustomizedScalingMetricSpecificationElMetricDataQueriesElMetricStatEl,
                         >,
                     >,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.metric_stat = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.metric_stat = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.metric_stat = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.metric_stat = std::option::Option::Some(d);
             },
         }
         self
     }
 }
 
-impl ToListMappable for AutoscalingPolicyPredictiveScalingConfigurationElMetricSpecificationElCustomizedScalingMetricSpecificationElMetricDataQueriesEl {
+impl terrars
+::ToListMappable for AutoscalingPolicyPredictiveScalingConfigurationElMetricSpecificationElCustomizedScalingMetricSpecificationElMetricDataQueriesEl {
     type O =
-        BlockAssignable<
+        terrars
+        ::BlockAssignable<
             AutoscalingPolicyPredictiveScalingConfigurationElMetricSpecificationElCustomizedScalingMetricSpecificationElMetricDataQueriesEl,
         >;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -2018,8 +2232,8 @@ impl ToListMappable for AutoscalingPolicyPredictiveScalingConfigurationElMetricS
 }
 
 pub struct BuildAutoscalingPolicyPredictiveScalingConfigurationElMetricSpecificationElCustomizedScalingMetricSpecificationElMetricDataQueriesEl {
-    #[doc= ""]
-    pub id: PrimField<String>,
+    #[doc = ""]
+    pub id: terrars::PrimField<std::string::String>,
 }
 
 impl BuildAutoscalingPolicyPredictiveScalingConfigurationElMetricSpecificationElCustomizedScalingMetricSpecificationElMetricDataQueriesEl {
@@ -2032,20 +2246,21 @@ impl BuildAutoscalingPolicyPredictiveScalingConfigurationElMetricSpecificationEl
             label: core::default::Default::default(),
             return_data: core::default::Default::default(),
             metric_stat: core::default::Default::default(),
-            dynamic: Default::default(),
+            dynamic: core::default::Default::default(),
         }
     }
 }
 
 pub struct AutoscalingPolicyPredictiveScalingConfigurationElMetricSpecificationElCustomizedScalingMetricSpecificationElMetricDataQueriesElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for AutoscalingPolicyPredictiveScalingConfigurationElMetricSpecificationElCustomizedScalingMetricSpecificationElMetricDataQueriesElRef {
+impl terrars
+::Ref for AutoscalingPolicyPredictiveScalingConfigurationElMetricSpecificationElCustomizedScalingMetricSpecificationElMetricDataQueriesElRef {
     fn new(
-        shared: StackShared,
-        base: String,
+        shared: terrars::StackShared,
+        base: std::string::String,
     ) -> AutoscalingPolicyPredictiveScalingConfigurationElMetricSpecificationElCustomizedScalingMetricSpecificationElMetricDataQueriesElRef {
         AutoscalingPolicyPredictiveScalingConfigurationElMetricSpecificationElCustomizedScalingMetricSpecificationElMetricDataQueriesElRef {
             shared: shared,
@@ -2055,44 +2270,48 @@ impl Ref for AutoscalingPolicyPredictiveScalingConfigurationElMetricSpecificatio
 }
 
 impl AutoscalingPolicyPredictiveScalingConfigurationElMetricSpecificationElCustomizedScalingMetricSpecificationElMetricDataQueriesElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `expression` after provisioning.\n"]
-    pub fn expression(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.expression", self.base))
+    #[doc = "Get a reference to the value of field `expression` after provisioning.\n"]
+    pub fn expression(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.expression", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `id` after provisioning.\n"]
-    pub fn id(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.id", self.base))
+    #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
+    pub fn id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `label` after provisioning.\n"]
-    pub fn label(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.label", self.base))
+    #[doc = "Get a reference to the value of field `label` after provisioning.\n"]
+    pub fn label(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.label", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `return_data` after provisioning.\n"]
-    pub fn return_data(&self) -> PrimExpr<bool> {
-        PrimExpr::new(self.shared().clone(), format!("{}.return_data", self.base))
+    #[doc = "Get a reference to the value of field `return_data` after provisioning.\n"]
+    pub fn return_data(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.return_data", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `metric_stat` after provisioning.\n"]
+    #[doc = "Get a reference to the value of field `metric_stat` after provisioning.\n"]
     pub fn metric_stat(
         &self,
-    ) -> ListRef<
+    ) -> terrars
+    ::ListRef<
         AutoscalingPolicyPredictiveScalingConfigurationElMetricSpecificationElCustomizedScalingMetricSpecificationElMetricDataQueriesElMetricStatElRef,
     > {
-        ListRef::new(self.shared().clone(), format!("{}.metric_stat", self.base))
+        terrars::ListRef::new(self.shared().clone(), format!("{}.metric_stat", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
 struct AutoscalingPolicyPredictiveScalingConfigurationElMetricSpecificationElCustomizedScalingMetricSpecificationElDynamic {
-    metric_data_queries: Option<
-        DynamicBlock<
+    metric_data_queries: std
+    ::option
+    ::Option<
+        terrars
+        ::DynamicBlock<
             AutoscalingPolicyPredictiveScalingConfigurationElMetricSpecificationElCustomizedScalingMetricSpecificationElMetricDataQueriesEl,
         >,
     >,
@@ -2100,9 +2319,13 @@ struct AutoscalingPolicyPredictiveScalingConfigurationElMetricSpecificationElCus
 
 #[derive(Serialize)]
 pub struct AutoscalingPolicyPredictiveScalingConfigurationElMetricSpecificationElCustomizedScalingMetricSpecificationEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    metric_data_queries: Option<
-        Vec<
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    metric_data_queries: std
+    ::option
+    ::Option<
+        std
+        ::vec
+        ::Vec<
             AutoscalingPolicyPredictiveScalingConfigurationElMetricSpecificationElCustomizedScalingMetricSpecificationElMetricDataQueriesEl,
         >,
     >,
@@ -2110,38 +2333,43 @@ pub struct AutoscalingPolicyPredictiveScalingConfigurationElMetricSpecificationE
 }
 
 impl AutoscalingPolicyPredictiveScalingConfigurationElMetricSpecificationElCustomizedScalingMetricSpecificationEl {
-    #[doc= "Set the field `metric_data_queries`.\n"]
+    #[doc = "Set the field `metric_data_queries`.\n"]
     pub fn set_metric_data_queries(
         mut self,
         v:
             impl
 
-                    Into<
-                        BlockAssignable<
+                    std
+                    ::convert
+                    ::Into<
+                        terrars
+                        ::BlockAssignable<
                             AutoscalingPolicyPredictiveScalingConfigurationElMetricSpecificationElCustomizedScalingMetricSpecificationElMetricDataQueriesEl,
                         >,
                     >,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.metric_data_queries = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.metric_data_queries = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.metric_data_queries = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.metric_data_queries = std::option::Option::Some(d);
             },
         }
         self
     }
 }
 
-impl ToListMappable for AutoscalingPolicyPredictiveScalingConfigurationElMetricSpecificationElCustomizedScalingMetricSpecificationEl {
+impl terrars
+::ToListMappable for AutoscalingPolicyPredictiveScalingConfigurationElMetricSpecificationElCustomizedScalingMetricSpecificationEl {
     type O =
-        BlockAssignable<
+        terrars
+        ::BlockAssignable<
             AutoscalingPolicyPredictiveScalingConfigurationElMetricSpecificationElCustomizedScalingMetricSpecificationEl,
         >;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -2157,20 +2385,21 @@ impl BuildAutoscalingPolicyPredictiveScalingConfigurationElMetricSpecificationEl
     ) -> AutoscalingPolicyPredictiveScalingConfigurationElMetricSpecificationElCustomizedScalingMetricSpecificationEl {
         AutoscalingPolicyPredictiveScalingConfigurationElMetricSpecificationElCustomizedScalingMetricSpecificationEl {
             metric_data_queries: core::default::Default::default(),
-            dynamic: Default::default(),
+            dynamic: core::default::Default::default(),
         }
     }
 }
 
 pub struct AutoscalingPolicyPredictiveScalingConfigurationElMetricSpecificationElCustomizedScalingMetricSpecificationElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for AutoscalingPolicyPredictiveScalingConfigurationElMetricSpecificationElCustomizedScalingMetricSpecificationElRef {
+impl terrars
+::Ref for AutoscalingPolicyPredictiveScalingConfigurationElMetricSpecificationElCustomizedScalingMetricSpecificationElRef {
     fn new(
-        shared: StackShared,
-        base: String,
+        shared: terrars::StackShared,
+        base: std::string::String,
     ) -> AutoscalingPolicyPredictiveScalingConfigurationElMetricSpecificationElCustomizedScalingMetricSpecificationElRef {
         AutoscalingPolicyPredictiveScalingConfigurationElMetricSpecificationElCustomizedScalingMetricSpecificationElRef {
             shared: shared,
@@ -2180,36 +2409,39 @@ impl Ref for AutoscalingPolicyPredictiveScalingConfigurationElMetricSpecificatio
 }
 
 impl AutoscalingPolicyPredictiveScalingConfigurationElMetricSpecificationElCustomizedScalingMetricSpecificationElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `metric_data_queries` after provisioning.\n"]
+    #[doc = "Get a reference to the value of field `metric_data_queries` after provisioning.\n"]
     pub fn metric_data_queries(
         &self,
-    ) -> ListRef<
+    ) -> terrars
+    ::ListRef<
         AutoscalingPolicyPredictiveScalingConfigurationElMetricSpecificationElCustomizedScalingMetricSpecificationElMetricDataQueriesElRef,
     > {
-        ListRef::new(self.shared().clone(), format!("{}.metric_data_queries", self.base))
+        terrars::ListRef::new(self.shared().clone(), format!("{}.metric_data_queries", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct AutoscalingPolicyPredictiveScalingConfigurationElMetricSpecificationElPredefinedLoadMetricSpecificationEl {
-    predefined_metric_type: PrimField<String>,
-    resource_label: PrimField<String>,
+    predefined_metric_type: terrars::PrimField<std::string::String>,
+    resource_label: terrars::PrimField<std::string::String>,
 }
 
 impl AutoscalingPolicyPredictiveScalingConfigurationElMetricSpecificationElPredefinedLoadMetricSpecificationEl { }
 
-impl ToListMappable for AutoscalingPolicyPredictiveScalingConfigurationElMetricSpecificationElPredefinedLoadMetricSpecificationEl {
+impl terrars
+::ToListMappable for AutoscalingPolicyPredictiveScalingConfigurationElMetricSpecificationElPredefinedLoadMetricSpecificationEl {
     type O =
-        BlockAssignable<
+        terrars
+        ::BlockAssignable<
             AutoscalingPolicyPredictiveScalingConfigurationElMetricSpecificationElPredefinedLoadMetricSpecificationEl,
         >;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -2218,10 +2450,10 @@ impl ToListMappable for AutoscalingPolicyPredictiveScalingConfigurationElMetricS
 }
 
 pub struct BuildAutoscalingPolicyPredictiveScalingConfigurationElMetricSpecificationElPredefinedLoadMetricSpecificationEl {
-    #[doc= ""]
-    pub predefined_metric_type: PrimField<String>,
-    #[doc= ""]
-    pub resource_label: PrimField<String>,
+    #[doc = ""]
+    pub predefined_metric_type: terrars::PrimField<std::string::String>,
+    #[doc = ""]
+    pub resource_label: terrars::PrimField<std::string::String>,
 }
 
 impl BuildAutoscalingPolicyPredictiveScalingConfigurationElMetricSpecificationElPredefinedLoadMetricSpecificationEl {
@@ -2236,14 +2468,15 @@ impl BuildAutoscalingPolicyPredictiveScalingConfigurationElMetricSpecificationEl
 }
 
 pub struct AutoscalingPolicyPredictiveScalingConfigurationElMetricSpecificationElPredefinedLoadMetricSpecificationElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for AutoscalingPolicyPredictiveScalingConfigurationElMetricSpecificationElPredefinedLoadMetricSpecificationElRef {
+impl terrars
+::Ref for AutoscalingPolicyPredictiveScalingConfigurationElMetricSpecificationElPredefinedLoadMetricSpecificationElRef {
     fn new(
-        shared: StackShared,
-        base: String,
+        shared: terrars::StackShared,
+        base: std::string::String,
     ) -> AutoscalingPolicyPredictiveScalingConfigurationElMetricSpecificationElPredefinedLoadMetricSpecificationElRef {
         AutoscalingPolicyPredictiveScalingConfigurationElMetricSpecificationElPredefinedLoadMetricSpecificationElRef {
             shared: shared,
@@ -2253,37 +2486,39 @@ impl Ref for AutoscalingPolicyPredictiveScalingConfigurationElMetricSpecificatio
 }
 
 impl AutoscalingPolicyPredictiveScalingConfigurationElMetricSpecificationElPredefinedLoadMetricSpecificationElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `predefined_metric_type` after provisioning.\n"]
-    pub fn predefined_metric_type(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.predefined_metric_type", self.base))
+    #[doc = "Get a reference to the value of field `predefined_metric_type` after provisioning.\n"]
+    pub fn predefined_metric_type(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.predefined_metric_type", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `resource_label` after provisioning.\n"]
-    pub fn resource_label(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.resource_label", self.base))
+    #[doc = "Get a reference to the value of field `resource_label` after provisioning.\n"]
+    pub fn resource_label(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.resource_label", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct AutoscalingPolicyPredictiveScalingConfigurationElMetricSpecificationElPredefinedMetricPairSpecificationEl {
-    predefined_metric_type: PrimField<String>,
-    resource_label: PrimField<String>,
+    predefined_metric_type: terrars::PrimField<std::string::String>,
+    resource_label: terrars::PrimField<std::string::String>,
 }
 
 impl AutoscalingPolicyPredictiveScalingConfigurationElMetricSpecificationElPredefinedMetricPairSpecificationEl { }
 
-impl ToListMappable for AutoscalingPolicyPredictiveScalingConfigurationElMetricSpecificationElPredefinedMetricPairSpecificationEl {
+impl terrars
+::ToListMappable for AutoscalingPolicyPredictiveScalingConfigurationElMetricSpecificationElPredefinedMetricPairSpecificationEl {
     type O =
-        BlockAssignable<
+        terrars
+        ::BlockAssignable<
             AutoscalingPolicyPredictiveScalingConfigurationElMetricSpecificationElPredefinedMetricPairSpecificationEl,
         >;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -2292,10 +2527,10 @@ impl ToListMappable for AutoscalingPolicyPredictiveScalingConfigurationElMetricS
 }
 
 pub struct BuildAutoscalingPolicyPredictiveScalingConfigurationElMetricSpecificationElPredefinedMetricPairSpecificationEl {
-    #[doc= ""]
-    pub predefined_metric_type: PrimField<String>,
-    #[doc= ""]
-    pub resource_label: PrimField<String>,
+    #[doc = ""]
+    pub predefined_metric_type: terrars::PrimField<std::string::String>,
+    #[doc = ""]
+    pub resource_label: terrars::PrimField<std::string::String>,
 }
 
 impl BuildAutoscalingPolicyPredictiveScalingConfigurationElMetricSpecificationElPredefinedMetricPairSpecificationEl {
@@ -2310,14 +2545,15 @@ impl BuildAutoscalingPolicyPredictiveScalingConfigurationElMetricSpecificationEl
 }
 
 pub struct AutoscalingPolicyPredictiveScalingConfigurationElMetricSpecificationElPredefinedMetricPairSpecificationElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for AutoscalingPolicyPredictiveScalingConfigurationElMetricSpecificationElPredefinedMetricPairSpecificationElRef {
+impl terrars
+::Ref for AutoscalingPolicyPredictiveScalingConfigurationElMetricSpecificationElPredefinedMetricPairSpecificationElRef {
     fn new(
-        shared: StackShared,
-        base: String,
+        shared: terrars::StackShared,
+        base: std::string::String,
     ) -> AutoscalingPolicyPredictiveScalingConfigurationElMetricSpecificationElPredefinedMetricPairSpecificationElRef {
         AutoscalingPolicyPredictiveScalingConfigurationElMetricSpecificationElPredefinedMetricPairSpecificationElRef {
             shared: shared,
@@ -2327,37 +2563,39 @@ impl Ref for AutoscalingPolicyPredictiveScalingConfigurationElMetricSpecificatio
 }
 
 impl AutoscalingPolicyPredictiveScalingConfigurationElMetricSpecificationElPredefinedMetricPairSpecificationElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `predefined_metric_type` after provisioning.\n"]
-    pub fn predefined_metric_type(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.predefined_metric_type", self.base))
+    #[doc = "Get a reference to the value of field `predefined_metric_type` after provisioning.\n"]
+    pub fn predefined_metric_type(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.predefined_metric_type", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `resource_label` after provisioning.\n"]
-    pub fn resource_label(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.resource_label", self.base))
+    #[doc = "Get a reference to the value of field `resource_label` after provisioning.\n"]
+    pub fn resource_label(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.resource_label", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct AutoscalingPolicyPredictiveScalingConfigurationElMetricSpecificationElPredefinedScalingMetricSpecificationEl {
-    predefined_metric_type: PrimField<String>,
-    resource_label: PrimField<String>,
+    predefined_metric_type: terrars::PrimField<std::string::String>,
+    resource_label: terrars::PrimField<std::string::String>,
 }
 
 impl AutoscalingPolicyPredictiveScalingConfigurationElMetricSpecificationElPredefinedScalingMetricSpecificationEl { }
 
-impl ToListMappable for AutoscalingPolicyPredictiveScalingConfigurationElMetricSpecificationElPredefinedScalingMetricSpecificationEl {
+impl terrars
+::ToListMappable for AutoscalingPolicyPredictiveScalingConfigurationElMetricSpecificationElPredefinedScalingMetricSpecificationEl {
     type O =
-        BlockAssignable<
+        terrars
+        ::BlockAssignable<
             AutoscalingPolicyPredictiveScalingConfigurationElMetricSpecificationElPredefinedScalingMetricSpecificationEl,
         >;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -2366,10 +2604,10 @@ impl ToListMappable for AutoscalingPolicyPredictiveScalingConfigurationElMetricS
 }
 
 pub struct BuildAutoscalingPolicyPredictiveScalingConfigurationElMetricSpecificationElPredefinedScalingMetricSpecificationEl {
-    #[doc= ""]
-    pub predefined_metric_type: PrimField<String>,
-    #[doc= ""]
-    pub resource_label: PrimField<String>,
+    #[doc = ""]
+    pub predefined_metric_type: terrars::PrimField<std::string::String>,
+    #[doc = ""]
+    pub resource_label: terrars::PrimField<std::string::String>,
 }
 
 impl BuildAutoscalingPolicyPredictiveScalingConfigurationElMetricSpecificationElPredefinedScalingMetricSpecificationEl {
@@ -2384,14 +2622,15 @@ impl BuildAutoscalingPolicyPredictiveScalingConfigurationElMetricSpecificationEl
 }
 
 pub struct AutoscalingPolicyPredictiveScalingConfigurationElMetricSpecificationElPredefinedScalingMetricSpecificationElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for AutoscalingPolicyPredictiveScalingConfigurationElMetricSpecificationElPredefinedScalingMetricSpecificationElRef {
+impl terrars
+::Ref for AutoscalingPolicyPredictiveScalingConfigurationElMetricSpecificationElPredefinedScalingMetricSpecificationElRef {
     fn new(
-        shared: StackShared,
-        base: String,
+        shared: terrars::StackShared,
+        base: std::string::String,
     ) -> AutoscalingPolicyPredictiveScalingConfigurationElMetricSpecificationElPredefinedScalingMetricSpecificationElRef {
         AutoscalingPolicyPredictiveScalingConfigurationElMetricSpecificationElPredefinedScalingMetricSpecificationElRef {
             shared: shared,
@@ -2401,50 +2640,68 @@ impl Ref for AutoscalingPolicyPredictiveScalingConfigurationElMetricSpecificatio
 }
 
 impl AutoscalingPolicyPredictiveScalingConfigurationElMetricSpecificationElPredefinedScalingMetricSpecificationElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `predefined_metric_type` after provisioning.\n"]
-    pub fn predefined_metric_type(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.predefined_metric_type", self.base))
+    #[doc = "Get a reference to the value of field `predefined_metric_type` after provisioning.\n"]
+    pub fn predefined_metric_type(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.predefined_metric_type", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `resource_label` after provisioning.\n"]
-    pub fn resource_label(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.resource_label", self.base))
+    #[doc = "Get a reference to the value of field `resource_label` after provisioning.\n"]
+    pub fn resource_label(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.resource_label", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
 struct AutoscalingPolicyPredictiveScalingConfigurationElMetricSpecificationElDynamic {
-    customized_capacity_metric_specification: Option<
-        DynamicBlock<
+    customized_capacity_metric_specification: std
+    ::option
+    ::Option<
+        terrars
+        ::DynamicBlock<
             AutoscalingPolicyPredictiveScalingConfigurationElMetricSpecificationElCustomizedCapacityMetricSpecificationEl,
         >,
     >,
-    customized_load_metric_specification: Option<
-        DynamicBlock<
+    customized_load_metric_specification: std
+    ::option
+    ::Option<
+        terrars
+        ::DynamicBlock<
             AutoscalingPolicyPredictiveScalingConfigurationElMetricSpecificationElCustomizedLoadMetricSpecificationEl,
         >,
     >,
-    customized_scaling_metric_specification: Option<
-        DynamicBlock<
+    customized_scaling_metric_specification: std
+    ::option
+    ::Option<
+        terrars
+        ::DynamicBlock<
             AutoscalingPolicyPredictiveScalingConfigurationElMetricSpecificationElCustomizedScalingMetricSpecificationEl,
         >,
     >,
-    predefined_load_metric_specification: Option<
-        DynamicBlock<
+    predefined_load_metric_specification: std
+    ::option
+    ::Option<
+        terrars
+        ::DynamicBlock<
             AutoscalingPolicyPredictiveScalingConfigurationElMetricSpecificationElPredefinedLoadMetricSpecificationEl,
         >,
     >,
-    predefined_metric_pair_specification: Option<
-        DynamicBlock<
+    predefined_metric_pair_specification: std
+    ::option
+    ::Option<
+        terrars
+        ::DynamicBlock<
             AutoscalingPolicyPredictiveScalingConfigurationElMetricSpecificationElPredefinedMetricPairSpecificationEl,
         >,
     >,
-    predefined_scaling_metric_specification: Option<
-        DynamicBlock<
+    predefined_scaling_metric_specification: std
+    ::option
+    ::Option<
+        terrars
+        ::DynamicBlock<
             AutoscalingPolicyPredictiveScalingConfigurationElMetricSpecificationElPredefinedScalingMetricSpecificationEl,
         >,
     >,
@@ -2452,34 +2709,64 @@ struct AutoscalingPolicyPredictiveScalingConfigurationElMetricSpecificationElDyn
 
 #[derive(Serialize)]
 pub struct AutoscalingPolicyPredictiveScalingConfigurationElMetricSpecificationEl {
-    target_value: PrimField<f64>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    customized_capacity_metric_specification: Option<
-        Vec<
+    target_value: terrars::PrimField<f64>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    customized_capacity_metric_specification: std
+    ::option
+    ::Option<
+        std
+        ::vec
+        ::Vec<
             AutoscalingPolicyPredictiveScalingConfigurationElMetricSpecificationElCustomizedCapacityMetricSpecificationEl,
         >,
     >,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    customized_load_metric_specification: Option<
-        Vec<AutoscalingPolicyPredictiveScalingConfigurationElMetricSpecificationElCustomizedLoadMetricSpecificationEl>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    customized_load_metric_specification: std
+    ::option
+    ::Option<
+        std
+        ::vec
+        ::Vec<
+            AutoscalingPolicyPredictiveScalingConfigurationElMetricSpecificationElCustomizedLoadMetricSpecificationEl,
+        >,
     >,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    customized_scaling_metric_specification: Option<
-        Vec<
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    customized_scaling_metric_specification: std
+    ::option
+    ::Option<
+        std
+        ::vec
+        ::Vec<
             AutoscalingPolicyPredictiveScalingConfigurationElMetricSpecificationElCustomizedScalingMetricSpecificationEl,
         >,
     >,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    predefined_load_metric_specification: Option<
-        Vec<AutoscalingPolicyPredictiveScalingConfigurationElMetricSpecificationElPredefinedLoadMetricSpecificationEl>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    predefined_load_metric_specification: std
+    ::option
+    ::Option<
+        std
+        ::vec
+        ::Vec<
+            AutoscalingPolicyPredictiveScalingConfigurationElMetricSpecificationElPredefinedLoadMetricSpecificationEl,
+        >,
     >,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    predefined_metric_pair_specification: Option<
-        Vec<AutoscalingPolicyPredictiveScalingConfigurationElMetricSpecificationElPredefinedMetricPairSpecificationEl>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    predefined_metric_pair_specification: std
+    ::option
+    ::Option<
+        std
+        ::vec
+        ::Vec<
+            AutoscalingPolicyPredictiveScalingConfigurationElMetricSpecificationElPredefinedMetricPairSpecificationEl,
+        >,
     >,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    predefined_scaling_metric_specification: Option<
-        Vec<
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    predefined_scaling_metric_specification: std
+    ::option
+    ::Option<
+        std
+        ::vec
+        ::Vec<
             AutoscalingPolicyPredictiveScalingConfigurationElMetricSpecificationElPredefinedScalingMetricSpecificationEl,
         >,
     >,
@@ -2487,150 +2774,168 @@ pub struct AutoscalingPolicyPredictiveScalingConfigurationElMetricSpecificationE
 }
 
 impl AutoscalingPolicyPredictiveScalingConfigurationElMetricSpecificationEl {
-    #[doc= "Set the field `customized_capacity_metric_specification`.\n"]
+    #[doc = "Set the field `customized_capacity_metric_specification`.\n"]
     pub fn set_customized_capacity_metric_specification(
         mut self,
         v:
             impl
 
-                    Into<
-                        BlockAssignable<
+                    std
+                    ::convert
+                    ::Into<
+                        terrars
+                        ::BlockAssignable<
                             AutoscalingPolicyPredictiveScalingConfigurationElMetricSpecificationElCustomizedCapacityMetricSpecificationEl,
                         >,
                     >,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.customized_capacity_metric_specification = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.customized_capacity_metric_specification = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.customized_capacity_metric_specification = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.customized_capacity_metric_specification = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Set the field `customized_load_metric_specification`.\n"]
+    #[doc = "Set the field `customized_load_metric_specification`.\n"]
     pub fn set_customized_load_metric_specification(
         mut self,
         v:
             impl
 
-                    Into<
-                        BlockAssignable<
+                    std
+                    ::convert
+                    ::Into<
+                        terrars
+                        ::BlockAssignable<
                             AutoscalingPolicyPredictiveScalingConfigurationElMetricSpecificationElCustomizedLoadMetricSpecificationEl,
                         >,
                     >,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.customized_load_metric_specification = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.customized_load_metric_specification = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.customized_load_metric_specification = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.customized_load_metric_specification = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Set the field `customized_scaling_metric_specification`.\n"]
+    #[doc = "Set the field `customized_scaling_metric_specification`.\n"]
     pub fn set_customized_scaling_metric_specification(
         mut self,
         v:
             impl
 
-                    Into<
-                        BlockAssignable<
+                    std
+                    ::convert
+                    ::Into<
+                        terrars
+                        ::BlockAssignable<
                             AutoscalingPolicyPredictiveScalingConfigurationElMetricSpecificationElCustomizedScalingMetricSpecificationEl,
                         >,
                     >,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.customized_scaling_metric_specification = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.customized_scaling_metric_specification = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.customized_scaling_metric_specification = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.customized_scaling_metric_specification = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Set the field `predefined_load_metric_specification`.\n"]
+    #[doc = "Set the field `predefined_load_metric_specification`.\n"]
     pub fn set_predefined_load_metric_specification(
         mut self,
         v:
             impl
 
-                    Into<
-                        BlockAssignable<
+                    std
+                    ::convert
+                    ::Into<
+                        terrars
+                        ::BlockAssignable<
                             AutoscalingPolicyPredictiveScalingConfigurationElMetricSpecificationElPredefinedLoadMetricSpecificationEl,
                         >,
                     >,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.predefined_load_metric_specification = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.predefined_load_metric_specification = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.predefined_load_metric_specification = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.predefined_load_metric_specification = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Set the field `predefined_metric_pair_specification`.\n"]
+    #[doc = "Set the field `predefined_metric_pair_specification`.\n"]
     pub fn set_predefined_metric_pair_specification(
         mut self,
         v:
             impl
 
-                    Into<
-                        BlockAssignable<
+                    std
+                    ::convert
+                    ::Into<
+                        terrars
+                        ::BlockAssignable<
                             AutoscalingPolicyPredictiveScalingConfigurationElMetricSpecificationElPredefinedMetricPairSpecificationEl,
                         >,
                     >,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.predefined_metric_pair_specification = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.predefined_metric_pair_specification = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.predefined_metric_pair_specification = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.predefined_metric_pair_specification = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Set the field `predefined_scaling_metric_specification`.\n"]
+    #[doc = "Set the field `predefined_scaling_metric_specification`.\n"]
     pub fn set_predefined_scaling_metric_specification(
         mut self,
         v:
             impl
 
-                    Into<
-                        BlockAssignable<
+                    std
+                    ::convert
+                    ::Into<
+                        terrars
+                        ::BlockAssignable<
                             AutoscalingPolicyPredictiveScalingConfigurationElMetricSpecificationElPredefinedScalingMetricSpecificationEl,
                         >,
                     >,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.predefined_scaling_metric_specification = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.predefined_scaling_metric_specification = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.predefined_scaling_metric_specification = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.predefined_scaling_metric_specification = std::option::Option::Some(d);
             },
         }
         self
     }
 }
 
-impl ToListMappable for AutoscalingPolicyPredictiveScalingConfigurationElMetricSpecificationEl {
-    type O = BlockAssignable<AutoscalingPolicyPredictiveScalingConfigurationElMetricSpecificationEl>;
+impl terrars::ToListMappable for AutoscalingPolicyPredictiveScalingConfigurationElMetricSpecificationEl {
+    type O = terrars::BlockAssignable<AutoscalingPolicyPredictiveScalingConfigurationElMetricSpecificationEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -2639,8 +2944,8 @@ impl ToListMappable for AutoscalingPolicyPredictiveScalingConfigurationElMetricS
 }
 
 pub struct BuildAutoscalingPolicyPredictiveScalingConfigurationElMetricSpecificationEl {
-    #[doc= ""]
-    pub target_value: PrimField<f64>,
+    #[doc = ""]
+    pub target_value: terrars::PrimField<f64>,
 }
 
 impl BuildAutoscalingPolicyPredictiveScalingConfigurationElMetricSpecificationEl {
@@ -2653,20 +2958,20 @@ impl BuildAutoscalingPolicyPredictiveScalingConfigurationElMetricSpecificationEl
             predefined_load_metric_specification: core::default::Default::default(),
             predefined_metric_pair_specification: core::default::Default::default(),
             predefined_scaling_metric_specification: core::default::Default::default(),
-            dynamic: Default::default(),
+            dynamic: core::default::Default::default(),
         }
     }
 }
 
 pub struct AutoscalingPolicyPredictiveScalingConfigurationElMetricSpecificationElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for AutoscalingPolicyPredictiveScalingConfigurationElMetricSpecificationElRef {
+impl terrars::Ref for AutoscalingPolicyPredictiveScalingConfigurationElMetricSpecificationElRef {
     fn new(
-        shared: StackShared,
-        base: String,
+        shared: terrars::StackShared,
+        base: std::string::String,
     ) -> AutoscalingPolicyPredictiveScalingConfigurationElMetricSpecificationElRef {
         AutoscalingPolicyPredictiveScalingConfigurationElMetricSpecificationElRef {
             shared: shared,
@@ -2676,139 +2981,173 @@ impl Ref for AutoscalingPolicyPredictiveScalingConfigurationElMetricSpecificatio
 }
 
 impl AutoscalingPolicyPredictiveScalingConfigurationElMetricSpecificationElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `target_value` after provisioning.\n"]
-    pub fn target_value(&self) -> PrimExpr<f64> {
-        PrimExpr::new(self.shared().clone(), format!("{}.target_value", self.base))
+    #[doc = "Get a reference to the value of field `target_value` after provisioning.\n"]
+    pub fn target_value(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.target_value", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `customized_capacity_metric_specification` after provisioning.\n"]
+    #[doc = "Get a reference to the value of field `customized_capacity_metric_specification` after provisioning.\n"]
     pub fn customized_capacity_metric_specification(
         &self,
-    ) -> ListRef<
+    ) -> terrars
+    ::ListRef<
         AutoscalingPolicyPredictiveScalingConfigurationElMetricSpecificationElCustomizedCapacityMetricSpecificationElRef,
     > {
-        ListRef::new(self.shared().clone(), format!("{}.customized_capacity_metric_specification", self.base))
+        terrars::ListRef::new(
+            self.shared().clone(),
+            format!("{}.customized_capacity_metric_specification", self.base),
+        )
     }
 
-    #[doc= "Get a reference to the value of field `customized_load_metric_specification` after provisioning.\n"]
+    #[doc = "Get a reference to the value of field `customized_load_metric_specification` after provisioning.\n"]
     pub fn customized_load_metric_specification(
         &self,
-    ) -> ListRef<
+    ) -> terrars
+    ::ListRef<
         AutoscalingPolicyPredictiveScalingConfigurationElMetricSpecificationElCustomizedLoadMetricSpecificationElRef,
     > {
-        ListRef::new(self.shared().clone(), format!("{}.customized_load_metric_specification", self.base))
+        terrars::ListRef::new(self.shared().clone(), format!("{}.customized_load_metric_specification", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `customized_scaling_metric_specification` after provisioning.\n"]
+    #[doc = "Get a reference to the value of field `customized_scaling_metric_specification` after provisioning.\n"]
     pub fn customized_scaling_metric_specification(
         &self,
-    ) -> ListRef<
+    ) -> terrars
+    ::ListRef<
         AutoscalingPolicyPredictiveScalingConfigurationElMetricSpecificationElCustomizedScalingMetricSpecificationElRef,
     > {
-        ListRef::new(self.shared().clone(), format!("{}.customized_scaling_metric_specification", self.base))
+        terrars::ListRef::new(
+            self.shared().clone(),
+            format!("{}.customized_scaling_metric_specification", self.base),
+        )
     }
 
-    #[doc= "Get a reference to the value of field `predefined_load_metric_specification` after provisioning.\n"]
+    #[doc = "Get a reference to the value of field `predefined_load_metric_specification` after provisioning.\n"]
     pub fn predefined_load_metric_specification(
         &self,
-    ) -> ListRef<
+    ) -> terrars
+    ::ListRef<
         AutoscalingPolicyPredictiveScalingConfigurationElMetricSpecificationElPredefinedLoadMetricSpecificationElRef,
     > {
-        ListRef::new(self.shared().clone(), format!("{}.predefined_load_metric_specification", self.base))
+        terrars::ListRef::new(self.shared().clone(), format!("{}.predefined_load_metric_specification", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `predefined_metric_pair_specification` after provisioning.\n"]
+    #[doc = "Get a reference to the value of field `predefined_metric_pair_specification` after provisioning.\n"]
     pub fn predefined_metric_pair_specification(
         &self,
-    ) -> ListRef<
+    ) -> terrars
+    ::ListRef<
         AutoscalingPolicyPredictiveScalingConfigurationElMetricSpecificationElPredefinedMetricPairSpecificationElRef,
     > {
-        ListRef::new(self.shared().clone(), format!("{}.predefined_metric_pair_specification", self.base))
+        terrars::ListRef::new(self.shared().clone(), format!("{}.predefined_metric_pair_specification", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `predefined_scaling_metric_specification` after provisioning.\n"]
+    #[doc = "Get a reference to the value of field `predefined_scaling_metric_specification` after provisioning.\n"]
     pub fn predefined_scaling_metric_specification(
         &self,
-    ) -> ListRef<
+    ) -> terrars
+    ::ListRef<
         AutoscalingPolicyPredictiveScalingConfigurationElMetricSpecificationElPredefinedScalingMetricSpecificationElRef,
     > {
-        ListRef::new(self.shared().clone(), format!("{}.predefined_scaling_metric_specification", self.base))
+        terrars::ListRef::new(
+            self.shared().clone(),
+            format!("{}.predefined_scaling_metric_specification", self.base),
+        )
     }
 }
 
 #[derive(Serialize, Default)]
 struct AutoscalingPolicyPredictiveScalingConfigurationElDynamic {
-    metric_specification: Option<
-        DynamicBlock<AutoscalingPolicyPredictiveScalingConfigurationElMetricSpecificationEl>,
-    >,
+    metric_specification: std
+    ::option
+    ::Option<terrars::DynamicBlock<AutoscalingPolicyPredictiveScalingConfigurationElMetricSpecificationEl>>,
 }
 
 #[derive(Serialize)]
 pub struct AutoscalingPolicyPredictiveScalingConfigurationEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    max_capacity_breach_behavior: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    max_capacity_buffer: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    mode: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    scheduling_buffer_time: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    metric_specification: Option<Vec<AutoscalingPolicyPredictiveScalingConfigurationElMetricSpecificationEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    max_capacity_breach_behavior: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    max_capacity_buffer: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    mode: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    scheduling_buffer_time: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    metric_specification: std
+    ::option
+    ::Option<std::vec::Vec<AutoscalingPolicyPredictiveScalingConfigurationElMetricSpecificationEl>>,
     dynamic: AutoscalingPolicyPredictiveScalingConfigurationElDynamic,
 }
 
 impl AutoscalingPolicyPredictiveScalingConfigurationEl {
-    #[doc= "Set the field `max_capacity_breach_behavior`.\n"]
-    pub fn set_max_capacity_breach_behavior(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.max_capacity_breach_behavior = Some(v.into());
+    #[doc = "Set the field `max_capacity_breach_behavior`.\n"]
+    pub fn set_max_capacity_breach_behavior(
+        mut self,
+        v: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.max_capacity_breach_behavior = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `max_capacity_buffer`.\n"]
-    pub fn set_max_capacity_buffer(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.max_capacity_buffer = Some(v.into());
+    #[doc = "Set the field `max_capacity_buffer`.\n"]
+    pub fn set_max_capacity_buffer(
+        mut self,
+        v: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.max_capacity_buffer = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `mode`.\n"]
-    pub fn set_mode(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.mode = Some(v.into());
+    #[doc = "Set the field `mode`.\n"]
+    pub fn set_mode(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.mode = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `scheduling_buffer_time`.\n"]
-    pub fn set_scheduling_buffer_time(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.scheduling_buffer_time = Some(v.into());
+    #[doc = "Set the field `scheduling_buffer_time`.\n"]
+    pub fn set_scheduling_buffer_time(
+        mut self,
+        v: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.scheduling_buffer_time = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `metric_specification`.\n"]
+    #[doc = "Set the field `metric_specification`.\n"]
     pub fn set_metric_specification(
         mut self,
-        v: impl Into<BlockAssignable<AutoscalingPolicyPredictiveScalingConfigurationElMetricSpecificationEl>>,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<
+                        terrars
+                        ::BlockAssignable<AutoscalingPolicyPredictiveScalingConfigurationElMetricSpecificationEl>,
+                    >,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.metric_specification = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.metric_specification = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.metric_specification = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.metric_specification = std::option::Option::Some(d);
             },
         }
         self
     }
 }
 
-impl ToListMappable for AutoscalingPolicyPredictiveScalingConfigurationEl {
-    type O = BlockAssignable<AutoscalingPolicyPredictiveScalingConfigurationEl>;
+impl terrars::ToListMappable for AutoscalingPolicyPredictiveScalingConfigurationEl {
+    type O = terrars::BlockAssignable<AutoscalingPolicyPredictiveScalingConfigurationEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -2826,18 +3165,21 @@ impl BuildAutoscalingPolicyPredictiveScalingConfigurationEl {
             mode: core::default::Default::default(),
             scheduling_buffer_time: core::default::Default::default(),
             metric_specification: core::default::Default::default(),
-            dynamic: Default::default(),
+            dynamic: core::default::Default::default(),
         }
     }
 }
 
 pub struct AutoscalingPolicyPredictiveScalingConfigurationElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for AutoscalingPolicyPredictiveScalingConfigurationElRef {
-    fn new(shared: StackShared, base: String) -> AutoscalingPolicyPredictiveScalingConfigurationElRef {
+impl terrars::Ref for AutoscalingPolicyPredictiveScalingConfigurationElRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> AutoscalingPolicyPredictiveScalingConfigurationElRef {
         AutoscalingPolicyPredictiveScalingConfigurationElRef {
             shared: shared,
             base: base.to_string(),
@@ -2846,66 +3188,72 @@ impl Ref for AutoscalingPolicyPredictiveScalingConfigurationElRef {
 }
 
 impl AutoscalingPolicyPredictiveScalingConfigurationElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `max_capacity_breach_behavior` after provisioning.\n"]
-    pub fn max_capacity_breach_behavior(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.max_capacity_breach_behavior", self.base))
+    #[doc = "Get a reference to the value of field `max_capacity_breach_behavior` after provisioning.\n"]
+    pub fn max_capacity_breach_behavior(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.max_capacity_breach_behavior", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `max_capacity_buffer` after provisioning.\n"]
-    pub fn max_capacity_buffer(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.max_capacity_buffer", self.base))
+    #[doc = "Get a reference to the value of field `max_capacity_buffer` after provisioning.\n"]
+    pub fn max_capacity_buffer(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.max_capacity_buffer", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `mode` after provisioning.\n"]
-    pub fn mode(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.mode", self.base))
+    #[doc = "Get a reference to the value of field `mode` after provisioning.\n"]
+    pub fn mode(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.mode", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `scheduling_buffer_time` after provisioning.\n"]
-    pub fn scheduling_buffer_time(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.scheduling_buffer_time", self.base))
+    #[doc = "Get a reference to the value of field `scheduling_buffer_time` after provisioning.\n"]
+    pub fn scheduling_buffer_time(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.scheduling_buffer_time", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `metric_specification` after provisioning.\n"]
+    #[doc = "Get a reference to the value of field `metric_specification` after provisioning.\n"]
     pub fn metric_specification(
         &self,
-    ) -> ListRef<AutoscalingPolicyPredictiveScalingConfigurationElMetricSpecificationElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.metric_specification", self.base))
+    ) -> terrars::ListRef<AutoscalingPolicyPredictiveScalingConfigurationElMetricSpecificationElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.metric_specification", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct AutoscalingPolicyStepAdjustmentEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    metric_interval_lower_bound: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    metric_interval_upper_bound: Option<PrimField<String>>,
-    scaling_adjustment: PrimField<f64>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    metric_interval_lower_bound: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    metric_interval_upper_bound: std::option::Option<terrars::PrimField<std::string::String>>,
+    scaling_adjustment: terrars::PrimField<f64>,
 }
 
 impl AutoscalingPolicyStepAdjustmentEl {
-    #[doc= "Set the field `metric_interval_lower_bound`.\n"]
-    pub fn set_metric_interval_lower_bound(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.metric_interval_lower_bound = Some(v.into());
+    #[doc = "Set the field `metric_interval_lower_bound`.\n"]
+    pub fn set_metric_interval_lower_bound(
+        mut self,
+        v: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.metric_interval_lower_bound = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `metric_interval_upper_bound`.\n"]
-    pub fn set_metric_interval_upper_bound(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.metric_interval_upper_bound = Some(v.into());
+    #[doc = "Set the field `metric_interval_upper_bound`.\n"]
+    pub fn set_metric_interval_upper_bound(
+        mut self,
+        v: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.metric_interval_upper_bound = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl ToListMappable for AutoscalingPolicyStepAdjustmentEl {
-    type O = BlockAssignable<AutoscalingPolicyStepAdjustmentEl>;
+impl terrars::ToListMappable for AutoscalingPolicyStepAdjustmentEl {
+    type O = terrars::BlockAssignable<AutoscalingPolicyStepAdjustmentEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -2914,8 +3262,8 @@ impl ToListMappable for AutoscalingPolicyStepAdjustmentEl {
 }
 
 pub struct BuildAutoscalingPolicyStepAdjustmentEl {
-    #[doc= ""]
-    pub scaling_adjustment: PrimField<f64>,
+    #[doc = ""]
+    pub scaling_adjustment: terrars::PrimField<f64>,
 }
 
 impl BuildAutoscalingPolicyStepAdjustmentEl {
@@ -2929,12 +3277,12 @@ impl BuildAutoscalingPolicyStepAdjustmentEl {
 }
 
 pub struct AutoscalingPolicyStepAdjustmentElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for AutoscalingPolicyStepAdjustmentElRef {
-    fn new(shared: StackShared, base: String) -> AutoscalingPolicyStepAdjustmentElRef {
+impl terrars::Ref for AutoscalingPolicyStepAdjustmentElRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> AutoscalingPolicyStepAdjustmentElRef {
         AutoscalingPolicyStepAdjustmentElRef {
             shared: shared,
             base: base.to_string(),
@@ -2943,42 +3291,44 @@ impl Ref for AutoscalingPolicyStepAdjustmentElRef {
 }
 
 impl AutoscalingPolicyStepAdjustmentElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `metric_interval_lower_bound` after provisioning.\n"]
-    pub fn metric_interval_lower_bound(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.metric_interval_lower_bound", self.base))
+    #[doc = "Get a reference to the value of field `metric_interval_lower_bound` after provisioning.\n"]
+    pub fn metric_interval_lower_bound(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.metric_interval_lower_bound", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `metric_interval_upper_bound` after provisioning.\n"]
-    pub fn metric_interval_upper_bound(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.metric_interval_upper_bound", self.base))
+    #[doc = "Get a reference to the value of field `metric_interval_upper_bound` after provisioning.\n"]
+    pub fn metric_interval_upper_bound(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.metric_interval_upper_bound", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `scaling_adjustment` after provisioning.\n"]
-    pub fn scaling_adjustment(&self) -> PrimExpr<f64> {
-        PrimExpr::new(self.shared().clone(), format!("{}.scaling_adjustment", self.base))
+    #[doc = "Get a reference to the value of field `scaling_adjustment` after provisioning.\n"]
+    pub fn scaling_adjustment(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.scaling_adjustment", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct AutoscalingPolicyTargetTrackingConfigurationElCustomizedMetricSpecificationElMetricDimensionEl {
-    name: PrimField<String>,
-    value: PrimField<String>,
+    name: terrars::PrimField<std::string::String>,
+    value: terrars::PrimField<std::string::String>,
 }
 
 impl AutoscalingPolicyTargetTrackingConfigurationElCustomizedMetricSpecificationElMetricDimensionEl { }
 
-impl ToListMappable for AutoscalingPolicyTargetTrackingConfigurationElCustomizedMetricSpecificationElMetricDimensionEl {
+impl terrars
+::ToListMappable for AutoscalingPolicyTargetTrackingConfigurationElCustomizedMetricSpecificationElMetricDimensionEl {
     type O =
-        BlockAssignable<
+        terrars
+        ::BlockAssignable<
             AutoscalingPolicyTargetTrackingConfigurationElCustomizedMetricSpecificationElMetricDimensionEl,
         >;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -2987,10 +3337,10 @@ impl ToListMappable for AutoscalingPolicyTargetTrackingConfigurationElCustomized
 }
 
 pub struct BuildAutoscalingPolicyTargetTrackingConfigurationElCustomizedMetricSpecificationElMetricDimensionEl {
-    #[doc= ""]
-    pub name: PrimField<String>,
-    #[doc= ""]
-    pub value: PrimField<String>,
+    #[doc = ""]
+    pub name: terrars::PrimField<std::string::String>,
+    #[doc = ""]
+    pub value: terrars::PrimField<std::string::String>,
 }
 
 impl BuildAutoscalingPolicyTargetTrackingConfigurationElCustomizedMetricSpecificationElMetricDimensionEl {
@@ -3005,14 +3355,15 @@ impl BuildAutoscalingPolicyTargetTrackingConfigurationElCustomizedMetricSpecific
 }
 
 pub struct AutoscalingPolicyTargetTrackingConfigurationElCustomizedMetricSpecificationElMetricDimensionElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for AutoscalingPolicyTargetTrackingConfigurationElCustomizedMetricSpecificationElMetricDimensionElRef {
+impl terrars
+::Ref for AutoscalingPolicyTargetTrackingConfigurationElCustomizedMetricSpecificationElMetricDimensionElRef {
     fn new(
-        shared: StackShared,
-        base: String,
+        shared: terrars::StackShared,
+        base: std::string::String,
     ) -> AutoscalingPolicyTargetTrackingConfigurationElCustomizedMetricSpecificationElMetricDimensionElRef {
         AutoscalingPolicyTargetTrackingConfigurationElCustomizedMetricSpecificationElMetricDimensionElRef {
             shared: shared,
@@ -3022,78 +3373,86 @@ impl Ref for AutoscalingPolicyTargetTrackingConfigurationElCustomizedMetricSpeci
 }
 
 impl AutoscalingPolicyTargetTrackingConfigurationElCustomizedMetricSpecificationElMetricDimensionElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `name` after provisioning.\n"]
-    pub fn name(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.name", self.base))
+    #[doc = "Get a reference to the value of field `name` after provisioning.\n"]
+    pub fn name(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `value` after provisioning.\n"]
-    pub fn value(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.value", self.base))
+    #[doc = "Get a reference to the value of field `value` after provisioning.\n"]
+    pub fn value(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.value", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
 struct AutoscalingPolicyTargetTrackingConfigurationElCustomizedMetricSpecificationElDynamic {
-    metric_dimension: Option<
-        DynamicBlock<AutoscalingPolicyTargetTrackingConfigurationElCustomizedMetricSpecificationElMetricDimensionEl>,
+    metric_dimension: std
+    ::option
+    ::Option<
+        terrars
+        ::DynamicBlock<AutoscalingPolicyTargetTrackingConfigurationElCustomizedMetricSpecificationElMetricDimensionEl>,
     >,
 }
 
 #[derive(Serialize)]
 pub struct AutoscalingPolicyTargetTrackingConfigurationElCustomizedMetricSpecificationEl {
-    metric_name: PrimField<String>,
-    namespace: PrimField<String>,
-    statistic: PrimField<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    unit: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    metric_dimension: Option<
-        Vec<AutoscalingPolicyTargetTrackingConfigurationElCustomizedMetricSpecificationElMetricDimensionEl>,
+    metric_name: terrars::PrimField<std::string::String>,
+    namespace: terrars::PrimField<std::string::String>,
+    statistic: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    unit: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    metric_dimension: std
+    ::option
+    ::Option<
+        std::vec::Vec<AutoscalingPolicyTargetTrackingConfigurationElCustomizedMetricSpecificationElMetricDimensionEl>,
     >,
     dynamic: AutoscalingPolicyTargetTrackingConfigurationElCustomizedMetricSpecificationElDynamic,
 }
 
 impl AutoscalingPolicyTargetTrackingConfigurationElCustomizedMetricSpecificationEl {
-    #[doc= "Set the field `unit`.\n"]
-    pub fn set_unit(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.unit = Some(v.into());
+    #[doc = "Set the field `unit`.\n"]
+    pub fn set_unit(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.unit = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `metric_dimension`.\n"]
+    #[doc = "Set the field `metric_dimension`.\n"]
     pub fn set_metric_dimension(
         mut self,
         v:
             impl
 
-                    Into<
-                        BlockAssignable<
+                    std
+                    ::convert
+                    ::Into<
+                        terrars
+                        ::BlockAssignable<
                             AutoscalingPolicyTargetTrackingConfigurationElCustomizedMetricSpecificationElMetricDimensionEl,
                         >,
                     >,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.metric_dimension = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.metric_dimension = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.metric_dimension = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.metric_dimension = std::option::Option::Some(d);
             },
         }
         self
     }
 }
 
-impl ToListMappable for AutoscalingPolicyTargetTrackingConfigurationElCustomizedMetricSpecificationEl {
-    type O = BlockAssignable<AutoscalingPolicyTargetTrackingConfigurationElCustomizedMetricSpecificationEl>;
+impl terrars::ToListMappable for AutoscalingPolicyTargetTrackingConfigurationElCustomizedMetricSpecificationEl {
+    type O = terrars::BlockAssignable<AutoscalingPolicyTargetTrackingConfigurationElCustomizedMetricSpecificationEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -3102,12 +3461,12 @@ impl ToListMappable for AutoscalingPolicyTargetTrackingConfigurationElCustomized
 }
 
 pub struct BuildAutoscalingPolicyTargetTrackingConfigurationElCustomizedMetricSpecificationEl {
-    #[doc= ""]
-    pub metric_name: PrimField<String>,
-    #[doc= ""]
-    pub namespace: PrimField<String>,
-    #[doc= ""]
-    pub statistic: PrimField<String>,
+    #[doc = ""]
+    pub metric_name: terrars::PrimField<std::string::String>,
+    #[doc = ""]
+    pub namespace: terrars::PrimField<std::string::String>,
+    #[doc = ""]
+    pub statistic: terrars::PrimField<std::string::String>,
 }
 
 impl BuildAutoscalingPolicyTargetTrackingConfigurationElCustomizedMetricSpecificationEl {
@@ -3118,20 +3477,20 @@ impl BuildAutoscalingPolicyTargetTrackingConfigurationElCustomizedMetricSpecific
             statistic: self.statistic,
             unit: core::default::Default::default(),
             metric_dimension: core::default::Default::default(),
-            dynamic: Default::default(),
+            dynamic: core::default::Default::default(),
         }
     }
 }
 
 pub struct AutoscalingPolicyTargetTrackingConfigurationElCustomizedMetricSpecificationElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for AutoscalingPolicyTargetTrackingConfigurationElCustomizedMetricSpecificationElRef {
+impl terrars::Ref for AutoscalingPolicyTargetTrackingConfigurationElCustomizedMetricSpecificationElRef {
     fn new(
-        shared: StackShared,
-        base: String,
+        shared: terrars::StackShared,
+        base: std::string::String,
     ) -> AutoscalingPolicyTargetTrackingConfigurationElCustomizedMetricSpecificationElRef {
         AutoscalingPolicyTargetTrackingConfigurationElCustomizedMetricSpecificationElRef {
             shared: shared,
@@ -3141,58 +3500,59 @@ impl Ref for AutoscalingPolicyTargetTrackingConfigurationElCustomizedMetricSpeci
 }
 
 impl AutoscalingPolicyTargetTrackingConfigurationElCustomizedMetricSpecificationElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `metric_name` after provisioning.\n"]
-    pub fn metric_name(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.metric_name", self.base))
+    #[doc = "Get a reference to the value of field `metric_name` after provisioning.\n"]
+    pub fn metric_name(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.metric_name", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `namespace` after provisioning.\n"]
-    pub fn namespace(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.namespace", self.base))
+    #[doc = "Get a reference to the value of field `namespace` after provisioning.\n"]
+    pub fn namespace(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.namespace", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `statistic` after provisioning.\n"]
-    pub fn statistic(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.statistic", self.base))
+    #[doc = "Get a reference to the value of field `statistic` after provisioning.\n"]
+    pub fn statistic(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.statistic", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `unit` after provisioning.\n"]
-    pub fn unit(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.unit", self.base))
+    #[doc = "Get a reference to the value of field `unit` after provisioning.\n"]
+    pub fn unit(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.unit", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `metric_dimension` after provisioning.\n"]
+    #[doc = "Get a reference to the value of field `metric_dimension` after provisioning.\n"]
     pub fn metric_dimension(
         &self,
-    ) -> ListRef<AutoscalingPolicyTargetTrackingConfigurationElCustomizedMetricSpecificationElMetricDimensionElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.metric_dimension", self.base))
+    ) -> terrars
+    ::ListRef<AutoscalingPolicyTargetTrackingConfigurationElCustomizedMetricSpecificationElMetricDimensionElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.metric_dimension", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct AutoscalingPolicyTargetTrackingConfigurationElPredefinedMetricSpecificationEl {
-    predefined_metric_type: PrimField<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    resource_label: Option<PrimField<String>>,
+    predefined_metric_type: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    resource_label: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
 impl AutoscalingPolicyTargetTrackingConfigurationElPredefinedMetricSpecificationEl {
-    #[doc= "Set the field `resource_label`.\n"]
-    pub fn set_resource_label(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.resource_label = Some(v.into());
+    #[doc = "Set the field `resource_label`.\n"]
+    pub fn set_resource_label(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.resource_label = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl ToListMappable for AutoscalingPolicyTargetTrackingConfigurationElPredefinedMetricSpecificationEl {
-    type O = BlockAssignable<AutoscalingPolicyTargetTrackingConfigurationElPredefinedMetricSpecificationEl>;
+impl terrars::ToListMappable for AutoscalingPolicyTargetTrackingConfigurationElPredefinedMetricSpecificationEl {
+    type O = terrars::BlockAssignable<AutoscalingPolicyTargetTrackingConfigurationElPredefinedMetricSpecificationEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -3201,8 +3561,8 @@ impl ToListMappable for AutoscalingPolicyTargetTrackingConfigurationElPredefined
 }
 
 pub struct BuildAutoscalingPolicyTargetTrackingConfigurationElPredefinedMetricSpecificationEl {
-    #[doc= ""]
-    pub predefined_metric_type: PrimField<String>,
+    #[doc = ""]
+    pub predefined_metric_type: terrars::PrimField<std::string::String>,
 }
 
 impl BuildAutoscalingPolicyTargetTrackingConfigurationElPredefinedMetricSpecificationEl {
@@ -3215,14 +3575,14 @@ impl BuildAutoscalingPolicyTargetTrackingConfigurationElPredefinedMetricSpecific
 }
 
 pub struct AutoscalingPolicyTargetTrackingConfigurationElPredefinedMetricSpecificationElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for AutoscalingPolicyTargetTrackingConfigurationElPredefinedMetricSpecificationElRef {
+impl terrars::Ref for AutoscalingPolicyTargetTrackingConfigurationElPredefinedMetricSpecificationElRef {
     fn new(
-        shared: StackShared,
-        base: String,
+        shared: terrars::StackShared,
+        base: std::string::String,
     ) -> AutoscalingPolicyTargetTrackingConfigurationElPredefinedMetricSpecificationElRef {
         AutoscalingPolicyTargetTrackingConfigurationElPredefinedMetricSpecificationElRef {
             shared: shared,
@@ -3232,92 +3592,112 @@ impl Ref for AutoscalingPolicyTargetTrackingConfigurationElPredefinedMetricSpeci
 }
 
 impl AutoscalingPolicyTargetTrackingConfigurationElPredefinedMetricSpecificationElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `predefined_metric_type` after provisioning.\n"]
-    pub fn predefined_metric_type(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.predefined_metric_type", self.base))
+    #[doc = "Get a reference to the value of field `predefined_metric_type` after provisioning.\n"]
+    pub fn predefined_metric_type(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.predefined_metric_type", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `resource_label` after provisioning.\n"]
-    pub fn resource_label(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.resource_label", self.base))
+    #[doc = "Get a reference to the value of field `resource_label` after provisioning.\n"]
+    pub fn resource_label(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.resource_label", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
 struct AutoscalingPolicyTargetTrackingConfigurationElDynamic {
-    customized_metric_specification: Option<
-        DynamicBlock<AutoscalingPolicyTargetTrackingConfigurationElCustomizedMetricSpecificationEl>,
-    >,
-    predefined_metric_specification: Option<
-        DynamicBlock<AutoscalingPolicyTargetTrackingConfigurationElPredefinedMetricSpecificationEl>,
-    >,
+    customized_metric_specification: std
+    ::option
+    ::Option<terrars::DynamicBlock<AutoscalingPolicyTargetTrackingConfigurationElCustomizedMetricSpecificationEl>>,
+    predefined_metric_specification: std
+    ::option
+    ::Option<terrars::DynamicBlock<AutoscalingPolicyTargetTrackingConfigurationElPredefinedMetricSpecificationEl>>,
 }
 
 #[derive(Serialize)]
 pub struct AutoscalingPolicyTargetTrackingConfigurationEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    disable_scale_in: Option<PrimField<bool>>,
-    target_value: PrimField<f64>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    customized_metric_specification: Option<
-        Vec<AutoscalingPolicyTargetTrackingConfigurationElCustomizedMetricSpecificationEl>,
-    >,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    predefined_metric_specification: Option<
-        Vec<AutoscalingPolicyTargetTrackingConfigurationElPredefinedMetricSpecificationEl>,
-    >,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    disable_scale_in: std::option::Option<terrars::PrimField<bool>>,
+    target_value: terrars::PrimField<f64>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    customized_metric_specification: std
+    ::option
+    ::Option<std::vec::Vec<AutoscalingPolicyTargetTrackingConfigurationElCustomizedMetricSpecificationEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    predefined_metric_specification: std
+    ::option
+    ::Option<std::vec::Vec<AutoscalingPolicyTargetTrackingConfigurationElPredefinedMetricSpecificationEl>>,
     dynamic: AutoscalingPolicyTargetTrackingConfigurationElDynamic,
 }
 
 impl AutoscalingPolicyTargetTrackingConfigurationEl {
-    #[doc= "Set the field `disable_scale_in`.\n"]
-    pub fn set_disable_scale_in(mut self, v: impl Into<PrimField<bool>>) -> Self {
-        self.disable_scale_in = Some(v.into());
+    #[doc = "Set the field `disable_scale_in`.\n"]
+    pub fn set_disable_scale_in(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
+        self.disable_scale_in = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `customized_metric_specification`.\n"]
+    #[doc = "Set the field `customized_metric_specification`.\n"]
     pub fn set_customized_metric_specification(
         mut self,
-        v: impl Into<BlockAssignable<AutoscalingPolicyTargetTrackingConfigurationElCustomizedMetricSpecificationEl>>,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<
+                        terrars
+                        ::BlockAssignable<
+                            AutoscalingPolicyTargetTrackingConfigurationElCustomizedMetricSpecificationEl,
+                        >,
+                    >,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.customized_metric_specification = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.customized_metric_specification = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.customized_metric_specification = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.customized_metric_specification = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Set the field `predefined_metric_specification`.\n"]
+    #[doc = "Set the field `predefined_metric_specification`.\n"]
     pub fn set_predefined_metric_specification(
         mut self,
-        v: impl Into<BlockAssignable<AutoscalingPolicyTargetTrackingConfigurationElPredefinedMetricSpecificationEl>>,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<
+                        terrars
+                        ::BlockAssignable<
+                            AutoscalingPolicyTargetTrackingConfigurationElPredefinedMetricSpecificationEl,
+                        >,
+                    >,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.predefined_metric_specification = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.predefined_metric_specification = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.predefined_metric_specification = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.predefined_metric_specification = std::option::Option::Some(d);
             },
         }
         self
     }
 }
 
-impl ToListMappable for AutoscalingPolicyTargetTrackingConfigurationEl {
-    type O = BlockAssignable<AutoscalingPolicyTargetTrackingConfigurationEl>;
+impl terrars::ToListMappable for AutoscalingPolicyTargetTrackingConfigurationEl {
+    type O = terrars::BlockAssignable<AutoscalingPolicyTargetTrackingConfigurationEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -3326,8 +3706,8 @@ impl ToListMappable for AutoscalingPolicyTargetTrackingConfigurationEl {
 }
 
 pub struct BuildAutoscalingPolicyTargetTrackingConfigurationEl {
-    #[doc= ""]
-    pub target_value: PrimField<f64>,
+    #[doc = ""]
+    pub target_value: terrars::PrimField<f64>,
 }
 
 impl BuildAutoscalingPolicyTargetTrackingConfigurationEl {
@@ -3337,18 +3717,21 @@ impl BuildAutoscalingPolicyTargetTrackingConfigurationEl {
             target_value: self.target_value,
             customized_metric_specification: core::default::Default::default(),
             predefined_metric_specification: core::default::Default::default(),
-            dynamic: Default::default(),
+            dynamic: core::default::Default::default(),
         }
     }
 }
 
 pub struct AutoscalingPolicyTargetTrackingConfigurationElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for AutoscalingPolicyTargetTrackingConfigurationElRef {
-    fn new(shared: StackShared, base: String) -> AutoscalingPolicyTargetTrackingConfigurationElRef {
+impl terrars::Ref for AutoscalingPolicyTargetTrackingConfigurationElRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> AutoscalingPolicyTargetTrackingConfigurationElRef {
         AutoscalingPolicyTargetTrackingConfigurationElRef {
             shared: shared,
             base: base.to_string(),
@@ -3357,38 +3740,42 @@ impl Ref for AutoscalingPolicyTargetTrackingConfigurationElRef {
 }
 
 impl AutoscalingPolicyTargetTrackingConfigurationElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `disable_scale_in` after provisioning.\n"]
-    pub fn disable_scale_in(&self) -> PrimExpr<bool> {
-        PrimExpr::new(self.shared().clone(), format!("{}.disable_scale_in", self.base))
+    #[doc = "Get a reference to the value of field `disable_scale_in` after provisioning.\n"]
+    pub fn disable_scale_in(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.disable_scale_in", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `target_value` after provisioning.\n"]
-    pub fn target_value(&self) -> PrimExpr<f64> {
-        PrimExpr::new(self.shared().clone(), format!("{}.target_value", self.base))
+    #[doc = "Get a reference to the value of field `target_value` after provisioning.\n"]
+    pub fn target_value(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.target_value", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `customized_metric_specification` after provisioning.\n"]
+    #[doc = "Get a reference to the value of field `customized_metric_specification` after provisioning.\n"]
     pub fn customized_metric_specification(
         &self,
-    ) -> ListRef<AutoscalingPolicyTargetTrackingConfigurationElCustomizedMetricSpecificationElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.customized_metric_specification", self.base))
+    ) -> terrars::ListRef<AutoscalingPolicyTargetTrackingConfigurationElCustomizedMetricSpecificationElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.customized_metric_specification", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `predefined_metric_specification` after provisioning.\n"]
+    #[doc = "Get a reference to the value of field `predefined_metric_specification` after provisioning.\n"]
     pub fn predefined_metric_specification(
         &self,
-    ) -> ListRef<AutoscalingPolicyTargetTrackingConfigurationElPredefinedMetricSpecificationElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.predefined_metric_specification", self.base))
+    ) -> terrars::ListRef<AutoscalingPolicyTargetTrackingConfigurationElPredefinedMetricSpecificationElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.predefined_metric_specification", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
 struct AutoscalingPolicyDynamic {
-    predictive_scaling_configuration: Option<DynamicBlock<AutoscalingPolicyPredictiveScalingConfigurationEl>>,
-    step_adjustment: Option<DynamicBlock<AutoscalingPolicyStepAdjustmentEl>>,
-    target_tracking_configuration: Option<DynamicBlock<AutoscalingPolicyTargetTrackingConfigurationEl>>,
+    predictive_scaling_configuration: std
+    ::option
+    ::Option<terrars::DynamicBlock<AutoscalingPolicyPredictiveScalingConfigurationEl>>,
+    step_adjustment: std::option::Option<terrars::DynamicBlock<AutoscalingPolicyStepAdjustmentEl>>,
+    target_tracking_configuration: std
+    ::option
+    ::Option<terrars::DynamicBlock<AutoscalingPolicyTargetTrackingConfigurationEl>>,
 }

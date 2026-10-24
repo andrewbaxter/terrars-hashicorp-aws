@@ -1,134 +1,162 @@
 use serde::Serialize;
-use std::cell::RefCell;
-use std::rc::Rc;
-use terrars::*;
+use terrars::{
+    Referable as _,
+    Datasource_ as _,
+    Ref as _,
+};
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
 struct DataLambdaFunctionUrlData {
-    #[serde(skip_serializing_if = "Vec::is_empty")]
-    depends_on: Vec<String>,
-    #[serde(skip_serializing_if = "SerdeSkipDefault::is_default")]
-    provider: Option<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    for_each: Option<String>,
-    function_name: PrimField<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    id: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    qualifier: Option<PrimField<String>>,
+    #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
+    depends_on: std::vec::Vec<std::string::String>,
+    #[serde(skip_serializing_if = "terrars::SerdeSkipDefault::is_default")]
+    provider: std::option::Option<std::string::String>,
+    #[serde(skip_serializing_if = "terrars::SerdeSkipDefault::is_default")]
+    lifecycle: terrars::DatasourceLifecycle,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    for_each: std::option::Option<std::string::String>,
+    function_name: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    id: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    qualifier: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
 struct DataLambdaFunctionUrl_ {
-    shared: StackShared,
-    tf_id: String,
-    data: RefCell<DataLambdaFunctionUrlData>,
+    shared: terrars::StackShared,
+    tf_id: std::string::String,
+    data: std::cell::RefCell<DataLambdaFunctionUrlData>,
 }
 
 #[derive(Clone)]
-pub struct DataLambdaFunctionUrl(Rc<DataLambdaFunctionUrl_>);
+pub struct DataLambdaFunctionUrl(std::rc::Rc<DataLambdaFunctionUrl_>);
 
 impl DataLambdaFunctionUrl {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.0.shared
     }
 
-    pub fn depends_on(self, dep: &impl Referable) -> Self {
+    pub fn depends_on(self, dep: &impl terrars::Referable) -> Self {
         self.0.data.borrow_mut().depends_on.push(dep.extract_ref());
         self
     }
 
     pub fn set_provider(&self, provider: &ProviderAws) -> &Self {
-        self.0.data.borrow_mut().provider = Some(provider.provider_ref());
+        self.0.data.borrow_mut().provider = std::option::Option::Some(provider.provider_ref());
         self
     }
 
-    #[doc= "Set the field `id`.\n"]
-    pub fn set_id(self, v: impl Into<PrimField<String>>) -> Self {
-        self.0.data.borrow_mut().id = Some(v.into());
+    pub fn add_lifecycle_precondition(
+        self,
+        condition: impl std::convert::Into<terrars::PrimField<bool>>,
+        error_message: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.0.data.borrow_mut().lifecycle.precondition.push(terrars::LifecycleCondition {
+            condition: condition.into(),
+            error_message: error_message.into(),
+        });
         self
     }
 
-    #[doc= "Set the field `qualifier`.\n"]
-    pub fn set_qualifier(self, v: impl Into<PrimField<String>>) -> Self {
-        self.0.data.borrow_mut().qualifier = Some(v.into());
+    pub fn add_lifecycle_postcondition(
+        self,
+        condition: impl std::convert::Into<terrars::PrimField<bool>>,
+        error_message: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.0.data.borrow_mut().lifecycle.postcondition.push(terrars::LifecycleCondition {
+            condition: condition.into(),
+            error_message: error_message.into(),
+        });
         self
     }
 
-    #[doc= "Get a reference to the value of field `authorization_type` after provisioning.\n"]
-    pub fn authorization_type(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.authorization_type", self.extract_ref()))
+    #[doc = "Set the field `id`.\n"]
+    pub fn set_id(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().id = std::option::Option::Some(v.into());
+        self
     }
 
-    #[doc= "Get a reference to the value of field `cors` after provisioning.\n"]
-    pub fn cors(&self) -> ListRef<DataLambdaFunctionUrlCorsElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.cors", self.extract_ref()))
+    #[doc = "Set the field `qualifier`.\n"]
+    pub fn set_qualifier(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().qualifier = std::option::Option::Some(v.into());
+        self
     }
 
-    #[doc= "Get a reference to the value of field `creation_time` after provisioning.\n"]
-    pub fn creation_time(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.creation_time", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `authorization_type` after provisioning.\n"]
+    pub fn authorization_type(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.authorization_type", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `function_arn` after provisioning.\n"]
-    pub fn function_arn(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.function_arn", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `cors` after provisioning.\n"]
+    pub fn cors(&self) -> terrars::ListRef<DataLambdaFunctionUrlCorsElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.cors", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `function_name` after provisioning.\n"]
-    pub fn function_name(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.function_name", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `creation_time` after provisioning.\n"]
+    pub fn creation_time(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.creation_time", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `function_url` after provisioning.\n"]
-    pub fn function_url(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.function_url", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `function_arn` after provisioning.\n"]
+    pub fn function_arn(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.function_arn", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `id` after provisioning.\n"]
-    pub fn id(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `function_name` after provisioning.\n"]
+    pub fn function_name(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.function_name", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `last_modified_time` after provisioning.\n"]
-    pub fn last_modified_time(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.last_modified_time", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `function_url` after provisioning.\n"]
+    pub fn function_url(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.function_url", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `qualifier` after provisioning.\n"]
-    pub fn qualifier(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.qualifier", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
+    pub fn id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `url_id` after provisioning.\n"]
-    pub fn url_id(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.url_id", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `last_modified_time` after provisioning.\n"]
+    pub fn last_modified_time(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.last_modified_time", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `qualifier` after provisioning.\n"]
+    pub fn qualifier(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.qualifier", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `url_id` after provisioning.\n"]
+    pub fn url_id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.url_id", self.extract_ref()))
     }
 }
 
-impl Referable for DataLambdaFunctionUrl {
-    fn extract_ref(&self) -> String {
+impl terrars::Referable for DataLambdaFunctionUrl {
+    fn extract_ref(&self) -> std::string::String {
         format!("data.{}.{}", self.0.extract_datasource_type(), self.0.extract_tf_id())
     }
 }
 
-impl Datasource for DataLambdaFunctionUrl { }
+impl terrars::Datasource for DataLambdaFunctionUrl { }
 
-impl ToListMappable for DataLambdaFunctionUrl {
-    type O = ListRef<DataLambdaFunctionUrlRef>;
+impl terrars::ToListMappable for DataLambdaFunctionUrl {
+    type O = terrars::ListRef<DataLambdaFunctionUrlRef>;
 
-    fn do_map(self, base: String) -> Self::O {
-        self.0.data.borrow_mut().for_each = Some(format!("${{{}}}", base));
-        ListRef::new(self.0.shared.clone(), self.extract_ref())
+    fn do_map(self, base: std::string::String) -> Self::O {
+        self.0.data.borrow_mut().for_each = std::option::Option::Some(format!("${{{}}}", base));
+        terrars::ListRef::new(self.0.shared.clone(), self.extract_ref())
     }
 }
 
-impl Datasource_ for DataLambdaFunctionUrl_ {
-    fn extract_datasource_type(&self) -> String {
+impl terrars::Datasource_ for DataLambdaFunctionUrl_ {
+    fn extract_datasource_type(&self) -> std::string::String {
         "aws_lambda_function_url".into()
     }
 
-    fn extract_tf_id(&self) -> String {
+    fn extract_tf_id(&self) -> std::string::String {
         self.tf_id.clone()
     }
 
@@ -138,20 +166,21 @@ impl Datasource_ for DataLambdaFunctionUrl_ {
 }
 
 pub struct BuildDataLambdaFunctionUrl {
-    pub tf_id: String,
-    #[doc= ""]
-    pub function_name: PrimField<String>,
+    pub tf_id: std::string::String,
+    #[doc = ""]
+    pub function_name: terrars::PrimField<std::string::String>,
 }
 
 impl BuildDataLambdaFunctionUrl {
-    pub fn build(self, stack: &mut Stack) -> DataLambdaFunctionUrl {
-        let out = DataLambdaFunctionUrl(Rc::new(DataLambdaFunctionUrl_ {
+    pub fn build(self, stack: &mut terrars::Stack) -> DataLambdaFunctionUrl {
+        let out = DataLambdaFunctionUrl(std::rc::Rc::new(DataLambdaFunctionUrl_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: RefCell::new(DataLambdaFunctionUrlData {
+            data: std::cell::RefCell::new(DataLambdaFunctionUrlData {
                 depends_on: core::default::Default::default(),
-                provider: None,
-                for_each: None,
+                provider: std::option::Option::None,
+                lifecycle: core::default::Default::default(),
+                for_each: std::option::Option::None,
                 function_name: self.function_name,
                 id: core::default::Default::default(),
                 qualifier: core::default::Default::default(),
@@ -163,12 +192,12 @@ impl BuildDataLambdaFunctionUrl {
 }
 
 pub struct DataLambdaFunctionUrlRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for DataLambdaFunctionUrlRef {
-    fn new(shared: StackShared, base: String) -> Self {
+impl terrars::Ref for DataLambdaFunctionUrlRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> Self {
         Self {
             shared: shared,
             base: base,
@@ -177,124 +206,136 @@ impl Ref for DataLambdaFunctionUrlRef {
 }
 
 impl DataLambdaFunctionUrlRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    fn extract_ref(&self) -> String {
+    fn extract_ref(&self) -> std::string::String {
         self.base.clone()
     }
 
-    #[doc= "Get a reference to the value of field `authorization_type` after provisioning.\n"]
-    pub fn authorization_type(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.authorization_type", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `authorization_type` after provisioning.\n"]
+    pub fn authorization_type(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.authorization_type", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `cors` after provisioning.\n"]
-    pub fn cors(&self) -> ListRef<DataLambdaFunctionUrlCorsElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.cors", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `cors` after provisioning.\n"]
+    pub fn cors(&self) -> terrars::ListRef<DataLambdaFunctionUrlCorsElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.cors", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `creation_time` after provisioning.\n"]
-    pub fn creation_time(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.creation_time", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `creation_time` after provisioning.\n"]
+    pub fn creation_time(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.creation_time", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `function_arn` after provisioning.\n"]
-    pub fn function_arn(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.function_arn", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `function_arn` after provisioning.\n"]
+    pub fn function_arn(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.function_arn", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `function_name` after provisioning.\n"]
-    pub fn function_name(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.function_name", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `function_name` after provisioning.\n"]
+    pub fn function_name(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.function_name", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `function_url` after provisioning.\n"]
-    pub fn function_url(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.function_url", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `function_url` after provisioning.\n"]
+    pub fn function_url(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.function_url", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `id` after provisioning.\n"]
-    pub fn id(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
+    pub fn id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `last_modified_time` after provisioning.\n"]
-    pub fn last_modified_time(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.last_modified_time", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `last_modified_time` after provisioning.\n"]
+    pub fn last_modified_time(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.last_modified_time", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `qualifier` after provisioning.\n"]
-    pub fn qualifier(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.qualifier", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `qualifier` after provisioning.\n"]
+    pub fn qualifier(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.qualifier", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `url_id` after provisioning.\n"]
-    pub fn url_id(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.url_id", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `url_id` after provisioning.\n"]
+    pub fn url_id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.url_id", self.extract_ref()))
     }
 }
 
 #[derive(Serialize)]
 pub struct DataLambdaFunctionUrlCorsEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    allow_credentials: Option<PrimField<bool>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    allow_headers: Option<ListField<PrimField<String>>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    allow_methods: Option<ListField<PrimField<String>>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    allow_origins: Option<ListField<PrimField<String>>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    expose_headers: Option<ListField<PrimField<String>>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    max_age: Option<PrimField<f64>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    allow_credentials: std::option::Option<terrars::PrimField<bool>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    allow_headers: std::option::Option<terrars::ListField<terrars::PrimField<std::string::String>>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    allow_methods: std::option::Option<terrars::ListField<terrars::PrimField<std::string::String>>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    allow_origins: std::option::Option<terrars::ListField<terrars::PrimField<std::string::String>>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    expose_headers: std::option::Option<terrars::ListField<terrars::PrimField<std::string::String>>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    max_age: std::option::Option<terrars::PrimField<f64>>,
 }
 
 impl DataLambdaFunctionUrlCorsEl {
-    #[doc= "Set the field `allow_credentials`.\n"]
-    pub fn set_allow_credentials(mut self, v: impl Into<PrimField<bool>>) -> Self {
-        self.allow_credentials = Some(v.into());
+    #[doc = "Set the field `allow_credentials`.\n"]
+    pub fn set_allow_credentials(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
+        self.allow_credentials = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `allow_headers`.\n"]
-    pub fn set_allow_headers(mut self, v: impl Into<ListField<PrimField<String>>>) -> Self {
-        self.allow_headers = Some(v.into());
+    #[doc = "Set the field `allow_headers`.\n"]
+    pub fn set_allow_headers(
+        mut self,
+        v: impl std::convert::Into<terrars::ListField<terrars::PrimField<std::string::String>>>,
+    ) -> Self {
+        self.allow_headers = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `allow_methods`.\n"]
-    pub fn set_allow_methods(mut self, v: impl Into<ListField<PrimField<String>>>) -> Self {
-        self.allow_methods = Some(v.into());
+    #[doc = "Set the field `allow_methods`.\n"]
+    pub fn set_allow_methods(
+        mut self,
+        v: impl std::convert::Into<terrars::ListField<terrars::PrimField<std::string::String>>>,
+    ) -> Self {
+        self.allow_methods = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `allow_origins`.\n"]
-    pub fn set_allow_origins(mut self, v: impl Into<ListField<PrimField<String>>>) -> Self {
-        self.allow_origins = Some(v.into());
+    #[doc = "Set the field `allow_origins`.\n"]
+    pub fn set_allow_origins(
+        mut self,
+        v: impl std::convert::Into<terrars::ListField<terrars::PrimField<std::string::String>>>,
+    ) -> Self {
+        self.allow_origins = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `expose_headers`.\n"]
-    pub fn set_expose_headers(mut self, v: impl Into<ListField<PrimField<String>>>) -> Self {
-        self.expose_headers = Some(v.into());
+    #[doc = "Set the field `expose_headers`.\n"]
+    pub fn set_expose_headers(
+        mut self,
+        v: impl std::convert::Into<terrars::ListField<terrars::PrimField<std::string::String>>>,
+    ) -> Self {
+        self.expose_headers = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `max_age`.\n"]
-    pub fn set_max_age(mut self, v: impl Into<PrimField<f64>>) -> Self {
-        self.max_age = Some(v.into());
+    #[doc = "Set the field `max_age`.\n"]
+    pub fn set_max_age(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.max_age = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl ToListMappable for DataLambdaFunctionUrlCorsEl {
-    type O = BlockAssignable<DataLambdaFunctionUrlCorsEl>;
+impl terrars::ToListMappable for DataLambdaFunctionUrlCorsEl {
+    type O = terrars::BlockAssignable<DataLambdaFunctionUrlCorsEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -318,12 +359,12 @@ impl BuildDataLambdaFunctionUrlCorsEl {
 }
 
 pub struct DataLambdaFunctionUrlCorsElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for DataLambdaFunctionUrlCorsElRef {
-    fn new(shared: StackShared, base: String) -> DataLambdaFunctionUrlCorsElRef {
+impl terrars::Ref for DataLambdaFunctionUrlCorsElRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataLambdaFunctionUrlCorsElRef {
         DataLambdaFunctionUrlCorsElRef {
             shared: shared,
             base: base.to_string(),
@@ -332,37 +373,37 @@ impl Ref for DataLambdaFunctionUrlCorsElRef {
 }
 
 impl DataLambdaFunctionUrlCorsElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `allow_credentials` after provisioning.\n"]
-    pub fn allow_credentials(&self) -> PrimExpr<bool> {
-        PrimExpr::new(self.shared().clone(), format!("{}.allow_credentials", self.base))
+    #[doc = "Get a reference to the value of field `allow_credentials` after provisioning.\n"]
+    pub fn allow_credentials(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.allow_credentials", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `allow_headers` after provisioning.\n"]
-    pub fn allow_headers(&self) -> ListRef<PrimExpr<String>> {
-        ListRef::new(self.shared().clone(), format!("{}.allow_headers", self.base))
+    #[doc = "Get a reference to the value of field `allow_headers` after provisioning.\n"]
+    pub fn allow_headers(&self) -> terrars::ListRef<terrars::PrimExpr<std::string::String>> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.allow_headers", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `allow_methods` after provisioning.\n"]
-    pub fn allow_methods(&self) -> ListRef<PrimExpr<String>> {
-        ListRef::new(self.shared().clone(), format!("{}.allow_methods", self.base))
+    #[doc = "Get a reference to the value of field `allow_methods` after provisioning.\n"]
+    pub fn allow_methods(&self) -> terrars::ListRef<terrars::PrimExpr<std::string::String>> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.allow_methods", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `allow_origins` after provisioning.\n"]
-    pub fn allow_origins(&self) -> ListRef<PrimExpr<String>> {
-        ListRef::new(self.shared().clone(), format!("{}.allow_origins", self.base))
+    #[doc = "Get a reference to the value of field `allow_origins` after provisioning.\n"]
+    pub fn allow_origins(&self) -> terrars::ListRef<terrars::PrimExpr<std::string::String>> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.allow_origins", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `expose_headers` after provisioning.\n"]
-    pub fn expose_headers(&self) -> ListRef<PrimExpr<String>> {
-        ListRef::new(self.shared().clone(), format!("{}.expose_headers", self.base))
+    #[doc = "Get a reference to the value of field `expose_headers` after provisioning.\n"]
+    pub fn expose_headers(&self) -> terrars::ListRef<terrars::PrimExpr<std::string::String>> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.expose_headers", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `max_age` after provisioning.\n"]
-    pub fn max_age(&self) -> PrimExpr<f64> {
-        PrimExpr::new(self.shared().clone(), format!("{}.max_age", self.base))
+    #[doc = "Get a reference to the value of field `max_age` after provisioning.\n"]
+    pub fn max_age(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.max_age", self.base))
     }
 }

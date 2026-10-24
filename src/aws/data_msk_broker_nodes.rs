@@ -1,91 +1,119 @@
 use serde::Serialize;
-use std::cell::RefCell;
-use std::rc::Rc;
-use terrars::*;
+use terrars::{
+    Referable as _,
+    Datasource_ as _,
+    Ref as _,
+};
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
 struct DataMskBrokerNodesData {
-    #[serde(skip_serializing_if = "Vec::is_empty")]
-    depends_on: Vec<String>,
-    #[serde(skip_serializing_if = "SerdeSkipDefault::is_default")]
-    provider: Option<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    for_each: Option<String>,
-    cluster_arn: PrimField<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    id: Option<PrimField<String>>,
+    #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
+    depends_on: std::vec::Vec<std::string::String>,
+    #[serde(skip_serializing_if = "terrars::SerdeSkipDefault::is_default")]
+    provider: std::option::Option<std::string::String>,
+    #[serde(skip_serializing_if = "terrars::SerdeSkipDefault::is_default")]
+    lifecycle: terrars::DatasourceLifecycle,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    for_each: std::option::Option<std::string::String>,
+    cluster_arn: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    id: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
 struct DataMskBrokerNodes_ {
-    shared: StackShared,
-    tf_id: String,
-    data: RefCell<DataMskBrokerNodesData>,
+    shared: terrars::StackShared,
+    tf_id: std::string::String,
+    data: std::cell::RefCell<DataMskBrokerNodesData>,
 }
 
 #[derive(Clone)]
-pub struct DataMskBrokerNodes(Rc<DataMskBrokerNodes_>);
+pub struct DataMskBrokerNodes(std::rc::Rc<DataMskBrokerNodes_>);
 
 impl DataMskBrokerNodes {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.0.shared
     }
 
-    pub fn depends_on(self, dep: &impl Referable) -> Self {
+    pub fn depends_on(self, dep: &impl terrars::Referable) -> Self {
         self.0.data.borrow_mut().depends_on.push(dep.extract_ref());
         self
     }
 
     pub fn set_provider(&self, provider: &ProviderAws) -> &Self {
-        self.0.data.borrow_mut().provider = Some(provider.provider_ref());
+        self.0.data.borrow_mut().provider = std::option::Option::Some(provider.provider_ref());
         self
     }
 
-    #[doc= "Set the field `id`.\n"]
-    pub fn set_id(self, v: impl Into<PrimField<String>>) -> Self {
-        self.0.data.borrow_mut().id = Some(v.into());
+    pub fn add_lifecycle_precondition(
+        self,
+        condition: impl std::convert::Into<terrars::PrimField<bool>>,
+        error_message: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.0.data.borrow_mut().lifecycle.precondition.push(terrars::LifecycleCondition {
+            condition: condition.into(),
+            error_message: error_message.into(),
+        });
         self
     }
 
-    #[doc= "Get a reference to the value of field `cluster_arn` after provisioning.\n"]
-    pub fn cluster_arn(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.cluster_arn", self.extract_ref()))
+    pub fn add_lifecycle_postcondition(
+        self,
+        condition: impl std::convert::Into<terrars::PrimField<bool>>,
+        error_message: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.0.data.borrow_mut().lifecycle.postcondition.push(terrars::LifecycleCondition {
+            condition: condition.into(),
+            error_message: error_message.into(),
+        });
+        self
     }
 
-    #[doc= "Get a reference to the value of field `id` after provisioning.\n"]
-    pub fn id(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
+    #[doc = "Set the field `id`.\n"]
+    pub fn set_id(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().id = std::option::Option::Some(v.into());
+        self
     }
 
-    #[doc= "Get a reference to the value of field `node_info_list` after provisioning.\n"]
-    pub fn node_info_list(&self) -> ListRef<DataMskBrokerNodesNodeInfoListElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.node_info_list", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `cluster_arn` after provisioning.\n"]
+    pub fn cluster_arn(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.cluster_arn", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
+    pub fn id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `node_info_list` after provisioning.\n"]
+    pub fn node_info_list(&self) -> terrars::ListRef<DataMskBrokerNodesNodeInfoListElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.node_info_list", self.extract_ref()))
     }
 }
 
-impl Referable for DataMskBrokerNodes {
-    fn extract_ref(&self) -> String {
+impl terrars::Referable for DataMskBrokerNodes {
+    fn extract_ref(&self) -> std::string::String {
         format!("data.{}.{}", self.0.extract_datasource_type(), self.0.extract_tf_id())
     }
 }
 
-impl Datasource for DataMskBrokerNodes { }
+impl terrars::Datasource for DataMskBrokerNodes { }
 
-impl ToListMappable for DataMskBrokerNodes {
-    type O = ListRef<DataMskBrokerNodesRef>;
+impl terrars::ToListMappable for DataMskBrokerNodes {
+    type O = terrars::ListRef<DataMskBrokerNodesRef>;
 
-    fn do_map(self, base: String) -> Self::O {
-        self.0.data.borrow_mut().for_each = Some(format!("${{{}}}", base));
-        ListRef::new(self.0.shared.clone(), self.extract_ref())
+    fn do_map(self, base: std::string::String) -> Self::O {
+        self.0.data.borrow_mut().for_each = std::option::Option::Some(format!("${{{}}}", base));
+        terrars::ListRef::new(self.0.shared.clone(), self.extract_ref())
     }
 }
 
-impl Datasource_ for DataMskBrokerNodes_ {
-    fn extract_datasource_type(&self) -> String {
+impl terrars::Datasource_ for DataMskBrokerNodes_ {
+    fn extract_datasource_type(&self) -> std::string::String {
         "aws_msk_broker_nodes".into()
     }
 
-    fn extract_tf_id(&self) -> String {
+    fn extract_tf_id(&self) -> std::string::String {
         self.tf_id.clone()
     }
 
@@ -95,20 +123,21 @@ impl Datasource_ for DataMskBrokerNodes_ {
 }
 
 pub struct BuildDataMskBrokerNodes {
-    pub tf_id: String,
-    #[doc= ""]
-    pub cluster_arn: PrimField<String>,
+    pub tf_id: std::string::String,
+    #[doc = ""]
+    pub cluster_arn: terrars::PrimField<std::string::String>,
 }
 
 impl BuildDataMskBrokerNodes {
-    pub fn build(self, stack: &mut Stack) -> DataMskBrokerNodes {
-        let out = DataMskBrokerNodes(Rc::new(DataMskBrokerNodes_ {
+    pub fn build(self, stack: &mut terrars::Stack) -> DataMskBrokerNodes {
+        let out = DataMskBrokerNodes(std::rc::Rc::new(DataMskBrokerNodes_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: RefCell::new(DataMskBrokerNodesData {
+            data: std::cell::RefCell::new(DataMskBrokerNodesData {
                 depends_on: core::default::Default::default(),
-                provider: None,
-                for_each: None,
+                provider: std::option::Option::None,
+                lifecycle: core::default::Default::default(),
+                for_each: std::option::Option::None,
                 cluster_arn: self.cluster_arn,
                 id: core::default::Default::default(),
             }),
@@ -119,12 +148,12 @@ impl BuildDataMskBrokerNodes {
 }
 
 pub struct DataMskBrokerNodesRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for DataMskBrokerNodesRef {
-    fn new(shared: StackShared, base: String) -> Self {
+impl terrars::Ref for DataMskBrokerNodesRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> Self {
         Self {
             shared: shared,
             base: base,
@@ -133,89 +162,95 @@ impl Ref for DataMskBrokerNodesRef {
 }
 
 impl DataMskBrokerNodesRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    fn extract_ref(&self) -> String {
+    fn extract_ref(&self) -> std::string::String {
         self.base.clone()
     }
 
-    #[doc= "Get a reference to the value of field `cluster_arn` after provisioning.\n"]
-    pub fn cluster_arn(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.cluster_arn", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `cluster_arn` after provisioning.\n"]
+    pub fn cluster_arn(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.cluster_arn", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `id` after provisioning.\n"]
-    pub fn id(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
+    pub fn id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `node_info_list` after provisioning.\n"]
-    pub fn node_info_list(&self) -> ListRef<DataMskBrokerNodesNodeInfoListElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.node_info_list", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `node_info_list` after provisioning.\n"]
+    pub fn node_info_list(&self) -> terrars::ListRef<DataMskBrokerNodesNodeInfoListElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.node_info_list", self.extract_ref()))
     }
 }
 
 #[derive(Serialize)]
 pub struct DataMskBrokerNodesNodeInfoListEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    attached_eni_id: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    broker_id: Option<PrimField<f64>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    client_subnet: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    client_vpc_ip_address: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    endpoints: Option<SetField<PrimField<String>>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    node_arn: Option<PrimField<String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    attached_eni_id: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    broker_id: std::option::Option<terrars::PrimField<f64>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    client_subnet: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    client_vpc_ip_address: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    endpoints: std::option::Option<terrars::SetField<terrars::PrimField<std::string::String>>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    node_arn: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
 impl DataMskBrokerNodesNodeInfoListEl {
-    #[doc= "Set the field `attached_eni_id`.\n"]
-    pub fn set_attached_eni_id(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.attached_eni_id = Some(v.into());
+    #[doc = "Set the field `attached_eni_id`.\n"]
+    pub fn set_attached_eni_id(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.attached_eni_id = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `broker_id`.\n"]
-    pub fn set_broker_id(mut self, v: impl Into<PrimField<f64>>) -> Self {
-        self.broker_id = Some(v.into());
+    #[doc = "Set the field `broker_id`.\n"]
+    pub fn set_broker_id(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.broker_id = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `client_subnet`.\n"]
-    pub fn set_client_subnet(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.client_subnet = Some(v.into());
+    #[doc = "Set the field `client_subnet`.\n"]
+    pub fn set_client_subnet(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.client_subnet = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `client_vpc_ip_address`.\n"]
-    pub fn set_client_vpc_ip_address(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.client_vpc_ip_address = Some(v.into());
+    #[doc = "Set the field `client_vpc_ip_address`.\n"]
+    pub fn set_client_vpc_ip_address(
+        mut self,
+        v: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.client_vpc_ip_address = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `endpoints`.\n"]
-    pub fn set_endpoints(mut self, v: impl Into<SetField<PrimField<String>>>) -> Self {
-        self.endpoints = Some(v.into());
+    #[doc = "Set the field `endpoints`.\n"]
+    pub fn set_endpoints(
+        mut self,
+        v: impl std::convert::Into<terrars::SetField<terrars::PrimField<std::string::String>>>,
+    ) -> Self {
+        self.endpoints = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `node_arn`.\n"]
-    pub fn set_node_arn(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.node_arn = Some(v.into());
+    #[doc = "Set the field `node_arn`.\n"]
+    pub fn set_node_arn(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.node_arn = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl ToListMappable for DataMskBrokerNodesNodeInfoListEl {
-    type O = BlockAssignable<DataMskBrokerNodesNodeInfoListEl>;
+impl terrars::ToListMappable for DataMskBrokerNodesNodeInfoListEl {
+    type O = terrars::BlockAssignable<DataMskBrokerNodesNodeInfoListEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -239,12 +274,12 @@ impl BuildDataMskBrokerNodesNodeInfoListEl {
 }
 
 pub struct DataMskBrokerNodesNodeInfoListElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for DataMskBrokerNodesNodeInfoListElRef {
-    fn new(shared: StackShared, base: String) -> DataMskBrokerNodesNodeInfoListElRef {
+impl terrars::Ref for DataMskBrokerNodesNodeInfoListElRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataMskBrokerNodesNodeInfoListElRef {
         DataMskBrokerNodesNodeInfoListElRef {
             shared: shared,
             base: base.to_string(),
@@ -253,37 +288,37 @@ impl Ref for DataMskBrokerNodesNodeInfoListElRef {
 }
 
 impl DataMskBrokerNodesNodeInfoListElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `attached_eni_id` after provisioning.\n"]
-    pub fn attached_eni_id(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.attached_eni_id", self.base))
+    #[doc = "Get a reference to the value of field `attached_eni_id` after provisioning.\n"]
+    pub fn attached_eni_id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.attached_eni_id", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `broker_id` after provisioning.\n"]
-    pub fn broker_id(&self) -> PrimExpr<f64> {
-        PrimExpr::new(self.shared().clone(), format!("{}.broker_id", self.base))
+    #[doc = "Get a reference to the value of field `broker_id` after provisioning.\n"]
+    pub fn broker_id(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.broker_id", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `client_subnet` after provisioning.\n"]
-    pub fn client_subnet(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.client_subnet", self.base))
+    #[doc = "Get a reference to the value of field `client_subnet` after provisioning.\n"]
+    pub fn client_subnet(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.client_subnet", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `client_vpc_ip_address` after provisioning.\n"]
-    pub fn client_vpc_ip_address(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.client_vpc_ip_address", self.base))
+    #[doc = "Get a reference to the value of field `client_vpc_ip_address` after provisioning.\n"]
+    pub fn client_vpc_ip_address(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.client_vpc_ip_address", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `endpoints` after provisioning.\n"]
-    pub fn endpoints(&self) -> SetRef<PrimExpr<String>> {
-        SetRef::new(self.shared().clone(), format!("{}.endpoints", self.base))
+    #[doc = "Get a reference to the value of field `endpoints` after provisioning.\n"]
+    pub fn endpoints(&self) -> terrars::SetRef<terrars::PrimExpr<std::string::String>> {
+        terrars::SetRef::new(self.shared().clone(), format!("{}.endpoints", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `node_arn` after provisioning.\n"]
-    pub fn node_arn(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.node_arn", self.base))
+    #[doc = "Get a reference to the value of field `node_arn` after provisioning.\n"]
+    pub fn node_arn(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.node_arn", self.base))
     }
 }

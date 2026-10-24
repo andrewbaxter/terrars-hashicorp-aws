@@ -1,52 +1,56 @@
 use serde::Serialize;
-use std::cell::RefCell;
-use std::rc::Rc;
-use terrars::*;
+use terrars::{
+    Referable as _,
+    Resource_ as _,
+    Ref as _,
+};
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
 struct SignerSigningJobData {
-    #[serde(skip_serializing_if = "Vec::is_empty")]
-    depends_on: Vec<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    provider: Option<String>,
-    #[serde(skip_serializing_if = "SerdeSkipDefault::is_default")]
-    lifecycle: ResourceLifecycle,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    for_each: Option<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    id: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    ignore_signing_job_failure: Option<PrimField<bool>>,
-    profile_name: PrimField<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    destination: Option<Vec<SignerSigningJobDestinationEl>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    source: Option<Vec<SignerSigningJobSourceEl>>,
+    #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
+    depends_on: std::vec::Vec<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    provider: std::option::Option<std::string::String>,
+    #[serde(skip_serializing_if = "terrars::SerdeSkipDefault::is_default")]
+    lifecycle: terrars::ResourceLifecycle,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    for_each: std::option::Option<std::string::String>,
+    #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
+    provisioner: std::vec::Vec<terrars::Provisioner>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    id: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    ignore_signing_job_failure: std::option::Option<terrars::PrimField<bool>>,
+    profile_name: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    destination: std::option::Option<std::vec::Vec<SignerSigningJobDestinationEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    source: std::option::Option<std::vec::Vec<SignerSigningJobSourceEl>>,
     dynamic: SignerSigningJobDynamic,
 }
 
 struct SignerSigningJob_ {
-    shared: StackShared,
-    tf_id: String,
-    data: RefCell<SignerSigningJobData>,
+    shared: terrars::StackShared,
+    tf_id: std::string::String,
+    data: std::cell::RefCell<SignerSigningJobData>,
 }
 
 #[derive(Clone)]
-pub struct SignerSigningJob(Rc<SignerSigningJob_>);
+pub struct SignerSigningJob(std::rc::Rc<SignerSigningJob_>);
 
 impl SignerSigningJob {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.0.shared
     }
 
-    pub fn depends_on(self, dep: &impl Referable) -> Self {
+    pub fn depends_on(self, dep: &impl terrars::Referable) -> Self {
         self.0.data.borrow_mut().depends_on.push(dep.extract_ref());
         self
     }
 
     pub fn set_provider(self, provider: &ProviderAws) -> Self {
-        self.0.data.borrow_mut().provider = Some(provider.provider_ref());
+        self.0.data.borrow_mut().provider = std::option::Option::Some(provider.provider_ref());
         self
     }
 
@@ -61,198 +65,234 @@ impl SignerSigningJob {
     }
 
     pub fn ignore_changes_to_all(self) -> Self {
-        self.0.data.borrow_mut().lifecycle.ignore_changes = Some(IgnoreChanges::All(IgnoreChangesAll::All));
+        self.0.data.borrow_mut().lifecycle.ignore_changes =
+            std::option::Option::Some(terrars::IgnoreChanges::All(terrars::IgnoreChangesAll::All));
         self
     }
 
-    pub fn ignore_changes_to_attr(self, attr: impl ToString) -> Self {
+    pub fn ignore_changes_to_attr(self, attr: impl std::string::ToString) -> Self {
         {
             let mut d = self.0.data.borrow_mut();
             if match &mut d.lifecycle.ignore_changes {
-                Some(i) => match i {
-                    IgnoreChanges::All(_) => {
+                std::option::Option::Some(i) => match i {
+                    terrars::IgnoreChanges::All(_) => {
                         true
                     },
-                    IgnoreChanges::Refs(r) => {
+                    terrars::IgnoreChanges::Refs(r) => {
                         r.push(attr.to_string());
                         false
                     },
                 },
-                None => true,
+                std::option::Option::None => true,
             } {
-                d.lifecycle.ignore_changes = Some(IgnoreChanges::Refs(vec![attr.to_string()]));
+                d.lifecycle.ignore_changes =
+                    std::option::Option::Some(terrars::IgnoreChanges::Refs(vec![attr.to_string()]));
             }
         }
         self
     }
 
-    pub fn replace_triggered_by_resource(self, r: &impl Resource) -> Self {
+    pub fn replace_triggered_by_resource(self, r: &impl terrars::Resource) -> Self {
         self.0.data.borrow_mut().lifecycle.replace_triggered_by.push(r.extract_ref());
         self
     }
 
-    pub fn replace_triggered_by_attr(self, attr: impl ToString) -> Self {
+    pub fn replace_triggered_by_attr(self, attr: impl std::string::ToString) -> Self {
         self.0.data.borrow_mut().lifecycle.replace_triggered_by.push(attr.to_string());
         self
     }
 
-    #[doc= "Set the field `id`.\n"]
-    pub fn set_id(self, v: impl Into<PrimField<String>>) -> Self {
-        self.0.data.borrow_mut().id = Some(v.into());
+    #[doc = r" Add a provisioner (ex: `local-exec`, `remote-exec`, `file`) to this resource."]
+    #[doc = r" Provisioners run in the order they're added."]
+    pub fn add_provisioner(self, v: impl std::convert::Into<terrars::Provisioner>) -> Self {
+        self.0.data.borrow_mut().provisioner.push(v.into());
         self
     }
 
-    #[doc= "Set the field `ignore_signing_job_failure`.\n"]
-    pub fn set_ignore_signing_job_failure(self, v: impl Into<PrimField<bool>>) -> Self {
-        self.0.data.borrow_mut().ignore_signing_job_failure = Some(v.into());
+    pub fn add_lifecycle_precondition(
+        self,
+        condition: impl std::convert::Into<terrars::PrimField<bool>>,
+        error_message: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.0.data.borrow_mut().lifecycle.precondition.push(terrars::LifecycleCondition {
+            condition: condition.into(),
+            error_message: error_message.into(),
+        });
         self
     }
 
-    #[doc= "Set the field `destination`.\n"]
-    pub fn set_destination(self, v: impl Into<BlockAssignable<SignerSigningJobDestinationEl>>) -> Self {
+    pub fn add_lifecycle_postcondition(
+        self,
+        condition: impl std::convert::Into<terrars::PrimField<bool>>,
+        error_message: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.0.data.borrow_mut().lifecycle.postcondition.push(terrars::LifecycleCondition {
+            condition: condition.into(),
+            error_message: error_message.into(),
+        });
+        self
+    }
+
+    #[doc = "Set the field `id`.\n"]
+    pub fn set_id(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().id = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `ignore_signing_job_failure`.\n"]
+    pub fn set_ignore_signing_job_failure(self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
+        self.0.data.borrow_mut().ignore_signing_job_failure = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `destination`.\n"]
+    pub fn set_destination(
+        self,
+        v: impl std::convert::Into<terrars::BlockAssignable<SignerSigningJobDestinationEl>>,
+    ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.0.data.borrow_mut().destination = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.0.data.borrow_mut().destination = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.0.data.borrow_mut().dynamic.destination = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.0.data.borrow_mut().dynamic.destination = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Set the field `source`.\n"]
-    pub fn set_source(self, v: impl Into<BlockAssignable<SignerSigningJobSourceEl>>) -> Self {
+    #[doc = "Set the field `source`.\n"]
+    pub fn set_source(self, v: impl std::convert::Into<terrars::BlockAssignable<SignerSigningJobSourceEl>>) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.0.data.borrow_mut().source = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.0.data.borrow_mut().source = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.0.data.borrow_mut().dynamic.source = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.0.data.borrow_mut().dynamic.source = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Get a reference to the value of field `completed_at` after provisioning.\n"]
-    pub fn completed_at(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.completed_at", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `completed_at` after provisioning.\n"]
+    pub fn completed_at(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.completed_at", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `created_at` after provisioning.\n"]
-    pub fn created_at(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.created_at", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `created_at` after provisioning.\n"]
+    pub fn created_at(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.created_at", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `id` after provisioning.\n"]
-    pub fn id(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
+    pub fn id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `ignore_signing_job_failure` after provisioning.\n"]
-    pub fn ignore_signing_job_failure(&self) -> PrimExpr<bool> {
-        PrimExpr::new(self.shared().clone(), format!("{}.ignore_signing_job_failure", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `ignore_signing_job_failure` after provisioning.\n"]
+    pub fn ignore_signing_job_failure(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.ignore_signing_job_failure", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `job_id` after provisioning.\n"]
-    pub fn job_id(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.job_id", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `job_id` after provisioning.\n"]
+    pub fn job_id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.job_id", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `job_invoker` after provisioning.\n"]
-    pub fn job_invoker(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.job_invoker", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `job_invoker` after provisioning.\n"]
+    pub fn job_invoker(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.job_invoker", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `job_owner` after provisioning.\n"]
-    pub fn job_owner(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.job_owner", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `job_owner` after provisioning.\n"]
+    pub fn job_owner(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.job_owner", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `platform_display_name` after provisioning.\n"]
-    pub fn platform_display_name(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.platform_display_name", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `platform_display_name` after provisioning.\n"]
+    pub fn platform_display_name(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.platform_display_name", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `platform_id` after provisioning.\n"]
-    pub fn platform_id(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.platform_id", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `platform_id` after provisioning.\n"]
+    pub fn platform_id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.platform_id", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `profile_name` after provisioning.\n"]
-    pub fn profile_name(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.profile_name", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `profile_name` after provisioning.\n"]
+    pub fn profile_name(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.profile_name", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `profile_version` after provisioning.\n"]
-    pub fn profile_version(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.profile_version", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `profile_version` after provisioning.\n"]
+    pub fn profile_version(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.profile_version", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `requested_by` after provisioning.\n"]
-    pub fn requested_by(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.requested_by", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `requested_by` after provisioning.\n"]
+    pub fn requested_by(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.requested_by", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `revocation_record` after provisioning.\n"]
-    pub fn revocation_record(&self) -> ListRef<SignerSigningJobRevocationRecordElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.revocation_record", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `revocation_record` after provisioning.\n"]
+    pub fn revocation_record(&self) -> terrars::ListRef<SignerSigningJobRevocationRecordElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.revocation_record", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `signature_expires_at` after provisioning.\n"]
-    pub fn signature_expires_at(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.signature_expires_at", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `signature_expires_at` after provisioning.\n"]
+    pub fn signature_expires_at(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.signature_expires_at", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `signed_object` after provisioning.\n"]
-    pub fn signed_object(&self) -> ListRef<SignerSigningJobSignedObjectElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.signed_object", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `signed_object` after provisioning.\n"]
+    pub fn signed_object(&self) -> terrars::ListRef<SignerSigningJobSignedObjectElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.signed_object", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `status` after provisioning.\n"]
-    pub fn status(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.status", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `status` after provisioning.\n"]
+    pub fn status(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.status", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `status_reason` after provisioning.\n"]
-    pub fn status_reason(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.status_reason", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `status_reason` after provisioning.\n"]
+    pub fn status_reason(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.status_reason", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `destination` after provisioning.\n"]
-    pub fn destination(&self) -> ListRef<SignerSigningJobDestinationElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.destination", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `destination` after provisioning.\n"]
+    pub fn destination(&self) -> terrars::ListRef<SignerSigningJobDestinationElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.destination", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `source` after provisioning.\n"]
-    pub fn source(&self) -> ListRef<SignerSigningJobSourceElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.source", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `source` after provisioning.\n"]
+    pub fn source(&self) -> terrars::ListRef<SignerSigningJobSourceElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.source", self.extract_ref()))
     }
 }
 
-impl Referable for SignerSigningJob {
-    fn extract_ref(&self) -> String {
+impl terrars::Referable for SignerSigningJob {
+    fn extract_ref(&self) -> std::string::String {
         format!("{}.{}", self.0.extract_resource_type(), self.0.extract_tf_id())
     }
 }
 
-impl Resource for SignerSigningJob { }
+impl terrars::Resource for SignerSigningJob { }
 
-impl ToListMappable for SignerSigningJob {
-    type O = ListRef<SignerSigningJobRef>;
+impl terrars::ToListMappable for SignerSigningJob {
+    type O = terrars::ListRef<SignerSigningJobRef>;
 
-    fn do_map(self, base: String) -> Self::O {
-        self.0.data.borrow_mut().for_each = Some(format!("${{{}}}", base));
-        ListRef::new(self.0.shared.clone(), self.extract_ref())
+    fn do_map(self, base: std::string::String) -> Self::O {
+        self.0.data.borrow_mut().for_each = std::option::Option::Some(format!("${{{}}}", base));
+        terrars::ListRef::new(self.0.shared.clone(), self.extract_ref())
     }
 }
 
-impl Resource_ for SignerSigningJob_ {
-    fn extract_resource_type(&self) -> String {
+impl terrars::Resource_ for SignerSigningJob_ {
+    fn extract_resource_type(&self) -> std::string::String {
         "aws_signer_signing_job".into()
     }
 
-    fn extract_tf_id(&self) -> String {
+    fn extract_tf_id(&self) -> std::string::String {
         self.tf_id.clone()
     }
 
@@ -262,27 +302,28 @@ impl Resource_ for SignerSigningJob_ {
 }
 
 pub struct BuildSignerSigningJob {
-    pub tf_id: String,
-    #[doc= ""]
-    pub profile_name: PrimField<String>,
+    pub tf_id: std::string::String,
+    #[doc = ""]
+    pub profile_name: terrars::PrimField<std::string::String>,
 }
 
 impl BuildSignerSigningJob {
-    pub fn build(self, stack: &mut Stack) -> SignerSigningJob {
-        let out = SignerSigningJob(Rc::new(SignerSigningJob_ {
+    pub fn build(self, stack: &mut terrars::Stack) -> SignerSigningJob {
+        let out = SignerSigningJob(std::rc::Rc::new(SignerSigningJob_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: RefCell::new(SignerSigningJobData {
+            data: std::cell::RefCell::new(SignerSigningJobData {
                 depends_on: core::default::Default::default(),
-                provider: None,
+                provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
-                for_each: None,
+                for_each: std::option::Option::None,
+                provisioner: core::default::Default::default(),
                 id: core::default::Default::default(),
                 ignore_signing_job_failure: core::default::Default::default(),
                 profile_name: self.profile_name,
                 destination: core::default::Default::default(),
                 source: core::default::Default::default(),
-                dynamic: Default::default(),
+                dynamic: core::default::Default::default(),
             }),
         }));
         stack.add_resource(out.0.clone());
@@ -291,12 +332,12 @@ impl BuildSignerSigningJob {
 }
 
 pub struct SignerSigningJobRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for SignerSigningJobRef {
-    fn new(shared: StackShared, base: String) -> Self {
+impl terrars::Ref for SignerSigningJobRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> Self {
         Self {
             shared: shared,
             base: base,
@@ -305,145 +346,145 @@ impl Ref for SignerSigningJobRef {
 }
 
 impl SignerSigningJobRef {
-    fn extract_ref(&self) -> String {
+    fn extract_ref(&self) -> std::string::String {
         self.base.clone()
     }
 
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `completed_at` after provisioning.\n"]
-    pub fn completed_at(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.completed_at", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `completed_at` after provisioning.\n"]
+    pub fn completed_at(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.completed_at", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `created_at` after provisioning.\n"]
-    pub fn created_at(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.created_at", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `created_at` after provisioning.\n"]
+    pub fn created_at(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.created_at", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `id` after provisioning.\n"]
-    pub fn id(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
+    pub fn id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `ignore_signing_job_failure` after provisioning.\n"]
-    pub fn ignore_signing_job_failure(&self) -> PrimExpr<bool> {
-        PrimExpr::new(self.shared().clone(), format!("{}.ignore_signing_job_failure", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `ignore_signing_job_failure` after provisioning.\n"]
+    pub fn ignore_signing_job_failure(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.ignore_signing_job_failure", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `job_id` after provisioning.\n"]
-    pub fn job_id(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.job_id", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `job_id` after provisioning.\n"]
+    pub fn job_id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.job_id", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `job_invoker` after provisioning.\n"]
-    pub fn job_invoker(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.job_invoker", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `job_invoker` after provisioning.\n"]
+    pub fn job_invoker(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.job_invoker", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `job_owner` after provisioning.\n"]
-    pub fn job_owner(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.job_owner", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `job_owner` after provisioning.\n"]
+    pub fn job_owner(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.job_owner", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `platform_display_name` after provisioning.\n"]
-    pub fn platform_display_name(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.platform_display_name", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `platform_display_name` after provisioning.\n"]
+    pub fn platform_display_name(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.platform_display_name", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `platform_id` after provisioning.\n"]
-    pub fn platform_id(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.platform_id", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `platform_id` after provisioning.\n"]
+    pub fn platform_id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.platform_id", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `profile_name` after provisioning.\n"]
-    pub fn profile_name(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.profile_name", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `profile_name` after provisioning.\n"]
+    pub fn profile_name(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.profile_name", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `profile_version` after provisioning.\n"]
-    pub fn profile_version(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.profile_version", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `profile_version` after provisioning.\n"]
+    pub fn profile_version(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.profile_version", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `requested_by` after provisioning.\n"]
-    pub fn requested_by(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.requested_by", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `requested_by` after provisioning.\n"]
+    pub fn requested_by(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.requested_by", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `revocation_record` after provisioning.\n"]
-    pub fn revocation_record(&self) -> ListRef<SignerSigningJobRevocationRecordElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.revocation_record", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `revocation_record` after provisioning.\n"]
+    pub fn revocation_record(&self) -> terrars::ListRef<SignerSigningJobRevocationRecordElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.revocation_record", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `signature_expires_at` after provisioning.\n"]
-    pub fn signature_expires_at(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.signature_expires_at", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `signature_expires_at` after provisioning.\n"]
+    pub fn signature_expires_at(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.signature_expires_at", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `signed_object` after provisioning.\n"]
-    pub fn signed_object(&self) -> ListRef<SignerSigningJobSignedObjectElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.signed_object", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `signed_object` after provisioning.\n"]
+    pub fn signed_object(&self) -> terrars::ListRef<SignerSigningJobSignedObjectElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.signed_object", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `status` after provisioning.\n"]
-    pub fn status(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.status", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `status` after provisioning.\n"]
+    pub fn status(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.status", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `status_reason` after provisioning.\n"]
-    pub fn status_reason(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.status_reason", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `status_reason` after provisioning.\n"]
+    pub fn status_reason(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.status_reason", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `destination` after provisioning.\n"]
-    pub fn destination(&self) -> ListRef<SignerSigningJobDestinationElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.destination", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `destination` after provisioning.\n"]
+    pub fn destination(&self) -> terrars::ListRef<SignerSigningJobDestinationElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.destination", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `source` after provisioning.\n"]
-    pub fn source(&self) -> ListRef<SignerSigningJobSourceElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.source", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `source` after provisioning.\n"]
+    pub fn source(&self) -> terrars::ListRef<SignerSigningJobSourceElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.source", self.extract_ref()))
     }
 }
 
 #[derive(Serialize)]
 pub struct SignerSigningJobRevocationRecordEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    reason: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    revoked_at: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    revoked_by: Option<PrimField<String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    reason: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    revoked_at: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    revoked_by: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
 impl SignerSigningJobRevocationRecordEl {
-    #[doc= "Set the field `reason`.\n"]
-    pub fn set_reason(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.reason = Some(v.into());
+    #[doc = "Set the field `reason`.\n"]
+    pub fn set_reason(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.reason = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `revoked_at`.\n"]
-    pub fn set_revoked_at(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.revoked_at = Some(v.into());
+    #[doc = "Set the field `revoked_at`.\n"]
+    pub fn set_revoked_at(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.revoked_at = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `revoked_by`.\n"]
-    pub fn set_revoked_by(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.revoked_by = Some(v.into());
+    #[doc = "Set the field `revoked_by`.\n"]
+    pub fn set_revoked_by(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.revoked_by = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl ToListMappable for SignerSigningJobRevocationRecordEl {
-    type O = BlockAssignable<SignerSigningJobRevocationRecordEl>;
+impl terrars::ToListMappable for SignerSigningJobRevocationRecordEl {
+    type O = terrars::BlockAssignable<SignerSigningJobRevocationRecordEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -464,12 +505,12 @@ impl BuildSignerSigningJobRevocationRecordEl {
 }
 
 pub struct SignerSigningJobRevocationRecordElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for SignerSigningJobRevocationRecordElRef {
-    fn new(shared: StackShared, base: String) -> SignerSigningJobRevocationRecordElRef {
+impl terrars::Ref for SignerSigningJobRevocationRecordElRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> SignerSigningJobRevocationRecordElRef {
         SignerSigningJobRevocationRecordElRef {
             shared: shared,
             base: base.to_string(),
@@ -478,53 +519,53 @@ impl Ref for SignerSigningJobRevocationRecordElRef {
 }
 
 impl SignerSigningJobRevocationRecordElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `reason` after provisioning.\n"]
-    pub fn reason(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.reason", self.base))
+    #[doc = "Get a reference to the value of field `reason` after provisioning.\n"]
+    pub fn reason(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.reason", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `revoked_at` after provisioning.\n"]
-    pub fn revoked_at(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.revoked_at", self.base))
+    #[doc = "Get a reference to the value of field `revoked_at` after provisioning.\n"]
+    pub fn revoked_at(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.revoked_at", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `revoked_by` after provisioning.\n"]
-    pub fn revoked_by(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.revoked_by", self.base))
+    #[doc = "Get a reference to the value of field `revoked_by` after provisioning.\n"]
+    pub fn revoked_by(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.revoked_by", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct SignerSigningJobSignedObjectElS3El {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    bucket: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    key: Option<PrimField<String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    bucket: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    key: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
 impl SignerSigningJobSignedObjectElS3El {
-    #[doc= "Set the field `bucket`.\n"]
-    pub fn set_bucket(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.bucket = Some(v.into());
+    #[doc = "Set the field `bucket`.\n"]
+    pub fn set_bucket(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.bucket = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `key`.\n"]
-    pub fn set_key(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.key = Some(v.into());
+    #[doc = "Set the field `key`.\n"]
+    pub fn set_key(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.key = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl ToListMappable for SignerSigningJobSignedObjectElS3El {
-    type O = BlockAssignable<SignerSigningJobSignedObjectElS3El>;
+impl terrars::ToListMappable for SignerSigningJobSignedObjectElS3El {
+    type O = terrars::BlockAssignable<SignerSigningJobSignedObjectElS3El>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -544,12 +585,12 @@ impl BuildSignerSigningJobSignedObjectElS3El {
 }
 
 pub struct SignerSigningJobSignedObjectElS3ElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for SignerSigningJobSignedObjectElS3ElRef {
-    fn new(shared: StackShared, base: String) -> SignerSigningJobSignedObjectElS3ElRef {
+impl terrars::Ref for SignerSigningJobSignedObjectElS3ElRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> SignerSigningJobSignedObjectElS3ElRef {
         SignerSigningJobSignedObjectElS3ElRef {
             shared: shared,
             base: base.to_string(),
@@ -558,40 +599,40 @@ impl Ref for SignerSigningJobSignedObjectElS3ElRef {
 }
 
 impl SignerSigningJobSignedObjectElS3ElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `bucket` after provisioning.\n"]
-    pub fn bucket(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.bucket", self.base))
+    #[doc = "Get a reference to the value of field `bucket` after provisioning.\n"]
+    pub fn bucket(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.bucket", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `key` after provisioning.\n"]
-    pub fn key(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.key", self.base))
+    #[doc = "Get a reference to the value of field `key` after provisioning.\n"]
+    pub fn key(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.key", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct SignerSigningJobSignedObjectEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    s3: Option<ListField<SignerSigningJobSignedObjectElS3El>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    s3: std::option::Option<terrars::ListField<SignerSigningJobSignedObjectElS3El>>,
 }
 
 impl SignerSigningJobSignedObjectEl {
-    #[doc= "Set the field `s3`.\n"]
-    pub fn set_s3(mut self, v: impl Into<ListField<SignerSigningJobSignedObjectElS3El>>) -> Self {
-        self.s3 = Some(v.into());
+    #[doc = "Set the field `s3`.\n"]
+    pub fn set_s3(mut self, v: impl std::convert::Into<terrars::ListField<SignerSigningJobSignedObjectElS3El>>) -> Self {
+        self.s3 = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl ToListMappable for SignerSigningJobSignedObjectEl {
-    type O = BlockAssignable<SignerSigningJobSignedObjectEl>;
+impl terrars::ToListMappable for SignerSigningJobSignedObjectEl {
+    type O = terrars::BlockAssignable<SignerSigningJobSignedObjectEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -608,12 +649,12 @@ impl BuildSignerSigningJobSignedObjectEl {
 }
 
 pub struct SignerSigningJobSignedObjectElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for SignerSigningJobSignedObjectElRef {
-    fn new(shared: StackShared, base: String) -> SignerSigningJobSignedObjectElRef {
+impl terrars::Ref for SignerSigningJobSignedObjectElRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> SignerSigningJobSignedObjectElRef {
         SignerSigningJobSignedObjectElRef {
             shared: shared,
             base: base.to_string(),
@@ -622,36 +663,36 @@ impl Ref for SignerSigningJobSignedObjectElRef {
 }
 
 impl SignerSigningJobSignedObjectElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `s3` after provisioning.\n"]
-    pub fn s3(&self) -> ListRef<SignerSigningJobSignedObjectElS3ElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.s3", self.base))
+    #[doc = "Get a reference to the value of field `s3` after provisioning.\n"]
+    pub fn s3(&self) -> terrars::ListRef<SignerSigningJobSignedObjectElS3ElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.s3", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct SignerSigningJobDestinationElS3El {
-    bucket: PrimField<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    prefix: Option<PrimField<String>>,
+    bucket: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    prefix: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
 impl SignerSigningJobDestinationElS3El {
-    #[doc= "Set the field `prefix`.\n"]
-    pub fn set_prefix(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.prefix = Some(v.into());
+    #[doc = "Set the field `prefix`.\n"]
+    pub fn set_prefix(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.prefix = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl ToListMappable for SignerSigningJobDestinationElS3El {
-    type O = BlockAssignable<SignerSigningJobDestinationElS3El>;
+impl terrars::ToListMappable for SignerSigningJobDestinationElS3El {
+    type O = terrars::BlockAssignable<SignerSigningJobDestinationElS3El>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -660,8 +701,8 @@ impl ToListMappable for SignerSigningJobDestinationElS3El {
 }
 
 pub struct BuildSignerSigningJobDestinationElS3El {
-    #[doc= ""]
-    pub bucket: PrimField<String>,
+    #[doc = ""]
+    pub bucket: terrars::PrimField<std::string::String>,
 }
 
 impl BuildSignerSigningJobDestinationElS3El {
@@ -674,12 +715,12 @@ impl BuildSignerSigningJobDestinationElS3El {
 }
 
 pub struct SignerSigningJobDestinationElS3ElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for SignerSigningJobDestinationElS3ElRef {
-    fn new(shared: StackShared, base: String) -> SignerSigningJobDestinationElS3ElRef {
+impl terrars::Ref for SignerSigningJobDestinationElS3ElRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> SignerSigningJobDestinationElS3ElRef {
         SignerSigningJobDestinationElS3ElRef {
             shared: shared,
             base: base.to_string(),
@@ -688,53 +729,56 @@ impl Ref for SignerSigningJobDestinationElS3ElRef {
 }
 
 impl SignerSigningJobDestinationElS3ElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `bucket` after provisioning.\n"]
-    pub fn bucket(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.bucket", self.base))
+    #[doc = "Get a reference to the value of field `bucket` after provisioning.\n"]
+    pub fn bucket(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.bucket", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `prefix` after provisioning.\n"]
-    pub fn prefix(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.prefix", self.base))
+    #[doc = "Get a reference to the value of field `prefix` after provisioning.\n"]
+    pub fn prefix(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.prefix", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
 struct SignerSigningJobDestinationElDynamic {
-    s3: Option<DynamicBlock<SignerSigningJobDestinationElS3El>>,
+    s3: std::option::Option<terrars::DynamicBlock<SignerSigningJobDestinationElS3El>>,
 }
 
 #[derive(Serialize)]
 pub struct SignerSigningJobDestinationEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    s3: Option<Vec<SignerSigningJobDestinationElS3El>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    s3: std::option::Option<std::vec::Vec<SignerSigningJobDestinationElS3El>>,
     dynamic: SignerSigningJobDestinationElDynamic,
 }
 
 impl SignerSigningJobDestinationEl {
-    #[doc= "Set the field `s3`.\n"]
-    pub fn set_s3(mut self, v: impl Into<BlockAssignable<SignerSigningJobDestinationElS3El>>) -> Self {
+    #[doc = "Set the field `s3`.\n"]
+    pub fn set_s3(
+        mut self,
+        v: impl std::convert::Into<terrars::BlockAssignable<SignerSigningJobDestinationElS3El>>,
+    ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.s3 = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.s3 = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.s3 = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.s3 = std::option::Option::Some(d);
             },
         }
         self
     }
 }
 
-impl ToListMappable for SignerSigningJobDestinationEl {
-    type O = BlockAssignable<SignerSigningJobDestinationEl>;
+impl terrars::ToListMappable for SignerSigningJobDestinationEl {
+    type O = terrars::BlockAssignable<SignerSigningJobDestinationEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -748,18 +792,18 @@ impl BuildSignerSigningJobDestinationEl {
     pub fn build(self) -> SignerSigningJobDestinationEl {
         SignerSigningJobDestinationEl {
             s3: core::default::Default::default(),
-            dynamic: Default::default(),
+            dynamic: core::default::Default::default(),
         }
     }
 }
 
 pub struct SignerSigningJobDestinationElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for SignerSigningJobDestinationElRef {
-    fn new(shared: StackShared, base: String) -> SignerSigningJobDestinationElRef {
+impl terrars::Ref for SignerSigningJobDestinationElRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> SignerSigningJobDestinationElRef {
         SignerSigningJobDestinationElRef {
             shared: shared,
             base: base.to_string(),
@@ -768,30 +812,30 @@ impl Ref for SignerSigningJobDestinationElRef {
 }
 
 impl SignerSigningJobDestinationElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `s3` after provisioning.\n"]
-    pub fn s3(&self) -> ListRef<SignerSigningJobDestinationElS3ElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.s3", self.base))
+    #[doc = "Get a reference to the value of field `s3` after provisioning.\n"]
+    pub fn s3(&self) -> terrars::ListRef<SignerSigningJobDestinationElS3ElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.s3", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct SignerSigningJobSourceElS3El {
-    bucket: PrimField<String>,
-    key: PrimField<String>,
-    version: PrimField<String>,
+    bucket: terrars::PrimField<std::string::String>,
+    key: terrars::PrimField<std::string::String>,
+    version: terrars::PrimField<std::string::String>,
 }
 
 impl SignerSigningJobSourceElS3El { }
 
-impl ToListMappable for SignerSigningJobSourceElS3El {
-    type O = BlockAssignable<SignerSigningJobSourceElS3El>;
+impl terrars::ToListMappable for SignerSigningJobSourceElS3El {
+    type O = terrars::BlockAssignable<SignerSigningJobSourceElS3El>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -800,12 +844,12 @@ impl ToListMappable for SignerSigningJobSourceElS3El {
 }
 
 pub struct BuildSignerSigningJobSourceElS3El {
-    #[doc= ""]
-    pub bucket: PrimField<String>,
-    #[doc= ""]
-    pub key: PrimField<String>,
-    #[doc= ""]
-    pub version: PrimField<String>,
+    #[doc = ""]
+    pub bucket: terrars::PrimField<std::string::String>,
+    #[doc = ""]
+    pub key: terrars::PrimField<std::string::String>,
+    #[doc = ""]
+    pub version: terrars::PrimField<std::string::String>,
 }
 
 impl BuildSignerSigningJobSourceElS3El {
@@ -819,12 +863,12 @@ impl BuildSignerSigningJobSourceElS3El {
 }
 
 pub struct SignerSigningJobSourceElS3ElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for SignerSigningJobSourceElS3ElRef {
-    fn new(shared: StackShared, base: String) -> SignerSigningJobSourceElS3ElRef {
+impl terrars::Ref for SignerSigningJobSourceElS3ElRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> SignerSigningJobSourceElS3ElRef {
         SignerSigningJobSourceElS3ElRef {
             shared: shared,
             base: base.to_string(),
@@ -833,58 +877,58 @@ impl Ref for SignerSigningJobSourceElS3ElRef {
 }
 
 impl SignerSigningJobSourceElS3ElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `bucket` after provisioning.\n"]
-    pub fn bucket(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.bucket", self.base))
+    #[doc = "Get a reference to the value of field `bucket` after provisioning.\n"]
+    pub fn bucket(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.bucket", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `key` after provisioning.\n"]
-    pub fn key(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.key", self.base))
+    #[doc = "Get a reference to the value of field `key` after provisioning.\n"]
+    pub fn key(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.key", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `version` after provisioning.\n"]
-    pub fn version(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.version", self.base))
+    #[doc = "Get a reference to the value of field `version` after provisioning.\n"]
+    pub fn version(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.version", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
 struct SignerSigningJobSourceElDynamic {
-    s3: Option<DynamicBlock<SignerSigningJobSourceElS3El>>,
+    s3: std::option::Option<terrars::DynamicBlock<SignerSigningJobSourceElS3El>>,
 }
 
 #[derive(Serialize)]
 pub struct SignerSigningJobSourceEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    s3: Option<Vec<SignerSigningJobSourceElS3El>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    s3: std::option::Option<std::vec::Vec<SignerSigningJobSourceElS3El>>,
     dynamic: SignerSigningJobSourceElDynamic,
 }
 
 impl SignerSigningJobSourceEl {
-    #[doc= "Set the field `s3`.\n"]
-    pub fn set_s3(mut self, v: impl Into<BlockAssignable<SignerSigningJobSourceElS3El>>) -> Self {
+    #[doc = "Set the field `s3`.\n"]
+    pub fn set_s3(mut self, v: impl std::convert::Into<terrars::BlockAssignable<SignerSigningJobSourceElS3El>>) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.s3 = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.s3 = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.s3 = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.s3 = std::option::Option::Some(d);
             },
         }
         self
     }
 }
 
-impl ToListMappable for SignerSigningJobSourceEl {
-    type O = BlockAssignable<SignerSigningJobSourceEl>;
+impl terrars::ToListMappable for SignerSigningJobSourceEl {
+    type O = terrars::BlockAssignable<SignerSigningJobSourceEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -898,18 +942,18 @@ impl BuildSignerSigningJobSourceEl {
     pub fn build(self) -> SignerSigningJobSourceEl {
         SignerSigningJobSourceEl {
             s3: core::default::Default::default(),
-            dynamic: Default::default(),
+            dynamic: core::default::Default::default(),
         }
     }
 }
 
 pub struct SignerSigningJobSourceElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for SignerSigningJobSourceElRef {
-    fn new(shared: StackShared, base: String) -> SignerSigningJobSourceElRef {
+impl terrars::Ref for SignerSigningJobSourceElRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> SignerSigningJobSourceElRef {
         SignerSigningJobSourceElRef {
             shared: shared,
             base: base.to_string(),
@@ -918,18 +962,18 @@ impl Ref for SignerSigningJobSourceElRef {
 }
 
 impl SignerSigningJobSourceElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `s3` after provisioning.\n"]
-    pub fn s3(&self) -> ListRef<SignerSigningJobSourceElS3ElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.s3", self.base))
+    #[doc = "Get a reference to the value of field `s3` after provisioning.\n"]
+    pub fn s3(&self) -> terrars::ListRef<SignerSigningJobSourceElS3ElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.s3", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
 struct SignerSigningJobDynamic {
-    destination: Option<DynamicBlock<SignerSigningJobDestinationEl>>,
-    source: Option<DynamicBlock<SignerSigningJobSourceEl>>,
+    destination: std::option::Option<terrars::DynamicBlock<SignerSigningJobDestinationEl>>,
+    source: std::option::Option<terrars::DynamicBlock<SignerSigningJobSourceEl>>,
 }

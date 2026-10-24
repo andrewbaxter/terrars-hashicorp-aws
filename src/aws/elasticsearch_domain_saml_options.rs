@@ -1,50 +1,54 @@
 use serde::Serialize;
-use std::cell::RefCell;
-use std::rc::Rc;
-use terrars::*;
+use terrars::{
+    Referable as _,
+    Resource_ as _,
+    Ref as _,
+};
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
 struct ElasticsearchDomainSamlOptionsData {
-    #[serde(skip_serializing_if = "Vec::is_empty")]
-    depends_on: Vec<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    provider: Option<String>,
-    #[serde(skip_serializing_if = "SerdeSkipDefault::is_default")]
-    lifecycle: ResourceLifecycle,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    for_each: Option<String>,
-    domain_name: PrimField<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    id: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    saml_options: Option<Vec<ElasticsearchDomainSamlOptionsSamlOptionsEl>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    timeouts: Option<ElasticsearchDomainSamlOptionsTimeoutsEl>,
+    #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
+    depends_on: std::vec::Vec<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    provider: std::option::Option<std::string::String>,
+    #[serde(skip_serializing_if = "terrars::SerdeSkipDefault::is_default")]
+    lifecycle: terrars::ResourceLifecycle,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    for_each: std::option::Option<std::string::String>,
+    #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
+    provisioner: std::vec::Vec<terrars::Provisioner>,
+    domain_name: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    id: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    saml_options: std::option::Option<std::vec::Vec<ElasticsearchDomainSamlOptionsSamlOptionsEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    timeouts: std::option::Option<ElasticsearchDomainSamlOptionsTimeoutsEl>,
     dynamic: ElasticsearchDomainSamlOptionsDynamic,
 }
 
 struct ElasticsearchDomainSamlOptions_ {
-    shared: StackShared,
-    tf_id: String,
-    data: RefCell<ElasticsearchDomainSamlOptionsData>,
+    shared: terrars::StackShared,
+    tf_id: std::string::String,
+    data: std::cell::RefCell<ElasticsearchDomainSamlOptionsData>,
 }
 
 #[derive(Clone)]
-pub struct ElasticsearchDomainSamlOptions(Rc<ElasticsearchDomainSamlOptions_>);
+pub struct ElasticsearchDomainSamlOptions(std::rc::Rc<ElasticsearchDomainSamlOptions_>);
 
 impl ElasticsearchDomainSamlOptions {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.0.shared
     }
 
-    pub fn depends_on(self, dep: &impl Referable) -> Self {
+    pub fn depends_on(self, dep: &impl terrars::Referable) -> Self {
         self.0.data.borrow_mut().depends_on.push(dep.extract_ref());
         self
     }
 
     pub fn set_provider(self, provider: &ProviderAws) -> Self {
-        self.0.data.borrow_mut().provider = Some(provider.provider_ref());
+        self.0.data.borrow_mut().provider = std::option::Option::Some(provider.provider_ref());
         self
     }
 
@@ -59,82 +63,118 @@ impl ElasticsearchDomainSamlOptions {
     }
 
     pub fn ignore_changes_to_all(self) -> Self {
-        self.0.data.borrow_mut().lifecycle.ignore_changes = Some(IgnoreChanges::All(IgnoreChangesAll::All));
+        self.0.data.borrow_mut().lifecycle.ignore_changes =
+            std::option::Option::Some(terrars::IgnoreChanges::All(terrars::IgnoreChangesAll::All));
         self
     }
 
-    pub fn ignore_changes_to_attr(self, attr: impl ToString) -> Self {
+    pub fn ignore_changes_to_attr(self, attr: impl std::string::ToString) -> Self {
         {
             let mut d = self.0.data.borrow_mut();
             if match &mut d.lifecycle.ignore_changes {
-                Some(i) => match i {
-                    IgnoreChanges::All(_) => {
+                std::option::Option::Some(i) => match i {
+                    terrars::IgnoreChanges::All(_) => {
                         true
                     },
-                    IgnoreChanges::Refs(r) => {
+                    terrars::IgnoreChanges::Refs(r) => {
                         r.push(attr.to_string());
                         false
                     },
                 },
-                None => true,
+                std::option::Option::None => true,
             } {
-                d.lifecycle.ignore_changes = Some(IgnoreChanges::Refs(vec![attr.to_string()]));
+                d.lifecycle.ignore_changes =
+                    std::option::Option::Some(terrars::IgnoreChanges::Refs(vec![attr.to_string()]));
             }
         }
         self
     }
 
-    pub fn replace_triggered_by_resource(self, r: &impl Resource) -> Self {
+    pub fn replace_triggered_by_resource(self, r: &impl terrars::Resource) -> Self {
         self.0.data.borrow_mut().lifecycle.replace_triggered_by.push(r.extract_ref());
         self
     }
 
-    pub fn replace_triggered_by_attr(self, attr: impl ToString) -> Self {
+    pub fn replace_triggered_by_attr(self, attr: impl std::string::ToString) -> Self {
         self.0.data.borrow_mut().lifecycle.replace_triggered_by.push(attr.to_string());
         self
     }
 
-    #[doc= "Set the field `id`.\n"]
-    pub fn set_id(self, v: impl Into<PrimField<String>>) -> Self {
-        self.0.data.borrow_mut().id = Some(v.into());
+    #[doc = r" Add a provisioner (ex: `local-exec`, `remote-exec`, `file`) to this resource."]
+    #[doc = r" Provisioners run in the order they're added."]
+    pub fn add_provisioner(self, v: impl std::convert::Into<terrars::Provisioner>) -> Self {
+        self.0.data.borrow_mut().provisioner.push(v.into());
         self
     }
 
-    #[doc= "Set the field `saml_options`.\n"]
-    pub fn set_saml_options(self, v: impl Into<BlockAssignable<ElasticsearchDomainSamlOptionsSamlOptionsEl>>) -> Self {
+    pub fn add_lifecycle_precondition(
+        self,
+        condition: impl std::convert::Into<terrars::PrimField<bool>>,
+        error_message: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.0.data.borrow_mut().lifecycle.precondition.push(terrars::LifecycleCondition {
+            condition: condition.into(),
+            error_message: error_message.into(),
+        });
+        self
+    }
+
+    pub fn add_lifecycle_postcondition(
+        self,
+        condition: impl std::convert::Into<terrars::PrimField<bool>>,
+        error_message: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.0.data.borrow_mut().lifecycle.postcondition.push(terrars::LifecycleCondition {
+            condition: condition.into(),
+            error_message: error_message.into(),
+        });
+        self
+    }
+
+    #[doc = "Set the field `id`.\n"]
+    pub fn set_id(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().id = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `saml_options`.\n"]
+    pub fn set_saml_options(
+        self,
+        v: impl std::convert::Into<terrars::BlockAssignable<ElasticsearchDomainSamlOptionsSamlOptionsEl>>,
+    ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.0.data.borrow_mut().saml_options = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.0.data.borrow_mut().saml_options = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.0.data.borrow_mut().dynamic.saml_options = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.0.data.borrow_mut().dynamic.saml_options = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Set the field `timeouts`.\n"]
-    pub fn set_timeouts(self, v: impl Into<ElasticsearchDomainSamlOptionsTimeoutsEl>) -> Self {
-        self.0.data.borrow_mut().timeouts = Some(v.into());
+    #[doc = "Set the field `timeouts`.\n"]
+    pub fn set_timeouts(self, v: impl std::convert::Into<ElasticsearchDomainSamlOptionsTimeoutsEl>) -> Self {
+        self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Get a reference to the value of field `domain_name` after provisioning.\n"]
-    pub fn domain_name(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.domain_name", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `domain_name` after provisioning.\n"]
+    pub fn domain_name(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.domain_name", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `id` after provisioning.\n"]
-    pub fn id(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
+    pub fn id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `saml_options` after provisioning.\n"]
-    pub fn saml_options(&self) -> ListRef<ElasticsearchDomainSamlOptionsSamlOptionsElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.saml_options", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `saml_options` after provisioning.\n"]
+    pub fn saml_options(&self) -> terrars::ListRef<ElasticsearchDomainSamlOptionsSamlOptionsElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.saml_options", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `timeouts` after provisioning.\n"]
+    #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
     pub fn timeouts(&self) -> ElasticsearchDomainSamlOptionsTimeoutsElRef {
         ElasticsearchDomainSamlOptionsTimeoutsElRef::new(
             self.shared().clone(),
@@ -143,29 +183,29 @@ impl ElasticsearchDomainSamlOptions {
     }
 }
 
-impl Referable for ElasticsearchDomainSamlOptions {
-    fn extract_ref(&self) -> String {
+impl terrars::Referable for ElasticsearchDomainSamlOptions {
+    fn extract_ref(&self) -> std::string::String {
         format!("{}.{}", self.0.extract_resource_type(), self.0.extract_tf_id())
     }
 }
 
-impl Resource for ElasticsearchDomainSamlOptions { }
+impl terrars::Resource for ElasticsearchDomainSamlOptions { }
 
-impl ToListMappable for ElasticsearchDomainSamlOptions {
-    type O = ListRef<ElasticsearchDomainSamlOptionsRef>;
+impl terrars::ToListMappable for ElasticsearchDomainSamlOptions {
+    type O = terrars::ListRef<ElasticsearchDomainSamlOptionsRef>;
 
-    fn do_map(self, base: String) -> Self::O {
-        self.0.data.borrow_mut().for_each = Some(format!("${{{}}}", base));
-        ListRef::new(self.0.shared.clone(), self.extract_ref())
+    fn do_map(self, base: std::string::String) -> Self::O {
+        self.0.data.borrow_mut().for_each = std::option::Option::Some(format!("${{{}}}", base));
+        terrars::ListRef::new(self.0.shared.clone(), self.extract_ref())
     }
 }
 
-impl Resource_ for ElasticsearchDomainSamlOptions_ {
-    fn extract_resource_type(&self) -> String {
+impl terrars::Resource_ for ElasticsearchDomainSamlOptions_ {
+    fn extract_resource_type(&self) -> std::string::String {
         "aws_elasticsearch_domain_saml_options".into()
     }
 
-    fn extract_tf_id(&self) -> String {
+    fn extract_tf_id(&self) -> std::string::String {
         self.tf_id.clone()
     }
 
@@ -175,26 +215,27 @@ impl Resource_ for ElasticsearchDomainSamlOptions_ {
 }
 
 pub struct BuildElasticsearchDomainSamlOptions {
-    pub tf_id: String,
-    #[doc= ""]
-    pub domain_name: PrimField<String>,
+    pub tf_id: std::string::String,
+    #[doc = ""]
+    pub domain_name: terrars::PrimField<std::string::String>,
 }
 
 impl BuildElasticsearchDomainSamlOptions {
-    pub fn build(self, stack: &mut Stack) -> ElasticsearchDomainSamlOptions {
-        let out = ElasticsearchDomainSamlOptions(Rc::new(ElasticsearchDomainSamlOptions_ {
+    pub fn build(self, stack: &mut terrars::Stack) -> ElasticsearchDomainSamlOptions {
+        let out = ElasticsearchDomainSamlOptions(std::rc::Rc::new(ElasticsearchDomainSamlOptions_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: RefCell::new(ElasticsearchDomainSamlOptionsData {
+            data: std::cell::RefCell::new(ElasticsearchDomainSamlOptionsData {
                 depends_on: core::default::Default::default(),
-                provider: None,
+                provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
-                for_each: None,
+                for_each: std::option::Option::None,
+                provisioner: core::default::Default::default(),
                 domain_name: self.domain_name,
                 id: core::default::Default::default(),
                 saml_options: core::default::Default::default(),
                 timeouts: core::default::Default::default(),
-                dynamic: Default::default(),
+                dynamic: core::default::Default::default(),
             }),
         }));
         stack.add_resource(out.0.clone());
@@ -203,12 +244,12 @@ impl BuildElasticsearchDomainSamlOptions {
 }
 
 pub struct ElasticsearchDomainSamlOptionsRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for ElasticsearchDomainSamlOptionsRef {
-    fn new(shared: StackShared, base: String) -> Self {
+impl terrars::Ref for ElasticsearchDomainSamlOptionsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> Self {
         Self {
             shared: shared,
             base: base,
@@ -217,30 +258,30 @@ impl Ref for ElasticsearchDomainSamlOptionsRef {
 }
 
 impl ElasticsearchDomainSamlOptionsRef {
-    fn extract_ref(&self) -> String {
+    fn extract_ref(&self) -> std::string::String {
         self.base.clone()
     }
 
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `domain_name` after provisioning.\n"]
-    pub fn domain_name(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.domain_name", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `domain_name` after provisioning.\n"]
+    pub fn domain_name(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.domain_name", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `id` after provisioning.\n"]
-    pub fn id(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
+    pub fn id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `saml_options` after provisioning.\n"]
-    pub fn saml_options(&self) -> ListRef<ElasticsearchDomainSamlOptionsSamlOptionsElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.saml_options", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `saml_options` after provisioning.\n"]
+    pub fn saml_options(&self) -> terrars::ListRef<ElasticsearchDomainSamlOptionsSamlOptionsElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.saml_options", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `timeouts` after provisioning.\n"]
+    #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
     pub fn timeouts(&self) -> ElasticsearchDomainSamlOptionsTimeoutsElRef {
         ElasticsearchDomainSamlOptionsTimeoutsElRef::new(
             self.shared().clone(),
@@ -251,17 +292,17 @@ impl ElasticsearchDomainSamlOptionsRef {
 
 #[derive(Serialize)]
 pub struct ElasticsearchDomainSamlOptionsSamlOptionsElIdpEl {
-    entity_id: PrimField<String>,
-    metadata_content: PrimField<String>,
+    entity_id: terrars::PrimField<std::string::String>,
+    metadata_content: terrars::PrimField<std::string::String>,
 }
 
 impl ElasticsearchDomainSamlOptionsSamlOptionsElIdpEl { }
 
-impl ToListMappable for ElasticsearchDomainSamlOptionsSamlOptionsElIdpEl {
-    type O = BlockAssignable<ElasticsearchDomainSamlOptionsSamlOptionsElIdpEl>;
+impl terrars::ToListMappable for ElasticsearchDomainSamlOptionsSamlOptionsElIdpEl {
+    type O = terrars::BlockAssignable<ElasticsearchDomainSamlOptionsSamlOptionsElIdpEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -270,10 +311,10 @@ impl ToListMappable for ElasticsearchDomainSamlOptionsSamlOptionsElIdpEl {
 }
 
 pub struct BuildElasticsearchDomainSamlOptionsSamlOptionsElIdpEl {
-    #[doc= ""]
-    pub entity_id: PrimField<String>,
-    #[doc= ""]
-    pub metadata_content: PrimField<String>,
+    #[doc = ""]
+    pub entity_id: terrars::PrimField<std::string::String>,
+    #[doc = ""]
+    pub metadata_content: terrars::PrimField<std::string::String>,
 }
 
 impl BuildElasticsearchDomainSamlOptionsSamlOptionsElIdpEl {
@@ -286,12 +327,15 @@ impl BuildElasticsearchDomainSamlOptionsSamlOptionsElIdpEl {
 }
 
 pub struct ElasticsearchDomainSamlOptionsSamlOptionsElIdpElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for ElasticsearchDomainSamlOptionsSamlOptionsElIdpElRef {
-    fn new(shared: StackShared, base: String) -> ElasticsearchDomainSamlOptionsSamlOptionsElIdpElRef {
+impl terrars::Ref for ElasticsearchDomainSamlOptionsSamlOptionsElIdpElRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> ElasticsearchDomainSamlOptionsSamlOptionsElIdpElRef {
         ElasticsearchDomainSamlOptionsSamlOptionsElIdpElRef {
             shared: shared,
             base: base.to_string(),
@@ -300,101 +344,107 @@ impl Ref for ElasticsearchDomainSamlOptionsSamlOptionsElIdpElRef {
 }
 
 impl ElasticsearchDomainSamlOptionsSamlOptionsElIdpElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `entity_id` after provisioning.\n"]
-    pub fn entity_id(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.entity_id", self.base))
+    #[doc = "Get a reference to the value of field `entity_id` after provisioning.\n"]
+    pub fn entity_id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.entity_id", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `metadata_content` after provisioning.\n"]
-    pub fn metadata_content(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.metadata_content", self.base))
+    #[doc = "Get a reference to the value of field `metadata_content` after provisioning.\n"]
+    pub fn metadata_content(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.metadata_content", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
 struct ElasticsearchDomainSamlOptionsSamlOptionsElDynamic {
-    idp: Option<DynamicBlock<ElasticsearchDomainSamlOptionsSamlOptionsElIdpEl>>,
+    idp: std::option::Option<terrars::DynamicBlock<ElasticsearchDomainSamlOptionsSamlOptionsElIdpEl>>,
 }
 
 #[derive(Serialize)]
 pub struct ElasticsearchDomainSamlOptionsSamlOptionsEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    enabled: Option<PrimField<bool>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    master_backend_role: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    master_user_name: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    roles_key: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    session_timeout_minutes: Option<PrimField<f64>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    subject_key: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    idp: Option<Vec<ElasticsearchDomainSamlOptionsSamlOptionsElIdpEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    enabled: std::option::Option<terrars::PrimField<bool>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    master_backend_role: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    master_user_name: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    roles_key: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    session_timeout_minutes: std::option::Option<terrars::PrimField<f64>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    subject_key: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    idp: std::option::Option<std::vec::Vec<ElasticsearchDomainSamlOptionsSamlOptionsElIdpEl>>,
     dynamic: ElasticsearchDomainSamlOptionsSamlOptionsElDynamic,
 }
 
 impl ElasticsearchDomainSamlOptionsSamlOptionsEl {
-    #[doc= "Set the field `enabled`.\n"]
-    pub fn set_enabled(mut self, v: impl Into<PrimField<bool>>) -> Self {
-        self.enabled = Some(v.into());
+    #[doc = "Set the field `enabled`.\n"]
+    pub fn set_enabled(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
+        self.enabled = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `master_backend_role`.\n"]
-    pub fn set_master_backend_role(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.master_backend_role = Some(v.into());
+    #[doc = "Set the field `master_backend_role`.\n"]
+    pub fn set_master_backend_role(
+        mut self,
+        v: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.master_backend_role = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `master_user_name`.\n"]
-    pub fn set_master_user_name(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.master_user_name = Some(v.into());
+    #[doc = "Set the field `master_user_name`.\n"]
+    pub fn set_master_user_name(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.master_user_name = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `roles_key`.\n"]
-    pub fn set_roles_key(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.roles_key = Some(v.into());
+    #[doc = "Set the field `roles_key`.\n"]
+    pub fn set_roles_key(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.roles_key = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `session_timeout_minutes`.\n"]
-    pub fn set_session_timeout_minutes(mut self, v: impl Into<PrimField<f64>>) -> Self {
-        self.session_timeout_minutes = Some(v.into());
+    #[doc = "Set the field `session_timeout_minutes`.\n"]
+    pub fn set_session_timeout_minutes(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.session_timeout_minutes = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `subject_key`.\n"]
-    pub fn set_subject_key(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.subject_key = Some(v.into());
+    #[doc = "Set the field `subject_key`.\n"]
+    pub fn set_subject_key(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.subject_key = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `idp`.\n"]
-    pub fn set_idp(mut self, v: impl Into<BlockAssignable<ElasticsearchDomainSamlOptionsSamlOptionsElIdpEl>>) -> Self {
+    #[doc = "Set the field `idp`.\n"]
+    pub fn set_idp(
+        mut self,
+        v: impl std::convert::Into<terrars::BlockAssignable<ElasticsearchDomainSamlOptionsSamlOptionsElIdpEl>>,
+    ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.idp = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.idp = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.idp = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.idp = std::option::Option::Some(d);
             },
         }
         self
     }
 }
 
-impl ToListMappable for ElasticsearchDomainSamlOptionsSamlOptionsEl {
-    type O = BlockAssignable<ElasticsearchDomainSamlOptionsSamlOptionsEl>;
+impl terrars::ToListMappable for ElasticsearchDomainSamlOptionsSamlOptionsEl {
+    type O = terrars::BlockAssignable<ElasticsearchDomainSamlOptionsSamlOptionsEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -414,18 +464,21 @@ impl BuildElasticsearchDomainSamlOptionsSamlOptionsEl {
             session_timeout_minutes: core::default::Default::default(),
             subject_key: core::default::Default::default(),
             idp: core::default::Default::default(),
-            dynamic: Default::default(),
+            dynamic: core::default::Default::default(),
         }
     }
 }
 
 pub struct ElasticsearchDomainSamlOptionsSamlOptionsElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for ElasticsearchDomainSamlOptionsSamlOptionsElRef {
-    fn new(shared: StackShared, base: String) -> ElasticsearchDomainSamlOptionsSamlOptionsElRef {
+impl terrars::Ref for ElasticsearchDomainSamlOptionsSamlOptionsElRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> ElasticsearchDomainSamlOptionsSamlOptionsElRef {
         ElasticsearchDomainSamlOptionsSamlOptionsElRef {
             shared: shared,
             base: base.to_string(),
@@ -434,73 +487,73 @@ impl Ref for ElasticsearchDomainSamlOptionsSamlOptionsElRef {
 }
 
 impl ElasticsearchDomainSamlOptionsSamlOptionsElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `enabled` after provisioning.\n"]
-    pub fn enabled(&self) -> PrimExpr<bool> {
-        PrimExpr::new(self.shared().clone(), format!("{}.enabled", self.base))
+    #[doc = "Get a reference to the value of field `enabled` after provisioning.\n"]
+    pub fn enabled(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.enabled", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `master_backend_role` after provisioning.\n"]
-    pub fn master_backend_role(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.master_backend_role", self.base))
+    #[doc = "Get a reference to the value of field `master_backend_role` after provisioning.\n"]
+    pub fn master_backend_role(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.master_backend_role", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `master_user_name` after provisioning.\n"]
-    pub fn master_user_name(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.master_user_name", self.base))
+    #[doc = "Get a reference to the value of field `master_user_name` after provisioning.\n"]
+    pub fn master_user_name(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.master_user_name", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `roles_key` after provisioning.\n"]
-    pub fn roles_key(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.roles_key", self.base))
+    #[doc = "Get a reference to the value of field `roles_key` after provisioning.\n"]
+    pub fn roles_key(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.roles_key", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `session_timeout_minutes` after provisioning.\n"]
-    pub fn session_timeout_minutes(&self) -> PrimExpr<f64> {
-        PrimExpr::new(self.shared().clone(), format!("{}.session_timeout_minutes", self.base))
+    #[doc = "Get a reference to the value of field `session_timeout_minutes` after provisioning.\n"]
+    pub fn session_timeout_minutes(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.session_timeout_minutes", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `subject_key` after provisioning.\n"]
-    pub fn subject_key(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.subject_key", self.base))
+    #[doc = "Get a reference to the value of field `subject_key` after provisioning.\n"]
+    pub fn subject_key(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.subject_key", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `idp` after provisioning.\n"]
-    pub fn idp(&self) -> ListRef<ElasticsearchDomainSamlOptionsSamlOptionsElIdpElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.idp", self.base))
+    #[doc = "Get a reference to the value of field `idp` after provisioning.\n"]
+    pub fn idp(&self) -> terrars::ListRef<ElasticsearchDomainSamlOptionsSamlOptionsElIdpElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.idp", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct ElasticsearchDomainSamlOptionsTimeoutsEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    delete: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    update: Option<PrimField<String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    delete: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    update: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
 impl ElasticsearchDomainSamlOptionsTimeoutsEl {
-    #[doc= "Set the field `delete`.\n"]
-    pub fn set_delete(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.delete = Some(v.into());
+    #[doc = "Set the field `delete`.\n"]
+    pub fn set_delete(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.delete = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `update`.\n"]
-    pub fn set_update(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.update = Some(v.into());
+    #[doc = "Set the field `update`.\n"]
+    pub fn set_update(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.update = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl ToListMappable for ElasticsearchDomainSamlOptionsTimeoutsEl {
-    type O = BlockAssignable<ElasticsearchDomainSamlOptionsTimeoutsEl>;
+impl terrars::ToListMappable for ElasticsearchDomainSamlOptionsTimeoutsEl {
+    type O = terrars::BlockAssignable<ElasticsearchDomainSamlOptionsTimeoutsEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -520,12 +573,12 @@ impl BuildElasticsearchDomainSamlOptionsTimeoutsEl {
 }
 
 pub struct ElasticsearchDomainSamlOptionsTimeoutsElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for ElasticsearchDomainSamlOptionsTimeoutsElRef {
-    fn new(shared: StackShared, base: String) -> ElasticsearchDomainSamlOptionsTimeoutsElRef {
+impl terrars::Ref for ElasticsearchDomainSamlOptionsTimeoutsElRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> ElasticsearchDomainSamlOptionsTimeoutsElRef {
         ElasticsearchDomainSamlOptionsTimeoutsElRef {
             shared: shared,
             base: base.to_string(),
@@ -534,22 +587,22 @@ impl Ref for ElasticsearchDomainSamlOptionsTimeoutsElRef {
 }
 
 impl ElasticsearchDomainSamlOptionsTimeoutsElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `delete` after provisioning.\n"]
-    pub fn delete(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.delete", self.base))
+    #[doc = "Get a reference to the value of field `delete` after provisioning.\n"]
+    pub fn delete(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.delete", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `update` after provisioning.\n"]
-    pub fn update(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.update", self.base))
+    #[doc = "Get a reference to the value of field `update` after provisioning.\n"]
+    pub fn update(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.update", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
 struct ElasticsearchDomainSamlOptionsDynamic {
-    saml_options: Option<DynamicBlock<ElasticsearchDomainSamlOptionsSamlOptionsEl>>,
+    saml_options: std::option::Option<terrars::DynamicBlock<ElasticsearchDomainSamlOptionsSamlOptionsEl>>,
 }

@@ -1,64 +1,72 @@
 use serde::Serialize;
-use std::cell::RefCell;
-use std::rc::Rc;
-use terrars::*;
+use terrars::{
+    Referable as _,
+    Resource_ as _,
+    Ref as _,
+};
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
 struct Kinesisanalyticsv2ApplicationData {
-    #[serde(skip_serializing_if = "Vec::is_empty")]
-    depends_on: Vec<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    provider: Option<String>,
-    #[serde(skip_serializing_if = "SerdeSkipDefault::is_default")]
-    lifecycle: ResourceLifecycle,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    for_each: Option<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    description: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    force_stop: Option<PrimField<bool>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    id: Option<PrimField<String>>,
-    name: PrimField<String>,
-    runtime_environment: PrimField<String>,
-    service_execution_role: PrimField<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    start_application: Option<PrimField<bool>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    tags: Option<RecField<PrimField<String>>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    tags_all: Option<RecField<PrimField<String>>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    application_configuration: Option<Vec<Kinesisanalyticsv2ApplicationApplicationConfigurationEl>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    cloudwatch_logging_options: Option<Vec<Kinesisanalyticsv2ApplicationCloudwatchLoggingOptionsEl>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    timeouts: Option<Kinesisanalyticsv2ApplicationTimeoutsEl>,
+    #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
+    depends_on: std::vec::Vec<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    provider: std::option::Option<std::string::String>,
+    #[serde(skip_serializing_if = "terrars::SerdeSkipDefault::is_default")]
+    lifecycle: terrars::ResourceLifecycle,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    for_each: std::option::Option<std::string::String>,
+    #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
+    provisioner: std::vec::Vec<terrars::Provisioner>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    description: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    force_stop: std::option::Option<terrars::PrimField<bool>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    id: std::option::Option<terrars::PrimField<std::string::String>>,
+    name: terrars::PrimField<std::string::String>,
+    runtime_environment: terrars::PrimField<std::string::String>,
+    service_execution_role: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    start_application: std::option::Option<terrars::PrimField<bool>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    tags: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    tags_all: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    application_configuration: std
+    ::option
+    ::Option<std::vec::Vec<Kinesisanalyticsv2ApplicationApplicationConfigurationEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    cloudwatch_logging_options: std
+    ::option
+    ::Option<std::vec::Vec<Kinesisanalyticsv2ApplicationCloudwatchLoggingOptionsEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    timeouts: std::option::Option<Kinesisanalyticsv2ApplicationTimeoutsEl>,
     dynamic: Kinesisanalyticsv2ApplicationDynamic,
 }
 
 struct Kinesisanalyticsv2Application_ {
-    shared: StackShared,
-    tf_id: String,
-    data: RefCell<Kinesisanalyticsv2ApplicationData>,
+    shared: terrars::StackShared,
+    tf_id: std::string::String,
+    data: std::cell::RefCell<Kinesisanalyticsv2ApplicationData>,
 }
 
 #[derive(Clone)]
-pub struct Kinesisanalyticsv2Application(Rc<Kinesisanalyticsv2Application_>);
+pub struct Kinesisanalyticsv2Application(std::rc::Rc<Kinesisanalyticsv2Application_>);
 
 impl Kinesisanalyticsv2Application {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.0.shared
     }
 
-    pub fn depends_on(self, dep: &impl Referable) -> Self {
+    pub fn depends_on(self, dep: &impl terrars::Referable) -> Self {
         self.0.data.borrow_mut().depends_on.push(dep.extract_ref());
         self
     }
 
     pub fn set_provider(self, provider: &ProviderAws) -> Self {
-        self.0.data.borrow_mut().provider = Some(provider.provider_ref());
+        self.0.data.borrow_mut().provider = std::option::Option::Some(provider.provider_ref());
         self
     }
 
@@ -73,196 +81,249 @@ impl Kinesisanalyticsv2Application {
     }
 
     pub fn ignore_changes_to_all(self) -> Self {
-        self.0.data.borrow_mut().lifecycle.ignore_changes = Some(IgnoreChanges::All(IgnoreChangesAll::All));
+        self.0.data.borrow_mut().lifecycle.ignore_changes =
+            std::option::Option::Some(terrars::IgnoreChanges::All(terrars::IgnoreChangesAll::All));
         self
     }
 
-    pub fn ignore_changes_to_attr(self, attr: impl ToString) -> Self {
+    pub fn ignore_changes_to_attr(self, attr: impl std::string::ToString) -> Self {
         {
             let mut d = self.0.data.borrow_mut();
             if match &mut d.lifecycle.ignore_changes {
-                Some(i) => match i {
-                    IgnoreChanges::All(_) => {
+                std::option::Option::Some(i) => match i {
+                    terrars::IgnoreChanges::All(_) => {
                         true
                     },
-                    IgnoreChanges::Refs(r) => {
+                    terrars::IgnoreChanges::Refs(r) => {
                         r.push(attr.to_string());
                         false
                     },
                 },
-                None => true,
+                std::option::Option::None => true,
             } {
-                d.lifecycle.ignore_changes = Some(IgnoreChanges::Refs(vec![attr.to_string()]));
+                d.lifecycle.ignore_changes =
+                    std::option::Option::Some(terrars::IgnoreChanges::Refs(vec![attr.to_string()]));
             }
         }
         self
     }
 
-    pub fn replace_triggered_by_resource(self, r: &impl Resource) -> Self {
+    pub fn replace_triggered_by_resource(self, r: &impl terrars::Resource) -> Self {
         self.0.data.borrow_mut().lifecycle.replace_triggered_by.push(r.extract_ref());
         self
     }
 
-    pub fn replace_triggered_by_attr(self, attr: impl ToString) -> Self {
+    pub fn replace_triggered_by_attr(self, attr: impl std::string::ToString) -> Self {
         self.0.data.borrow_mut().lifecycle.replace_triggered_by.push(attr.to_string());
         self
     }
 
-    #[doc= "Set the field `description`.\n"]
-    pub fn set_description(self, v: impl Into<PrimField<String>>) -> Self {
-        self.0.data.borrow_mut().description = Some(v.into());
+    #[doc = r" Add a provisioner (ex: `local-exec`, `remote-exec`, `file`) to this resource."]
+    #[doc = r" Provisioners run in the order they're added."]
+    pub fn add_provisioner(self, v: impl std::convert::Into<terrars::Provisioner>) -> Self {
+        self.0.data.borrow_mut().provisioner.push(v.into());
         self
     }
 
-    #[doc= "Set the field `force_stop`.\n"]
-    pub fn set_force_stop(self, v: impl Into<PrimField<bool>>) -> Self {
-        self.0.data.borrow_mut().force_stop = Some(v.into());
+    pub fn add_lifecycle_precondition(
+        self,
+        condition: impl std::convert::Into<terrars::PrimField<bool>>,
+        error_message: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.0.data.borrow_mut().lifecycle.precondition.push(terrars::LifecycleCondition {
+            condition: condition.into(),
+            error_message: error_message.into(),
+        });
         self
     }
 
-    #[doc= "Set the field `id`.\n"]
-    pub fn set_id(self, v: impl Into<PrimField<String>>) -> Self {
-        self.0.data.borrow_mut().id = Some(v.into());
+    pub fn add_lifecycle_postcondition(
+        self,
+        condition: impl std::convert::Into<terrars::PrimField<bool>>,
+        error_message: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.0.data.borrow_mut().lifecycle.postcondition.push(terrars::LifecycleCondition {
+            condition: condition.into(),
+            error_message: error_message.into(),
+        });
         self
     }
 
-    #[doc= "Set the field `start_application`.\n"]
-    pub fn set_start_application(self, v: impl Into<PrimField<bool>>) -> Self {
-        self.0.data.borrow_mut().start_application = Some(v.into());
+    #[doc = "Set the field `description`.\n"]
+    pub fn set_description(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().description = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `tags`.\n"]
-    pub fn set_tags(self, v: impl Into<RecField<PrimField<String>>>) -> Self {
-        self.0.data.borrow_mut().tags = Some(v.into());
+    #[doc = "Set the field `force_stop`.\n"]
+    pub fn set_force_stop(self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
+        self.0.data.borrow_mut().force_stop = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `tags_all`.\n"]
-    pub fn set_tags_all(self, v: impl Into<RecField<PrimField<String>>>) -> Self {
-        self.0.data.borrow_mut().tags_all = Some(v.into());
+    #[doc = "Set the field `id`.\n"]
+    pub fn set_id(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().id = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `application_configuration`.\n"]
+    #[doc = "Set the field `start_application`.\n"]
+    pub fn set_start_application(self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
+        self.0.data.borrow_mut().start_application = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `tags`.\n"]
+    pub fn set_tags(
+        self,
+        v: impl std::convert::Into<terrars::RecField<terrars::PrimField<std::string::String>>>,
+    ) -> Self {
+        self.0.data.borrow_mut().tags = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `tags_all`.\n"]
+    pub fn set_tags_all(
+        self,
+        v: impl std::convert::Into<terrars::RecField<terrars::PrimField<std::string::String>>>,
+    ) -> Self {
+        self.0.data.borrow_mut().tags_all = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `application_configuration`.\n"]
     pub fn set_application_configuration(
         self,
-        v: impl Into<BlockAssignable<Kinesisanalyticsv2ApplicationApplicationConfigurationEl>>,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<terrars::BlockAssignable<Kinesisanalyticsv2ApplicationApplicationConfigurationEl>>,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.0.data.borrow_mut().application_configuration = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.0.data.borrow_mut().application_configuration = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.0.data.borrow_mut().dynamic.application_configuration = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.0.data.borrow_mut().dynamic.application_configuration = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Set the field `cloudwatch_logging_options`.\n"]
+    #[doc = "Set the field `cloudwatch_logging_options`.\n"]
     pub fn set_cloudwatch_logging_options(
         self,
-        v: impl Into<BlockAssignable<Kinesisanalyticsv2ApplicationCloudwatchLoggingOptionsEl>>,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<terrars::BlockAssignable<Kinesisanalyticsv2ApplicationCloudwatchLoggingOptionsEl>>,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.0.data.borrow_mut().cloudwatch_logging_options = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.0.data.borrow_mut().cloudwatch_logging_options = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.0.data.borrow_mut().dynamic.cloudwatch_logging_options = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.0.data.borrow_mut().dynamic.cloudwatch_logging_options = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Set the field `timeouts`.\n"]
-    pub fn set_timeouts(self, v: impl Into<Kinesisanalyticsv2ApplicationTimeoutsEl>) -> Self {
-        self.0.data.borrow_mut().timeouts = Some(v.into());
+    #[doc = "Set the field `timeouts`.\n"]
+    pub fn set_timeouts(self, v: impl std::convert::Into<Kinesisanalyticsv2ApplicationTimeoutsEl>) -> Self {
+        self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Get a reference to the value of field `arn` after provisioning.\n"]
-    pub fn arn(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.arn", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `arn` after provisioning.\n"]
+    pub fn arn(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.arn", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `create_timestamp` after provisioning.\n"]
-    pub fn create_timestamp(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.create_timestamp", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `create_timestamp` after provisioning.\n"]
+    pub fn create_timestamp(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.create_timestamp", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `description` after provisioning.\n"]
-    pub fn description(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.description", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `description` after provisioning.\n"]
+    pub fn description(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.description", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `force_stop` after provisioning.\n"]
-    pub fn force_stop(&self) -> PrimExpr<bool> {
-        PrimExpr::new(self.shared().clone(), format!("{}.force_stop", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `force_stop` after provisioning.\n"]
+    pub fn force_stop(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.force_stop", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `id` after provisioning.\n"]
-    pub fn id(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
+    pub fn id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `last_update_timestamp` after provisioning.\n"]
-    pub fn last_update_timestamp(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.last_update_timestamp", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `last_update_timestamp` after provisioning.\n"]
+    pub fn last_update_timestamp(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.last_update_timestamp", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `name` after provisioning.\n"]
-    pub fn name(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `name` after provisioning.\n"]
+    pub fn name(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `runtime_environment` after provisioning.\n"]
-    pub fn runtime_environment(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.runtime_environment", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `runtime_environment` after provisioning.\n"]
+    pub fn runtime_environment(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.runtime_environment", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `service_execution_role` after provisioning.\n"]
-    pub fn service_execution_role(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.service_execution_role", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `service_execution_role` after provisioning.\n"]
+    pub fn service_execution_role(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.service_execution_role", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `start_application` after provisioning.\n"]
-    pub fn start_application(&self) -> PrimExpr<bool> {
-        PrimExpr::new(self.shared().clone(), format!("{}.start_application", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `start_application` after provisioning.\n"]
+    pub fn start_application(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.start_application", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `status` after provisioning.\n"]
-    pub fn status(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.status", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `status` after provisioning.\n"]
+    pub fn status(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.status", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `tags` after provisioning.\n"]
-    pub fn tags(&self) -> RecRef<PrimExpr<String>> {
-        RecRef::new(self.shared().clone(), format!("{}.tags", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `tags` after provisioning.\n"]
+    pub fn tags(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
+        terrars::RecRef::new(self.shared().clone(), format!("{}.tags", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `tags_all` after provisioning.\n"]
-    pub fn tags_all(&self) -> RecRef<PrimExpr<String>> {
-        RecRef::new(self.shared().clone(), format!("{}.tags_all", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `tags_all` after provisioning.\n"]
+    pub fn tags_all(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
+        terrars::RecRef::new(self.shared().clone(), format!("{}.tags_all", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `version_id` after provisioning.\n"]
-    pub fn version_id(&self) -> PrimExpr<f64> {
-        PrimExpr::new(self.shared().clone(), format!("{}.version_id", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `version_id` after provisioning.\n"]
+    pub fn version_id(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.version_id", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `application_configuration` after provisioning.\n"]
-    pub fn application_configuration(&self) -> ListRef<Kinesisanalyticsv2ApplicationApplicationConfigurationElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.application_configuration", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `application_configuration` after provisioning.\n"]
+    pub fn application_configuration(
+        &self,
+    ) -> terrars::ListRef<Kinesisanalyticsv2ApplicationApplicationConfigurationElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.application_configuration", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `cloudwatch_logging_options` after provisioning.\n"]
-    pub fn cloudwatch_logging_options(&self) -> ListRef<Kinesisanalyticsv2ApplicationCloudwatchLoggingOptionsElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.cloudwatch_logging_options", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `cloudwatch_logging_options` after provisioning.\n"]
+    pub fn cloudwatch_logging_options(
+        &self,
+    ) -> terrars::ListRef<Kinesisanalyticsv2ApplicationCloudwatchLoggingOptionsElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.cloudwatch_logging_options", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `timeouts` after provisioning.\n"]
+    #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
     pub fn timeouts(&self) -> Kinesisanalyticsv2ApplicationTimeoutsElRef {
         Kinesisanalyticsv2ApplicationTimeoutsElRef::new(
             self.shared().clone(),
@@ -271,29 +332,29 @@ impl Kinesisanalyticsv2Application {
     }
 }
 
-impl Referable for Kinesisanalyticsv2Application {
-    fn extract_ref(&self) -> String {
+impl terrars::Referable for Kinesisanalyticsv2Application {
+    fn extract_ref(&self) -> std::string::String {
         format!("{}.{}", self.0.extract_resource_type(), self.0.extract_tf_id())
     }
 }
 
-impl Resource for Kinesisanalyticsv2Application { }
+impl terrars::Resource for Kinesisanalyticsv2Application { }
 
-impl ToListMappable for Kinesisanalyticsv2Application {
-    type O = ListRef<Kinesisanalyticsv2ApplicationRef>;
+impl terrars::ToListMappable for Kinesisanalyticsv2Application {
+    type O = terrars::ListRef<Kinesisanalyticsv2ApplicationRef>;
 
-    fn do_map(self, base: String) -> Self::O {
-        self.0.data.borrow_mut().for_each = Some(format!("${{{}}}", base));
-        ListRef::new(self.0.shared.clone(), self.extract_ref())
+    fn do_map(self, base: std::string::String) -> Self::O {
+        self.0.data.borrow_mut().for_each = std::option::Option::Some(format!("${{{}}}", base));
+        terrars::ListRef::new(self.0.shared.clone(), self.extract_ref())
     }
 }
 
-impl Resource_ for Kinesisanalyticsv2Application_ {
-    fn extract_resource_type(&self) -> String {
+impl terrars::Resource_ for Kinesisanalyticsv2Application_ {
+    fn extract_resource_type(&self) -> std::string::String {
         "aws_kinesisanalyticsv2_application".into()
     }
 
-    fn extract_tf_id(&self) -> String {
+    fn extract_tf_id(&self) -> std::string::String {
         self.tf_id.clone()
     }
 
@@ -303,25 +364,26 @@ impl Resource_ for Kinesisanalyticsv2Application_ {
 }
 
 pub struct BuildKinesisanalyticsv2Application {
-    pub tf_id: String,
-    #[doc= ""]
-    pub name: PrimField<String>,
-    #[doc= ""]
-    pub runtime_environment: PrimField<String>,
-    #[doc= ""]
-    pub service_execution_role: PrimField<String>,
+    pub tf_id: std::string::String,
+    #[doc = ""]
+    pub name: terrars::PrimField<std::string::String>,
+    #[doc = ""]
+    pub runtime_environment: terrars::PrimField<std::string::String>,
+    #[doc = ""]
+    pub service_execution_role: terrars::PrimField<std::string::String>,
 }
 
 impl BuildKinesisanalyticsv2Application {
-    pub fn build(self, stack: &mut Stack) -> Kinesisanalyticsv2Application {
-        let out = Kinesisanalyticsv2Application(Rc::new(Kinesisanalyticsv2Application_ {
+    pub fn build(self, stack: &mut terrars::Stack) -> Kinesisanalyticsv2Application {
+        let out = Kinesisanalyticsv2Application(std::rc::Rc::new(Kinesisanalyticsv2Application_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: RefCell::new(Kinesisanalyticsv2ApplicationData {
+            data: std::cell::RefCell::new(Kinesisanalyticsv2ApplicationData {
                 depends_on: core::default::Default::default(),
-                provider: None,
+                provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
-                for_each: None,
+                for_each: std::option::Option::None,
+                provisioner: core::default::Default::default(),
                 description: core::default::Default::default(),
                 force_stop: core::default::Default::default(),
                 id: core::default::Default::default(),
@@ -334,7 +396,7 @@ impl BuildKinesisanalyticsv2Application {
                 application_configuration: core::default::Default::default(),
                 cloudwatch_logging_options: core::default::Default::default(),
                 timeouts: core::default::Default::default(),
-                dynamic: Default::default(),
+                dynamic: core::default::Default::default(),
             }),
         }));
         stack.add_resource(out.0.clone());
@@ -343,12 +405,12 @@ impl BuildKinesisanalyticsv2Application {
 }
 
 pub struct Kinesisanalyticsv2ApplicationRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for Kinesisanalyticsv2ApplicationRef {
-    fn new(shared: StackShared, base: String) -> Self {
+impl terrars::Ref for Kinesisanalyticsv2ApplicationRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> Self {
         Self {
             shared: shared,
             base: base,
@@ -357,95 +419,99 @@ impl Ref for Kinesisanalyticsv2ApplicationRef {
 }
 
 impl Kinesisanalyticsv2ApplicationRef {
-    fn extract_ref(&self) -> String {
+    fn extract_ref(&self) -> std::string::String {
         self.base.clone()
     }
 
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `arn` after provisioning.\n"]
-    pub fn arn(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.arn", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `arn` after provisioning.\n"]
+    pub fn arn(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.arn", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `create_timestamp` after provisioning.\n"]
-    pub fn create_timestamp(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.create_timestamp", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `create_timestamp` after provisioning.\n"]
+    pub fn create_timestamp(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.create_timestamp", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `description` after provisioning.\n"]
-    pub fn description(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.description", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `description` after provisioning.\n"]
+    pub fn description(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.description", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `force_stop` after provisioning.\n"]
-    pub fn force_stop(&self) -> PrimExpr<bool> {
-        PrimExpr::new(self.shared().clone(), format!("{}.force_stop", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `force_stop` after provisioning.\n"]
+    pub fn force_stop(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.force_stop", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `id` after provisioning.\n"]
-    pub fn id(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
+    pub fn id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `last_update_timestamp` after provisioning.\n"]
-    pub fn last_update_timestamp(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.last_update_timestamp", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `last_update_timestamp` after provisioning.\n"]
+    pub fn last_update_timestamp(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.last_update_timestamp", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `name` after provisioning.\n"]
-    pub fn name(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `name` after provisioning.\n"]
+    pub fn name(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `runtime_environment` after provisioning.\n"]
-    pub fn runtime_environment(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.runtime_environment", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `runtime_environment` after provisioning.\n"]
+    pub fn runtime_environment(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.runtime_environment", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `service_execution_role` after provisioning.\n"]
-    pub fn service_execution_role(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.service_execution_role", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `service_execution_role` after provisioning.\n"]
+    pub fn service_execution_role(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.service_execution_role", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `start_application` after provisioning.\n"]
-    pub fn start_application(&self) -> PrimExpr<bool> {
-        PrimExpr::new(self.shared().clone(), format!("{}.start_application", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `start_application` after provisioning.\n"]
+    pub fn start_application(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.start_application", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `status` after provisioning.\n"]
-    pub fn status(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.status", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `status` after provisioning.\n"]
+    pub fn status(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.status", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `tags` after provisioning.\n"]
-    pub fn tags(&self) -> RecRef<PrimExpr<String>> {
-        RecRef::new(self.shared().clone(), format!("{}.tags", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `tags` after provisioning.\n"]
+    pub fn tags(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
+        terrars::RecRef::new(self.shared().clone(), format!("{}.tags", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `tags_all` after provisioning.\n"]
-    pub fn tags_all(&self) -> RecRef<PrimExpr<String>> {
-        RecRef::new(self.shared().clone(), format!("{}.tags_all", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `tags_all` after provisioning.\n"]
+    pub fn tags_all(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
+        terrars::RecRef::new(self.shared().clone(), format!("{}.tags_all", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `version_id` after provisioning.\n"]
-    pub fn version_id(&self) -> PrimExpr<f64> {
-        PrimExpr::new(self.shared().clone(), format!("{}.version_id", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `version_id` after provisioning.\n"]
+    pub fn version_id(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.version_id", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `application_configuration` after provisioning.\n"]
-    pub fn application_configuration(&self) -> ListRef<Kinesisanalyticsv2ApplicationApplicationConfigurationElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.application_configuration", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `application_configuration` after provisioning.\n"]
+    pub fn application_configuration(
+        &self,
+    ) -> terrars::ListRef<Kinesisanalyticsv2ApplicationApplicationConfigurationElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.application_configuration", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `cloudwatch_logging_options` after provisioning.\n"]
-    pub fn cloudwatch_logging_options(&self) -> ListRef<Kinesisanalyticsv2ApplicationCloudwatchLoggingOptionsElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.cloudwatch_logging_options", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `cloudwatch_logging_options` after provisioning.\n"]
+    pub fn cloudwatch_logging_options(
+        &self,
+    ) -> terrars::ListRef<Kinesisanalyticsv2ApplicationCloudwatchLoggingOptionsElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.cloudwatch_logging_options", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `timeouts` after provisioning.\n"]
+    #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
     pub fn timeouts(&self) -> Kinesisanalyticsv2ApplicationTimeoutsElRef {
         Kinesisanalyticsv2ApplicationTimeoutsElRef::new(
             self.shared().clone(),
@@ -456,28 +522,30 @@ impl Kinesisanalyticsv2ApplicationRef {
 
 #[derive(Serialize)]
 pub struct Kinesisanalyticsv2ApplicationApplicationConfigurationElApplicationCodeConfigurationElCodeContentElS3ContentLocationEl {
-    bucket_arn: PrimField<String>,
-    file_key: PrimField<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    object_version: Option<PrimField<String>>,
+    bucket_arn: terrars::PrimField<std::string::String>,
+    file_key: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    object_version: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
 impl Kinesisanalyticsv2ApplicationApplicationConfigurationElApplicationCodeConfigurationElCodeContentElS3ContentLocationEl {
-    #[doc= "Set the field `object_version`.\n"]
-    pub fn set_object_version(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.object_version = Some(v.into());
+    #[doc = "Set the field `object_version`.\n"]
+    pub fn set_object_version(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.object_version = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl ToListMappable for Kinesisanalyticsv2ApplicationApplicationConfigurationElApplicationCodeConfigurationElCodeContentElS3ContentLocationEl {
+impl terrars
+::ToListMappable for Kinesisanalyticsv2ApplicationApplicationConfigurationElApplicationCodeConfigurationElCodeContentElS3ContentLocationEl {
     type O =
-        BlockAssignable<
+        terrars
+        ::BlockAssignable<
             Kinesisanalyticsv2ApplicationApplicationConfigurationElApplicationCodeConfigurationElCodeContentElS3ContentLocationEl,
         >;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -486,10 +554,10 @@ impl ToListMappable for Kinesisanalyticsv2ApplicationApplicationConfigurationElA
 }
 
 pub struct BuildKinesisanalyticsv2ApplicationApplicationConfigurationElApplicationCodeConfigurationElCodeContentElS3ContentLocationEl {
-    #[doc= ""]
-    pub bucket_arn: PrimField<String>,
-    #[doc= ""]
-    pub file_key: PrimField<String>,
+    #[doc = ""]
+    pub bucket_arn: terrars::PrimField<std::string::String>,
+    #[doc = ""]
+    pub file_key: terrars::PrimField<std::string::String>,
 }
 
 impl BuildKinesisanalyticsv2ApplicationApplicationConfigurationElApplicationCodeConfigurationElCodeContentElS3ContentLocationEl {
@@ -505,14 +573,15 @@ impl BuildKinesisanalyticsv2ApplicationApplicationConfigurationElApplicationCode
 }
 
 pub struct Kinesisanalyticsv2ApplicationApplicationConfigurationElApplicationCodeConfigurationElCodeContentElS3ContentLocationElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for Kinesisanalyticsv2ApplicationApplicationConfigurationElApplicationCodeConfigurationElCodeContentElS3ContentLocationElRef {
+impl terrars
+::Ref for Kinesisanalyticsv2ApplicationApplicationConfigurationElApplicationCodeConfigurationElCodeContentElS3ContentLocationElRef {
     fn new(
-        shared: StackShared,
-        base: String,
+        shared: terrars::StackShared,
+        base: std::string::String,
     ) -> Kinesisanalyticsv2ApplicationApplicationConfigurationElApplicationCodeConfigurationElCodeContentElS3ContentLocationElRef {
         Kinesisanalyticsv2ApplicationApplicationConfigurationElApplicationCodeConfigurationElCodeContentElS3ContentLocationElRef {
             shared: shared,
@@ -522,30 +591,33 @@ impl Ref for Kinesisanalyticsv2ApplicationApplicationConfigurationElApplicationC
 }
 
 impl Kinesisanalyticsv2ApplicationApplicationConfigurationElApplicationCodeConfigurationElCodeContentElS3ContentLocationElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `bucket_arn` after provisioning.\n"]
-    pub fn bucket_arn(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.bucket_arn", self.base))
+    #[doc = "Get a reference to the value of field `bucket_arn` after provisioning.\n"]
+    pub fn bucket_arn(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.bucket_arn", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `file_key` after provisioning.\n"]
-    pub fn file_key(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.file_key", self.base))
+    #[doc = "Get a reference to the value of field `file_key` after provisioning.\n"]
+    pub fn file_key(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.file_key", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `object_version` after provisioning.\n"]
-    pub fn object_version(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.object_version", self.base))
+    #[doc = "Get a reference to the value of field `object_version` after provisioning.\n"]
+    pub fn object_version(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.object_version", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
 struct Kinesisanalyticsv2ApplicationApplicationConfigurationElApplicationCodeConfigurationElCodeContentElDynamic {
-    s3_content_location: Option<
-        DynamicBlock<
+    s3_content_location: std
+    ::option
+    ::Option<
+        terrars
+        ::DynamicBlock<
             Kinesisanalyticsv2ApplicationApplicationConfigurationElApplicationCodeConfigurationElCodeContentElS3ContentLocationEl,
         >,
     >,
@@ -553,11 +625,15 @@ struct Kinesisanalyticsv2ApplicationApplicationConfigurationElApplicationCodeCon
 
 #[derive(Serialize)]
 pub struct Kinesisanalyticsv2ApplicationApplicationConfigurationElApplicationCodeConfigurationElCodeContentEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    text_content: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    s3_content_location: Option<
-        Vec<
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    text_content: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    s3_content_location: std
+    ::option
+    ::Option<
+        std
+        ::vec
+        ::Vec<
             Kinesisanalyticsv2ApplicationApplicationConfigurationElApplicationCodeConfigurationElCodeContentElS3ContentLocationEl,
         >,
     >,
@@ -565,44 +641,49 @@ pub struct Kinesisanalyticsv2ApplicationApplicationConfigurationElApplicationCod
 }
 
 impl Kinesisanalyticsv2ApplicationApplicationConfigurationElApplicationCodeConfigurationElCodeContentEl {
-    #[doc= "Set the field `text_content`.\n"]
-    pub fn set_text_content(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.text_content = Some(v.into());
+    #[doc = "Set the field `text_content`.\n"]
+    pub fn set_text_content(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.text_content = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `s3_content_location`.\n"]
+    #[doc = "Set the field `s3_content_location`.\n"]
     pub fn set_s3_content_location(
         mut self,
         v:
             impl
 
-                    Into<
-                        BlockAssignable<
+                    std
+                    ::convert
+                    ::Into<
+                        terrars
+                        ::BlockAssignable<
                             Kinesisanalyticsv2ApplicationApplicationConfigurationElApplicationCodeConfigurationElCodeContentElS3ContentLocationEl,
                         >,
                     >,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.s3_content_location = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.s3_content_location = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.s3_content_location = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.s3_content_location = std::option::Option::Some(d);
             },
         }
         self
     }
 }
 
-impl ToListMappable for Kinesisanalyticsv2ApplicationApplicationConfigurationElApplicationCodeConfigurationElCodeContentEl {
+impl terrars
+::ToListMappable for Kinesisanalyticsv2ApplicationApplicationConfigurationElApplicationCodeConfigurationElCodeContentEl {
     type O =
-        BlockAssignable<
+        terrars
+        ::BlockAssignable<
             Kinesisanalyticsv2ApplicationApplicationConfigurationElApplicationCodeConfigurationElCodeContentEl,
         >;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -619,20 +700,21 @@ impl BuildKinesisanalyticsv2ApplicationApplicationConfigurationElApplicationCode
         Kinesisanalyticsv2ApplicationApplicationConfigurationElApplicationCodeConfigurationElCodeContentEl {
             text_content: core::default::Default::default(),
             s3_content_location: core::default::Default::default(),
-            dynamic: Default::default(),
+            dynamic: core::default::Default::default(),
         }
     }
 }
 
 pub struct Kinesisanalyticsv2ApplicationApplicationConfigurationElApplicationCodeConfigurationElCodeContentElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for Kinesisanalyticsv2ApplicationApplicationConfigurationElApplicationCodeConfigurationElCodeContentElRef {
+impl terrars
+::Ref for Kinesisanalyticsv2ApplicationApplicationConfigurationElApplicationCodeConfigurationElCodeContentElRef {
     fn new(
-        shared: StackShared,
-        base: String,
+        shared: terrars::StackShared,
+        base: std::string::String,
     ) -> Kinesisanalyticsv2ApplicationApplicationConfigurationElApplicationCodeConfigurationElCodeContentElRef {
         Kinesisanalyticsv2ApplicationApplicationConfigurationElApplicationCodeConfigurationElCodeContentElRef {
             shared: shared,
@@ -642,29 +724,33 @@ impl Ref for Kinesisanalyticsv2ApplicationApplicationConfigurationElApplicationC
 }
 
 impl Kinesisanalyticsv2ApplicationApplicationConfigurationElApplicationCodeConfigurationElCodeContentElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `text_content` after provisioning.\n"]
-    pub fn text_content(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.text_content", self.base))
+    #[doc = "Get a reference to the value of field `text_content` after provisioning.\n"]
+    pub fn text_content(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.text_content", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `s3_content_location` after provisioning.\n"]
+    #[doc = "Get a reference to the value of field `s3_content_location` after provisioning.\n"]
     pub fn s3_content_location(
         &self,
-    ) -> ListRef<
+    ) -> terrars
+    ::ListRef<
         Kinesisanalyticsv2ApplicationApplicationConfigurationElApplicationCodeConfigurationElCodeContentElS3ContentLocationElRef,
     > {
-        ListRef::new(self.shared().clone(), format!("{}.s3_content_location", self.base))
+        terrars::ListRef::new(self.shared().clone(), format!("{}.s3_content_location", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
 struct Kinesisanalyticsv2ApplicationApplicationConfigurationElApplicationCodeConfigurationElDynamic {
-    code_content: Option<
-        DynamicBlock<
+    code_content: std
+    ::option
+    ::Option<
+        terrars
+        ::DynamicBlock<
             Kinesisanalyticsv2ApplicationApplicationConfigurationElApplicationCodeConfigurationElCodeContentEl,
         >,
     >,
@@ -672,44 +758,53 @@ struct Kinesisanalyticsv2ApplicationApplicationConfigurationElApplicationCodeCon
 
 #[derive(Serialize)]
 pub struct Kinesisanalyticsv2ApplicationApplicationConfigurationElApplicationCodeConfigurationEl {
-    code_content_type: PrimField<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    code_content: Option<
-        Vec<Kinesisanalyticsv2ApplicationApplicationConfigurationElApplicationCodeConfigurationElCodeContentEl>,
+    code_content_type: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    code_content: std
+    ::option
+    ::Option<
+        std
+        ::vec
+        ::Vec<Kinesisanalyticsv2ApplicationApplicationConfigurationElApplicationCodeConfigurationElCodeContentEl>,
     >,
     dynamic: Kinesisanalyticsv2ApplicationApplicationConfigurationElApplicationCodeConfigurationElDynamic,
 }
 
 impl Kinesisanalyticsv2ApplicationApplicationConfigurationElApplicationCodeConfigurationEl {
-    #[doc= "Set the field `code_content`.\n"]
+    #[doc = "Set the field `code_content`.\n"]
     pub fn set_code_content(
         mut self,
         v:
             impl
 
-                    Into<
-                        BlockAssignable<
+                    std
+                    ::convert
+                    ::Into<
+                        terrars
+                        ::BlockAssignable<
                             Kinesisanalyticsv2ApplicationApplicationConfigurationElApplicationCodeConfigurationElCodeContentEl,
                         >,
                     >,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.code_content = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.code_content = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.code_content = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.code_content = std::option::Option::Some(d);
             },
         }
         self
     }
 }
 
-impl ToListMappable for Kinesisanalyticsv2ApplicationApplicationConfigurationElApplicationCodeConfigurationEl {
-    type O = BlockAssignable<Kinesisanalyticsv2ApplicationApplicationConfigurationElApplicationCodeConfigurationEl>;
+impl terrars::ToListMappable for Kinesisanalyticsv2ApplicationApplicationConfigurationElApplicationCodeConfigurationEl {
+    type O =
+        terrars
+        ::BlockAssignable<Kinesisanalyticsv2ApplicationApplicationConfigurationElApplicationCodeConfigurationEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -718,8 +813,8 @@ impl ToListMappable for Kinesisanalyticsv2ApplicationApplicationConfigurationElA
 }
 
 pub struct BuildKinesisanalyticsv2ApplicationApplicationConfigurationElApplicationCodeConfigurationEl {
-    #[doc= ""]
-    pub code_content_type: PrimField<String>,
+    #[doc = ""]
+    pub code_content_type: terrars::PrimField<std::string::String>,
 }
 
 impl BuildKinesisanalyticsv2ApplicationApplicationConfigurationElApplicationCodeConfigurationEl {
@@ -727,20 +822,20 @@ impl BuildKinesisanalyticsv2ApplicationApplicationConfigurationElApplicationCode
         Kinesisanalyticsv2ApplicationApplicationConfigurationElApplicationCodeConfigurationEl {
             code_content_type: self.code_content_type,
             code_content: core::default::Default::default(),
-            dynamic: Default::default(),
+            dynamic: core::default::Default::default(),
         }
     }
 }
 
 pub struct Kinesisanalyticsv2ApplicationApplicationConfigurationElApplicationCodeConfigurationElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for Kinesisanalyticsv2ApplicationApplicationConfigurationElApplicationCodeConfigurationElRef {
+impl terrars::Ref for Kinesisanalyticsv2ApplicationApplicationConfigurationElApplicationCodeConfigurationElRef {
     fn new(
-        shared: StackShared,
-        base: String,
+        shared: terrars::StackShared,
+        base: std::string::String,
     ) -> Kinesisanalyticsv2ApplicationApplicationConfigurationElApplicationCodeConfigurationElRef {
         Kinesisanalyticsv2ApplicationApplicationConfigurationElApplicationCodeConfigurationElRef {
             shared: shared,
@@ -750,38 +845,39 @@ impl Ref for Kinesisanalyticsv2ApplicationApplicationConfigurationElApplicationC
 }
 
 impl Kinesisanalyticsv2ApplicationApplicationConfigurationElApplicationCodeConfigurationElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `code_content_type` after provisioning.\n"]
-    pub fn code_content_type(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.code_content_type", self.base))
+    #[doc = "Get a reference to the value of field `code_content_type` after provisioning.\n"]
+    pub fn code_content_type(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.code_content_type", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `code_content` after provisioning.\n"]
+    #[doc = "Get a reference to the value of field `code_content` after provisioning.\n"]
     pub fn code_content(
         &self,
-    ) -> ListRef<
-        Kinesisanalyticsv2ApplicationApplicationConfigurationElApplicationCodeConfigurationElCodeContentElRef,
-    > {
-        ListRef::new(self.shared().clone(), format!("{}.code_content", self.base))
+    ) -> terrars
+    ::ListRef<Kinesisanalyticsv2ApplicationApplicationConfigurationElApplicationCodeConfigurationElCodeContentElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.code_content", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct Kinesisanalyticsv2ApplicationApplicationConfigurationElApplicationSnapshotConfigurationEl {
-    snapshots_enabled: PrimField<bool>,
+    snapshots_enabled: terrars::PrimField<bool>,
 }
 
 impl Kinesisanalyticsv2ApplicationApplicationConfigurationElApplicationSnapshotConfigurationEl { }
 
-impl ToListMappable for Kinesisanalyticsv2ApplicationApplicationConfigurationElApplicationSnapshotConfigurationEl {
+impl terrars
+::ToListMappable for Kinesisanalyticsv2ApplicationApplicationConfigurationElApplicationSnapshotConfigurationEl {
     type O =
-        BlockAssignable<Kinesisanalyticsv2ApplicationApplicationConfigurationElApplicationSnapshotConfigurationEl>;
+        terrars
+        ::BlockAssignable<Kinesisanalyticsv2ApplicationApplicationConfigurationElApplicationSnapshotConfigurationEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -790,8 +886,8 @@ impl ToListMappable for Kinesisanalyticsv2ApplicationApplicationConfigurationElA
 }
 
 pub struct BuildKinesisanalyticsv2ApplicationApplicationConfigurationElApplicationSnapshotConfigurationEl {
-    #[doc= ""]
-    pub snapshots_enabled: PrimField<bool>,
+    #[doc = ""]
+    pub snapshots_enabled: terrars::PrimField<bool>,
 }
 
 impl BuildKinesisanalyticsv2ApplicationApplicationConfigurationElApplicationSnapshotConfigurationEl {
@@ -803,14 +899,14 @@ impl BuildKinesisanalyticsv2ApplicationApplicationConfigurationElApplicationSnap
 }
 
 pub struct Kinesisanalyticsv2ApplicationApplicationConfigurationElApplicationSnapshotConfigurationElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for Kinesisanalyticsv2ApplicationApplicationConfigurationElApplicationSnapshotConfigurationElRef {
+impl terrars::Ref for Kinesisanalyticsv2ApplicationApplicationConfigurationElApplicationSnapshotConfigurationElRef {
     fn new(
-        shared: StackShared,
-        base: String,
+        shared: terrars::StackShared,
+        base: std::string::String,
     ) -> Kinesisanalyticsv2ApplicationApplicationConfigurationElApplicationSnapshotConfigurationElRef {
         Kinesisanalyticsv2ApplicationApplicationConfigurationElApplicationSnapshotConfigurationElRef {
             shared: shared,
@@ -820,32 +916,34 @@ impl Ref for Kinesisanalyticsv2ApplicationApplicationConfigurationElApplicationS
 }
 
 impl Kinesisanalyticsv2ApplicationApplicationConfigurationElApplicationSnapshotConfigurationElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `snapshots_enabled` after provisioning.\n"]
-    pub fn snapshots_enabled(&self) -> PrimExpr<bool> {
-        PrimExpr::new(self.shared().clone(), format!("{}.snapshots_enabled", self.base))
+    #[doc = "Get a reference to the value of field `snapshots_enabled` after provisioning.\n"]
+    pub fn snapshots_enabled(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.snapshots_enabled", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct Kinesisanalyticsv2ApplicationApplicationConfigurationElEnvironmentPropertiesElPropertyGroupEl {
-    property_group_id: PrimField<String>,
-    property_map: RecField<PrimField<String>>,
+    property_group_id: terrars::PrimField<std::string::String>,
+    property_map: terrars::RecField<terrars::PrimField<std::string::String>>,
 }
 
 impl Kinesisanalyticsv2ApplicationApplicationConfigurationElEnvironmentPropertiesElPropertyGroupEl { }
 
-impl ToListMappable for Kinesisanalyticsv2ApplicationApplicationConfigurationElEnvironmentPropertiesElPropertyGroupEl {
+impl terrars
+::ToListMappable for Kinesisanalyticsv2ApplicationApplicationConfigurationElEnvironmentPropertiesElPropertyGroupEl {
     type O =
-        BlockAssignable<
+        terrars
+        ::BlockAssignable<
             Kinesisanalyticsv2ApplicationApplicationConfigurationElEnvironmentPropertiesElPropertyGroupEl,
         >;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -854,10 +952,10 @@ impl ToListMappable for Kinesisanalyticsv2ApplicationApplicationConfigurationElE
 }
 
 pub struct BuildKinesisanalyticsv2ApplicationApplicationConfigurationElEnvironmentPropertiesElPropertyGroupEl {
-    #[doc= ""]
-    pub property_group_id: PrimField<String>,
-    #[doc= ""]
-    pub property_map: RecField<PrimField<String>>,
+    #[doc = ""]
+    pub property_group_id: terrars::PrimField<std::string::String>,
+    #[doc = ""]
+    pub property_map: terrars::RecField<terrars::PrimField<std::string::String>>,
 }
 
 impl BuildKinesisanalyticsv2ApplicationApplicationConfigurationElEnvironmentPropertiesElPropertyGroupEl {
@@ -872,14 +970,14 @@ impl BuildKinesisanalyticsv2ApplicationApplicationConfigurationElEnvironmentProp
 }
 
 pub struct Kinesisanalyticsv2ApplicationApplicationConfigurationElEnvironmentPropertiesElPropertyGroupElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for Kinesisanalyticsv2ApplicationApplicationConfigurationElEnvironmentPropertiesElPropertyGroupElRef {
+impl terrars::Ref for Kinesisanalyticsv2ApplicationApplicationConfigurationElEnvironmentPropertiesElPropertyGroupElRef {
     fn new(
-        shared: StackShared,
-        base: String,
+        shared: terrars::StackShared,
+        base: std::string::String,
     ) -> Kinesisanalyticsv2ApplicationApplicationConfigurationElEnvironmentPropertiesElPropertyGroupElRef {
         Kinesisanalyticsv2ApplicationApplicationConfigurationElEnvironmentPropertiesElPropertyGroupElRef {
             shared: shared,
@@ -889,67 +987,76 @@ impl Ref for Kinesisanalyticsv2ApplicationApplicationConfigurationElEnvironmentP
 }
 
 impl Kinesisanalyticsv2ApplicationApplicationConfigurationElEnvironmentPropertiesElPropertyGroupElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `property_group_id` after provisioning.\n"]
-    pub fn property_group_id(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.property_group_id", self.base))
+    #[doc = "Get a reference to the value of field `property_group_id` after provisioning.\n"]
+    pub fn property_group_id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.property_group_id", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `property_map` after provisioning.\n"]
-    pub fn property_map(&self) -> RecRef<PrimExpr<String>> {
-        RecRef::new(self.shared().clone(), format!("{}.property_map", self.base))
+    #[doc = "Get a reference to the value of field `property_map` after provisioning.\n"]
+    pub fn property_map(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
+        terrars::RecRef::new(self.shared().clone(), format!("{}.property_map", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
 struct Kinesisanalyticsv2ApplicationApplicationConfigurationElEnvironmentPropertiesElDynamic {
-    property_group: Option<
-        DynamicBlock<Kinesisanalyticsv2ApplicationApplicationConfigurationElEnvironmentPropertiesElPropertyGroupEl>,
+    property_group: std
+    ::option
+    ::Option<
+        terrars
+        ::DynamicBlock<Kinesisanalyticsv2ApplicationApplicationConfigurationElEnvironmentPropertiesElPropertyGroupEl>,
     >,
 }
 
 #[derive(Serialize)]
 pub struct Kinesisanalyticsv2ApplicationApplicationConfigurationElEnvironmentPropertiesEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    property_group: Option<
-        Vec<Kinesisanalyticsv2ApplicationApplicationConfigurationElEnvironmentPropertiesElPropertyGroupEl>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    property_group: std
+    ::option
+    ::Option<
+        std::vec::Vec<Kinesisanalyticsv2ApplicationApplicationConfigurationElEnvironmentPropertiesElPropertyGroupEl>,
     >,
     dynamic: Kinesisanalyticsv2ApplicationApplicationConfigurationElEnvironmentPropertiesElDynamic,
 }
 
 impl Kinesisanalyticsv2ApplicationApplicationConfigurationElEnvironmentPropertiesEl {
-    #[doc= "Set the field `property_group`.\n"]
+    #[doc = "Set the field `property_group`.\n"]
     pub fn set_property_group(
         mut self,
         v:
             impl
 
-                    Into<
-                        BlockAssignable<
+                    std
+                    ::convert
+                    ::Into<
+                        terrars
+                        ::BlockAssignable<
                             Kinesisanalyticsv2ApplicationApplicationConfigurationElEnvironmentPropertiesElPropertyGroupEl,
                         >,
                     >,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.property_group = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.property_group = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.property_group = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.property_group = std::option::Option::Some(d);
             },
         }
         self
     }
 }
 
-impl ToListMappable for Kinesisanalyticsv2ApplicationApplicationConfigurationElEnvironmentPropertiesEl {
-    type O = BlockAssignable<Kinesisanalyticsv2ApplicationApplicationConfigurationElEnvironmentPropertiesEl>;
+impl terrars::ToListMappable for Kinesisanalyticsv2ApplicationApplicationConfigurationElEnvironmentPropertiesEl {
+    type O =
+        terrars::BlockAssignable<Kinesisanalyticsv2ApplicationApplicationConfigurationElEnvironmentPropertiesEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -963,20 +1070,20 @@ impl BuildKinesisanalyticsv2ApplicationApplicationConfigurationElEnvironmentProp
     pub fn build(self) -> Kinesisanalyticsv2ApplicationApplicationConfigurationElEnvironmentPropertiesEl {
         Kinesisanalyticsv2ApplicationApplicationConfigurationElEnvironmentPropertiesEl {
             property_group: core::default::Default::default(),
-            dynamic: Default::default(),
+            dynamic: core::default::Default::default(),
         }
     }
 }
 
 pub struct Kinesisanalyticsv2ApplicationApplicationConfigurationElEnvironmentPropertiesElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for Kinesisanalyticsv2ApplicationApplicationConfigurationElEnvironmentPropertiesElRef {
+impl terrars::Ref for Kinesisanalyticsv2ApplicationApplicationConfigurationElEnvironmentPropertiesElRef {
     fn new(
-        shared: StackShared,
-        base: String,
+        shared: terrars::StackShared,
+        base: std::string::String,
     ) -> Kinesisanalyticsv2ApplicationApplicationConfigurationElEnvironmentPropertiesElRef {
         Kinesisanalyticsv2ApplicationApplicationConfigurationElEnvironmentPropertiesElRef {
             shared: shared,
@@ -986,50 +1093,52 @@ impl Ref for Kinesisanalyticsv2ApplicationApplicationConfigurationElEnvironmentP
 }
 
 impl Kinesisanalyticsv2ApplicationApplicationConfigurationElEnvironmentPropertiesElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 }
 
 #[derive(Serialize)]
 pub struct Kinesisanalyticsv2ApplicationApplicationConfigurationElFlinkApplicationConfigurationElCheckpointConfigurationEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    checkpoint_interval: Option<PrimField<f64>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    checkpointing_enabled: Option<PrimField<bool>>,
-    configuration_type: PrimField<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    min_pause_between_checkpoints: Option<PrimField<f64>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    checkpoint_interval: std::option::Option<terrars::PrimField<f64>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    checkpointing_enabled: std::option::Option<terrars::PrimField<bool>>,
+    configuration_type: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    min_pause_between_checkpoints: std::option::Option<terrars::PrimField<f64>>,
 }
 
 impl Kinesisanalyticsv2ApplicationApplicationConfigurationElFlinkApplicationConfigurationElCheckpointConfigurationEl {
-    #[doc= "Set the field `checkpoint_interval`.\n"]
-    pub fn set_checkpoint_interval(mut self, v: impl Into<PrimField<f64>>) -> Self {
-        self.checkpoint_interval = Some(v.into());
+    #[doc = "Set the field `checkpoint_interval`.\n"]
+    pub fn set_checkpoint_interval(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.checkpoint_interval = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `checkpointing_enabled`.\n"]
-    pub fn set_checkpointing_enabled(mut self, v: impl Into<PrimField<bool>>) -> Self {
-        self.checkpointing_enabled = Some(v.into());
+    #[doc = "Set the field `checkpointing_enabled`.\n"]
+    pub fn set_checkpointing_enabled(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
+        self.checkpointing_enabled = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `min_pause_between_checkpoints`.\n"]
-    pub fn set_min_pause_between_checkpoints(mut self, v: impl Into<PrimField<f64>>) -> Self {
-        self.min_pause_between_checkpoints = Some(v.into());
+    #[doc = "Set the field `min_pause_between_checkpoints`.\n"]
+    pub fn set_min_pause_between_checkpoints(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.min_pause_between_checkpoints = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl ToListMappable for Kinesisanalyticsv2ApplicationApplicationConfigurationElFlinkApplicationConfigurationElCheckpointConfigurationEl {
+impl terrars
+::ToListMappable for Kinesisanalyticsv2ApplicationApplicationConfigurationElFlinkApplicationConfigurationElCheckpointConfigurationEl {
     type O =
-        BlockAssignable<
+        terrars
+        ::BlockAssignable<
             Kinesisanalyticsv2ApplicationApplicationConfigurationElFlinkApplicationConfigurationElCheckpointConfigurationEl,
         >;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -1038,8 +1147,8 @@ impl ToListMappable for Kinesisanalyticsv2ApplicationApplicationConfigurationElF
 }
 
 pub struct BuildKinesisanalyticsv2ApplicationApplicationConfigurationElFlinkApplicationConfigurationElCheckpointConfigurationEl {
-    #[doc= ""]
-    pub configuration_type: PrimField<String>,
+    #[doc = ""]
+    pub configuration_type: terrars::PrimField<std::string::String>,
 }
 
 impl BuildKinesisanalyticsv2ApplicationApplicationConfigurationElFlinkApplicationConfigurationElCheckpointConfigurationEl {
@@ -1056,14 +1165,15 @@ impl BuildKinesisanalyticsv2ApplicationApplicationConfigurationElFlinkApplicatio
 }
 
 pub struct Kinesisanalyticsv2ApplicationApplicationConfigurationElFlinkApplicationConfigurationElCheckpointConfigurationElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for Kinesisanalyticsv2ApplicationApplicationConfigurationElFlinkApplicationConfigurationElCheckpointConfigurationElRef {
+impl terrars
+::Ref for Kinesisanalyticsv2ApplicationApplicationConfigurationElFlinkApplicationConfigurationElCheckpointConfigurationElRef {
     fn new(
-        shared: StackShared,
-        base: String,
+        shared: terrars::StackShared,
+        base: std::string::String,
     ) -> Kinesisanalyticsv2ApplicationApplicationConfigurationElFlinkApplicationConfigurationElCheckpointConfigurationElRef {
         Kinesisanalyticsv2ApplicationApplicationConfigurationElFlinkApplicationConfigurationElCheckpointConfigurationElRef {
             shared: shared,
@@ -1073,62 +1183,64 @@ impl Ref for Kinesisanalyticsv2ApplicationApplicationConfigurationElFlinkApplica
 }
 
 impl Kinesisanalyticsv2ApplicationApplicationConfigurationElFlinkApplicationConfigurationElCheckpointConfigurationElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `checkpoint_interval` after provisioning.\n"]
-    pub fn checkpoint_interval(&self) -> PrimExpr<f64> {
-        PrimExpr::new(self.shared().clone(), format!("{}.checkpoint_interval", self.base))
+    #[doc = "Get a reference to the value of field `checkpoint_interval` after provisioning.\n"]
+    pub fn checkpoint_interval(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.checkpoint_interval", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `checkpointing_enabled` after provisioning.\n"]
-    pub fn checkpointing_enabled(&self) -> PrimExpr<bool> {
-        PrimExpr::new(self.shared().clone(), format!("{}.checkpointing_enabled", self.base))
+    #[doc = "Get a reference to the value of field `checkpointing_enabled` after provisioning.\n"]
+    pub fn checkpointing_enabled(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.checkpointing_enabled", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `configuration_type` after provisioning.\n"]
-    pub fn configuration_type(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.configuration_type", self.base))
+    #[doc = "Get a reference to the value of field `configuration_type` after provisioning.\n"]
+    pub fn configuration_type(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.configuration_type", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `min_pause_between_checkpoints` after provisioning.\n"]
-    pub fn min_pause_between_checkpoints(&self) -> PrimExpr<f64> {
-        PrimExpr::new(self.shared().clone(), format!("{}.min_pause_between_checkpoints", self.base))
+    #[doc = "Get a reference to the value of field `min_pause_between_checkpoints` after provisioning.\n"]
+    pub fn min_pause_between_checkpoints(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.min_pause_between_checkpoints", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct Kinesisanalyticsv2ApplicationApplicationConfigurationElFlinkApplicationConfigurationElMonitoringConfigurationEl {
-    configuration_type: PrimField<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    log_level: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    metrics_level: Option<PrimField<String>>,
+    configuration_type: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    log_level: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    metrics_level: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
 impl Kinesisanalyticsv2ApplicationApplicationConfigurationElFlinkApplicationConfigurationElMonitoringConfigurationEl {
-    #[doc= "Set the field `log_level`.\n"]
-    pub fn set_log_level(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.log_level = Some(v.into());
+    #[doc = "Set the field `log_level`.\n"]
+    pub fn set_log_level(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.log_level = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `metrics_level`.\n"]
-    pub fn set_metrics_level(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.metrics_level = Some(v.into());
+    #[doc = "Set the field `metrics_level`.\n"]
+    pub fn set_metrics_level(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.metrics_level = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl ToListMappable for Kinesisanalyticsv2ApplicationApplicationConfigurationElFlinkApplicationConfigurationElMonitoringConfigurationEl {
+impl terrars
+::ToListMappable for Kinesisanalyticsv2ApplicationApplicationConfigurationElFlinkApplicationConfigurationElMonitoringConfigurationEl {
     type O =
-        BlockAssignable<
+        terrars
+        ::BlockAssignable<
             Kinesisanalyticsv2ApplicationApplicationConfigurationElFlinkApplicationConfigurationElMonitoringConfigurationEl,
         >;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -1137,8 +1249,8 @@ impl ToListMappable for Kinesisanalyticsv2ApplicationApplicationConfigurationElF
 }
 
 pub struct BuildKinesisanalyticsv2ApplicationApplicationConfigurationElFlinkApplicationConfigurationElMonitoringConfigurationEl {
-    #[doc= ""]
-    pub configuration_type: PrimField<String>,
+    #[doc = ""]
+    pub configuration_type: terrars::PrimField<std::string::String>,
 }
 
 impl BuildKinesisanalyticsv2ApplicationApplicationConfigurationElFlinkApplicationConfigurationElMonitoringConfigurationEl {
@@ -1154,14 +1266,15 @@ impl BuildKinesisanalyticsv2ApplicationApplicationConfigurationElFlinkApplicatio
 }
 
 pub struct Kinesisanalyticsv2ApplicationApplicationConfigurationElFlinkApplicationConfigurationElMonitoringConfigurationElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for Kinesisanalyticsv2ApplicationApplicationConfigurationElFlinkApplicationConfigurationElMonitoringConfigurationElRef {
+impl terrars
+::Ref for Kinesisanalyticsv2ApplicationApplicationConfigurationElFlinkApplicationConfigurationElMonitoringConfigurationElRef {
     fn new(
-        shared: StackShared,
-        base: String,
+        shared: terrars::StackShared,
+        base: std::string::String,
     ) -> Kinesisanalyticsv2ApplicationApplicationConfigurationElFlinkApplicationConfigurationElMonitoringConfigurationElRef {
         Kinesisanalyticsv2ApplicationApplicationConfigurationElFlinkApplicationConfigurationElMonitoringConfigurationElRef {
             shared: shared,
@@ -1171,65 +1284,67 @@ impl Ref for Kinesisanalyticsv2ApplicationApplicationConfigurationElFlinkApplica
 }
 
 impl Kinesisanalyticsv2ApplicationApplicationConfigurationElFlinkApplicationConfigurationElMonitoringConfigurationElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `configuration_type` after provisioning.\n"]
-    pub fn configuration_type(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.configuration_type", self.base))
+    #[doc = "Get a reference to the value of field `configuration_type` after provisioning.\n"]
+    pub fn configuration_type(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.configuration_type", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `log_level` after provisioning.\n"]
-    pub fn log_level(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.log_level", self.base))
+    #[doc = "Get a reference to the value of field `log_level` after provisioning.\n"]
+    pub fn log_level(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.log_level", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `metrics_level` after provisioning.\n"]
-    pub fn metrics_level(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.metrics_level", self.base))
+    #[doc = "Get a reference to the value of field `metrics_level` after provisioning.\n"]
+    pub fn metrics_level(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.metrics_level", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct Kinesisanalyticsv2ApplicationApplicationConfigurationElFlinkApplicationConfigurationElParallelismConfigurationEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    auto_scaling_enabled: Option<PrimField<bool>>,
-    configuration_type: PrimField<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    parallelism: Option<PrimField<f64>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    parallelism_per_kpu: Option<PrimField<f64>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    auto_scaling_enabled: std::option::Option<terrars::PrimField<bool>>,
+    configuration_type: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    parallelism: std::option::Option<terrars::PrimField<f64>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    parallelism_per_kpu: std::option::Option<terrars::PrimField<f64>>,
 }
 
 impl Kinesisanalyticsv2ApplicationApplicationConfigurationElFlinkApplicationConfigurationElParallelismConfigurationEl {
-    #[doc= "Set the field `auto_scaling_enabled`.\n"]
-    pub fn set_auto_scaling_enabled(mut self, v: impl Into<PrimField<bool>>) -> Self {
-        self.auto_scaling_enabled = Some(v.into());
+    #[doc = "Set the field `auto_scaling_enabled`.\n"]
+    pub fn set_auto_scaling_enabled(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
+        self.auto_scaling_enabled = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `parallelism`.\n"]
-    pub fn set_parallelism(mut self, v: impl Into<PrimField<f64>>) -> Self {
-        self.parallelism = Some(v.into());
+    #[doc = "Set the field `parallelism`.\n"]
+    pub fn set_parallelism(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.parallelism = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `parallelism_per_kpu`.\n"]
-    pub fn set_parallelism_per_kpu(mut self, v: impl Into<PrimField<f64>>) -> Self {
-        self.parallelism_per_kpu = Some(v.into());
+    #[doc = "Set the field `parallelism_per_kpu`.\n"]
+    pub fn set_parallelism_per_kpu(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.parallelism_per_kpu = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl ToListMappable for Kinesisanalyticsv2ApplicationApplicationConfigurationElFlinkApplicationConfigurationElParallelismConfigurationEl {
+impl terrars
+::ToListMappable for Kinesisanalyticsv2ApplicationApplicationConfigurationElFlinkApplicationConfigurationElParallelismConfigurationEl {
     type O =
-        BlockAssignable<
+        terrars
+        ::BlockAssignable<
             Kinesisanalyticsv2ApplicationApplicationConfigurationElFlinkApplicationConfigurationElParallelismConfigurationEl,
         >;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -1238,8 +1353,8 @@ impl ToListMappable for Kinesisanalyticsv2ApplicationApplicationConfigurationElF
 }
 
 pub struct BuildKinesisanalyticsv2ApplicationApplicationConfigurationElFlinkApplicationConfigurationElParallelismConfigurationEl {
-    #[doc= ""]
-    pub configuration_type: PrimField<String>,
+    #[doc = ""]
+    pub configuration_type: terrars::PrimField<std::string::String>,
 }
 
 impl BuildKinesisanalyticsv2ApplicationApplicationConfigurationElFlinkApplicationConfigurationElParallelismConfigurationEl {
@@ -1256,14 +1371,15 @@ impl BuildKinesisanalyticsv2ApplicationApplicationConfigurationElFlinkApplicatio
 }
 
 pub struct Kinesisanalyticsv2ApplicationApplicationConfigurationElFlinkApplicationConfigurationElParallelismConfigurationElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for Kinesisanalyticsv2ApplicationApplicationConfigurationElFlinkApplicationConfigurationElParallelismConfigurationElRef {
+impl terrars
+::Ref for Kinesisanalyticsv2ApplicationApplicationConfigurationElFlinkApplicationConfigurationElParallelismConfigurationElRef {
     fn new(
-        shared: StackShared,
-        base: String,
+        shared: terrars::StackShared,
+        base: std::string::String,
     ) -> Kinesisanalyticsv2ApplicationApplicationConfigurationElFlinkApplicationConfigurationElParallelismConfigurationElRef {
         Kinesisanalyticsv2ApplicationApplicationConfigurationElFlinkApplicationConfigurationElParallelismConfigurationElRef {
             shared: shared,
@@ -1273,45 +1389,54 @@ impl Ref for Kinesisanalyticsv2ApplicationApplicationConfigurationElFlinkApplica
 }
 
 impl Kinesisanalyticsv2ApplicationApplicationConfigurationElFlinkApplicationConfigurationElParallelismConfigurationElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `auto_scaling_enabled` after provisioning.\n"]
-    pub fn auto_scaling_enabled(&self) -> PrimExpr<bool> {
-        PrimExpr::new(self.shared().clone(), format!("{}.auto_scaling_enabled", self.base))
+    #[doc = "Get a reference to the value of field `auto_scaling_enabled` after provisioning.\n"]
+    pub fn auto_scaling_enabled(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.auto_scaling_enabled", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `configuration_type` after provisioning.\n"]
-    pub fn configuration_type(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.configuration_type", self.base))
+    #[doc = "Get a reference to the value of field `configuration_type` after provisioning.\n"]
+    pub fn configuration_type(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.configuration_type", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `parallelism` after provisioning.\n"]
-    pub fn parallelism(&self) -> PrimExpr<f64> {
-        PrimExpr::new(self.shared().clone(), format!("{}.parallelism", self.base))
+    #[doc = "Get a reference to the value of field `parallelism` after provisioning.\n"]
+    pub fn parallelism(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.parallelism", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `parallelism_per_kpu` after provisioning.\n"]
-    pub fn parallelism_per_kpu(&self) -> PrimExpr<f64> {
-        PrimExpr::new(self.shared().clone(), format!("{}.parallelism_per_kpu", self.base))
+    #[doc = "Get a reference to the value of field `parallelism_per_kpu` after provisioning.\n"]
+    pub fn parallelism_per_kpu(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.parallelism_per_kpu", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
 struct Kinesisanalyticsv2ApplicationApplicationConfigurationElFlinkApplicationConfigurationElDynamic {
-    checkpoint_configuration: Option<
-        DynamicBlock<
+    checkpoint_configuration: std
+    ::option
+    ::Option<
+        terrars
+        ::DynamicBlock<
             Kinesisanalyticsv2ApplicationApplicationConfigurationElFlinkApplicationConfigurationElCheckpointConfigurationEl,
         >,
     >,
-    monitoring_configuration: Option<
-        DynamicBlock<
+    monitoring_configuration: std
+    ::option
+    ::Option<
+        terrars
+        ::DynamicBlock<
             Kinesisanalyticsv2ApplicationApplicationConfigurationElFlinkApplicationConfigurationElMonitoringConfigurationEl,
         >,
     >,
-    parallelism_configuration: Option<
-        DynamicBlock<
+    parallelism_configuration: std
+    ::option
+    ::Option<
+        terrars
+        ::DynamicBlock<
             Kinesisanalyticsv2ApplicationApplicationConfigurationElFlinkApplicationConfigurationElParallelismConfigurationEl,
         >,
     >,
@@ -1319,21 +1444,33 @@ struct Kinesisanalyticsv2ApplicationApplicationConfigurationElFlinkApplicationCo
 
 #[derive(Serialize)]
 pub struct Kinesisanalyticsv2ApplicationApplicationConfigurationElFlinkApplicationConfigurationEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    checkpoint_configuration: Option<
-        Vec<
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    checkpoint_configuration: std
+    ::option
+    ::Option<
+        std
+        ::vec
+        ::Vec<
             Kinesisanalyticsv2ApplicationApplicationConfigurationElFlinkApplicationConfigurationElCheckpointConfigurationEl,
         >,
     >,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    monitoring_configuration: Option<
-        Vec<
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    monitoring_configuration: std
+    ::option
+    ::Option<
+        std
+        ::vec
+        ::Vec<
             Kinesisanalyticsv2ApplicationApplicationConfigurationElFlinkApplicationConfigurationElMonitoringConfigurationEl,
         >,
     >,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    parallelism_configuration: Option<
-        Vec<
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    parallelism_configuration: std
+    ::option
+    ::Option<
+        std
+        ::vec
+        ::Vec<
             Kinesisanalyticsv2ApplicationApplicationConfigurationElFlinkApplicationConfigurationElParallelismConfigurationEl,
         >,
     >,
@@ -1341,81 +1478,93 @@ pub struct Kinesisanalyticsv2ApplicationApplicationConfigurationElFlinkApplicati
 }
 
 impl Kinesisanalyticsv2ApplicationApplicationConfigurationElFlinkApplicationConfigurationEl {
-    #[doc= "Set the field `checkpoint_configuration`.\n"]
+    #[doc = "Set the field `checkpoint_configuration`.\n"]
     pub fn set_checkpoint_configuration(
         mut self,
         v:
             impl
 
-                    Into<
-                        BlockAssignable<
+                    std
+                    ::convert
+                    ::Into<
+                        terrars
+                        ::BlockAssignable<
                             Kinesisanalyticsv2ApplicationApplicationConfigurationElFlinkApplicationConfigurationElCheckpointConfigurationEl,
                         >,
                     >,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.checkpoint_configuration = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.checkpoint_configuration = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.checkpoint_configuration = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.checkpoint_configuration = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Set the field `monitoring_configuration`.\n"]
+    #[doc = "Set the field `monitoring_configuration`.\n"]
     pub fn set_monitoring_configuration(
         mut self,
         v:
             impl
 
-                    Into<
-                        BlockAssignable<
+                    std
+                    ::convert
+                    ::Into<
+                        terrars
+                        ::BlockAssignable<
                             Kinesisanalyticsv2ApplicationApplicationConfigurationElFlinkApplicationConfigurationElMonitoringConfigurationEl,
                         >,
                     >,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.monitoring_configuration = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.monitoring_configuration = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.monitoring_configuration = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.monitoring_configuration = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Set the field `parallelism_configuration`.\n"]
+    #[doc = "Set the field `parallelism_configuration`.\n"]
     pub fn set_parallelism_configuration(
         mut self,
         v:
             impl
 
-                    Into<
-                        BlockAssignable<
+                    std
+                    ::convert
+                    ::Into<
+                        terrars
+                        ::BlockAssignable<
                             Kinesisanalyticsv2ApplicationApplicationConfigurationElFlinkApplicationConfigurationElParallelismConfigurationEl,
                         >,
                     >,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.parallelism_configuration = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.parallelism_configuration = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.parallelism_configuration = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.parallelism_configuration = std::option::Option::Some(d);
             },
         }
         self
     }
 }
 
-impl ToListMappable for Kinesisanalyticsv2ApplicationApplicationConfigurationElFlinkApplicationConfigurationEl {
-    type O = BlockAssignable<Kinesisanalyticsv2ApplicationApplicationConfigurationElFlinkApplicationConfigurationEl>;
+impl terrars
+::ToListMappable for Kinesisanalyticsv2ApplicationApplicationConfigurationElFlinkApplicationConfigurationEl {
+    type O =
+        terrars
+        ::BlockAssignable<Kinesisanalyticsv2ApplicationApplicationConfigurationElFlinkApplicationConfigurationEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -1431,20 +1580,20 @@ impl BuildKinesisanalyticsv2ApplicationApplicationConfigurationElFlinkApplicatio
             checkpoint_configuration: core::default::Default::default(),
             monitoring_configuration: core::default::Default::default(),
             parallelism_configuration: core::default::Default::default(),
-            dynamic: Default::default(),
+            dynamic: core::default::Default::default(),
         }
     }
 }
 
 pub struct Kinesisanalyticsv2ApplicationApplicationConfigurationElFlinkApplicationConfigurationElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for Kinesisanalyticsv2ApplicationApplicationConfigurationElFlinkApplicationConfigurationElRef {
+impl terrars::Ref for Kinesisanalyticsv2ApplicationApplicationConfigurationElFlinkApplicationConfigurationElRef {
     fn new(
-        shared: StackShared,
-        base: String,
+        shared: terrars::StackShared,
+        base: std::string::String,
     ) -> Kinesisanalyticsv2ApplicationApplicationConfigurationElFlinkApplicationConfigurationElRef {
         Kinesisanalyticsv2ApplicationApplicationConfigurationElFlinkApplicationConfigurationElRef {
             shared: shared,
@@ -1454,68 +1603,76 @@ impl Ref for Kinesisanalyticsv2ApplicationApplicationConfigurationElFlinkApplica
 }
 
 impl Kinesisanalyticsv2ApplicationApplicationConfigurationElFlinkApplicationConfigurationElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `checkpoint_configuration` after provisioning.\n"]
+    #[doc = "Get a reference to the value of field `checkpoint_configuration` after provisioning.\n"]
     pub fn checkpoint_configuration(
         &self,
-    ) -> ListRef<
+    ) -> terrars
+    ::ListRef<
         Kinesisanalyticsv2ApplicationApplicationConfigurationElFlinkApplicationConfigurationElCheckpointConfigurationElRef,
     > {
-        ListRef::new(self.shared().clone(), format!("{}.checkpoint_configuration", self.base))
+        terrars::ListRef::new(self.shared().clone(), format!("{}.checkpoint_configuration", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `monitoring_configuration` after provisioning.\n"]
+    #[doc = "Get a reference to the value of field `monitoring_configuration` after provisioning.\n"]
     pub fn monitoring_configuration(
         &self,
-    ) -> ListRef<
+    ) -> terrars
+    ::ListRef<
         Kinesisanalyticsv2ApplicationApplicationConfigurationElFlinkApplicationConfigurationElMonitoringConfigurationElRef,
     > {
-        ListRef::new(self.shared().clone(), format!("{}.monitoring_configuration", self.base))
+        terrars::ListRef::new(self.shared().clone(), format!("{}.monitoring_configuration", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `parallelism_configuration` after provisioning.\n"]
+    #[doc = "Get a reference to the value of field `parallelism_configuration` after provisioning.\n"]
     pub fn parallelism_configuration(
         &self,
-    ) -> ListRef<
+    ) -> terrars
+    ::ListRef<
         Kinesisanalyticsv2ApplicationApplicationConfigurationElFlinkApplicationConfigurationElParallelismConfigurationElRef,
     > {
-        ListRef::new(self.shared().clone(), format!("{}.parallelism_configuration", self.base))
+        terrars::ListRef::new(self.shared().clone(), format!("{}.parallelism_configuration", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct Kinesisanalyticsv2ApplicationApplicationConfigurationElRunConfigurationElApplicationRestoreConfigurationEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    application_restore_type: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    snapshot_name: Option<PrimField<String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    application_restore_type: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    snapshot_name: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
 impl Kinesisanalyticsv2ApplicationApplicationConfigurationElRunConfigurationElApplicationRestoreConfigurationEl {
-    #[doc= "Set the field `application_restore_type`.\n"]
-    pub fn set_application_restore_type(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.application_restore_type = Some(v.into());
+    #[doc = "Set the field `application_restore_type`.\n"]
+    pub fn set_application_restore_type(
+        mut self,
+        v: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.application_restore_type = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `snapshot_name`.\n"]
-    pub fn set_snapshot_name(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.snapshot_name = Some(v.into());
+    #[doc = "Set the field `snapshot_name`.\n"]
+    pub fn set_snapshot_name(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.snapshot_name = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl ToListMappable for Kinesisanalyticsv2ApplicationApplicationConfigurationElRunConfigurationElApplicationRestoreConfigurationEl {
+impl terrars
+::ToListMappable for Kinesisanalyticsv2ApplicationApplicationConfigurationElRunConfigurationElApplicationRestoreConfigurationEl {
     type O =
-        BlockAssignable<
+        terrars
+        ::BlockAssignable<
             Kinesisanalyticsv2ApplicationApplicationConfigurationElRunConfigurationElApplicationRestoreConfigurationEl,
         >;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -1537,14 +1694,15 @@ impl BuildKinesisanalyticsv2ApplicationApplicationConfigurationElRunConfiguratio
 }
 
 pub struct Kinesisanalyticsv2ApplicationApplicationConfigurationElRunConfigurationElApplicationRestoreConfigurationElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for Kinesisanalyticsv2ApplicationApplicationConfigurationElRunConfigurationElApplicationRestoreConfigurationElRef {
+impl terrars
+::Ref for Kinesisanalyticsv2ApplicationApplicationConfigurationElRunConfigurationElApplicationRestoreConfigurationElRef {
     fn new(
-        shared: StackShared,
-        base: String,
+        shared: terrars::StackShared,
+        base: std::string::String,
     ) -> Kinesisanalyticsv2ApplicationApplicationConfigurationElRunConfigurationElApplicationRestoreConfigurationElRef {
         Kinesisanalyticsv2ApplicationApplicationConfigurationElRunConfigurationElApplicationRestoreConfigurationElRef {
             shared: shared,
@@ -1554,43 +1712,45 @@ impl Ref for Kinesisanalyticsv2ApplicationApplicationConfigurationElRunConfigura
 }
 
 impl Kinesisanalyticsv2ApplicationApplicationConfigurationElRunConfigurationElApplicationRestoreConfigurationElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `application_restore_type` after provisioning.\n"]
-    pub fn application_restore_type(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.application_restore_type", self.base))
+    #[doc = "Get a reference to the value of field `application_restore_type` after provisioning.\n"]
+    pub fn application_restore_type(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.application_restore_type", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `snapshot_name` after provisioning.\n"]
-    pub fn snapshot_name(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.snapshot_name", self.base))
+    #[doc = "Get a reference to the value of field `snapshot_name` after provisioning.\n"]
+    pub fn snapshot_name(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.snapshot_name", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct Kinesisanalyticsv2ApplicationApplicationConfigurationElRunConfigurationElFlinkRunConfigurationEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    allow_non_restored_state: Option<PrimField<bool>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    allow_non_restored_state: std::option::Option<terrars::PrimField<bool>>,
 }
 
 impl Kinesisanalyticsv2ApplicationApplicationConfigurationElRunConfigurationElFlinkRunConfigurationEl {
-    #[doc= "Set the field `allow_non_restored_state`.\n"]
-    pub fn set_allow_non_restored_state(mut self, v: impl Into<PrimField<bool>>) -> Self {
-        self.allow_non_restored_state = Some(v.into());
+    #[doc = "Set the field `allow_non_restored_state`.\n"]
+    pub fn set_allow_non_restored_state(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
+        self.allow_non_restored_state = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl ToListMappable for Kinesisanalyticsv2ApplicationApplicationConfigurationElRunConfigurationElFlinkRunConfigurationEl {
+impl terrars
+::ToListMappable for Kinesisanalyticsv2ApplicationApplicationConfigurationElRunConfigurationElFlinkRunConfigurationEl {
     type O =
-        BlockAssignable<
+        terrars
+        ::BlockAssignable<
             Kinesisanalyticsv2ApplicationApplicationConfigurationElRunConfigurationElFlinkRunConfigurationEl,
         >;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -1611,14 +1771,15 @@ impl BuildKinesisanalyticsv2ApplicationApplicationConfigurationElRunConfiguratio
 }
 
 pub struct Kinesisanalyticsv2ApplicationApplicationConfigurationElRunConfigurationElFlinkRunConfigurationElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for Kinesisanalyticsv2ApplicationApplicationConfigurationElRunConfigurationElFlinkRunConfigurationElRef {
+impl terrars
+::Ref for Kinesisanalyticsv2ApplicationApplicationConfigurationElRunConfigurationElFlinkRunConfigurationElRef {
     fn new(
-        shared: StackShared,
-        base: String,
+        shared: terrars::StackShared,
+        base: std::string::String,
     ) -> Kinesisanalyticsv2ApplicationApplicationConfigurationElRunConfigurationElFlinkRunConfigurationElRef {
         Kinesisanalyticsv2ApplicationApplicationConfigurationElRunConfigurationElFlinkRunConfigurationElRef {
             shared: shared,
@@ -1628,96 +1789,118 @@ impl Ref for Kinesisanalyticsv2ApplicationApplicationConfigurationElRunConfigura
 }
 
 impl Kinesisanalyticsv2ApplicationApplicationConfigurationElRunConfigurationElFlinkRunConfigurationElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `allow_non_restored_state` after provisioning.\n"]
-    pub fn allow_non_restored_state(&self) -> PrimExpr<bool> {
-        PrimExpr::new(self.shared().clone(), format!("{}.allow_non_restored_state", self.base))
+    #[doc = "Get a reference to the value of field `allow_non_restored_state` after provisioning.\n"]
+    pub fn allow_non_restored_state(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.allow_non_restored_state", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
 struct Kinesisanalyticsv2ApplicationApplicationConfigurationElRunConfigurationElDynamic {
-    application_restore_configuration: Option<
-        DynamicBlock<
+    application_restore_configuration: std
+    ::option
+    ::Option<
+        terrars
+        ::DynamicBlock<
             Kinesisanalyticsv2ApplicationApplicationConfigurationElRunConfigurationElApplicationRestoreConfigurationEl,
         >,
     >,
-    flink_run_configuration: Option<
-        DynamicBlock<Kinesisanalyticsv2ApplicationApplicationConfigurationElRunConfigurationElFlinkRunConfigurationEl>,
+    flink_run_configuration: std
+    ::option
+    ::Option<
+        terrars
+        ::DynamicBlock<
+            Kinesisanalyticsv2ApplicationApplicationConfigurationElRunConfigurationElFlinkRunConfigurationEl,
+        >,
     >,
 }
 
 #[derive(Serialize)]
 pub struct Kinesisanalyticsv2ApplicationApplicationConfigurationElRunConfigurationEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    application_restore_configuration: Option<
-        Vec<
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    application_restore_configuration: std
+    ::option
+    ::Option<
+        std
+        ::vec
+        ::Vec<
             Kinesisanalyticsv2ApplicationApplicationConfigurationElRunConfigurationElApplicationRestoreConfigurationEl,
         >,
     >,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    flink_run_configuration: Option<
-        Vec<Kinesisanalyticsv2ApplicationApplicationConfigurationElRunConfigurationElFlinkRunConfigurationEl>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    flink_run_configuration: std
+    ::option
+    ::Option<
+        std
+        ::vec
+        ::Vec<Kinesisanalyticsv2ApplicationApplicationConfigurationElRunConfigurationElFlinkRunConfigurationEl>,
     >,
     dynamic: Kinesisanalyticsv2ApplicationApplicationConfigurationElRunConfigurationElDynamic,
 }
 
 impl Kinesisanalyticsv2ApplicationApplicationConfigurationElRunConfigurationEl {
-    #[doc= "Set the field `application_restore_configuration`.\n"]
+    #[doc = "Set the field `application_restore_configuration`.\n"]
     pub fn set_application_restore_configuration(
         mut self,
         v:
             impl
 
-                    Into<
-                        BlockAssignable<
+                    std
+                    ::convert
+                    ::Into<
+                        terrars
+                        ::BlockAssignable<
                             Kinesisanalyticsv2ApplicationApplicationConfigurationElRunConfigurationElApplicationRestoreConfigurationEl,
                         >,
                     >,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.application_restore_configuration = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.application_restore_configuration = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.application_restore_configuration = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.application_restore_configuration = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Set the field `flink_run_configuration`.\n"]
+    #[doc = "Set the field `flink_run_configuration`.\n"]
     pub fn set_flink_run_configuration(
         mut self,
         v:
             impl
 
-                    Into<
-                        BlockAssignable<
+                    std
+                    ::convert
+                    ::Into<
+                        terrars
+                        ::BlockAssignable<
                             Kinesisanalyticsv2ApplicationApplicationConfigurationElRunConfigurationElFlinkRunConfigurationEl,
                         >,
                     >,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.flink_run_configuration = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.flink_run_configuration = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.flink_run_configuration = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.flink_run_configuration = std::option::Option::Some(d);
             },
         }
         self
     }
 }
 
-impl ToListMappable for Kinesisanalyticsv2ApplicationApplicationConfigurationElRunConfigurationEl {
-    type O = BlockAssignable<Kinesisanalyticsv2ApplicationApplicationConfigurationElRunConfigurationEl>;
+impl terrars::ToListMappable for Kinesisanalyticsv2ApplicationApplicationConfigurationElRunConfigurationEl {
+    type O = terrars::BlockAssignable<Kinesisanalyticsv2ApplicationApplicationConfigurationElRunConfigurationEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -1732,20 +1915,20 @@ impl BuildKinesisanalyticsv2ApplicationApplicationConfigurationElRunConfiguratio
         Kinesisanalyticsv2ApplicationApplicationConfigurationElRunConfigurationEl {
             application_restore_configuration: core::default::Default::default(),
             flink_run_configuration: core::default::Default::default(),
-            dynamic: Default::default(),
+            dynamic: core::default::Default::default(),
         }
     }
 }
 
 pub struct Kinesisanalyticsv2ApplicationApplicationConfigurationElRunConfigurationElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for Kinesisanalyticsv2ApplicationApplicationConfigurationElRunConfigurationElRef {
+impl terrars::Ref for Kinesisanalyticsv2ApplicationApplicationConfigurationElRunConfigurationElRef {
     fn new(
-        shared: StackShared,
-        base: String,
+        shared: terrars::StackShared,
+        base: std::string::String,
     ) -> Kinesisanalyticsv2ApplicationApplicationConfigurationElRunConfigurationElRef {
         Kinesisanalyticsv2ApplicationApplicationConfigurationElRunConfigurationElRef {
             shared: shared,
@@ -1755,49 +1938,53 @@ impl Ref for Kinesisanalyticsv2ApplicationApplicationConfigurationElRunConfigura
 }
 
 impl Kinesisanalyticsv2ApplicationApplicationConfigurationElRunConfigurationElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `application_restore_configuration` after provisioning.\n"]
+    #[doc = "Get a reference to the value of field `application_restore_configuration` after provisioning.\n"]
     pub fn application_restore_configuration(
         &self,
-    ) -> ListRef<
+    ) -> terrars
+    ::ListRef<
         Kinesisanalyticsv2ApplicationApplicationConfigurationElRunConfigurationElApplicationRestoreConfigurationElRef,
     > {
-        ListRef::new(self.shared().clone(), format!("{}.application_restore_configuration", self.base))
+        terrars::ListRef::new(self.shared().clone(), format!("{}.application_restore_configuration", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `flink_run_configuration` after provisioning.\n"]
+    #[doc = "Get a reference to the value of field `flink_run_configuration` after provisioning.\n"]
     pub fn flink_run_configuration(
         &self,
-    ) -> ListRef<Kinesisanalyticsv2ApplicationApplicationConfigurationElRunConfigurationElFlinkRunConfigurationElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.flink_run_configuration", self.base))
+    ) -> terrars
+    ::ListRef<Kinesisanalyticsv2ApplicationApplicationConfigurationElRunConfigurationElFlinkRunConfigurationElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.flink_run_configuration", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElInputElInputParallelismEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    count: Option<PrimField<f64>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    count: std::option::Option<terrars::PrimField<f64>>,
 }
 
 impl Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElInputElInputParallelismEl {
-    #[doc= "Set the field `count`.\n"]
-    pub fn set_count(mut self, v: impl Into<PrimField<f64>>) -> Self {
-        self.count = Some(v.into());
+    #[doc = "Set the field `count`.\n"]
+    pub fn set_count(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.count = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl ToListMappable for Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElInputElInputParallelismEl {
+impl terrars
+::ToListMappable for Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElInputElInputParallelismEl {
     type O =
-        BlockAssignable<
+        terrars
+        ::BlockAssignable<
             Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElInputElInputParallelismEl,
         >;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -1818,14 +2005,15 @@ impl BuildKinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationC
 }
 
 pub struct Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElInputElInputParallelismElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElInputElInputParallelismElRef {
+impl terrars
+::Ref for Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElInputElInputParallelismElRef {
     fn new(
-        shared: StackShared,
-        base: String,
+        shared: terrars::StackShared,
+        base: std::string::String,
     ) -> Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElInputElInputParallelismElRef {
         Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElInputElInputParallelismElRef {
             shared: shared,
@@ -1835,33 +2023,35 @@ impl Ref for Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicati
 }
 
 impl Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElInputElInputParallelismElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `count` after provisioning.\n"]
-    pub fn count(&self) -> PrimExpr<f64> {
-        PrimExpr::new(self.shared().clone(), format!("{}.count", self.base))
+    #[doc = "Get a reference to the value of field `count` after provisioning.\n"]
+    pub fn count(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.count", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElInputElInputProcessingConfigurationElInputLambdaProcessorEl {
-    resource_arn: PrimField<String>,
+    resource_arn: terrars::PrimField<std::string::String>,
 }
 
 impl Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElInputElInputProcessingConfigurationElInputLambdaProcessorEl {
 
 }
 
-impl ToListMappable for Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElInputElInputProcessingConfigurationElInputLambdaProcessorEl {
+impl terrars
+::ToListMappable for Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElInputElInputProcessingConfigurationElInputLambdaProcessorEl {
     type O =
-        BlockAssignable<
+        terrars
+        ::BlockAssignable<
             Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElInputElInputProcessingConfigurationElInputLambdaProcessorEl,
         >;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -1870,8 +2060,8 @@ impl ToListMappable for Kinesisanalyticsv2ApplicationApplicationConfigurationElS
 }
 
 pub struct BuildKinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElInputElInputProcessingConfigurationElInputLambdaProcessorEl {
-    #[doc= ""]
-    pub resource_arn: PrimField<String>,
+    #[doc = ""]
+    pub resource_arn: terrars::PrimField<std::string::String>,
 }
 
 impl BuildKinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElInputElInputProcessingConfigurationElInputLambdaProcessorEl {
@@ -1885,14 +2075,15 @@ impl BuildKinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationC
 }
 
 pub struct Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElInputElInputProcessingConfigurationElInputLambdaProcessorElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElInputElInputProcessingConfigurationElInputLambdaProcessorElRef {
+impl terrars
+::Ref for Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElInputElInputProcessingConfigurationElInputLambdaProcessorElRef {
     fn new(
-        shared: StackShared,
-        base: String,
+        shared: terrars::StackShared,
+        base: std::string::String,
     ) -> Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElInputElInputProcessingConfigurationElInputLambdaProcessorElRef {
         Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElInputElInputProcessingConfigurationElInputLambdaProcessorElRef {
             shared: shared,
@@ -1902,20 +2093,23 @@ impl Ref for Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicati
 }
 
 impl Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElInputElInputProcessingConfigurationElInputLambdaProcessorElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `resource_arn` after provisioning.\n"]
-    pub fn resource_arn(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.resource_arn", self.base))
+    #[doc = "Get a reference to the value of field `resource_arn` after provisioning.\n"]
+    pub fn resource_arn(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.resource_arn", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
 struct Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElInputElInputProcessingConfigurationElDynamic {
-    input_lambda_processor: Option<
-        DynamicBlock<
+    input_lambda_processor: std
+    ::option
+    ::Option<
+        terrars
+        ::DynamicBlock<
             Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElInputElInputProcessingConfigurationElInputLambdaProcessorEl,
         >,
     >,
@@ -1923,9 +2117,13 @@ struct Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConf
 
 #[derive(Serialize)]
 pub struct Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElInputElInputProcessingConfigurationEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    input_lambda_processor: Option<
-        Vec<
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    input_lambda_processor: std
+    ::option
+    ::Option<
+        std
+        ::vec
+        ::Vec<
             Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElInputElInputProcessingConfigurationElInputLambdaProcessorEl,
         >,
     >,
@@ -1933,38 +2131,43 @@ pub struct Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplication
 }
 
 impl Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElInputElInputProcessingConfigurationEl {
-    #[doc= "Set the field `input_lambda_processor`.\n"]
+    #[doc = "Set the field `input_lambda_processor`.\n"]
     pub fn set_input_lambda_processor(
         mut self,
         v:
             impl
 
-                    Into<
-                        BlockAssignable<
+                    std
+                    ::convert
+                    ::Into<
+                        terrars
+                        ::BlockAssignable<
                             Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElInputElInputProcessingConfigurationElInputLambdaProcessorEl,
                         >,
                     >,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.input_lambda_processor = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.input_lambda_processor = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.input_lambda_processor = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.input_lambda_processor = std::option::Option::Some(d);
             },
         }
         self
     }
 }
 
-impl ToListMappable for Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElInputElInputProcessingConfigurationEl {
+impl terrars
+::ToListMappable for Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElInputElInputProcessingConfigurationEl {
     type O =
-        BlockAssignable<
+        terrars
+        ::BlockAssignable<
             Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElInputElInputProcessingConfigurationEl,
         >;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -1980,20 +2183,21 @@ impl BuildKinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationC
     ) -> Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElInputElInputProcessingConfigurationEl {
         Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElInputElInputProcessingConfigurationEl {
             input_lambda_processor: core::default::Default::default(),
-            dynamic: Default::default(),
+            dynamic: core::default::Default::default(),
         }
     }
 }
 
 pub struct Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElInputElInputProcessingConfigurationElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElInputElInputProcessingConfigurationElRef {
+impl terrars
+::Ref for Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElInputElInputProcessingConfigurationElRef {
     fn new(
-        shared: StackShared,
-        base: String,
+        shared: terrars::StackShared,
+        base: std::string::String,
     ) -> Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElInputElInputProcessingConfigurationElRef {
         Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElInputElInputProcessingConfigurationElRef {
             shared: shared,
@@ -2003,44 +2207,47 @@ impl Ref for Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicati
 }
 
 impl Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElInputElInputProcessingConfigurationElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `input_lambda_processor` after provisioning.\n"]
+    #[doc = "Get a reference to the value of field `input_lambda_processor` after provisioning.\n"]
     pub fn input_lambda_processor(
         &self,
-    ) -> ListRef<
+    ) -> terrars
+    ::ListRef<
         Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElInputElInputProcessingConfigurationElInputLambdaProcessorElRef,
     > {
-        ListRef::new(self.shared().clone(), format!("{}.input_lambda_processor", self.base))
+        terrars::ListRef::new(self.shared().clone(), format!("{}.input_lambda_processor", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElInputElInputSchemaElRecordColumnEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    mapping: Option<PrimField<String>>,
-    name: PrimField<String>,
-    sql_type: PrimField<String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    mapping: std::option::Option<terrars::PrimField<std::string::String>>,
+    name: terrars::PrimField<std::string::String>,
+    sql_type: terrars::PrimField<std::string::String>,
 }
 
 impl Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElInputElInputSchemaElRecordColumnEl {
-    #[doc= "Set the field `mapping`.\n"]
-    pub fn set_mapping(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.mapping = Some(v.into());
+    #[doc = "Set the field `mapping`.\n"]
+    pub fn set_mapping(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.mapping = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl ToListMappable for Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElInputElInputSchemaElRecordColumnEl {
+impl terrars
+::ToListMappable for Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElInputElInputSchemaElRecordColumnEl {
     type O =
-        BlockAssignable<
+        terrars
+        ::BlockAssignable<
             Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElInputElInputSchemaElRecordColumnEl,
         >;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -2049,10 +2256,10 @@ impl ToListMappable for Kinesisanalyticsv2ApplicationApplicationConfigurationElS
 }
 
 pub struct BuildKinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElInputElInputSchemaElRecordColumnEl {
-    #[doc= ""]
-    pub name: PrimField<String>,
-    #[doc= ""]
-    pub sql_type: PrimField<String>,
+    #[doc = ""]
+    pub name: terrars::PrimField<std::string::String>,
+    #[doc = ""]
+    pub sql_type: terrars::PrimField<std::string::String>,
 }
 
 impl BuildKinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElInputElInputSchemaElRecordColumnEl {
@@ -2068,14 +2275,15 @@ impl BuildKinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationC
 }
 
 pub struct Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElInputElInputSchemaElRecordColumnElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElInputElInputSchemaElRecordColumnElRef {
+impl terrars
+::Ref for Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElInputElInputSchemaElRecordColumnElRef {
     fn new(
-        shared: StackShared,
-        base: String,
+        shared: terrars::StackShared,
+        base: std::string::String,
     ) -> Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElInputElInputSchemaElRecordColumnElRef {
         Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElInputElInputSchemaElRecordColumnElRef {
             shared: shared,
@@ -2085,44 +2293,46 @@ impl Ref for Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicati
 }
 
 impl Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElInputElInputSchemaElRecordColumnElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `mapping` after provisioning.\n"]
-    pub fn mapping(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.mapping", self.base))
+    #[doc = "Get a reference to the value of field `mapping` after provisioning.\n"]
+    pub fn mapping(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.mapping", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `name` after provisioning.\n"]
-    pub fn name(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.name", self.base))
+    #[doc = "Get a reference to the value of field `name` after provisioning.\n"]
+    pub fn name(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `sql_type` after provisioning.\n"]
-    pub fn sql_type(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.sql_type", self.base))
+    #[doc = "Get a reference to the value of field `sql_type` after provisioning.\n"]
+    pub fn sql_type(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.sql_type", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElInputElInputSchemaElRecordFormatElMappingParametersElCsvMappingParametersEl {
-    record_column_delimiter: PrimField<String>,
-    record_row_delimiter: PrimField<String>,
+    record_column_delimiter: terrars::PrimField<std::string::String>,
+    record_row_delimiter: terrars::PrimField<std::string::String>,
 }
 
 impl Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElInputElInputSchemaElRecordFormatElMappingParametersElCsvMappingParametersEl {
 
 }
 
-impl ToListMappable for Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElInputElInputSchemaElRecordFormatElMappingParametersElCsvMappingParametersEl {
+impl terrars
+::ToListMappable for Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElInputElInputSchemaElRecordFormatElMappingParametersElCsvMappingParametersEl {
     type O =
-        BlockAssignable<
+        terrars
+        ::BlockAssignable<
             Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElInputElInputSchemaElRecordFormatElMappingParametersElCsvMappingParametersEl,
         >;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -2131,10 +2341,10 @@ impl ToListMappable for Kinesisanalyticsv2ApplicationApplicationConfigurationElS
 }
 
 pub struct BuildKinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElInputElInputSchemaElRecordFormatElMappingParametersElCsvMappingParametersEl {
-    #[doc= ""]
-    pub record_column_delimiter: PrimField<String>,
-    #[doc= ""]
-    pub record_row_delimiter: PrimField<String>,
+    #[doc = ""]
+    pub record_column_delimiter: terrars::PrimField<std::string::String>,
+    #[doc = ""]
+    pub record_row_delimiter: terrars::PrimField<std::string::String>,
 }
 
 impl BuildKinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElInputElInputSchemaElRecordFormatElMappingParametersElCsvMappingParametersEl {
@@ -2149,14 +2359,15 @@ impl BuildKinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationC
 }
 
 pub struct Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElInputElInputSchemaElRecordFormatElMappingParametersElCsvMappingParametersElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElInputElInputSchemaElRecordFormatElMappingParametersElCsvMappingParametersElRef {
+impl terrars
+::Ref for Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElInputElInputSchemaElRecordFormatElMappingParametersElCsvMappingParametersElRef {
     fn new(
-        shared: StackShared,
-        base: String,
+        shared: terrars::StackShared,
+        base: std::string::String,
     ) -> Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElInputElInputSchemaElRecordFormatElMappingParametersElCsvMappingParametersElRef {
         Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElInputElInputSchemaElRecordFormatElMappingParametersElCsvMappingParametersElRef {
             shared: shared,
@@ -2166,38 +2377,40 @@ impl Ref for Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicati
 }
 
 impl Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElInputElInputSchemaElRecordFormatElMappingParametersElCsvMappingParametersElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `record_column_delimiter` after provisioning.\n"]
-    pub fn record_column_delimiter(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.record_column_delimiter", self.base))
+    #[doc = "Get a reference to the value of field `record_column_delimiter` after provisioning.\n"]
+    pub fn record_column_delimiter(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.record_column_delimiter", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `record_row_delimiter` after provisioning.\n"]
-    pub fn record_row_delimiter(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.record_row_delimiter", self.base))
+    #[doc = "Get a reference to the value of field `record_row_delimiter` after provisioning.\n"]
+    pub fn record_row_delimiter(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.record_row_delimiter", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElInputElInputSchemaElRecordFormatElMappingParametersElJsonMappingParametersEl {
-    record_row_path: PrimField<String>,
+    record_row_path: terrars::PrimField<std::string::String>,
 }
 
 impl Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElInputElInputSchemaElRecordFormatElMappingParametersElJsonMappingParametersEl {
 
 }
 
-impl ToListMappable for Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElInputElInputSchemaElRecordFormatElMappingParametersElJsonMappingParametersEl {
+impl terrars
+::ToListMappable for Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElInputElInputSchemaElRecordFormatElMappingParametersElJsonMappingParametersEl {
     type O =
-        BlockAssignable<
+        terrars
+        ::BlockAssignable<
             Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElInputElInputSchemaElRecordFormatElMappingParametersElJsonMappingParametersEl,
         >;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -2206,8 +2419,8 @@ impl ToListMappable for Kinesisanalyticsv2ApplicationApplicationConfigurationElS
 }
 
 pub struct BuildKinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElInputElInputSchemaElRecordFormatElMappingParametersElJsonMappingParametersEl {
-    #[doc= ""]
-    pub record_row_path: PrimField<String>,
+    #[doc = ""]
+    pub record_row_path: terrars::PrimField<std::string::String>,
 }
 
 impl BuildKinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElInputElInputSchemaElRecordFormatElMappingParametersElJsonMappingParametersEl {
@@ -2221,14 +2434,15 @@ impl BuildKinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationC
 }
 
 pub struct Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElInputElInputSchemaElRecordFormatElMappingParametersElJsonMappingParametersElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElInputElInputSchemaElRecordFormatElMappingParametersElJsonMappingParametersElRef {
+impl terrars
+::Ref for Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElInputElInputSchemaElRecordFormatElMappingParametersElJsonMappingParametersElRef {
     fn new(
-        shared: StackShared,
-        base: String,
+        shared: terrars::StackShared,
+        base: std::string::String,
     ) -> Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElInputElInputSchemaElRecordFormatElMappingParametersElJsonMappingParametersElRef {
         Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElInputElInputSchemaElRecordFormatElMappingParametersElJsonMappingParametersElRef {
             shared: shared,
@@ -2238,25 +2452,31 @@ impl Ref for Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicati
 }
 
 impl Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElInputElInputSchemaElRecordFormatElMappingParametersElJsonMappingParametersElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `record_row_path` after provisioning.\n"]
-    pub fn record_row_path(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.record_row_path", self.base))
+    #[doc = "Get a reference to the value of field `record_row_path` after provisioning.\n"]
+    pub fn record_row_path(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.record_row_path", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
 struct Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElInputElInputSchemaElRecordFormatElMappingParametersElDynamic {
-    csv_mapping_parameters: Option<
-        DynamicBlock<
+    csv_mapping_parameters: std
+    ::option
+    ::Option<
+        terrars
+        ::DynamicBlock<
             Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElInputElInputSchemaElRecordFormatElMappingParametersElCsvMappingParametersEl,
         >,
     >,
-    json_mapping_parameters: Option<
-        DynamicBlock<
+    json_mapping_parameters: std
+    ::option
+    ::Option<
+        terrars
+        ::DynamicBlock<
             Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElInputElInputSchemaElRecordFormatElMappingParametersElJsonMappingParametersEl,
         >,
     >,
@@ -2264,15 +2484,23 @@ struct Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConf
 
 #[derive(Serialize)]
 pub struct Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElInputElInputSchemaElRecordFormatElMappingParametersEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    csv_mapping_parameters: Option<
-        Vec<
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    csv_mapping_parameters: std
+    ::option
+    ::Option<
+        std
+        ::vec
+        ::Vec<
             Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElInputElInputSchemaElRecordFormatElMappingParametersElCsvMappingParametersEl,
         >,
     >,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    json_mapping_parameters: Option<
-        Vec<
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    json_mapping_parameters: std
+    ::option
+    ::Option<
+        std
+        ::vec
+        ::Vec<
             Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElInputElInputSchemaElRecordFormatElMappingParametersElJsonMappingParametersEl,
         >,
     >,
@@ -2280,61 +2508,69 @@ pub struct Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplication
 }
 
 impl Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElInputElInputSchemaElRecordFormatElMappingParametersEl {
-    #[doc= "Set the field `csv_mapping_parameters`.\n"]
+    #[doc = "Set the field `csv_mapping_parameters`.\n"]
     pub fn set_csv_mapping_parameters(
         mut self,
         v:
             impl
 
-                    Into<
-                        BlockAssignable<
+                    std
+                    ::convert
+                    ::Into<
+                        terrars
+                        ::BlockAssignable<
                             Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElInputElInputSchemaElRecordFormatElMappingParametersElCsvMappingParametersEl,
                         >,
                     >,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.csv_mapping_parameters = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.csv_mapping_parameters = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.csv_mapping_parameters = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.csv_mapping_parameters = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Set the field `json_mapping_parameters`.\n"]
+    #[doc = "Set the field `json_mapping_parameters`.\n"]
     pub fn set_json_mapping_parameters(
         mut self,
         v:
             impl
 
-                    Into<
-                        BlockAssignable<
+                    std
+                    ::convert
+                    ::Into<
+                        terrars
+                        ::BlockAssignable<
                             Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElInputElInputSchemaElRecordFormatElMappingParametersElJsonMappingParametersEl,
                         >,
                     >,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.json_mapping_parameters = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.json_mapping_parameters = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.json_mapping_parameters = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.json_mapping_parameters = std::option::Option::Some(d);
             },
         }
         self
     }
 }
 
-impl ToListMappable for Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElInputElInputSchemaElRecordFormatElMappingParametersEl {
+impl terrars
+::ToListMappable for Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElInputElInputSchemaElRecordFormatElMappingParametersEl {
     type O =
-        BlockAssignable<
+        terrars
+        ::BlockAssignable<
             Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElInputElInputSchemaElRecordFormatElMappingParametersEl,
         >;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -2351,20 +2587,21 @@ impl BuildKinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationC
         Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElInputElInputSchemaElRecordFormatElMappingParametersEl {
             csv_mapping_parameters: core::default::Default::default(),
             json_mapping_parameters: core::default::Default::default(),
-            dynamic: Default::default(),
+            dynamic: core::default::Default::default(),
         }
     }
 }
 
 pub struct Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElInputElInputSchemaElRecordFormatElMappingParametersElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElInputElInputSchemaElRecordFormatElMappingParametersElRef {
+impl terrars
+::Ref for Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElInputElInputSchemaElRecordFormatElMappingParametersElRef {
     fn new(
-        shared: StackShared,
-        base: String,
+        shared: terrars::StackShared,
+        base: std::string::String,
     ) -> Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElInputElInputSchemaElRecordFormatElMappingParametersElRef {
         Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElInputElInputSchemaElRecordFormatElMappingParametersElRef {
             shared: shared,
@@ -2374,33 +2611,38 @@ impl Ref for Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicati
 }
 
 impl Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElInputElInputSchemaElRecordFormatElMappingParametersElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `csv_mapping_parameters` after provisioning.\n"]
+    #[doc = "Get a reference to the value of field `csv_mapping_parameters` after provisioning.\n"]
     pub fn csv_mapping_parameters(
         &self,
-    ) -> ListRef<
+    ) -> terrars
+    ::ListRef<
         Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElInputElInputSchemaElRecordFormatElMappingParametersElCsvMappingParametersElRef,
     > {
-        ListRef::new(self.shared().clone(), format!("{}.csv_mapping_parameters", self.base))
+        terrars::ListRef::new(self.shared().clone(), format!("{}.csv_mapping_parameters", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `json_mapping_parameters` after provisioning.\n"]
+    #[doc = "Get a reference to the value of field `json_mapping_parameters` after provisioning.\n"]
     pub fn json_mapping_parameters(
         &self,
-    ) -> ListRef<
+    ) -> terrars
+    ::ListRef<
         Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElInputElInputSchemaElRecordFormatElMappingParametersElJsonMappingParametersElRef,
     > {
-        ListRef::new(self.shared().clone(), format!("{}.json_mapping_parameters", self.base))
+        terrars::ListRef::new(self.shared().clone(), format!("{}.json_mapping_parameters", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
 struct Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElInputElInputSchemaElRecordFormatElDynamic {
-    mapping_parameters: Option<
-        DynamicBlock<
+    mapping_parameters: std
+    ::option
+    ::Option<
+        terrars
+        ::DynamicBlock<
             Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElInputElInputSchemaElRecordFormatElMappingParametersEl,
         >,
     >,
@@ -2408,10 +2650,14 @@ struct Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConf
 
 #[derive(Serialize)]
 pub struct Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElInputElInputSchemaElRecordFormatEl {
-    record_format_type: PrimField<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    mapping_parameters: Option<
-        Vec<
+    record_format_type: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    mapping_parameters: std
+    ::option
+    ::Option<
+        std
+        ::vec
+        ::Vec<
             Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElInputElInputSchemaElRecordFormatElMappingParametersEl,
         >,
     >,
@@ -2419,38 +2665,43 @@ pub struct Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplication
 }
 
 impl Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElInputElInputSchemaElRecordFormatEl {
-    #[doc= "Set the field `mapping_parameters`.\n"]
+    #[doc = "Set the field `mapping_parameters`.\n"]
     pub fn set_mapping_parameters(
         mut self,
         v:
             impl
 
-                    Into<
-                        BlockAssignable<
+                    std
+                    ::convert
+                    ::Into<
+                        terrars
+                        ::BlockAssignable<
                             Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElInputElInputSchemaElRecordFormatElMappingParametersEl,
                         >,
                     >,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.mapping_parameters = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.mapping_parameters = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.mapping_parameters = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.mapping_parameters = std::option::Option::Some(d);
             },
         }
         self
     }
 }
 
-impl ToListMappable for Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElInputElInputSchemaElRecordFormatEl {
+impl terrars
+::ToListMappable for Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElInputElInputSchemaElRecordFormatEl {
     type O =
-        BlockAssignable<
+        terrars
+        ::BlockAssignable<
             Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElInputElInputSchemaElRecordFormatEl,
         >;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -2459,8 +2710,8 @@ impl ToListMappable for Kinesisanalyticsv2ApplicationApplicationConfigurationElS
 }
 
 pub struct BuildKinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElInputElInputSchemaElRecordFormatEl {
-    #[doc= ""]
-    pub record_format_type: PrimField<String>,
+    #[doc = ""]
+    pub record_format_type: terrars::PrimField<std::string::String>,
 }
 
 impl BuildKinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElInputElInputSchemaElRecordFormatEl {
@@ -2470,20 +2721,21 @@ impl BuildKinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationC
         Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElInputElInputSchemaElRecordFormatEl {
             record_format_type: self.record_format_type,
             mapping_parameters: core::default::Default::default(),
-            dynamic: Default::default(),
+            dynamic: core::default::Default::default(),
         }
     }
 }
 
 pub struct Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElInputElInputSchemaElRecordFormatElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElInputElInputSchemaElRecordFormatElRef {
+impl terrars
+::Ref for Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElInputElInputSchemaElRecordFormatElRef {
     fn new(
-        shared: StackShared,
-        base: String,
+        shared: terrars::StackShared,
+        base: std::string::String,
     ) -> Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElInputElInputSchemaElRecordFormatElRef {
         Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElInputElInputSchemaElRecordFormatElRef {
             shared: shared,
@@ -2493,34 +2745,41 @@ impl Ref for Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicati
 }
 
 impl Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElInputElInputSchemaElRecordFormatElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `record_format_type` after provisioning.\n"]
-    pub fn record_format_type(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.record_format_type", self.base))
+    #[doc = "Get a reference to the value of field `record_format_type` after provisioning.\n"]
+    pub fn record_format_type(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.record_format_type", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `mapping_parameters` after provisioning.\n"]
+    #[doc = "Get a reference to the value of field `mapping_parameters` after provisioning.\n"]
     pub fn mapping_parameters(
         &self,
-    ) -> ListRef<
+    ) -> terrars
+    ::ListRef<
         Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElInputElInputSchemaElRecordFormatElMappingParametersElRef,
     > {
-        ListRef::new(self.shared().clone(), format!("{}.mapping_parameters", self.base))
+        terrars::ListRef::new(self.shared().clone(), format!("{}.mapping_parameters", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
 struct Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElInputElInputSchemaElDynamic {
-    record_column: Option<
-        DynamicBlock<
+    record_column: std
+    ::option
+    ::Option<
+        terrars
+        ::DynamicBlock<
             Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElInputElInputSchemaElRecordColumnEl,
         >,
     >,
-    record_format: Option<
-        DynamicBlock<
+    record_format: std
+    ::option
+    ::Option<
+        terrars
+        ::DynamicBlock<
             Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElInputElInputSchemaElRecordFormatEl,
         >,
     >,
@@ -2528,17 +2787,25 @@ struct Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConf
 
 #[derive(Serialize)]
 pub struct Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElInputElInputSchemaEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    record_encoding: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    record_column: Option<
-        Vec<
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    record_encoding: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    record_column: std
+    ::option
+    ::Option<
+        std
+        ::vec
+        ::Vec<
             Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElInputElInputSchemaElRecordColumnEl,
         >,
     >,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    record_format: Option<
-        Vec<
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    record_format: std
+    ::option
+    ::Option<
+        std
+        ::vec
+        ::Vec<
             Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElInputElInputSchemaElRecordFormatEl,
         >,
     >,
@@ -2546,67 +2813,75 @@ pub struct Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplication
 }
 
 impl Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElInputElInputSchemaEl {
-    #[doc= "Set the field `record_encoding`.\n"]
-    pub fn set_record_encoding(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.record_encoding = Some(v.into());
+    #[doc = "Set the field `record_encoding`.\n"]
+    pub fn set_record_encoding(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.record_encoding = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `record_column`.\n"]
+    #[doc = "Set the field `record_column`.\n"]
     pub fn set_record_column(
         mut self,
         v:
             impl
 
-                    Into<
-                        BlockAssignable<
+                    std
+                    ::convert
+                    ::Into<
+                        terrars
+                        ::BlockAssignable<
                             Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElInputElInputSchemaElRecordColumnEl,
                         >,
                     >,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.record_column = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.record_column = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.record_column = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.record_column = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Set the field `record_format`.\n"]
+    #[doc = "Set the field `record_format`.\n"]
     pub fn set_record_format(
         mut self,
         v:
             impl
 
-                    Into<
-                        BlockAssignable<
+                    std
+                    ::convert
+                    ::Into<
+                        terrars
+                        ::BlockAssignable<
                             Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElInputElInputSchemaElRecordFormatEl,
                         >,
                     >,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.record_format = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.record_format = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.record_format = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.record_format = std::option::Option::Some(d);
             },
         }
         self
     }
 }
 
-impl ToListMappable for Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElInputElInputSchemaEl {
+impl terrars
+::ToListMappable for Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElInputElInputSchemaEl {
     type O =
-        BlockAssignable<
+        terrars
+        ::BlockAssignable<
             Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElInputElInputSchemaEl,
         >;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -2624,20 +2899,21 @@ impl BuildKinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationC
             record_encoding: core::default::Default::default(),
             record_column: core::default::Default::default(),
             record_format: core::default::Default::default(),
-            dynamic: Default::default(),
+            dynamic: core::default::Default::default(),
         }
     }
 }
 
 pub struct Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElInputElInputSchemaElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElInputElInputSchemaElRef {
+impl terrars
+::Ref for Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElInputElInputSchemaElRef {
     fn new(
-        shared: StackShared,
-        base: String,
+        shared: terrars::StackShared,
+        base: std::string::String,
     ) -> Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElInputElInputSchemaElRef {
         Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElInputElInputSchemaElRef {
             shared: shared,
@@ -2647,56 +2923,63 @@ impl Ref for Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicati
 }
 
 impl Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElInputElInputSchemaElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `record_encoding` after provisioning.\n"]
-    pub fn record_encoding(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.record_encoding", self.base))
+    #[doc = "Get a reference to the value of field `record_encoding` after provisioning.\n"]
+    pub fn record_encoding(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.record_encoding", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `record_column` after provisioning.\n"]
+    #[doc = "Get a reference to the value of field `record_column` after provisioning.\n"]
     pub fn record_column(
         &self,
-    ) -> ListRef<
+    ) -> terrars
+    ::ListRef<
         Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElInputElInputSchemaElRecordColumnElRef,
     > {
-        ListRef::new(self.shared().clone(), format!("{}.record_column", self.base))
+        terrars::ListRef::new(self.shared().clone(), format!("{}.record_column", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `record_format` after provisioning.\n"]
+    #[doc = "Get a reference to the value of field `record_format` after provisioning.\n"]
     pub fn record_format(
         &self,
-    ) -> ListRef<
+    ) -> terrars
+    ::ListRef<
         Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElInputElInputSchemaElRecordFormatElRef,
     > {
-        ListRef::new(self.shared().clone(), format!("{}.record_format", self.base))
+        terrars::ListRef::new(self.shared().clone(), format!("{}.record_format", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElInputElInputStartingPositionConfigurationEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    input_starting_position: Option<PrimField<String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    input_starting_position: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
 impl Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElInputElInputStartingPositionConfigurationEl {
-    #[doc= "Set the field `input_starting_position`.\n"]
-    pub fn set_input_starting_position(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.input_starting_position = Some(v.into());
+    #[doc = "Set the field `input_starting_position`.\n"]
+    pub fn set_input_starting_position(
+        mut self,
+        v: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.input_starting_position = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl ToListMappable for Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElInputElInputStartingPositionConfigurationEl {
+impl terrars
+::ToListMappable for Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElInputElInputStartingPositionConfigurationEl {
     type O =
-        BlockAssignable<
+        terrars
+        ::BlockAssignable<
             Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElInputElInputStartingPositionConfigurationEl,
         >;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -2717,14 +3000,15 @@ impl BuildKinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationC
 }
 
 pub struct Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElInputElInputStartingPositionConfigurationElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElInputElInputStartingPositionConfigurationElRef {
+impl terrars
+::Ref for Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElInputElInputStartingPositionConfigurationElRef {
     fn new(
-        shared: StackShared,
-        base: String,
+        shared: terrars::StackShared,
+        base: std::string::String,
     ) -> Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElInputElInputStartingPositionConfigurationElRef {
         Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElInputElInputStartingPositionConfigurationElRef {
             shared: shared,
@@ -2734,33 +3018,35 @@ impl Ref for Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicati
 }
 
 impl Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElInputElInputStartingPositionConfigurationElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `input_starting_position` after provisioning.\n"]
-    pub fn input_starting_position(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.input_starting_position", self.base))
+    #[doc = "Get a reference to the value of field `input_starting_position` after provisioning.\n"]
+    pub fn input_starting_position(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.input_starting_position", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElInputElKinesisFirehoseInputEl {
-    resource_arn: PrimField<String>,
+    resource_arn: terrars::PrimField<std::string::String>,
 }
 
 impl Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElInputElKinesisFirehoseInputEl {
 
 }
 
-impl ToListMappable for Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElInputElKinesisFirehoseInputEl {
+impl terrars
+::ToListMappable for Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElInputElKinesisFirehoseInputEl {
     type O =
-        BlockAssignable<
+        terrars
+        ::BlockAssignable<
             Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElInputElKinesisFirehoseInputEl,
         >;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -2769,8 +3055,8 @@ impl ToListMappable for Kinesisanalyticsv2ApplicationApplicationConfigurationElS
 }
 
 pub struct BuildKinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElInputElKinesisFirehoseInputEl {
-    #[doc= ""]
-    pub resource_arn: PrimField<String>,
+    #[doc = ""]
+    pub resource_arn: terrars::PrimField<std::string::String>,
 }
 
 impl BuildKinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElInputElKinesisFirehoseInputEl {
@@ -2784,14 +3070,15 @@ impl BuildKinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationC
 }
 
 pub struct Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElInputElKinesisFirehoseInputElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElInputElKinesisFirehoseInputElRef {
+impl terrars
+::Ref for Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElInputElKinesisFirehoseInputElRef {
     fn new(
-        shared: StackShared,
-        base: String,
+        shared: terrars::StackShared,
+        base: std::string::String,
     ) -> Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElInputElKinesisFirehoseInputElRef {
         Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElInputElKinesisFirehoseInputElRef {
             shared: shared,
@@ -2801,33 +3088,35 @@ impl Ref for Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicati
 }
 
 impl Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElInputElKinesisFirehoseInputElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `resource_arn` after provisioning.\n"]
-    pub fn resource_arn(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.resource_arn", self.base))
+    #[doc = "Get a reference to the value of field `resource_arn` after provisioning.\n"]
+    pub fn resource_arn(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.resource_arn", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElInputElKinesisStreamsInputEl {
-    resource_arn: PrimField<String>,
+    resource_arn: terrars::PrimField<std::string::String>,
 }
 
 impl Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElInputElKinesisStreamsInputEl {
 
 }
 
-impl ToListMappable for Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElInputElKinesisStreamsInputEl {
+impl terrars
+::ToListMappable for Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElInputElKinesisStreamsInputEl {
     type O =
-        BlockAssignable<
+        terrars
+        ::BlockAssignable<
             Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElInputElKinesisStreamsInputEl,
         >;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -2836,8 +3125,8 @@ impl ToListMappable for Kinesisanalyticsv2ApplicationApplicationConfigurationElS
 }
 
 pub struct BuildKinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElInputElKinesisStreamsInputEl {
-    #[doc= ""]
-    pub resource_arn: PrimField<String>,
+    #[doc = ""]
+    pub resource_arn: terrars::PrimField<std::string::String>,
 }
 
 impl BuildKinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElInputElKinesisStreamsInputEl {
@@ -2851,14 +3140,15 @@ impl BuildKinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationC
 }
 
 pub struct Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElInputElKinesisStreamsInputElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElInputElKinesisStreamsInputElRef {
+impl terrars
+::Ref for Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElInputElKinesisStreamsInputElRef {
     fn new(
-        shared: StackShared,
-        base: String,
+        shared: terrars::StackShared,
+        base: std::string::String,
     ) -> Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElInputElKinesisStreamsInputElRef {
         Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElInputElKinesisStreamsInputElRef {
             shared: shared,
@@ -2868,45 +3158,63 @@ impl Ref for Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicati
 }
 
 impl Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElInputElKinesisStreamsInputElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `resource_arn` after provisioning.\n"]
-    pub fn resource_arn(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.resource_arn", self.base))
+    #[doc = "Get a reference to the value of field `resource_arn` after provisioning.\n"]
+    pub fn resource_arn(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.resource_arn", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
 struct Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElInputElDynamic {
-    input_parallelism: Option<
-        DynamicBlock<
+    input_parallelism: std
+    ::option
+    ::Option<
+        terrars
+        ::DynamicBlock<
             Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElInputElInputParallelismEl,
         >,
     >,
-    input_processing_configuration: Option<
-        DynamicBlock<
+    input_processing_configuration: std
+    ::option
+    ::Option<
+        terrars
+        ::DynamicBlock<
             Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElInputElInputProcessingConfigurationEl,
         >,
     >,
-    input_schema: Option<
-        DynamicBlock<
+    input_schema: std
+    ::option
+    ::Option<
+        terrars
+        ::DynamicBlock<
             Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElInputElInputSchemaEl,
         >,
     >,
-    input_starting_position_configuration: Option<
-        DynamicBlock<
+    input_starting_position_configuration: std
+    ::option
+    ::Option<
+        terrars
+        ::DynamicBlock<
             Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElInputElInputStartingPositionConfigurationEl,
         >,
     >,
-    kinesis_firehose_input: Option<
-        DynamicBlock<
+    kinesis_firehose_input: std
+    ::option
+    ::Option<
+        terrars
+        ::DynamicBlock<
             Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElInputElKinesisFirehoseInputEl,
         >,
     >,
-    kinesis_streams_input: Option<
-        DynamicBlock<
+    kinesis_streams_input: std
+    ::option
+    ::Option<
+        terrars
+        ::DynamicBlock<
             Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElInputElKinesisStreamsInputEl,
         >,
     >,
@@ -2914,38 +3222,64 @@ struct Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConf
 
 #[derive(Serialize)]
 pub struct Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElInputEl {
-    name_prefix: PrimField<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    input_parallelism: Option<
-        Vec<
+    name_prefix: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    input_parallelism: std
+    ::option
+    ::Option<
+        std
+        ::vec
+        ::Vec<
             Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElInputElInputParallelismEl,
         >,
     >,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    input_processing_configuration: Option<
-        Vec<
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    input_processing_configuration: std
+    ::option
+    ::Option<
+        std
+        ::vec
+        ::Vec<
             Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElInputElInputProcessingConfigurationEl,
         >,
     >,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    input_schema: Option<
-        Vec<Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElInputElInputSchemaEl>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    input_schema: std
+    ::option
+    ::Option<
+        std
+        ::vec
+        ::Vec<
+            Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElInputElInputSchemaEl,
+        >,
     >,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    input_starting_position_configuration: Option<
-        Vec<
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    input_starting_position_configuration: std
+    ::option
+    ::Option<
+        std
+        ::vec
+        ::Vec<
             Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElInputElInputStartingPositionConfigurationEl,
         >,
     >,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    kinesis_firehose_input: Option<
-        Vec<
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    kinesis_firehose_input: std
+    ::option
+    ::Option<
+        std
+        ::vec
+        ::Vec<
             Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElInputElKinesisFirehoseInputEl,
         >,
     >,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    kinesis_streams_input: Option<
-        Vec<
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    kinesis_streams_input: std
+    ::option
+    ::Option<
+        std
+        ::vec
+        ::Vec<
             Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElInputElKinesisStreamsInputEl,
         >,
     >,
@@ -2953,151 +3287,173 @@ pub struct Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplication
 }
 
 impl Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElInputEl {
-    #[doc= "Set the field `input_parallelism`.\n"]
+    #[doc = "Set the field `input_parallelism`.\n"]
     pub fn set_input_parallelism(
         mut self,
         v:
             impl
 
-                    Into<
-                        BlockAssignable<
+                    std
+                    ::convert
+                    ::Into<
+                        terrars
+                        ::BlockAssignable<
                             Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElInputElInputParallelismEl,
                         >,
                     >,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.input_parallelism = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.input_parallelism = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.input_parallelism = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.input_parallelism = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Set the field `input_processing_configuration`.\n"]
+    #[doc = "Set the field `input_processing_configuration`.\n"]
     pub fn set_input_processing_configuration(
         mut self,
         v:
             impl
 
-                    Into<
-                        BlockAssignable<
+                    std
+                    ::convert
+                    ::Into<
+                        terrars
+                        ::BlockAssignable<
                             Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElInputElInputProcessingConfigurationEl,
                         >,
                     >,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.input_processing_configuration = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.input_processing_configuration = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.input_processing_configuration = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.input_processing_configuration = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Set the field `input_schema`.\n"]
+    #[doc = "Set the field `input_schema`.\n"]
     pub fn set_input_schema(
         mut self,
         v:
             impl
 
-                    Into<
-                        BlockAssignable<
+                    std
+                    ::convert
+                    ::Into<
+                        terrars
+                        ::BlockAssignable<
                             Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElInputElInputSchemaEl,
                         >,
                     >,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.input_schema = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.input_schema = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.input_schema = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.input_schema = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Set the field `input_starting_position_configuration`.\n"]
+    #[doc = "Set the field `input_starting_position_configuration`.\n"]
     pub fn set_input_starting_position_configuration(
         mut self,
         v:
             impl
 
-                    Into<
-                        BlockAssignable<
+                    std
+                    ::convert
+                    ::Into<
+                        terrars
+                        ::BlockAssignable<
                             Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElInputElInputStartingPositionConfigurationEl,
                         >,
                     >,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.input_starting_position_configuration = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.input_starting_position_configuration = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.input_starting_position_configuration = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.input_starting_position_configuration = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Set the field `kinesis_firehose_input`.\n"]
+    #[doc = "Set the field `kinesis_firehose_input`.\n"]
     pub fn set_kinesis_firehose_input(
         mut self,
         v:
             impl
 
-                    Into<
-                        BlockAssignable<
+                    std
+                    ::convert
+                    ::Into<
+                        terrars
+                        ::BlockAssignable<
                             Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElInputElKinesisFirehoseInputEl,
                         >,
                     >,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.kinesis_firehose_input = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.kinesis_firehose_input = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.kinesis_firehose_input = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.kinesis_firehose_input = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Set the field `kinesis_streams_input`.\n"]
+    #[doc = "Set the field `kinesis_streams_input`.\n"]
     pub fn set_kinesis_streams_input(
         mut self,
         v:
             impl
 
-                    Into<
-                        BlockAssignable<
+                    std
+                    ::convert
+                    ::Into<
+                        terrars
+                        ::BlockAssignable<
                             Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElInputElKinesisStreamsInputEl,
                         >,
                     >,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.kinesis_streams_input = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.kinesis_streams_input = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.kinesis_streams_input = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.kinesis_streams_input = std::option::Option::Some(d);
             },
         }
         self
     }
 }
 
-impl ToListMappable for Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElInputEl {
+impl terrars
+::ToListMappable for Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElInputEl {
     type O =
-        BlockAssignable<Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElInputEl>;
+        terrars
+        ::BlockAssignable<
+            Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElInputEl,
+        >;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -3106,8 +3462,8 @@ impl ToListMappable for Kinesisanalyticsv2ApplicationApplicationConfigurationElS
 }
 
 pub struct BuildKinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElInputEl {
-    #[doc= ""]
-    pub name_prefix: PrimField<String>,
+    #[doc = ""]
+    pub name_prefix: terrars::PrimField<std::string::String>,
 }
 
 impl BuildKinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElInputEl {
@@ -3122,20 +3478,20 @@ impl BuildKinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationC
             input_starting_position_configuration: core::default::Default::default(),
             kinesis_firehose_input: core::default::Default::default(),
             kinesis_streams_input: core::default::Default::default(),
-            dynamic: Default::default(),
+            dynamic: core::default::Default::default(),
         }
     }
 }
 
 pub struct Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElInputElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElInputElRef {
+impl terrars::Ref for Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElInputElRef {
     fn new(
-        shared: StackShared,
-        base: String,
+        shared: terrars::StackShared,
+        base: std::string::String,
     ) -> Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElInputElRef {
         Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElInputElRef {
             shared: shared,
@@ -3145,97 +3501,105 @@ impl Ref for Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicati
 }
 
 impl Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElInputElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `in_app_stream_names` after provisioning.\n"]
-    pub fn in_app_stream_names(&self) -> ListRef<PrimExpr<String>> {
-        ListRef::new(self.shared().clone(), format!("{}.in_app_stream_names", self.base))
+    #[doc = "Get a reference to the value of field `in_app_stream_names` after provisioning.\n"]
+    pub fn in_app_stream_names(&self) -> terrars::ListRef<terrars::PrimExpr<std::string::String>> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.in_app_stream_names", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `input_id` after provisioning.\n"]
-    pub fn input_id(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.input_id", self.base))
+    #[doc = "Get a reference to the value of field `input_id` after provisioning.\n"]
+    pub fn input_id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.input_id", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `name_prefix` after provisioning.\n"]
-    pub fn name_prefix(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.name_prefix", self.base))
+    #[doc = "Get a reference to the value of field `name_prefix` after provisioning.\n"]
+    pub fn name_prefix(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.name_prefix", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `input_parallelism` after provisioning.\n"]
+    #[doc = "Get a reference to the value of field `input_parallelism` after provisioning.\n"]
     pub fn input_parallelism(
         &self,
-    ) -> ListRef<
+    ) -> terrars
+    ::ListRef<
         Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElInputElInputParallelismElRef,
     > {
-        ListRef::new(self.shared().clone(), format!("{}.input_parallelism", self.base))
+        terrars::ListRef::new(self.shared().clone(), format!("{}.input_parallelism", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `input_processing_configuration` after provisioning.\n"]
+    #[doc = "Get a reference to the value of field `input_processing_configuration` after provisioning.\n"]
     pub fn input_processing_configuration(
         &self,
-    ) -> ListRef<
+    ) -> terrars
+    ::ListRef<
         Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElInputElInputProcessingConfigurationElRef,
     > {
-        ListRef::new(self.shared().clone(), format!("{}.input_processing_configuration", self.base))
+        terrars::ListRef::new(self.shared().clone(), format!("{}.input_processing_configuration", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `input_schema` after provisioning.\n"]
+    #[doc = "Get a reference to the value of field `input_schema` after provisioning.\n"]
     pub fn input_schema(
         &self,
-    ) -> ListRef<
+    ) -> terrars
+    ::ListRef<
         Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElInputElInputSchemaElRef,
     > {
-        ListRef::new(self.shared().clone(), format!("{}.input_schema", self.base))
+        terrars::ListRef::new(self.shared().clone(), format!("{}.input_schema", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `input_starting_position_configuration` after provisioning.\n"]
+    #[doc = "Get a reference to the value of field `input_starting_position_configuration` after provisioning.\n"]
     pub fn input_starting_position_configuration(
         &self,
-    ) -> ListRef<
+    ) -> terrars
+    ::ListRef<
         Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElInputElInputStartingPositionConfigurationElRef,
     > {
-        ListRef::new(self.shared().clone(), format!("{}.input_starting_position_configuration", self.base))
+        terrars::ListRef::new(self.shared().clone(), format!("{}.input_starting_position_configuration", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `kinesis_firehose_input` after provisioning.\n"]
+    #[doc = "Get a reference to the value of field `kinesis_firehose_input` after provisioning.\n"]
     pub fn kinesis_firehose_input(
         &self,
-    ) -> ListRef<
+    ) -> terrars
+    ::ListRef<
         Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElInputElKinesisFirehoseInputElRef,
     > {
-        ListRef::new(self.shared().clone(), format!("{}.kinesis_firehose_input", self.base))
+        terrars::ListRef::new(self.shared().clone(), format!("{}.kinesis_firehose_input", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `kinesis_streams_input` after provisioning.\n"]
+    #[doc = "Get a reference to the value of field `kinesis_streams_input` after provisioning.\n"]
     pub fn kinesis_streams_input(
         &self,
-    ) -> ListRef<
+    ) -> terrars
+    ::ListRef<
         Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElInputElKinesisStreamsInputElRef,
     > {
-        ListRef::new(self.shared().clone(), format!("{}.kinesis_streams_input", self.base))
+        terrars::ListRef::new(self.shared().clone(), format!("{}.kinesis_streams_input", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElOutputElDestinationSchemaEl {
-    record_format_type: PrimField<String>,
+    record_format_type: terrars::PrimField<std::string::String>,
 }
 
 impl Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElOutputElDestinationSchemaEl {
 
 }
 
-impl ToListMappable for Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElOutputElDestinationSchemaEl {
+impl terrars
+::ToListMappable for Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElOutputElDestinationSchemaEl {
     type O =
-        BlockAssignable<
+        terrars
+        ::BlockAssignable<
             Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElOutputElDestinationSchemaEl,
         >;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -3244,8 +3608,8 @@ impl ToListMappable for Kinesisanalyticsv2ApplicationApplicationConfigurationElS
 }
 
 pub struct BuildKinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElOutputElDestinationSchemaEl {
-    #[doc= ""]
-    pub record_format_type: PrimField<String>,
+    #[doc = ""]
+    pub record_format_type: terrars::PrimField<std::string::String>,
 }
 
 impl BuildKinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElOutputElDestinationSchemaEl {
@@ -3259,14 +3623,15 @@ impl BuildKinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationC
 }
 
 pub struct Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElOutputElDestinationSchemaElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElOutputElDestinationSchemaElRef {
+impl terrars
+::Ref for Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElOutputElDestinationSchemaElRef {
     fn new(
-        shared: StackShared,
-        base: String,
+        shared: terrars::StackShared,
+        base: std::string::String,
     ) -> Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElOutputElDestinationSchemaElRef {
         Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElOutputElDestinationSchemaElRef {
             shared: shared,
@@ -3276,33 +3641,35 @@ impl Ref for Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicati
 }
 
 impl Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElOutputElDestinationSchemaElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `record_format_type` after provisioning.\n"]
-    pub fn record_format_type(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.record_format_type", self.base))
+    #[doc = "Get a reference to the value of field `record_format_type` after provisioning.\n"]
+    pub fn record_format_type(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.record_format_type", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElOutputElKinesisFirehoseOutputEl {
-    resource_arn: PrimField<String>,
+    resource_arn: terrars::PrimField<std::string::String>,
 }
 
 impl Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElOutputElKinesisFirehoseOutputEl {
 
 }
 
-impl ToListMappable for Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElOutputElKinesisFirehoseOutputEl {
+impl terrars
+::ToListMappable for Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElOutputElKinesisFirehoseOutputEl {
     type O =
-        BlockAssignable<
+        terrars
+        ::BlockAssignable<
             Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElOutputElKinesisFirehoseOutputEl,
         >;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -3311,8 +3678,8 @@ impl ToListMappable for Kinesisanalyticsv2ApplicationApplicationConfigurationElS
 }
 
 pub struct BuildKinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElOutputElKinesisFirehoseOutputEl {
-    #[doc= ""]
-    pub resource_arn: PrimField<String>,
+    #[doc = ""]
+    pub resource_arn: terrars::PrimField<std::string::String>,
 }
 
 impl BuildKinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElOutputElKinesisFirehoseOutputEl {
@@ -3326,14 +3693,15 @@ impl BuildKinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationC
 }
 
 pub struct Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElOutputElKinesisFirehoseOutputElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElOutputElKinesisFirehoseOutputElRef {
+impl terrars
+::Ref for Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElOutputElKinesisFirehoseOutputElRef {
     fn new(
-        shared: StackShared,
-        base: String,
+        shared: terrars::StackShared,
+        base: std::string::String,
     ) -> Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElOutputElKinesisFirehoseOutputElRef {
         Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElOutputElKinesisFirehoseOutputElRef {
             shared: shared,
@@ -3343,33 +3711,35 @@ impl Ref for Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicati
 }
 
 impl Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElOutputElKinesisFirehoseOutputElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `resource_arn` after provisioning.\n"]
-    pub fn resource_arn(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.resource_arn", self.base))
+    #[doc = "Get a reference to the value of field `resource_arn` after provisioning.\n"]
+    pub fn resource_arn(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.resource_arn", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElOutputElKinesisStreamsOutputEl {
-    resource_arn: PrimField<String>,
+    resource_arn: terrars::PrimField<std::string::String>,
 }
 
 impl Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElOutputElKinesisStreamsOutputEl {
 
 }
 
-impl ToListMappable for Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElOutputElKinesisStreamsOutputEl {
+impl terrars
+::ToListMappable for Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElOutputElKinesisStreamsOutputEl {
     type O =
-        BlockAssignable<
+        terrars
+        ::BlockAssignable<
             Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElOutputElKinesisStreamsOutputEl,
         >;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -3378,8 +3748,8 @@ impl ToListMappable for Kinesisanalyticsv2ApplicationApplicationConfigurationElS
 }
 
 pub struct BuildKinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElOutputElKinesisStreamsOutputEl {
-    #[doc= ""]
-    pub resource_arn: PrimField<String>,
+    #[doc = ""]
+    pub resource_arn: terrars::PrimField<std::string::String>,
 }
 
 impl BuildKinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElOutputElKinesisStreamsOutputEl {
@@ -3393,14 +3763,15 @@ impl BuildKinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationC
 }
 
 pub struct Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElOutputElKinesisStreamsOutputElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElOutputElKinesisStreamsOutputElRef {
+impl terrars
+::Ref for Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElOutputElKinesisStreamsOutputElRef {
     fn new(
-        shared: StackShared,
-        base: String,
+        shared: terrars::StackShared,
+        base: std::string::String,
     ) -> Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElOutputElKinesisStreamsOutputElRef {
         Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElOutputElKinesisStreamsOutputElRef {
             shared: shared,
@@ -3410,31 +3781,33 @@ impl Ref for Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicati
 }
 
 impl Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElOutputElKinesisStreamsOutputElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `resource_arn` after provisioning.\n"]
-    pub fn resource_arn(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.resource_arn", self.base))
+    #[doc = "Get a reference to the value of field `resource_arn` after provisioning.\n"]
+    pub fn resource_arn(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.resource_arn", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElOutputElLambdaOutputEl {
-    resource_arn: PrimField<String>,
+    resource_arn: terrars::PrimField<std::string::String>,
 }
 
 impl Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElOutputElLambdaOutputEl { }
 
-impl ToListMappable for Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElOutputElLambdaOutputEl {
+impl terrars
+::ToListMappable for Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElOutputElLambdaOutputEl {
     type O =
-        BlockAssignable<
+        terrars
+        ::BlockAssignable<
             Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElOutputElLambdaOutputEl,
         >;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -3443,8 +3816,8 @@ impl ToListMappable for Kinesisanalyticsv2ApplicationApplicationConfigurationElS
 }
 
 pub struct BuildKinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElOutputElLambdaOutputEl {
-    #[doc= ""]
-    pub resource_arn: PrimField<String>,
+    #[doc = ""]
+    pub resource_arn: terrars::PrimField<std::string::String>,
 }
 
 impl BuildKinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElOutputElLambdaOutputEl {
@@ -3458,14 +3831,15 @@ impl BuildKinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationC
 }
 
 pub struct Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElOutputElLambdaOutputElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElOutputElLambdaOutputElRef {
+impl terrars
+::Ref for Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElOutputElLambdaOutputElRef {
     fn new(
-        shared: StackShared,
-        base: String,
+        shared: terrars::StackShared,
+        base: std::string::String,
     ) -> Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElOutputElLambdaOutputElRef {
         Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElOutputElLambdaOutputElRef {
             shared: shared,
@@ -3475,35 +3849,47 @@ impl Ref for Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicati
 }
 
 impl Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElOutputElLambdaOutputElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `resource_arn` after provisioning.\n"]
-    pub fn resource_arn(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.resource_arn", self.base))
+    #[doc = "Get a reference to the value of field `resource_arn` after provisioning.\n"]
+    pub fn resource_arn(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.resource_arn", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
 struct Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElOutputElDynamic {
-    destination_schema: Option<
-        DynamicBlock<
+    destination_schema: std
+    ::option
+    ::Option<
+        terrars
+        ::DynamicBlock<
             Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElOutputElDestinationSchemaEl,
         >,
     >,
-    kinesis_firehose_output: Option<
-        DynamicBlock<
+    kinesis_firehose_output: std
+    ::option
+    ::Option<
+        terrars
+        ::DynamicBlock<
             Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElOutputElKinesisFirehoseOutputEl,
         >,
     >,
-    kinesis_streams_output: Option<
-        DynamicBlock<
+    kinesis_streams_output: std
+    ::option
+    ::Option<
+        terrars
+        ::DynamicBlock<
             Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElOutputElKinesisStreamsOutputEl,
         >,
     >,
-    lambda_output: Option<
-        DynamicBlock<
+    lambda_output: std
+    ::option
+    ::Option<
+        terrars
+        ::DynamicBlock<
             Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElOutputElLambdaOutputEl,
         >,
     >,
@@ -3511,28 +3897,44 @@ struct Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConf
 
 #[derive(Serialize)]
 pub struct Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElOutputEl {
-    name: PrimField<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    destination_schema: Option<
-        Vec<
+    name: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    destination_schema: std
+    ::option
+    ::Option<
+        std
+        ::vec
+        ::Vec<
             Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElOutputElDestinationSchemaEl,
         >,
     >,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    kinesis_firehose_output: Option<
-        Vec<
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    kinesis_firehose_output: std
+    ::option
+    ::Option<
+        std
+        ::vec
+        ::Vec<
             Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElOutputElKinesisFirehoseOutputEl,
         >,
     >,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    kinesis_streams_output: Option<
-        Vec<
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    kinesis_streams_output: std
+    ::option
+    ::Option<
+        std
+        ::vec
+        ::Vec<
             Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElOutputElKinesisStreamsOutputEl,
         >,
     >,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    lambda_output: Option<
-        Vec<
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    lambda_output: std
+    ::option
+    ::Option<
+        std
+        ::vec
+        ::Vec<
             Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElOutputElLambdaOutputEl,
         >,
     >,
@@ -3540,107 +3942,121 @@ pub struct Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplication
 }
 
 impl Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElOutputEl {
-    #[doc= "Set the field `destination_schema`.\n"]
+    #[doc = "Set the field `destination_schema`.\n"]
     pub fn set_destination_schema(
         mut self,
         v:
             impl
 
-                    Into<
-                        BlockAssignable<
+                    std
+                    ::convert
+                    ::Into<
+                        terrars
+                        ::BlockAssignable<
                             Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElOutputElDestinationSchemaEl,
                         >,
                     >,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.destination_schema = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.destination_schema = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.destination_schema = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.destination_schema = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Set the field `kinesis_firehose_output`.\n"]
+    #[doc = "Set the field `kinesis_firehose_output`.\n"]
     pub fn set_kinesis_firehose_output(
         mut self,
         v:
             impl
 
-                    Into<
-                        BlockAssignable<
+                    std
+                    ::convert
+                    ::Into<
+                        terrars
+                        ::BlockAssignable<
                             Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElOutputElKinesisFirehoseOutputEl,
                         >,
                     >,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.kinesis_firehose_output = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.kinesis_firehose_output = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.kinesis_firehose_output = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.kinesis_firehose_output = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Set the field `kinesis_streams_output`.\n"]
+    #[doc = "Set the field `kinesis_streams_output`.\n"]
     pub fn set_kinesis_streams_output(
         mut self,
         v:
             impl
 
-                    Into<
-                        BlockAssignable<
+                    std
+                    ::convert
+                    ::Into<
+                        terrars
+                        ::BlockAssignable<
                             Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElOutputElKinesisStreamsOutputEl,
                         >,
                     >,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.kinesis_streams_output = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.kinesis_streams_output = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.kinesis_streams_output = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.kinesis_streams_output = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Set the field `lambda_output`.\n"]
+    #[doc = "Set the field `lambda_output`.\n"]
     pub fn set_lambda_output(
         mut self,
         v:
             impl
 
-                    Into<
-                        BlockAssignable<
+                    std
+                    ::convert
+                    ::Into<
+                        terrars
+                        ::BlockAssignable<
                             Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElOutputElLambdaOutputEl,
                         >,
                     >,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.lambda_output = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.lambda_output = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.lambda_output = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.lambda_output = std::option::Option::Some(d);
             },
         }
         self
     }
 }
 
-impl ToListMappable for Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElOutputEl {
+impl terrars
+::ToListMappable for Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElOutputEl {
     type O =
-        BlockAssignable<
+        terrars
+        ::BlockAssignable<
             Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElOutputEl,
         >;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -3649,8 +4065,8 @@ impl ToListMappable for Kinesisanalyticsv2ApplicationApplicationConfigurationElS
 }
 
 pub struct BuildKinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElOutputEl {
-    #[doc= ""]
-    pub name: PrimField<String>,
+    #[doc = ""]
+    pub name: terrars::PrimField<std::string::String>,
 }
 
 impl BuildKinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElOutputEl {
@@ -3663,20 +4079,20 @@ impl BuildKinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationC
             kinesis_firehose_output: core::default::Default::default(),
             kinesis_streams_output: core::default::Default::default(),
             lambda_output: core::default::Default::default(),
-            dynamic: Default::default(),
+            dynamic: core::default::Default::default(),
         }
     }
 }
 
 pub struct Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElOutputElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElOutputElRef {
+impl terrars::Ref for Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElOutputElRef {
     fn new(
-        shared: StackShared,
-        base: String,
+        shared: terrars::StackShared,
+        base: std::string::String,
     ) -> Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElOutputElRef {
         Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElOutputElRef {
             shared: shared,
@@ -3686,81 +4102,87 @@ impl Ref for Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicati
 }
 
 impl Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElOutputElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `name` after provisioning.\n"]
-    pub fn name(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.name", self.base))
+    #[doc = "Get a reference to the value of field `name` after provisioning.\n"]
+    pub fn name(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `output_id` after provisioning.\n"]
-    pub fn output_id(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.output_id", self.base))
+    #[doc = "Get a reference to the value of field `output_id` after provisioning.\n"]
+    pub fn output_id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.output_id", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `destination_schema` after provisioning.\n"]
+    #[doc = "Get a reference to the value of field `destination_schema` after provisioning.\n"]
     pub fn destination_schema(
         &self,
-    ) -> ListRef<
+    ) -> terrars
+    ::ListRef<
         Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElOutputElDestinationSchemaElRef,
     > {
-        ListRef::new(self.shared().clone(), format!("{}.destination_schema", self.base))
+        terrars::ListRef::new(self.shared().clone(), format!("{}.destination_schema", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `kinesis_firehose_output` after provisioning.\n"]
+    #[doc = "Get a reference to the value of field `kinesis_firehose_output` after provisioning.\n"]
     pub fn kinesis_firehose_output(
         &self,
-    ) -> ListRef<
+    ) -> terrars
+    ::ListRef<
         Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElOutputElKinesisFirehoseOutputElRef,
     > {
-        ListRef::new(self.shared().clone(), format!("{}.kinesis_firehose_output", self.base))
+        terrars::ListRef::new(self.shared().clone(), format!("{}.kinesis_firehose_output", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `kinesis_streams_output` after provisioning.\n"]
+    #[doc = "Get a reference to the value of field `kinesis_streams_output` after provisioning.\n"]
     pub fn kinesis_streams_output(
         &self,
-    ) -> ListRef<
+    ) -> terrars
+    ::ListRef<
         Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElOutputElKinesisStreamsOutputElRef,
     > {
-        ListRef::new(self.shared().clone(), format!("{}.kinesis_streams_output", self.base))
+        terrars::ListRef::new(self.shared().clone(), format!("{}.kinesis_streams_output", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `lambda_output` after provisioning.\n"]
+    #[doc = "Get a reference to the value of field `lambda_output` after provisioning.\n"]
     pub fn lambda_output(
         &self,
-    ) -> ListRef<
+    ) -> terrars
+    ::ListRef<
         Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElOutputElLambdaOutputElRef,
     > {
-        ListRef::new(self.shared().clone(), format!("{}.lambda_output", self.base))
+        terrars::ListRef::new(self.shared().clone(), format!("{}.lambda_output", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElReferenceDataSourceElReferenceSchemaElRecordColumnEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    mapping: Option<PrimField<String>>,
-    name: PrimField<String>,
-    sql_type: PrimField<String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    mapping: std::option::Option<terrars::PrimField<std::string::String>>,
+    name: terrars::PrimField<std::string::String>,
+    sql_type: terrars::PrimField<std::string::String>,
 }
 
 impl Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElReferenceDataSourceElReferenceSchemaElRecordColumnEl {
-    #[doc= "Set the field `mapping`.\n"]
-    pub fn set_mapping(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.mapping = Some(v.into());
+    #[doc = "Set the field `mapping`.\n"]
+    pub fn set_mapping(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.mapping = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl ToListMappable for Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElReferenceDataSourceElReferenceSchemaElRecordColumnEl {
+impl terrars
+::ToListMappable for Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElReferenceDataSourceElReferenceSchemaElRecordColumnEl {
     type O =
-        BlockAssignable<
+        terrars
+        ::BlockAssignable<
             Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElReferenceDataSourceElReferenceSchemaElRecordColumnEl,
         >;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -3769,10 +4191,10 @@ impl ToListMappable for Kinesisanalyticsv2ApplicationApplicationConfigurationElS
 }
 
 pub struct BuildKinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElReferenceDataSourceElReferenceSchemaElRecordColumnEl {
-    #[doc= ""]
-    pub name: PrimField<String>,
-    #[doc= ""]
-    pub sql_type: PrimField<String>,
+    #[doc = ""]
+    pub name: terrars::PrimField<std::string::String>,
+    #[doc = ""]
+    pub sql_type: terrars::PrimField<std::string::String>,
 }
 
 impl BuildKinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElReferenceDataSourceElReferenceSchemaElRecordColumnEl {
@@ -3788,14 +4210,15 @@ impl BuildKinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationC
 }
 
 pub struct Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElReferenceDataSourceElReferenceSchemaElRecordColumnElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElReferenceDataSourceElReferenceSchemaElRecordColumnElRef {
+impl terrars
+::Ref for Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElReferenceDataSourceElReferenceSchemaElRecordColumnElRef {
     fn new(
-        shared: StackShared,
-        base: String,
+        shared: terrars::StackShared,
+        base: std::string::String,
     ) -> Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElReferenceDataSourceElReferenceSchemaElRecordColumnElRef {
         Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElReferenceDataSourceElReferenceSchemaElRecordColumnElRef {
             shared: shared,
@@ -3805,44 +4228,46 @@ impl Ref for Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicati
 }
 
 impl Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElReferenceDataSourceElReferenceSchemaElRecordColumnElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `mapping` after provisioning.\n"]
-    pub fn mapping(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.mapping", self.base))
+    #[doc = "Get a reference to the value of field `mapping` after provisioning.\n"]
+    pub fn mapping(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.mapping", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `name` after provisioning.\n"]
-    pub fn name(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.name", self.base))
+    #[doc = "Get a reference to the value of field `name` after provisioning.\n"]
+    pub fn name(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `sql_type` after provisioning.\n"]
-    pub fn sql_type(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.sql_type", self.base))
+    #[doc = "Get a reference to the value of field `sql_type` after provisioning.\n"]
+    pub fn sql_type(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.sql_type", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElReferenceDataSourceElReferenceSchemaElRecordFormatElMappingParametersElCsvMappingParametersEl {
-    record_column_delimiter: PrimField<String>,
-    record_row_delimiter: PrimField<String>,
+    record_column_delimiter: terrars::PrimField<std::string::String>,
+    record_row_delimiter: terrars::PrimField<std::string::String>,
 }
 
 impl Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElReferenceDataSourceElReferenceSchemaElRecordFormatElMappingParametersElCsvMappingParametersEl {
 
 }
 
-impl ToListMappable for Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElReferenceDataSourceElReferenceSchemaElRecordFormatElMappingParametersElCsvMappingParametersEl {
+impl terrars
+::ToListMappable for Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElReferenceDataSourceElReferenceSchemaElRecordFormatElMappingParametersElCsvMappingParametersEl {
     type O =
-        BlockAssignable<
+        terrars
+        ::BlockAssignable<
             Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElReferenceDataSourceElReferenceSchemaElRecordFormatElMappingParametersElCsvMappingParametersEl,
         >;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -3851,10 +4276,10 @@ impl ToListMappable for Kinesisanalyticsv2ApplicationApplicationConfigurationElS
 }
 
 pub struct BuildKinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElReferenceDataSourceElReferenceSchemaElRecordFormatElMappingParametersElCsvMappingParametersEl {
-    #[doc= ""]
-    pub record_column_delimiter: PrimField<String>,
-    #[doc= ""]
-    pub record_row_delimiter: PrimField<String>,
+    #[doc = ""]
+    pub record_column_delimiter: terrars::PrimField<std::string::String>,
+    #[doc = ""]
+    pub record_row_delimiter: terrars::PrimField<std::string::String>,
 }
 
 impl BuildKinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElReferenceDataSourceElReferenceSchemaElRecordFormatElMappingParametersElCsvMappingParametersEl {
@@ -3869,14 +4294,15 @@ impl BuildKinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationC
 }
 
 pub struct Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElReferenceDataSourceElReferenceSchemaElRecordFormatElMappingParametersElCsvMappingParametersElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElReferenceDataSourceElReferenceSchemaElRecordFormatElMappingParametersElCsvMappingParametersElRef {
+impl terrars
+::Ref for Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElReferenceDataSourceElReferenceSchemaElRecordFormatElMappingParametersElCsvMappingParametersElRef {
     fn new(
-        shared: StackShared,
-        base: String,
+        shared: terrars::StackShared,
+        base: std::string::String,
     ) -> Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElReferenceDataSourceElReferenceSchemaElRecordFormatElMappingParametersElCsvMappingParametersElRef {
         Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElReferenceDataSourceElReferenceSchemaElRecordFormatElMappingParametersElCsvMappingParametersElRef {
             shared: shared,
@@ -3886,38 +4312,40 @@ impl Ref for Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicati
 }
 
 impl Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElReferenceDataSourceElReferenceSchemaElRecordFormatElMappingParametersElCsvMappingParametersElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `record_column_delimiter` after provisioning.\n"]
-    pub fn record_column_delimiter(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.record_column_delimiter", self.base))
+    #[doc = "Get a reference to the value of field `record_column_delimiter` after provisioning.\n"]
+    pub fn record_column_delimiter(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.record_column_delimiter", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `record_row_delimiter` after provisioning.\n"]
-    pub fn record_row_delimiter(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.record_row_delimiter", self.base))
+    #[doc = "Get a reference to the value of field `record_row_delimiter` after provisioning.\n"]
+    pub fn record_row_delimiter(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.record_row_delimiter", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElReferenceDataSourceElReferenceSchemaElRecordFormatElMappingParametersElJsonMappingParametersEl {
-    record_row_path: PrimField<String>,
+    record_row_path: terrars::PrimField<std::string::String>,
 }
 
 impl Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElReferenceDataSourceElReferenceSchemaElRecordFormatElMappingParametersElJsonMappingParametersEl {
 
 }
 
-impl ToListMappable for Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElReferenceDataSourceElReferenceSchemaElRecordFormatElMappingParametersElJsonMappingParametersEl {
+impl terrars
+::ToListMappable for Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElReferenceDataSourceElReferenceSchemaElRecordFormatElMappingParametersElJsonMappingParametersEl {
     type O =
-        BlockAssignable<
+        terrars
+        ::BlockAssignable<
             Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElReferenceDataSourceElReferenceSchemaElRecordFormatElMappingParametersElJsonMappingParametersEl,
         >;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -3926,8 +4354,8 @@ impl ToListMappable for Kinesisanalyticsv2ApplicationApplicationConfigurationElS
 }
 
 pub struct BuildKinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElReferenceDataSourceElReferenceSchemaElRecordFormatElMappingParametersElJsonMappingParametersEl {
-    #[doc= ""]
-    pub record_row_path: PrimField<String>,
+    #[doc = ""]
+    pub record_row_path: terrars::PrimField<std::string::String>,
 }
 
 impl BuildKinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElReferenceDataSourceElReferenceSchemaElRecordFormatElMappingParametersElJsonMappingParametersEl {
@@ -3941,14 +4369,15 @@ impl BuildKinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationC
 }
 
 pub struct Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElReferenceDataSourceElReferenceSchemaElRecordFormatElMappingParametersElJsonMappingParametersElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElReferenceDataSourceElReferenceSchemaElRecordFormatElMappingParametersElJsonMappingParametersElRef {
+impl terrars
+::Ref for Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElReferenceDataSourceElReferenceSchemaElRecordFormatElMappingParametersElJsonMappingParametersElRef {
     fn new(
-        shared: StackShared,
-        base: String,
+        shared: terrars::StackShared,
+        base: std::string::String,
     ) -> Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElReferenceDataSourceElReferenceSchemaElRecordFormatElMappingParametersElJsonMappingParametersElRef {
         Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElReferenceDataSourceElReferenceSchemaElRecordFormatElMappingParametersElJsonMappingParametersElRef {
             shared: shared,
@@ -3958,25 +4387,31 @@ impl Ref for Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicati
 }
 
 impl Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElReferenceDataSourceElReferenceSchemaElRecordFormatElMappingParametersElJsonMappingParametersElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `record_row_path` after provisioning.\n"]
-    pub fn record_row_path(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.record_row_path", self.base))
+    #[doc = "Get a reference to the value of field `record_row_path` after provisioning.\n"]
+    pub fn record_row_path(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.record_row_path", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
 struct Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElReferenceDataSourceElReferenceSchemaElRecordFormatElMappingParametersElDynamic {
-    csv_mapping_parameters: Option<
-        DynamicBlock<
+    csv_mapping_parameters: std
+    ::option
+    ::Option<
+        terrars
+        ::DynamicBlock<
             Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElReferenceDataSourceElReferenceSchemaElRecordFormatElMappingParametersElCsvMappingParametersEl,
         >,
     >,
-    json_mapping_parameters: Option<
-        DynamicBlock<
+    json_mapping_parameters: std
+    ::option
+    ::Option<
+        terrars
+        ::DynamicBlock<
             Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElReferenceDataSourceElReferenceSchemaElRecordFormatElMappingParametersElJsonMappingParametersEl,
         >,
     >,
@@ -3984,15 +4419,23 @@ struct Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConf
 
 #[derive(Serialize)]
 pub struct Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElReferenceDataSourceElReferenceSchemaElRecordFormatElMappingParametersEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    csv_mapping_parameters: Option<
-        Vec<
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    csv_mapping_parameters: std
+    ::option
+    ::Option<
+        std
+        ::vec
+        ::Vec<
             Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElReferenceDataSourceElReferenceSchemaElRecordFormatElMappingParametersElCsvMappingParametersEl,
         >,
     >,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    json_mapping_parameters: Option<
-        Vec<
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    json_mapping_parameters: std
+    ::option
+    ::Option<
+        std
+        ::vec
+        ::Vec<
             Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElReferenceDataSourceElReferenceSchemaElRecordFormatElMappingParametersElJsonMappingParametersEl,
         >,
     >,
@@ -4000,61 +4443,69 @@ pub struct Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplication
 }
 
 impl Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElReferenceDataSourceElReferenceSchemaElRecordFormatElMappingParametersEl {
-    #[doc= "Set the field `csv_mapping_parameters`.\n"]
+    #[doc = "Set the field `csv_mapping_parameters`.\n"]
     pub fn set_csv_mapping_parameters(
         mut self,
         v:
             impl
 
-                    Into<
-                        BlockAssignable<
+                    std
+                    ::convert
+                    ::Into<
+                        terrars
+                        ::BlockAssignable<
                             Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElReferenceDataSourceElReferenceSchemaElRecordFormatElMappingParametersElCsvMappingParametersEl,
                         >,
                     >,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.csv_mapping_parameters = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.csv_mapping_parameters = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.csv_mapping_parameters = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.csv_mapping_parameters = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Set the field `json_mapping_parameters`.\n"]
+    #[doc = "Set the field `json_mapping_parameters`.\n"]
     pub fn set_json_mapping_parameters(
         mut self,
         v:
             impl
 
-                    Into<
-                        BlockAssignable<
+                    std
+                    ::convert
+                    ::Into<
+                        terrars
+                        ::BlockAssignable<
                             Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElReferenceDataSourceElReferenceSchemaElRecordFormatElMappingParametersElJsonMappingParametersEl,
                         >,
                     >,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.json_mapping_parameters = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.json_mapping_parameters = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.json_mapping_parameters = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.json_mapping_parameters = std::option::Option::Some(d);
             },
         }
         self
     }
 }
 
-impl ToListMappable for Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElReferenceDataSourceElReferenceSchemaElRecordFormatElMappingParametersEl {
+impl terrars
+::ToListMappable for Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElReferenceDataSourceElReferenceSchemaElRecordFormatElMappingParametersEl {
     type O =
-        BlockAssignable<
+        terrars
+        ::BlockAssignable<
             Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElReferenceDataSourceElReferenceSchemaElRecordFormatElMappingParametersEl,
         >;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -4071,20 +4522,21 @@ impl BuildKinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationC
         Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElReferenceDataSourceElReferenceSchemaElRecordFormatElMappingParametersEl {
             csv_mapping_parameters: core::default::Default::default(),
             json_mapping_parameters: core::default::Default::default(),
-            dynamic: Default::default(),
+            dynamic: core::default::Default::default(),
         }
     }
 }
 
 pub struct Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElReferenceDataSourceElReferenceSchemaElRecordFormatElMappingParametersElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElReferenceDataSourceElReferenceSchemaElRecordFormatElMappingParametersElRef {
+impl terrars
+::Ref for Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElReferenceDataSourceElReferenceSchemaElRecordFormatElMappingParametersElRef {
     fn new(
-        shared: StackShared,
-        base: String,
+        shared: terrars::StackShared,
+        base: std::string::String,
     ) -> Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElReferenceDataSourceElReferenceSchemaElRecordFormatElMappingParametersElRef {
         Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElReferenceDataSourceElReferenceSchemaElRecordFormatElMappingParametersElRef {
             shared: shared,
@@ -4094,33 +4546,38 @@ impl Ref for Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicati
 }
 
 impl Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElReferenceDataSourceElReferenceSchemaElRecordFormatElMappingParametersElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `csv_mapping_parameters` after provisioning.\n"]
+    #[doc = "Get a reference to the value of field `csv_mapping_parameters` after provisioning.\n"]
     pub fn csv_mapping_parameters(
         &self,
-    ) -> ListRef<
+    ) -> terrars
+    ::ListRef<
         Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElReferenceDataSourceElReferenceSchemaElRecordFormatElMappingParametersElCsvMappingParametersElRef,
     > {
-        ListRef::new(self.shared().clone(), format!("{}.csv_mapping_parameters", self.base))
+        terrars::ListRef::new(self.shared().clone(), format!("{}.csv_mapping_parameters", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `json_mapping_parameters` after provisioning.\n"]
+    #[doc = "Get a reference to the value of field `json_mapping_parameters` after provisioning.\n"]
     pub fn json_mapping_parameters(
         &self,
-    ) -> ListRef<
+    ) -> terrars
+    ::ListRef<
         Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElReferenceDataSourceElReferenceSchemaElRecordFormatElMappingParametersElJsonMappingParametersElRef,
     > {
-        ListRef::new(self.shared().clone(), format!("{}.json_mapping_parameters", self.base))
+        terrars::ListRef::new(self.shared().clone(), format!("{}.json_mapping_parameters", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
 struct Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElReferenceDataSourceElReferenceSchemaElRecordFormatElDynamic {
-    mapping_parameters: Option<
-        DynamicBlock<
+    mapping_parameters: std
+    ::option
+    ::Option<
+        terrars
+        ::DynamicBlock<
             Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElReferenceDataSourceElReferenceSchemaElRecordFormatElMappingParametersEl,
         >,
     >,
@@ -4128,10 +4585,14 @@ struct Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConf
 
 #[derive(Serialize)]
 pub struct Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElReferenceDataSourceElReferenceSchemaElRecordFormatEl {
-    record_format_type: PrimField<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    mapping_parameters: Option<
-        Vec<
+    record_format_type: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    mapping_parameters: std
+    ::option
+    ::Option<
+        std
+        ::vec
+        ::Vec<
             Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElReferenceDataSourceElReferenceSchemaElRecordFormatElMappingParametersEl,
         >,
     >,
@@ -4139,38 +4600,43 @@ pub struct Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplication
 }
 
 impl Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElReferenceDataSourceElReferenceSchemaElRecordFormatEl {
-    #[doc= "Set the field `mapping_parameters`.\n"]
+    #[doc = "Set the field `mapping_parameters`.\n"]
     pub fn set_mapping_parameters(
         mut self,
         v:
             impl
 
-                    Into<
-                        BlockAssignable<
+                    std
+                    ::convert
+                    ::Into<
+                        terrars
+                        ::BlockAssignable<
                             Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElReferenceDataSourceElReferenceSchemaElRecordFormatElMappingParametersEl,
                         >,
                     >,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.mapping_parameters = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.mapping_parameters = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.mapping_parameters = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.mapping_parameters = std::option::Option::Some(d);
             },
         }
         self
     }
 }
 
-impl ToListMappable for Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElReferenceDataSourceElReferenceSchemaElRecordFormatEl {
+impl terrars
+::ToListMappable for Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElReferenceDataSourceElReferenceSchemaElRecordFormatEl {
     type O =
-        BlockAssignable<
+        terrars
+        ::BlockAssignable<
             Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElReferenceDataSourceElReferenceSchemaElRecordFormatEl,
         >;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -4179,8 +4645,8 @@ impl ToListMappable for Kinesisanalyticsv2ApplicationApplicationConfigurationElS
 }
 
 pub struct BuildKinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElReferenceDataSourceElReferenceSchemaElRecordFormatEl {
-    #[doc= ""]
-    pub record_format_type: PrimField<String>,
+    #[doc = ""]
+    pub record_format_type: terrars::PrimField<std::string::String>,
 }
 
 impl BuildKinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElReferenceDataSourceElReferenceSchemaElRecordFormatEl {
@@ -4190,20 +4656,21 @@ impl BuildKinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationC
         Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElReferenceDataSourceElReferenceSchemaElRecordFormatEl {
             record_format_type: self.record_format_type,
             mapping_parameters: core::default::Default::default(),
-            dynamic: Default::default(),
+            dynamic: core::default::Default::default(),
         }
     }
 }
 
 pub struct Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElReferenceDataSourceElReferenceSchemaElRecordFormatElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElReferenceDataSourceElReferenceSchemaElRecordFormatElRef {
+impl terrars
+::Ref for Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElReferenceDataSourceElReferenceSchemaElRecordFormatElRef {
     fn new(
-        shared: StackShared,
-        base: String,
+        shared: terrars::StackShared,
+        base: std::string::String,
     ) -> Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElReferenceDataSourceElReferenceSchemaElRecordFormatElRef {
         Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElReferenceDataSourceElReferenceSchemaElRecordFormatElRef {
             shared: shared,
@@ -4213,34 +4680,41 @@ impl Ref for Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicati
 }
 
 impl Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElReferenceDataSourceElReferenceSchemaElRecordFormatElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `record_format_type` after provisioning.\n"]
-    pub fn record_format_type(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.record_format_type", self.base))
+    #[doc = "Get a reference to the value of field `record_format_type` after provisioning.\n"]
+    pub fn record_format_type(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.record_format_type", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `mapping_parameters` after provisioning.\n"]
+    #[doc = "Get a reference to the value of field `mapping_parameters` after provisioning.\n"]
     pub fn mapping_parameters(
         &self,
-    ) -> ListRef<
+    ) -> terrars
+    ::ListRef<
         Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElReferenceDataSourceElReferenceSchemaElRecordFormatElMappingParametersElRef,
     > {
-        ListRef::new(self.shared().clone(), format!("{}.mapping_parameters", self.base))
+        terrars::ListRef::new(self.shared().clone(), format!("{}.mapping_parameters", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
 struct Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElReferenceDataSourceElReferenceSchemaElDynamic {
-    record_column: Option<
-        DynamicBlock<
+    record_column: std
+    ::option
+    ::Option<
+        terrars
+        ::DynamicBlock<
             Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElReferenceDataSourceElReferenceSchemaElRecordColumnEl,
         >,
     >,
-    record_format: Option<
-        DynamicBlock<
+    record_format: std
+    ::option
+    ::Option<
+        terrars
+        ::DynamicBlock<
             Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElReferenceDataSourceElReferenceSchemaElRecordFormatEl,
         >,
     >,
@@ -4248,17 +4722,25 @@ struct Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConf
 
 #[derive(Serialize)]
 pub struct Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElReferenceDataSourceElReferenceSchemaEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    record_encoding: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    record_column: Option<
-        Vec<
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    record_encoding: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    record_column: std
+    ::option
+    ::Option<
+        std
+        ::vec
+        ::Vec<
             Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElReferenceDataSourceElReferenceSchemaElRecordColumnEl,
         >,
     >,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    record_format: Option<
-        Vec<
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    record_format: std
+    ::option
+    ::Option<
+        std
+        ::vec
+        ::Vec<
             Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElReferenceDataSourceElReferenceSchemaElRecordFormatEl,
         >,
     >,
@@ -4266,67 +4748,75 @@ pub struct Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplication
 }
 
 impl Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElReferenceDataSourceElReferenceSchemaEl {
-    #[doc= "Set the field `record_encoding`.\n"]
-    pub fn set_record_encoding(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.record_encoding = Some(v.into());
+    #[doc = "Set the field `record_encoding`.\n"]
+    pub fn set_record_encoding(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.record_encoding = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `record_column`.\n"]
+    #[doc = "Set the field `record_column`.\n"]
     pub fn set_record_column(
         mut self,
         v:
             impl
 
-                    Into<
-                        BlockAssignable<
+                    std
+                    ::convert
+                    ::Into<
+                        terrars
+                        ::BlockAssignable<
                             Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElReferenceDataSourceElReferenceSchemaElRecordColumnEl,
                         >,
                     >,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.record_column = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.record_column = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.record_column = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.record_column = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Set the field `record_format`.\n"]
+    #[doc = "Set the field `record_format`.\n"]
     pub fn set_record_format(
         mut self,
         v:
             impl
 
-                    Into<
-                        BlockAssignable<
+                    std
+                    ::convert
+                    ::Into<
+                        terrars
+                        ::BlockAssignable<
                             Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElReferenceDataSourceElReferenceSchemaElRecordFormatEl,
                         >,
                     >,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.record_format = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.record_format = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.record_format = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.record_format = std::option::Option::Some(d);
             },
         }
         self
     }
 }
 
-impl ToListMappable for Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElReferenceDataSourceElReferenceSchemaEl {
+impl terrars
+::ToListMappable for Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElReferenceDataSourceElReferenceSchemaEl {
     type O =
-        BlockAssignable<
+        terrars
+        ::BlockAssignable<
             Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElReferenceDataSourceElReferenceSchemaEl,
         >;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -4344,20 +4834,21 @@ impl BuildKinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationC
             record_encoding: core::default::Default::default(),
             record_column: core::default::Default::default(),
             record_format: core::default::Default::default(),
-            dynamic: Default::default(),
+            dynamic: core::default::Default::default(),
         }
     }
 }
 
 pub struct Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElReferenceDataSourceElReferenceSchemaElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElReferenceDataSourceElReferenceSchemaElRef {
+impl terrars
+::Ref for Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElReferenceDataSourceElReferenceSchemaElRef {
     fn new(
-        shared: StackShared,
-        base: String,
+        shared: terrars::StackShared,
+        base: std::string::String,
     ) -> Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElReferenceDataSourceElReferenceSchemaElRef {
         Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElReferenceDataSourceElReferenceSchemaElRef {
             shared: shared,
@@ -4367,52 +4858,56 @@ impl Ref for Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicati
 }
 
 impl Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElReferenceDataSourceElReferenceSchemaElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `record_encoding` after provisioning.\n"]
-    pub fn record_encoding(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.record_encoding", self.base))
+    #[doc = "Get a reference to the value of field `record_encoding` after provisioning.\n"]
+    pub fn record_encoding(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.record_encoding", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `record_column` after provisioning.\n"]
+    #[doc = "Get a reference to the value of field `record_column` after provisioning.\n"]
     pub fn record_column(
         &self,
-    ) -> ListRef<
+    ) -> terrars
+    ::ListRef<
         Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElReferenceDataSourceElReferenceSchemaElRecordColumnElRef,
     > {
-        ListRef::new(self.shared().clone(), format!("{}.record_column", self.base))
+        terrars::ListRef::new(self.shared().clone(), format!("{}.record_column", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `record_format` after provisioning.\n"]
+    #[doc = "Get a reference to the value of field `record_format` after provisioning.\n"]
     pub fn record_format(
         &self,
-    ) -> ListRef<
+    ) -> terrars
+    ::ListRef<
         Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElReferenceDataSourceElReferenceSchemaElRecordFormatElRef,
     > {
-        ListRef::new(self.shared().clone(), format!("{}.record_format", self.base))
+        terrars::ListRef::new(self.shared().clone(), format!("{}.record_format", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElReferenceDataSourceElS3ReferenceDataSourceEl {
-    bucket_arn: PrimField<String>,
-    file_key: PrimField<String>,
+    bucket_arn: terrars::PrimField<std::string::String>,
+    file_key: terrars::PrimField<std::string::String>,
 }
 
 impl Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElReferenceDataSourceElS3ReferenceDataSourceEl {
 
 }
 
-impl ToListMappable for Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElReferenceDataSourceElS3ReferenceDataSourceEl {
+impl terrars
+::ToListMappable for Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElReferenceDataSourceElS3ReferenceDataSourceEl {
     type O =
-        BlockAssignable<
+        terrars
+        ::BlockAssignable<
             Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElReferenceDataSourceElS3ReferenceDataSourceEl,
         >;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -4421,10 +4916,10 @@ impl ToListMappable for Kinesisanalyticsv2ApplicationApplicationConfigurationElS
 }
 
 pub struct BuildKinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElReferenceDataSourceElS3ReferenceDataSourceEl {
-    #[doc= ""]
-    pub bucket_arn: PrimField<String>,
-    #[doc= ""]
-    pub file_key: PrimField<String>,
+    #[doc = ""]
+    pub bucket_arn: terrars::PrimField<std::string::String>,
+    #[doc = ""]
+    pub file_key: terrars::PrimField<std::string::String>,
 }
 
 impl BuildKinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElReferenceDataSourceElS3ReferenceDataSourceEl {
@@ -4439,14 +4934,15 @@ impl BuildKinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationC
 }
 
 pub struct Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElReferenceDataSourceElS3ReferenceDataSourceElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElReferenceDataSourceElS3ReferenceDataSourceElRef {
+impl terrars
+::Ref for Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElReferenceDataSourceElS3ReferenceDataSourceElRef {
     fn new(
-        shared: StackShared,
-        base: String,
+        shared: terrars::StackShared,
+        base: std::string::String,
     ) -> Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElReferenceDataSourceElS3ReferenceDataSourceElRef {
         Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElReferenceDataSourceElS3ReferenceDataSourceElRef {
             shared: shared,
@@ -4456,30 +4952,36 @@ impl Ref for Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicati
 }
 
 impl Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElReferenceDataSourceElS3ReferenceDataSourceElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `bucket_arn` after provisioning.\n"]
-    pub fn bucket_arn(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.bucket_arn", self.base))
+    #[doc = "Get a reference to the value of field `bucket_arn` after provisioning.\n"]
+    pub fn bucket_arn(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.bucket_arn", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `file_key` after provisioning.\n"]
-    pub fn file_key(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.file_key", self.base))
+    #[doc = "Get a reference to the value of field `file_key` after provisioning.\n"]
+    pub fn file_key(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.file_key", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
 struct Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElReferenceDataSourceElDynamic {
-    reference_schema: Option<
-        DynamicBlock<
+    reference_schema: std
+    ::option
+    ::Option<
+        terrars
+        ::DynamicBlock<
             Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElReferenceDataSourceElReferenceSchemaEl,
         >,
     >,
-    s3_reference_data_source: Option<
-        DynamicBlock<
+    s3_reference_data_source: std
+    ::option
+    ::Option<
+        terrars
+        ::DynamicBlock<
             Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElReferenceDataSourceElS3ReferenceDataSourceEl,
         >,
     >,
@@ -4487,16 +4989,24 @@ struct Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConf
 
 #[derive(Serialize)]
 pub struct Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElReferenceDataSourceEl {
-    table_name: PrimField<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    reference_schema: Option<
-        Vec<
+    table_name: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    reference_schema: std
+    ::option
+    ::Option<
+        std
+        ::vec
+        ::Vec<
             Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElReferenceDataSourceElReferenceSchemaEl,
         >,
     >,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    s3_reference_data_source: Option<
-        Vec<
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    s3_reference_data_source: std
+    ::option
+    ::Option<
+        std
+        ::vec
+        ::Vec<
             Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElReferenceDataSourceElS3ReferenceDataSourceEl,
         >,
     >,
@@ -4504,61 +5014,69 @@ pub struct Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplication
 }
 
 impl Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElReferenceDataSourceEl {
-    #[doc= "Set the field `reference_schema`.\n"]
+    #[doc = "Set the field `reference_schema`.\n"]
     pub fn set_reference_schema(
         mut self,
         v:
             impl
 
-                    Into<
-                        BlockAssignable<
+                    std
+                    ::convert
+                    ::Into<
+                        terrars
+                        ::BlockAssignable<
                             Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElReferenceDataSourceElReferenceSchemaEl,
                         >,
                     >,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.reference_schema = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.reference_schema = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.reference_schema = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.reference_schema = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Set the field `s3_reference_data_source`.\n"]
+    #[doc = "Set the field `s3_reference_data_source`.\n"]
     pub fn set_s3_reference_data_source(
         mut self,
         v:
             impl
 
-                    Into<
-                        BlockAssignable<
+                    std
+                    ::convert
+                    ::Into<
+                        terrars
+                        ::BlockAssignable<
                             Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElReferenceDataSourceElS3ReferenceDataSourceEl,
                         >,
                     >,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.s3_reference_data_source = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.s3_reference_data_source = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.s3_reference_data_source = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.s3_reference_data_source = std::option::Option::Some(d);
             },
         }
         self
     }
 }
 
-impl ToListMappable for Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElReferenceDataSourceEl {
+impl terrars
+::ToListMappable for Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElReferenceDataSourceEl {
     type O =
-        BlockAssignable<
+        terrars
+        ::BlockAssignable<
             Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElReferenceDataSourceEl,
         >;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -4567,8 +5085,8 @@ impl ToListMappable for Kinesisanalyticsv2ApplicationApplicationConfigurationElS
 }
 
 pub struct BuildKinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElReferenceDataSourceEl {
-    #[doc= ""]
-    pub table_name: PrimField<String>,
+    #[doc = ""]
+    pub table_name: terrars::PrimField<std::string::String>,
 }
 
 impl BuildKinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElReferenceDataSourceEl {
@@ -4579,20 +5097,21 @@ impl BuildKinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationC
             table_name: self.table_name,
             reference_schema: core::default::Default::default(),
             s3_reference_data_source: core::default::Default::default(),
-            dynamic: Default::default(),
+            dynamic: core::default::Default::default(),
         }
     }
 }
 
 pub struct Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElReferenceDataSourceElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElReferenceDataSourceElRef {
+impl terrars
+::Ref for Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElReferenceDataSourceElRef {
     fn new(
-        shared: StackShared,
-        base: String,
+        shared: terrars::StackShared,
+        base: std::string::String,
     ) -> Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElReferenceDataSourceElRef {
         Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElReferenceDataSourceElRef {
             shared: shared,
@@ -4602,49 +5121,60 @@ impl Ref for Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicati
 }
 
 impl Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElReferenceDataSourceElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `reference_id` after provisioning.\n"]
-    pub fn reference_id(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.reference_id", self.base))
+    #[doc = "Get a reference to the value of field `reference_id` after provisioning.\n"]
+    pub fn reference_id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.reference_id", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `table_name` after provisioning.\n"]
-    pub fn table_name(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.table_name", self.base))
+    #[doc = "Get a reference to the value of field `table_name` after provisioning.\n"]
+    pub fn table_name(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.table_name", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `reference_schema` after provisioning.\n"]
+    #[doc = "Get a reference to the value of field `reference_schema` after provisioning.\n"]
     pub fn reference_schema(
         &self,
-    ) -> ListRef<
+    ) -> terrars
+    ::ListRef<
         Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElReferenceDataSourceElReferenceSchemaElRef,
     > {
-        ListRef::new(self.shared().clone(), format!("{}.reference_schema", self.base))
+        terrars::ListRef::new(self.shared().clone(), format!("{}.reference_schema", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `s3_reference_data_source` after provisioning.\n"]
+    #[doc = "Get a reference to the value of field `s3_reference_data_source` after provisioning.\n"]
     pub fn s3_reference_data_source(
         &self,
-    ) -> ListRef<
+    ) -> terrars
+    ::ListRef<
         Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElReferenceDataSourceElS3ReferenceDataSourceElRef,
     > {
-        ListRef::new(self.shared().clone(), format!("{}.s3_reference_data_source", self.base))
+        terrars::ListRef::new(self.shared().clone(), format!("{}.s3_reference_data_source", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
 struct Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElDynamic {
-    input: Option<
-        DynamicBlock<Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElInputEl>,
+    input: std
+    ::option
+    ::Option<
+        terrars
+        ::DynamicBlock<Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElInputEl>,
     >,
-    output: Option<
-        DynamicBlock<Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElOutputEl>,
+    output: std
+    ::option
+    ::Option<
+        terrars
+        ::DynamicBlock<Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElOutputEl>,
     >,
-    reference_data_source: Option<
-        DynamicBlock<
+    reference_data_source: std
+    ::option
+    ::Option<
+        terrars
+        ::DynamicBlock<
             Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElReferenceDataSourceEl,
         >,
     >,
@@ -4652,93 +5182,118 @@ struct Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConf
 
 #[derive(Serialize)]
 pub struct Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    input: Option<Vec<Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElInputEl>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    output: Option<Vec<Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElOutputEl>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    reference_data_source: Option<
-        Vec<Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElReferenceDataSourceEl>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    input: std
+    ::option
+    ::Option<
+        std::vec::Vec<Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElInputEl>,
+    >,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    output: std
+    ::option
+    ::Option<
+        std::vec::Vec<Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElOutputEl>,
+    >,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    reference_data_source: std
+    ::option
+    ::Option<
+        std
+        ::vec
+        ::Vec<
+            Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElReferenceDataSourceEl,
+        >,
     >,
     dynamic: Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElDynamic,
 }
 
 impl Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationEl {
-    #[doc= "Set the field `input`.\n"]
+    #[doc = "Set the field `input`.\n"]
     pub fn set_input(
         mut self,
         v:
             impl
 
-                    Into<
-                        BlockAssignable<
+                    std
+                    ::convert
+                    ::Into<
+                        terrars
+                        ::BlockAssignable<
                             Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElInputEl,
                         >,
                     >,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.input = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.input = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.input = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.input = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Set the field `output`.\n"]
+    #[doc = "Set the field `output`.\n"]
     pub fn set_output(
         mut self,
         v:
             impl
 
-                    Into<
-                        BlockAssignable<
+                    std
+                    ::convert
+                    ::Into<
+                        terrars
+                        ::BlockAssignable<
                             Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElOutputEl,
                         >,
                     >,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.output = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.output = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.output = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.output = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Set the field `reference_data_source`.\n"]
+    #[doc = "Set the field `reference_data_source`.\n"]
     pub fn set_reference_data_source(
         mut self,
         v:
             impl
 
-                    Into<
-                        BlockAssignable<
+                    std
+                    ::convert
+                    ::Into<
+                        terrars
+                        ::BlockAssignable<
                             Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElReferenceDataSourceEl,
                         >,
                     >,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.reference_data_source = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.reference_data_source = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.reference_data_source = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.reference_data_source = std::option::Option::Some(d);
             },
         }
         self
     }
 }
 
-impl ToListMappable for Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationEl {
-    type O = BlockAssignable<Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationEl>;
+impl terrars::ToListMappable for Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationEl {
+    type O =
+        terrars
+        ::BlockAssignable<Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -4754,20 +5309,20 @@ impl BuildKinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationC
             input: core::default::Default::default(),
             output: core::default::Default::default(),
             reference_data_source: core::default::Default::default(),
-            dynamic: Default::default(),
+            dynamic: core::default::Default::default(),
         }
     }
 }
 
 pub struct Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElRef {
+impl terrars::Ref for Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElRef {
     fn new(
-        shared: StackShared,
-        base: String,
+        shared: terrars::StackShared,
+        base: std::string::String,
     ) -> Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElRef {
         Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElRef {
             shared: shared,
@@ -4777,40 +5332,42 @@ impl Ref for Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicati
 }
 
 impl Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `input` after provisioning.\n"]
+    #[doc = "Get a reference to the value of field `input` after provisioning.\n"]
     pub fn input(
         &self,
-    ) -> ListRef<Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElInputElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.input", self.base))
+    ) -> terrars
+    ::ListRef<Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElInputElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.input", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `reference_data_source` after provisioning.\n"]
+    #[doc = "Get a reference to the value of field `reference_data_source` after provisioning.\n"]
     pub fn reference_data_source(
         &self,
-    ) -> ListRef<
+    ) -> terrars
+    ::ListRef<
         Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElReferenceDataSourceElRef,
     > {
-        ListRef::new(self.shared().clone(), format!("{}.reference_data_source", self.base))
+        terrars::ListRef::new(self.shared().clone(), format!("{}.reference_data_source", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct Kinesisanalyticsv2ApplicationApplicationConfigurationElVpcConfigurationEl {
-    security_group_ids: SetField<PrimField<String>>,
-    subnet_ids: SetField<PrimField<String>>,
+    security_group_ids: terrars::SetField<terrars::PrimField<std::string::String>>,
+    subnet_ids: terrars::SetField<terrars::PrimField<std::string::String>>,
 }
 
 impl Kinesisanalyticsv2ApplicationApplicationConfigurationElVpcConfigurationEl { }
 
-impl ToListMappable for Kinesisanalyticsv2ApplicationApplicationConfigurationElVpcConfigurationEl {
-    type O = BlockAssignable<Kinesisanalyticsv2ApplicationApplicationConfigurationElVpcConfigurationEl>;
+impl terrars::ToListMappable for Kinesisanalyticsv2ApplicationApplicationConfigurationElVpcConfigurationEl {
+    type O = terrars::BlockAssignable<Kinesisanalyticsv2ApplicationApplicationConfigurationElVpcConfigurationEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -4819,10 +5376,10 @@ impl ToListMappable for Kinesisanalyticsv2ApplicationApplicationConfigurationElV
 }
 
 pub struct BuildKinesisanalyticsv2ApplicationApplicationConfigurationElVpcConfigurationEl {
-    #[doc= ""]
-    pub security_group_ids: SetField<PrimField<String>>,
-    #[doc= ""]
-    pub subnet_ids: SetField<PrimField<String>>,
+    #[doc = ""]
+    pub security_group_ids: terrars::SetField<terrars::PrimField<std::string::String>>,
+    #[doc = ""]
+    pub subnet_ids: terrars::SetField<terrars::PrimField<std::string::String>>,
 }
 
 impl BuildKinesisanalyticsv2ApplicationApplicationConfigurationElVpcConfigurationEl {
@@ -4835,14 +5392,14 @@ impl BuildKinesisanalyticsv2ApplicationApplicationConfigurationElVpcConfiguratio
 }
 
 pub struct Kinesisanalyticsv2ApplicationApplicationConfigurationElVpcConfigurationElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for Kinesisanalyticsv2ApplicationApplicationConfigurationElVpcConfigurationElRef {
+impl terrars::Ref for Kinesisanalyticsv2ApplicationApplicationConfigurationElVpcConfigurationElRef {
     fn new(
-        shared: StackShared,
-        base: String,
+        shared: terrars::StackShared,
+        base: std::string::String,
     ) -> Kinesisanalyticsv2ApplicationApplicationConfigurationElVpcConfigurationElRef {
         Kinesisanalyticsv2ApplicationApplicationConfigurationElVpcConfigurationElRef {
             shared: shared,
@@ -4852,237 +5409,285 @@ impl Ref for Kinesisanalyticsv2ApplicationApplicationConfigurationElVpcConfigura
 }
 
 impl Kinesisanalyticsv2ApplicationApplicationConfigurationElVpcConfigurationElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `security_group_ids` after provisioning.\n"]
-    pub fn security_group_ids(&self) -> SetRef<PrimExpr<String>> {
-        SetRef::new(self.shared().clone(), format!("{}.security_group_ids", self.base))
+    #[doc = "Get a reference to the value of field `security_group_ids` after provisioning.\n"]
+    pub fn security_group_ids(&self) -> terrars::SetRef<terrars::PrimExpr<std::string::String>> {
+        terrars::SetRef::new(self.shared().clone(), format!("{}.security_group_ids", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `subnet_ids` after provisioning.\n"]
-    pub fn subnet_ids(&self) -> SetRef<PrimExpr<String>> {
-        SetRef::new(self.shared().clone(), format!("{}.subnet_ids", self.base))
+    #[doc = "Get a reference to the value of field `subnet_ids` after provisioning.\n"]
+    pub fn subnet_ids(&self) -> terrars::SetRef<terrars::PrimExpr<std::string::String>> {
+        terrars::SetRef::new(self.shared().clone(), format!("{}.subnet_ids", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `vpc_configuration_id` after provisioning.\n"]
-    pub fn vpc_configuration_id(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.vpc_configuration_id", self.base))
+    #[doc = "Get a reference to the value of field `vpc_configuration_id` after provisioning.\n"]
+    pub fn vpc_configuration_id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.vpc_configuration_id", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `vpc_id` after provisioning.\n"]
-    pub fn vpc_id(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.vpc_id", self.base))
+    #[doc = "Get a reference to the value of field `vpc_id` after provisioning.\n"]
+    pub fn vpc_id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.vpc_id", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
 struct Kinesisanalyticsv2ApplicationApplicationConfigurationElDynamic {
-    application_code_configuration: Option<
-        DynamicBlock<Kinesisanalyticsv2ApplicationApplicationConfigurationElApplicationCodeConfigurationEl>,
+    application_code_configuration: std
+    ::option
+    ::Option<
+        terrars::DynamicBlock<Kinesisanalyticsv2ApplicationApplicationConfigurationElApplicationCodeConfigurationEl>,
     >,
-    application_snapshot_configuration: Option<
-        DynamicBlock<Kinesisanalyticsv2ApplicationApplicationConfigurationElApplicationSnapshotConfigurationEl>,
+    application_snapshot_configuration: std
+    ::option
+    ::Option<
+        terrars
+        ::DynamicBlock<Kinesisanalyticsv2ApplicationApplicationConfigurationElApplicationSnapshotConfigurationEl>,
     >,
-    environment_properties: Option<
-        DynamicBlock<Kinesisanalyticsv2ApplicationApplicationConfigurationElEnvironmentPropertiesEl>,
+    environment_properties: std
+    ::option
+    ::Option<terrars::DynamicBlock<Kinesisanalyticsv2ApplicationApplicationConfigurationElEnvironmentPropertiesEl>>,
+    flink_application_configuration: std
+    ::option
+    ::Option<
+        terrars::DynamicBlock<Kinesisanalyticsv2ApplicationApplicationConfigurationElFlinkApplicationConfigurationEl>,
     >,
-    flink_application_configuration: Option<
-        DynamicBlock<Kinesisanalyticsv2ApplicationApplicationConfigurationElFlinkApplicationConfigurationEl>,
+    run_configuration: std
+    ::option
+    ::Option<terrars::DynamicBlock<Kinesisanalyticsv2ApplicationApplicationConfigurationElRunConfigurationEl>>,
+    sql_application_configuration: std
+    ::option
+    ::Option<
+        terrars::DynamicBlock<Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationEl>,
     >,
-    run_configuration: Option<
-        DynamicBlock<Kinesisanalyticsv2ApplicationApplicationConfigurationElRunConfigurationEl>,
-    >,
-    sql_application_configuration: Option<
-        DynamicBlock<Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationEl>,
-    >,
-    vpc_configuration: Option<
-        DynamicBlock<Kinesisanalyticsv2ApplicationApplicationConfigurationElVpcConfigurationEl>,
-    >,
+    vpc_configuration: std
+    ::option
+    ::Option<terrars::DynamicBlock<Kinesisanalyticsv2ApplicationApplicationConfigurationElVpcConfigurationEl>>,
 }
 
 #[derive(Serialize)]
 pub struct Kinesisanalyticsv2ApplicationApplicationConfigurationEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    application_code_configuration: Option<
-        Vec<Kinesisanalyticsv2ApplicationApplicationConfigurationElApplicationCodeConfigurationEl>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    application_code_configuration: std
+    ::option
+    ::Option<std::vec::Vec<Kinesisanalyticsv2ApplicationApplicationConfigurationElApplicationCodeConfigurationEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    application_snapshot_configuration: std
+    ::option
+    ::Option<
+        std::vec::Vec<Kinesisanalyticsv2ApplicationApplicationConfigurationElApplicationSnapshotConfigurationEl>,
     >,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    application_snapshot_configuration: Option<
-        Vec<Kinesisanalyticsv2ApplicationApplicationConfigurationElApplicationSnapshotConfigurationEl>,
-    >,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    environment_properties: Option<Vec<Kinesisanalyticsv2ApplicationApplicationConfigurationElEnvironmentPropertiesEl>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    flink_application_configuration: Option<
-        Vec<Kinesisanalyticsv2ApplicationApplicationConfigurationElFlinkApplicationConfigurationEl>,
-    >,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    run_configuration: Option<Vec<Kinesisanalyticsv2ApplicationApplicationConfigurationElRunConfigurationEl>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    sql_application_configuration: Option<
-        Vec<Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationEl>,
-    >,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    vpc_configuration: Option<Vec<Kinesisanalyticsv2ApplicationApplicationConfigurationElVpcConfigurationEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    environment_properties: std
+    ::option
+    ::Option<std::vec::Vec<Kinesisanalyticsv2ApplicationApplicationConfigurationElEnvironmentPropertiesEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    flink_application_configuration: std
+    ::option
+    ::Option<std::vec::Vec<Kinesisanalyticsv2ApplicationApplicationConfigurationElFlinkApplicationConfigurationEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    run_configuration: std
+    ::option
+    ::Option<std::vec::Vec<Kinesisanalyticsv2ApplicationApplicationConfigurationElRunConfigurationEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    sql_application_configuration: std
+    ::option
+    ::Option<std::vec::Vec<Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    vpc_configuration: std
+    ::option
+    ::Option<std::vec::Vec<Kinesisanalyticsv2ApplicationApplicationConfigurationElVpcConfigurationEl>>,
     dynamic: Kinesisanalyticsv2ApplicationApplicationConfigurationElDynamic,
 }
 
 impl Kinesisanalyticsv2ApplicationApplicationConfigurationEl {
-    #[doc= "Set the field `application_code_configuration`.\n"]
+    #[doc = "Set the field `application_code_configuration`.\n"]
     pub fn set_application_code_configuration(
         mut self,
         v:
             impl
 
-                    Into<
-                        BlockAssignable<
+                    std
+                    ::convert
+                    ::Into<
+                        terrars
+                        ::BlockAssignable<
                             Kinesisanalyticsv2ApplicationApplicationConfigurationElApplicationCodeConfigurationEl,
                         >,
                     >,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.application_code_configuration = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.application_code_configuration = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.application_code_configuration = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.application_code_configuration = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Set the field `application_snapshot_configuration`.\n"]
+    #[doc = "Set the field `application_snapshot_configuration`.\n"]
     pub fn set_application_snapshot_configuration(
         mut self,
         v:
             impl
 
-                    Into<
-                        BlockAssignable<
+                    std
+                    ::convert
+                    ::Into<
+                        terrars
+                        ::BlockAssignable<
                             Kinesisanalyticsv2ApplicationApplicationConfigurationElApplicationSnapshotConfigurationEl,
                         >,
                     >,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.application_snapshot_configuration = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.application_snapshot_configuration = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.application_snapshot_configuration = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.application_snapshot_configuration = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Set the field `environment_properties`.\n"]
+    #[doc = "Set the field `environment_properties`.\n"]
     pub fn set_environment_properties(
         mut self,
         v:
             impl
 
-                    Into<
-                        BlockAssignable<
+                    std
+                    ::convert
+                    ::Into<
+                        terrars
+                        ::BlockAssignable<
                             Kinesisanalyticsv2ApplicationApplicationConfigurationElEnvironmentPropertiesEl,
                         >,
                     >,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.environment_properties = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.environment_properties = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.environment_properties = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.environment_properties = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Set the field `flink_application_configuration`.\n"]
+    #[doc = "Set the field `flink_application_configuration`.\n"]
     pub fn set_flink_application_configuration(
         mut self,
         v:
             impl
 
-                    Into<
-                        BlockAssignable<
+                    std
+                    ::convert
+                    ::Into<
+                        terrars
+                        ::BlockAssignable<
                             Kinesisanalyticsv2ApplicationApplicationConfigurationElFlinkApplicationConfigurationEl,
                         >,
                     >,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.flink_application_configuration = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.flink_application_configuration = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.flink_application_configuration = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.flink_application_configuration = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Set the field `run_configuration`.\n"]
+    #[doc = "Set the field `run_configuration`.\n"]
     pub fn set_run_configuration(
         mut self,
-        v: impl Into<BlockAssignable<Kinesisanalyticsv2ApplicationApplicationConfigurationElRunConfigurationEl>>,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<
+                        terrars
+                        ::BlockAssignable<Kinesisanalyticsv2ApplicationApplicationConfigurationElRunConfigurationEl>,
+                    >,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.run_configuration = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.run_configuration = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.run_configuration = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.run_configuration = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Set the field `sql_application_configuration`.\n"]
+    #[doc = "Set the field `sql_application_configuration`.\n"]
     pub fn set_sql_application_configuration(
         mut self,
         v:
             impl
 
-                    Into<
-                        BlockAssignable<
+                    std
+                    ::convert
+                    ::Into<
+                        terrars
+                        ::BlockAssignable<
                             Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationEl,
                         >,
                     >,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.sql_application_configuration = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.sql_application_configuration = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.sql_application_configuration = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.sql_application_configuration = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Set the field `vpc_configuration`.\n"]
+    #[doc = "Set the field `vpc_configuration`.\n"]
     pub fn set_vpc_configuration(
         mut self,
-        v: impl Into<BlockAssignable<Kinesisanalyticsv2ApplicationApplicationConfigurationElVpcConfigurationEl>>,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<
+                        terrars
+                        ::BlockAssignable<Kinesisanalyticsv2ApplicationApplicationConfigurationElVpcConfigurationEl>,
+                    >,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.vpc_configuration = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.vpc_configuration = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.vpc_configuration = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.vpc_configuration = std::option::Option::Some(d);
             },
         }
         self
     }
 }
 
-impl ToListMappable for Kinesisanalyticsv2ApplicationApplicationConfigurationEl {
-    type O = BlockAssignable<Kinesisanalyticsv2ApplicationApplicationConfigurationEl>;
+impl terrars::ToListMappable for Kinesisanalyticsv2ApplicationApplicationConfigurationEl {
+    type O = terrars::BlockAssignable<Kinesisanalyticsv2ApplicationApplicationConfigurationEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -5102,18 +5707,21 @@ impl BuildKinesisanalyticsv2ApplicationApplicationConfigurationEl {
             run_configuration: core::default::Default::default(),
             sql_application_configuration: core::default::Default::default(),
             vpc_configuration: core::default::Default::default(),
-            dynamic: Default::default(),
+            dynamic: core::default::Default::default(),
         }
     }
 }
 
 pub struct Kinesisanalyticsv2ApplicationApplicationConfigurationElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for Kinesisanalyticsv2ApplicationApplicationConfigurationElRef {
-    fn new(shared: StackShared, base: String) -> Kinesisanalyticsv2ApplicationApplicationConfigurationElRef {
+impl terrars::Ref for Kinesisanalyticsv2ApplicationApplicationConfigurationElRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> Kinesisanalyticsv2ApplicationApplicationConfigurationElRef {
         Kinesisanalyticsv2ApplicationApplicationConfigurationElRef {
             shared: shared,
             base: base.to_string(),
@@ -5122,72 +5730,73 @@ impl Ref for Kinesisanalyticsv2ApplicationApplicationConfigurationElRef {
 }
 
 impl Kinesisanalyticsv2ApplicationApplicationConfigurationElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `application_code_configuration` after provisioning.\n"]
+    #[doc = "Get a reference to the value of field `application_code_configuration` after provisioning.\n"]
     pub fn application_code_configuration(
         &self,
-    ) -> ListRef<Kinesisanalyticsv2ApplicationApplicationConfigurationElApplicationCodeConfigurationElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.application_code_configuration", self.base))
+    ) -> terrars::ListRef<Kinesisanalyticsv2ApplicationApplicationConfigurationElApplicationCodeConfigurationElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.application_code_configuration", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `application_snapshot_configuration` after provisioning.\n"]
+    #[doc = "Get a reference to the value of field `application_snapshot_configuration` after provisioning.\n"]
     pub fn application_snapshot_configuration(
         &self,
-    ) -> ListRef<Kinesisanalyticsv2ApplicationApplicationConfigurationElApplicationSnapshotConfigurationElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.application_snapshot_configuration", self.base))
+    ) -> terrars
+    ::ListRef<Kinesisanalyticsv2ApplicationApplicationConfigurationElApplicationSnapshotConfigurationElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.application_snapshot_configuration", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `environment_properties` after provisioning.\n"]
+    #[doc = "Get a reference to the value of field `environment_properties` after provisioning.\n"]
     pub fn environment_properties(
         &self,
-    ) -> ListRef<Kinesisanalyticsv2ApplicationApplicationConfigurationElEnvironmentPropertiesElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.environment_properties", self.base))
+    ) -> terrars::ListRef<Kinesisanalyticsv2ApplicationApplicationConfigurationElEnvironmentPropertiesElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.environment_properties", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `flink_application_configuration` after provisioning.\n"]
+    #[doc = "Get a reference to the value of field `flink_application_configuration` after provisioning.\n"]
     pub fn flink_application_configuration(
         &self,
-    ) -> ListRef<Kinesisanalyticsv2ApplicationApplicationConfigurationElFlinkApplicationConfigurationElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.flink_application_configuration", self.base))
+    ) -> terrars::ListRef<Kinesisanalyticsv2ApplicationApplicationConfigurationElFlinkApplicationConfigurationElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.flink_application_configuration", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `run_configuration` after provisioning.\n"]
+    #[doc = "Get a reference to the value of field `run_configuration` after provisioning.\n"]
     pub fn run_configuration(
         &self,
-    ) -> ListRef<Kinesisanalyticsv2ApplicationApplicationConfigurationElRunConfigurationElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.run_configuration", self.base))
+    ) -> terrars::ListRef<Kinesisanalyticsv2ApplicationApplicationConfigurationElRunConfigurationElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.run_configuration", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `sql_application_configuration` after provisioning.\n"]
+    #[doc = "Get a reference to the value of field `sql_application_configuration` after provisioning.\n"]
     pub fn sql_application_configuration(
         &self,
-    ) -> ListRef<Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.sql_application_configuration", self.base))
+    ) -> terrars::ListRef<Kinesisanalyticsv2ApplicationApplicationConfigurationElSqlApplicationConfigurationElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.sql_application_configuration", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `vpc_configuration` after provisioning.\n"]
+    #[doc = "Get a reference to the value of field `vpc_configuration` after provisioning.\n"]
     pub fn vpc_configuration(
         &self,
-    ) -> ListRef<Kinesisanalyticsv2ApplicationApplicationConfigurationElVpcConfigurationElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.vpc_configuration", self.base))
+    ) -> terrars::ListRef<Kinesisanalyticsv2ApplicationApplicationConfigurationElVpcConfigurationElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.vpc_configuration", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct Kinesisanalyticsv2ApplicationCloudwatchLoggingOptionsEl {
-    log_stream_arn: PrimField<String>,
+    log_stream_arn: terrars::PrimField<std::string::String>,
 }
 
 impl Kinesisanalyticsv2ApplicationCloudwatchLoggingOptionsEl { }
 
-impl ToListMappable for Kinesisanalyticsv2ApplicationCloudwatchLoggingOptionsEl {
-    type O = BlockAssignable<Kinesisanalyticsv2ApplicationCloudwatchLoggingOptionsEl>;
+impl terrars::ToListMappable for Kinesisanalyticsv2ApplicationCloudwatchLoggingOptionsEl {
+    type O = terrars::BlockAssignable<Kinesisanalyticsv2ApplicationCloudwatchLoggingOptionsEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -5196,8 +5805,8 @@ impl ToListMappable for Kinesisanalyticsv2ApplicationCloudwatchLoggingOptionsEl 
 }
 
 pub struct BuildKinesisanalyticsv2ApplicationCloudwatchLoggingOptionsEl {
-    #[doc= ""]
-    pub log_stream_arn: PrimField<String>,
+    #[doc = ""]
+    pub log_stream_arn: terrars::PrimField<std::string::String>,
 }
 
 impl BuildKinesisanalyticsv2ApplicationCloudwatchLoggingOptionsEl {
@@ -5207,12 +5816,15 @@ impl BuildKinesisanalyticsv2ApplicationCloudwatchLoggingOptionsEl {
 }
 
 pub struct Kinesisanalyticsv2ApplicationCloudwatchLoggingOptionsElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for Kinesisanalyticsv2ApplicationCloudwatchLoggingOptionsElRef {
-    fn new(shared: StackShared, base: String) -> Kinesisanalyticsv2ApplicationCloudwatchLoggingOptionsElRef {
+impl terrars::Ref for Kinesisanalyticsv2ApplicationCloudwatchLoggingOptionsElRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> Kinesisanalyticsv2ApplicationCloudwatchLoggingOptionsElRef {
         Kinesisanalyticsv2ApplicationCloudwatchLoggingOptionsElRef {
             shared: shared,
             base: base.to_string(),
@@ -5221,56 +5833,56 @@ impl Ref for Kinesisanalyticsv2ApplicationCloudwatchLoggingOptionsElRef {
 }
 
 impl Kinesisanalyticsv2ApplicationCloudwatchLoggingOptionsElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `cloudwatch_logging_option_id` after provisioning.\n"]
-    pub fn cloudwatch_logging_option_id(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.cloudwatch_logging_option_id", self.base))
+    #[doc = "Get a reference to the value of field `cloudwatch_logging_option_id` after provisioning.\n"]
+    pub fn cloudwatch_logging_option_id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.cloudwatch_logging_option_id", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `log_stream_arn` after provisioning.\n"]
-    pub fn log_stream_arn(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.log_stream_arn", self.base))
+    #[doc = "Get a reference to the value of field `log_stream_arn` after provisioning.\n"]
+    pub fn log_stream_arn(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.log_stream_arn", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct Kinesisanalyticsv2ApplicationTimeoutsEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    create: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    delete: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    update: Option<PrimField<String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    create: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    delete: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    update: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
 impl Kinesisanalyticsv2ApplicationTimeoutsEl {
-    #[doc= "Set the field `create`.\n"]
-    pub fn set_create(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.create = Some(v.into());
+    #[doc = "Set the field `create`.\n"]
+    pub fn set_create(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.create = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `delete`.\n"]
-    pub fn set_delete(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.delete = Some(v.into());
+    #[doc = "Set the field `delete`.\n"]
+    pub fn set_delete(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.delete = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `update`.\n"]
-    pub fn set_update(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.update = Some(v.into());
+    #[doc = "Set the field `update`.\n"]
+    pub fn set_update(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.update = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl ToListMappable for Kinesisanalyticsv2ApplicationTimeoutsEl {
-    type O = BlockAssignable<Kinesisanalyticsv2ApplicationTimeoutsEl>;
+impl terrars::ToListMappable for Kinesisanalyticsv2ApplicationTimeoutsEl {
+    type O = terrars::BlockAssignable<Kinesisanalyticsv2ApplicationTimeoutsEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -5291,12 +5903,12 @@ impl BuildKinesisanalyticsv2ApplicationTimeoutsEl {
 }
 
 pub struct Kinesisanalyticsv2ApplicationTimeoutsElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for Kinesisanalyticsv2ApplicationTimeoutsElRef {
-    fn new(shared: StackShared, base: String) -> Kinesisanalyticsv2ApplicationTimeoutsElRef {
+impl terrars::Ref for Kinesisanalyticsv2ApplicationTimeoutsElRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> Kinesisanalyticsv2ApplicationTimeoutsElRef {
         Kinesisanalyticsv2ApplicationTimeoutsElRef {
             shared: shared,
             base: base.to_string(),
@@ -5305,28 +5917,32 @@ impl Ref for Kinesisanalyticsv2ApplicationTimeoutsElRef {
 }
 
 impl Kinesisanalyticsv2ApplicationTimeoutsElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `create` after provisioning.\n"]
-    pub fn create(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.create", self.base))
+    #[doc = "Get a reference to the value of field `create` after provisioning.\n"]
+    pub fn create(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.create", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `delete` after provisioning.\n"]
-    pub fn delete(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.delete", self.base))
+    #[doc = "Get a reference to the value of field `delete` after provisioning.\n"]
+    pub fn delete(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.delete", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `update` after provisioning.\n"]
-    pub fn update(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.update", self.base))
+    #[doc = "Get a reference to the value of field `update` after provisioning.\n"]
+    pub fn update(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.update", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
 struct Kinesisanalyticsv2ApplicationDynamic {
-    application_configuration: Option<DynamicBlock<Kinesisanalyticsv2ApplicationApplicationConfigurationEl>>,
-    cloudwatch_logging_options: Option<DynamicBlock<Kinesisanalyticsv2ApplicationCloudwatchLoggingOptionsEl>>,
+    application_configuration: std
+    ::option
+    ::Option<terrars::DynamicBlock<Kinesisanalyticsv2ApplicationApplicationConfigurationEl>>,
+    cloudwatch_logging_options: std
+    ::option
+    ::Option<terrars::DynamicBlock<Kinesisanalyticsv2ApplicationCloudwatchLoggingOptionsEl>>,
 }

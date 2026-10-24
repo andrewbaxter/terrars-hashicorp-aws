@@ -1,186 +1,217 @@
 use serde::Serialize;
-use std::cell::RefCell;
-use std::rc::Rc;
-use terrars::*;
+use terrars::{
+    Referable as _,
+    Datasource_ as _,
+    Ref as _,
+};
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
 struct DataKeyPairData {
-    #[serde(skip_serializing_if = "Vec::is_empty")]
-    depends_on: Vec<String>,
-    #[serde(skip_serializing_if = "SerdeSkipDefault::is_default")]
-    provider: Option<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    for_each: Option<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    id: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    include_public_key: Option<PrimField<bool>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    key_name: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    key_pair_id: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    tags: Option<RecField<PrimField<String>>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    filter: Option<Vec<DataKeyPairFilterEl>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    timeouts: Option<DataKeyPairTimeoutsEl>,
+    #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
+    depends_on: std::vec::Vec<std::string::String>,
+    #[serde(skip_serializing_if = "terrars::SerdeSkipDefault::is_default")]
+    provider: std::option::Option<std::string::String>,
+    #[serde(skip_serializing_if = "terrars::SerdeSkipDefault::is_default")]
+    lifecycle: terrars::DatasourceLifecycle,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    for_each: std::option::Option<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    id: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    include_public_key: std::option::Option<terrars::PrimField<bool>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    key_name: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    key_pair_id: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    tags: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    filter: std::option::Option<std::vec::Vec<DataKeyPairFilterEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    timeouts: std::option::Option<DataKeyPairTimeoutsEl>,
     dynamic: DataKeyPairDynamic,
 }
 
 struct DataKeyPair_ {
-    shared: StackShared,
-    tf_id: String,
-    data: RefCell<DataKeyPairData>,
+    shared: terrars::StackShared,
+    tf_id: std::string::String,
+    data: std::cell::RefCell<DataKeyPairData>,
 }
 
 #[derive(Clone)]
-pub struct DataKeyPair(Rc<DataKeyPair_>);
+pub struct DataKeyPair(std::rc::Rc<DataKeyPair_>);
 
 impl DataKeyPair {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.0.shared
     }
 
-    pub fn depends_on(self, dep: &impl Referable) -> Self {
+    pub fn depends_on(self, dep: &impl terrars::Referable) -> Self {
         self.0.data.borrow_mut().depends_on.push(dep.extract_ref());
         self
     }
 
     pub fn set_provider(&self, provider: &ProviderAws) -> &Self {
-        self.0.data.borrow_mut().provider = Some(provider.provider_ref());
+        self.0.data.borrow_mut().provider = std::option::Option::Some(provider.provider_ref());
         self
     }
 
-    #[doc= "Set the field `id`.\n"]
-    pub fn set_id(self, v: impl Into<PrimField<String>>) -> Self {
-        self.0.data.borrow_mut().id = Some(v.into());
+    pub fn add_lifecycle_precondition(
+        self,
+        condition: impl std::convert::Into<terrars::PrimField<bool>>,
+        error_message: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.0.data.borrow_mut().lifecycle.precondition.push(terrars::LifecycleCondition {
+            condition: condition.into(),
+            error_message: error_message.into(),
+        });
         self
     }
 
-    #[doc= "Set the field `include_public_key`.\n"]
-    pub fn set_include_public_key(self, v: impl Into<PrimField<bool>>) -> Self {
-        self.0.data.borrow_mut().include_public_key = Some(v.into());
+    pub fn add_lifecycle_postcondition(
+        self,
+        condition: impl std::convert::Into<terrars::PrimField<bool>>,
+        error_message: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.0.data.borrow_mut().lifecycle.postcondition.push(terrars::LifecycleCondition {
+            condition: condition.into(),
+            error_message: error_message.into(),
+        });
         self
     }
 
-    #[doc= "Set the field `key_name`.\n"]
-    pub fn set_key_name(self, v: impl Into<PrimField<String>>) -> Self {
-        self.0.data.borrow_mut().key_name = Some(v.into());
+    #[doc = "Set the field `id`.\n"]
+    pub fn set_id(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().id = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `key_pair_id`.\n"]
-    pub fn set_key_pair_id(self, v: impl Into<PrimField<String>>) -> Self {
-        self.0.data.borrow_mut().key_pair_id = Some(v.into());
+    #[doc = "Set the field `include_public_key`.\n"]
+    pub fn set_include_public_key(self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
+        self.0.data.borrow_mut().include_public_key = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `tags`.\n"]
-    pub fn set_tags(self, v: impl Into<RecField<PrimField<String>>>) -> Self {
-        self.0.data.borrow_mut().tags = Some(v.into());
+    #[doc = "Set the field `key_name`.\n"]
+    pub fn set_key_name(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().key_name = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `filter`.\n"]
-    pub fn set_filter(self, v: impl Into<BlockAssignable<DataKeyPairFilterEl>>) -> Self {
+    #[doc = "Set the field `key_pair_id`.\n"]
+    pub fn set_key_pair_id(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().key_pair_id = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `tags`.\n"]
+    pub fn set_tags(
+        self,
+        v: impl std::convert::Into<terrars::RecField<terrars::PrimField<std::string::String>>>,
+    ) -> Self {
+        self.0.data.borrow_mut().tags = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `filter`.\n"]
+    pub fn set_filter(self, v: impl std::convert::Into<terrars::BlockAssignable<DataKeyPairFilterEl>>) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.0.data.borrow_mut().filter = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.0.data.borrow_mut().filter = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.0.data.borrow_mut().dynamic.filter = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.0.data.borrow_mut().dynamic.filter = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Set the field `timeouts`.\n"]
-    pub fn set_timeouts(self, v: impl Into<DataKeyPairTimeoutsEl>) -> Self {
-        self.0.data.borrow_mut().timeouts = Some(v.into());
+    #[doc = "Set the field `timeouts`.\n"]
+    pub fn set_timeouts(self, v: impl std::convert::Into<DataKeyPairTimeoutsEl>) -> Self {
+        self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Get a reference to the value of field `arn` after provisioning.\n"]
-    pub fn arn(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.arn", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `arn` after provisioning.\n"]
+    pub fn arn(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.arn", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `create_time` after provisioning.\n"]
-    pub fn create_time(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.create_time", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `create_time` after provisioning.\n"]
+    pub fn create_time(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.create_time", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `fingerprint` after provisioning.\n"]
-    pub fn fingerprint(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.fingerprint", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `fingerprint` after provisioning.\n"]
+    pub fn fingerprint(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.fingerprint", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `id` after provisioning.\n"]
-    pub fn id(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
+    pub fn id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `include_public_key` after provisioning.\n"]
-    pub fn include_public_key(&self) -> PrimExpr<bool> {
-        PrimExpr::new(self.shared().clone(), format!("{}.include_public_key", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `include_public_key` after provisioning.\n"]
+    pub fn include_public_key(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.include_public_key", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `key_name` after provisioning.\n"]
-    pub fn key_name(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.key_name", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `key_name` after provisioning.\n"]
+    pub fn key_name(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.key_name", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `key_pair_id` after provisioning.\n"]
-    pub fn key_pair_id(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.key_pair_id", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `key_pair_id` after provisioning.\n"]
+    pub fn key_pair_id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.key_pair_id", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `key_type` after provisioning.\n"]
-    pub fn key_type(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.key_type", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `key_type` after provisioning.\n"]
+    pub fn key_type(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.key_type", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `public_key` after provisioning.\n"]
-    pub fn public_key(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.public_key", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `public_key` after provisioning.\n"]
+    pub fn public_key(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.public_key", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `tags` after provisioning.\n"]
-    pub fn tags(&self) -> RecRef<PrimExpr<String>> {
-        RecRef::new(self.shared().clone(), format!("{}.tags", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `tags` after provisioning.\n"]
+    pub fn tags(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
+        terrars::RecRef::new(self.shared().clone(), format!("{}.tags", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `timeouts` after provisioning.\n"]
+    #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
     pub fn timeouts(&self) -> DataKeyPairTimeoutsElRef {
         DataKeyPairTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
-impl Referable for DataKeyPair {
-    fn extract_ref(&self) -> String {
+impl terrars::Referable for DataKeyPair {
+    fn extract_ref(&self) -> std::string::String {
         format!("data.{}.{}", self.0.extract_datasource_type(), self.0.extract_tf_id())
     }
 }
 
-impl Datasource for DataKeyPair { }
+impl terrars::Datasource for DataKeyPair { }
 
-impl ToListMappable for DataKeyPair {
-    type O = ListRef<DataKeyPairRef>;
+impl terrars::ToListMappable for DataKeyPair {
+    type O = terrars::ListRef<DataKeyPairRef>;
 
-    fn do_map(self, base: String) -> Self::O {
-        self.0.data.borrow_mut().for_each = Some(format!("${{{}}}", base));
-        ListRef::new(self.0.shared.clone(), self.extract_ref())
+    fn do_map(self, base: std::string::String) -> Self::O {
+        self.0.data.borrow_mut().for_each = std::option::Option::Some(format!("${{{}}}", base));
+        terrars::ListRef::new(self.0.shared.clone(), self.extract_ref())
     }
 }
 
-impl Datasource_ for DataKeyPair_ {
-    fn extract_datasource_type(&self) -> String {
+impl terrars::Datasource_ for DataKeyPair_ {
+    fn extract_datasource_type(&self) -> std::string::String {
         "aws_key_pair".into()
     }
 
-    fn extract_tf_id(&self) -> String {
+    fn extract_tf_id(&self) -> std::string::String {
         self.tf_id.clone()
     }
 
@@ -190,18 +221,19 @@ impl Datasource_ for DataKeyPair_ {
 }
 
 pub struct BuildDataKeyPair {
-    pub tf_id: String,
+    pub tf_id: std::string::String,
 }
 
 impl BuildDataKeyPair {
-    pub fn build(self, stack: &mut Stack) -> DataKeyPair {
-        let out = DataKeyPair(Rc::new(DataKeyPair_ {
+    pub fn build(self, stack: &mut terrars::Stack) -> DataKeyPair {
+        let out = DataKeyPair(std::rc::Rc::new(DataKeyPair_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: RefCell::new(DataKeyPairData {
+            data: std::cell::RefCell::new(DataKeyPairData {
                 depends_on: core::default::Default::default(),
-                provider: None,
-                for_each: None,
+                provider: std::option::Option::None,
+                lifecycle: core::default::Default::default(),
+                for_each: std::option::Option::None,
                 id: core::default::Default::default(),
                 include_public_key: core::default::Default::default(),
                 key_name: core::default::Default::default(),
@@ -209,7 +241,7 @@ impl BuildDataKeyPair {
                 tags: core::default::Default::default(),
                 filter: core::default::Default::default(),
                 timeouts: core::default::Default::default(),
-                dynamic: Default::default(),
+                dynamic: core::default::Default::default(),
             }),
         }));
         stack.add_datasource(out.0.clone());
@@ -218,12 +250,12 @@ impl BuildDataKeyPair {
 }
 
 pub struct DataKeyPairRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for DataKeyPairRef {
-    fn new(shared: StackShared, base: String) -> Self {
+impl terrars::Ref for DataKeyPairRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> Self {
         Self {
             shared: shared,
             base: base,
@@ -232,65 +264,65 @@ impl Ref for DataKeyPairRef {
 }
 
 impl DataKeyPairRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    fn extract_ref(&self) -> String {
+    fn extract_ref(&self) -> std::string::String {
         self.base.clone()
     }
 
-    #[doc= "Get a reference to the value of field `arn` after provisioning.\n"]
-    pub fn arn(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.arn", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `arn` after provisioning.\n"]
+    pub fn arn(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.arn", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `create_time` after provisioning.\n"]
-    pub fn create_time(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.create_time", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `create_time` after provisioning.\n"]
+    pub fn create_time(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.create_time", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `fingerprint` after provisioning.\n"]
-    pub fn fingerprint(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.fingerprint", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `fingerprint` after provisioning.\n"]
+    pub fn fingerprint(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.fingerprint", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `id` after provisioning.\n"]
-    pub fn id(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
+    pub fn id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `include_public_key` after provisioning.\n"]
-    pub fn include_public_key(&self) -> PrimExpr<bool> {
-        PrimExpr::new(self.shared().clone(), format!("{}.include_public_key", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `include_public_key` after provisioning.\n"]
+    pub fn include_public_key(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.include_public_key", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `key_name` after provisioning.\n"]
-    pub fn key_name(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.key_name", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `key_name` after provisioning.\n"]
+    pub fn key_name(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.key_name", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `key_pair_id` after provisioning.\n"]
-    pub fn key_pair_id(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.key_pair_id", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `key_pair_id` after provisioning.\n"]
+    pub fn key_pair_id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.key_pair_id", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `key_type` after provisioning.\n"]
-    pub fn key_type(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.key_type", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `key_type` after provisioning.\n"]
+    pub fn key_type(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.key_type", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `public_key` after provisioning.\n"]
-    pub fn public_key(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.public_key", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `public_key` after provisioning.\n"]
+    pub fn public_key(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.public_key", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `tags` after provisioning.\n"]
-    pub fn tags(&self) -> RecRef<PrimExpr<String>> {
-        RecRef::new(self.shared().clone(), format!("{}.tags", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `tags` after provisioning.\n"]
+    pub fn tags(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
+        terrars::RecRef::new(self.shared().clone(), format!("{}.tags", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `timeouts` after provisioning.\n"]
+    #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
     pub fn timeouts(&self) -> DataKeyPairTimeoutsElRef {
         DataKeyPairTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
@@ -298,17 +330,17 @@ impl DataKeyPairRef {
 
 #[derive(Serialize)]
 pub struct DataKeyPairFilterEl {
-    name: PrimField<String>,
-    values: ListField<PrimField<String>>,
+    name: terrars::PrimField<std::string::String>,
+    values: terrars::ListField<terrars::PrimField<std::string::String>>,
 }
 
 impl DataKeyPairFilterEl { }
 
-impl ToListMappable for DataKeyPairFilterEl {
-    type O = BlockAssignable<DataKeyPairFilterEl>;
+impl terrars::ToListMappable for DataKeyPairFilterEl {
+    type O = terrars::BlockAssignable<DataKeyPairFilterEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -317,10 +349,10 @@ impl ToListMappable for DataKeyPairFilterEl {
 }
 
 pub struct BuildDataKeyPairFilterEl {
-    #[doc= ""]
-    pub name: PrimField<String>,
-    #[doc= ""]
-    pub values: ListField<PrimField<String>>,
+    #[doc = ""]
+    pub name: terrars::PrimField<std::string::String>,
+    #[doc = ""]
+    pub values: terrars::ListField<terrars::PrimField<std::string::String>>,
 }
 
 impl BuildDataKeyPairFilterEl {
@@ -333,12 +365,12 @@ impl BuildDataKeyPairFilterEl {
 }
 
 pub struct DataKeyPairFilterElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for DataKeyPairFilterElRef {
-    fn new(shared: StackShared, base: String) -> DataKeyPairFilterElRef {
+impl terrars::Ref for DataKeyPairFilterElRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataKeyPairFilterElRef {
         DataKeyPairFilterElRef {
             shared: shared,
             base: base.to_string(),
@@ -347,40 +379,40 @@ impl Ref for DataKeyPairFilterElRef {
 }
 
 impl DataKeyPairFilterElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `name` after provisioning.\n"]
-    pub fn name(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.name", self.base))
+    #[doc = "Get a reference to the value of field `name` after provisioning.\n"]
+    pub fn name(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `values` after provisioning.\n"]
-    pub fn values(&self) -> ListRef<PrimExpr<String>> {
-        ListRef::new(self.shared().clone(), format!("{}.values", self.base))
+    #[doc = "Get a reference to the value of field `values` after provisioning.\n"]
+    pub fn values(&self) -> terrars::ListRef<terrars::PrimExpr<std::string::String>> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.values", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct DataKeyPairTimeoutsEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    read: Option<PrimField<String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    read: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
 impl DataKeyPairTimeoutsEl {
-    #[doc= "Set the field `read`.\n"]
-    pub fn set_read(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.read = Some(v.into());
+    #[doc = "Set the field `read`.\n"]
+    pub fn set_read(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.read = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl ToListMappable for DataKeyPairTimeoutsEl {
-    type O = BlockAssignable<DataKeyPairTimeoutsEl>;
+impl terrars::ToListMappable for DataKeyPairTimeoutsEl {
+    type O = terrars::BlockAssignable<DataKeyPairTimeoutsEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -397,12 +429,12 @@ impl BuildDataKeyPairTimeoutsEl {
 }
 
 pub struct DataKeyPairTimeoutsElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for DataKeyPairTimeoutsElRef {
-    fn new(shared: StackShared, base: String) -> DataKeyPairTimeoutsElRef {
+impl terrars::Ref for DataKeyPairTimeoutsElRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataKeyPairTimeoutsElRef {
         DataKeyPairTimeoutsElRef {
             shared: shared,
             base: base.to_string(),
@@ -411,17 +443,17 @@ impl Ref for DataKeyPairTimeoutsElRef {
 }
 
 impl DataKeyPairTimeoutsElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `read` after provisioning.\n"]
-    pub fn read(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.read", self.base))
+    #[doc = "Get a reference to the value of field `read` after provisioning.\n"]
+    pub fn read(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.read", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
 struct DataKeyPairDynamic {
-    filter: Option<DynamicBlock<DataKeyPairFilterEl>>,
+    filter: std::option::Option<terrars::DynamicBlock<DataKeyPairFilterEl>>,
 }

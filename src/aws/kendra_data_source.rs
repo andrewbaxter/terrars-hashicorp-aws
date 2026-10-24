@@ -1,67 +1,73 @@
 use serde::Serialize;
-use std::cell::RefCell;
-use std::rc::Rc;
-use terrars::*;
+use terrars::{
+    Referable as _,
+    Resource_ as _,
+    Ref as _,
+};
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
 struct KendraDataSourceData {
-    #[serde(skip_serializing_if = "Vec::is_empty")]
-    depends_on: Vec<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    provider: Option<String>,
-    #[serde(skip_serializing_if = "SerdeSkipDefault::is_default")]
-    lifecycle: ResourceLifecycle,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    for_each: Option<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    description: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    id: Option<PrimField<String>>,
-    index_id: PrimField<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    language_code: Option<PrimField<String>>,
-    name: PrimField<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    role_arn: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    schedule: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    tags: Option<RecField<PrimField<String>>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    tags_all: Option<RecField<PrimField<String>>>,
+    #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
+    depends_on: std::vec::Vec<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    provider: std::option::Option<std::string::String>,
+    #[serde(skip_serializing_if = "terrars::SerdeSkipDefault::is_default")]
+    lifecycle: terrars::ResourceLifecycle,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    for_each: std::option::Option<std::string::String>,
+    #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
+    provisioner: std::vec::Vec<terrars::Provisioner>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    description: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    id: std::option::Option<terrars::PrimField<std::string::String>>,
+    index_id: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    language_code: std::option::Option<terrars::PrimField<std::string::String>>,
+    name: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    role_arn: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    schedule: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    tags: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    tags_all: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     #[serde(rename = "type")]
-    type_: PrimField<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    configuration: Option<Vec<KendraDataSourceConfigurationEl>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    custom_document_enrichment_configuration: Option<Vec<KendraDataSourceCustomDocumentEnrichmentConfigurationEl>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    timeouts: Option<KendraDataSourceTimeoutsEl>,
+    type_: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    configuration: std::option::Option<std::vec::Vec<KendraDataSourceConfigurationEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    custom_document_enrichment_configuration: std
+    ::option
+    ::Option<std::vec::Vec<KendraDataSourceCustomDocumentEnrichmentConfigurationEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    timeouts: std::option::Option<KendraDataSourceTimeoutsEl>,
     dynamic: KendraDataSourceDynamic,
 }
 
 struct KendraDataSource_ {
-    shared: StackShared,
-    tf_id: String,
-    data: RefCell<KendraDataSourceData>,
+    shared: terrars::StackShared,
+    tf_id: std::string::String,
+    data: std::cell::RefCell<KendraDataSourceData>,
 }
 
 #[derive(Clone)]
-pub struct KendraDataSource(Rc<KendraDataSource_>);
+pub struct KendraDataSource(std::rc::Rc<KendraDataSource_>);
 
 impl KendraDataSource {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.0.shared
     }
 
-    pub fn depends_on(self, dep: &impl Referable) -> Self {
+    pub fn depends_on(self, dep: &impl terrars::Referable) -> Self {
         self.0.data.borrow_mut().depends_on.push(dep.extract_ref());
         self
     }
 
     pub fn set_provider(self, provider: &ProviderAws) -> Self {
-        self.0.data.borrow_mut().provider = Some(provider.provider_ref());
+        self.0.data.borrow_mut().provider = std::option::Option::Some(provider.provider_ref());
         self
     }
 
@@ -76,242 +82,290 @@ impl KendraDataSource {
     }
 
     pub fn ignore_changes_to_all(self) -> Self {
-        self.0.data.borrow_mut().lifecycle.ignore_changes = Some(IgnoreChanges::All(IgnoreChangesAll::All));
+        self.0.data.borrow_mut().lifecycle.ignore_changes =
+            std::option::Option::Some(terrars::IgnoreChanges::All(terrars::IgnoreChangesAll::All));
         self
     }
 
-    pub fn ignore_changes_to_attr(self, attr: impl ToString) -> Self {
+    pub fn ignore_changes_to_attr(self, attr: impl std::string::ToString) -> Self {
         {
             let mut d = self.0.data.borrow_mut();
             if match &mut d.lifecycle.ignore_changes {
-                Some(i) => match i {
-                    IgnoreChanges::All(_) => {
+                std::option::Option::Some(i) => match i {
+                    terrars::IgnoreChanges::All(_) => {
                         true
                     },
-                    IgnoreChanges::Refs(r) => {
+                    terrars::IgnoreChanges::Refs(r) => {
                         r.push(attr.to_string());
                         false
                     },
                 },
-                None => true,
+                std::option::Option::None => true,
             } {
-                d.lifecycle.ignore_changes = Some(IgnoreChanges::Refs(vec![attr.to_string()]));
+                d.lifecycle.ignore_changes =
+                    std::option::Option::Some(terrars::IgnoreChanges::Refs(vec![attr.to_string()]));
             }
         }
         self
     }
 
-    pub fn replace_triggered_by_resource(self, r: &impl Resource) -> Self {
+    pub fn replace_triggered_by_resource(self, r: &impl terrars::Resource) -> Self {
         self.0.data.borrow_mut().lifecycle.replace_triggered_by.push(r.extract_ref());
         self
     }
 
-    pub fn replace_triggered_by_attr(self, attr: impl ToString) -> Self {
+    pub fn replace_triggered_by_attr(self, attr: impl std::string::ToString) -> Self {
         self.0.data.borrow_mut().lifecycle.replace_triggered_by.push(attr.to_string());
         self
     }
 
-    #[doc= "Set the field `description`.\n"]
-    pub fn set_description(self, v: impl Into<PrimField<String>>) -> Self {
-        self.0.data.borrow_mut().description = Some(v.into());
+    #[doc = r" Add a provisioner (ex: `local-exec`, `remote-exec`, `file`) to this resource."]
+    #[doc = r" Provisioners run in the order they're added."]
+    pub fn add_provisioner(self, v: impl std::convert::Into<terrars::Provisioner>) -> Self {
+        self.0.data.borrow_mut().provisioner.push(v.into());
         self
     }
 
-    #[doc= "Set the field `id`.\n"]
-    pub fn set_id(self, v: impl Into<PrimField<String>>) -> Self {
-        self.0.data.borrow_mut().id = Some(v.into());
-        self
-    }
-
-    #[doc= "Set the field `language_code`.\n"]
-    pub fn set_language_code(self, v: impl Into<PrimField<String>>) -> Self {
-        self.0.data.borrow_mut().language_code = Some(v.into());
-        self
-    }
-
-    #[doc= "Set the field `role_arn`.\n"]
-    pub fn set_role_arn(self, v: impl Into<PrimField<String>>) -> Self {
-        self.0.data.borrow_mut().role_arn = Some(v.into());
-        self
-    }
-
-    #[doc= "Set the field `schedule`.\n"]
-    pub fn set_schedule(self, v: impl Into<PrimField<String>>) -> Self {
-        self.0.data.borrow_mut().schedule = Some(v.into());
-        self
-    }
-
-    #[doc= "Set the field `tags`.\n"]
-    pub fn set_tags(self, v: impl Into<RecField<PrimField<String>>>) -> Self {
-        self.0.data.borrow_mut().tags = Some(v.into());
-        self
-    }
-
-    #[doc= "Set the field `tags_all`.\n"]
-    pub fn set_tags_all(self, v: impl Into<RecField<PrimField<String>>>) -> Self {
-        self.0.data.borrow_mut().tags_all = Some(v.into());
-        self
-    }
-
-    #[doc= "Set the field `configuration`.\n"]
-    pub fn set_configuration(self, v: impl Into<BlockAssignable<KendraDataSourceConfigurationEl>>) -> Self {
-        match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.0.data.borrow_mut().configuration = Some(v);
-            },
-            BlockAssignable::Dynamic(d) => {
-                self.0.data.borrow_mut().dynamic.configuration = Some(d);
-            },
-        }
-        self
-    }
-
-    #[doc= "Set the field `custom_document_enrichment_configuration`.\n"]
-    pub fn set_custom_document_enrichment_configuration(
+    pub fn add_lifecycle_precondition(
         self,
-        v: impl Into<BlockAssignable<KendraDataSourceCustomDocumentEnrichmentConfigurationEl>>,
+        condition: impl std::convert::Into<terrars::PrimField<bool>>,
+        error_message: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.0.data.borrow_mut().lifecycle.precondition.push(terrars::LifecycleCondition {
+            condition: condition.into(),
+            error_message: error_message.into(),
+        });
+        self
+    }
+
+    pub fn add_lifecycle_postcondition(
+        self,
+        condition: impl std::convert::Into<terrars::PrimField<bool>>,
+        error_message: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.0.data.borrow_mut().lifecycle.postcondition.push(terrars::LifecycleCondition {
+            condition: condition.into(),
+            error_message: error_message.into(),
+        });
+        self
+    }
+
+    #[doc = "Set the field `description`.\n"]
+    pub fn set_description(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().description = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `id`.\n"]
+    pub fn set_id(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().id = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `language_code`.\n"]
+    pub fn set_language_code(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().language_code = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `role_arn`.\n"]
+    pub fn set_role_arn(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().role_arn = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `schedule`.\n"]
+    pub fn set_schedule(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().schedule = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `tags`.\n"]
+    pub fn set_tags(
+        self,
+        v: impl std::convert::Into<terrars::RecField<terrars::PrimField<std::string::String>>>,
+    ) -> Self {
+        self.0.data.borrow_mut().tags = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `tags_all`.\n"]
+    pub fn set_tags_all(
+        self,
+        v: impl std::convert::Into<terrars::RecField<terrars::PrimField<std::string::String>>>,
+    ) -> Self {
+        self.0.data.borrow_mut().tags_all = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `configuration`.\n"]
+    pub fn set_configuration(
+        self,
+        v: impl std::convert::Into<terrars::BlockAssignable<KendraDataSourceConfigurationEl>>,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.0.data.borrow_mut().custom_document_enrichment_configuration = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.0.data.borrow_mut().configuration = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.0.data.borrow_mut().dynamic.custom_document_enrichment_configuration = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.0.data.borrow_mut().dynamic.configuration = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Set the field `timeouts`.\n"]
-    pub fn set_timeouts(self, v: impl Into<KendraDataSourceTimeoutsEl>) -> Self {
-        self.0.data.borrow_mut().timeouts = Some(v.into());
+    #[doc = "Set the field `custom_document_enrichment_configuration`.\n"]
+    pub fn set_custom_document_enrichment_configuration(
+        self,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<terrars::BlockAssignable<KendraDataSourceCustomDocumentEnrichmentConfigurationEl>>,
+    ) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.0.data.borrow_mut().custom_document_enrichment_configuration = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.0.data.borrow_mut().dynamic.custom_document_enrichment_configuration =
+                    std::option::Option::Some(d);
+            },
+        }
         self
     }
 
-    #[doc= "Get a reference to the value of field `arn` after provisioning.\n"]
-    pub fn arn(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.arn", self.extract_ref()))
+    #[doc = "Set the field `timeouts`.\n"]
+    pub fn set_timeouts(self, v: impl std::convert::Into<KendraDataSourceTimeoutsEl>) -> Self {
+        self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
+        self
     }
 
-    #[doc= "Get a reference to the value of field `created_at` after provisioning.\n"]
-    pub fn created_at(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.created_at", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `arn` after provisioning.\n"]
+    pub fn arn(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.arn", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `data_source_id` after provisioning.\n"]
-    pub fn data_source_id(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.data_source_id", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `created_at` after provisioning.\n"]
+    pub fn created_at(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.created_at", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `description` after provisioning.\n"]
-    pub fn description(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.description", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `data_source_id` after provisioning.\n"]
+    pub fn data_source_id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.data_source_id", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `error_message` after provisioning.\n"]
-    pub fn error_message(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.error_message", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `description` after provisioning.\n"]
+    pub fn description(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.description", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `id` after provisioning.\n"]
-    pub fn id(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `error_message` after provisioning.\n"]
+    pub fn error_message(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.error_message", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `index_id` after provisioning.\n"]
-    pub fn index_id(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.index_id", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
+    pub fn id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `language_code` after provisioning.\n"]
-    pub fn language_code(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.language_code", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `index_id` after provisioning.\n"]
+    pub fn index_id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.index_id", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `name` after provisioning.\n"]
-    pub fn name(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `language_code` after provisioning.\n"]
+    pub fn language_code(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.language_code", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `role_arn` after provisioning.\n"]
-    pub fn role_arn(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.role_arn", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `name` after provisioning.\n"]
+    pub fn name(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `schedule` after provisioning.\n"]
-    pub fn schedule(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.schedule", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `role_arn` after provisioning.\n"]
+    pub fn role_arn(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.role_arn", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `status` after provisioning.\n"]
-    pub fn status(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.status", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `schedule` after provisioning.\n"]
+    pub fn schedule(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.schedule", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `tags` after provisioning.\n"]
-    pub fn tags(&self) -> RecRef<PrimExpr<String>> {
-        RecRef::new(self.shared().clone(), format!("{}.tags", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `status` after provisioning.\n"]
+    pub fn status(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.status", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `tags_all` after provisioning.\n"]
-    pub fn tags_all(&self) -> RecRef<PrimExpr<String>> {
-        RecRef::new(self.shared().clone(), format!("{}.tags_all", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `tags` after provisioning.\n"]
+    pub fn tags(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
+        terrars::RecRef::new(self.shared().clone(), format!("{}.tags", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `type_` after provisioning.\n"]
-    pub fn type_(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.type", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `tags_all` after provisioning.\n"]
+    pub fn tags_all(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
+        terrars::RecRef::new(self.shared().clone(), format!("{}.tags_all", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `updated_at` after provisioning.\n"]
-    pub fn updated_at(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.updated_at", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `type_` after provisioning.\n"]
+    pub fn type_(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.type", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `configuration` after provisioning.\n"]
-    pub fn configuration(&self) -> ListRef<KendraDataSourceConfigurationElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.configuration", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `updated_at` after provisioning.\n"]
+    pub fn updated_at(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.updated_at", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `custom_document_enrichment_configuration` after provisioning.\n"]
+    #[doc = "Get a reference to the value of field `configuration` after provisioning.\n"]
+    pub fn configuration(&self) -> terrars::ListRef<KendraDataSourceConfigurationElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.configuration", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `custom_document_enrichment_configuration` after provisioning.\n"]
     pub fn custom_document_enrichment_configuration(
         &self,
-    ) -> ListRef<KendraDataSourceCustomDocumentEnrichmentConfigurationElRef> {
-        ListRef::new(
+    ) -> terrars::ListRef<KendraDataSourceCustomDocumentEnrichmentConfigurationElRef> {
+        terrars::ListRef::new(
             self.shared().clone(),
             format!("{}.custom_document_enrichment_configuration", self.extract_ref()),
         )
     }
 
-    #[doc= "Get a reference to the value of field `timeouts` after provisioning.\n"]
+    #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
     pub fn timeouts(&self) -> KendraDataSourceTimeoutsElRef {
         KendraDataSourceTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
-impl Referable for KendraDataSource {
-    fn extract_ref(&self) -> String {
+impl terrars::Referable for KendraDataSource {
+    fn extract_ref(&self) -> std::string::String {
         format!("{}.{}", self.0.extract_resource_type(), self.0.extract_tf_id())
     }
 }
 
-impl Resource for KendraDataSource { }
+impl terrars::Resource for KendraDataSource { }
 
-impl ToListMappable for KendraDataSource {
-    type O = ListRef<KendraDataSourceRef>;
+impl terrars::ToListMappable for KendraDataSource {
+    type O = terrars::ListRef<KendraDataSourceRef>;
 
-    fn do_map(self, base: String) -> Self::O {
-        self.0.data.borrow_mut().for_each = Some(format!("${{{}}}", base));
-        ListRef::new(self.0.shared.clone(), self.extract_ref())
+    fn do_map(self, base: std::string::String) -> Self::O {
+        self.0.data.borrow_mut().for_each = std::option::Option::Some(format!("${{{}}}", base));
+        terrars::ListRef::new(self.0.shared.clone(), self.extract_ref())
     }
 }
 
-impl Resource_ for KendraDataSource_ {
-    fn extract_resource_type(&self) -> String {
+impl terrars::Resource_ for KendraDataSource_ {
+    fn extract_resource_type(&self) -> std::string::String {
         "aws_kendra_data_source".into()
     }
 
-    fn extract_tf_id(&self) -> String {
+    fn extract_tf_id(&self) -> std::string::String {
         self.tf_id.clone()
     }
 
@@ -321,25 +375,26 @@ impl Resource_ for KendraDataSource_ {
 }
 
 pub struct BuildKendraDataSource {
-    pub tf_id: String,
-    #[doc= ""]
-    pub index_id: PrimField<String>,
-    #[doc= ""]
-    pub name: PrimField<String>,
-    #[doc= ""]
-    pub type_: PrimField<String>,
+    pub tf_id: std::string::String,
+    #[doc = ""]
+    pub index_id: terrars::PrimField<std::string::String>,
+    #[doc = ""]
+    pub name: terrars::PrimField<std::string::String>,
+    #[doc = ""]
+    pub type_: terrars::PrimField<std::string::String>,
 }
 
 impl BuildKendraDataSource {
-    pub fn build(self, stack: &mut Stack) -> KendraDataSource {
-        let out = KendraDataSource(Rc::new(KendraDataSource_ {
+    pub fn build(self, stack: &mut terrars::Stack) -> KendraDataSource {
+        let out = KendraDataSource(std::rc::Rc::new(KendraDataSource_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: RefCell::new(KendraDataSourceData {
+            data: std::cell::RefCell::new(KendraDataSourceData {
                 depends_on: core::default::Default::default(),
-                provider: None,
+                provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
-                for_each: None,
+                for_each: std::option::Option::None,
+                provisioner: core::default::Default::default(),
                 description: core::default::Default::default(),
                 id: core::default::Default::default(),
                 index_id: self.index_id,
@@ -353,7 +408,7 @@ impl BuildKendraDataSource {
                 configuration: core::default::Default::default(),
                 custom_document_enrichment_configuration: core::default::Default::default(),
                 timeouts: core::default::Default::default(),
-                dynamic: Default::default(),
+                dynamic: core::default::Default::default(),
             }),
         }));
         stack.add_resource(out.0.clone());
@@ -362,12 +417,12 @@ impl BuildKendraDataSource {
 }
 
 pub struct KendraDataSourceRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for KendraDataSourceRef {
-    fn new(shared: StackShared, base: String) -> Self {
+impl terrars::Ref for KendraDataSourceRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> Self {
         Self {
             shared: shared,
             base: base,
@@ -376,110 +431,110 @@ impl Ref for KendraDataSourceRef {
 }
 
 impl KendraDataSourceRef {
-    fn extract_ref(&self) -> String {
+    fn extract_ref(&self) -> std::string::String {
         self.base.clone()
     }
 
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `arn` after provisioning.\n"]
-    pub fn arn(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.arn", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `arn` after provisioning.\n"]
+    pub fn arn(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.arn", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `created_at` after provisioning.\n"]
-    pub fn created_at(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.created_at", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `created_at` after provisioning.\n"]
+    pub fn created_at(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.created_at", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `data_source_id` after provisioning.\n"]
-    pub fn data_source_id(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.data_source_id", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `data_source_id` after provisioning.\n"]
+    pub fn data_source_id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.data_source_id", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `description` after provisioning.\n"]
-    pub fn description(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.description", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `description` after provisioning.\n"]
+    pub fn description(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.description", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `error_message` after provisioning.\n"]
-    pub fn error_message(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.error_message", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `error_message` after provisioning.\n"]
+    pub fn error_message(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.error_message", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `id` after provisioning.\n"]
-    pub fn id(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
+    pub fn id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `index_id` after provisioning.\n"]
-    pub fn index_id(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.index_id", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `index_id` after provisioning.\n"]
+    pub fn index_id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.index_id", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `language_code` after provisioning.\n"]
-    pub fn language_code(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.language_code", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `language_code` after provisioning.\n"]
+    pub fn language_code(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.language_code", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `name` after provisioning.\n"]
-    pub fn name(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `name` after provisioning.\n"]
+    pub fn name(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `role_arn` after provisioning.\n"]
-    pub fn role_arn(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.role_arn", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `role_arn` after provisioning.\n"]
+    pub fn role_arn(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.role_arn", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `schedule` after provisioning.\n"]
-    pub fn schedule(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.schedule", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `schedule` after provisioning.\n"]
+    pub fn schedule(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.schedule", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `status` after provisioning.\n"]
-    pub fn status(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.status", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `status` after provisioning.\n"]
+    pub fn status(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.status", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `tags` after provisioning.\n"]
-    pub fn tags(&self) -> RecRef<PrimExpr<String>> {
-        RecRef::new(self.shared().clone(), format!("{}.tags", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `tags` after provisioning.\n"]
+    pub fn tags(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
+        terrars::RecRef::new(self.shared().clone(), format!("{}.tags", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `tags_all` after provisioning.\n"]
-    pub fn tags_all(&self) -> RecRef<PrimExpr<String>> {
-        RecRef::new(self.shared().clone(), format!("{}.tags_all", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `tags_all` after provisioning.\n"]
+    pub fn tags_all(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
+        terrars::RecRef::new(self.shared().clone(), format!("{}.tags_all", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `type_` after provisioning.\n"]
-    pub fn type_(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.type", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `type_` after provisioning.\n"]
+    pub fn type_(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.type", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `updated_at` after provisioning.\n"]
-    pub fn updated_at(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.updated_at", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `updated_at` after provisioning.\n"]
+    pub fn updated_at(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.updated_at", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `configuration` after provisioning.\n"]
-    pub fn configuration(&self) -> ListRef<KendraDataSourceConfigurationElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.configuration", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `configuration` after provisioning.\n"]
+    pub fn configuration(&self) -> terrars::ListRef<KendraDataSourceConfigurationElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.configuration", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `custom_document_enrichment_configuration` after provisioning.\n"]
+    #[doc = "Get a reference to the value of field `custom_document_enrichment_configuration` after provisioning.\n"]
     pub fn custom_document_enrichment_configuration(
         &self,
-    ) -> ListRef<KendraDataSourceCustomDocumentEnrichmentConfigurationElRef> {
-        ListRef::new(
+    ) -> terrars::ListRef<KendraDataSourceCustomDocumentEnrichmentConfigurationElRef> {
+        terrars::ListRef::new(
             self.shared().clone(),
             format!("{}.custom_document_enrichment_configuration", self.extract_ref()),
         )
     }
 
-    #[doc= "Get a reference to the value of field `timeouts` after provisioning.\n"]
+    #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
     pub fn timeouts(&self) -> KendraDataSourceTimeoutsElRef {
         KendraDataSourceTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
@@ -487,23 +542,24 @@ impl KendraDataSourceRef {
 
 #[derive(Serialize)]
 pub struct KendraDataSourceConfigurationElS3ConfigurationElAccessControlListConfigurationEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    key_path: Option<PrimField<String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    key_path: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
 impl KendraDataSourceConfigurationElS3ConfigurationElAccessControlListConfigurationEl {
-    #[doc= "Set the field `key_path`.\n"]
-    pub fn set_key_path(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.key_path = Some(v.into());
+    #[doc = "Set the field `key_path`.\n"]
+    pub fn set_key_path(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.key_path = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl ToListMappable for KendraDataSourceConfigurationElS3ConfigurationElAccessControlListConfigurationEl {
-    type O = BlockAssignable<KendraDataSourceConfigurationElS3ConfigurationElAccessControlListConfigurationEl>;
+impl terrars::ToListMappable for KendraDataSourceConfigurationElS3ConfigurationElAccessControlListConfigurationEl {
+    type O =
+        terrars::BlockAssignable<KendraDataSourceConfigurationElS3ConfigurationElAccessControlListConfigurationEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -522,14 +578,14 @@ impl BuildKendraDataSourceConfigurationElS3ConfigurationElAccessControlListConfi
 }
 
 pub struct KendraDataSourceConfigurationElS3ConfigurationElAccessControlListConfigurationElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for KendraDataSourceConfigurationElS3ConfigurationElAccessControlListConfigurationElRef {
+impl terrars::Ref for KendraDataSourceConfigurationElS3ConfigurationElAccessControlListConfigurationElRef {
     fn new(
-        shared: StackShared,
-        base: String,
+        shared: terrars::StackShared,
+        base: std::string::String,
     ) -> KendraDataSourceConfigurationElS3ConfigurationElAccessControlListConfigurationElRef {
         KendraDataSourceConfigurationElS3ConfigurationElAccessControlListConfigurationElRef {
             shared: shared,
@@ -539,35 +595,36 @@ impl Ref for KendraDataSourceConfigurationElS3ConfigurationElAccessControlListCo
 }
 
 impl KendraDataSourceConfigurationElS3ConfigurationElAccessControlListConfigurationElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `key_path` after provisioning.\n"]
-    pub fn key_path(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.key_path", self.base))
+    #[doc = "Get a reference to the value of field `key_path` after provisioning.\n"]
+    pub fn key_path(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.key_path", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct KendraDataSourceConfigurationElS3ConfigurationElDocumentsMetadataConfigurationEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    s3_prefix: Option<PrimField<String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    s3_prefix: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
 impl KendraDataSourceConfigurationElS3ConfigurationElDocumentsMetadataConfigurationEl {
-    #[doc= "Set the field `s3_prefix`.\n"]
-    pub fn set_s3_prefix(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.s3_prefix = Some(v.into());
+    #[doc = "Set the field `s3_prefix`.\n"]
+    pub fn set_s3_prefix(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.s3_prefix = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl ToListMappable for KendraDataSourceConfigurationElS3ConfigurationElDocumentsMetadataConfigurationEl {
-    type O = BlockAssignable<KendraDataSourceConfigurationElS3ConfigurationElDocumentsMetadataConfigurationEl>;
+impl terrars::ToListMappable for KendraDataSourceConfigurationElS3ConfigurationElDocumentsMetadataConfigurationEl {
+    type O =
+        terrars::BlockAssignable<KendraDataSourceConfigurationElS3ConfigurationElDocumentsMetadataConfigurationEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -586,14 +643,14 @@ impl BuildKendraDataSourceConfigurationElS3ConfigurationElDocumentsMetadataConfi
 }
 
 pub struct KendraDataSourceConfigurationElS3ConfigurationElDocumentsMetadataConfigurationElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for KendraDataSourceConfigurationElS3ConfigurationElDocumentsMetadataConfigurationElRef {
+impl terrars::Ref for KendraDataSourceConfigurationElS3ConfigurationElDocumentsMetadataConfigurationElRef {
     fn new(
-        shared: StackShared,
-        base: String,
+        shared: terrars::StackShared,
+        base: std::string::String,
     ) -> KendraDataSourceConfigurationElS3ConfigurationElDocumentsMetadataConfigurationElRef {
         KendraDataSourceConfigurationElS3ConfigurationElDocumentsMetadataConfigurationElRef {
             shared: shared,
@@ -603,117 +660,134 @@ impl Ref for KendraDataSourceConfigurationElS3ConfigurationElDocumentsMetadataCo
 }
 
 impl KendraDataSourceConfigurationElS3ConfigurationElDocumentsMetadataConfigurationElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `s3_prefix` after provisioning.\n"]
-    pub fn s3_prefix(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.s3_prefix", self.base))
+    #[doc = "Get a reference to the value of field `s3_prefix` after provisioning.\n"]
+    pub fn s3_prefix(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.s3_prefix", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
 struct KendraDataSourceConfigurationElS3ConfigurationElDynamic {
-    access_control_list_configuration: Option<
-        DynamicBlock<KendraDataSourceConfigurationElS3ConfigurationElAccessControlListConfigurationEl>,
-    >,
-    documents_metadata_configuration: Option<
-        DynamicBlock<KendraDataSourceConfigurationElS3ConfigurationElDocumentsMetadataConfigurationEl>,
+    access_control_list_configuration: std
+    ::option
+    ::Option<terrars::DynamicBlock<KendraDataSourceConfigurationElS3ConfigurationElAccessControlListConfigurationEl>>,
+    documents_metadata_configuration: std
+    ::option
+    ::Option<
+        terrars::DynamicBlock<KendraDataSourceConfigurationElS3ConfigurationElDocumentsMetadataConfigurationEl>,
     >,
 }
 
 #[derive(Serialize)]
 pub struct KendraDataSourceConfigurationElS3ConfigurationEl {
-    bucket_name: PrimField<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    exclusion_patterns: Option<SetField<PrimField<String>>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    inclusion_patterns: Option<SetField<PrimField<String>>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    inclusion_prefixes: Option<SetField<PrimField<String>>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    access_control_list_configuration: Option<
-        Vec<KendraDataSourceConfigurationElS3ConfigurationElAccessControlListConfigurationEl>,
-    >,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    documents_metadata_configuration: Option<
-        Vec<KendraDataSourceConfigurationElS3ConfigurationElDocumentsMetadataConfigurationEl>,
-    >,
+    bucket_name: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    exclusion_patterns: std::option::Option<terrars::SetField<terrars::PrimField<std::string::String>>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    inclusion_patterns: std::option::Option<terrars::SetField<terrars::PrimField<std::string::String>>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    inclusion_prefixes: std::option::Option<terrars::SetField<terrars::PrimField<std::string::String>>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    access_control_list_configuration: std
+    ::option
+    ::Option<std::vec::Vec<KendraDataSourceConfigurationElS3ConfigurationElAccessControlListConfigurationEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    documents_metadata_configuration: std
+    ::option
+    ::Option<std::vec::Vec<KendraDataSourceConfigurationElS3ConfigurationElDocumentsMetadataConfigurationEl>>,
     dynamic: KendraDataSourceConfigurationElS3ConfigurationElDynamic,
 }
 
 impl KendraDataSourceConfigurationElS3ConfigurationEl {
-    #[doc= "Set the field `exclusion_patterns`.\n"]
-    pub fn set_exclusion_patterns(mut self, v: impl Into<SetField<PrimField<String>>>) -> Self {
-        self.exclusion_patterns = Some(v.into());
+    #[doc = "Set the field `exclusion_patterns`.\n"]
+    pub fn set_exclusion_patterns(
+        mut self,
+        v: impl std::convert::Into<terrars::SetField<terrars::PrimField<std::string::String>>>,
+    ) -> Self {
+        self.exclusion_patterns = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `inclusion_patterns`.\n"]
-    pub fn set_inclusion_patterns(mut self, v: impl Into<SetField<PrimField<String>>>) -> Self {
-        self.inclusion_patterns = Some(v.into());
+    #[doc = "Set the field `inclusion_patterns`.\n"]
+    pub fn set_inclusion_patterns(
+        mut self,
+        v: impl std::convert::Into<terrars::SetField<terrars::PrimField<std::string::String>>>,
+    ) -> Self {
+        self.inclusion_patterns = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `inclusion_prefixes`.\n"]
-    pub fn set_inclusion_prefixes(mut self, v: impl Into<SetField<PrimField<String>>>) -> Self {
-        self.inclusion_prefixes = Some(v.into());
+    #[doc = "Set the field `inclusion_prefixes`.\n"]
+    pub fn set_inclusion_prefixes(
+        mut self,
+        v: impl std::convert::Into<terrars::SetField<terrars::PrimField<std::string::String>>>,
+    ) -> Self {
+        self.inclusion_prefixes = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `access_control_list_configuration`.\n"]
+    #[doc = "Set the field `access_control_list_configuration`.\n"]
     pub fn set_access_control_list_configuration(
         mut self,
         v:
             impl
 
-                    Into<
-                        BlockAssignable<
+                    std
+                    ::convert
+                    ::Into<
+                        terrars
+                        ::BlockAssignable<
                             KendraDataSourceConfigurationElS3ConfigurationElAccessControlListConfigurationEl,
                         >,
                     >,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.access_control_list_configuration = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.access_control_list_configuration = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.access_control_list_configuration = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.access_control_list_configuration = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Set the field `documents_metadata_configuration`.\n"]
+    #[doc = "Set the field `documents_metadata_configuration`.\n"]
     pub fn set_documents_metadata_configuration(
         mut self,
         v:
             impl
 
-                    Into<
-                        BlockAssignable<
+                    std
+                    ::convert
+                    ::Into<
+                        terrars
+                        ::BlockAssignable<
                             KendraDataSourceConfigurationElS3ConfigurationElDocumentsMetadataConfigurationEl,
                         >,
                     >,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.documents_metadata_configuration = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.documents_metadata_configuration = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.documents_metadata_configuration = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.documents_metadata_configuration = std::option::Option::Some(d);
             },
         }
         self
     }
 }
 
-impl ToListMappable for KendraDataSourceConfigurationElS3ConfigurationEl {
-    type O = BlockAssignable<KendraDataSourceConfigurationElS3ConfigurationEl>;
+impl terrars::ToListMappable for KendraDataSourceConfigurationElS3ConfigurationEl {
+    type O = terrars::BlockAssignable<KendraDataSourceConfigurationElS3ConfigurationEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -722,8 +796,8 @@ impl ToListMappable for KendraDataSourceConfigurationElS3ConfigurationEl {
 }
 
 pub struct BuildKendraDataSourceConfigurationElS3ConfigurationEl {
-    #[doc= ""]
-    pub bucket_name: PrimField<String>,
+    #[doc = ""]
+    pub bucket_name: terrars::PrimField<std::string::String>,
 }
 
 impl BuildKendraDataSourceConfigurationElS3ConfigurationEl {
@@ -735,18 +809,21 @@ impl BuildKendraDataSourceConfigurationElS3ConfigurationEl {
             inclusion_prefixes: core::default::Default::default(),
             access_control_list_configuration: core::default::Default::default(),
             documents_metadata_configuration: core::default::Default::default(),
-            dynamic: Default::default(),
+            dynamic: core::default::Default::default(),
         }
     }
 }
 
 pub struct KendraDataSourceConfigurationElS3ConfigurationElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for KendraDataSourceConfigurationElS3ConfigurationElRef {
-    fn new(shared: StackShared, base: String) -> KendraDataSourceConfigurationElS3ConfigurationElRef {
+impl terrars::Ref for KendraDataSourceConfigurationElS3ConfigurationElRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> KendraDataSourceConfigurationElS3ConfigurationElRef {
         KendraDataSourceConfigurationElS3ConfigurationElRef {
             shared: shared,
             base: base.to_string(),
@@ -755,62 +832,64 @@ impl Ref for KendraDataSourceConfigurationElS3ConfigurationElRef {
 }
 
 impl KendraDataSourceConfigurationElS3ConfigurationElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `bucket_name` after provisioning.\n"]
-    pub fn bucket_name(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.bucket_name", self.base))
+    #[doc = "Get a reference to the value of field `bucket_name` after provisioning.\n"]
+    pub fn bucket_name(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.bucket_name", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `exclusion_patterns` after provisioning.\n"]
-    pub fn exclusion_patterns(&self) -> SetRef<PrimExpr<String>> {
-        SetRef::new(self.shared().clone(), format!("{}.exclusion_patterns", self.base))
+    #[doc = "Get a reference to the value of field `exclusion_patterns` after provisioning.\n"]
+    pub fn exclusion_patterns(&self) -> terrars::SetRef<terrars::PrimExpr<std::string::String>> {
+        terrars::SetRef::new(self.shared().clone(), format!("{}.exclusion_patterns", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `inclusion_patterns` after provisioning.\n"]
-    pub fn inclusion_patterns(&self) -> SetRef<PrimExpr<String>> {
-        SetRef::new(self.shared().clone(), format!("{}.inclusion_patterns", self.base))
+    #[doc = "Get a reference to the value of field `inclusion_patterns` after provisioning.\n"]
+    pub fn inclusion_patterns(&self) -> terrars::SetRef<terrars::PrimExpr<std::string::String>> {
+        terrars::SetRef::new(self.shared().clone(), format!("{}.inclusion_patterns", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `inclusion_prefixes` after provisioning.\n"]
-    pub fn inclusion_prefixes(&self) -> SetRef<PrimExpr<String>> {
-        SetRef::new(self.shared().clone(), format!("{}.inclusion_prefixes", self.base))
+    #[doc = "Get a reference to the value of field `inclusion_prefixes` after provisioning.\n"]
+    pub fn inclusion_prefixes(&self) -> terrars::SetRef<terrars::PrimExpr<std::string::String>> {
+        terrars::SetRef::new(self.shared().clone(), format!("{}.inclusion_prefixes", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `access_control_list_configuration` after provisioning.\n"]
+    #[doc = "Get a reference to the value of field `access_control_list_configuration` after provisioning.\n"]
     pub fn access_control_list_configuration(
         &self,
-    ) -> ListRef<KendraDataSourceConfigurationElS3ConfigurationElAccessControlListConfigurationElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.access_control_list_configuration", self.base))
+    ) -> terrars::ListRef<KendraDataSourceConfigurationElS3ConfigurationElAccessControlListConfigurationElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.access_control_list_configuration", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `documents_metadata_configuration` after provisioning.\n"]
+    #[doc = "Get a reference to the value of field `documents_metadata_configuration` after provisioning.\n"]
     pub fn documents_metadata_configuration(
         &self,
-    ) -> ListRef<KendraDataSourceConfigurationElS3ConfigurationElDocumentsMetadataConfigurationElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.documents_metadata_configuration", self.base))
+    ) -> terrars::ListRef<KendraDataSourceConfigurationElS3ConfigurationElDocumentsMetadataConfigurationElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.documents_metadata_configuration", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct KendraDataSourceConfigurationElWebCrawlerConfigurationElAuthenticationConfigurationElBasicAuthenticationEl {
-    credentials: PrimField<String>,
-    host: PrimField<String>,
-    port: PrimField<f64>,
+    credentials: terrars::PrimField<std::string::String>,
+    host: terrars::PrimField<std::string::String>,
+    port: terrars::PrimField<f64>,
 }
 
 impl KendraDataSourceConfigurationElWebCrawlerConfigurationElAuthenticationConfigurationElBasicAuthenticationEl { }
 
-impl ToListMappable for KendraDataSourceConfigurationElWebCrawlerConfigurationElAuthenticationConfigurationElBasicAuthenticationEl {
+impl terrars
+::ToListMappable for KendraDataSourceConfigurationElWebCrawlerConfigurationElAuthenticationConfigurationElBasicAuthenticationEl {
     type O =
-        BlockAssignable<
+        terrars
+        ::BlockAssignable<
             KendraDataSourceConfigurationElWebCrawlerConfigurationElAuthenticationConfigurationElBasicAuthenticationEl,
         >;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -819,12 +898,12 @@ impl ToListMappable for KendraDataSourceConfigurationElWebCrawlerConfigurationEl
 }
 
 pub struct BuildKendraDataSourceConfigurationElWebCrawlerConfigurationElAuthenticationConfigurationElBasicAuthenticationEl {
-    #[doc= ""]
-    pub credentials: PrimField<String>,
-    #[doc= ""]
-    pub host: PrimField<String>,
-    #[doc= ""]
-    pub port: PrimField<f64>,
+    #[doc = ""]
+    pub credentials: terrars::PrimField<std::string::String>,
+    #[doc = ""]
+    pub host: terrars::PrimField<std::string::String>,
+    #[doc = ""]
+    pub port: terrars::PrimField<f64>,
 }
 
 impl BuildKendraDataSourceConfigurationElWebCrawlerConfigurationElAuthenticationConfigurationElBasicAuthenticationEl {
@@ -840,14 +919,15 @@ impl BuildKendraDataSourceConfigurationElWebCrawlerConfigurationElAuthentication
 }
 
 pub struct KendraDataSourceConfigurationElWebCrawlerConfigurationElAuthenticationConfigurationElBasicAuthenticationElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for KendraDataSourceConfigurationElWebCrawlerConfigurationElAuthenticationConfigurationElBasicAuthenticationElRef {
+impl terrars
+::Ref for KendraDataSourceConfigurationElWebCrawlerConfigurationElAuthenticationConfigurationElBasicAuthenticationElRef {
     fn new(
-        shared: StackShared,
-        base: String,
+        shared: terrars::StackShared,
+        base: std::string::String,
     ) -> KendraDataSourceConfigurationElWebCrawlerConfigurationElAuthenticationConfigurationElBasicAuthenticationElRef {
         KendraDataSourceConfigurationElWebCrawlerConfigurationElAuthenticationConfigurationElBasicAuthenticationElRef {
             shared: shared,
@@ -857,30 +937,33 @@ impl Ref for KendraDataSourceConfigurationElWebCrawlerConfigurationElAuthenticat
 }
 
 impl KendraDataSourceConfigurationElWebCrawlerConfigurationElAuthenticationConfigurationElBasicAuthenticationElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `credentials` after provisioning.\n"]
-    pub fn credentials(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.credentials", self.base))
+    #[doc = "Get a reference to the value of field `credentials` after provisioning.\n"]
+    pub fn credentials(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.credentials", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `host` after provisioning.\n"]
-    pub fn host(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.host", self.base))
+    #[doc = "Get a reference to the value of field `host` after provisioning.\n"]
+    pub fn host(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.host", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `port` after provisioning.\n"]
-    pub fn port(&self) -> PrimExpr<f64> {
-        PrimExpr::new(self.shared().clone(), format!("{}.port", self.base))
+    #[doc = "Get a reference to the value of field `port` after provisioning.\n"]
+    pub fn port(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.port", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
 struct KendraDataSourceConfigurationElWebCrawlerConfigurationElAuthenticationConfigurationElDynamic {
-    basic_authentication: Option<
-        DynamicBlock<
+    basic_authentication: std
+    ::option
+    ::Option<
+        terrars
+        ::DynamicBlock<
             KendraDataSourceConfigurationElWebCrawlerConfigurationElAuthenticationConfigurationElBasicAuthenticationEl,
         >,
     >,
@@ -888,9 +971,13 @@ struct KendraDataSourceConfigurationElWebCrawlerConfigurationElAuthenticationCon
 
 #[derive(Serialize)]
 pub struct KendraDataSourceConfigurationElWebCrawlerConfigurationElAuthenticationConfigurationEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    basic_authentication: Option<
-        Vec<
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    basic_authentication: std
+    ::option
+    ::Option<
+        std
+        ::vec
+        ::Vec<
             KendraDataSourceConfigurationElWebCrawlerConfigurationElAuthenticationConfigurationElBasicAuthenticationEl,
         >,
     >,
@@ -898,35 +985,40 @@ pub struct KendraDataSourceConfigurationElWebCrawlerConfigurationElAuthenticatio
 }
 
 impl KendraDataSourceConfigurationElWebCrawlerConfigurationElAuthenticationConfigurationEl {
-    #[doc= "Set the field `basic_authentication`.\n"]
+    #[doc = "Set the field `basic_authentication`.\n"]
     pub fn set_basic_authentication(
         mut self,
         v:
             impl
 
-                    Into<
-                        BlockAssignable<
+                    std
+                    ::convert
+                    ::Into<
+                        terrars
+                        ::BlockAssignable<
                             KendraDataSourceConfigurationElWebCrawlerConfigurationElAuthenticationConfigurationElBasicAuthenticationEl,
                         >,
                     >,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.basic_authentication = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.basic_authentication = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.basic_authentication = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.basic_authentication = std::option::Option::Some(d);
             },
         }
         self
     }
 }
 
-impl ToListMappable for KendraDataSourceConfigurationElWebCrawlerConfigurationElAuthenticationConfigurationEl {
-    type O = BlockAssignable<KendraDataSourceConfigurationElWebCrawlerConfigurationElAuthenticationConfigurationEl>;
+impl terrars::ToListMappable for KendraDataSourceConfigurationElWebCrawlerConfigurationElAuthenticationConfigurationEl {
+    type O =
+        terrars
+        ::BlockAssignable<KendraDataSourceConfigurationElWebCrawlerConfigurationElAuthenticationConfigurationEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -940,20 +1032,20 @@ impl BuildKendraDataSourceConfigurationElWebCrawlerConfigurationElAuthentication
     pub fn build(self) -> KendraDataSourceConfigurationElWebCrawlerConfigurationElAuthenticationConfigurationEl {
         KendraDataSourceConfigurationElWebCrawlerConfigurationElAuthenticationConfigurationEl {
             basic_authentication: core::default::Default::default(),
-            dynamic: Default::default(),
+            dynamic: core::default::Default::default(),
         }
     }
 }
 
 pub struct KendraDataSourceConfigurationElWebCrawlerConfigurationElAuthenticationConfigurationElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for KendraDataSourceConfigurationElWebCrawlerConfigurationElAuthenticationConfigurationElRef {
+impl terrars::Ref for KendraDataSourceConfigurationElWebCrawlerConfigurationElAuthenticationConfigurationElRef {
     fn new(
-        shared: StackShared,
-        base: String,
+        shared: terrars::StackShared,
+        base: std::string::String,
     ) -> KendraDataSourceConfigurationElWebCrawlerConfigurationElAuthenticationConfigurationElRef {
         KendraDataSourceConfigurationElWebCrawlerConfigurationElAuthenticationConfigurationElRef {
             shared: shared,
@@ -963,32 +1055,32 @@ impl Ref for KendraDataSourceConfigurationElWebCrawlerConfigurationElAuthenticat
 }
 
 impl KendraDataSourceConfigurationElWebCrawlerConfigurationElAuthenticationConfigurationElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 }
 
 #[derive(Serialize)]
 pub struct KendraDataSourceConfigurationElWebCrawlerConfigurationElProxyConfigurationEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    credentials: Option<PrimField<String>>,
-    host: PrimField<String>,
-    port: PrimField<f64>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    credentials: std::option::Option<terrars::PrimField<std::string::String>>,
+    host: terrars::PrimField<std::string::String>,
+    port: terrars::PrimField<f64>,
 }
 
 impl KendraDataSourceConfigurationElWebCrawlerConfigurationElProxyConfigurationEl {
-    #[doc= "Set the field `credentials`.\n"]
-    pub fn set_credentials(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.credentials = Some(v.into());
+    #[doc = "Set the field `credentials`.\n"]
+    pub fn set_credentials(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.credentials = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl ToListMappable for KendraDataSourceConfigurationElWebCrawlerConfigurationElProxyConfigurationEl {
-    type O = BlockAssignable<KendraDataSourceConfigurationElWebCrawlerConfigurationElProxyConfigurationEl>;
+impl terrars::ToListMappable for KendraDataSourceConfigurationElWebCrawlerConfigurationElProxyConfigurationEl {
+    type O = terrars::BlockAssignable<KendraDataSourceConfigurationElWebCrawlerConfigurationElProxyConfigurationEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -997,10 +1089,10 @@ impl ToListMappable for KendraDataSourceConfigurationElWebCrawlerConfigurationEl
 }
 
 pub struct BuildKendraDataSourceConfigurationElWebCrawlerConfigurationElProxyConfigurationEl {
-    #[doc= ""]
-    pub host: PrimField<String>,
-    #[doc= ""]
-    pub port: PrimField<f64>,
+    #[doc = ""]
+    pub host: terrars::PrimField<std::string::String>,
+    #[doc = ""]
+    pub port: terrars::PrimField<f64>,
 }
 
 impl BuildKendraDataSourceConfigurationElWebCrawlerConfigurationElProxyConfigurationEl {
@@ -1014,14 +1106,14 @@ impl BuildKendraDataSourceConfigurationElWebCrawlerConfigurationElProxyConfigura
 }
 
 pub struct KendraDataSourceConfigurationElWebCrawlerConfigurationElProxyConfigurationElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for KendraDataSourceConfigurationElWebCrawlerConfigurationElProxyConfigurationElRef {
+impl terrars::Ref for KendraDataSourceConfigurationElWebCrawlerConfigurationElProxyConfigurationElRef {
     fn new(
-        shared: StackShared,
-        base: String,
+        shared: terrars::StackShared,
+        base: std::string::String,
     ) -> KendraDataSourceConfigurationElWebCrawlerConfigurationElProxyConfigurationElRef {
         KendraDataSourceConfigurationElWebCrawlerConfigurationElProxyConfigurationElRef {
             shared: shared,
@@ -1031,46 +1123,48 @@ impl Ref for KendraDataSourceConfigurationElWebCrawlerConfigurationElProxyConfig
 }
 
 impl KendraDataSourceConfigurationElWebCrawlerConfigurationElProxyConfigurationElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `credentials` after provisioning.\n"]
-    pub fn credentials(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.credentials", self.base))
+    #[doc = "Get a reference to the value of field `credentials` after provisioning.\n"]
+    pub fn credentials(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.credentials", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `host` after provisioning.\n"]
-    pub fn host(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.host", self.base))
+    #[doc = "Get a reference to the value of field `host` after provisioning.\n"]
+    pub fn host(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.host", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `port` after provisioning.\n"]
-    pub fn port(&self) -> PrimExpr<f64> {
-        PrimExpr::new(self.shared().clone(), format!("{}.port", self.base))
+    #[doc = "Get a reference to the value of field `port` after provisioning.\n"]
+    pub fn port(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.port", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct KendraDataSourceConfigurationElWebCrawlerConfigurationElUrlsElSeedUrlConfigurationEl {
-    seed_urls: SetField<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    web_crawler_mode: Option<PrimField<String>>,
+    seed_urls: terrars::SetField<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    web_crawler_mode: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
 impl KendraDataSourceConfigurationElWebCrawlerConfigurationElUrlsElSeedUrlConfigurationEl {
-    #[doc= "Set the field `web_crawler_mode`.\n"]
-    pub fn set_web_crawler_mode(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.web_crawler_mode = Some(v.into());
+    #[doc = "Set the field `web_crawler_mode`.\n"]
+    pub fn set_web_crawler_mode(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.web_crawler_mode = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl ToListMappable for KendraDataSourceConfigurationElWebCrawlerConfigurationElUrlsElSeedUrlConfigurationEl {
-    type O = BlockAssignable<KendraDataSourceConfigurationElWebCrawlerConfigurationElUrlsElSeedUrlConfigurationEl>;
+impl terrars::ToListMappable for KendraDataSourceConfigurationElWebCrawlerConfigurationElUrlsElSeedUrlConfigurationEl {
+    type O =
+        terrars
+        ::BlockAssignable<KendraDataSourceConfigurationElWebCrawlerConfigurationElUrlsElSeedUrlConfigurationEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -1079,8 +1173,8 @@ impl ToListMappable for KendraDataSourceConfigurationElWebCrawlerConfigurationEl
 }
 
 pub struct BuildKendraDataSourceConfigurationElWebCrawlerConfigurationElUrlsElSeedUrlConfigurationEl {
-    #[doc= ""]
-    pub seed_urls: SetField<PrimField<String>>,
+    #[doc = ""]
+    pub seed_urls: terrars::SetField<terrars::PrimField<std::string::String>>,
 }
 
 impl BuildKendraDataSourceConfigurationElWebCrawlerConfigurationElUrlsElSeedUrlConfigurationEl {
@@ -1093,14 +1187,14 @@ impl BuildKendraDataSourceConfigurationElWebCrawlerConfigurationElUrlsElSeedUrlC
 }
 
 pub struct KendraDataSourceConfigurationElWebCrawlerConfigurationElUrlsElSeedUrlConfigurationElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for KendraDataSourceConfigurationElWebCrawlerConfigurationElUrlsElSeedUrlConfigurationElRef {
+impl terrars::Ref for KendraDataSourceConfigurationElWebCrawlerConfigurationElUrlsElSeedUrlConfigurationElRef {
     fn new(
-        shared: StackShared,
-        base: String,
+        shared: terrars::StackShared,
+        base: std::string::String,
     ) -> KendraDataSourceConfigurationElWebCrawlerConfigurationElUrlsElSeedUrlConfigurationElRef {
         KendraDataSourceConfigurationElWebCrawlerConfigurationElUrlsElSeedUrlConfigurationElRef {
             shared: shared,
@@ -1110,33 +1204,35 @@ impl Ref for KendraDataSourceConfigurationElWebCrawlerConfigurationElUrlsElSeedU
 }
 
 impl KendraDataSourceConfigurationElWebCrawlerConfigurationElUrlsElSeedUrlConfigurationElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `seed_urls` after provisioning.\n"]
-    pub fn seed_urls(&self) -> SetRef<PrimExpr<String>> {
-        SetRef::new(self.shared().clone(), format!("{}.seed_urls", self.base))
+    #[doc = "Get a reference to the value of field `seed_urls` after provisioning.\n"]
+    pub fn seed_urls(&self) -> terrars::SetRef<terrars::PrimExpr<std::string::String>> {
+        terrars::SetRef::new(self.shared().clone(), format!("{}.seed_urls", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `web_crawler_mode` after provisioning.\n"]
-    pub fn web_crawler_mode(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.web_crawler_mode", self.base))
+    #[doc = "Get a reference to the value of field `web_crawler_mode` after provisioning.\n"]
+    pub fn web_crawler_mode(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.web_crawler_mode", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct KendraDataSourceConfigurationElWebCrawlerConfigurationElUrlsElSiteMapsConfigurationEl {
-    site_maps: SetField<PrimField<String>>,
+    site_maps: terrars::SetField<terrars::PrimField<std::string::String>>,
 }
 
 impl KendraDataSourceConfigurationElWebCrawlerConfigurationElUrlsElSiteMapsConfigurationEl { }
 
-impl ToListMappable for KendraDataSourceConfigurationElWebCrawlerConfigurationElUrlsElSiteMapsConfigurationEl {
-    type O = BlockAssignable<KendraDataSourceConfigurationElWebCrawlerConfigurationElUrlsElSiteMapsConfigurationEl>;
+impl terrars::ToListMappable for KendraDataSourceConfigurationElWebCrawlerConfigurationElUrlsElSiteMapsConfigurationEl {
+    type O =
+        terrars
+        ::BlockAssignable<KendraDataSourceConfigurationElWebCrawlerConfigurationElUrlsElSiteMapsConfigurationEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -1145,8 +1241,8 @@ impl ToListMappable for KendraDataSourceConfigurationElWebCrawlerConfigurationEl
 }
 
 pub struct BuildKendraDataSourceConfigurationElWebCrawlerConfigurationElUrlsElSiteMapsConfigurationEl {
-    #[doc= ""]
-    pub site_maps: SetField<PrimField<String>>,
+    #[doc = ""]
+    pub site_maps: terrars::SetField<terrars::PrimField<std::string::String>>,
 }
 
 impl BuildKendraDataSourceConfigurationElWebCrawlerConfigurationElUrlsElSiteMapsConfigurationEl {
@@ -1158,14 +1254,14 @@ impl BuildKendraDataSourceConfigurationElWebCrawlerConfigurationElUrlsElSiteMaps
 }
 
 pub struct KendraDataSourceConfigurationElWebCrawlerConfigurationElUrlsElSiteMapsConfigurationElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for KendraDataSourceConfigurationElWebCrawlerConfigurationElUrlsElSiteMapsConfigurationElRef {
+impl terrars::Ref for KendraDataSourceConfigurationElWebCrawlerConfigurationElUrlsElSiteMapsConfigurationElRef {
     fn new(
-        shared: StackShared,
-        base: String,
+        shared: terrars::StackShared,
+        base: std::string::String,
     ) -> KendraDataSourceConfigurationElWebCrawlerConfigurationElUrlsElSiteMapsConfigurationElRef {
         KendraDataSourceConfigurationElWebCrawlerConfigurationElUrlsElSiteMapsConfigurationElRef {
             shared: shared,
@@ -1175,92 +1271,102 @@ impl Ref for KendraDataSourceConfigurationElWebCrawlerConfigurationElUrlsElSiteM
 }
 
 impl KendraDataSourceConfigurationElWebCrawlerConfigurationElUrlsElSiteMapsConfigurationElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `site_maps` after provisioning.\n"]
-    pub fn site_maps(&self) -> SetRef<PrimExpr<String>> {
-        SetRef::new(self.shared().clone(), format!("{}.site_maps", self.base))
+    #[doc = "Get a reference to the value of field `site_maps` after provisioning.\n"]
+    pub fn site_maps(&self) -> terrars::SetRef<terrars::PrimExpr<std::string::String>> {
+        terrars::SetRef::new(self.shared().clone(), format!("{}.site_maps", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
 struct KendraDataSourceConfigurationElWebCrawlerConfigurationElUrlsElDynamic {
-    seed_url_configuration: Option<
-        DynamicBlock<KendraDataSourceConfigurationElWebCrawlerConfigurationElUrlsElSeedUrlConfigurationEl>,
+    seed_url_configuration: std
+    ::option
+    ::Option<
+        terrars::DynamicBlock<KendraDataSourceConfigurationElWebCrawlerConfigurationElUrlsElSeedUrlConfigurationEl>,
     >,
-    site_maps_configuration: Option<
-        DynamicBlock<KendraDataSourceConfigurationElWebCrawlerConfigurationElUrlsElSiteMapsConfigurationEl>,
+    site_maps_configuration: std
+    ::option
+    ::Option<
+        terrars::DynamicBlock<KendraDataSourceConfigurationElWebCrawlerConfigurationElUrlsElSiteMapsConfigurationEl>,
     >,
 }
 
 #[derive(Serialize)]
 pub struct KendraDataSourceConfigurationElWebCrawlerConfigurationElUrlsEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    seed_url_configuration: Option<
-        Vec<KendraDataSourceConfigurationElWebCrawlerConfigurationElUrlsElSeedUrlConfigurationEl>,
-    >,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    site_maps_configuration: Option<
-        Vec<KendraDataSourceConfigurationElWebCrawlerConfigurationElUrlsElSiteMapsConfigurationEl>,
-    >,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    seed_url_configuration: std
+    ::option
+    ::Option<std::vec::Vec<KendraDataSourceConfigurationElWebCrawlerConfigurationElUrlsElSeedUrlConfigurationEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    site_maps_configuration: std
+    ::option
+    ::Option<std::vec::Vec<KendraDataSourceConfigurationElWebCrawlerConfigurationElUrlsElSiteMapsConfigurationEl>>,
     dynamic: KendraDataSourceConfigurationElWebCrawlerConfigurationElUrlsElDynamic,
 }
 
 impl KendraDataSourceConfigurationElWebCrawlerConfigurationElUrlsEl {
-    #[doc= "Set the field `seed_url_configuration`.\n"]
+    #[doc = "Set the field `seed_url_configuration`.\n"]
     pub fn set_seed_url_configuration(
         mut self,
         v:
             impl
 
-                    Into<
-                        BlockAssignable<
+                    std
+                    ::convert
+                    ::Into<
+                        terrars
+                        ::BlockAssignable<
                             KendraDataSourceConfigurationElWebCrawlerConfigurationElUrlsElSeedUrlConfigurationEl,
                         >,
                     >,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.seed_url_configuration = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.seed_url_configuration = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.seed_url_configuration = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.seed_url_configuration = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Set the field `site_maps_configuration`.\n"]
+    #[doc = "Set the field `site_maps_configuration`.\n"]
     pub fn set_site_maps_configuration(
         mut self,
         v:
             impl
 
-                    Into<
-                        BlockAssignable<
+                    std
+                    ::convert
+                    ::Into<
+                        terrars
+                        ::BlockAssignable<
                             KendraDataSourceConfigurationElWebCrawlerConfigurationElUrlsElSiteMapsConfigurationEl,
                         >,
                     >,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.site_maps_configuration = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.site_maps_configuration = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.site_maps_configuration = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.site_maps_configuration = std::option::Option::Some(d);
             },
         }
         self
     }
 }
 
-impl ToListMappable for KendraDataSourceConfigurationElWebCrawlerConfigurationElUrlsEl {
-    type O = BlockAssignable<KendraDataSourceConfigurationElWebCrawlerConfigurationElUrlsEl>;
+impl terrars::ToListMappable for KendraDataSourceConfigurationElWebCrawlerConfigurationElUrlsEl {
+    type O = terrars::BlockAssignable<KendraDataSourceConfigurationElWebCrawlerConfigurationElUrlsEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -1275,18 +1381,21 @@ impl BuildKendraDataSourceConfigurationElWebCrawlerConfigurationElUrlsEl {
         KendraDataSourceConfigurationElWebCrawlerConfigurationElUrlsEl {
             seed_url_configuration: core::default::Default::default(),
             site_maps_configuration: core::default::Default::default(),
-            dynamic: Default::default(),
+            dynamic: core::default::Default::default(),
         }
     }
 }
 
 pub struct KendraDataSourceConfigurationElWebCrawlerConfigurationElUrlsElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for KendraDataSourceConfigurationElWebCrawlerConfigurationElUrlsElRef {
-    fn new(shared: StackShared, base: String) -> KendraDataSourceConfigurationElWebCrawlerConfigurationElUrlsElRef {
+impl terrars::Ref for KendraDataSourceConfigurationElWebCrawlerConfigurationElUrlsElRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> KendraDataSourceConfigurationElWebCrawlerConfigurationElUrlsElRef {
         KendraDataSourceConfigurationElWebCrawlerConfigurationElUrlsElRef {
             shared: shared,
             base: base.to_string(),
@@ -1295,159 +1404,192 @@ impl Ref for KendraDataSourceConfigurationElWebCrawlerConfigurationElUrlsElRef {
 }
 
 impl KendraDataSourceConfigurationElWebCrawlerConfigurationElUrlsElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `seed_url_configuration` after provisioning.\n"]
+    #[doc = "Get a reference to the value of field `seed_url_configuration` after provisioning.\n"]
     pub fn seed_url_configuration(
         &self,
-    ) -> ListRef<KendraDataSourceConfigurationElWebCrawlerConfigurationElUrlsElSeedUrlConfigurationElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.seed_url_configuration", self.base))
+    ) -> terrars::ListRef<KendraDataSourceConfigurationElWebCrawlerConfigurationElUrlsElSeedUrlConfigurationElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.seed_url_configuration", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `site_maps_configuration` after provisioning.\n"]
+    #[doc = "Get a reference to the value of field `site_maps_configuration` after provisioning.\n"]
     pub fn site_maps_configuration(
         &self,
-    ) -> ListRef<KendraDataSourceConfigurationElWebCrawlerConfigurationElUrlsElSiteMapsConfigurationElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.site_maps_configuration", self.base))
+    ) -> terrars::ListRef<KendraDataSourceConfigurationElWebCrawlerConfigurationElUrlsElSiteMapsConfigurationElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.site_maps_configuration", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
 struct KendraDataSourceConfigurationElWebCrawlerConfigurationElDynamic {
-    authentication_configuration: Option<
-        DynamicBlock<KendraDataSourceConfigurationElWebCrawlerConfigurationElAuthenticationConfigurationEl>,
+    authentication_configuration: std
+    ::option
+    ::Option<
+        terrars::DynamicBlock<KendraDataSourceConfigurationElWebCrawlerConfigurationElAuthenticationConfigurationEl>,
     >,
-    proxy_configuration: Option<
-        DynamicBlock<KendraDataSourceConfigurationElWebCrawlerConfigurationElProxyConfigurationEl>,
-    >,
-    urls: Option<DynamicBlock<KendraDataSourceConfigurationElWebCrawlerConfigurationElUrlsEl>>,
+    proxy_configuration: std
+    ::option
+    ::Option<terrars::DynamicBlock<KendraDataSourceConfigurationElWebCrawlerConfigurationElProxyConfigurationEl>>,
+    urls: std
+    ::option
+    ::Option<terrars::DynamicBlock<KendraDataSourceConfigurationElWebCrawlerConfigurationElUrlsEl>>,
 }
 
 #[derive(Serialize)]
 pub struct KendraDataSourceConfigurationElWebCrawlerConfigurationEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    crawl_depth: Option<PrimField<f64>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    max_content_size_per_page_in_mega_bytes: Option<PrimField<f64>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    max_links_per_page: Option<PrimField<f64>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    max_urls_per_minute_crawl_rate: Option<PrimField<f64>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    url_exclusion_patterns: Option<SetField<PrimField<String>>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    url_inclusion_patterns: Option<SetField<PrimField<String>>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    authentication_configuration: Option<
-        Vec<KendraDataSourceConfigurationElWebCrawlerConfigurationElAuthenticationConfigurationEl>,
-    >,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    proxy_configuration: Option<Vec<KendraDataSourceConfigurationElWebCrawlerConfigurationElProxyConfigurationEl>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    urls: Option<Vec<KendraDataSourceConfigurationElWebCrawlerConfigurationElUrlsEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    crawl_depth: std::option::Option<terrars::PrimField<f64>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    max_content_size_per_page_in_mega_bytes: std::option::Option<terrars::PrimField<f64>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    max_links_per_page: std::option::Option<terrars::PrimField<f64>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    max_urls_per_minute_crawl_rate: std::option::Option<terrars::PrimField<f64>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    url_exclusion_patterns: std::option::Option<terrars::SetField<terrars::PrimField<std::string::String>>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    url_inclusion_patterns: std::option::Option<terrars::SetField<terrars::PrimField<std::string::String>>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    authentication_configuration: std
+    ::option
+    ::Option<std::vec::Vec<KendraDataSourceConfigurationElWebCrawlerConfigurationElAuthenticationConfigurationEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    proxy_configuration: std
+    ::option
+    ::Option<std::vec::Vec<KendraDataSourceConfigurationElWebCrawlerConfigurationElProxyConfigurationEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    urls: std::option::Option<std::vec::Vec<KendraDataSourceConfigurationElWebCrawlerConfigurationElUrlsEl>>,
     dynamic: KendraDataSourceConfigurationElWebCrawlerConfigurationElDynamic,
 }
 
 impl KendraDataSourceConfigurationElWebCrawlerConfigurationEl {
-    #[doc= "Set the field `crawl_depth`.\n"]
-    pub fn set_crawl_depth(mut self, v: impl Into<PrimField<f64>>) -> Self {
-        self.crawl_depth = Some(v.into());
+    #[doc = "Set the field `crawl_depth`.\n"]
+    pub fn set_crawl_depth(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.crawl_depth = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `max_content_size_per_page_in_mega_bytes`.\n"]
-    pub fn set_max_content_size_per_page_in_mega_bytes(mut self, v: impl Into<PrimField<f64>>) -> Self {
-        self.max_content_size_per_page_in_mega_bytes = Some(v.into());
+    #[doc = "Set the field `max_content_size_per_page_in_mega_bytes`.\n"]
+    pub fn set_max_content_size_per_page_in_mega_bytes(
+        mut self,
+        v: impl std::convert::Into<terrars::PrimField<f64>>,
+    ) -> Self {
+        self.max_content_size_per_page_in_mega_bytes = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `max_links_per_page`.\n"]
-    pub fn set_max_links_per_page(mut self, v: impl Into<PrimField<f64>>) -> Self {
-        self.max_links_per_page = Some(v.into());
+    #[doc = "Set the field `max_links_per_page`.\n"]
+    pub fn set_max_links_per_page(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.max_links_per_page = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `max_urls_per_minute_crawl_rate`.\n"]
-    pub fn set_max_urls_per_minute_crawl_rate(mut self, v: impl Into<PrimField<f64>>) -> Self {
-        self.max_urls_per_minute_crawl_rate = Some(v.into());
+    #[doc = "Set the field `max_urls_per_minute_crawl_rate`.\n"]
+    pub fn set_max_urls_per_minute_crawl_rate(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.max_urls_per_minute_crawl_rate = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `url_exclusion_patterns`.\n"]
-    pub fn set_url_exclusion_patterns(mut self, v: impl Into<SetField<PrimField<String>>>) -> Self {
-        self.url_exclusion_patterns = Some(v.into());
+    #[doc = "Set the field `url_exclusion_patterns`.\n"]
+    pub fn set_url_exclusion_patterns(
+        mut self,
+        v: impl std::convert::Into<terrars::SetField<terrars::PrimField<std::string::String>>>,
+    ) -> Self {
+        self.url_exclusion_patterns = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `url_inclusion_patterns`.\n"]
-    pub fn set_url_inclusion_patterns(mut self, v: impl Into<SetField<PrimField<String>>>) -> Self {
-        self.url_inclusion_patterns = Some(v.into());
+    #[doc = "Set the field `url_inclusion_patterns`.\n"]
+    pub fn set_url_inclusion_patterns(
+        mut self,
+        v: impl std::convert::Into<terrars::SetField<terrars::PrimField<std::string::String>>>,
+    ) -> Self {
+        self.url_inclusion_patterns = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `authentication_configuration`.\n"]
+    #[doc = "Set the field `authentication_configuration`.\n"]
     pub fn set_authentication_configuration(
         mut self,
         v:
             impl
 
-                    Into<
-                        BlockAssignable<
+                    std
+                    ::convert
+                    ::Into<
+                        terrars
+                        ::BlockAssignable<
                             KendraDataSourceConfigurationElWebCrawlerConfigurationElAuthenticationConfigurationEl,
                         >,
                     >,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.authentication_configuration = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.authentication_configuration = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.authentication_configuration = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.authentication_configuration = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Set the field `proxy_configuration`.\n"]
+    #[doc = "Set the field `proxy_configuration`.\n"]
     pub fn set_proxy_configuration(
         mut self,
-        v: impl Into<BlockAssignable<KendraDataSourceConfigurationElWebCrawlerConfigurationElProxyConfigurationEl>>,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<
+                        terrars
+                        ::BlockAssignable<
+                            KendraDataSourceConfigurationElWebCrawlerConfigurationElProxyConfigurationEl,
+                        >,
+                    >,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.proxy_configuration = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.proxy_configuration = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.proxy_configuration = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.proxy_configuration = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Set the field `urls`.\n"]
+    #[doc = "Set the field `urls`.\n"]
     pub fn set_urls(
         mut self,
-        v: impl Into<BlockAssignable<KendraDataSourceConfigurationElWebCrawlerConfigurationElUrlsEl>>,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<terrars::BlockAssignable<KendraDataSourceConfigurationElWebCrawlerConfigurationElUrlsEl>>,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.urls = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.urls = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.urls = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.urls = std::option::Option::Some(d);
             },
         }
         self
     }
 }
 
-impl ToListMappable for KendraDataSourceConfigurationElWebCrawlerConfigurationEl {
-    type O = BlockAssignable<KendraDataSourceConfigurationElWebCrawlerConfigurationEl>;
+impl terrars::ToListMappable for KendraDataSourceConfigurationElWebCrawlerConfigurationEl {
+    type O = terrars::BlockAssignable<KendraDataSourceConfigurationElWebCrawlerConfigurationEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -1469,18 +1611,21 @@ impl BuildKendraDataSourceConfigurationElWebCrawlerConfigurationEl {
             authentication_configuration: core::default::Default::default(),
             proxy_configuration: core::default::Default::default(),
             urls: core::default::Default::default(),
-            dynamic: Default::default(),
+            dynamic: core::default::Default::default(),
         }
     }
 }
 
 pub struct KendraDataSourceConfigurationElWebCrawlerConfigurationElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for KendraDataSourceConfigurationElWebCrawlerConfigurationElRef {
-    fn new(shared: StackShared, base: String) -> KendraDataSourceConfigurationElWebCrawlerConfigurationElRef {
+impl terrars::Ref for KendraDataSourceConfigurationElWebCrawlerConfigurationElRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> KendraDataSourceConfigurationElWebCrawlerConfigurationElRef {
         KendraDataSourceConfigurationElWebCrawlerConfigurationElRef {
             shared: shared,
             base: base.to_string(),
@@ -1489,114 +1634,126 @@ impl Ref for KendraDataSourceConfigurationElWebCrawlerConfigurationElRef {
 }
 
 impl KendraDataSourceConfigurationElWebCrawlerConfigurationElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `crawl_depth` after provisioning.\n"]
-    pub fn crawl_depth(&self) -> PrimExpr<f64> {
-        PrimExpr::new(self.shared().clone(), format!("{}.crawl_depth", self.base))
+    #[doc = "Get a reference to the value of field `crawl_depth` after provisioning.\n"]
+    pub fn crawl_depth(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.crawl_depth", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `max_content_size_per_page_in_mega_bytes` after provisioning.\n"]
-    pub fn max_content_size_per_page_in_mega_bytes(&self) -> PrimExpr<f64> {
-        PrimExpr::new(self.shared().clone(), format!("{}.max_content_size_per_page_in_mega_bytes", self.base))
+    #[doc = "Get a reference to the value of field `max_content_size_per_page_in_mega_bytes` after provisioning.\n"]
+    pub fn max_content_size_per_page_in_mega_bytes(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(
+            self.shared().clone(),
+            format!("{}.max_content_size_per_page_in_mega_bytes", self.base),
+        )
     }
 
-    #[doc= "Get a reference to the value of field `max_links_per_page` after provisioning.\n"]
-    pub fn max_links_per_page(&self) -> PrimExpr<f64> {
-        PrimExpr::new(self.shared().clone(), format!("{}.max_links_per_page", self.base))
+    #[doc = "Get a reference to the value of field `max_links_per_page` after provisioning.\n"]
+    pub fn max_links_per_page(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.max_links_per_page", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `max_urls_per_minute_crawl_rate` after provisioning.\n"]
-    pub fn max_urls_per_minute_crawl_rate(&self) -> PrimExpr<f64> {
-        PrimExpr::new(self.shared().clone(), format!("{}.max_urls_per_minute_crawl_rate", self.base))
+    #[doc = "Get a reference to the value of field `max_urls_per_minute_crawl_rate` after provisioning.\n"]
+    pub fn max_urls_per_minute_crawl_rate(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.max_urls_per_minute_crawl_rate", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `url_exclusion_patterns` after provisioning.\n"]
-    pub fn url_exclusion_patterns(&self) -> SetRef<PrimExpr<String>> {
-        SetRef::new(self.shared().clone(), format!("{}.url_exclusion_patterns", self.base))
+    #[doc = "Get a reference to the value of field `url_exclusion_patterns` after provisioning.\n"]
+    pub fn url_exclusion_patterns(&self) -> terrars::SetRef<terrars::PrimExpr<std::string::String>> {
+        terrars::SetRef::new(self.shared().clone(), format!("{}.url_exclusion_patterns", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `url_inclusion_patterns` after provisioning.\n"]
-    pub fn url_inclusion_patterns(&self) -> SetRef<PrimExpr<String>> {
-        SetRef::new(self.shared().clone(), format!("{}.url_inclusion_patterns", self.base))
+    #[doc = "Get a reference to the value of field `url_inclusion_patterns` after provisioning.\n"]
+    pub fn url_inclusion_patterns(&self) -> terrars::SetRef<terrars::PrimExpr<std::string::String>> {
+        terrars::SetRef::new(self.shared().clone(), format!("{}.url_inclusion_patterns", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `authentication_configuration` after provisioning.\n"]
+    #[doc = "Get a reference to the value of field `authentication_configuration` after provisioning.\n"]
     pub fn authentication_configuration(
         &self,
-    ) -> ListRef<KendraDataSourceConfigurationElWebCrawlerConfigurationElAuthenticationConfigurationElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.authentication_configuration", self.base))
+    ) -> terrars::ListRef<KendraDataSourceConfigurationElWebCrawlerConfigurationElAuthenticationConfigurationElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.authentication_configuration", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `proxy_configuration` after provisioning.\n"]
+    #[doc = "Get a reference to the value of field `proxy_configuration` after provisioning.\n"]
     pub fn proxy_configuration(
         &self,
-    ) -> ListRef<KendraDataSourceConfigurationElWebCrawlerConfigurationElProxyConfigurationElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.proxy_configuration", self.base))
+    ) -> terrars::ListRef<KendraDataSourceConfigurationElWebCrawlerConfigurationElProxyConfigurationElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.proxy_configuration", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `urls` after provisioning.\n"]
-    pub fn urls(&self) -> ListRef<KendraDataSourceConfigurationElWebCrawlerConfigurationElUrlsElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.urls", self.base))
+    #[doc = "Get a reference to the value of field `urls` after provisioning.\n"]
+    pub fn urls(&self) -> terrars::ListRef<KendraDataSourceConfigurationElWebCrawlerConfigurationElUrlsElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.urls", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
 struct KendraDataSourceConfigurationElDynamic {
-    s3_configuration: Option<DynamicBlock<KendraDataSourceConfigurationElS3ConfigurationEl>>,
-    web_crawler_configuration: Option<DynamicBlock<KendraDataSourceConfigurationElWebCrawlerConfigurationEl>>,
+    s3_configuration: std::option::Option<terrars::DynamicBlock<KendraDataSourceConfigurationElS3ConfigurationEl>>,
+    web_crawler_configuration: std
+    ::option
+    ::Option<terrars::DynamicBlock<KendraDataSourceConfigurationElWebCrawlerConfigurationEl>>,
 }
 
 #[derive(Serialize)]
 pub struct KendraDataSourceConfigurationEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    s3_configuration: Option<Vec<KendraDataSourceConfigurationElS3ConfigurationEl>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    web_crawler_configuration: Option<Vec<KendraDataSourceConfigurationElWebCrawlerConfigurationEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    s3_configuration: std::option::Option<std::vec::Vec<KendraDataSourceConfigurationElS3ConfigurationEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    web_crawler_configuration: std
+    ::option
+    ::Option<std::vec::Vec<KendraDataSourceConfigurationElWebCrawlerConfigurationEl>>,
     dynamic: KendraDataSourceConfigurationElDynamic,
 }
 
 impl KendraDataSourceConfigurationEl {
-    #[doc= "Set the field `s3_configuration`.\n"]
+    #[doc = "Set the field `s3_configuration`.\n"]
     pub fn set_s3_configuration(
         mut self,
-        v: impl Into<BlockAssignable<KendraDataSourceConfigurationElS3ConfigurationEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<KendraDataSourceConfigurationElS3ConfigurationEl>>,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.s3_configuration = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.s3_configuration = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.s3_configuration = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.s3_configuration = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Set the field `web_crawler_configuration`.\n"]
+    #[doc = "Set the field `web_crawler_configuration`.\n"]
     pub fn set_web_crawler_configuration(
         mut self,
-        v: impl Into<BlockAssignable<KendraDataSourceConfigurationElWebCrawlerConfigurationEl>>,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<terrars::BlockAssignable<KendraDataSourceConfigurationElWebCrawlerConfigurationEl>>,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.web_crawler_configuration = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.web_crawler_configuration = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.web_crawler_configuration = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.web_crawler_configuration = std::option::Option::Some(d);
             },
         }
         self
     }
 }
 
-impl ToListMappable for KendraDataSourceConfigurationEl {
-    type O = BlockAssignable<KendraDataSourceConfigurationEl>;
+impl terrars::ToListMappable for KendraDataSourceConfigurationEl {
+    type O = terrars::BlockAssignable<KendraDataSourceConfigurationEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -1611,18 +1768,18 @@ impl BuildKendraDataSourceConfigurationEl {
         KendraDataSourceConfigurationEl {
             s3_configuration: core::default::Default::default(),
             web_crawler_configuration: core::default::Default::default(),
-            dynamic: Default::default(),
+            dynamic: core::default::Default::default(),
         }
     }
 }
 
 pub struct KendraDataSourceConfigurationElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for KendraDataSourceConfigurationElRef {
-    fn new(shared: StackShared, base: String) -> KendraDataSourceConfigurationElRef {
+impl terrars::Ref for KendraDataSourceConfigurationElRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> KendraDataSourceConfigurationElRef {
         KendraDataSourceConfigurationElRef {
             shared: shared,
             base: base.to_string(),
@@ -1631,67 +1788,74 @@ impl Ref for KendraDataSourceConfigurationElRef {
 }
 
 impl KendraDataSourceConfigurationElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `s3_configuration` after provisioning.\n"]
-    pub fn s3_configuration(&self) -> ListRef<KendraDataSourceConfigurationElS3ConfigurationElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.s3_configuration", self.base))
+    #[doc = "Get a reference to the value of field `s3_configuration` after provisioning.\n"]
+    pub fn s3_configuration(&self) -> terrars::ListRef<KendraDataSourceConfigurationElS3ConfigurationElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.s3_configuration", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `web_crawler_configuration` after provisioning.\n"]
-    pub fn web_crawler_configuration(&self) -> ListRef<KendraDataSourceConfigurationElWebCrawlerConfigurationElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.web_crawler_configuration", self.base))
+    #[doc = "Get a reference to the value of field `web_crawler_configuration` after provisioning.\n"]
+    pub fn web_crawler_configuration(
+        &self,
+    ) -> terrars::ListRef<KendraDataSourceConfigurationElWebCrawlerConfigurationElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.web_crawler_configuration", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct KendraDataSourceCustomDocumentEnrichmentConfigurationElInlineConfigurationsElConditionElConditionOnValueEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    date_value: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    long_value: Option<PrimField<f64>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    string_list_value: Option<SetField<PrimField<String>>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    string_value: Option<PrimField<String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    date_value: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    long_value: std::option::Option<terrars::PrimField<f64>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    string_list_value: std::option::Option<terrars::SetField<terrars::PrimField<std::string::String>>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    string_value: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
 impl KendraDataSourceCustomDocumentEnrichmentConfigurationElInlineConfigurationsElConditionElConditionOnValueEl {
-    #[doc= "Set the field `date_value`.\n"]
-    pub fn set_date_value(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.date_value = Some(v.into());
+    #[doc = "Set the field `date_value`.\n"]
+    pub fn set_date_value(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.date_value = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `long_value`.\n"]
-    pub fn set_long_value(mut self, v: impl Into<PrimField<f64>>) -> Self {
-        self.long_value = Some(v.into());
+    #[doc = "Set the field `long_value`.\n"]
+    pub fn set_long_value(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.long_value = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `string_list_value`.\n"]
-    pub fn set_string_list_value(mut self, v: impl Into<SetField<PrimField<String>>>) -> Self {
-        self.string_list_value = Some(v.into());
+    #[doc = "Set the field `string_list_value`.\n"]
+    pub fn set_string_list_value(
+        mut self,
+        v: impl std::convert::Into<terrars::SetField<terrars::PrimField<std::string::String>>>,
+    ) -> Self {
+        self.string_list_value = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `string_value`.\n"]
-    pub fn set_string_value(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.string_value = Some(v.into());
+    #[doc = "Set the field `string_value`.\n"]
+    pub fn set_string_value(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.string_value = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl ToListMappable for KendraDataSourceCustomDocumentEnrichmentConfigurationElInlineConfigurationsElConditionElConditionOnValueEl {
+impl terrars
+::ToListMappable for KendraDataSourceCustomDocumentEnrichmentConfigurationElInlineConfigurationsElConditionElConditionOnValueEl {
     type O =
-        BlockAssignable<
+        terrars
+        ::BlockAssignable<
             KendraDataSourceCustomDocumentEnrichmentConfigurationElInlineConfigurationsElConditionElConditionOnValueEl,
         >;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -1715,14 +1879,15 @@ impl BuildKendraDataSourceCustomDocumentEnrichmentConfigurationElInlineConfigura
 }
 
 pub struct KendraDataSourceCustomDocumentEnrichmentConfigurationElInlineConfigurationsElConditionElConditionOnValueElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for KendraDataSourceCustomDocumentEnrichmentConfigurationElInlineConfigurationsElConditionElConditionOnValueElRef {
+impl terrars
+::Ref for KendraDataSourceCustomDocumentEnrichmentConfigurationElInlineConfigurationsElConditionElConditionOnValueElRef {
     fn new(
-        shared: StackShared,
-        base: String,
+        shared: terrars::StackShared,
+        base: std::string::String,
     ) -> KendraDataSourceCustomDocumentEnrichmentConfigurationElInlineConfigurationsElConditionElConditionOnValueElRef {
         KendraDataSourceCustomDocumentEnrichmentConfigurationElInlineConfigurationsElConditionElConditionOnValueElRef {
             shared: shared,
@@ -1732,35 +1897,38 @@ impl Ref for KendraDataSourceCustomDocumentEnrichmentConfigurationElInlineConfig
 }
 
 impl KendraDataSourceCustomDocumentEnrichmentConfigurationElInlineConfigurationsElConditionElConditionOnValueElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `date_value` after provisioning.\n"]
-    pub fn date_value(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.date_value", self.base))
+    #[doc = "Get a reference to the value of field `date_value` after provisioning.\n"]
+    pub fn date_value(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.date_value", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `long_value` after provisioning.\n"]
-    pub fn long_value(&self) -> PrimExpr<f64> {
-        PrimExpr::new(self.shared().clone(), format!("{}.long_value", self.base))
+    #[doc = "Get a reference to the value of field `long_value` after provisioning.\n"]
+    pub fn long_value(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.long_value", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `string_list_value` after provisioning.\n"]
-    pub fn string_list_value(&self) -> SetRef<PrimExpr<String>> {
-        SetRef::new(self.shared().clone(), format!("{}.string_list_value", self.base))
+    #[doc = "Get a reference to the value of field `string_list_value` after provisioning.\n"]
+    pub fn string_list_value(&self) -> terrars::SetRef<terrars::PrimExpr<std::string::String>> {
+        terrars::SetRef::new(self.shared().clone(), format!("{}.string_list_value", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `string_value` after provisioning.\n"]
-    pub fn string_value(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.string_value", self.base))
+    #[doc = "Get a reference to the value of field `string_value` after provisioning.\n"]
+    pub fn string_value(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.string_value", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
 struct KendraDataSourceCustomDocumentEnrichmentConfigurationElInlineConfigurationsElConditionElDynamic {
-    condition_on_value: Option<
-        DynamicBlock<
+    condition_on_value: std
+    ::option
+    ::Option<
+        terrars
+        ::DynamicBlock<
             KendraDataSourceCustomDocumentEnrichmentConfigurationElInlineConfigurationsElConditionElConditionOnValueEl,
         >,
     >,
@@ -1768,11 +1936,15 @@ struct KendraDataSourceCustomDocumentEnrichmentConfigurationElInlineConfiguratio
 
 #[derive(Serialize)]
 pub struct KendraDataSourceCustomDocumentEnrichmentConfigurationElInlineConfigurationsElConditionEl {
-    condition_document_attribute_key: PrimField<String>,
-    operator: PrimField<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    condition_on_value: Option<
-        Vec<
+    condition_document_attribute_key: terrars::PrimField<std::string::String>,
+    operator: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    condition_on_value: std
+    ::option
+    ::Option<
+        std
+        ::vec
+        ::Vec<
             KendraDataSourceCustomDocumentEnrichmentConfigurationElInlineConfigurationsElConditionElConditionOnValueEl,
         >,
     >,
@@ -1780,36 +1952,41 @@ pub struct KendraDataSourceCustomDocumentEnrichmentConfigurationElInlineConfigur
 }
 
 impl KendraDataSourceCustomDocumentEnrichmentConfigurationElInlineConfigurationsElConditionEl {
-    #[doc= "Set the field `condition_on_value`.\n"]
+    #[doc = "Set the field `condition_on_value`.\n"]
     pub fn set_condition_on_value(
         mut self,
         v:
             impl
 
-                    Into<
-                        BlockAssignable<
+                    std
+                    ::convert
+                    ::Into<
+                        terrars
+                        ::BlockAssignable<
                             KendraDataSourceCustomDocumentEnrichmentConfigurationElInlineConfigurationsElConditionElConditionOnValueEl,
                         >,
                     >,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.condition_on_value = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.condition_on_value = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.condition_on_value = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.condition_on_value = std::option::Option::Some(d);
             },
         }
         self
     }
 }
 
-impl ToListMappable for KendraDataSourceCustomDocumentEnrichmentConfigurationElInlineConfigurationsElConditionEl {
+impl terrars
+::ToListMappable for KendraDataSourceCustomDocumentEnrichmentConfigurationElInlineConfigurationsElConditionEl {
     type O =
-        BlockAssignable<KendraDataSourceCustomDocumentEnrichmentConfigurationElInlineConfigurationsElConditionEl>;
+        terrars
+        ::BlockAssignable<KendraDataSourceCustomDocumentEnrichmentConfigurationElInlineConfigurationsElConditionEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -1818,10 +1995,10 @@ impl ToListMappable for KendraDataSourceCustomDocumentEnrichmentConfigurationElI
 }
 
 pub struct BuildKendraDataSourceCustomDocumentEnrichmentConfigurationElInlineConfigurationsElConditionEl {
-    #[doc= ""]
-    pub condition_document_attribute_key: PrimField<String>,
-    #[doc= ""]
-    pub operator: PrimField<String>,
+    #[doc = ""]
+    pub condition_document_attribute_key: terrars::PrimField<std::string::String>,
+    #[doc = ""]
+    pub operator: terrars::PrimField<std::string::String>,
 }
 
 impl BuildKendraDataSourceCustomDocumentEnrichmentConfigurationElInlineConfigurationsElConditionEl {
@@ -1830,20 +2007,20 @@ impl BuildKendraDataSourceCustomDocumentEnrichmentConfigurationElInlineConfigura
             condition_document_attribute_key: self.condition_document_attribute_key,
             operator: self.operator,
             condition_on_value: core::default::Default::default(),
-            dynamic: Default::default(),
+            dynamic: core::default::Default::default(),
         }
     }
 }
 
 pub struct KendraDataSourceCustomDocumentEnrichmentConfigurationElInlineConfigurationsElConditionElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for KendraDataSourceCustomDocumentEnrichmentConfigurationElInlineConfigurationsElConditionElRef {
+impl terrars::Ref for KendraDataSourceCustomDocumentEnrichmentConfigurationElInlineConfigurationsElConditionElRef {
     fn new(
-        shared: StackShared,
-        base: String,
+        shared: terrars::StackShared,
+        base: std::string::String,
     ) -> KendraDataSourceCustomDocumentEnrichmentConfigurationElInlineConfigurationsElConditionElRef {
         KendraDataSourceCustomDocumentEnrichmentConfigurationElInlineConfigurationsElConditionElRef {
             shared: shared,
@@ -1853,76 +2030,82 @@ impl Ref for KendraDataSourceCustomDocumentEnrichmentConfigurationElInlineConfig
 }
 
 impl KendraDataSourceCustomDocumentEnrichmentConfigurationElInlineConfigurationsElConditionElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `condition_document_attribute_key` after provisioning.\n"]
-    pub fn condition_document_attribute_key(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.condition_document_attribute_key", self.base))
+    #[doc = "Get a reference to the value of field `condition_document_attribute_key` after provisioning.\n"]
+    pub fn condition_document_attribute_key(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.condition_document_attribute_key", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `operator` after provisioning.\n"]
-    pub fn operator(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.operator", self.base))
+    #[doc = "Get a reference to the value of field `operator` after provisioning.\n"]
+    pub fn operator(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.operator", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `condition_on_value` after provisioning.\n"]
+    #[doc = "Get a reference to the value of field `condition_on_value` after provisioning.\n"]
     pub fn condition_on_value(
         &self,
-    ) -> ListRef<
+    ) -> terrars
+    ::ListRef<
         KendraDataSourceCustomDocumentEnrichmentConfigurationElInlineConfigurationsElConditionElConditionOnValueElRef,
     > {
-        ListRef::new(self.shared().clone(), format!("{}.condition_on_value", self.base))
+        terrars::ListRef::new(self.shared().clone(), format!("{}.condition_on_value", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct KendraDataSourceCustomDocumentEnrichmentConfigurationElInlineConfigurationsElTargetElTargetDocumentAttributeValueEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    date_value: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    long_value: Option<PrimField<f64>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    string_list_value: Option<SetField<PrimField<String>>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    string_value: Option<PrimField<String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    date_value: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    long_value: std::option::Option<terrars::PrimField<f64>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    string_list_value: std::option::Option<terrars::SetField<terrars::PrimField<std::string::String>>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    string_value: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
 impl KendraDataSourceCustomDocumentEnrichmentConfigurationElInlineConfigurationsElTargetElTargetDocumentAttributeValueEl {
-    #[doc= "Set the field `date_value`.\n"]
-    pub fn set_date_value(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.date_value = Some(v.into());
+    #[doc = "Set the field `date_value`.\n"]
+    pub fn set_date_value(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.date_value = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `long_value`.\n"]
-    pub fn set_long_value(mut self, v: impl Into<PrimField<f64>>) -> Self {
-        self.long_value = Some(v.into());
+    #[doc = "Set the field `long_value`.\n"]
+    pub fn set_long_value(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.long_value = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `string_list_value`.\n"]
-    pub fn set_string_list_value(mut self, v: impl Into<SetField<PrimField<String>>>) -> Self {
-        self.string_list_value = Some(v.into());
+    #[doc = "Set the field `string_list_value`.\n"]
+    pub fn set_string_list_value(
+        mut self,
+        v: impl std::convert::Into<terrars::SetField<terrars::PrimField<std::string::String>>>,
+    ) -> Self {
+        self.string_list_value = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `string_value`.\n"]
-    pub fn set_string_value(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.string_value = Some(v.into());
+    #[doc = "Set the field `string_value`.\n"]
+    pub fn set_string_value(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.string_value = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl ToListMappable for KendraDataSourceCustomDocumentEnrichmentConfigurationElInlineConfigurationsElTargetElTargetDocumentAttributeValueEl {
+impl terrars
+::ToListMappable for KendraDataSourceCustomDocumentEnrichmentConfigurationElInlineConfigurationsElTargetElTargetDocumentAttributeValueEl {
     type O =
-        BlockAssignable<
+        terrars
+        ::BlockAssignable<
             KendraDataSourceCustomDocumentEnrichmentConfigurationElInlineConfigurationsElTargetElTargetDocumentAttributeValueEl,
         >;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -1946,14 +2129,15 @@ impl BuildKendraDataSourceCustomDocumentEnrichmentConfigurationElInlineConfigura
 }
 
 pub struct KendraDataSourceCustomDocumentEnrichmentConfigurationElInlineConfigurationsElTargetElTargetDocumentAttributeValueElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for KendraDataSourceCustomDocumentEnrichmentConfigurationElInlineConfigurationsElTargetElTargetDocumentAttributeValueElRef {
+impl terrars
+::Ref for KendraDataSourceCustomDocumentEnrichmentConfigurationElInlineConfigurationsElTargetElTargetDocumentAttributeValueElRef {
     fn new(
-        shared: StackShared,
-        base: String,
+        shared: terrars::StackShared,
+        base: std::string::String,
     ) -> KendraDataSourceCustomDocumentEnrichmentConfigurationElInlineConfigurationsElTargetElTargetDocumentAttributeValueElRef {
         KendraDataSourceCustomDocumentEnrichmentConfigurationElInlineConfigurationsElTargetElTargetDocumentAttributeValueElRef {
             shared: shared,
@@ -1963,35 +2147,38 @@ impl Ref for KendraDataSourceCustomDocumentEnrichmentConfigurationElInlineConfig
 }
 
 impl KendraDataSourceCustomDocumentEnrichmentConfigurationElInlineConfigurationsElTargetElTargetDocumentAttributeValueElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `date_value` after provisioning.\n"]
-    pub fn date_value(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.date_value", self.base))
+    #[doc = "Get a reference to the value of field `date_value` after provisioning.\n"]
+    pub fn date_value(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.date_value", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `long_value` after provisioning.\n"]
-    pub fn long_value(&self) -> PrimExpr<f64> {
-        PrimExpr::new(self.shared().clone(), format!("{}.long_value", self.base))
+    #[doc = "Get a reference to the value of field `long_value` after provisioning.\n"]
+    pub fn long_value(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.long_value", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `string_list_value` after provisioning.\n"]
-    pub fn string_list_value(&self) -> SetRef<PrimExpr<String>> {
-        SetRef::new(self.shared().clone(), format!("{}.string_list_value", self.base))
+    #[doc = "Get a reference to the value of field `string_list_value` after provisioning.\n"]
+    pub fn string_list_value(&self) -> terrars::SetRef<terrars::PrimExpr<std::string::String>> {
+        terrars::SetRef::new(self.shared().clone(), format!("{}.string_list_value", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `string_value` after provisioning.\n"]
-    pub fn string_value(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.string_value", self.base))
+    #[doc = "Get a reference to the value of field `string_value` after provisioning.\n"]
+    pub fn string_value(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.string_value", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
 struct KendraDataSourceCustomDocumentEnrichmentConfigurationElInlineConfigurationsElTargetElDynamic {
-    target_document_attribute_value: Option<
-        DynamicBlock<
+    target_document_attribute_value: std
+    ::option
+    ::Option<
+        terrars
+        ::DynamicBlock<
             KendraDataSourceCustomDocumentEnrichmentConfigurationElInlineConfigurationsElTargetElTargetDocumentAttributeValueEl,
         >,
     >,
@@ -1999,13 +2186,17 @@ struct KendraDataSourceCustomDocumentEnrichmentConfigurationElInlineConfiguratio
 
 #[derive(Serialize)]
 pub struct KendraDataSourceCustomDocumentEnrichmentConfigurationElInlineConfigurationsElTargetEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    target_document_attribute_key: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    target_document_attribute_value_deletion: Option<PrimField<bool>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    target_document_attribute_value: Option<
-        Vec<
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    target_document_attribute_key: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    target_document_attribute_value_deletion: std::option::Option<terrars::PrimField<bool>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    target_document_attribute_value: std
+    ::option
+    ::Option<
+        std
+        ::vec
+        ::Vec<
             KendraDataSourceCustomDocumentEnrichmentConfigurationElInlineConfigurationsElTargetElTargetDocumentAttributeValueEl,
         >,
     >,
@@ -2013,47 +2204,58 @@ pub struct KendraDataSourceCustomDocumentEnrichmentConfigurationElInlineConfigur
 }
 
 impl KendraDataSourceCustomDocumentEnrichmentConfigurationElInlineConfigurationsElTargetEl {
-    #[doc= "Set the field `target_document_attribute_key`.\n"]
-    pub fn set_target_document_attribute_key(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.target_document_attribute_key = Some(v.into());
+    #[doc = "Set the field `target_document_attribute_key`.\n"]
+    pub fn set_target_document_attribute_key(
+        mut self,
+        v: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.target_document_attribute_key = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `target_document_attribute_value_deletion`.\n"]
-    pub fn set_target_document_attribute_value_deletion(mut self, v: impl Into<PrimField<bool>>) -> Self {
-        self.target_document_attribute_value_deletion = Some(v.into());
+    #[doc = "Set the field `target_document_attribute_value_deletion`.\n"]
+    pub fn set_target_document_attribute_value_deletion(
+        mut self,
+        v: impl std::convert::Into<terrars::PrimField<bool>>,
+    ) -> Self {
+        self.target_document_attribute_value_deletion = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `target_document_attribute_value`.\n"]
+    #[doc = "Set the field `target_document_attribute_value`.\n"]
     pub fn set_target_document_attribute_value(
         mut self,
         v:
             impl
 
-                    Into<
-                        BlockAssignable<
+                    std
+                    ::convert
+                    ::Into<
+                        terrars
+                        ::BlockAssignable<
                             KendraDataSourceCustomDocumentEnrichmentConfigurationElInlineConfigurationsElTargetElTargetDocumentAttributeValueEl,
                         >,
                     >,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.target_document_attribute_value = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.target_document_attribute_value = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.target_document_attribute_value = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.target_document_attribute_value = std::option::Option::Some(d);
             },
         }
         self
     }
 }
 
-impl ToListMappable for KendraDataSourceCustomDocumentEnrichmentConfigurationElInlineConfigurationsElTargetEl {
-    type O = BlockAssignable<KendraDataSourceCustomDocumentEnrichmentConfigurationElInlineConfigurationsElTargetEl>;
+impl terrars::ToListMappable for KendraDataSourceCustomDocumentEnrichmentConfigurationElInlineConfigurationsElTargetEl {
+    type O =
+        terrars
+        ::BlockAssignable<KendraDataSourceCustomDocumentEnrichmentConfigurationElInlineConfigurationsElTargetEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -2069,20 +2271,20 @@ impl BuildKendraDataSourceCustomDocumentEnrichmentConfigurationElInlineConfigura
             target_document_attribute_key: core::default::Default::default(),
             target_document_attribute_value_deletion: core::default::Default::default(),
             target_document_attribute_value: core::default::Default::default(),
-            dynamic: Default::default(),
+            dynamic: core::default::Default::default(),
         }
     }
 }
 
 pub struct KendraDataSourceCustomDocumentEnrichmentConfigurationElInlineConfigurationsElTargetElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for KendraDataSourceCustomDocumentEnrichmentConfigurationElInlineConfigurationsElTargetElRef {
+impl terrars::Ref for KendraDataSourceCustomDocumentEnrichmentConfigurationElInlineConfigurationsElTargetElRef {
     fn new(
-        shared: StackShared,
-        base: String,
+        shared: terrars::StackShared,
+        base: std::string::String,
     ) -> KendraDataSourceCustomDocumentEnrichmentConfigurationElInlineConfigurationsElTargetElRef {
         KendraDataSourceCustomDocumentEnrichmentConfigurationElInlineConfigurationsElTargetElRef {
             shared: shared,
@@ -2092,110 +2294,129 @@ impl Ref for KendraDataSourceCustomDocumentEnrichmentConfigurationElInlineConfig
 }
 
 impl KendraDataSourceCustomDocumentEnrichmentConfigurationElInlineConfigurationsElTargetElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `target_document_attribute_key` after provisioning.\n"]
-    pub fn target_document_attribute_key(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.target_document_attribute_key", self.base))
+    #[doc = "Get a reference to the value of field `target_document_attribute_key` after provisioning.\n"]
+    pub fn target_document_attribute_key(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.target_document_attribute_key", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `target_document_attribute_value_deletion` after provisioning.\n"]
-    pub fn target_document_attribute_value_deletion(&self) -> PrimExpr<bool> {
-        PrimExpr::new(self.shared().clone(), format!("{}.target_document_attribute_value_deletion", self.base))
+    #[doc = "Get a reference to the value of field `target_document_attribute_value_deletion` after provisioning.\n"]
+    pub fn target_document_attribute_value_deletion(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(
+            self.shared().clone(),
+            format!("{}.target_document_attribute_value_deletion", self.base),
+        )
     }
 
-    #[doc= "Get a reference to the value of field `target_document_attribute_value` after provisioning.\n"]
+    #[doc = "Get a reference to the value of field `target_document_attribute_value` after provisioning.\n"]
     pub fn target_document_attribute_value(
         &self,
-    ) -> ListRef<
+    ) -> terrars
+    ::ListRef<
         KendraDataSourceCustomDocumentEnrichmentConfigurationElInlineConfigurationsElTargetElTargetDocumentAttributeValueElRef,
     > {
-        ListRef::new(self.shared().clone(), format!("{}.target_document_attribute_value", self.base))
+        terrars::ListRef::new(self.shared().clone(), format!("{}.target_document_attribute_value", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
 struct KendraDataSourceCustomDocumentEnrichmentConfigurationElInlineConfigurationsElDynamic {
-    condition: Option<
-        DynamicBlock<KendraDataSourceCustomDocumentEnrichmentConfigurationElInlineConfigurationsElConditionEl>,
+    condition: std
+    ::option
+    ::Option<
+        terrars
+        ::DynamicBlock<KendraDataSourceCustomDocumentEnrichmentConfigurationElInlineConfigurationsElConditionEl>,
     >,
-    target: Option<
-        DynamicBlock<KendraDataSourceCustomDocumentEnrichmentConfigurationElInlineConfigurationsElTargetEl>,
+    target: std
+    ::option
+    ::Option<
+        terrars::DynamicBlock<KendraDataSourceCustomDocumentEnrichmentConfigurationElInlineConfigurationsElTargetEl>,
     >,
 }
 
 #[derive(Serialize)]
 pub struct KendraDataSourceCustomDocumentEnrichmentConfigurationElInlineConfigurationsEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    document_content_deletion: Option<PrimField<bool>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    condition: Option<Vec<KendraDataSourceCustomDocumentEnrichmentConfigurationElInlineConfigurationsElConditionEl>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    target: Option<Vec<KendraDataSourceCustomDocumentEnrichmentConfigurationElInlineConfigurationsElTargetEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    document_content_deletion: std::option::Option<terrars::PrimField<bool>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    condition: std
+    ::option
+    ::Option<std::vec::Vec<KendraDataSourceCustomDocumentEnrichmentConfigurationElInlineConfigurationsElConditionEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    target: std
+    ::option
+    ::Option<std::vec::Vec<KendraDataSourceCustomDocumentEnrichmentConfigurationElInlineConfigurationsElTargetEl>>,
     dynamic: KendraDataSourceCustomDocumentEnrichmentConfigurationElInlineConfigurationsElDynamic,
 }
 
 impl KendraDataSourceCustomDocumentEnrichmentConfigurationElInlineConfigurationsEl {
-    #[doc= "Set the field `document_content_deletion`.\n"]
-    pub fn set_document_content_deletion(mut self, v: impl Into<PrimField<bool>>) -> Self {
-        self.document_content_deletion = Some(v.into());
+    #[doc = "Set the field `document_content_deletion`.\n"]
+    pub fn set_document_content_deletion(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
+        self.document_content_deletion = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `condition`.\n"]
+    #[doc = "Set the field `condition`.\n"]
     pub fn set_condition(
         mut self,
         v:
             impl
 
-                    Into<
-                        BlockAssignable<
+                    std
+                    ::convert
+                    ::Into<
+                        terrars
+                        ::BlockAssignable<
                             KendraDataSourceCustomDocumentEnrichmentConfigurationElInlineConfigurationsElConditionEl,
                         >,
                     >,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.condition = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.condition = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.condition = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.condition = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Set the field `target`.\n"]
+    #[doc = "Set the field `target`.\n"]
     pub fn set_target(
         mut self,
         v:
             impl
 
-                    Into<
-                        BlockAssignable<
+                    std
+                    ::convert
+                    ::Into<
+                        terrars
+                        ::BlockAssignable<
                             KendraDataSourceCustomDocumentEnrichmentConfigurationElInlineConfigurationsElTargetEl,
                         >,
                     >,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.target = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.target = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.target = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.target = std::option::Option::Some(d);
             },
         }
         self
     }
 }
 
-impl ToListMappable for KendraDataSourceCustomDocumentEnrichmentConfigurationElInlineConfigurationsEl {
-    type O = BlockAssignable<KendraDataSourceCustomDocumentEnrichmentConfigurationElInlineConfigurationsEl>;
+impl terrars::ToListMappable for KendraDataSourceCustomDocumentEnrichmentConfigurationElInlineConfigurationsEl {
+    type O = terrars::BlockAssignable<KendraDataSourceCustomDocumentEnrichmentConfigurationElInlineConfigurationsEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -2211,20 +2432,20 @@ impl BuildKendraDataSourceCustomDocumentEnrichmentConfigurationElInlineConfigura
             document_content_deletion: core::default::Default::default(),
             condition: core::default::Default::default(),
             target: core::default::Default::default(),
-            dynamic: Default::default(),
+            dynamic: core::default::Default::default(),
         }
     }
 }
 
 pub struct KendraDataSourceCustomDocumentEnrichmentConfigurationElInlineConfigurationsElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for KendraDataSourceCustomDocumentEnrichmentConfigurationElInlineConfigurationsElRef {
+impl terrars::Ref for KendraDataSourceCustomDocumentEnrichmentConfigurationElInlineConfigurationsElRef {
     fn new(
-        shared: StackShared,
-        base: String,
+        shared: terrars::StackShared,
+        base: std::string::String,
     ) -> KendraDataSourceCustomDocumentEnrichmentConfigurationElInlineConfigurationsElRef {
         KendraDataSourceCustomDocumentEnrichmentConfigurationElInlineConfigurationsElRef {
             shared: shared,
@@ -2234,76 +2455,82 @@ impl Ref for KendraDataSourceCustomDocumentEnrichmentConfigurationElInlineConfig
 }
 
 impl KendraDataSourceCustomDocumentEnrichmentConfigurationElInlineConfigurationsElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `document_content_deletion` after provisioning.\n"]
-    pub fn document_content_deletion(&self) -> PrimExpr<bool> {
-        PrimExpr::new(self.shared().clone(), format!("{}.document_content_deletion", self.base))
+    #[doc = "Get a reference to the value of field `document_content_deletion` after provisioning.\n"]
+    pub fn document_content_deletion(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.document_content_deletion", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `condition` after provisioning.\n"]
+    #[doc = "Get a reference to the value of field `condition` after provisioning.\n"]
     pub fn condition(
         &self,
-    ) -> ListRef<KendraDataSourceCustomDocumentEnrichmentConfigurationElInlineConfigurationsElConditionElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.condition", self.base))
+    ) -> terrars
+    ::ListRef<KendraDataSourceCustomDocumentEnrichmentConfigurationElInlineConfigurationsElConditionElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.condition", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `target` after provisioning.\n"]
+    #[doc = "Get a reference to the value of field `target` after provisioning.\n"]
     pub fn target(
         &self,
-    ) -> ListRef<KendraDataSourceCustomDocumentEnrichmentConfigurationElInlineConfigurationsElTargetElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.target", self.base))
+    ) -> terrars::ListRef<KendraDataSourceCustomDocumentEnrichmentConfigurationElInlineConfigurationsElTargetElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.target", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct KendraDataSourceCustomDocumentEnrichmentConfigurationElPostExtractionHookConfigurationElInvocationConditionElConditionOnValueEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    date_value: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    long_value: Option<PrimField<f64>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    string_list_value: Option<SetField<PrimField<String>>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    string_value: Option<PrimField<String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    date_value: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    long_value: std::option::Option<terrars::PrimField<f64>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    string_list_value: std::option::Option<terrars::SetField<terrars::PrimField<std::string::String>>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    string_value: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
 impl KendraDataSourceCustomDocumentEnrichmentConfigurationElPostExtractionHookConfigurationElInvocationConditionElConditionOnValueEl {
-    #[doc= "Set the field `date_value`.\n"]
-    pub fn set_date_value(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.date_value = Some(v.into());
+    #[doc = "Set the field `date_value`.\n"]
+    pub fn set_date_value(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.date_value = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `long_value`.\n"]
-    pub fn set_long_value(mut self, v: impl Into<PrimField<f64>>) -> Self {
-        self.long_value = Some(v.into());
+    #[doc = "Set the field `long_value`.\n"]
+    pub fn set_long_value(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.long_value = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `string_list_value`.\n"]
-    pub fn set_string_list_value(mut self, v: impl Into<SetField<PrimField<String>>>) -> Self {
-        self.string_list_value = Some(v.into());
+    #[doc = "Set the field `string_list_value`.\n"]
+    pub fn set_string_list_value(
+        mut self,
+        v: impl std::convert::Into<terrars::SetField<terrars::PrimField<std::string::String>>>,
+    ) -> Self {
+        self.string_list_value = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `string_value`.\n"]
-    pub fn set_string_value(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.string_value = Some(v.into());
+    #[doc = "Set the field `string_value`.\n"]
+    pub fn set_string_value(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.string_value = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl ToListMappable for KendraDataSourceCustomDocumentEnrichmentConfigurationElPostExtractionHookConfigurationElInvocationConditionElConditionOnValueEl {
+impl terrars
+::ToListMappable for KendraDataSourceCustomDocumentEnrichmentConfigurationElPostExtractionHookConfigurationElInvocationConditionElConditionOnValueEl {
     type O =
-        BlockAssignable<
+        terrars
+        ::BlockAssignable<
             KendraDataSourceCustomDocumentEnrichmentConfigurationElPostExtractionHookConfigurationElInvocationConditionElConditionOnValueEl,
         >;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -2327,14 +2554,15 @@ impl BuildKendraDataSourceCustomDocumentEnrichmentConfigurationElPostExtractionH
 }
 
 pub struct KendraDataSourceCustomDocumentEnrichmentConfigurationElPostExtractionHookConfigurationElInvocationConditionElConditionOnValueElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for KendraDataSourceCustomDocumentEnrichmentConfigurationElPostExtractionHookConfigurationElInvocationConditionElConditionOnValueElRef {
+impl terrars
+::Ref for KendraDataSourceCustomDocumentEnrichmentConfigurationElPostExtractionHookConfigurationElInvocationConditionElConditionOnValueElRef {
     fn new(
-        shared: StackShared,
-        base: String,
+        shared: terrars::StackShared,
+        base: std::string::String,
     ) -> KendraDataSourceCustomDocumentEnrichmentConfigurationElPostExtractionHookConfigurationElInvocationConditionElConditionOnValueElRef {
         KendraDataSourceCustomDocumentEnrichmentConfigurationElPostExtractionHookConfigurationElInvocationConditionElConditionOnValueElRef {
             shared: shared,
@@ -2344,35 +2572,38 @@ impl Ref for KendraDataSourceCustomDocumentEnrichmentConfigurationElPostExtracti
 }
 
 impl KendraDataSourceCustomDocumentEnrichmentConfigurationElPostExtractionHookConfigurationElInvocationConditionElConditionOnValueElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `date_value` after provisioning.\n"]
-    pub fn date_value(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.date_value", self.base))
+    #[doc = "Get a reference to the value of field `date_value` after provisioning.\n"]
+    pub fn date_value(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.date_value", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `long_value` after provisioning.\n"]
-    pub fn long_value(&self) -> PrimExpr<f64> {
-        PrimExpr::new(self.shared().clone(), format!("{}.long_value", self.base))
+    #[doc = "Get a reference to the value of field `long_value` after provisioning.\n"]
+    pub fn long_value(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.long_value", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `string_list_value` after provisioning.\n"]
-    pub fn string_list_value(&self) -> SetRef<PrimExpr<String>> {
-        SetRef::new(self.shared().clone(), format!("{}.string_list_value", self.base))
+    #[doc = "Get a reference to the value of field `string_list_value` after provisioning.\n"]
+    pub fn string_list_value(&self) -> terrars::SetRef<terrars::PrimExpr<std::string::String>> {
+        terrars::SetRef::new(self.shared().clone(), format!("{}.string_list_value", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `string_value` after provisioning.\n"]
-    pub fn string_value(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.string_value", self.base))
+    #[doc = "Get a reference to the value of field `string_value` after provisioning.\n"]
+    pub fn string_value(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.string_value", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
 struct KendraDataSourceCustomDocumentEnrichmentConfigurationElPostExtractionHookConfigurationElInvocationConditionElDynamic {
-    condition_on_value: Option<
-        DynamicBlock<
+    condition_on_value: std
+    ::option
+    ::Option<
+        terrars
+        ::DynamicBlock<
             KendraDataSourceCustomDocumentEnrichmentConfigurationElPostExtractionHookConfigurationElInvocationConditionElConditionOnValueEl,
         >,
     >,
@@ -2380,11 +2611,15 @@ struct KendraDataSourceCustomDocumentEnrichmentConfigurationElPostExtractionHook
 
 #[derive(Serialize)]
 pub struct KendraDataSourceCustomDocumentEnrichmentConfigurationElPostExtractionHookConfigurationElInvocationConditionEl {
-    condition_document_attribute_key: PrimField<String>,
-    operator: PrimField<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    condition_on_value: Option<
-        Vec<
+    condition_document_attribute_key: terrars::PrimField<std::string::String>,
+    operator: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    condition_on_value: std
+    ::option
+    ::Option<
+        std
+        ::vec
+        ::Vec<
             KendraDataSourceCustomDocumentEnrichmentConfigurationElPostExtractionHookConfigurationElInvocationConditionElConditionOnValueEl,
         >,
     >,
@@ -2392,38 +2627,43 @@ pub struct KendraDataSourceCustomDocumentEnrichmentConfigurationElPostExtraction
 }
 
 impl KendraDataSourceCustomDocumentEnrichmentConfigurationElPostExtractionHookConfigurationElInvocationConditionEl {
-    #[doc= "Set the field `condition_on_value`.\n"]
+    #[doc = "Set the field `condition_on_value`.\n"]
     pub fn set_condition_on_value(
         mut self,
         v:
             impl
 
-                    Into<
-                        BlockAssignable<
+                    std
+                    ::convert
+                    ::Into<
+                        terrars
+                        ::BlockAssignable<
                             KendraDataSourceCustomDocumentEnrichmentConfigurationElPostExtractionHookConfigurationElInvocationConditionElConditionOnValueEl,
                         >,
                     >,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.condition_on_value = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.condition_on_value = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.condition_on_value = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.condition_on_value = std::option::Option::Some(d);
             },
         }
         self
     }
 }
 
-impl ToListMappable for KendraDataSourceCustomDocumentEnrichmentConfigurationElPostExtractionHookConfigurationElInvocationConditionEl {
+impl terrars
+::ToListMappable for KendraDataSourceCustomDocumentEnrichmentConfigurationElPostExtractionHookConfigurationElInvocationConditionEl {
     type O =
-        BlockAssignable<
+        terrars
+        ::BlockAssignable<
             KendraDataSourceCustomDocumentEnrichmentConfigurationElPostExtractionHookConfigurationElInvocationConditionEl,
         >;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -2432,10 +2672,10 @@ impl ToListMappable for KendraDataSourceCustomDocumentEnrichmentConfigurationElP
 }
 
 pub struct BuildKendraDataSourceCustomDocumentEnrichmentConfigurationElPostExtractionHookConfigurationElInvocationConditionEl {
-    #[doc= ""]
-    pub condition_document_attribute_key: PrimField<String>,
-    #[doc= ""]
-    pub operator: PrimField<String>,
+    #[doc = ""]
+    pub condition_document_attribute_key: terrars::PrimField<std::string::String>,
+    #[doc = ""]
+    pub operator: terrars::PrimField<std::string::String>,
 }
 
 impl BuildKendraDataSourceCustomDocumentEnrichmentConfigurationElPostExtractionHookConfigurationElInvocationConditionEl {
@@ -2446,20 +2686,21 @@ impl BuildKendraDataSourceCustomDocumentEnrichmentConfigurationElPostExtractionH
             condition_document_attribute_key: self.condition_document_attribute_key,
             operator: self.operator,
             condition_on_value: core::default::Default::default(),
-            dynamic: Default::default(),
+            dynamic: core::default::Default::default(),
         }
     }
 }
 
 pub struct KendraDataSourceCustomDocumentEnrichmentConfigurationElPostExtractionHookConfigurationElInvocationConditionElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for KendraDataSourceCustomDocumentEnrichmentConfigurationElPostExtractionHookConfigurationElInvocationConditionElRef {
+impl terrars
+::Ref for KendraDataSourceCustomDocumentEnrichmentConfigurationElPostExtractionHookConfigurationElInvocationConditionElRef {
     fn new(
-        shared: StackShared,
-        base: String,
+        shared: terrars::StackShared,
+        base: std::string::String,
     ) -> KendraDataSourceCustomDocumentEnrichmentConfigurationElPostExtractionHookConfigurationElInvocationConditionElRef {
         KendraDataSourceCustomDocumentEnrichmentConfigurationElPostExtractionHookConfigurationElInvocationConditionElRef {
             shared: shared,
@@ -2469,34 +2710,38 @@ impl Ref for KendraDataSourceCustomDocumentEnrichmentConfigurationElPostExtracti
 }
 
 impl KendraDataSourceCustomDocumentEnrichmentConfigurationElPostExtractionHookConfigurationElInvocationConditionElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `condition_document_attribute_key` after provisioning.\n"]
-    pub fn condition_document_attribute_key(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.condition_document_attribute_key", self.base))
+    #[doc = "Get a reference to the value of field `condition_document_attribute_key` after provisioning.\n"]
+    pub fn condition_document_attribute_key(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.condition_document_attribute_key", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `operator` after provisioning.\n"]
-    pub fn operator(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.operator", self.base))
+    #[doc = "Get a reference to the value of field `operator` after provisioning.\n"]
+    pub fn operator(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.operator", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `condition_on_value` after provisioning.\n"]
+    #[doc = "Get a reference to the value of field `condition_on_value` after provisioning.\n"]
     pub fn condition_on_value(
         &self,
-    ) -> ListRef<
+    ) -> terrars
+    ::ListRef<
         KendraDataSourceCustomDocumentEnrichmentConfigurationElPostExtractionHookConfigurationElInvocationConditionElConditionOnValueElRef,
     > {
-        ListRef::new(self.shared().clone(), format!("{}.condition_on_value", self.base))
+        terrars::ListRef::new(self.shared().clone(), format!("{}.condition_on_value", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
 struct KendraDataSourceCustomDocumentEnrichmentConfigurationElPostExtractionHookConfigurationElDynamic {
-    invocation_condition: Option<
-        DynamicBlock<
+    invocation_condition: std
+    ::option
+    ::Option<
+        terrars
+        ::DynamicBlock<
             KendraDataSourceCustomDocumentEnrichmentConfigurationElPostExtractionHookConfigurationElInvocationConditionEl,
         >,
     >,
@@ -2504,11 +2749,15 @@ struct KendraDataSourceCustomDocumentEnrichmentConfigurationElPostExtractionHook
 
 #[derive(Serialize)]
 pub struct KendraDataSourceCustomDocumentEnrichmentConfigurationElPostExtractionHookConfigurationEl {
-    lambda_arn: PrimField<String>,
-    s3_bucket: PrimField<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    invocation_condition: Option<
-        Vec<
+    lambda_arn: terrars::PrimField<std::string::String>,
+    s3_bucket: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    invocation_condition: std
+    ::option
+    ::Option<
+        std
+        ::vec
+        ::Vec<
             KendraDataSourceCustomDocumentEnrichmentConfigurationElPostExtractionHookConfigurationElInvocationConditionEl,
         >,
     >,
@@ -2516,36 +2765,41 @@ pub struct KendraDataSourceCustomDocumentEnrichmentConfigurationElPostExtraction
 }
 
 impl KendraDataSourceCustomDocumentEnrichmentConfigurationElPostExtractionHookConfigurationEl {
-    #[doc= "Set the field `invocation_condition`.\n"]
+    #[doc = "Set the field `invocation_condition`.\n"]
     pub fn set_invocation_condition(
         mut self,
         v:
             impl
 
-                    Into<
-                        BlockAssignable<
+                    std
+                    ::convert
+                    ::Into<
+                        terrars
+                        ::BlockAssignable<
                             KendraDataSourceCustomDocumentEnrichmentConfigurationElPostExtractionHookConfigurationElInvocationConditionEl,
                         >,
                     >,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.invocation_condition = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.invocation_condition = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.invocation_condition = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.invocation_condition = std::option::Option::Some(d);
             },
         }
         self
     }
 }
 
-impl ToListMappable for KendraDataSourceCustomDocumentEnrichmentConfigurationElPostExtractionHookConfigurationEl {
+impl terrars
+::ToListMappable for KendraDataSourceCustomDocumentEnrichmentConfigurationElPostExtractionHookConfigurationEl {
     type O =
-        BlockAssignable<KendraDataSourceCustomDocumentEnrichmentConfigurationElPostExtractionHookConfigurationEl>;
+        terrars
+        ::BlockAssignable<KendraDataSourceCustomDocumentEnrichmentConfigurationElPostExtractionHookConfigurationEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -2554,10 +2808,10 @@ impl ToListMappable for KendraDataSourceCustomDocumentEnrichmentConfigurationElP
 }
 
 pub struct BuildKendraDataSourceCustomDocumentEnrichmentConfigurationElPostExtractionHookConfigurationEl {
-    #[doc= ""]
-    pub lambda_arn: PrimField<String>,
-    #[doc= ""]
-    pub s3_bucket: PrimField<String>,
+    #[doc = ""]
+    pub lambda_arn: terrars::PrimField<std::string::String>,
+    #[doc = ""]
+    pub s3_bucket: terrars::PrimField<std::string::String>,
 }
 
 impl BuildKendraDataSourceCustomDocumentEnrichmentConfigurationElPostExtractionHookConfigurationEl {
@@ -2566,20 +2820,20 @@ impl BuildKendraDataSourceCustomDocumentEnrichmentConfigurationElPostExtractionH
             lambda_arn: self.lambda_arn,
             s3_bucket: self.s3_bucket,
             invocation_condition: core::default::Default::default(),
-            dynamic: Default::default(),
+            dynamic: core::default::Default::default(),
         }
     }
 }
 
 pub struct KendraDataSourceCustomDocumentEnrichmentConfigurationElPostExtractionHookConfigurationElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for KendraDataSourceCustomDocumentEnrichmentConfigurationElPostExtractionHookConfigurationElRef {
+impl terrars::Ref for KendraDataSourceCustomDocumentEnrichmentConfigurationElPostExtractionHookConfigurationElRef {
     fn new(
-        shared: StackShared,
-        base: String,
+        shared: terrars::StackShared,
+        base: std::string::String,
     ) -> KendraDataSourceCustomDocumentEnrichmentConfigurationElPostExtractionHookConfigurationElRef {
         KendraDataSourceCustomDocumentEnrichmentConfigurationElPostExtractionHookConfigurationElRef {
             shared: shared,
@@ -2589,76 +2843,82 @@ impl Ref for KendraDataSourceCustomDocumentEnrichmentConfigurationElPostExtracti
 }
 
 impl KendraDataSourceCustomDocumentEnrichmentConfigurationElPostExtractionHookConfigurationElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `lambda_arn` after provisioning.\n"]
-    pub fn lambda_arn(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.lambda_arn", self.base))
+    #[doc = "Get a reference to the value of field `lambda_arn` after provisioning.\n"]
+    pub fn lambda_arn(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.lambda_arn", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `s3_bucket` after provisioning.\n"]
-    pub fn s3_bucket(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.s3_bucket", self.base))
+    #[doc = "Get a reference to the value of field `s3_bucket` after provisioning.\n"]
+    pub fn s3_bucket(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.s3_bucket", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `invocation_condition` after provisioning.\n"]
+    #[doc = "Get a reference to the value of field `invocation_condition` after provisioning.\n"]
     pub fn invocation_condition(
         &self,
-    ) -> ListRef<
+    ) -> terrars
+    ::ListRef<
         KendraDataSourceCustomDocumentEnrichmentConfigurationElPostExtractionHookConfigurationElInvocationConditionElRef,
     > {
-        ListRef::new(self.shared().clone(), format!("{}.invocation_condition", self.base))
+        terrars::ListRef::new(self.shared().clone(), format!("{}.invocation_condition", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct KendraDataSourceCustomDocumentEnrichmentConfigurationElPreExtractionHookConfigurationElInvocationConditionElConditionOnValueEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    date_value: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    long_value: Option<PrimField<f64>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    string_list_value: Option<SetField<PrimField<String>>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    string_value: Option<PrimField<String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    date_value: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    long_value: std::option::Option<terrars::PrimField<f64>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    string_list_value: std::option::Option<terrars::SetField<terrars::PrimField<std::string::String>>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    string_value: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
 impl KendraDataSourceCustomDocumentEnrichmentConfigurationElPreExtractionHookConfigurationElInvocationConditionElConditionOnValueEl {
-    #[doc= "Set the field `date_value`.\n"]
-    pub fn set_date_value(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.date_value = Some(v.into());
+    #[doc = "Set the field `date_value`.\n"]
+    pub fn set_date_value(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.date_value = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `long_value`.\n"]
-    pub fn set_long_value(mut self, v: impl Into<PrimField<f64>>) -> Self {
-        self.long_value = Some(v.into());
+    #[doc = "Set the field `long_value`.\n"]
+    pub fn set_long_value(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.long_value = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `string_list_value`.\n"]
-    pub fn set_string_list_value(mut self, v: impl Into<SetField<PrimField<String>>>) -> Self {
-        self.string_list_value = Some(v.into());
+    #[doc = "Set the field `string_list_value`.\n"]
+    pub fn set_string_list_value(
+        mut self,
+        v: impl std::convert::Into<terrars::SetField<terrars::PrimField<std::string::String>>>,
+    ) -> Self {
+        self.string_list_value = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `string_value`.\n"]
-    pub fn set_string_value(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.string_value = Some(v.into());
+    #[doc = "Set the field `string_value`.\n"]
+    pub fn set_string_value(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.string_value = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl ToListMappable for KendraDataSourceCustomDocumentEnrichmentConfigurationElPreExtractionHookConfigurationElInvocationConditionElConditionOnValueEl {
+impl terrars
+::ToListMappable for KendraDataSourceCustomDocumentEnrichmentConfigurationElPreExtractionHookConfigurationElInvocationConditionElConditionOnValueEl {
     type O =
-        BlockAssignable<
+        terrars
+        ::BlockAssignable<
             KendraDataSourceCustomDocumentEnrichmentConfigurationElPreExtractionHookConfigurationElInvocationConditionElConditionOnValueEl,
         >;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -2682,14 +2942,15 @@ impl BuildKendraDataSourceCustomDocumentEnrichmentConfigurationElPreExtractionHo
 }
 
 pub struct KendraDataSourceCustomDocumentEnrichmentConfigurationElPreExtractionHookConfigurationElInvocationConditionElConditionOnValueElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for KendraDataSourceCustomDocumentEnrichmentConfigurationElPreExtractionHookConfigurationElInvocationConditionElConditionOnValueElRef {
+impl terrars
+::Ref for KendraDataSourceCustomDocumentEnrichmentConfigurationElPreExtractionHookConfigurationElInvocationConditionElConditionOnValueElRef {
     fn new(
-        shared: StackShared,
-        base: String,
+        shared: terrars::StackShared,
+        base: std::string::String,
     ) -> KendraDataSourceCustomDocumentEnrichmentConfigurationElPreExtractionHookConfigurationElInvocationConditionElConditionOnValueElRef {
         KendraDataSourceCustomDocumentEnrichmentConfigurationElPreExtractionHookConfigurationElInvocationConditionElConditionOnValueElRef {
             shared: shared,
@@ -2699,35 +2960,38 @@ impl Ref for KendraDataSourceCustomDocumentEnrichmentConfigurationElPreExtractio
 }
 
 impl KendraDataSourceCustomDocumentEnrichmentConfigurationElPreExtractionHookConfigurationElInvocationConditionElConditionOnValueElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `date_value` after provisioning.\n"]
-    pub fn date_value(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.date_value", self.base))
+    #[doc = "Get a reference to the value of field `date_value` after provisioning.\n"]
+    pub fn date_value(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.date_value", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `long_value` after provisioning.\n"]
-    pub fn long_value(&self) -> PrimExpr<f64> {
-        PrimExpr::new(self.shared().clone(), format!("{}.long_value", self.base))
+    #[doc = "Get a reference to the value of field `long_value` after provisioning.\n"]
+    pub fn long_value(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.long_value", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `string_list_value` after provisioning.\n"]
-    pub fn string_list_value(&self) -> SetRef<PrimExpr<String>> {
-        SetRef::new(self.shared().clone(), format!("{}.string_list_value", self.base))
+    #[doc = "Get a reference to the value of field `string_list_value` after provisioning.\n"]
+    pub fn string_list_value(&self) -> terrars::SetRef<terrars::PrimExpr<std::string::String>> {
+        terrars::SetRef::new(self.shared().clone(), format!("{}.string_list_value", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `string_value` after provisioning.\n"]
-    pub fn string_value(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.string_value", self.base))
+    #[doc = "Get a reference to the value of field `string_value` after provisioning.\n"]
+    pub fn string_value(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.string_value", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
 struct KendraDataSourceCustomDocumentEnrichmentConfigurationElPreExtractionHookConfigurationElInvocationConditionElDynamic {
-    condition_on_value: Option<
-        DynamicBlock<
+    condition_on_value: std
+    ::option
+    ::Option<
+        terrars
+        ::DynamicBlock<
             KendraDataSourceCustomDocumentEnrichmentConfigurationElPreExtractionHookConfigurationElInvocationConditionElConditionOnValueEl,
         >,
     >,
@@ -2735,11 +2999,15 @@ struct KendraDataSourceCustomDocumentEnrichmentConfigurationElPreExtractionHookC
 
 #[derive(Serialize)]
 pub struct KendraDataSourceCustomDocumentEnrichmentConfigurationElPreExtractionHookConfigurationElInvocationConditionEl {
-    condition_document_attribute_key: PrimField<String>,
-    operator: PrimField<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    condition_on_value: Option<
-        Vec<
+    condition_document_attribute_key: terrars::PrimField<std::string::String>,
+    operator: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    condition_on_value: std
+    ::option
+    ::Option<
+        std
+        ::vec
+        ::Vec<
             KendraDataSourceCustomDocumentEnrichmentConfigurationElPreExtractionHookConfigurationElInvocationConditionElConditionOnValueEl,
         >,
     >,
@@ -2747,38 +3015,43 @@ pub struct KendraDataSourceCustomDocumentEnrichmentConfigurationElPreExtractionH
 }
 
 impl KendraDataSourceCustomDocumentEnrichmentConfigurationElPreExtractionHookConfigurationElInvocationConditionEl {
-    #[doc= "Set the field `condition_on_value`.\n"]
+    #[doc = "Set the field `condition_on_value`.\n"]
     pub fn set_condition_on_value(
         mut self,
         v:
             impl
 
-                    Into<
-                        BlockAssignable<
+                    std
+                    ::convert
+                    ::Into<
+                        terrars
+                        ::BlockAssignable<
                             KendraDataSourceCustomDocumentEnrichmentConfigurationElPreExtractionHookConfigurationElInvocationConditionElConditionOnValueEl,
                         >,
                     >,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.condition_on_value = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.condition_on_value = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.condition_on_value = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.condition_on_value = std::option::Option::Some(d);
             },
         }
         self
     }
 }
 
-impl ToListMappable for KendraDataSourceCustomDocumentEnrichmentConfigurationElPreExtractionHookConfigurationElInvocationConditionEl {
+impl terrars
+::ToListMappable for KendraDataSourceCustomDocumentEnrichmentConfigurationElPreExtractionHookConfigurationElInvocationConditionEl {
     type O =
-        BlockAssignable<
+        terrars
+        ::BlockAssignable<
             KendraDataSourceCustomDocumentEnrichmentConfigurationElPreExtractionHookConfigurationElInvocationConditionEl,
         >;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -2787,10 +3060,10 @@ impl ToListMappable for KendraDataSourceCustomDocumentEnrichmentConfigurationElP
 }
 
 pub struct BuildKendraDataSourceCustomDocumentEnrichmentConfigurationElPreExtractionHookConfigurationElInvocationConditionEl {
-    #[doc= ""]
-    pub condition_document_attribute_key: PrimField<String>,
-    #[doc= ""]
-    pub operator: PrimField<String>,
+    #[doc = ""]
+    pub condition_document_attribute_key: terrars::PrimField<std::string::String>,
+    #[doc = ""]
+    pub operator: terrars::PrimField<std::string::String>,
 }
 
 impl BuildKendraDataSourceCustomDocumentEnrichmentConfigurationElPreExtractionHookConfigurationElInvocationConditionEl {
@@ -2801,20 +3074,21 @@ impl BuildKendraDataSourceCustomDocumentEnrichmentConfigurationElPreExtractionHo
             condition_document_attribute_key: self.condition_document_attribute_key,
             operator: self.operator,
             condition_on_value: core::default::Default::default(),
-            dynamic: Default::default(),
+            dynamic: core::default::Default::default(),
         }
     }
 }
 
 pub struct KendraDataSourceCustomDocumentEnrichmentConfigurationElPreExtractionHookConfigurationElInvocationConditionElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for KendraDataSourceCustomDocumentEnrichmentConfigurationElPreExtractionHookConfigurationElInvocationConditionElRef {
+impl terrars
+::Ref for KendraDataSourceCustomDocumentEnrichmentConfigurationElPreExtractionHookConfigurationElInvocationConditionElRef {
     fn new(
-        shared: StackShared,
-        base: String,
+        shared: terrars::StackShared,
+        base: std::string::String,
     ) -> KendraDataSourceCustomDocumentEnrichmentConfigurationElPreExtractionHookConfigurationElInvocationConditionElRef {
         KendraDataSourceCustomDocumentEnrichmentConfigurationElPreExtractionHookConfigurationElInvocationConditionElRef {
             shared: shared,
@@ -2824,34 +3098,38 @@ impl Ref for KendraDataSourceCustomDocumentEnrichmentConfigurationElPreExtractio
 }
 
 impl KendraDataSourceCustomDocumentEnrichmentConfigurationElPreExtractionHookConfigurationElInvocationConditionElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `condition_document_attribute_key` after provisioning.\n"]
-    pub fn condition_document_attribute_key(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.condition_document_attribute_key", self.base))
+    #[doc = "Get a reference to the value of field `condition_document_attribute_key` after provisioning.\n"]
+    pub fn condition_document_attribute_key(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.condition_document_attribute_key", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `operator` after provisioning.\n"]
-    pub fn operator(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.operator", self.base))
+    #[doc = "Get a reference to the value of field `operator` after provisioning.\n"]
+    pub fn operator(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.operator", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `condition_on_value` after provisioning.\n"]
+    #[doc = "Get a reference to the value of field `condition_on_value` after provisioning.\n"]
     pub fn condition_on_value(
         &self,
-    ) -> ListRef<
+    ) -> terrars
+    ::ListRef<
         KendraDataSourceCustomDocumentEnrichmentConfigurationElPreExtractionHookConfigurationElInvocationConditionElConditionOnValueElRef,
     > {
-        ListRef::new(self.shared().clone(), format!("{}.condition_on_value", self.base))
+        terrars::ListRef::new(self.shared().clone(), format!("{}.condition_on_value", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
 struct KendraDataSourceCustomDocumentEnrichmentConfigurationElPreExtractionHookConfigurationElDynamic {
-    invocation_condition: Option<
-        DynamicBlock<
+    invocation_condition: std
+    ::option
+    ::Option<
+        terrars
+        ::DynamicBlock<
             KendraDataSourceCustomDocumentEnrichmentConfigurationElPreExtractionHookConfigurationElInvocationConditionEl,
         >,
     >,
@@ -2859,11 +3137,15 @@ struct KendraDataSourceCustomDocumentEnrichmentConfigurationElPreExtractionHookC
 
 #[derive(Serialize)]
 pub struct KendraDataSourceCustomDocumentEnrichmentConfigurationElPreExtractionHookConfigurationEl {
-    lambda_arn: PrimField<String>,
-    s3_bucket: PrimField<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    invocation_condition: Option<
-        Vec<
+    lambda_arn: terrars::PrimField<std::string::String>,
+    s3_bucket: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    invocation_condition: std
+    ::option
+    ::Option<
+        std
+        ::vec
+        ::Vec<
             KendraDataSourceCustomDocumentEnrichmentConfigurationElPreExtractionHookConfigurationElInvocationConditionEl,
         >,
     >,
@@ -2871,36 +3153,41 @@ pub struct KendraDataSourceCustomDocumentEnrichmentConfigurationElPreExtractionH
 }
 
 impl KendraDataSourceCustomDocumentEnrichmentConfigurationElPreExtractionHookConfigurationEl {
-    #[doc= "Set the field `invocation_condition`.\n"]
+    #[doc = "Set the field `invocation_condition`.\n"]
     pub fn set_invocation_condition(
         mut self,
         v:
             impl
 
-                    Into<
-                        BlockAssignable<
+                    std
+                    ::convert
+                    ::Into<
+                        terrars
+                        ::BlockAssignable<
                             KendraDataSourceCustomDocumentEnrichmentConfigurationElPreExtractionHookConfigurationElInvocationConditionEl,
                         >,
                     >,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.invocation_condition = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.invocation_condition = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.invocation_condition = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.invocation_condition = std::option::Option::Some(d);
             },
         }
         self
     }
 }
 
-impl ToListMappable for KendraDataSourceCustomDocumentEnrichmentConfigurationElPreExtractionHookConfigurationEl {
+impl terrars
+::ToListMappable for KendraDataSourceCustomDocumentEnrichmentConfigurationElPreExtractionHookConfigurationEl {
     type O =
-        BlockAssignable<KendraDataSourceCustomDocumentEnrichmentConfigurationElPreExtractionHookConfigurationEl>;
+        terrars
+        ::BlockAssignable<KendraDataSourceCustomDocumentEnrichmentConfigurationElPreExtractionHookConfigurationEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -2909,10 +3196,10 @@ impl ToListMappable for KendraDataSourceCustomDocumentEnrichmentConfigurationElP
 }
 
 pub struct BuildKendraDataSourceCustomDocumentEnrichmentConfigurationElPreExtractionHookConfigurationEl {
-    #[doc= ""]
-    pub lambda_arn: PrimField<String>,
-    #[doc= ""]
-    pub s3_bucket: PrimField<String>,
+    #[doc = ""]
+    pub lambda_arn: terrars::PrimField<std::string::String>,
+    #[doc = ""]
+    pub s3_bucket: terrars::PrimField<std::string::String>,
 }
 
 impl BuildKendraDataSourceCustomDocumentEnrichmentConfigurationElPreExtractionHookConfigurationEl {
@@ -2921,20 +3208,20 @@ impl BuildKendraDataSourceCustomDocumentEnrichmentConfigurationElPreExtractionHo
             lambda_arn: self.lambda_arn,
             s3_bucket: self.s3_bucket,
             invocation_condition: core::default::Default::default(),
-            dynamic: Default::default(),
+            dynamic: core::default::Default::default(),
         }
     }
 }
 
 pub struct KendraDataSourceCustomDocumentEnrichmentConfigurationElPreExtractionHookConfigurationElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for KendraDataSourceCustomDocumentEnrichmentConfigurationElPreExtractionHookConfigurationElRef {
+impl terrars::Ref for KendraDataSourceCustomDocumentEnrichmentConfigurationElPreExtractionHookConfigurationElRef {
     fn new(
-        shared: StackShared,
-        base: String,
+        shared: terrars::StackShared,
+        base: std::string::String,
     ) -> KendraDataSourceCustomDocumentEnrichmentConfigurationElPreExtractionHookConfigurationElRef {
         KendraDataSourceCustomDocumentEnrichmentConfigurationElPreExtractionHookConfigurationElRef {
             shared: shared,
@@ -2944,135 +3231,159 @@ impl Ref for KendraDataSourceCustomDocumentEnrichmentConfigurationElPreExtractio
 }
 
 impl KendraDataSourceCustomDocumentEnrichmentConfigurationElPreExtractionHookConfigurationElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `lambda_arn` after provisioning.\n"]
-    pub fn lambda_arn(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.lambda_arn", self.base))
+    #[doc = "Get a reference to the value of field `lambda_arn` after provisioning.\n"]
+    pub fn lambda_arn(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.lambda_arn", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `s3_bucket` after provisioning.\n"]
-    pub fn s3_bucket(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.s3_bucket", self.base))
+    #[doc = "Get a reference to the value of field `s3_bucket` after provisioning.\n"]
+    pub fn s3_bucket(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.s3_bucket", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `invocation_condition` after provisioning.\n"]
+    #[doc = "Get a reference to the value of field `invocation_condition` after provisioning.\n"]
     pub fn invocation_condition(
         &self,
-    ) -> ListRef<
+    ) -> terrars
+    ::ListRef<
         KendraDataSourceCustomDocumentEnrichmentConfigurationElPreExtractionHookConfigurationElInvocationConditionElRef,
     > {
-        ListRef::new(self.shared().clone(), format!("{}.invocation_condition", self.base))
+        terrars::ListRef::new(self.shared().clone(), format!("{}.invocation_condition", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
 struct KendraDataSourceCustomDocumentEnrichmentConfigurationElDynamic {
-    inline_configurations: Option<
-        DynamicBlock<KendraDataSourceCustomDocumentEnrichmentConfigurationElInlineConfigurationsEl>,
+    inline_configurations: std
+    ::option
+    ::Option<terrars::DynamicBlock<KendraDataSourceCustomDocumentEnrichmentConfigurationElInlineConfigurationsEl>>,
+    post_extraction_hook_configuration: std
+    ::option
+    ::Option<
+        terrars
+        ::DynamicBlock<KendraDataSourceCustomDocumentEnrichmentConfigurationElPostExtractionHookConfigurationEl>,
     >,
-    post_extraction_hook_configuration: Option<
-        DynamicBlock<KendraDataSourceCustomDocumentEnrichmentConfigurationElPostExtractionHookConfigurationEl>,
-    >,
-    pre_extraction_hook_configuration: Option<
-        DynamicBlock<KendraDataSourceCustomDocumentEnrichmentConfigurationElPreExtractionHookConfigurationEl>,
+    pre_extraction_hook_configuration: std
+    ::option
+    ::Option<
+        terrars::DynamicBlock<KendraDataSourceCustomDocumentEnrichmentConfigurationElPreExtractionHookConfigurationEl>,
     >,
 }
 
 #[derive(Serialize)]
 pub struct KendraDataSourceCustomDocumentEnrichmentConfigurationEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    role_arn: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    inline_configurations: Option<Vec<KendraDataSourceCustomDocumentEnrichmentConfigurationElInlineConfigurationsEl>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    post_extraction_hook_configuration: Option<
-        Vec<KendraDataSourceCustomDocumentEnrichmentConfigurationElPostExtractionHookConfigurationEl>,
-    >,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    pre_extraction_hook_configuration: Option<
-        Vec<KendraDataSourceCustomDocumentEnrichmentConfigurationElPreExtractionHookConfigurationEl>,
-    >,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    role_arn: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    inline_configurations: std
+    ::option
+    ::Option<std::vec::Vec<KendraDataSourceCustomDocumentEnrichmentConfigurationElInlineConfigurationsEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    post_extraction_hook_configuration: std
+    ::option
+    ::Option<std::vec::Vec<KendraDataSourceCustomDocumentEnrichmentConfigurationElPostExtractionHookConfigurationEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    pre_extraction_hook_configuration: std
+    ::option
+    ::Option<std::vec::Vec<KendraDataSourceCustomDocumentEnrichmentConfigurationElPreExtractionHookConfigurationEl>>,
     dynamic: KendraDataSourceCustomDocumentEnrichmentConfigurationElDynamic,
 }
 
 impl KendraDataSourceCustomDocumentEnrichmentConfigurationEl {
-    #[doc= "Set the field `role_arn`.\n"]
-    pub fn set_role_arn(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.role_arn = Some(v.into());
+    #[doc = "Set the field `role_arn`.\n"]
+    pub fn set_role_arn(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.role_arn = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `inline_configurations`.\n"]
+    #[doc = "Set the field `inline_configurations`.\n"]
     pub fn set_inline_configurations(
         mut self,
-        v: impl Into<BlockAssignable<KendraDataSourceCustomDocumentEnrichmentConfigurationElInlineConfigurationsEl>>,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<
+                        terrars
+                        ::BlockAssignable<
+                            KendraDataSourceCustomDocumentEnrichmentConfigurationElInlineConfigurationsEl,
+                        >,
+                    >,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.inline_configurations = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.inline_configurations = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.inline_configurations = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.inline_configurations = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Set the field `post_extraction_hook_configuration`.\n"]
+    #[doc = "Set the field `post_extraction_hook_configuration`.\n"]
     pub fn set_post_extraction_hook_configuration(
         mut self,
         v:
             impl
 
-                    Into<
-                        BlockAssignable<
+                    std
+                    ::convert
+                    ::Into<
+                        terrars
+                        ::BlockAssignable<
                             KendraDataSourceCustomDocumentEnrichmentConfigurationElPostExtractionHookConfigurationEl,
                         >,
                     >,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.post_extraction_hook_configuration = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.post_extraction_hook_configuration = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.post_extraction_hook_configuration = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.post_extraction_hook_configuration = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Set the field `pre_extraction_hook_configuration`.\n"]
+    #[doc = "Set the field `pre_extraction_hook_configuration`.\n"]
     pub fn set_pre_extraction_hook_configuration(
         mut self,
         v:
             impl
 
-                    Into<
-                        BlockAssignable<
+                    std
+                    ::convert
+                    ::Into<
+                        terrars
+                        ::BlockAssignable<
                             KendraDataSourceCustomDocumentEnrichmentConfigurationElPreExtractionHookConfigurationEl,
                         >,
                     >,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.pre_extraction_hook_configuration = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.pre_extraction_hook_configuration = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.pre_extraction_hook_configuration = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.pre_extraction_hook_configuration = std::option::Option::Some(d);
             },
         }
         self
     }
 }
 
-impl ToListMappable for KendraDataSourceCustomDocumentEnrichmentConfigurationEl {
-    type O = BlockAssignable<KendraDataSourceCustomDocumentEnrichmentConfigurationEl>;
+impl terrars::ToListMappable for KendraDataSourceCustomDocumentEnrichmentConfigurationEl {
+    type O = terrars::BlockAssignable<KendraDataSourceCustomDocumentEnrichmentConfigurationEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -3089,18 +3400,21 @@ impl BuildKendraDataSourceCustomDocumentEnrichmentConfigurationEl {
             inline_configurations: core::default::Default::default(),
             post_extraction_hook_configuration: core::default::Default::default(),
             pre_extraction_hook_configuration: core::default::Default::default(),
-            dynamic: Default::default(),
+            dynamic: core::default::Default::default(),
         }
     }
 }
 
 pub struct KendraDataSourceCustomDocumentEnrichmentConfigurationElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for KendraDataSourceCustomDocumentEnrichmentConfigurationElRef {
-    fn new(shared: StackShared, base: String) -> KendraDataSourceCustomDocumentEnrichmentConfigurationElRef {
+impl terrars::Ref for KendraDataSourceCustomDocumentEnrichmentConfigurationElRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> KendraDataSourceCustomDocumentEnrichmentConfigurationElRef {
         KendraDataSourceCustomDocumentEnrichmentConfigurationElRef {
             shared: shared,
             base: base.to_string(),
@@ -3109,65 +3423,66 @@ impl Ref for KendraDataSourceCustomDocumentEnrichmentConfigurationElRef {
 }
 
 impl KendraDataSourceCustomDocumentEnrichmentConfigurationElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `role_arn` after provisioning.\n"]
-    pub fn role_arn(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.role_arn", self.base))
+    #[doc = "Get a reference to the value of field `role_arn` after provisioning.\n"]
+    pub fn role_arn(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.role_arn", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `post_extraction_hook_configuration` after provisioning.\n"]
+    #[doc = "Get a reference to the value of field `post_extraction_hook_configuration` after provisioning.\n"]
     pub fn post_extraction_hook_configuration(
         &self,
-    ) -> ListRef<KendraDataSourceCustomDocumentEnrichmentConfigurationElPostExtractionHookConfigurationElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.post_extraction_hook_configuration", self.base))
+    ) -> terrars
+    ::ListRef<KendraDataSourceCustomDocumentEnrichmentConfigurationElPostExtractionHookConfigurationElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.post_extraction_hook_configuration", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `pre_extraction_hook_configuration` after provisioning.\n"]
+    #[doc = "Get a reference to the value of field `pre_extraction_hook_configuration` after provisioning.\n"]
     pub fn pre_extraction_hook_configuration(
         &self,
-    ) -> ListRef<KendraDataSourceCustomDocumentEnrichmentConfigurationElPreExtractionHookConfigurationElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.pre_extraction_hook_configuration", self.base))
+    ) -> terrars::ListRef<KendraDataSourceCustomDocumentEnrichmentConfigurationElPreExtractionHookConfigurationElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.pre_extraction_hook_configuration", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct KendraDataSourceTimeoutsEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    create: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    delete: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    update: Option<PrimField<String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    create: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    delete: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    update: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
 impl KendraDataSourceTimeoutsEl {
-    #[doc= "Set the field `create`.\n"]
-    pub fn set_create(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.create = Some(v.into());
+    #[doc = "Set the field `create`.\n"]
+    pub fn set_create(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.create = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `delete`.\n"]
-    pub fn set_delete(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.delete = Some(v.into());
+    #[doc = "Set the field `delete`.\n"]
+    pub fn set_delete(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.delete = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `update`.\n"]
-    pub fn set_update(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.update = Some(v.into());
+    #[doc = "Set the field `update`.\n"]
+    pub fn set_update(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.update = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl ToListMappable for KendraDataSourceTimeoutsEl {
-    type O = BlockAssignable<KendraDataSourceTimeoutsEl>;
+impl terrars::ToListMappable for KendraDataSourceTimeoutsEl {
+    type O = terrars::BlockAssignable<KendraDataSourceTimeoutsEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -3188,12 +3503,12 @@ impl BuildKendraDataSourceTimeoutsEl {
 }
 
 pub struct KendraDataSourceTimeoutsElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for KendraDataSourceTimeoutsElRef {
-    fn new(shared: StackShared, base: String) -> KendraDataSourceTimeoutsElRef {
+impl terrars::Ref for KendraDataSourceTimeoutsElRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> KendraDataSourceTimeoutsElRef {
         KendraDataSourceTimeoutsElRef {
             shared: shared,
             base: base.to_string(),
@@ -3202,30 +3517,30 @@ impl Ref for KendraDataSourceTimeoutsElRef {
 }
 
 impl KendraDataSourceTimeoutsElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `create` after provisioning.\n"]
-    pub fn create(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.create", self.base))
+    #[doc = "Get a reference to the value of field `create` after provisioning.\n"]
+    pub fn create(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.create", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `delete` after provisioning.\n"]
-    pub fn delete(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.delete", self.base))
+    #[doc = "Get a reference to the value of field `delete` after provisioning.\n"]
+    pub fn delete(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.delete", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `update` after provisioning.\n"]
-    pub fn update(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.update", self.base))
+    #[doc = "Get a reference to the value of field `update` after provisioning.\n"]
+    pub fn update(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.update", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
 struct KendraDataSourceDynamic {
-    configuration: Option<DynamicBlock<KendraDataSourceConfigurationEl>>,
-    custom_document_enrichment_configuration: Option<
-        DynamicBlock<KendraDataSourceCustomDocumentEnrichmentConfigurationEl>,
-    >,
+    configuration: std::option::Option<terrars::DynamicBlock<KendraDataSourceConfigurationEl>>,
+    custom_document_enrichment_configuration: std
+    ::option
+    ::Option<terrars::DynamicBlock<KendraDataSourceCustomDocumentEnrichmentConfigurationEl>>,
 }

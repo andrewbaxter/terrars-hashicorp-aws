@@ -1,49 +1,53 @@
 use serde::Serialize;
-use std::cell::RefCell;
-use std::rc::Rc;
-use terrars::*;
+use terrars::{
+    Referable as _,
+    Resource_ as _,
+    Ref as _,
+};
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
 struct ConnectInstanceStorageConfigData {
-    #[serde(skip_serializing_if = "Vec::is_empty")]
-    depends_on: Vec<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    provider: Option<String>,
-    #[serde(skip_serializing_if = "SerdeSkipDefault::is_default")]
-    lifecycle: ResourceLifecycle,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    for_each: Option<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    id: Option<PrimField<String>>,
-    instance_id: PrimField<String>,
-    resource_type: PrimField<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    storage_config: Option<Vec<ConnectInstanceStorageConfigStorageConfigEl>>,
+    #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
+    depends_on: std::vec::Vec<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    provider: std::option::Option<std::string::String>,
+    #[serde(skip_serializing_if = "terrars::SerdeSkipDefault::is_default")]
+    lifecycle: terrars::ResourceLifecycle,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    for_each: std::option::Option<std::string::String>,
+    #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
+    provisioner: std::vec::Vec<terrars::Provisioner>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    id: std::option::Option<terrars::PrimField<std::string::String>>,
+    instance_id: terrars::PrimField<std::string::String>,
+    resource_type: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    storage_config: std::option::Option<std::vec::Vec<ConnectInstanceStorageConfigStorageConfigEl>>,
     dynamic: ConnectInstanceStorageConfigDynamic,
 }
 
 struct ConnectInstanceStorageConfig_ {
-    shared: StackShared,
-    tf_id: String,
-    data: RefCell<ConnectInstanceStorageConfigData>,
+    shared: terrars::StackShared,
+    tf_id: std::string::String,
+    data: std::cell::RefCell<ConnectInstanceStorageConfigData>,
 }
 
 #[derive(Clone)]
-pub struct ConnectInstanceStorageConfig(Rc<ConnectInstanceStorageConfig_>);
+pub struct ConnectInstanceStorageConfig(std::rc::Rc<ConnectInstanceStorageConfig_>);
 
 impl ConnectInstanceStorageConfig {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.0.shared
     }
 
-    pub fn depends_on(self, dep: &impl Referable) -> Self {
+    pub fn depends_on(self, dep: &impl terrars::Referable) -> Self {
         self.0.data.borrow_mut().depends_on.push(dep.extract_ref());
         self
     }
 
     pub fn set_provider(self, provider: &ProviderAws) -> Self {
-        self.0.data.borrow_mut().provider = Some(provider.provider_ref());
+        self.0.data.borrow_mut().provider = std::option::Option::Some(provider.provider_ref());
         self
     }
 
@@ -58,109 +62,145 @@ impl ConnectInstanceStorageConfig {
     }
 
     pub fn ignore_changes_to_all(self) -> Self {
-        self.0.data.borrow_mut().lifecycle.ignore_changes = Some(IgnoreChanges::All(IgnoreChangesAll::All));
+        self.0.data.borrow_mut().lifecycle.ignore_changes =
+            std::option::Option::Some(terrars::IgnoreChanges::All(terrars::IgnoreChangesAll::All));
         self
     }
 
-    pub fn ignore_changes_to_attr(self, attr: impl ToString) -> Self {
+    pub fn ignore_changes_to_attr(self, attr: impl std::string::ToString) -> Self {
         {
             let mut d = self.0.data.borrow_mut();
             if match &mut d.lifecycle.ignore_changes {
-                Some(i) => match i {
-                    IgnoreChanges::All(_) => {
+                std::option::Option::Some(i) => match i {
+                    terrars::IgnoreChanges::All(_) => {
                         true
                     },
-                    IgnoreChanges::Refs(r) => {
+                    terrars::IgnoreChanges::Refs(r) => {
                         r.push(attr.to_string());
                         false
                     },
                 },
-                None => true,
+                std::option::Option::None => true,
             } {
-                d.lifecycle.ignore_changes = Some(IgnoreChanges::Refs(vec![attr.to_string()]));
+                d.lifecycle.ignore_changes =
+                    std::option::Option::Some(terrars::IgnoreChanges::Refs(vec![attr.to_string()]));
             }
         }
         self
     }
 
-    pub fn replace_triggered_by_resource(self, r: &impl Resource) -> Self {
+    pub fn replace_triggered_by_resource(self, r: &impl terrars::Resource) -> Self {
         self.0.data.borrow_mut().lifecycle.replace_triggered_by.push(r.extract_ref());
         self
     }
 
-    pub fn replace_triggered_by_attr(self, attr: impl ToString) -> Self {
+    pub fn replace_triggered_by_attr(self, attr: impl std::string::ToString) -> Self {
         self.0.data.borrow_mut().lifecycle.replace_triggered_by.push(attr.to_string());
         self
     }
 
-    #[doc= "Set the field `id`.\n"]
-    pub fn set_id(self, v: impl Into<PrimField<String>>) -> Self {
-        self.0.data.borrow_mut().id = Some(v.into());
+    #[doc = r" Add a provisioner (ex: `local-exec`, `remote-exec`, `file`) to this resource."]
+    #[doc = r" Provisioners run in the order they're added."]
+    pub fn add_provisioner(self, v: impl std::convert::Into<terrars::Provisioner>) -> Self {
+        self.0.data.borrow_mut().provisioner.push(v.into());
         self
     }
 
-    #[doc= "Set the field `storage_config`.\n"]
-    pub fn set_storage_config(self, v: impl Into<BlockAssignable<ConnectInstanceStorageConfigStorageConfigEl>>) -> Self {
+    pub fn add_lifecycle_precondition(
+        self,
+        condition: impl std::convert::Into<terrars::PrimField<bool>>,
+        error_message: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.0.data.borrow_mut().lifecycle.precondition.push(terrars::LifecycleCondition {
+            condition: condition.into(),
+            error_message: error_message.into(),
+        });
+        self
+    }
+
+    pub fn add_lifecycle_postcondition(
+        self,
+        condition: impl std::convert::Into<terrars::PrimField<bool>>,
+        error_message: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.0.data.borrow_mut().lifecycle.postcondition.push(terrars::LifecycleCondition {
+            condition: condition.into(),
+            error_message: error_message.into(),
+        });
+        self
+    }
+
+    #[doc = "Set the field `id`.\n"]
+    pub fn set_id(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().id = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `storage_config`.\n"]
+    pub fn set_storage_config(
+        self,
+        v: impl std::convert::Into<terrars::BlockAssignable<ConnectInstanceStorageConfigStorageConfigEl>>,
+    ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.0.data.borrow_mut().storage_config = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.0.data.borrow_mut().storage_config = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.0.data.borrow_mut().dynamic.storage_config = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.0.data.borrow_mut().dynamic.storage_config = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Get a reference to the value of field `association_id` after provisioning.\n"]
-    pub fn association_id(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.association_id", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `association_id` after provisioning.\n"]
+    pub fn association_id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.association_id", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `id` after provisioning.\n"]
-    pub fn id(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
+    pub fn id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `instance_id` after provisioning.\n"]
-    pub fn instance_id(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.instance_id", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `instance_id` after provisioning.\n"]
+    pub fn instance_id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.instance_id", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `resource_type` after provisioning.\n"]
-    pub fn resource_type(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.resource_type", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `resource_type` after provisioning.\n"]
+    pub fn resource_type(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.resource_type", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `storage_config` after provisioning.\n"]
-    pub fn storage_config(&self) -> ListRef<ConnectInstanceStorageConfigStorageConfigElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.storage_config", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `storage_config` after provisioning.\n"]
+    pub fn storage_config(&self) -> terrars::ListRef<ConnectInstanceStorageConfigStorageConfigElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.storage_config", self.extract_ref()))
     }
 }
 
-impl Referable for ConnectInstanceStorageConfig {
-    fn extract_ref(&self) -> String {
+impl terrars::Referable for ConnectInstanceStorageConfig {
+    fn extract_ref(&self) -> std::string::String {
         format!("{}.{}", self.0.extract_resource_type(), self.0.extract_tf_id())
     }
 }
 
-impl Resource for ConnectInstanceStorageConfig { }
+impl terrars::Resource for ConnectInstanceStorageConfig { }
 
-impl ToListMappable for ConnectInstanceStorageConfig {
-    type O = ListRef<ConnectInstanceStorageConfigRef>;
+impl terrars::ToListMappable for ConnectInstanceStorageConfig {
+    type O = terrars::ListRef<ConnectInstanceStorageConfigRef>;
 
-    fn do_map(self, base: String) -> Self::O {
-        self.0.data.borrow_mut().for_each = Some(format!("${{{}}}", base));
-        ListRef::new(self.0.shared.clone(), self.extract_ref())
+    fn do_map(self, base: std::string::String) -> Self::O {
+        self.0.data.borrow_mut().for_each = std::option::Option::Some(format!("${{{}}}", base));
+        terrars::ListRef::new(self.0.shared.clone(), self.extract_ref())
     }
 }
 
-impl Resource_ for ConnectInstanceStorageConfig_ {
-    fn extract_resource_type(&self) -> String {
+impl terrars::Resource_ for ConnectInstanceStorageConfig_ {
+    fn extract_resource_type(&self) -> std::string::String {
         "aws_connect_instance_storage_config".into()
     }
 
-    fn extract_tf_id(&self) -> String {
+    fn extract_tf_id(&self) -> std::string::String {
         self.tf_id.clone()
     }
 
@@ -170,28 +210,29 @@ impl Resource_ for ConnectInstanceStorageConfig_ {
 }
 
 pub struct BuildConnectInstanceStorageConfig {
-    pub tf_id: String,
-    #[doc= ""]
-    pub instance_id: PrimField<String>,
-    #[doc= ""]
-    pub resource_type: PrimField<String>,
+    pub tf_id: std::string::String,
+    #[doc = ""]
+    pub instance_id: terrars::PrimField<std::string::String>,
+    #[doc = ""]
+    pub resource_type: terrars::PrimField<std::string::String>,
 }
 
 impl BuildConnectInstanceStorageConfig {
-    pub fn build(self, stack: &mut Stack) -> ConnectInstanceStorageConfig {
-        let out = ConnectInstanceStorageConfig(Rc::new(ConnectInstanceStorageConfig_ {
+    pub fn build(self, stack: &mut terrars::Stack) -> ConnectInstanceStorageConfig {
+        let out = ConnectInstanceStorageConfig(std::rc::Rc::new(ConnectInstanceStorageConfig_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: RefCell::new(ConnectInstanceStorageConfigData {
+            data: std::cell::RefCell::new(ConnectInstanceStorageConfigData {
                 depends_on: core::default::Default::default(),
-                provider: None,
+                provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
-                for_each: None,
+                for_each: std::option::Option::None,
+                provisioner: core::default::Default::default(),
                 id: core::default::Default::default(),
                 instance_id: self.instance_id,
                 resource_type: self.resource_type,
                 storage_config: core::default::Default::default(),
-                dynamic: Default::default(),
+                dynamic: core::default::Default::default(),
             }),
         }));
         stack.add_resource(out.0.clone());
@@ -200,12 +241,12 @@ impl BuildConnectInstanceStorageConfig {
 }
 
 pub struct ConnectInstanceStorageConfigRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for ConnectInstanceStorageConfigRef {
-    fn new(shared: StackShared, base: String) -> Self {
+impl terrars::Ref for ConnectInstanceStorageConfigRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> Self {
         Self {
             shared: shared,
             base: base,
@@ -214,52 +255,52 @@ impl Ref for ConnectInstanceStorageConfigRef {
 }
 
 impl ConnectInstanceStorageConfigRef {
-    fn extract_ref(&self) -> String {
+    fn extract_ref(&self) -> std::string::String {
         self.base.clone()
     }
 
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `association_id` after provisioning.\n"]
-    pub fn association_id(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.association_id", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `association_id` after provisioning.\n"]
+    pub fn association_id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.association_id", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `id` after provisioning.\n"]
-    pub fn id(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
+    pub fn id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `instance_id` after provisioning.\n"]
-    pub fn instance_id(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.instance_id", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `instance_id` after provisioning.\n"]
+    pub fn instance_id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.instance_id", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `resource_type` after provisioning.\n"]
-    pub fn resource_type(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.resource_type", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `resource_type` after provisioning.\n"]
+    pub fn resource_type(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.resource_type", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `storage_config` after provisioning.\n"]
-    pub fn storage_config(&self) -> ListRef<ConnectInstanceStorageConfigStorageConfigElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.storage_config", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `storage_config` after provisioning.\n"]
+    pub fn storage_config(&self) -> terrars::ListRef<ConnectInstanceStorageConfigStorageConfigElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.storage_config", self.extract_ref()))
     }
 }
 
 #[derive(Serialize)]
 pub struct ConnectInstanceStorageConfigStorageConfigElKinesisFirehoseConfigEl {
-    firehose_arn: PrimField<String>,
+    firehose_arn: terrars::PrimField<std::string::String>,
 }
 
 impl ConnectInstanceStorageConfigStorageConfigElKinesisFirehoseConfigEl { }
 
-impl ToListMappable for ConnectInstanceStorageConfigStorageConfigElKinesisFirehoseConfigEl {
-    type O = BlockAssignable<ConnectInstanceStorageConfigStorageConfigElKinesisFirehoseConfigEl>;
+impl terrars::ToListMappable for ConnectInstanceStorageConfigStorageConfigElKinesisFirehoseConfigEl {
+    type O = terrars::BlockAssignable<ConnectInstanceStorageConfigStorageConfigElKinesisFirehoseConfigEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -268,8 +309,8 @@ impl ToListMappable for ConnectInstanceStorageConfigStorageConfigElKinesisFireho
 }
 
 pub struct BuildConnectInstanceStorageConfigStorageConfigElKinesisFirehoseConfigEl {
-    #[doc= ""]
-    pub firehose_arn: PrimField<String>,
+    #[doc = ""]
+    pub firehose_arn: terrars::PrimField<std::string::String>,
 }
 
 impl BuildConnectInstanceStorageConfigStorageConfigElKinesisFirehoseConfigEl {
@@ -279,14 +320,14 @@ impl BuildConnectInstanceStorageConfigStorageConfigElKinesisFirehoseConfigEl {
 }
 
 pub struct ConnectInstanceStorageConfigStorageConfigElKinesisFirehoseConfigElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for ConnectInstanceStorageConfigStorageConfigElKinesisFirehoseConfigElRef {
+impl terrars::Ref for ConnectInstanceStorageConfigStorageConfigElKinesisFirehoseConfigElRef {
     fn new(
-        shared: StackShared,
-        base: String,
+        shared: terrars::StackShared,
+        base: std::string::String,
     ) -> ConnectInstanceStorageConfigStorageConfigElKinesisFirehoseConfigElRef {
         ConnectInstanceStorageConfigStorageConfigElKinesisFirehoseConfigElRef {
             shared: shared,
@@ -296,28 +337,28 @@ impl Ref for ConnectInstanceStorageConfigStorageConfigElKinesisFirehoseConfigElR
 }
 
 impl ConnectInstanceStorageConfigStorageConfigElKinesisFirehoseConfigElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `firehose_arn` after provisioning.\n"]
-    pub fn firehose_arn(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.firehose_arn", self.base))
+    #[doc = "Get a reference to the value of field `firehose_arn` after provisioning.\n"]
+    pub fn firehose_arn(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.firehose_arn", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct ConnectInstanceStorageConfigStorageConfigElKinesisStreamConfigEl {
-    stream_arn: PrimField<String>,
+    stream_arn: terrars::PrimField<std::string::String>,
 }
 
 impl ConnectInstanceStorageConfigStorageConfigElKinesisStreamConfigEl { }
 
-impl ToListMappable for ConnectInstanceStorageConfigStorageConfigElKinesisStreamConfigEl {
-    type O = BlockAssignable<ConnectInstanceStorageConfigStorageConfigElKinesisStreamConfigEl>;
+impl terrars::ToListMappable for ConnectInstanceStorageConfigStorageConfigElKinesisStreamConfigEl {
+    type O = terrars::BlockAssignable<ConnectInstanceStorageConfigStorageConfigElKinesisStreamConfigEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -326,8 +367,8 @@ impl ToListMappable for ConnectInstanceStorageConfigStorageConfigElKinesisStream
 }
 
 pub struct BuildConnectInstanceStorageConfigStorageConfigElKinesisStreamConfigEl {
-    #[doc= ""]
-    pub stream_arn: PrimField<String>,
+    #[doc = ""]
+    pub stream_arn: terrars::PrimField<std::string::String>,
 }
 
 impl BuildConnectInstanceStorageConfigStorageConfigElKinesisStreamConfigEl {
@@ -337,12 +378,15 @@ impl BuildConnectInstanceStorageConfigStorageConfigElKinesisStreamConfigEl {
 }
 
 pub struct ConnectInstanceStorageConfigStorageConfigElKinesisStreamConfigElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for ConnectInstanceStorageConfigStorageConfigElKinesisStreamConfigElRef {
-    fn new(shared: StackShared, base: String) -> ConnectInstanceStorageConfigStorageConfigElKinesisStreamConfigElRef {
+impl terrars::Ref for ConnectInstanceStorageConfigStorageConfigElKinesisStreamConfigElRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> ConnectInstanceStorageConfigStorageConfigElKinesisStreamConfigElRef {
         ConnectInstanceStorageConfigStorageConfigElKinesisStreamConfigElRef {
             shared: shared,
             base: base.to_string(),
@@ -351,30 +395,32 @@ impl Ref for ConnectInstanceStorageConfigStorageConfigElKinesisStreamConfigElRef
 }
 
 impl ConnectInstanceStorageConfigStorageConfigElKinesisStreamConfigElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `stream_arn` after provisioning.\n"]
-    pub fn stream_arn(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.stream_arn", self.base))
+    #[doc = "Get a reference to the value of field `stream_arn` after provisioning.\n"]
+    pub fn stream_arn(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.stream_arn", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct ConnectInstanceStorageConfigStorageConfigElKinesisVideoStreamConfigElEncryptionConfigEl {
-    encryption_type: PrimField<String>,
-    key_id: PrimField<String>,
+    encryption_type: terrars::PrimField<std::string::String>,
+    key_id: terrars::PrimField<std::string::String>,
 }
 
 impl ConnectInstanceStorageConfigStorageConfigElKinesisVideoStreamConfigElEncryptionConfigEl { }
 
-impl ToListMappable for ConnectInstanceStorageConfigStorageConfigElKinesisVideoStreamConfigElEncryptionConfigEl {
+impl terrars
+::ToListMappable for ConnectInstanceStorageConfigStorageConfigElKinesisVideoStreamConfigElEncryptionConfigEl {
     type O =
-        BlockAssignable<ConnectInstanceStorageConfigStorageConfigElKinesisVideoStreamConfigElEncryptionConfigEl>;
+        terrars
+        ::BlockAssignable<ConnectInstanceStorageConfigStorageConfigElKinesisVideoStreamConfigElEncryptionConfigEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -383,10 +429,10 @@ impl ToListMappable for ConnectInstanceStorageConfigStorageConfigElKinesisVideoS
 }
 
 pub struct BuildConnectInstanceStorageConfigStorageConfigElKinesisVideoStreamConfigElEncryptionConfigEl {
-    #[doc= ""]
-    pub encryption_type: PrimField<String>,
-    #[doc= ""]
-    pub key_id: PrimField<String>,
+    #[doc = ""]
+    pub encryption_type: terrars::PrimField<std::string::String>,
+    #[doc = ""]
+    pub key_id: terrars::PrimField<std::string::String>,
 }
 
 impl BuildConnectInstanceStorageConfigStorageConfigElKinesisVideoStreamConfigElEncryptionConfigEl {
@@ -399,14 +445,14 @@ impl BuildConnectInstanceStorageConfigStorageConfigElKinesisVideoStreamConfigElE
 }
 
 pub struct ConnectInstanceStorageConfigStorageConfigElKinesisVideoStreamConfigElEncryptionConfigElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for ConnectInstanceStorageConfigStorageConfigElKinesisVideoStreamConfigElEncryptionConfigElRef {
+impl terrars::Ref for ConnectInstanceStorageConfigStorageConfigElKinesisVideoStreamConfigElEncryptionConfigElRef {
     fn new(
-        shared: StackShared,
-        base: String,
+        shared: terrars::StackShared,
+        base: std::string::String,
     ) -> ConnectInstanceStorageConfigStorageConfigElKinesisVideoStreamConfigElEncryptionConfigElRef {
         ConnectInstanceStorageConfigStorageConfigElKinesisVideoStreamConfigElEncryptionConfigElRef {
             shared: shared,
@@ -416,69 +462,74 @@ impl Ref for ConnectInstanceStorageConfigStorageConfigElKinesisVideoStreamConfig
 }
 
 impl ConnectInstanceStorageConfigStorageConfigElKinesisVideoStreamConfigElEncryptionConfigElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `encryption_type` after provisioning.\n"]
-    pub fn encryption_type(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.encryption_type", self.base))
+    #[doc = "Get a reference to the value of field `encryption_type` after provisioning.\n"]
+    pub fn encryption_type(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.encryption_type", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `key_id` after provisioning.\n"]
-    pub fn key_id(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.key_id", self.base))
+    #[doc = "Get a reference to the value of field `key_id` after provisioning.\n"]
+    pub fn key_id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.key_id", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
 struct ConnectInstanceStorageConfigStorageConfigElKinesisVideoStreamConfigElDynamic {
-    encryption_config: Option<
-        DynamicBlock<ConnectInstanceStorageConfigStorageConfigElKinesisVideoStreamConfigElEncryptionConfigEl>,
+    encryption_config: std
+    ::option
+    ::Option<
+        terrars::DynamicBlock<ConnectInstanceStorageConfigStorageConfigElKinesisVideoStreamConfigElEncryptionConfigEl>,
     >,
 }
 
 #[derive(Serialize)]
 pub struct ConnectInstanceStorageConfigStorageConfigElKinesisVideoStreamConfigEl {
-    prefix: PrimField<String>,
-    retention_period_hours: PrimField<f64>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    encryption_config: Option<
-        Vec<ConnectInstanceStorageConfigStorageConfigElKinesisVideoStreamConfigElEncryptionConfigEl>,
-    >,
+    prefix: terrars::PrimField<std::string::String>,
+    retention_period_hours: terrars::PrimField<f64>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    encryption_config: std
+    ::option
+    ::Option<std::vec::Vec<ConnectInstanceStorageConfigStorageConfigElKinesisVideoStreamConfigElEncryptionConfigEl>>,
     dynamic: ConnectInstanceStorageConfigStorageConfigElKinesisVideoStreamConfigElDynamic,
 }
 
 impl ConnectInstanceStorageConfigStorageConfigElKinesisVideoStreamConfigEl {
-    #[doc= "Set the field `encryption_config`.\n"]
+    #[doc = "Set the field `encryption_config`.\n"]
     pub fn set_encryption_config(
         mut self,
         v:
             impl
 
-                    Into<
-                        BlockAssignable<
+                    std
+                    ::convert
+                    ::Into<
+                        terrars
+                        ::BlockAssignable<
                             ConnectInstanceStorageConfigStorageConfigElKinesisVideoStreamConfigElEncryptionConfigEl,
                         >,
                     >,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.encryption_config = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.encryption_config = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.encryption_config = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.encryption_config = std::option::Option::Some(d);
             },
         }
         self
     }
 }
 
-impl ToListMappable for ConnectInstanceStorageConfigStorageConfigElKinesisVideoStreamConfigEl {
-    type O = BlockAssignable<ConnectInstanceStorageConfigStorageConfigElKinesisVideoStreamConfigEl>;
+impl terrars::ToListMappable for ConnectInstanceStorageConfigStorageConfigElKinesisVideoStreamConfigEl {
+    type O = terrars::BlockAssignable<ConnectInstanceStorageConfigStorageConfigElKinesisVideoStreamConfigEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -487,10 +538,10 @@ impl ToListMappable for ConnectInstanceStorageConfigStorageConfigElKinesisVideoS
 }
 
 pub struct BuildConnectInstanceStorageConfigStorageConfigElKinesisVideoStreamConfigEl {
-    #[doc= ""]
-    pub prefix: PrimField<String>,
-    #[doc= ""]
-    pub retention_period_hours: PrimField<f64>,
+    #[doc = ""]
+    pub prefix: terrars::PrimField<std::string::String>,
+    #[doc = ""]
+    pub retention_period_hours: terrars::PrimField<f64>,
 }
 
 impl BuildConnectInstanceStorageConfigStorageConfigElKinesisVideoStreamConfigEl {
@@ -499,20 +550,20 @@ impl BuildConnectInstanceStorageConfigStorageConfigElKinesisVideoStreamConfigEl 
             prefix: self.prefix,
             retention_period_hours: self.retention_period_hours,
             encryption_config: core::default::Default::default(),
-            dynamic: Default::default(),
+            dynamic: core::default::Default::default(),
         }
     }
 }
 
 pub struct ConnectInstanceStorageConfigStorageConfigElKinesisVideoStreamConfigElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for ConnectInstanceStorageConfigStorageConfigElKinesisVideoStreamConfigElRef {
+impl terrars::Ref for ConnectInstanceStorageConfigStorageConfigElKinesisVideoStreamConfigElRef {
     fn new(
-        shared: StackShared,
-        base: String,
+        shared: terrars::StackShared,
+        base: std::string::String,
     ) -> ConnectInstanceStorageConfigStorageConfigElKinesisVideoStreamConfigElRef {
         ConnectInstanceStorageConfigStorageConfigElKinesisVideoStreamConfigElRef {
             shared: shared,
@@ -522,41 +573,41 @@ impl Ref for ConnectInstanceStorageConfigStorageConfigElKinesisVideoStreamConfig
 }
 
 impl ConnectInstanceStorageConfigStorageConfigElKinesisVideoStreamConfigElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `prefix` after provisioning.\n"]
-    pub fn prefix(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.prefix", self.base))
+    #[doc = "Get a reference to the value of field `prefix` after provisioning.\n"]
+    pub fn prefix(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.prefix", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `retention_period_hours` after provisioning.\n"]
-    pub fn retention_period_hours(&self) -> PrimExpr<f64> {
-        PrimExpr::new(self.shared().clone(), format!("{}.retention_period_hours", self.base))
+    #[doc = "Get a reference to the value of field `retention_period_hours` after provisioning.\n"]
+    pub fn retention_period_hours(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.retention_period_hours", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `encryption_config` after provisioning.\n"]
+    #[doc = "Get a reference to the value of field `encryption_config` after provisioning.\n"]
     pub fn encryption_config(
         &self,
-    ) -> ListRef<ConnectInstanceStorageConfigStorageConfigElKinesisVideoStreamConfigElEncryptionConfigElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.encryption_config", self.base))
+    ) -> terrars::ListRef<ConnectInstanceStorageConfigStorageConfigElKinesisVideoStreamConfigElEncryptionConfigElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.encryption_config", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct ConnectInstanceStorageConfigStorageConfigElS3ConfigElEncryptionConfigEl {
-    encryption_type: PrimField<String>,
-    key_id: PrimField<String>,
+    encryption_type: terrars::PrimField<std::string::String>,
+    key_id: terrars::PrimField<std::string::String>,
 }
 
 impl ConnectInstanceStorageConfigStorageConfigElS3ConfigElEncryptionConfigEl { }
 
-impl ToListMappable for ConnectInstanceStorageConfigStorageConfigElS3ConfigElEncryptionConfigEl {
-    type O = BlockAssignable<ConnectInstanceStorageConfigStorageConfigElS3ConfigElEncryptionConfigEl>;
+impl terrars::ToListMappable for ConnectInstanceStorageConfigStorageConfigElS3ConfigElEncryptionConfigEl {
+    type O = terrars::BlockAssignable<ConnectInstanceStorageConfigStorageConfigElS3ConfigElEncryptionConfigEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -565,10 +616,10 @@ impl ToListMappable for ConnectInstanceStorageConfigStorageConfigElS3ConfigElEnc
 }
 
 pub struct BuildConnectInstanceStorageConfigStorageConfigElS3ConfigElEncryptionConfigEl {
-    #[doc= ""]
-    pub encryption_type: PrimField<String>,
-    #[doc= ""]
-    pub key_id: PrimField<String>,
+    #[doc = ""]
+    pub encryption_type: terrars::PrimField<std::string::String>,
+    #[doc = ""]
+    pub key_id: terrars::PrimField<std::string::String>,
 }
 
 impl BuildConnectInstanceStorageConfigStorageConfigElS3ConfigElEncryptionConfigEl {
@@ -581,14 +632,14 @@ impl BuildConnectInstanceStorageConfigStorageConfigElS3ConfigElEncryptionConfigE
 }
 
 pub struct ConnectInstanceStorageConfigStorageConfigElS3ConfigElEncryptionConfigElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for ConnectInstanceStorageConfigStorageConfigElS3ConfigElEncryptionConfigElRef {
+impl terrars::Ref for ConnectInstanceStorageConfigStorageConfigElS3ConfigElEncryptionConfigElRef {
     fn new(
-        shared: StackShared,
-        base: String,
+        shared: terrars::StackShared,
+        base: std::string::String,
     ) -> ConnectInstanceStorageConfigStorageConfigElS3ConfigElEncryptionConfigElRef {
         ConnectInstanceStorageConfigStorageConfigElS3ConfigElEncryptionConfigElRef {
             shared: shared,
@@ -598,58 +649,70 @@ impl Ref for ConnectInstanceStorageConfigStorageConfigElS3ConfigElEncryptionConf
 }
 
 impl ConnectInstanceStorageConfigStorageConfigElS3ConfigElEncryptionConfigElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `encryption_type` after provisioning.\n"]
-    pub fn encryption_type(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.encryption_type", self.base))
+    #[doc = "Get a reference to the value of field `encryption_type` after provisioning.\n"]
+    pub fn encryption_type(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.encryption_type", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `key_id` after provisioning.\n"]
-    pub fn key_id(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.key_id", self.base))
+    #[doc = "Get a reference to the value of field `key_id` after provisioning.\n"]
+    pub fn key_id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.key_id", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
 struct ConnectInstanceStorageConfigStorageConfigElS3ConfigElDynamic {
-    encryption_config: Option<DynamicBlock<ConnectInstanceStorageConfigStorageConfigElS3ConfigElEncryptionConfigEl>>,
+    encryption_config: std
+    ::option
+    ::Option<terrars::DynamicBlock<ConnectInstanceStorageConfigStorageConfigElS3ConfigElEncryptionConfigEl>>,
 }
 
 #[derive(Serialize)]
 pub struct ConnectInstanceStorageConfigStorageConfigElS3ConfigEl {
-    bucket_name: PrimField<String>,
-    bucket_prefix: PrimField<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    encryption_config: Option<Vec<ConnectInstanceStorageConfigStorageConfigElS3ConfigElEncryptionConfigEl>>,
+    bucket_name: terrars::PrimField<std::string::String>,
+    bucket_prefix: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    encryption_config: std
+    ::option
+    ::Option<std::vec::Vec<ConnectInstanceStorageConfigStorageConfigElS3ConfigElEncryptionConfigEl>>,
     dynamic: ConnectInstanceStorageConfigStorageConfigElS3ConfigElDynamic,
 }
 
 impl ConnectInstanceStorageConfigStorageConfigElS3ConfigEl {
-    #[doc= "Set the field `encryption_config`.\n"]
+    #[doc = "Set the field `encryption_config`.\n"]
     pub fn set_encryption_config(
         mut self,
-        v: impl Into<BlockAssignable<ConnectInstanceStorageConfigStorageConfigElS3ConfigElEncryptionConfigEl>>,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<
+                        terrars
+                        ::BlockAssignable<ConnectInstanceStorageConfigStorageConfigElS3ConfigElEncryptionConfigEl>,
+                    >,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.encryption_config = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.encryption_config = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.encryption_config = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.encryption_config = std::option::Option::Some(d);
             },
         }
         self
     }
 }
 
-impl ToListMappable for ConnectInstanceStorageConfigStorageConfigElS3ConfigEl {
-    type O = BlockAssignable<ConnectInstanceStorageConfigStorageConfigElS3ConfigEl>;
+impl terrars::ToListMappable for ConnectInstanceStorageConfigStorageConfigElS3ConfigEl {
+    type O = terrars::BlockAssignable<ConnectInstanceStorageConfigStorageConfigElS3ConfigEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -658,10 +721,10 @@ impl ToListMappable for ConnectInstanceStorageConfigStorageConfigElS3ConfigEl {
 }
 
 pub struct BuildConnectInstanceStorageConfigStorageConfigElS3ConfigEl {
-    #[doc= ""]
-    pub bucket_name: PrimField<String>,
-    #[doc= ""]
-    pub bucket_prefix: PrimField<String>,
+    #[doc = ""]
+    pub bucket_name: terrars::PrimField<std::string::String>,
+    #[doc = ""]
+    pub bucket_prefix: terrars::PrimField<std::string::String>,
 }
 
 impl BuildConnectInstanceStorageConfigStorageConfigElS3ConfigEl {
@@ -670,18 +733,21 @@ impl BuildConnectInstanceStorageConfigStorageConfigElS3ConfigEl {
             bucket_name: self.bucket_name,
             bucket_prefix: self.bucket_prefix,
             encryption_config: core::default::Default::default(),
-            dynamic: Default::default(),
+            dynamic: core::default::Default::default(),
         }
     }
 }
 
 pub struct ConnectInstanceStorageConfigStorageConfigElS3ConfigElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for ConnectInstanceStorageConfigStorageConfigElS3ConfigElRef {
-    fn new(shared: StackShared, base: String) -> ConnectInstanceStorageConfigStorageConfigElS3ConfigElRef {
+impl terrars::Ref for ConnectInstanceStorageConfigStorageConfigElS3ConfigElRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> ConnectInstanceStorageConfigStorageConfigElS3ConfigElRef {
         ConnectInstanceStorageConfigStorageConfigElS3ConfigElRef {
             shared: shared,
             base: base.to_string(),
@@ -690,123 +756,155 @@ impl Ref for ConnectInstanceStorageConfigStorageConfigElS3ConfigElRef {
 }
 
 impl ConnectInstanceStorageConfigStorageConfigElS3ConfigElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `bucket_name` after provisioning.\n"]
-    pub fn bucket_name(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.bucket_name", self.base))
+    #[doc = "Get a reference to the value of field `bucket_name` after provisioning.\n"]
+    pub fn bucket_name(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.bucket_name", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `bucket_prefix` after provisioning.\n"]
-    pub fn bucket_prefix(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.bucket_prefix", self.base))
+    #[doc = "Get a reference to the value of field `bucket_prefix` after provisioning.\n"]
+    pub fn bucket_prefix(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.bucket_prefix", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `encryption_config` after provisioning.\n"]
+    #[doc = "Get a reference to the value of field `encryption_config` after provisioning.\n"]
     pub fn encryption_config(
         &self,
-    ) -> ListRef<ConnectInstanceStorageConfigStorageConfigElS3ConfigElEncryptionConfigElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.encryption_config", self.base))
+    ) -> terrars::ListRef<ConnectInstanceStorageConfigStorageConfigElS3ConfigElEncryptionConfigElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.encryption_config", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
 struct ConnectInstanceStorageConfigStorageConfigElDynamic {
-    kinesis_firehose_config: Option<DynamicBlock<ConnectInstanceStorageConfigStorageConfigElKinesisFirehoseConfigEl>>,
-    kinesis_stream_config: Option<DynamicBlock<ConnectInstanceStorageConfigStorageConfigElKinesisStreamConfigEl>>,
-    kinesis_video_stream_config: Option<
-        DynamicBlock<ConnectInstanceStorageConfigStorageConfigElKinesisVideoStreamConfigEl>,
-    >,
-    s3_config: Option<DynamicBlock<ConnectInstanceStorageConfigStorageConfigElS3ConfigEl>>,
+    kinesis_firehose_config: std
+    ::option
+    ::Option<terrars::DynamicBlock<ConnectInstanceStorageConfigStorageConfigElKinesisFirehoseConfigEl>>,
+    kinesis_stream_config: std
+    ::option
+    ::Option<terrars::DynamicBlock<ConnectInstanceStorageConfigStorageConfigElKinesisStreamConfigEl>>,
+    kinesis_video_stream_config: std
+    ::option
+    ::Option<terrars::DynamicBlock<ConnectInstanceStorageConfigStorageConfigElKinesisVideoStreamConfigEl>>,
+    s3_config: std::option::Option<terrars::DynamicBlock<ConnectInstanceStorageConfigStorageConfigElS3ConfigEl>>,
 }
 
 #[derive(Serialize)]
 pub struct ConnectInstanceStorageConfigStorageConfigEl {
-    storage_type: PrimField<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    kinesis_firehose_config: Option<Vec<ConnectInstanceStorageConfigStorageConfigElKinesisFirehoseConfigEl>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    kinesis_stream_config: Option<Vec<ConnectInstanceStorageConfigStorageConfigElKinesisStreamConfigEl>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    kinesis_video_stream_config: Option<Vec<ConnectInstanceStorageConfigStorageConfigElKinesisVideoStreamConfigEl>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    s3_config: Option<Vec<ConnectInstanceStorageConfigStorageConfigElS3ConfigEl>>,
+    storage_type: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    kinesis_firehose_config: std
+    ::option
+    ::Option<std::vec::Vec<ConnectInstanceStorageConfigStorageConfigElKinesisFirehoseConfigEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    kinesis_stream_config: std
+    ::option
+    ::Option<std::vec::Vec<ConnectInstanceStorageConfigStorageConfigElKinesisStreamConfigEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    kinesis_video_stream_config: std
+    ::option
+    ::Option<std::vec::Vec<ConnectInstanceStorageConfigStorageConfigElKinesisVideoStreamConfigEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    s3_config: std::option::Option<std::vec::Vec<ConnectInstanceStorageConfigStorageConfigElS3ConfigEl>>,
     dynamic: ConnectInstanceStorageConfigStorageConfigElDynamic,
 }
 
 impl ConnectInstanceStorageConfigStorageConfigEl {
-    #[doc= "Set the field `kinesis_firehose_config`.\n"]
+    #[doc = "Set the field `kinesis_firehose_config`.\n"]
     pub fn set_kinesis_firehose_config(
         mut self,
-        v: impl Into<BlockAssignable<ConnectInstanceStorageConfigStorageConfigElKinesisFirehoseConfigEl>>,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<
+                        terrars::BlockAssignable<ConnectInstanceStorageConfigStorageConfigElKinesisFirehoseConfigEl>,
+                    >,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.kinesis_firehose_config = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.kinesis_firehose_config = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.kinesis_firehose_config = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.kinesis_firehose_config = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Set the field `kinesis_stream_config`.\n"]
+    #[doc = "Set the field `kinesis_stream_config`.\n"]
     pub fn set_kinesis_stream_config(
         mut self,
-        v: impl Into<BlockAssignable<ConnectInstanceStorageConfigStorageConfigElKinesisStreamConfigEl>>,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<
+                        terrars::BlockAssignable<ConnectInstanceStorageConfigStorageConfigElKinesisStreamConfigEl>,
+                    >,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.kinesis_stream_config = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.kinesis_stream_config = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.kinesis_stream_config = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.kinesis_stream_config = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Set the field `kinesis_video_stream_config`.\n"]
+    #[doc = "Set the field `kinesis_video_stream_config`.\n"]
     pub fn set_kinesis_video_stream_config(
         mut self,
-        v: impl Into<BlockAssignable<ConnectInstanceStorageConfigStorageConfigElKinesisVideoStreamConfigEl>>,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<
+                        terrars
+                        ::BlockAssignable<ConnectInstanceStorageConfigStorageConfigElKinesisVideoStreamConfigEl>,
+                    >,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.kinesis_video_stream_config = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.kinesis_video_stream_config = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.kinesis_video_stream_config = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.kinesis_video_stream_config = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Set the field `s3_config`.\n"]
+    #[doc = "Set the field `s3_config`.\n"]
     pub fn set_s3_config(
         mut self,
-        v: impl Into<BlockAssignable<ConnectInstanceStorageConfigStorageConfigElS3ConfigEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<ConnectInstanceStorageConfigStorageConfigElS3ConfigEl>>,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.s3_config = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.s3_config = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.s3_config = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.s3_config = std::option::Option::Some(d);
             },
         }
         self
     }
 }
 
-impl ToListMappable for ConnectInstanceStorageConfigStorageConfigEl {
-    type O = BlockAssignable<ConnectInstanceStorageConfigStorageConfigEl>;
+impl terrars::ToListMappable for ConnectInstanceStorageConfigStorageConfigEl {
+    type O = terrars::BlockAssignable<ConnectInstanceStorageConfigStorageConfigEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -815,8 +913,8 @@ impl ToListMappable for ConnectInstanceStorageConfigStorageConfigEl {
 }
 
 pub struct BuildConnectInstanceStorageConfigStorageConfigEl {
-    #[doc= ""]
-    pub storage_type: PrimField<String>,
+    #[doc = ""]
+    pub storage_type: terrars::PrimField<std::string::String>,
 }
 
 impl BuildConnectInstanceStorageConfigStorageConfigEl {
@@ -827,18 +925,21 @@ impl BuildConnectInstanceStorageConfigStorageConfigEl {
             kinesis_stream_config: core::default::Default::default(),
             kinesis_video_stream_config: core::default::Default::default(),
             s3_config: core::default::Default::default(),
-            dynamic: Default::default(),
+            dynamic: core::default::Default::default(),
         }
     }
 }
 
 pub struct ConnectInstanceStorageConfigStorageConfigElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for ConnectInstanceStorageConfigStorageConfigElRef {
-    fn new(shared: StackShared, base: String) -> ConnectInstanceStorageConfigStorageConfigElRef {
+impl terrars::Ref for ConnectInstanceStorageConfigStorageConfigElRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> ConnectInstanceStorageConfigStorageConfigElRef {
         ConnectInstanceStorageConfigStorageConfigElRef {
             shared: shared,
             base: base.to_string(),
@@ -847,41 +948,43 @@ impl Ref for ConnectInstanceStorageConfigStorageConfigElRef {
 }
 
 impl ConnectInstanceStorageConfigStorageConfigElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `storage_type` after provisioning.\n"]
-    pub fn storage_type(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.storage_type", self.base))
+    #[doc = "Get a reference to the value of field `storage_type` after provisioning.\n"]
+    pub fn storage_type(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.storage_type", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `kinesis_firehose_config` after provisioning.\n"]
+    #[doc = "Get a reference to the value of field `kinesis_firehose_config` after provisioning.\n"]
     pub fn kinesis_firehose_config(
         &self,
-    ) -> ListRef<ConnectInstanceStorageConfigStorageConfigElKinesisFirehoseConfigElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.kinesis_firehose_config", self.base))
+    ) -> terrars::ListRef<ConnectInstanceStorageConfigStorageConfigElKinesisFirehoseConfigElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.kinesis_firehose_config", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `kinesis_stream_config` after provisioning.\n"]
-    pub fn kinesis_stream_config(&self) -> ListRef<ConnectInstanceStorageConfigStorageConfigElKinesisStreamConfigElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.kinesis_stream_config", self.base))
+    #[doc = "Get a reference to the value of field `kinesis_stream_config` after provisioning.\n"]
+    pub fn kinesis_stream_config(
+        &self,
+    ) -> terrars::ListRef<ConnectInstanceStorageConfigStorageConfigElKinesisStreamConfigElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.kinesis_stream_config", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `kinesis_video_stream_config` after provisioning.\n"]
+    #[doc = "Get a reference to the value of field `kinesis_video_stream_config` after provisioning.\n"]
     pub fn kinesis_video_stream_config(
         &self,
-    ) -> ListRef<ConnectInstanceStorageConfigStorageConfigElKinesisVideoStreamConfigElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.kinesis_video_stream_config", self.base))
+    ) -> terrars::ListRef<ConnectInstanceStorageConfigStorageConfigElKinesisVideoStreamConfigElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.kinesis_video_stream_config", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `s3_config` after provisioning.\n"]
-    pub fn s3_config(&self) -> ListRef<ConnectInstanceStorageConfigStorageConfigElS3ConfigElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.s3_config", self.base))
+    #[doc = "Get a reference to the value of field `s3_config` after provisioning.\n"]
+    pub fn s3_config(&self) -> terrars::ListRef<ConnectInstanceStorageConfigStorageConfigElS3ConfigElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.s3_config", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
 struct ConnectInstanceStorageConfigDynamic {
-    storage_config: Option<DynamicBlock<ConnectInstanceStorageConfigStorageConfigEl>>,
+    storage_config: std::option::Option<terrars::DynamicBlock<ConnectInstanceStorageConfigStorageConfigEl>>,
 }

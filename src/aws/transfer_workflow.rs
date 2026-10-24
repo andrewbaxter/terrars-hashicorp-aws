@@ -1,55 +1,59 @@
 use serde::Serialize;
-use std::cell::RefCell;
-use std::rc::Rc;
-use terrars::*;
+use terrars::{
+    Referable as _,
+    Resource_ as _,
+    Ref as _,
+};
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
 struct TransferWorkflowData {
-    #[serde(skip_serializing_if = "Vec::is_empty")]
-    depends_on: Vec<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    provider: Option<String>,
-    #[serde(skip_serializing_if = "SerdeSkipDefault::is_default")]
-    lifecycle: ResourceLifecycle,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    for_each: Option<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    description: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    id: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    tags: Option<RecField<PrimField<String>>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    tags_all: Option<RecField<PrimField<String>>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    on_exception_steps: Option<Vec<TransferWorkflowOnExceptionStepsEl>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    steps: Option<Vec<TransferWorkflowStepsEl>>,
+    #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
+    depends_on: std::vec::Vec<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    provider: std::option::Option<std::string::String>,
+    #[serde(skip_serializing_if = "terrars::SerdeSkipDefault::is_default")]
+    lifecycle: terrars::ResourceLifecycle,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    for_each: std::option::Option<std::string::String>,
+    #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
+    provisioner: std::vec::Vec<terrars::Provisioner>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    description: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    id: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    tags: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    tags_all: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    on_exception_steps: std::option::Option<std::vec::Vec<TransferWorkflowOnExceptionStepsEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    steps: std::option::Option<std::vec::Vec<TransferWorkflowStepsEl>>,
     dynamic: TransferWorkflowDynamic,
 }
 
 struct TransferWorkflow_ {
-    shared: StackShared,
-    tf_id: String,
-    data: RefCell<TransferWorkflowData>,
+    shared: terrars::StackShared,
+    tf_id: std::string::String,
+    data: std::cell::RefCell<TransferWorkflowData>,
 }
 
 #[derive(Clone)]
-pub struct TransferWorkflow(Rc<TransferWorkflow_>);
+pub struct TransferWorkflow(std::rc::Rc<TransferWorkflow_>);
 
 impl TransferWorkflow {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.0.shared
     }
 
-    pub fn depends_on(self, dep: &impl Referable) -> Self {
+    pub fn depends_on(self, dep: &impl terrars::Referable) -> Self {
         self.0.data.borrow_mut().depends_on.push(dep.extract_ref());
         self
     }
 
     pub fn set_provider(self, provider: &ProviderAws) -> Self {
-        self.0.data.borrow_mut().provider = Some(provider.provider_ref());
+        self.0.data.borrow_mut().provider = std::option::Option::Some(provider.provider_ref());
         self
     }
 
@@ -64,150 +68,192 @@ impl TransferWorkflow {
     }
 
     pub fn ignore_changes_to_all(self) -> Self {
-        self.0.data.borrow_mut().lifecycle.ignore_changes = Some(IgnoreChanges::All(IgnoreChangesAll::All));
+        self.0.data.borrow_mut().lifecycle.ignore_changes =
+            std::option::Option::Some(terrars::IgnoreChanges::All(terrars::IgnoreChangesAll::All));
         self
     }
 
-    pub fn ignore_changes_to_attr(self, attr: impl ToString) -> Self {
+    pub fn ignore_changes_to_attr(self, attr: impl std::string::ToString) -> Self {
         {
             let mut d = self.0.data.borrow_mut();
             if match &mut d.lifecycle.ignore_changes {
-                Some(i) => match i {
-                    IgnoreChanges::All(_) => {
+                std::option::Option::Some(i) => match i {
+                    terrars::IgnoreChanges::All(_) => {
                         true
                     },
-                    IgnoreChanges::Refs(r) => {
+                    terrars::IgnoreChanges::Refs(r) => {
                         r.push(attr.to_string());
                         false
                     },
                 },
-                None => true,
+                std::option::Option::None => true,
             } {
-                d.lifecycle.ignore_changes = Some(IgnoreChanges::Refs(vec![attr.to_string()]));
+                d.lifecycle.ignore_changes =
+                    std::option::Option::Some(terrars::IgnoreChanges::Refs(vec![attr.to_string()]));
             }
         }
         self
     }
 
-    pub fn replace_triggered_by_resource(self, r: &impl Resource) -> Self {
+    pub fn replace_triggered_by_resource(self, r: &impl terrars::Resource) -> Self {
         self.0.data.borrow_mut().lifecycle.replace_triggered_by.push(r.extract_ref());
         self
     }
 
-    pub fn replace_triggered_by_attr(self, attr: impl ToString) -> Self {
+    pub fn replace_triggered_by_attr(self, attr: impl std::string::ToString) -> Self {
         self.0.data.borrow_mut().lifecycle.replace_triggered_by.push(attr.to_string());
         self
     }
 
-    #[doc= "Set the field `description`.\n"]
-    pub fn set_description(self, v: impl Into<PrimField<String>>) -> Self {
-        self.0.data.borrow_mut().description = Some(v.into());
+    #[doc = r" Add a provisioner (ex: `local-exec`, `remote-exec`, `file`) to this resource."]
+    #[doc = r" Provisioners run in the order they're added."]
+    pub fn add_provisioner(self, v: impl std::convert::Into<terrars::Provisioner>) -> Self {
+        self.0.data.borrow_mut().provisioner.push(v.into());
         self
     }
 
-    #[doc= "Set the field `id`.\n"]
-    pub fn set_id(self, v: impl Into<PrimField<String>>) -> Self {
-        self.0.data.borrow_mut().id = Some(v.into());
+    pub fn add_lifecycle_precondition(
+        self,
+        condition: impl std::convert::Into<terrars::PrimField<bool>>,
+        error_message: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.0.data.borrow_mut().lifecycle.precondition.push(terrars::LifecycleCondition {
+            condition: condition.into(),
+            error_message: error_message.into(),
+        });
         self
     }
 
-    #[doc= "Set the field `tags`.\n"]
-    pub fn set_tags(self, v: impl Into<RecField<PrimField<String>>>) -> Self {
-        self.0.data.borrow_mut().tags = Some(v.into());
+    pub fn add_lifecycle_postcondition(
+        self,
+        condition: impl std::convert::Into<terrars::PrimField<bool>>,
+        error_message: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.0.data.borrow_mut().lifecycle.postcondition.push(terrars::LifecycleCondition {
+            condition: condition.into(),
+            error_message: error_message.into(),
+        });
         self
     }
 
-    #[doc= "Set the field `tags_all`.\n"]
-    pub fn set_tags_all(self, v: impl Into<RecField<PrimField<String>>>) -> Self {
-        self.0.data.borrow_mut().tags_all = Some(v.into());
+    #[doc = "Set the field `description`.\n"]
+    pub fn set_description(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().description = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `on_exception_steps`.\n"]
-    pub fn set_on_exception_steps(self, v: impl Into<BlockAssignable<TransferWorkflowOnExceptionStepsEl>>) -> Self {
+    #[doc = "Set the field `id`.\n"]
+    pub fn set_id(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().id = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `tags`.\n"]
+    pub fn set_tags(
+        self,
+        v: impl std::convert::Into<terrars::RecField<terrars::PrimField<std::string::String>>>,
+    ) -> Self {
+        self.0.data.borrow_mut().tags = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `tags_all`.\n"]
+    pub fn set_tags_all(
+        self,
+        v: impl std::convert::Into<terrars::RecField<terrars::PrimField<std::string::String>>>,
+    ) -> Self {
+        self.0.data.borrow_mut().tags_all = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `on_exception_steps`.\n"]
+    pub fn set_on_exception_steps(
+        self,
+        v: impl std::convert::Into<terrars::BlockAssignable<TransferWorkflowOnExceptionStepsEl>>,
+    ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.0.data.borrow_mut().on_exception_steps = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.0.data.borrow_mut().on_exception_steps = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.0.data.borrow_mut().dynamic.on_exception_steps = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.0.data.borrow_mut().dynamic.on_exception_steps = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Set the field `steps`.\n"]
-    pub fn set_steps(self, v: impl Into<BlockAssignable<TransferWorkflowStepsEl>>) -> Self {
+    #[doc = "Set the field `steps`.\n"]
+    pub fn set_steps(self, v: impl std::convert::Into<terrars::BlockAssignable<TransferWorkflowStepsEl>>) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.0.data.borrow_mut().steps = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.0.data.borrow_mut().steps = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.0.data.borrow_mut().dynamic.steps = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.0.data.borrow_mut().dynamic.steps = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Get a reference to the value of field `arn` after provisioning.\n"]
-    pub fn arn(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.arn", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `arn` after provisioning.\n"]
+    pub fn arn(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.arn", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `description` after provisioning.\n"]
-    pub fn description(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.description", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `description` after provisioning.\n"]
+    pub fn description(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.description", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `id` after provisioning.\n"]
-    pub fn id(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
+    pub fn id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `tags` after provisioning.\n"]
-    pub fn tags(&self) -> RecRef<PrimExpr<String>> {
-        RecRef::new(self.shared().clone(), format!("{}.tags", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `tags` after provisioning.\n"]
+    pub fn tags(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
+        terrars::RecRef::new(self.shared().clone(), format!("{}.tags", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `tags_all` after provisioning.\n"]
-    pub fn tags_all(&self) -> RecRef<PrimExpr<String>> {
-        RecRef::new(self.shared().clone(), format!("{}.tags_all", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `tags_all` after provisioning.\n"]
+    pub fn tags_all(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
+        terrars::RecRef::new(self.shared().clone(), format!("{}.tags_all", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `on_exception_steps` after provisioning.\n"]
-    pub fn on_exception_steps(&self) -> ListRef<TransferWorkflowOnExceptionStepsElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.on_exception_steps", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `on_exception_steps` after provisioning.\n"]
+    pub fn on_exception_steps(&self) -> terrars::ListRef<TransferWorkflowOnExceptionStepsElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.on_exception_steps", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `steps` after provisioning.\n"]
-    pub fn steps(&self) -> ListRef<TransferWorkflowStepsElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.steps", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `steps` after provisioning.\n"]
+    pub fn steps(&self) -> terrars::ListRef<TransferWorkflowStepsElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.steps", self.extract_ref()))
     }
 }
 
-impl Referable for TransferWorkflow {
-    fn extract_ref(&self) -> String {
+impl terrars::Referable for TransferWorkflow {
+    fn extract_ref(&self) -> std::string::String {
         format!("{}.{}", self.0.extract_resource_type(), self.0.extract_tf_id())
     }
 }
 
-impl Resource for TransferWorkflow { }
+impl terrars::Resource for TransferWorkflow { }
 
-impl ToListMappable for TransferWorkflow {
-    type O = ListRef<TransferWorkflowRef>;
+impl terrars::ToListMappable for TransferWorkflow {
+    type O = terrars::ListRef<TransferWorkflowRef>;
 
-    fn do_map(self, base: String) -> Self::O {
-        self.0.data.borrow_mut().for_each = Some(format!("${{{}}}", base));
-        ListRef::new(self.0.shared.clone(), self.extract_ref())
+    fn do_map(self, base: std::string::String) -> Self::O {
+        self.0.data.borrow_mut().for_each = std::option::Option::Some(format!("${{{}}}", base));
+        terrars::ListRef::new(self.0.shared.clone(), self.extract_ref())
     }
 }
 
-impl Resource_ for TransferWorkflow_ {
-    fn extract_resource_type(&self) -> String {
+impl terrars::Resource_ for TransferWorkflow_ {
+    fn extract_resource_type(&self) -> std::string::String {
         "aws_transfer_workflow".into()
     }
 
-    fn extract_tf_id(&self) -> String {
+    fn extract_tf_id(&self) -> std::string::String {
         self.tf_id.clone()
     }
 
@@ -217,26 +263,27 @@ impl Resource_ for TransferWorkflow_ {
 }
 
 pub struct BuildTransferWorkflow {
-    pub tf_id: String,
+    pub tf_id: std::string::String,
 }
 
 impl BuildTransferWorkflow {
-    pub fn build(self, stack: &mut Stack) -> TransferWorkflow {
-        let out = TransferWorkflow(Rc::new(TransferWorkflow_ {
+    pub fn build(self, stack: &mut terrars::Stack) -> TransferWorkflow {
+        let out = TransferWorkflow(std::rc::Rc::new(TransferWorkflow_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: RefCell::new(TransferWorkflowData {
+            data: std::cell::RefCell::new(TransferWorkflowData {
                 depends_on: core::default::Default::default(),
-                provider: None,
+                provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
-                for_each: None,
+                for_each: std::option::Option::None,
+                provisioner: core::default::Default::default(),
                 description: core::default::Default::default(),
                 id: core::default::Default::default(),
                 tags: core::default::Default::default(),
                 tags_all: core::default::Default::default(),
                 on_exception_steps: core::default::Default::default(),
                 steps: core::default::Default::default(),
-                dynamic: Default::default(),
+                dynamic: core::default::Default::default(),
             }),
         }));
         stack.add_resource(out.0.clone());
@@ -245,12 +292,12 @@ impl BuildTransferWorkflow {
 }
 
 pub struct TransferWorkflowRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for TransferWorkflowRef {
-    fn new(shared: StackShared, base: String) -> Self {
+impl terrars::Ref for TransferWorkflowRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> Self {
         Self {
             shared: shared,
             base: base,
@@ -259,80 +306,82 @@ impl Ref for TransferWorkflowRef {
 }
 
 impl TransferWorkflowRef {
-    fn extract_ref(&self) -> String {
+    fn extract_ref(&self) -> std::string::String {
         self.base.clone()
     }
 
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `arn` after provisioning.\n"]
-    pub fn arn(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.arn", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `arn` after provisioning.\n"]
+    pub fn arn(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.arn", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `description` after provisioning.\n"]
-    pub fn description(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.description", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `description` after provisioning.\n"]
+    pub fn description(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.description", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `id` after provisioning.\n"]
-    pub fn id(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
+    pub fn id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `tags` after provisioning.\n"]
-    pub fn tags(&self) -> RecRef<PrimExpr<String>> {
-        RecRef::new(self.shared().clone(), format!("{}.tags", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `tags` after provisioning.\n"]
+    pub fn tags(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
+        terrars::RecRef::new(self.shared().clone(), format!("{}.tags", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `tags_all` after provisioning.\n"]
-    pub fn tags_all(&self) -> RecRef<PrimExpr<String>> {
-        RecRef::new(self.shared().clone(), format!("{}.tags_all", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `tags_all` after provisioning.\n"]
+    pub fn tags_all(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
+        terrars::RecRef::new(self.shared().clone(), format!("{}.tags_all", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `on_exception_steps` after provisioning.\n"]
-    pub fn on_exception_steps(&self) -> ListRef<TransferWorkflowOnExceptionStepsElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.on_exception_steps", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `on_exception_steps` after provisioning.\n"]
+    pub fn on_exception_steps(&self) -> terrars::ListRef<TransferWorkflowOnExceptionStepsElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.on_exception_steps", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `steps` after provisioning.\n"]
-    pub fn steps(&self) -> ListRef<TransferWorkflowStepsElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.steps", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `steps` after provisioning.\n"]
+    pub fn steps(&self) -> terrars::ListRef<TransferWorkflowStepsElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.steps", self.extract_ref()))
     }
 }
 
 #[derive(Serialize)]
 pub struct TransferWorkflowOnExceptionStepsElCopyStepDetailsElDestinationFileLocationElEfsFileLocationEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    file_system_id: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    path: Option<PrimField<String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    file_system_id: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    path: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
 impl TransferWorkflowOnExceptionStepsElCopyStepDetailsElDestinationFileLocationElEfsFileLocationEl {
-    #[doc= "Set the field `file_system_id`.\n"]
-    pub fn set_file_system_id(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.file_system_id = Some(v.into());
+    #[doc = "Set the field `file_system_id`.\n"]
+    pub fn set_file_system_id(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.file_system_id = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `path`.\n"]
-    pub fn set_path(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.path = Some(v.into());
+    #[doc = "Set the field `path`.\n"]
+    pub fn set_path(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.path = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl ToListMappable for TransferWorkflowOnExceptionStepsElCopyStepDetailsElDestinationFileLocationElEfsFileLocationEl {
+impl terrars
+::ToListMappable for TransferWorkflowOnExceptionStepsElCopyStepDetailsElDestinationFileLocationElEfsFileLocationEl {
     type O =
-        BlockAssignable<
+        terrars
+        ::BlockAssignable<
             TransferWorkflowOnExceptionStepsElCopyStepDetailsElDestinationFileLocationElEfsFileLocationEl,
         >;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -354,14 +403,14 @@ impl BuildTransferWorkflowOnExceptionStepsElCopyStepDetailsElDestinationFileLoca
 }
 
 pub struct TransferWorkflowOnExceptionStepsElCopyStepDetailsElDestinationFileLocationElEfsFileLocationElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for TransferWorkflowOnExceptionStepsElCopyStepDetailsElDestinationFileLocationElEfsFileLocationElRef {
+impl terrars::Ref for TransferWorkflowOnExceptionStepsElCopyStepDetailsElDestinationFileLocationElEfsFileLocationElRef {
     fn new(
-        shared: StackShared,
-        base: String,
+        shared: terrars::StackShared,
+        base: std::string::String,
     ) -> TransferWorkflowOnExceptionStepsElCopyStepDetailsElDestinationFileLocationElEfsFileLocationElRef {
         TransferWorkflowOnExceptionStepsElCopyStepDetailsElDestinationFileLocationElEfsFileLocationElRef {
             shared: shared,
@@ -371,51 +420,53 @@ impl Ref for TransferWorkflowOnExceptionStepsElCopyStepDetailsElDestinationFileL
 }
 
 impl TransferWorkflowOnExceptionStepsElCopyStepDetailsElDestinationFileLocationElEfsFileLocationElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `file_system_id` after provisioning.\n"]
-    pub fn file_system_id(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.file_system_id", self.base))
+    #[doc = "Get a reference to the value of field `file_system_id` after provisioning.\n"]
+    pub fn file_system_id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.file_system_id", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `path` after provisioning.\n"]
-    pub fn path(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.path", self.base))
+    #[doc = "Get a reference to the value of field `path` after provisioning.\n"]
+    pub fn path(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.path", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct TransferWorkflowOnExceptionStepsElCopyStepDetailsElDestinationFileLocationElS3FileLocationEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    bucket: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    key: Option<PrimField<String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    bucket: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    key: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
 impl TransferWorkflowOnExceptionStepsElCopyStepDetailsElDestinationFileLocationElS3FileLocationEl {
-    #[doc= "Set the field `bucket`.\n"]
-    pub fn set_bucket(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.bucket = Some(v.into());
+    #[doc = "Set the field `bucket`.\n"]
+    pub fn set_bucket(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.bucket = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `key`.\n"]
-    pub fn set_key(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.key = Some(v.into());
+    #[doc = "Set the field `key`.\n"]
+    pub fn set_key(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.key = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl ToListMappable for TransferWorkflowOnExceptionStepsElCopyStepDetailsElDestinationFileLocationElS3FileLocationEl {
+impl terrars
+::ToListMappable for TransferWorkflowOnExceptionStepsElCopyStepDetailsElDestinationFileLocationElS3FileLocationEl {
     type O =
-        BlockAssignable<
+        terrars
+        ::BlockAssignable<
             TransferWorkflowOnExceptionStepsElCopyStepDetailsElDestinationFileLocationElS3FileLocationEl,
         >;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -437,14 +488,14 @@ impl BuildTransferWorkflowOnExceptionStepsElCopyStepDetailsElDestinationFileLoca
 }
 
 pub struct TransferWorkflowOnExceptionStepsElCopyStepDetailsElDestinationFileLocationElS3FileLocationElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for TransferWorkflowOnExceptionStepsElCopyStepDetailsElDestinationFileLocationElS3FileLocationElRef {
+impl terrars::Ref for TransferWorkflowOnExceptionStepsElCopyStepDetailsElDestinationFileLocationElS3FileLocationElRef {
     fn new(
-        shared: StackShared,
-        base: String,
+        shared: terrars::StackShared,
+        base: std::string::String,
     ) -> TransferWorkflowOnExceptionStepsElCopyStepDetailsElDestinationFileLocationElS3FileLocationElRef {
         TransferWorkflowOnExceptionStepsElCopyStepDetailsElDestinationFileLocationElS3FileLocationElRef {
             shared: shared,
@@ -454,97 +505,113 @@ impl Ref for TransferWorkflowOnExceptionStepsElCopyStepDetailsElDestinationFileL
 }
 
 impl TransferWorkflowOnExceptionStepsElCopyStepDetailsElDestinationFileLocationElS3FileLocationElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `bucket` after provisioning.\n"]
-    pub fn bucket(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.bucket", self.base))
+    #[doc = "Get a reference to the value of field `bucket` after provisioning.\n"]
+    pub fn bucket(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.bucket", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `key` after provisioning.\n"]
-    pub fn key(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.key", self.base))
+    #[doc = "Get a reference to the value of field `key` after provisioning.\n"]
+    pub fn key(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.key", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
 struct TransferWorkflowOnExceptionStepsElCopyStepDetailsElDestinationFileLocationElDynamic {
-    efs_file_location: Option<
-        DynamicBlock<TransferWorkflowOnExceptionStepsElCopyStepDetailsElDestinationFileLocationElEfsFileLocationEl>,
+    efs_file_location: std
+    ::option
+    ::Option<
+        terrars
+        ::DynamicBlock<TransferWorkflowOnExceptionStepsElCopyStepDetailsElDestinationFileLocationElEfsFileLocationEl>,
     >,
-    s3_file_location: Option<
-        DynamicBlock<TransferWorkflowOnExceptionStepsElCopyStepDetailsElDestinationFileLocationElS3FileLocationEl>,
+    s3_file_location: std
+    ::option
+    ::Option<
+        terrars
+        ::DynamicBlock<TransferWorkflowOnExceptionStepsElCopyStepDetailsElDestinationFileLocationElS3FileLocationEl>,
     >,
 }
 
 #[derive(Serialize)]
 pub struct TransferWorkflowOnExceptionStepsElCopyStepDetailsElDestinationFileLocationEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    efs_file_location: Option<
-        Vec<TransferWorkflowOnExceptionStepsElCopyStepDetailsElDestinationFileLocationElEfsFileLocationEl>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    efs_file_location: std
+    ::option
+    ::Option<
+        std::vec::Vec<TransferWorkflowOnExceptionStepsElCopyStepDetailsElDestinationFileLocationElEfsFileLocationEl>,
     >,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    s3_file_location: Option<
-        Vec<TransferWorkflowOnExceptionStepsElCopyStepDetailsElDestinationFileLocationElS3FileLocationEl>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    s3_file_location: std
+    ::option
+    ::Option<
+        std::vec::Vec<TransferWorkflowOnExceptionStepsElCopyStepDetailsElDestinationFileLocationElS3FileLocationEl>,
     >,
     dynamic: TransferWorkflowOnExceptionStepsElCopyStepDetailsElDestinationFileLocationElDynamic,
 }
 
 impl TransferWorkflowOnExceptionStepsElCopyStepDetailsElDestinationFileLocationEl {
-    #[doc= "Set the field `efs_file_location`.\n"]
+    #[doc = "Set the field `efs_file_location`.\n"]
     pub fn set_efs_file_location(
         mut self,
         v:
             impl
 
-                    Into<
-                        BlockAssignable<
+                    std
+                    ::convert
+                    ::Into<
+                        terrars
+                        ::BlockAssignable<
                             TransferWorkflowOnExceptionStepsElCopyStepDetailsElDestinationFileLocationElEfsFileLocationEl,
                         >,
                     >,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.efs_file_location = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.efs_file_location = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.efs_file_location = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.efs_file_location = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Set the field `s3_file_location`.\n"]
+    #[doc = "Set the field `s3_file_location`.\n"]
     pub fn set_s3_file_location(
         mut self,
         v:
             impl
 
-                    Into<
-                        BlockAssignable<
+                    std
+                    ::convert
+                    ::Into<
+                        terrars
+                        ::BlockAssignable<
                             TransferWorkflowOnExceptionStepsElCopyStepDetailsElDestinationFileLocationElS3FileLocationEl,
                         >,
                     >,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.s3_file_location = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.s3_file_location = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.s3_file_location = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.s3_file_location = std::option::Option::Some(d);
             },
         }
         self
     }
 }
 
-impl ToListMappable for TransferWorkflowOnExceptionStepsElCopyStepDetailsElDestinationFileLocationEl {
-    type O = BlockAssignable<TransferWorkflowOnExceptionStepsElCopyStepDetailsElDestinationFileLocationEl>;
+impl terrars::ToListMappable for TransferWorkflowOnExceptionStepsElCopyStepDetailsElDestinationFileLocationEl {
+    type O = terrars::BlockAssignable<TransferWorkflowOnExceptionStepsElCopyStepDetailsElDestinationFileLocationEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -559,20 +626,20 @@ impl BuildTransferWorkflowOnExceptionStepsElCopyStepDetailsElDestinationFileLoca
         TransferWorkflowOnExceptionStepsElCopyStepDetailsElDestinationFileLocationEl {
             efs_file_location: core::default::Default::default(),
             s3_file_location: core::default::Default::default(),
-            dynamic: Default::default(),
+            dynamic: core::default::Default::default(),
         }
     }
 }
 
 pub struct TransferWorkflowOnExceptionStepsElCopyStepDetailsElDestinationFileLocationElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for TransferWorkflowOnExceptionStepsElCopyStepDetailsElDestinationFileLocationElRef {
+impl terrars::Ref for TransferWorkflowOnExceptionStepsElCopyStepDetailsElDestinationFileLocationElRef {
     fn new(
-        shared: StackShared,
-        base: String,
+        shared: terrars::StackShared,
+        base: std::string::String,
     ) -> TransferWorkflowOnExceptionStepsElCopyStepDetailsElDestinationFileLocationElRef {
         TransferWorkflowOnExceptionStepsElCopyStepDetailsElDestinationFileLocationElRef {
             shared: shared,
@@ -582,86 +649,106 @@ impl Ref for TransferWorkflowOnExceptionStepsElCopyStepDetailsElDestinationFileL
 }
 
 impl TransferWorkflowOnExceptionStepsElCopyStepDetailsElDestinationFileLocationElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `efs_file_location` after provisioning.\n"]
+    #[doc = "Get a reference to the value of field `efs_file_location` after provisioning.\n"]
     pub fn efs_file_location(
         &self,
-    ) -> ListRef<TransferWorkflowOnExceptionStepsElCopyStepDetailsElDestinationFileLocationElEfsFileLocationElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.efs_file_location", self.base))
+    ) -> terrars
+    ::ListRef<TransferWorkflowOnExceptionStepsElCopyStepDetailsElDestinationFileLocationElEfsFileLocationElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.efs_file_location", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `s3_file_location` after provisioning.\n"]
+    #[doc = "Get a reference to the value of field `s3_file_location` after provisioning.\n"]
     pub fn s3_file_location(
         &self,
-    ) -> ListRef<TransferWorkflowOnExceptionStepsElCopyStepDetailsElDestinationFileLocationElS3FileLocationElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.s3_file_location", self.base))
+    ) -> terrars
+    ::ListRef<TransferWorkflowOnExceptionStepsElCopyStepDetailsElDestinationFileLocationElS3FileLocationElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.s3_file_location", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
 struct TransferWorkflowOnExceptionStepsElCopyStepDetailsElDynamic {
-    destination_file_location: Option<
-        DynamicBlock<TransferWorkflowOnExceptionStepsElCopyStepDetailsElDestinationFileLocationEl>,
-    >,
+    destination_file_location: std
+    ::option
+    ::Option<terrars::DynamicBlock<TransferWorkflowOnExceptionStepsElCopyStepDetailsElDestinationFileLocationEl>>,
 }
 
 #[derive(Serialize)]
 pub struct TransferWorkflowOnExceptionStepsElCopyStepDetailsEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    name: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    overwrite_existing: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    source_file_location: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    destination_file_location: Option<Vec<TransferWorkflowOnExceptionStepsElCopyStepDetailsElDestinationFileLocationEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    name: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    overwrite_existing: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    source_file_location: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    destination_file_location: std
+    ::option
+    ::Option<std::vec::Vec<TransferWorkflowOnExceptionStepsElCopyStepDetailsElDestinationFileLocationEl>>,
     dynamic: TransferWorkflowOnExceptionStepsElCopyStepDetailsElDynamic,
 }
 
 impl TransferWorkflowOnExceptionStepsElCopyStepDetailsEl {
-    #[doc= "Set the field `name`.\n"]
-    pub fn set_name(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.name = Some(v.into());
+    #[doc = "Set the field `name`.\n"]
+    pub fn set_name(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.name = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `overwrite_existing`.\n"]
-    pub fn set_overwrite_existing(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.overwrite_existing = Some(v.into());
+    #[doc = "Set the field `overwrite_existing`.\n"]
+    pub fn set_overwrite_existing(
+        mut self,
+        v: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.overwrite_existing = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `source_file_location`.\n"]
-    pub fn set_source_file_location(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.source_file_location = Some(v.into());
+    #[doc = "Set the field `source_file_location`.\n"]
+    pub fn set_source_file_location(
+        mut self,
+        v: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.source_file_location = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `destination_file_location`.\n"]
+    #[doc = "Set the field `destination_file_location`.\n"]
     pub fn set_destination_file_location(
         mut self,
-        v: impl Into<BlockAssignable<TransferWorkflowOnExceptionStepsElCopyStepDetailsElDestinationFileLocationEl>>,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<
+                        terrars
+                        ::BlockAssignable<
+                            TransferWorkflowOnExceptionStepsElCopyStepDetailsElDestinationFileLocationEl,
+                        >,
+                    >,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.destination_file_location = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.destination_file_location = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.destination_file_location = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.destination_file_location = std::option::Option::Some(d);
             },
         }
         self
     }
 }
 
-impl ToListMappable for TransferWorkflowOnExceptionStepsElCopyStepDetailsEl {
-    type O = BlockAssignable<TransferWorkflowOnExceptionStepsElCopyStepDetailsEl>;
+impl terrars::ToListMappable for TransferWorkflowOnExceptionStepsElCopyStepDetailsEl {
+    type O = terrars::BlockAssignable<TransferWorkflowOnExceptionStepsElCopyStepDetailsEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -678,18 +765,21 @@ impl BuildTransferWorkflowOnExceptionStepsElCopyStepDetailsEl {
             overwrite_existing: core::default::Default::default(),
             source_file_location: core::default::Default::default(),
             destination_file_location: core::default::Default::default(),
-            dynamic: Default::default(),
+            dynamic: core::default::Default::default(),
         }
     }
 }
 
 pub struct TransferWorkflowOnExceptionStepsElCopyStepDetailsElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for TransferWorkflowOnExceptionStepsElCopyStepDetailsElRef {
-    fn new(shared: StackShared, base: String) -> TransferWorkflowOnExceptionStepsElCopyStepDetailsElRef {
+impl terrars::Ref for TransferWorkflowOnExceptionStepsElCopyStepDetailsElRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> TransferWorkflowOnExceptionStepsElCopyStepDetailsElRef {
         TransferWorkflowOnExceptionStepsElCopyStepDetailsElRef {
             shared: shared,
             base: base.to_string(),
@@ -698,76 +788,79 @@ impl Ref for TransferWorkflowOnExceptionStepsElCopyStepDetailsElRef {
 }
 
 impl TransferWorkflowOnExceptionStepsElCopyStepDetailsElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `name` after provisioning.\n"]
-    pub fn name(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.name", self.base))
+    #[doc = "Get a reference to the value of field `name` after provisioning.\n"]
+    pub fn name(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `overwrite_existing` after provisioning.\n"]
-    pub fn overwrite_existing(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.overwrite_existing", self.base))
+    #[doc = "Get a reference to the value of field `overwrite_existing` after provisioning.\n"]
+    pub fn overwrite_existing(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.overwrite_existing", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `source_file_location` after provisioning.\n"]
-    pub fn source_file_location(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.source_file_location", self.base))
+    #[doc = "Get a reference to the value of field `source_file_location` after provisioning.\n"]
+    pub fn source_file_location(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.source_file_location", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `destination_file_location` after provisioning.\n"]
+    #[doc = "Get a reference to the value of field `destination_file_location` after provisioning.\n"]
     pub fn destination_file_location(
         &self,
-    ) -> ListRef<TransferWorkflowOnExceptionStepsElCopyStepDetailsElDestinationFileLocationElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.destination_file_location", self.base))
+    ) -> terrars::ListRef<TransferWorkflowOnExceptionStepsElCopyStepDetailsElDestinationFileLocationElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.destination_file_location", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct TransferWorkflowOnExceptionStepsElCustomStepDetailsEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    name: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    source_file_location: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    target: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    timeout_seconds: Option<PrimField<f64>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    name: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    source_file_location: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    target: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    timeout_seconds: std::option::Option<terrars::PrimField<f64>>,
 }
 
 impl TransferWorkflowOnExceptionStepsElCustomStepDetailsEl {
-    #[doc= "Set the field `name`.\n"]
-    pub fn set_name(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.name = Some(v.into());
+    #[doc = "Set the field `name`.\n"]
+    pub fn set_name(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.name = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `source_file_location`.\n"]
-    pub fn set_source_file_location(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.source_file_location = Some(v.into());
+    #[doc = "Set the field `source_file_location`.\n"]
+    pub fn set_source_file_location(
+        mut self,
+        v: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.source_file_location = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `target`.\n"]
-    pub fn set_target(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.target = Some(v.into());
+    #[doc = "Set the field `target`.\n"]
+    pub fn set_target(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.target = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `timeout_seconds`.\n"]
-    pub fn set_timeout_seconds(mut self, v: impl Into<PrimField<f64>>) -> Self {
-        self.timeout_seconds = Some(v.into());
+    #[doc = "Set the field `timeout_seconds`.\n"]
+    pub fn set_timeout_seconds(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.timeout_seconds = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl ToListMappable for TransferWorkflowOnExceptionStepsElCustomStepDetailsEl {
-    type O = BlockAssignable<TransferWorkflowOnExceptionStepsElCustomStepDetailsEl>;
+impl terrars::ToListMappable for TransferWorkflowOnExceptionStepsElCustomStepDetailsEl {
+    type O = terrars::BlockAssignable<TransferWorkflowOnExceptionStepsElCustomStepDetailsEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -789,12 +882,15 @@ impl BuildTransferWorkflowOnExceptionStepsElCustomStepDetailsEl {
 }
 
 pub struct TransferWorkflowOnExceptionStepsElCustomStepDetailsElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for TransferWorkflowOnExceptionStepsElCustomStepDetailsElRef {
-    fn new(shared: StackShared, base: String) -> TransferWorkflowOnExceptionStepsElCustomStepDetailsElRef {
+impl terrars::Ref for TransferWorkflowOnExceptionStepsElCustomStepDetailsElRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> TransferWorkflowOnExceptionStepsElCustomStepDetailsElRef {
         TransferWorkflowOnExceptionStepsElCustomStepDetailsElRef {
             shared: shared,
             base: base.to_string(),
@@ -803,58 +899,61 @@ impl Ref for TransferWorkflowOnExceptionStepsElCustomStepDetailsElRef {
 }
 
 impl TransferWorkflowOnExceptionStepsElCustomStepDetailsElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `name` after provisioning.\n"]
-    pub fn name(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.name", self.base))
+    #[doc = "Get a reference to the value of field `name` after provisioning.\n"]
+    pub fn name(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `source_file_location` after provisioning.\n"]
-    pub fn source_file_location(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.source_file_location", self.base))
+    #[doc = "Get a reference to the value of field `source_file_location` after provisioning.\n"]
+    pub fn source_file_location(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.source_file_location", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `target` after provisioning.\n"]
-    pub fn target(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.target", self.base))
+    #[doc = "Get a reference to the value of field `target` after provisioning.\n"]
+    pub fn target(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.target", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `timeout_seconds` after provisioning.\n"]
-    pub fn timeout_seconds(&self) -> PrimExpr<f64> {
-        PrimExpr::new(self.shared().clone(), format!("{}.timeout_seconds", self.base))
+    #[doc = "Get a reference to the value of field `timeout_seconds` after provisioning.\n"]
+    pub fn timeout_seconds(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.timeout_seconds", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct TransferWorkflowOnExceptionStepsElDeleteStepDetailsEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    name: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    source_file_location: Option<PrimField<String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    name: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    source_file_location: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
 impl TransferWorkflowOnExceptionStepsElDeleteStepDetailsEl {
-    #[doc= "Set the field `name`.\n"]
-    pub fn set_name(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.name = Some(v.into());
+    #[doc = "Set the field `name`.\n"]
+    pub fn set_name(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.name = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `source_file_location`.\n"]
-    pub fn set_source_file_location(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.source_file_location = Some(v.into());
+    #[doc = "Set the field `source_file_location`.\n"]
+    pub fn set_source_file_location(
+        mut self,
+        v: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.source_file_location = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl ToListMappable for TransferWorkflowOnExceptionStepsElDeleteStepDetailsEl {
-    type O = BlockAssignable<TransferWorkflowOnExceptionStepsElDeleteStepDetailsEl>;
+impl terrars::ToListMappable for TransferWorkflowOnExceptionStepsElDeleteStepDetailsEl {
+    type O = terrars::BlockAssignable<TransferWorkflowOnExceptionStepsElDeleteStepDetailsEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -874,12 +973,15 @@ impl BuildTransferWorkflowOnExceptionStepsElDeleteStepDetailsEl {
 }
 
 pub struct TransferWorkflowOnExceptionStepsElDeleteStepDetailsElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for TransferWorkflowOnExceptionStepsElDeleteStepDetailsElRef {
-    fn new(shared: StackShared, base: String) -> TransferWorkflowOnExceptionStepsElDeleteStepDetailsElRef {
+impl terrars::Ref for TransferWorkflowOnExceptionStepsElDeleteStepDetailsElRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> TransferWorkflowOnExceptionStepsElDeleteStepDetailsElRef {
         TransferWorkflowOnExceptionStepsElDeleteStepDetailsElRef {
             shared: shared,
             base: base.to_string(),
@@ -888,34 +990,34 @@ impl Ref for TransferWorkflowOnExceptionStepsElDeleteStepDetailsElRef {
 }
 
 impl TransferWorkflowOnExceptionStepsElDeleteStepDetailsElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `name` after provisioning.\n"]
-    pub fn name(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.name", self.base))
+    #[doc = "Get a reference to the value of field `name` after provisioning.\n"]
+    pub fn name(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `source_file_location` after provisioning.\n"]
-    pub fn source_file_location(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.source_file_location", self.base))
+    #[doc = "Get a reference to the value of field `source_file_location` after provisioning.\n"]
+    pub fn source_file_location(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.source_file_location", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct TransferWorkflowOnExceptionStepsElTagStepDetailsElTagsEl {
-    key: PrimField<String>,
-    value: PrimField<String>,
+    key: terrars::PrimField<std::string::String>,
+    value: terrars::PrimField<std::string::String>,
 }
 
 impl TransferWorkflowOnExceptionStepsElTagStepDetailsElTagsEl { }
 
-impl ToListMappable for TransferWorkflowOnExceptionStepsElTagStepDetailsElTagsEl {
-    type O = BlockAssignable<TransferWorkflowOnExceptionStepsElTagStepDetailsElTagsEl>;
+impl terrars::ToListMappable for TransferWorkflowOnExceptionStepsElTagStepDetailsElTagsEl {
+    type O = terrars::BlockAssignable<TransferWorkflowOnExceptionStepsElTagStepDetailsElTagsEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -924,10 +1026,10 @@ impl ToListMappable for TransferWorkflowOnExceptionStepsElTagStepDetailsElTagsEl
 }
 
 pub struct BuildTransferWorkflowOnExceptionStepsElTagStepDetailsElTagsEl {
-    #[doc= ""]
-    pub key: PrimField<String>,
-    #[doc= ""]
-    pub value: PrimField<String>,
+    #[doc = ""]
+    pub key: terrars::PrimField<std::string::String>,
+    #[doc = ""]
+    pub value: terrars::PrimField<std::string::String>,
 }
 
 impl BuildTransferWorkflowOnExceptionStepsElTagStepDetailsElTagsEl {
@@ -940,12 +1042,15 @@ impl BuildTransferWorkflowOnExceptionStepsElTagStepDetailsElTagsEl {
 }
 
 pub struct TransferWorkflowOnExceptionStepsElTagStepDetailsElTagsElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for TransferWorkflowOnExceptionStepsElTagStepDetailsElTagsElRef {
-    fn new(shared: StackShared, base: String) -> TransferWorkflowOnExceptionStepsElTagStepDetailsElTagsElRef {
+impl terrars::Ref for TransferWorkflowOnExceptionStepsElTagStepDetailsElTagsElRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> TransferWorkflowOnExceptionStepsElTagStepDetailsElTagsElRef {
         TransferWorkflowOnExceptionStepsElTagStepDetailsElTagsElRef {
             shared: shared,
             base: base.to_string(),
@@ -954,72 +1059,80 @@ impl Ref for TransferWorkflowOnExceptionStepsElTagStepDetailsElTagsElRef {
 }
 
 impl TransferWorkflowOnExceptionStepsElTagStepDetailsElTagsElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `key` after provisioning.\n"]
-    pub fn key(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.key", self.base))
+    #[doc = "Get a reference to the value of field `key` after provisioning.\n"]
+    pub fn key(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.key", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `value` after provisioning.\n"]
-    pub fn value(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.value", self.base))
+    #[doc = "Get a reference to the value of field `value` after provisioning.\n"]
+    pub fn value(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.value", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
 struct TransferWorkflowOnExceptionStepsElTagStepDetailsElDynamic {
-    tags: Option<DynamicBlock<TransferWorkflowOnExceptionStepsElTagStepDetailsElTagsEl>>,
+    tags: std::option::Option<terrars::DynamicBlock<TransferWorkflowOnExceptionStepsElTagStepDetailsElTagsEl>>,
 }
 
 #[derive(Serialize)]
 pub struct TransferWorkflowOnExceptionStepsElTagStepDetailsEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    name: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    source_file_location: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    tags: Option<Vec<TransferWorkflowOnExceptionStepsElTagStepDetailsElTagsEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    name: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    source_file_location: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    tags: std::option::Option<std::vec::Vec<TransferWorkflowOnExceptionStepsElTagStepDetailsElTagsEl>>,
     dynamic: TransferWorkflowOnExceptionStepsElTagStepDetailsElDynamic,
 }
 
 impl TransferWorkflowOnExceptionStepsElTagStepDetailsEl {
-    #[doc= "Set the field `name`.\n"]
-    pub fn set_name(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.name = Some(v.into());
+    #[doc = "Set the field `name`.\n"]
+    pub fn set_name(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.name = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `source_file_location`.\n"]
-    pub fn set_source_file_location(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.source_file_location = Some(v.into());
+    #[doc = "Set the field `source_file_location`.\n"]
+    pub fn set_source_file_location(
+        mut self,
+        v: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.source_file_location = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `tags`.\n"]
+    #[doc = "Set the field `tags`.\n"]
     pub fn set_tags(
         mut self,
-        v: impl Into<BlockAssignable<TransferWorkflowOnExceptionStepsElTagStepDetailsElTagsEl>>,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<terrars::BlockAssignable<TransferWorkflowOnExceptionStepsElTagStepDetailsElTagsEl>>,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.tags = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.tags = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.tags = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.tags = std::option::Option::Some(d);
             },
         }
         self
     }
 }
 
-impl ToListMappable for TransferWorkflowOnExceptionStepsElTagStepDetailsEl {
-    type O = BlockAssignable<TransferWorkflowOnExceptionStepsElTagStepDetailsEl>;
+impl terrars::ToListMappable for TransferWorkflowOnExceptionStepsElTagStepDetailsEl {
+    type O = terrars::BlockAssignable<TransferWorkflowOnExceptionStepsElTagStepDetailsEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -1035,18 +1148,21 @@ impl BuildTransferWorkflowOnExceptionStepsElTagStepDetailsEl {
             name: core::default::Default::default(),
             source_file_location: core::default::Default::default(),
             tags: core::default::Default::default(),
-            dynamic: Default::default(),
+            dynamic: core::default::Default::default(),
         }
     }
 }
 
 pub struct TransferWorkflowOnExceptionStepsElTagStepDetailsElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for TransferWorkflowOnExceptionStepsElTagStepDetailsElRef {
-    fn new(shared: StackShared, base: String) -> TransferWorkflowOnExceptionStepsElTagStepDetailsElRef {
+impl terrars::Ref for TransferWorkflowOnExceptionStepsElTagStepDetailsElRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> TransferWorkflowOnExceptionStepsElTagStepDetailsElRef {
         TransferWorkflowOnExceptionStepsElTagStepDetailsElRef {
             shared: shared,
             base: base.to_string(),
@@ -1055,120 +1171,128 @@ impl Ref for TransferWorkflowOnExceptionStepsElTagStepDetailsElRef {
 }
 
 impl TransferWorkflowOnExceptionStepsElTagStepDetailsElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `name` after provisioning.\n"]
-    pub fn name(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.name", self.base))
+    #[doc = "Get a reference to the value of field `name` after provisioning.\n"]
+    pub fn name(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `source_file_location` after provisioning.\n"]
-    pub fn source_file_location(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.source_file_location", self.base))
+    #[doc = "Get a reference to the value of field `source_file_location` after provisioning.\n"]
+    pub fn source_file_location(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.source_file_location", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `tags` after provisioning.\n"]
-    pub fn tags(&self) -> ListRef<TransferWorkflowOnExceptionStepsElTagStepDetailsElTagsElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.tags", self.base))
+    #[doc = "Get a reference to the value of field `tags` after provisioning.\n"]
+    pub fn tags(&self) -> terrars::ListRef<TransferWorkflowOnExceptionStepsElTagStepDetailsElTagsElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.tags", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
 struct TransferWorkflowOnExceptionStepsElDynamic {
-    copy_step_details: Option<DynamicBlock<TransferWorkflowOnExceptionStepsElCopyStepDetailsEl>>,
-    custom_step_details: Option<DynamicBlock<TransferWorkflowOnExceptionStepsElCustomStepDetailsEl>>,
-    delete_step_details: Option<DynamicBlock<TransferWorkflowOnExceptionStepsElDeleteStepDetailsEl>>,
-    tag_step_details: Option<DynamicBlock<TransferWorkflowOnExceptionStepsElTagStepDetailsEl>>,
+    copy_step_details: std
+    ::option
+    ::Option<terrars::DynamicBlock<TransferWorkflowOnExceptionStepsElCopyStepDetailsEl>>,
+    custom_step_details: std
+    ::option
+    ::Option<terrars::DynamicBlock<TransferWorkflowOnExceptionStepsElCustomStepDetailsEl>>,
+    delete_step_details: std
+    ::option
+    ::Option<terrars::DynamicBlock<TransferWorkflowOnExceptionStepsElDeleteStepDetailsEl>>,
+    tag_step_details: std
+    ::option
+    ::Option<terrars::DynamicBlock<TransferWorkflowOnExceptionStepsElTagStepDetailsEl>>,
 }
 
 #[derive(Serialize)]
 pub struct TransferWorkflowOnExceptionStepsEl {
     #[serde(rename = "type")]
-    type_: PrimField<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    copy_step_details: Option<Vec<TransferWorkflowOnExceptionStepsElCopyStepDetailsEl>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    custom_step_details: Option<Vec<TransferWorkflowOnExceptionStepsElCustomStepDetailsEl>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    delete_step_details: Option<Vec<TransferWorkflowOnExceptionStepsElDeleteStepDetailsEl>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    tag_step_details: Option<Vec<TransferWorkflowOnExceptionStepsElTagStepDetailsEl>>,
+    type_: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    copy_step_details: std::option::Option<std::vec::Vec<TransferWorkflowOnExceptionStepsElCopyStepDetailsEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    custom_step_details: std::option::Option<std::vec::Vec<TransferWorkflowOnExceptionStepsElCustomStepDetailsEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    delete_step_details: std::option::Option<std::vec::Vec<TransferWorkflowOnExceptionStepsElDeleteStepDetailsEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    tag_step_details: std::option::Option<std::vec::Vec<TransferWorkflowOnExceptionStepsElTagStepDetailsEl>>,
     dynamic: TransferWorkflowOnExceptionStepsElDynamic,
 }
 
 impl TransferWorkflowOnExceptionStepsEl {
-    #[doc= "Set the field `copy_step_details`.\n"]
+    #[doc = "Set the field `copy_step_details`.\n"]
     pub fn set_copy_step_details(
         mut self,
-        v: impl Into<BlockAssignable<TransferWorkflowOnExceptionStepsElCopyStepDetailsEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<TransferWorkflowOnExceptionStepsElCopyStepDetailsEl>>,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.copy_step_details = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.copy_step_details = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.copy_step_details = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.copy_step_details = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Set the field `custom_step_details`.\n"]
+    #[doc = "Set the field `custom_step_details`.\n"]
     pub fn set_custom_step_details(
         mut self,
-        v: impl Into<BlockAssignable<TransferWorkflowOnExceptionStepsElCustomStepDetailsEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<TransferWorkflowOnExceptionStepsElCustomStepDetailsEl>>,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.custom_step_details = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.custom_step_details = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.custom_step_details = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.custom_step_details = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Set the field `delete_step_details`.\n"]
+    #[doc = "Set the field `delete_step_details`.\n"]
     pub fn set_delete_step_details(
         mut self,
-        v: impl Into<BlockAssignable<TransferWorkflowOnExceptionStepsElDeleteStepDetailsEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<TransferWorkflowOnExceptionStepsElDeleteStepDetailsEl>>,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.delete_step_details = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.delete_step_details = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.delete_step_details = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.delete_step_details = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Set the field `tag_step_details`.\n"]
+    #[doc = "Set the field `tag_step_details`.\n"]
     pub fn set_tag_step_details(
         mut self,
-        v: impl Into<BlockAssignable<TransferWorkflowOnExceptionStepsElTagStepDetailsEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<TransferWorkflowOnExceptionStepsElTagStepDetailsEl>>,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.tag_step_details = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.tag_step_details = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.tag_step_details = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.tag_step_details = std::option::Option::Some(d);
             },
         }
         self
     }
 }
 
-impl ToListMappable for TransferWorkflowOnExceptionStepsEl {
-    type O = BlockAssignable<TransferWorkflowOnExceptionStepsEl>;
+impl terrars::ToListMappable for TransferWorkflowOnExceptionStepsEl {
+    type O = terrars::BlockAssignable<TransferWorkflowOnExceptionStepsEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -1177,8 +1301,8 @@ impl ToListMappable for TransferWorkflowOnExceptionStepsEl {
 }
 
 pub struct BuildTransferWorkflowOnExceptionStepsEl {
-    #[doc= ""]
-    pub type_: PrimField<String>,
+    #[doc = ""]
+    pub type_: terrars::PrimField<std::string::String>,
 }
 
 impl BuildTransferWorkflowOnExceptionStepsEl {
@@ -1189,18 +1313,18 @@ impl BuildTransferWorkflowOnExceptionStepsEl {
             custom_step_details: core::default::Default::default(),
             delete_step_details: core::default::Default::default(),
             tag_step_details: core::default::Default::default(),
-            dynamic: Default::default(),
+            dynamic: core::default::Default::default(),
         }
     }
 }
 
 pub struct TransferWorkflowOnExceptionStepsElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for TransferWorkflowOnExceptionStepsElRef {
-    fn new(shared: StackShared, base: String) -> TransferWorkflowOnExceptionStepsElRef {
+impl terrars::Ref for TransferWorkflowOnExceptionStepsElRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> TransferWorkflowOnExceptionStepsElRef {
         TransferWorkflowOnExceptionStepsElRef {
             shared: shared,
             base: base.to_string(),
@@ -1209,63 +1333,64 @@ impl Ref for TransferWorkflowOnExceptionStepsElRef {
 }
 
 impl TransferWorkflowOnExceptionStepsElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `type_` after provisioning.\n"]
-    pub fn type_(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.type", self.base))
+    #[doc = "Get a reference to the value of field `type_` after provisioning.\n"]
+    pub fn type_(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.type", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `copy_step_details` after provisioning.\n"]
-    pub fn copy_step_details(&self) -> ListRef<TransferWorkflowOnExceptionStepsElCopyStepDetailsElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.copy_step_details", self.base))
+    #[doc = "Get a reference to the value of field `copy_step_details` after provisioning.\n"]
+    pub fn copy_step_details(&self) -> terrars::ListRef<TransferWorkflowOnExceptionStepsElCopyStepDetailsElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.copy_step_details", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `custom_step_details` after provisioning.\n"]
-    pub fn custom_step_details(&self) -> ListRef<TransferWorkflowOnExceptionStepsElCustomStepDetailsElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.custom_step_details", self.base))
+    #[doc = "Get a reference to the value of field `custom_step_details` after provisioning.\n"]
+    pub fn custom_step_details(&self) -> terrars::ListRef<TransferWorkflowOnExceptionStepsElCustomStepDetailsElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.custom_step_details", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `delete_step_details` after provisioning.\n"]
-    pub fn delete_step_details(&self) -> ListRef<TransferWorkflowOnExceptionStepsElDeleteStepDetailsElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.delete_step_details", self.base))
+    #[doc = "Get a reference to the value of field `delete_step_details` after provisioning.\n"]
+    pub fn delete_step_details(&self) -> terrars::ListRef<TransferWorkflowOnExceptionStepsElDeleteStepDetailsElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.delete_step_details", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `tag_step_details` after provisioning.\n"]
-    pub fn tag_step_details(&self) -> ListRef<TransferWorkflowOnExceptionStepsElTagStepDetailsElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.tag_step_details", self.base))
+    #[doc = "Get a reference to the value of field `tag_step_details` after provisioning.\n"]
+    pub fn tag_step_details(&self) -> terrars::ListRef<TransferWorkflowOnExceptionStepsElTagStepDetailsElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.tag_step_details", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct TransferWorkflowStepsElCopyStepDetailsElDestinationFileLocationElEfsFileLocationEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    file_system_id: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    path: Option<PrimField<String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    file_system_id: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    path: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
 impl TransferWorkflowStepsElCopyStepDetailsElDestinationFileLocationElEfsFileLocationEl {
-    #[doc= "Set the field `file_system_id`.\n"]
-    pub fn set_file_system_id(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.file_system_id = Some(v.into());
+    #[doc = "Set the field `file_system_id`.\n"]
+    pub fn set_file_system_id(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.file_system_id = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `path`.\n"]
-    pub fn set_path(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.path = Some(v.into());
+    #[doc = "Set the field `path`.\n"]
+    pub fn set_path(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.path = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl ToListMappable for TransferWorkflowStepsElCopyStepDetailsElDestinationFileLocationElEfsFileLocationEl {
-    type O = BlockAssignable<TransferWorkflowStepsElCopyStepDetailsElDestinationFileLocationElEfsFileLocationEl>;
+impl terrars::ToListMappable for TransferWorkflowStepsElCopyStepDetailsElDestinationFileLocationElEfsFileLocationEl {
+    type O =
+        terrars::BlockAssignable<TransferWorkflowStepsElCopyStepDetailsElDestinationFileLocationElEfsFileLocationEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -1285,14 +1410,14 @@ impl BuildTransferWorkflowStepsElCopyStepDetailsElDestinationFileLocationElEfsFi
 }
 
 pub struct TransferWorkflowStepsElCopyStepDetailsElDestinationFileLocationElEfsFileLocationElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for TransferWorkflowStepsElCopyStepDetailsElDestinationFileLocationElEfsFileLocationElRef {
+impl terrars::Ref for TransferWorkflowStepsElCopyStepDetailsElDestinationFileLocationElEfsFileLocationElRef {
     fn new(
-        shared: StackShared,
-        base: String,
+        shared: terrars::StackShared,
+        base: std::string::String,
     ) -> TransferWorkflowStepsElCopyStepDetailsElDestinationFileLocationElEfsFileLocationElRef {
         TransferWorkflowStepsElCopyStepDetailsElDestinationFileLocationElEfsFileLocationElRef {
             shared: shared,
@@ -1302,48 +1427,49 @@ impl Ref for TransferWorkflowStepsElCopyStepDetailsElDestinationFileLocationElEf
 }
 
 impl TransferWorkflowStepsElCopyStepDetailsElDestinationFileLocationElEfsFileLocationElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `file_system_id` after provisioning.\n"]
-    pub fn file_system_id(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.file_system_id", self.base))
+    #[doc = "Get a reference to the value of field `file_system_id` after provisioning.\n"]
+    pub fn file_system_id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.file_system_id", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `path` after provisioning.\n"]
-    pub fn path(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.path", self.base))
+    #[doc = "Get a reference to the value of field `path` after provisioning.\n"]
+    pub fn path(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.path", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct TransferWorkflowStepsElCopyStepDetailsElDestinationFileLocationElS3FileLocationEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    bucket: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    key: Option<PrimField<String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    bucket: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    key: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
 impl TransferWorkflowStepsElCopyStepDetailsElDestinationFileLocationElS3FileLocationEl {
-    #[doc= "Set the field `bucket`.\n"]
-    pub fn set_bucket(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.bucket = Some(v.into());
+    #[doc = "Set the field `bucket`.\n"]
+    pub fn set_bucket(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.bucket = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `key`.\n"]
-    pub fn set_key(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.key = Some(v.into());
+    #[doc = "Set the field `key`.\n"]
+    pub fn set_key(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.key = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl ToListMappable for TransferWorkflowStepsElCopyStepDetailsElDestinationFileLocationElS3FileLocationEl {
-    type O = BlockAssignable<TransferWorkflowStepsElCopyStepDetailsElDestinationFileLocationElS3FileLocationEl>;
+impl terrars::ToListMappable for TransferWorkflowStepsElCopyStepDetailsElDestinationFileLocationElS3FileLocationEl {
+    type O =
+        terrars::BlockAssignable<TransferWorkflowStepsElCopyStepDetailsElDestinationFileLocationElS3FileLocationEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -1363,14 +1489,14 @@ impl BuildTransferWorkflowStepsElCopyStepDetailsElDestinationFileLocationElS3Fil
 }
 
 pub struct TransferWorkflowStepsElCopyStepDetailsElDestinationFileLocationElS3FileLocationElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for TransferWorkflowStepsElCopyStepDetailsElDestinationFileLocationElS3FileLocationElRef {
+impl terrars::Ref for TransferWorkflowStepsElCopyStepDetailsElDestinationFileLocationElS3FileLocationElRef {
     fn new(
-        shared: StackShared,
-        base: String,
+        shared: terrars::StackShared,
+        base: std::string::String,
     ) -> TransferWorkflowStepsElCopyStepDetailsElDestinationFileLocationElS3FileLocationElRef {
         TransferWorkflowStepsElCopyStepDetailsElDestinationFileLocationElS3FileLocationElRef {
             shared: shared,
@@ -1380,93 +1506,107 @@ impl Ref for TransferWorkflowStepsElCopyStepDetailsElDestinationFileLocationElS3
 }
 
 impl TransferWorkflowStepsElCopyStepDetailsElDestinationFileLocationElS3FileLocationElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `bucket` after provisioning.\n"]
-    pub fn bucket(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.bucket", self.base))
+    #[doc = "Get a reference to the value of field `bucket` after provisioning.\n"]
+    pub fn bucket(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.bucket", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `key` after provisioning.\n"]
-    pub fn key(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.key", self.base))
+    #[doc = "Get a reference to the value of field `key` after provisioning.\n"]
+    pub fn key(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.key", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
 struct TransferWorkflowStepsElCopyStepDetailsElDestinationFileLocationElDynamic {
-    efs_file_location: Option<
-        DynamicBlock<TransferWorkflowStepsElCopyStepDetailsElDestinationFileLocationElEfsFileLocationEl>,
+    efs_file_location: std
+    ::option
+    ::Option<
+        terrars::DynamicBlock<TransferWorkflowStepsElCopyStepDetailsElDestinationFileLocationElEfsFileLocationEl>,
     >,
-    s3_file_location: Option<
-        DynamicBlock<TransferWorkflowStepsElCopyStepDetailsElDestinationFileLocationElS3FileLocationEl>,
+    s3_file_location: std
+    ::option
+    ::Option<
+        terrars::DynamicBlock<TransferWorkflowStepsElCopyStepDetailsElDestinationFileLocationElS3FileLocationEl>,
     >,
 }
 
 #[derive(Serialize)]
 pub struct TransferWorkflowStepsElCopyStepDetailsElDestinationFileLocationEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    efs_file_location: Option<Vec<TransferWorkflowStepsElCopyStepDetailsElDestinationFileLocationElEfsFileLocationEl>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    s3_file_location: Option<Vec<TransferWorkflowStepsElCopyStepDetailsElDestinationFileLocationElS3FileLocationEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    efs_file_location: std
+    ::option
+    ::Option<std::vec::Vec<TransferWorkflowStepsElCopyStepDetailsElDestinationFileLocationElEfsFileLocationEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    s3_file_location: std
+    ::option
+    ::Option<std::vec::Vec<TransferWorkflowStepsElCopyStepDetailsElDestinationFileLocationElS3FileLocationEl>>,
     dynamic: TransferWorkflowStepsElCopyStepDetailsElDestinationFileLocationElDynamic,
 }
 
 impl TransferWorkflowStepsElCopyStepDetailsElDestinationFileLocationEl {
-    #[doc= "Set the field `efs_file_location`.\n"]
+    #[doc = "Set the field `efs_file_location`.\n"]
     pub fn set_efs_file_location(
         mut self,
         v:
             impl
 
-                    Into<
-                        BlockAssignable<
+                    std
+                    ::convert
+                    ::Into<
+                        terrars
+                        ::BlockAssignable<
                             TransferWorkflowStepsElCopyStepDetailsElDestinationFileLocationElEfsFileLocationEl,
                         >,
                     >,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.efs_file_location = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.efs_file_location = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.efs_file_location = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.efs_file_location = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Set the field `s3_file_location`.\n"]
+    #[doc = "Set the field `s3_file_location`.\n"]
     pub fn set_s3_file_location(
         mut self,
         v:
             impl
 
-                    Into<
-                        BlockAssignable<
+                    std
+                    ::convert
+                    ::Into<
+                        terrars
+                        ::BlockAssignable<
                             TransferWorkflowStepsElCopyStepDetailsElDestinationFileLocationElS3FileLocationEl,
                         >,
                     >,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.s3_file_location = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.s3_file_location = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.s3_file_location = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.s3_file_location = std::option::Option::Some(d);
             },
         }
         self
     }
 }
 
-impl ToListMappable for TransferWorkflowStepsElCopyStepDetailsElDestinationFileLocationEl {
-    type O = BlockAssignable<TransferWorkflowStepsElCopyStepDetailsElDestinationFileLocationEl>;
+impl terrars::ToListMappable for TransferWorkflowStepsElCopyStepDetailsElDestinationFileLocationEl {
+    type O = terrars::BlockAssignable<TransferWorkflowStepsElCopyStepDetailsElDestinationFileLocationEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -1481,20 +1621,20 @@ impl BuildTransferWorkflowStepsElCopyStepDetailsElDestinationFileLocationEl {
         TransferWorkflowStepsElCopyStepDetailsElDestinationFileLocationEl {
             efs_file_location: core::default::Default::default(),
             s3_file_location: core::default::Default::default(),
-            dynamic: Default::default(),
+            dynamic: core::default::Default::default(),
         }
     }
 }
 
 pub struct TransferWorkflowStepsElCopyStepDetailsElDestinationFileLocationElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for TransferWorkflowStepsElCopyStepDetailsElDestinationFileLocationElRef {
+impl terrars::Ref for TransferWorkflowStepsElCopyStepDetailsElDestinationFileLocationElRef {
     fn new(
-        shared: StackShared,
-        base: String,
+        shared: terrars::StackShared,
+        base: std::string::String,
     ) -> TransferWorkflowStepsElCopyStepDetailsElDestinationFileLocationElRef {
         TransferWorkflowStepsElCopyStepDetailsElDestinationFileLocationElRef {
             shared: shared,
@@ -1504,86 +1644,101 @@ impl Ref for TransferWorkflowStepsElCopyStepDetailsElDestinationFileLocationElRe
 }
 
 impl TransferWorkflowStepsElCopyStepDetailsElDestinationFileLocationElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `efs_file_location` after provisioning.\n"]
+    #[doc = "Get a reference to the value of field `efs_file_location` after provisioning.\n"]
     pub fn efs_file_location(
         &self,
-    ) -> ListRef<TransferWorkflowStepsElCopyStepDetailsElDestinationFileLocationElEfsFileLocationElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.efs_file_location", self.base))
+    ) -> terrars::ListRef<TransferWorkflowStepsElCopyStepDetailsElDestinationFileLocationElEfsFileLocationElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.efs_file_location", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `s3_file_location` after provisioning.\n"]
+    #[doc = "Get a reference to the value of field `s3_file_location` after provisioning.\n"]
     pub fn s3_file_location(
         &self,
-    ) -> ListRef<TransferWorkflowStepsElCopyStepDetailsElDestinationFileLocationElS3FileLocationElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.s3_file_location", self.base))
+    ) -> terrars::ListRef<TransferWorkflowStepsElCopyStepDetailsElDestinationFileLocationElS3FileLocationElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.s3_file_location", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
 struct TransferWorkflowStepsElCopyStepDetailsElDynamic {
-    destination_file_location: Option<
-        DynamicBlock<TransferWorkflowStepsElCopyStepDetailsElDestinationFileLocationEl>,
-    >,
+    destination_file_location: std
+    ::option
+    ::Option<terrars::DynamicBlock<TransferWorkflowStepsElCopyStepDetailsElDestinationFileLocationEl>>,
 }
 
 #[derive(Serialize)]
 pub struct TransferWorkflowStepsElCopyStepDetailsEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    name: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    overwrite_existing: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    source_file_location: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    destination_file_location: Option<Vec<TransferWorkflowStepsElCopyStepDetailsElDestinationFileLocationEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    name: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    overwrite_existing: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    source_file_location: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    destination_file_location: std
+    ::option
+    ::Option<std::vec::Vec<TransferWorkflowStepsElCopyStepDetailsElDestinationFileLocationEl>>,
     dynamic: TransferWorkflowStepsElCopyStepDetailsElDynamic,
 }
 
 impl TransferWorkflowStepsElCopyStepDetailsEl {
-    #[doc= "Set the field `name`.\n"]
-    pub fn set_name(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.name = Some(v.into());
+    #[doc = "Set the field `name`.\n"]
+    pub fn set_name(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.name = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `overwrite_existing`.\n"]
-    pub fn set_overwrite_existing(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.overwrite_existing = Some(v.into());
+    #[doc = "Set the field `overwrite_existing`.\n"]
+    pub fn set_overwrite_existing(
+        mut self,
+        v: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.overwrite_existing = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `source_file_location`.\n"]
-    pub fn set_source_file_location(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.source_file_location = Some(v.into());
+    #[doc = "Set the field `source_file_location`.\n"]
+    pub fn set_source_file_location(
+        mut self,
+        v: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.source_file_location = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `destination_file_location`.\n"]
+    #[doc = "Set the field `destination_file_location`.\n"]
     pub fn set_destination_file_location(
         mut self,
-        v: impl Into<BlockAssignable<TransferWorkflowStepsElCopyStepDetailsElDestinationFileLocationEl>>,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<
+                        terrars::BlockAssignable<TransferWorkflowStepsElCopyStepDetailsElDestinationFileLocationEl>,
+                    >,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.destination_file_location = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.destination_file_location = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.destination_file_location = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.destination_file_location = std::option::Option::Some(d);
             },
         }
         self
     }
 }
 
-impl ToListMappable for TransferWorkflowStepsElCopyStepDetailsEl {
-    type O = BlockAssignable<TransferWorkflowStepsElCopyStepDetailsEl>;
+impl terrars::ToListMappable for TransferWorkflowStepsElCopyStepDetailsEl {
+    type O = terrars::BlockAssignable<TransferWorkflowStepsElCopyStepDetailsEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -1600,18 +1755,18 @@ impl BuildTransferWorkflowStepsElCopyStepDetailsEl {
             overwrite_existing: core::default::Default::default(),
             source_file_location: core::default::Default::default(),
             destination_file_location: core::default::Default::default(),
-            dynamic: Default::default(),
+            dynamic: core::default::Default::default(),
         }
     }
 }
 
 pub struct TransferWorkflowStepsElCopyStepDetailsElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for TransferWorkflowStepsElCopyStepDetailsElRef {
-    fn new(shared: StackShared, base: String) -> TransferWorkflowStepsElCopyStepDetailsElRef {
+impl terrars::Ref for TransferWorkflowStepsElCopyStepDetailsElRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> TransferWorkflowStepsElCopyStepDetailsElRef {
         TransferWorkflowStepsElCopyStepDetailsElRef {
             shared: shared,
             base: base.to_string(),
@@ -1620,76 +1775,79 @@ impl Ref for TransferWorkflowStepsElCopyStepDetailsElRef {
 }
 
 impl TransferWorkflowStepsElCopyStepDetailsElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `name` after provisioning.\n"]
-    pub fn name(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.name", self.base))
+    #[doc = "Get a reference to the value of field `name` after provisioning.\n"]
+    pub fn name(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `overwrite_existing` after provisioning.\n"]
-    pub fn overwrite_existing(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.overwrite_existing", self.base))
+    #[doc = "Get a reference to the value of field `overwrite_existing` after provisioning.\n"]
+    pub fn overwrite_existing(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.overwrite_existing", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `source_file_location` after provisioning.\n"]
-    pub fn source_file_location(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.source_file_location", self.base))
+    #[doc = "Get a reference to the value of field `source_file_location` after provisioning.\n"]
+    pub fn source_file_location(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.source_file_location", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `destination_file_location` after provisioning.\n"]
+    #[doc = "Get a reference to the value of field `destination_file_location` after provisioning.\n"]
     pub fn destination_file_location(
         &self,
-    ) -> ListRef<TransferWorkflowStepsElCopyStepDetailsElDestinationFileLocationElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.destination_file_location", self.base))
+    ) -> terrars::ListRef<TransferWorkflowStepsElCopyStepDetailsElDestinationFileLocationElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.destination_file_location", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct TransferWorkflowStepsElCustomStepDetailsEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    name: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    source_file_location: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    target: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    timeout_seconds: Option<PrimField<f64>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    name: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    source_file_location: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    target: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    timeout_seconds: std::option::Option<terrars::PrimField<f64>>,
 }
 
 impl TransferWorkflowStepsElCustomStepDetailsEl {
-    #[doc= "Set the field `name`.\n"]
-    pub fn set_name(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.name = Some(v.into());
+    #[doc = "Set the field `name`.\n"]
+    pub fn set_name(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.name = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `source_file_location`.\n"]
-    pub fn set_source_file_location(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.source_file_location = Some(v.into());
+    #[doc = "Set the field `source_file_location`.\n"]
+    pub fn set_source_file_location(
+        mut self,
+        v: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.source_file_location = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `target`.\n"]
-    pub fn set_target(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.target = Some(v.into());
+    #[doc = "Set the field `target`.\n"]
+    pub fn set_target(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.target = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `timeout_seconds`.\n"]
-    pub fn set_timeout_seconds(mut self, v: impl Into<PrimField<f64>>) -> Self {
-        self.timeout_seconds = Some(v.into());
+    #[doc = "Set the field `timeout_seconds`.\n"]
+    pub fn set_timeout_seconds(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.timeout_seconds = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl ToListMappable for TransferWorkflowStepsElCustomStepDetailsEl {
-    type O = BlockAssignable<TransferWorkflowStepsElCustomStepDetailsEl>;
+impl terrars::ToListMappable for TransferWorkflowStepsElCustomStepDetailsEl {
+    type O = terrars::BlockAssignable<TransferWorkflowStepsElCustomStepDetailsEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -1711,12 +1869,12 @@ impl BuildTransferWorkflowStepsElCustomStepDetailsEl {
 }
 
 pub struct TransferWorkflowStepsElCustomStepDetailsElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for TransferWorkflowStepsElCustomStepDetailsElRef {
-    fn new(shared: StackShared, base: String) -> TransferWorkflowStepsElCustomStepDetailsElRef {
+impl terrars::Ref for TransferWorkflowStepsElCustomStepDetailsElRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> TransferWorkflowStepsElCustomStepDetailsElRef {
         TransferWorkflowStepsElCustomStepDetailsElRef {
             shared: shared,
             base: base.to_string(),
@@ -1725,58 +1883,61 @@ impl Ref for TransferWorkflowStepsElCustomStepDetailsElRef {
 }
 
 impl TransferWorkflowStepsElCustomStepDetailsElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `name` after provisioning.\n"]
-    pub fn name(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.name", self.base))
+    #[doc = "Get a reference to the value of field `name` after provisioning.\n"]
+    pub fn name(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `source_file_location` after provisioning.\n"]
-    pub fn source_file_location(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.source_file_location", self.base))
+    #[doc = "Get a reference to the value of field `source_file_location` after provisioning.\n"]
+    pub fn source_file_location(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.source_file_location", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `target` after provisioning.\n"]
-    pub fn target(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.target", self.base))
+    #[doc = "Get a reference to the value of field `target` after provisioning.\n"]
+    pub fn target(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.target", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `timeout_seconds` after provisioning.\n"]
-    pub fn timeout_seconds(&self) -> PrimExpr<f64> {
-        PrimExpr::new(self.shared().clone(), format!("{}.timeout_seconds", self.base))
+    #[doc = "Get a reference to the value of field `timeout_seconds` after provisioning.\n"]
+    pub fn timeout_seconds(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.timeout_seconds", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct TransferWorkflowStepsElDeleteStepDetailsEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    name: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    source_file_location: Option<PrimField<String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    name: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    source_file_location: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
 impl TransferWorkflowStepsElDeleteStepDetailsEl {
-    #[doc= "Set the field `name`.\n"]
-    pub fn set_name(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.name = Some(v.into());
+    #[doc = "Set the field `name`.\n"]
+    pub fn set_name(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.name = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `source_file_location`.\n"]
-    pub fn set_source_file_location(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.source_file_location = Some(v.into());
+    #[doc = "Set the field `source_file_location`.\n"]
+    pub fn set_source_file_location(
+        mut self,
+        v: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.source_file_location = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl ToListMappable for TransferWorkflowStepsElDeleteStepDetailsEl {
-    type O = BlockAssignable<TransferWorkflowStepsElDeleteStepDetailsEl>;
+impl terrars::ToListMappable for TransferWorkflowStepsElDeleteStepDetailsEl {
+    type O = terrars::BlockAssignable<TransferWorkflowStepsElDeleteStepDetailsEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -1796,12 +1957,12 @@ impl BuildTransferWorkflowStepsElDeleteStepDetailsEl {
 }
 
 pub struct TransferWorkflowStepsElDeleteStepDetailsElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for TransferWorkflowStepsElDeleteStepDetailsElRef {
-    fn new(shared: StackShared, base: String) -> TransferWorkflowStepsElDeleteStepDetailsElRef {
+impl terrars::Ref for TransferWorkflowStepsElDeleteStepDetailsElRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> TransferWorkflowStepsElDeleteStepDetailsElRef {
         TransferWorkflowStepsElDeleteStepDetailsElRef {
             shared: shared,
             base: base.to_string(),
@@ -1810,34 +1971,34 @@ impl Ref for TransferWorkflowStepsElDeleteStepDetailsElRef {
 }
 
 impl TransferWorkflowStepsElDeleteStepDetailsElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `name` after provisioning.\n"]
-    pub fn name(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.name", self.base))
+    #[doc = "Get a reference to the value of field `name` after provisioning.\n"]
+    pub fn name(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `source_file_location` after provisioning.\n"]
-    pub fn source_file_location(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.source_file_location", self.base))
+    #[doc = "Get a reference to the value of field `source_file_location` after provisioning.\n"]
+    pub fn source_file_location(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.source_file_location", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct TransferWorkflowStepsElTagStepDetailsElTagsEl {
-    key: PrimField<String>,
-    value: PrimField<String>,
+    key: terrars::PrimField<std::string::String>,
+    value: terrars::PrimField<std::string::String>,
 }
 
 impl TransferWorkflowStepsElTagStepDetailsElTagsEl { }
 
-impl ToListMappable for TransferWorkflowStepsElTagStepDetailsElTagsEl {
-    type O = BlockAssignable<TransferWorkflowStepsElTagStepDetailsElTagsEl>;
+impl terrars::ToListMappable for TransferWorkflowStepsElTagStepDetailsElTagsEl {
+    type O = terrars::BlockAssignable<TransferWorkflowStepsElTagStepDetailsElTagsEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -1846,10 +2007,10 @@ impl ToListMappable for TransferWorkflowStepsElTagStepDetailsElTagsEl {
 }
 
 pub struct BuildTransferWorkflowStepsElTagStepDetailsElTagsEl {
-    #[doc= ""]
-    pub key: PrimField<String>,
-    #[doc= ""]
-    pub value: PrimField<String>,
+    #[doc = ""]
+    pub key: terrars::PrimField<std::string::String>,
+    #[doc = ""]
+    pub value: terrars::PrimField<std::string::String>,
 }
 
 impl BuildTransferWorkflowStepsElTagStepDetailsElTagsEl {
@@ -1862,12 +2023,15 @@ impl BuildTransferWorkflowStepsElTagStepDetailsElTagsEl {
 }
 
 pub struct TransferWorkflowStepsElTagStepDetailsElTagsElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for TransferWorkflowStepsElTagStepDetailsElTagsElRef {
-    fn new(shared: StackShared, base: String) -> TransferWorkflowStepsElTagStepDetailsElTagsElRef {
+impl terrars::Ref for TransferWorkflowStepsElTagStepDetailsElTagsElRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> TransferWorkflowStepsElTagStepDetailsElTagsElRef {
         TransferWorkflowStepsElTagStepDetailsElTagsElRef {
             shared: shared,
             base: base.to_string(),
@@ -1876,69 +2040,75 @@ impl Ref for TransferWorkflowStepsElTagStepDetailsElTagsElRef {
 }
 
 impl TransferWorkflowStepsElTagStepDetailsElTagsElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `key` after provisioning.\n"]
-    pub fn key(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.key", self.base))
+    #[doc = "Get a reference to the value of field `key` after provisioning.\n"]
+    pub fn key(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.key", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `value` after provisioning.\n"]
-    pub fn value(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.value", self.base))
+    #[doc = "Get a reference to the value of field `value` after provisioning.\n"]
+    pub fn value(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.value", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
 struct TransferWorkflowStepsElTagStepDetailsElDynamic {
-    tags: Option<DynamicBlock<TransferWorkflowStepsElTagStepDetailsElTagsEl>>,
+    tags: std::option::Option<terrars::DynamicBlock<TransferWorkflowStepsElTagStepDetailsElTagsEl>>,
 }
 
 #[derive(Serialize)]
 pub struct TransferWorkflowStepsElTagStepDetailsEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    name: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    source_file_location: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    tags: Option<Vec<TransferWorkflowStepsElTagStepDetailsElTagsEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    name: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    source_file_location: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    tags: std::option::Option<std::vec::Vec<TransferWorkflowStepsElTagStepDetailsElTagsEl>>,
     dynamic: TransferWorkflowStepsElTagStepDetailsElDynamic,
 }
 
 impl TransferWorkflowStepsElTagStepDetailsEl {
-    #[doc= "Set the field `name`.\n"]
-    pub fn set_name(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.name = Some(v.into());
+    #[doc = "Set the field `name`.\n"]
+    pub fn set_name(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.name = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `source_file_location`.\n"]
-    pub fn set_source_file_location(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.source_file_location = Some(v.into());
+    #[doc = "Set the field `source_file_location`.\n"]
+    pub fn set_source_file_location(
+        mut self,
+        v: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.source_file_location = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `tags`.\n"]
-    pub fn set_tags(mut self, v: impl Into<BlockAssignable<TransferWorkflowStepsElTagStepDetailsElTagsEl>>) -> Self {
+    #[doc = "Set the field `tags`.\n"]
+    pub fn set_tags(
+        mut self,
+        v: impl std::convert::Into<terrars::BlockAssignable<TransferWorkflowStepsElTagStepDetailsElTagsEl>>,
+    ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.tags = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.tags = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.tags = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.tags = std::option::Option::Some(d);
             },
         }
         self
     }
 }
 
-impl ToListMappable for TransferWorkflowStepsElTagStepDetailsEl {
-    type O = BlockAssignable<TransferWorkflowStepsElTagStepDetailsEl>;
+impl terrars::ToListMappable for TransferWorkflowStepsElTagStepDetailsEl {
+    type O = terrars::BlockAssignable<TransferWorkflowStepsElTagStepDetailsEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -1954,18 +2124,18 @@ impl BuildTransferWorkflowStepsElTagStepDetailsEl {
             name: core::default::Default::default(),
             source_file_location: core::default::Default::default(),
             tags: core::default::Default::default(),
-            dynamic: Default::default(),
+            dynamic: core::default::Default::default(),
         }
     }
 }
 
 pub struct TransferWorkflowStepsElTagStepDetailsElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for TransferWorkflowStepsElTagStepDetailsElRef {
-    fn new(shared: StackShared, base: String) -> TransferWorkflowStepsElTagStepDetailsElRef {
+impl terrars::Ref for TransferWorkflowStepsElTagStepDetailsElRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> TransferWorkflowStepsElTagStepDetailsElRef {
         TransferWorkflowStepsElTagStepDetailsElRef {
             shared: shared,
             base: base.to_string(),
@@ -1974,120 +2144,120 @@ impl Ref for TransferWorkflowStepsElTagStepDetailsElRef {
 }
 
 impl TransferWorkflowStepsElTagStepDetailsElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `name` after provisioning.\n"]
-    pub fn name(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.name", self.base))
+    #[doc = "Get a reference to the value of field `name` after provisioning.\n"]
+    pub fn name(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `source_file_location` after provisioning.\n"]
-    pub fn source_file_location(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.source_file_location", self.base))
+    #[doc = "Get a reference to the value of field `source_file_location` after provisioning.\n"]
+    pub fn source_file_location(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.source_file_location", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `tags` after provisioning.\n"]
-    pub fn tags(&self) -> ListRef<TransferWorkflowStepsElTagStepDetailsElTagsElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.tags", self.base))
+    #[doc = "Get a reference to the value of field `tags` after provisioning.\n"]
+    pub fn tags(&self) -> terrars::ListRef<TransferWorkflowStepsElTagStepDetailsElTagsElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.tags", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
 struct TransferWorkflowStepsElDynamic {
-    copy_step_details: Option<DynamicBlock<TransferWorkflowStepsElCopyStepDetailsEl>>,
-    custom_step_details: Option<DynamicBlock<TransferWorkflowStepsElCustomStepDetailsEl>>,
-    delete_step_details: Option<DynamicBlock<TransferWorkflowStepsElDeleteStepDetailsEl>>,
-    tag_step_details: Option<DynamicBlock<TransferWorkflowStepsElTagStepDetailsEl>>,
+    copy_step_details: std::option::Option<terrars::DynamicBlock<TransferWorkflowStepsElCopyStepDetailsEl>>,
+    custom_step_details: std::option::Option<terrars::DynamicBlock<TransferWorkflowStepsElCustomStepDetailsEl>>,
+    delete_step_details: std::option::Option<terrars::DynamicBlock<TransferWorkflowStepsElDeleteStepDetailsEl>>,
+    tag_step_details: std::option::Option<terrars::DynamicBlock<TransferWorkflowStepsElTagStepDetailsEl>>,
 }
 
 #[derive(Serialize)]
 pub struct TransferWorkflowStepsEl {
     #[serde(rename = "type")]
-    type_: PrimField<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    copy_step_details: Option<Vec<TransferWorkflowStepsElCopyStepDetailsEl>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    custom_step_details: Option<Vec<TransferWorkflowStepsElCustomStepDetailsEl>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    delete_step_details: Option<Vec<TransferWorkflowStepsElDeleteStepDetailsEl>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    tag_step_details: Option<Vec<TransferWorkflowStepsElTagStepDetailsEl>>,
+    type_: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    copy_step_details: std::option::Option<std::vec::Vec<TransferWorkflowStepsElCopyStepDetailsEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    custom_step_details: std::option::Option<std::vec::Vec<TransferWorkflowStepsElCustomStepDetailsEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    delete_step_details: std::option::Option<std::vec::Vec<TransferWorkflowStepsElDeleteStepDetailsEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    tag_step_details: std::option::Option<std::vec::Vec<TransferWorkflowStepsElTagStepDetailsEl>>,
     dynamic: TransferWorkflowStepsElDynamic,
 }
 
 impl TransferWorkflowStepsEl {
-    #[doc= "Set the field `copy_step_details`.\n"]
+    #[doc = "Set the field `copy_step_details`.\n"]
     pub fn set_copy_step_details(
         mut self,
-        v: impl Into<BlockAssignable<TransferWorkflowStepsElCopyStepDetailsEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<TransferWorkflowStepsElCopyStepDetailsEl>>,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.copy_step_details = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.copy_step_details = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.copy_step_details = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.copy_step_details = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Set the field `custom_step_details`.\n"]
+    #[doc = "Set the field `custom_step_details`.\n"]
     pub fn set_custom_step_details(
         mut self,
-        v: impl Into<BlockAssignable<TransferWorkflowStepsElCustomStepDetailsEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<TransferWorkflowStepsElCustomStepDetailsEl>>,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.custom_step_details = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.custom_step_details = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.custom_step_details = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.custom_step_details = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Set the field `delete_step_details`.\n"]
+    #[doc = "Set the field `delete_step_details`.\n"]
     pub fn set_delete_step_details(
         mut self,
-        v: impl Into<BlockAssignable<TransferWorkflowStepsElDeleteStepDetailsEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<TransferWorkflowStepsElDeleteStepDetailsEl>>,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.delete_step_details = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.delete_step_details = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.delete_step_details = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.delete_step_details = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Set the field `tag_step_details`.\n"]
+    #[doc = "Set the field `tag_step_details`.\n"]
     pub fn set_tag_step_details(
         mut self,
-        v: impl Into<BlockAssignable<TransferWorkflowStepsElTagStepDetailsEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<TransferWorkflowStepsElTagStepDetailsEl>>,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.tag_step_details = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.tag_step_details = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.tag_step_details = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.tag_step_details = std::option::Option::Some(d);
             },
         }
         self
     }
 }
 
-impl ToListMappable for TransferWorkflowStepsEl {
-    type O = BlockAssignable<TransferWorkflowStepsEl>;
+impl terrars::ToListMappable for TransferWorkflowStepsEl {
+    type O = terrars::BlockAssignable<TransferWorkflowStepsEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -2096,8 +2266,8 @@ impl ToListMappable for TransferWorkflowStepsEl {
 }
 
 pub struct BuildTransferWorkflowStepsEl {
-    #[doc= ""]
-    pub type_: PrimField<String>,
+    #[doc = ""]
+    pub type_: terrars::PrimField<std::string::String>,
 }
 
 impl BuildTransferWorkflowStepsEl {
@@ -2108,18 +2278,18 @@ impl BuildTransferWorkflowStepsEl {
             custom_step_details: core::default::Default::default(),
             delete_step_details: core::default::Default::default(),
             tag_step_details: core::default::Default::default(),
-            dynamic: Default::default(),
+            dynamic: core::default::Default::default(),
         }
     }
 }
 
 pub struct TransferWorkflowStepsElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for TransferWorkflowStepsElRef {
-    fn new(shared: StackShared, base: String) -> TransferWorkflowStepsElRef {
+impl terrars::Ref for TransferWorkflowStepsElRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> TransferWorkflowStepsElRef {
         TransferWorkflowStepsElRef {
             shared: shared,
             base: base.to_string(),
@@ -2128,38 +2298,38 @@ impl Ref for TransferWorkflowStepsElRef {
 }
 
 impl TransferWorkflowStepsElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `type_` after provisioning.\n"]
-    pub fn type_(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.type", self.base))
+    #[doc = "Get a reference to the value of field `type_` after provisioning.\n"]
+    pub fn type_(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.type", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `copy_step_details` after provisioning.\n"]
-    pub fn copy_step_details(&self) -> ListRef<TransferWorkflowStepsElCopyStepDetailsElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.copy_step_details", self.base))
+    #[doc = "Get a reference to the value of field `copy_step_details` after provisioning.\n"]
+    pub fn copy_step_details(&self) -> terrars::ListRef<TransferWorkflowStepsElCopyStepDetailsElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.copy_step_details", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `custom_step_details` after provisioning.\n"]
-    pub fn custom_step_details(&self) -> ListRef<TransferWorkflowStepsElCustomStepDetailsElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.custom_step_details", self.base))
+    #[doc = "Get a reference to the value of field `custom_step_details` after provisioning.\n"]
+    pub fn custom_step_details(&self) -> terrars::ListRef<TransferWorkflowStepsElCustomStepDetailsElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.custom_step_details", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `delete_step_details` after provisioning.\n"]
-    pub fn delete_step_details(&self) -> ListRef<TransferWorkflowStepsElDeleteStepDetailsElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.delete_step_details", self.base))
+    #[doc = "Get a reference to the value of field `delete_step_details` after provisioning.\n"]
+    pub fn delete_step_details(&self) -> terrars::ListRef<TransferWorkflowStepsElDeleteStepDetailsElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.delete_step_details", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `tag_step_details` after provisioning.\n"]
-    pub fn tag_step_details(&self) -> ListRef<TransferWorkflowStepsElTagStepDetailsElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.tag_step_details", self.base))
+    #[doc = "Get a reference to the value of field `tag_step_details` after provisioning.\n"]
+    pub fn tag_step_details(&self) -> terrars::ListRef<TransferWorkflowStepsElTagStepDetailsElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.tag_step_details", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
 struct TransferWorkflowDynamic {
-    on_exception_steps: Option<DynamicBlock<TransferWorkflowOnExceptionStepsEl>>,
-    steps: Option<DynamicBlock<TransferWorkflowStepsEl>>,
+    on_exception_steps: std::option::Option<terrars::DynamicBlock<TransferWorkflowOnExceptionStepsEl>>,
+    steps: std::option::Option<terrars::DynamicBlock<TransferWorkflowStepsEl>>,
 }

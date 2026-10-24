@@ -1,91 +1,95 @@
 use serde::Serialize;
-use std::cell::RefCell;
-use std::rc::Rc;
-use terrars::*;
+use terrars::{
+    Referable as _,
+    Resource_ as _,
+    Ref as _,
+};
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
 struct CodebuildProjectData {
-    #[serde(skip_serializing_if = "Vec::is_empty")]
-    depends_on: Vec<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    provider: Option<String>,
-    #[serde(skip_serializing_if = "SerdeSkipDefault::is_default")]
-    lifecycle: ResourceLifecycle,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    for_each: Option<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    badge_enabled: Option<PrimField<bool>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    build_timeout: Option<PrimField<f64>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    concurrent_build_limit: Option<PrimField<f64>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    description: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    encryption_key: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    id: Option<PrimField<String>>,
-    name: PrimField<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    project_visibility: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    queued_timeout: Option<PrimField<f64>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    resource_access_role: Option<PrimField<String>>,
-    service_role: PrimField<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    source_version: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    tags: Option<RecField<PrimField<String>>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    tags_all: Option<RecField<PrimField<String>>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    artifacts: Option<Vec<CodebuildProjectArtifactsEl>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    build_batch_config: Option<Vec<CodebuildProjectBuildBatchConfigEl>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    cache: Option<Vec<CodebuildProjectCacheEl>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    environment: Option<Vec<CodebuildProjectEnvironmentEl>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    file_system_locations: Option<Vec<CodebuildProjectFileSystemLocationsEl>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    logs_config: Option<Vec<CodebuildProjectLogsConfigEl>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    secondary_artifacts: Option<Vec<CodebuildProjectSecondaryArtifactsEl>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    secondary_source_version: Option<Vec<CodebuildProjectSecondarySourceVersionEl>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    secondary_sources: Option<Vec<CodebuildProjectSecondarySourcesEl>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    source: Option<Vec<CodebuildProjectSourceEl>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    vpc_config: Option<Vec<CodebuildProjectVpcConfigEl>>,
+    #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
+    depends_on: std::vec::Vec<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    provider: std::option::Option<std::string::String>,
+    #[serde(skip_serializing_if = "terrars::SerdeSkipDefault::is_default")]
+    lifecycle: terrars::ResourceLifecycle,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    for_each: std::option::Option<std::string::String>,
+    #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
+    provisioner: std::vec::Vec<terrars::Provisioner>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    badge_enabled: std::option::Option<terrars::PrimField<bool>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    build_timeout: std::option::Option<terrars::PrimField<f64>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    concurrent_build_limit: std::option::Option<terrars::PrimField<f64>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    description: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    encryption_key: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    id: std::option::Option<terrars::PrimField<std::string::String>>,
+    name: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    project_visibility: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    queued_timeout: std::option::Option<terrars::PrimField<f64>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    resource_access_role: std::option::Option<terrars::PrimField<std::string::String>>,
+    service_role: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    source_version: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    tags: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    tags_all: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    artifacts: std::option::Option<std::vec::Vec<CodebuildProjectArtifactsEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    build_batch_config: std::option::Option<std::vec::Vec<CodebuildProjectBuildBatchConfigEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    cache: std::option::Option<std::vec::Vec<CodebuildProjectCacheEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    environment: std::option::Option<std::vec::Vec<CodebuildProjectEnvironmentEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    file_system_locations: std::option::Option<std::vec::Vec<CodebuildProjectFileSystemLocationsEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    logs_config: std::option::Option<std::vec::Vec<CodebuildProjectLogsConfigEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    secondary_artifacts: std::option::Option<std::vec::Vec<CodebuildProjectSecondaryArtifactsEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    secondary_source_version: std::option::Option<std::vec::Vec<CodebuildProjectSecondarySourceVersionEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    secondary_sources: std::option::Option<std::vec::Vec<CodebuildProjectSecondarySourcesEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    source: std::option::Option<std::vec::Vec<CodebuildProjectSourceEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    vpc_config: std::option::Option<std::vec::Vec<CodebuildProjectVpcConfigEl>>,
     dynamic: CodebuildProjectDynamic,
 }
 
 struct CodebuildProject_ {
-    shared: StackShared,
-    tf_id: String,
-    data: RefCell<CodebuildProjectData>,
+    shared: terrars::StackShared,
+    tf_id: std::string::String,
+    data: std::cell::RefCell<CodebuildProjectData>,
 }
 
 #[derive(Clone)]
-pub struct CodebuildProject(Rc<CodebuildProject_>);
+pub struct CodebuildProject(std::rc::Rc<CodebuildProject_>);
 
 impl CodebuildProject {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.0.shared
     }
 
-    pub fn depends_on(self, dep: &impl Referable) -> Self {
+    pub fn depends_on(self, dep: &impl terrars::Referable) -> Self {
         self.0.data.borrow_mut().depends_on.push(dep.extract_ref());
         self
     }
 
     pub fn set_provider(self, provider: &ProviderAws) -> Self {
-        self.0.data.borrow_mut().provider = Some(provider.provider_ref());
+        self.0.data.borrow_mut().provider = std::option::Option::Some(provider.provider_ref());
         self
     }
 
@@ -100,406 +104,466 @@ impl CodebuildProject {
     }
 
     pub fn ignore_changes_to_all(self) -> Self {
-        self.0.data.borrow_mut().lifecycle.ignore_changes = Some(IgnoreChanges::All(IgnoreChangesAll::All));
+        self.0.data.borrow_mut().lifecycle.ignore_changes =
+            std::option::Option::Some(terrars::IgnoreChanges::All(terrars::IgnoreChangesAll::All));
         self
     }
 
-    pub fn ignore_changes_to_attr(self, attr: impl ToString) -> Self {
+    pub fn ignore_changes_to_attr(self, attr: impl std::string::ToString) -> Self {
         {
             let mut d = self.0.data.borrow_mut();
             if match &mut d.lifecycle.ignore_changes {
-                Some(i) => match i {
-                    IgnoreChanges::All(_) => {
+                std::option::Option::Some(i) => match i {
+                    terrars::IgnoreChanges::All(_) => {
                         true
                     },
-                    IgnoreChanges::Refs(r) => {
+                    terrars::IgnoreChanges::Refs(r) => {
                         r.push(attr.to_string());
                         false
                     },
                 },
-                None => true,
+                std::option::Option::None => true,
             } {
-                d.lifecycle.ignore_changes = Some(IgnoreChanges::Refs(vec![attr.to_string()]));
+                d.lifecycle.ignore_changes =
+                    std::option::Option::Some(terrars::IgnoreChanges::Refs(vec![attr.to_string()]));
             }
         }
         self
     }
 
-    pub fn replace_triggered_by_resource(self, r: &impl Resource) -> Self {
+    pub fn replace_triggered_by_resource(self, r: &impl terrars::Resource) -> Self {
         self.0.data.borrow_mut().lifecycle.replace_triggered_by.push(r.extract_ref());
         self
     }
 
-    pub fn replace_triggered_by_attr(self, attr: impl ToString) -> Self {
+    pub fn replace_triggered_by_attr(self, attr: impl std::string::ToString) -> Self {
         self.0.data.borrow_mut().lifecycle.replace_triggered_by.push(attr.to_string());
         self
     }
 
-    #[doc= "Set the field `badge_enabled`.\n"]
-    pub fn set_badge_enabled(self, v: impl Into<PrimField<bool>>) -> Self {
-        self.0.data.borrow_mut().badge_enabled = Some(v.into());
+    #[doc = r" Add a provisioner (ex: `local-exec`, `remote-exec`, `file`) to this resource."]
+    #[doc = r" Provisioners run in the order they're added."]
+    pub fn add_provisioner(self, v: impl std::convert::Into<terrars::Provisioner>) -> Self {
+        self.0.data.borrow_mut().provisioner.push(v.into());
         self
     }
 
-    #[doc= "Set the field `build_timeout`.\n"]
-    pub fn set_build_timeout(self, v: impl Into<PrimField<f64>>) -> Self {
-        self.0.data.borrow_mut().build_timeout = Some(v.into());
+    pub fn add_lifecycle_precondition(
+        self,
+        condition: impl std::convert::Into<terrars::PrimField<bool>>,
+        error_message: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.0.data.borrow_mut().lifecycle.precondition.push(terrars::LifecycleCondition {
+            condition: condition.into(),
+            error_message: error_message.into(),
+        });
         self
     }
 
-    #[doc= "Set the field `concurrent_build_limit`.\n"]
-    pub fn set_concurrent_build_limit(self, v: impl Into<PrimField<f64>>) -> Self {
-        self.0.data.borrow_mut().concurrent_build_limit = Some(v.into());
+    pub fn add_lifecycle_postcondition(
+        self,
+        condition: impl std::convert::Into<terrars::PrimField<bool>>,
+        error_message: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.0.data.borrow_mut().lifecycle.postcondition.push(terrars::LifecycleCondition {
+            condition: condition.into(),
+            error_message: error_message.into(),
+        });
         self
     }
 
-    #[doc= "Set the field `description`.\n"]
-    pub fn set_description(self, v: impl Into<PrimField<String>>) -> Self {
-        self.0.data.borrow_mut().description = Some(v.into());
+    #[doc = "Set the field `badge_enabled`.\n"]
+    pub fn set_badge_enabled(self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
+        self.0.data.borrow_mut().badge_enabled = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `encryption_key`.\n"]
-    pub fn set_encryption_key(self, v: impl Into<PrimField<String>>) -> Self {
-        self.0.data.borrow_mut().encryption_key = Some(v.into());
+    #[doc = "Set the field `build_timeout`.\n"]
+    pub fn set_build_timeout(self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.0.data.borrow_mut().build_timeout = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `id`.\n"]
-    pub fn set_id(self, v: impl Into<PrimField<String>>) -> Self {
-        self.0.data.borrow_mut().id = Some(v.into());
+    #[doc = "Set the field `concurrent_build_limit`.\n"]
+    pub fn set_concurrent_build_limit(self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.0.data.borrow_mut().concurrent_build_limit = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `project_visibility`.\n"]
-    pub fn set_project_visibility(self, v: impl Into<PrimField<String>>) -> Self {
-        self.0.data.borrow_mut().project_visibility = Some(v.into());
+    #[doc = "Set the field `description`.\n"]
+    pub fn set_description(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().description = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `queued_timeout`.\n"]
-    pub fn set_queued_timeout(self, v: impl Into<PrimField<f64>>) -> Self {
-        self.0.data.borrow_mut().queued_timeout = Some(v.into());
+    #[doc = "Set the field `encryption_key`.\n"]
+    pub fn set_encryption_key(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().encryption_key = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `resource_access_role`.\n"]
-    pub fn set_resource_access_role(self, v: impl Into<PrimField<String>>) -> Self {
-        self.0.data.borrow_mut().resource_access_role = Some(v.into());
+    #[doc = "Set the field `id`.\n"]
+    pub fn set_id(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().id = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `source_version`.\n"]
-    pub fn set_source_version(self, v: impl Into<PrimField<String>>) -> Self {
-        self.0.data.borrow_mut().source_version = Some(v.into());
+    #[doc = "Set the field `project_visibility`.\n"]
+    pub fn set_project_visibility(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().project_visibility = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `tags`.\n"]
-    pub fn set_tags(self, v: impl Into<RecField<PrimField<String>>>) -> Self {
-        self.0.data.borrow_mut().tags = Some(v.into());
+    #[doc = "Set the field `queued_timeout`.\n"]
+    pub fn set_queued_timeout(self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.0.data.borrow_mut().queued_timeout = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `tags_all`.\n"]
-    pub fn set_tags_all(self, v: impl Into<RecField<PrimField<String>>>) -> Self {
-        self.0.data.borrow_mut().tags_all = Some(v.into());
+    #[doc = "Set the field `resource_access_role`.\n"]
+    pub fn set_resource_access_role(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().resource_access_role = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `artifacts`.\n"]
-    pub fn set_artifacts(self, v: impl Into<BlockAssignable<CodebuildProjectArtifactsEl>>) -> Self {
+    #[doc = "Set the field `source_version`.\n"]
+    pub fn set_source_version(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().source_version = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `tags`.\n"]
+    pub fn set_tags(
+        self,
+        v: impl std::convert::Into<terrars::RecField<terrars::PrimField<std::string::String>>>,
+    ) -> Self {
+        self.0.data.borrow_mut().tags = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `tags_all`.\n"]
+    pub fn set_tags_all(
+        self,
+        v: impl std::convert::Into<terrars::RecField<terrars::PrimField<std::string::String>>>,
+    ) -> Self {
+        self.0.data.borrow_mut().tags_all = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `artifacts`.\n"]
+    pub fn set_artifacts(
+        self,
+        v: impl std::convert::Into<terrars::BlockAssignable<CodebuildProjectArtifactsEl>>,
+    ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.0.data.borrow_mut().artifacts = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.0.data.borrow_mut().artifacts = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.0.data.borrow_mut().dynamic.artifacts = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.0.data.borrow_mut().dynamic.artifacts = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Set the field `build_batch_config`.\n"]
-    pub fn set_build_batch_config(self, v: impl Into<BlockAssignable<CodebuildProjectBuildBatchConfigEl>>) -> Self {
+    #[doc = "Set the field `build_batch_config`.\n"]
+    pub fn set_build_batch_config(
+        self,
+        v: impl std::convert::Into<terrars::BlockAssignable<CodebuildProjectBuildBatchConfigEl>>,
+    ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.0.data.borrow_mut().build_batch_config = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.0.data.borrow_mut().build_batch_config = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.0.data.borrow_mut().dynamic.build_batch_config = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.0.data.borrow_mut().dynamic.build_batch_config = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Set the field `cache`.\n"]
-    pub fn set_cache(self, v: impl Into<BlockAssignable<CodebuildProjectCacheEl>>) -> Self {
+    #[doc = "Set the field `cache`.\n"]
+    pub fn set_cache(self, v: impl std::convert::Into<terrars::BlockAssignable<CodebuildProjectCacheEl>>) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.0.data.borrow_mut().cache = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.0.data.borrow_mut().cache = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.0.data.borrow_mut().dynamic.cache = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.0.data.borrow_mut().dynamic.cache = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Set the field `environment`.\n"]
-    pub fn set_environment(self, v: impl Into<BlockAssignable<CodebuildProjectEnvironmentEl>>) -> Self {
+    #[doc = "Set the field `environment`.\n"]
+    pub fn set_environment(
+        self,
+        v: impl std::convert::Into<terrars::BlockAssignable<CodebuildProjectEnvironmentEl>>,
+    ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.0.data.borrow_mut().environment = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.0.data.borrow_mut().environment = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.0.data.borrow_mut().dynamic.environment = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.0.data.borrow_mut().dynamic.environment = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Set the field `file_system_locations`.\n"]
+    #[doc = "Set the field `file_system_locations`.\n"]
     pub fn set_file_system_locations(
         self,
-        v: impl Into<BlockAssignable<CodebuildProjectFileSystemLocationsEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<CodebuildProjectFileSystemLocationsEl>>,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.0.data.borrow_mut().file_system_locations = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.0.data.borrow_mut().file_system_locations = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.0.data.borrow_mut().dynamic.file_system_locations = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.0.data.borrow_mut().dynamic.file_system_locations = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Set the field `logs_config`.\n"]
-    pub fn set_logs_config(self, v: impl Into<BlockAssignable<CodebuildProjectLogsConfigEl>>) -> Self {
+    #[doc = "Set the field `logs_config`.\n"]
+    pub fn set_logs_config(
+        self,
+        v: impl std::convert::Into<terrars::BlockAssignable<CodebuildProjectLogsConfigEl>>,
+    ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.0.data.borrow_mut().logs_config = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.0.data.borrow_mut().logs_config = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.0.data.borrow_mut().dynamic.logs_config = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.0.data.borrow_mut().dynamic.logs_config = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Set the field `secondary_artifacts`.\n"]
-    pub fn set_secondary_artifacts(self, v: impl Into<BlockAssignable<CodebuildProjectSecondaryArtifactsEl>>) -> Self {
+    #[doc = "Set the field `secondary_artifacts`.\n"]
+    pub fn set_secondary_artifacts(
+        self,
+        v: impl std::convert::Into<terrars::BlockAssignable<CodebuildProjectSecondaryArtifactsEl>>,
+    ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.0.data.borrow_mut().secondary_artifacts = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.0.data.borrow_mut().secondary_artifacts = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.0.data.borrow_mut().dynamic.secondary_artifacts = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.0.data.borrow_mut().dynamic.secondary_artifacts = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Set the field `secondary_source_version`.\n"]
+    #[doc = "Set the field `secondary_source_version`.\n"]
     pub fn set_secondary_source_version(
         self,
-        v: impl Into<BlockAssignable<CodebuildProjectSecondarySourceVersionEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<CodebuildProjectSecondarySourceVersionEl>>,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.0.data.borrow_mut().secondary_source_version = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.0.data.borrow_mut().secondary_source_version = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.0.data.borrow_mut().dynamic.secondary_source_version = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.0.data.borrow_mut().dynamic.secondary_source_version = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Set the field `secondary_sources`.\n"]
-    pub fn set_secondary_sources(self, v: impl Into<BlockAssignable<CodebuildProjectSecondarySourcesEl>>) -> Self {
+    #[doc = "Set the field `secondary_sources`.\n"]
+    pub fn set_secondary_sources(
+        self,
+        v: impl std::convert::Into<terrars::BlockAssignable<CodebuildProjectSecondarySourcesEl>>,
+    ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.0.data.borrow_mut().secondary_sources = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.0.data.borrow_mut().secondary_sources = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.0.data.borrow_mut().dynamic.secondary_sources = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.0.data.borrow_mut().dynamic.secondary_sources = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Set the field `source`.\n"]
-    pub fn set_source(self, v: impl Into<BlockAssignable<CodebuildProjectSourceEl>>) -> Self {
+    #[doc = "Set the field `source`.\n"]
+    pub fn set_source(self, v: impl std::convert::Into<terrars::BlockAssignable<CodebuildProjectSourceEl>>) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.0.data.borrow_mut().source = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.0.data.borrow_mut().source = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.0.data.borrow_mut().dynamic.source = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.0.data.borrow_mut().dynamic.source = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Set the field `vpc_config`.\n"]
-    pub fn set_vpc_config(self, v: impl Into<BlockAssignable<CodebuildProjectVpcConfigEl>>) -> Self {
+    #[doc = "Set the field `vpc_config`.\n"]
+    pub fn set_vpc_config(
+        self,
+        v: impl std::convert::Into<terrars::BlockAssignable<CodebuildProjectVpcConfigEl>>,
+    ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.0.data.borrow_mut().vpc_config = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.0.data.borrow_mut().vpc_config = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.0.data.borrow_mut().dynamic.vpc_config = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.0.data.borrow_mut().dynamic.vpc_config = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Get a reference to the value of field `arn` after provisioning.\n"]
-    pub fn arn(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.arn", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `arn` after provisioning.\n"]
+    pub fn arn(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.arn", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `badge_enabled` after provisioning.\n"]
-    pub fn badge_enabled(&self) -> PrimExpr<bool> {
-        PrimExpr::new(self.shared().clone(), format!("{}.badge_enabled", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `badge_enabled` after provisioning.\n"]
+    pub fn badge_enabled(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.badge_enabled", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `badge_url` after provisioning.\n"]
-    pub fn badge_url(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.badge_url", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `badge_url` after provisioning.\n"]
+    pub fn badge_url(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.badge_url", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `build_timeout` after provisioning.\n"]
-    pub fn build_timeout(&self) -> PrimExpr<f64> {
-        PrimExpr::new(self.shared().clone(), format!("{}.build_timeout", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `build_timeout` after provisioning.\n"]
+    pub fn build_timeout(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.build_timeout", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `concurrent_build_limit` after provisioning.\n"]
-    pub fn concurrent_build_limit(&self) -> PrimExpr<f64> {
-        PrimExpr::new(self.shared().clone(), format!("{}.concurrent_build_limit", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `concurrent_build_limit` after provisioning.\n"]
+    pub fn concurrent_build_limit(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.concurrent_build_limit", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `description` after provisioning.\n"]
-    pub fn description(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.description", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `description` after provisioning.\n"]
+    pub fn description(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.description", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `encryption_key` after provisioning.\n"]
-    pub fn encryption_key(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.encryption_key", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `encryption_key` after provisioning.\n"]
+    pub fn encryption_key(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.encryption_key", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `id` after provisioning.\n"]
-    pub fn id(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
+    pub fn id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `name` after provisioning.\n"]
-    pub fn name(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `name` after provisioning.\n"]
+    pub fn name(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `project_visibility` after provisioning.\n"]
-    pub fn project_visibility(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.project_visibility", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `project_visibility` after provisioning.\n"]
+    pub fn project_visibility(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.project_visibility", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `public_project_alias` after provisioning.\n"]
-    pub fn public_project_alias(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.public_project_alias", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `public_project_alias` after provisioning.\n"]
+    pub fn public_project_alias(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.public_project_alias", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `queued_timeout` after provisioning.\n"]
-    pub fn queued_timeout(&self) -> PrimExpr<f64> {
-        PrimExpr::new(self.shared().clone(), format!("{}.queued_timeout", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `queued_timeout` after provisioning.\n"]
+    pub fn queued_timeout(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.queued_timeout", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `resource_access_role` after provisioning.\n"]
-    pub fn resource_access_role(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.resource_access_role", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `resource_access_role` after provisioning.\n"]
+    pub fn resource_access_role(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.resource_access_role", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `service_role` after provisioning.\n"]
-    pub fn service_role(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.service_role", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `service_role` after provisioning.\n"]
+    pub fn service_role(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.service_role", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `source_version` after provisioning.\n"]
-    pub fn source_version(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.source_version", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `source_version` after provisioning.\n"]
+    pub fn source_version(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.source_version", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `tags` after provisioning.\n"]
-    pub fn tags(&self) -> RecRef<PrimExpr<String>> {
-        RecRef::new(self.shared().clone(), format!("{}.tags", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `tags` after provisioning.\n"]
+    pub fn tags(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
+        terrars::RecRef::new(self.shared().clone(), format!("{}.tags", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `tags_all` after provisioning.\n"]
-    pub fn tags_all(&self) -> RecRef<PrimExpr<String>> {
-        RecRef::new(self.shared().clone(), format!("{}.tags_all", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `tags_all` after provisioning.\n"]
+    pub fn tags_all(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
+        terrars::RecRef::new(self.shared().clone(), format!("{}.tags_all", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `artifacts` after provisioning.\n"]
-    pub fn artifacts(&self) -> ListRef<CodebuildProjectArtifactsElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.artifacts", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `artifacts` after provisioning.\n"]
+    pub fn artifacts(&self) -> terrars::ListRef<CodebuildProjectArtifactsElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.artifacts", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `build_batch_config` after provisioning.\n"]
-    pub fn build_batch_config(&self) -> ListRef<CodebuildProjectBuildBatchConfigElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.build_batch_config", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `build_batch_config` after provisioning.\n"]
+    pub fn build_batch_config(&self) -> terrars::ListRef<CodebuildProjectBuildBatchConfigElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.build_batch_config", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `cache` after provisioning.\n"]
-    pub fn cache(&self) -> ListRef<CodebuildProjectCacheElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.cache", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `cache` after provisioning.\n"]
+    pub fn cache(&self) -> terrars::ListRef<CodebuildProjectCacheElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.cache", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `environment` after provisioning.\n"]
-    pub fn environment(&self) -> ListRef<CodebuildProjectEnvironmentElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.environment", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `environment` after provisioning.\n"]
+    pub fn environment(&self) -> terrars::ListRef<CodebuildProjectEnvironmentElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.environment", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `logs_config` after provisioning.\n"]
-    pub fn logs_config(&self) -> ListRef<CodebuildProjectLogsConfigElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.logs_config", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `logs_config` after provisioning.\n"]
+    pub fn logs_config(&self) -> terrars::ListRef<CodebuildProjectLogsConfigElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.logs_config", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `source` after provisioning.\n"]
-    pub fn source(&self) -> ListRef<CodebuildProjectSourceElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.source", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `source` after provisioning.\n"]
+    pub fn source(&self) -> terrars::ListRef<CodebuildProjectSourceElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.source", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `vpc_config` after provisioning.\n"]
-    pub fn vpc_config(&self) -> ListRef<CodebuildProjectVpcConfigElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.vpc_config", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `vpc_config` after provisioning.\n"]
+    pub fn vpc_config(&self) -> terrars::ListRef<CodebuildProjectVpcConfigElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.vpc_config", self.extract_ref()))
     }
 }
 
-impl Referable for CodebuildProject {
-    fn extract_ref(&self) -> String {
+impl terrars::Referable for CodebuildProject {
+    fn extract_ref(&self) -> std::string::String {
         format!("{}.{}", self.0.extract_resource_type(), self.0.extract_tf_id())
     }
 }
 
-impl Resource for CodebuildProject { }
+impl terrars::Resource for CodebuildProject { }
 
-impl ToListMappable for CodebuildProject {
-    type O = ListRef<CodebuildProjectRef>;
+impl terrars::ToListMappable for CodebuildProject {
+    type O = terrars::ListRef<CodebuildProjectRef>;
 
-    fn do_map(self, base: String) -> Self::O {
-        self.0.data.borrow_mut().for_each = Some(format!("${{{}}}", base));
-        ListRef::new(self.0.shared.clone(), self.extract_ref())
+    fn do_map(self, base: std::string::String) -> Self::O {
+        self.0.data.borrow_mut().for_each = std::option::Option::Some(format!("${{{}}}", base));
+        terrars::ListRef::new(self.0.shared.clone(), self.extract_ref())
     }
 }
 
-impl Resource_ for CodebuildProject_ {
-    fn extract_resource_type(&self) -> String {
+impl terrars::Resource_ for CodebuildProject_ {
+    fn extract_resource_type(&self) -> std::string::String {
         "aws_codebuild_project".into()
     }
 
-    fn extract_tf_id(&self) -> String {
+    fn extract_tf_id(&self) -> std::string::String {
         self.tf_id.clone()
     }
 
@@ -509,23 +573,24 @@ impl Resource_ for CodebuildProject_ {
 }
 
 pub struct BuildCodebuildProject {
-    pub tf_id: String,
-    #[doc= ""]
-    pub name: PrimField<String>,
-    #[doc= ""]
-    pub service_role: PrimField<String>,
+    pub tf_id: std::string::String,
+    #[doc = ""]
+    pub name: terrars::PrimField<std::string::String>,
+    #[doc = ""]
+    pub service_role: terrars::PrimField<std::string::String>,
 }
 
 impl BuildCodebuildProject {
-    pub fn build(self, stack: &mut Stack) -> CodebuildProject {
-        let out = CodebuildProject(Rc::new(CodebuildProject_ {
+    pub fn build(self, stack: &mut terrars::Stack) -> CodebuildProject {
+        let out = CodebuildProject(std::rc::Rc::new(CodebuildProject_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: RefCell::new(CodebuildProjectData {
+            data: std::cell::RefCell::new(CodebuildProjectData {
                 depends_on: core::default::Default::default(),
-                provider: None,
+                provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
-                for_each: None,
+                for_each: std::option::Option::None,
+                provisioner: core::default::Default::default(),
                 badge_enabled: core::default::Default::default(),
                 build_timeout: core::default::Default::default(),
                 concurrent_build_limit: core::default::Default::default(),
@@ -551,7 +616,7 @@ impl BuildCodebuildProject {
                 secondary_sources: core::default::Default::default(),
                 source: core::default::Default::default(),
                 vpc_config: core::default::Default::default(),
-                dynamic: Default::default(),
+                dynamic: core::default::Default::default(),
             }),
         }));
         stack.add_resource(out.0.clone());
@@ -560,12 +625,12 @@ impl BuildCodebuildProject {
 }
 
 pub struct CodebuildProjectRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for CodebuildProjectRef {
-    fn new(shared: StackShared, base: String) -> Self {
+impl terrars::Ref for CodebuildProjectRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> Self {
         Self {
             shared: shared,
             base: base,
@@ -574,220 +639,226 @@ impl Ref for CodebuildProjectRef {
 }
 
 impl CodebuildProjectRef {
-    fn extract_ref(&self) -> String {
+    fn extract_ref(&self) -> std::string::String {
         self.base.clone()
     }
 
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `arn` after provisioning.\n"]
-    pub fn arn(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.arn", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `arn` after provisioning.\n"]
+    pub fn arn(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.arn", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `badge_enabled` after provisioning.\n"]
-    pub fn badge_enabled(&self) -> PrimExpr<bool> {
-        PrimExpr::new(self.shared().clone(), format!("{}.badge_enabled", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `badge_enabled` after provisioning.\n"]
+    pub fn badge_enabled(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.badge_enabled", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `badge_url` after provisioning.\n"]
-    pub fn badge_url(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.badge_url", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `badge_url` after provisioning.\n"]
+    pub fn badge_url(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.badge_url", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `build_timeout` after provisioning.\n"]
-    pub fn build_timeout(&self) -> PrimExpr<f64> {
-        PrimExpr::new(self.shared().clone(), format!("{}.build_timeout", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `build_timeout` after provisioning.\n"]
+    pub fn build_timeout(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.build_timeout", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `concurrent_build_limit` after provisioning.\n"]
-    pub fn concurrent_build_limit(&self) -> PrimExpr<f64> {
-        PrimExpr::new(self.shared().clone(), format!("{}.concurrent_build_limit", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `concurrent_build_limit` after provisioning.\n"]
+    pub fn concurrent_build_limit(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.concurrent_build_limit", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `description` after provisioning.\n"]
-    pub fn description(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.description", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `description` after provisioning.\n"]
+    pub fn description(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.description", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `encryption_key` after provisioning.\n"]
-    pub fn encryption_key(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.encryption_key", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `encryption_key` after provisioning.\n"]
+    pub fn encryption_key(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.encryption_key", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `id` after provisioning.\n"]
-    pub fn id(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
+    pub fn id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `name` after provisioning.\n"]
-    pub fn name(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `name` after provisioning.\n"]
+    pub fn name(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `project_visibility` after provisioning.\n"]
-    pub fn project_visibility(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.project_visibility", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `project_visibility` after provisioning.\n"]
+    pub fn project_visibility(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.project_visibility", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `public_project_alias` after provisioning.\n"]
-    pub fn public_project_alias(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.public_project_alias", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `public_project_alias` after provisioning.\n"]
+    pub fn public_project_alias(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.public_project_alias", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `queued_timeout` after provisioning.\n"]
-    pub fn queued_timeout(&self) -> PrimExpr<f64> {
-        PrimExpr::new(self.shared().clone(), format!("{}.queued_timeout", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `queued_timeout` after provisioning.\n"]
+    pub fn queued_timeout(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.queued_timeout", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `resource_access_role` after provisioning.\n"]
-    pub fn resource_access_role(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.resource_access_role", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `resource_access_role` after provisioning.\n"]
+    pub fn resource_access_role(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.resource_access_role", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `service_role` after provisioning.\n"]
-    pub fn service_role(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.service_role", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `service_role` after provisioning.\n"]
+    pub fn service_role(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.service_role", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `source_version` after provisioning.\n"]
-    pub fn source_version(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.source_version", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `source_version` after provisioning.\n"]
+    pub fn source_version(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.source_version", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `tags` after provisioning.\n"]
-    pub fn tags(&self) -> RecRef<PrimExpr<String>> {
-        RecRef::new(self.shared().clone(), format!("{}.tags", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `tags` after provisioning.\n"]
+    pub fn tags(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
+        terrars::RecRef::new(self.shared().clone(), format!("{}.tags", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `tags_all` after provisioning.\n"]
-    pub fn tags_all(&self) -> RecRef<PrimExpr<String>> {
-        RecRef::new(self.shared().clone(), format!("{}.tags_all", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `tags_all` after provisioning.\n"]
+    pub fn tags_all(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
+        terrars::RecRef::new(self.shared().clone(), format!("{}.tags_all", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `artifacts` after provisioning.\n"]
-    pub fn artifacts(&self) -> ListRef<CodebuildProjectArtifactsElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.artifacts", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `artifacts` after provisioning.\n"]
+    pub fn artifacts(&self) -> terrars::ListRef<CodebuildProjectArtifactsElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.artifacts", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `build_batch_config` after provisioning.\n"]
-    pub fn build_batch_config(&self) -> ListRef<CodebuildProjectBuildBatchConfigElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.build_batch_config", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `build_batch_config` after provisioning.\n"]
+    pub fn build_batch_config(&self) -> terrars::ListRef<CodebuildProjectBuildBatchConfigElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.build_batch_config", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `cache` after provisioning.\n"]
-    pub fn cache(&self) -> ListRef<CodebuildProjectCacheElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.cache", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `cache` after provisioning.\n"]
+    pub fn cache(&self) -> terrars::ListRef<CodebuildProjectCacheElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.cache", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `environment` after provisioning.\n"]
-    pub fn environment(&self) -> ListRef<CodebuildProjectEnvironmentElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.environment", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `environment` after provisioning.\n"]
+    pub fn environment(&self) -> terrars::ListRef<CodebuildProjectEnvironmentElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.environment", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `logs_config` after provisioning.\n"]
-    pub fn logs_config(&self) -> ListRef<CodebuildProjectLogsConfigElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.logs_config", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `logs_config` after provisioning.\n"]
+    pub fn logs_config(&self) -> terrars::ListRef<CodebuildProjectLogsConfigElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.logs_config", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `source` after provisioning.\n"]
-    pub fn source(&self) -> ListRef<CodebuildProjectSourceElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.source", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `source` after provisioning.\n"]
+    pub fn source(&self) -> terrars::ListRef<CodebuildProjectSourceElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.source", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `vpc_config` after provisioning.\n"]
-    pub fn vpc_config(&self) -> ListRef<CodebuildProjectVpcConfigElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.vpc_config", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `vpc_config` after provisioning.\n"]
+    pub fn vpc_config(&self) -> terrars::ListRef<CodebuildProjectVpcConfigElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.vpc_config", self.extract_ref()))
     }
 }
 
 #[derive(Serialize)]
 pub struct CodebuildProjectArtifactsEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    artifact_identifier: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    bucket_owner_access: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    encryption_disabled: Option<PrimField<bool>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    location: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    name: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    namespace_type: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    override_artifact_name: Option<PrimField<bool>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    packaging: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    path: Option<PrimField<String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    artifact_identifier: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    bucket_owner_access: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    encryption_disabled: std::option::Option<terrars::PrimField<bool>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    location: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    name: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    namespace_type: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    override_artifact_name: std::option::Option<terrars::PrimField<bool>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    packaging: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    path: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(rename = "type")]
-    type_: PrimField<String>,
+    type_: terrars::PrimField<std::string::String>,
 }
 
 impl CodebuildProjectArtifactsEl {
-    #[doc= "Set the field `artifact_identifier`.\n"]
-    pub fn set_artifact_identifier(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.artifact_identifier = Some(v.into());
+    #[doc = "Set the field `artifact_identifier`.\n"]
+    pub fn set_artifact_identifier(
+        mut self,
+        v: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.artifact_identifier = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `bucket_owner_access`.\n"]
-    pub fn set_bucket_owner_access(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.bucket_owner_access = Some(v.into());
+    #[doc = "Set the field `bucket_owner_access`.\n"]
+    pub fn set_bucket_owner_access(
+        mut self,
+        v: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.bucket_owner_access = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `encryption_disabled`.\n"]
-    pub fn set_encryption_disabled(mut self, v: impl Into<PrimField<bool>>) -> Self {
-        self.encryption_disabled = Some(v.into());
+    #[doc = "Set the field `encryption_disabled`.\n"]
+    pub fn set_encryption_disabled(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
+        self.encryption_disabled = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `location`.\n"]
-    pub fn set_location(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.location = Some(v.into());
+    #[doc = "Set the field `location`.\n"]
+    pub fn set_location(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.location = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `name`.\n"]
-    pub fn set_name(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.name = Some(v.into());
+    #[doc = "Set the field `name`.\n"]
+    pub fn set_name(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.name = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `namespace_type`.\n"]
-    pub fn set_namespace_type(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.namespace_type = Some(v.into());
+    #[doc = "Set the field `namespace_type`.\n"]
+    pub fn set_namespace_type(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.namespace_type = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `override_artifact_name`.\n"]
-    pub fn set_override_artifact_name(mut self, v: impl Into<PrimField<bool>>) -> Self {
-        self.override_artifact_name = Some(v.into());
+    #[doc = "Set the field `override_artifact_name`.\n"]
+    pub fn set_override_artifact_name(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
+        self.override_artifact_name = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `packaging`.\n"]
-    pub fn set_packaging(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.packaging = Some(v.into());
+    #[doc = "Set the field `packaging`.\n"]
+    pub fn set_packaging(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.packaging = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `path`.\n"]
-    pub fn set_path(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.path = Some(v.into());
+    #[doc = "Set the field `path`.\n"]
+    pub fn set_path(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.path = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl ToListMappable for CodebuildProjectArtifactsEl {
-    type O = BlockAssignable<CodebuildProjectArtifactsEl>;
+impl terrars::ToListMappable for CodebuildProjectArtifactsEl {
+    type O = terrars::BlockAssignable<CodebuildProjectArtifactsEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -796,8 +867,8 @@ impl ToListMappable for CodebuildProjectArtifactsEl {
 }
 
 pub struct BuildCodebuildProjectArtifactsEl {
-    #[doc= ""]
-    pub type_: PrimField<String>,
+    #[doc = ""]
+    pub type_: terrars::PrimField<std::string::String>,
 }
 
 impl BuildCodebuildProjectArtifactsEl {
@@ -818,12 +889,12 @@ impl BuildCodebuildProjectArtifactsEl {
 }
 
 pub struct CodebuildProjectArtifactsElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for CodebuildProjectArtifactsElRef {
-    fn new(shared: StackShared, base: String) -> CodebuildProjectArtifactsElRef {
+impl terrars::Ref for CodebuildProjectArtifactsElRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> CodebuildProjectArtifactsElRef {
         CodebuildProjectArtifactsElRef {
             shared: shared,
             base: base.to_string(),
@@ -832,88 +903,91 @@ impl Ref for CodebuildProjectArtifactsElRef {
 }
 
 impl CodebuildProjectArtifactsElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `artifact_identifier` after provisioning.\n"]
-    pub fn artifact_identifier(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.artifact_identifier", self.base))
+    #[doc = "Get a reference to the value of field `artifact_identifier` after provisioning.\n"]
+    pub fn artifact_identifier(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.artifact_identifier", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `bucket_owner_access` after provisioning.\n"]
-    pub fn bucket_owner_access(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.bucket_owner_access", self.base))
+    #[doc = "Get a reference to the value of field `bucket_owner_access` after provisioning.\n"]
+    pub fn bucket_owner_access(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.bucket_owner_access", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `encryption_disabled` after provisioning.\n"]
-    pub fn encryption_disabled(&self) -> PrimExpr<bool> {
-        PrimExpr::new(self.shared().clone(), format!("{}.encryption_disabled", self.base))
+    #[doc = "Get a reference to the value of field `encryption_disabled` after provisioning.\n"]
+    pub fn encryption_disabled(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.encryption_disabled", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `location` after provisioning.\n"]
-    pub fn location(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.location", self.base))
+    #[doc = "Get a reference to the value of field `location` after provisioning.\n"]
+    pub fn location(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.location", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `name` after provisioning.\n"]
-    pub fn name(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.name", self.base))
+    #[doc = "Get a reference to the value of field `name` after provisioning.\n"]
+    pub fn name(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `namespace_type` after provisioning.\n"]
-    pub fn namespace_type(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.namespace_type", self.base))
+    #[doc = "Get a reference to the value of field `namespace_type` after provisioning.\n"]
+    pub fn namespace_type(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.namespace_type", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `override_artifact_name` after provisioning.\n"]
-    pub fn override_artifact_name(&self) -> PrimExpr<bool> {
-        PrimExpr::new(self.shared().clone(), format!("{}.override_artifact_name", self.base))
+    #[doc = "Get a reference to the value of field `override_artifact_name` after provisioning.\n"]
+    pub fn override_artifact_name(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.override_artifact_name", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `packaging` after provisioning.\n"]
-    pub fn packaging(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.packaging", self.base))
+    #[doc = "Get a reference to the value of field `packaging` after provisioning.\n"]
+    pub fn packaging(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.packaging", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `path` after provisioning.\n"]
-    pub fn path(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.path", self.base))
+    #[doc = "Get a reference to the value of field `path` after provisioning.\n"]
+    pub fn path(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.path", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `type_` after provisioning.\n"]
-    pub fn type_(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.type", self.base))
+    #[doc = "Get a reference to the value of field `type_` after provisioning.\n"]
+    pub fn type_(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.type", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct CodebuildProjectBuildBatchConfigElRestrictionsEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    compute_types_allowed: Option<ListField<PrimField<String>>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    maximum_builds_allowed: Option<PrimField<f64>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    compute_types_allowed: std::option::Option<terrars::ListField<terrars::PrimField<std::string::String>>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    maximum_builds_allowed: std::option::Option<terrars::PrimField<f64>>,
 }
 
 impl CodebuildProjectBuildBatchConfigElRestrictionsEl {
-    #[doc= "Set the field `compute_types_allowed`.\n"]
-    pub fn set_compute_types_allowed(mut self, v: impl Into<ListField<PrimField<String>>>) -> Self {
-        self.compute_types_allowed = Some(v.into());
+    #[doc = "Set the field `compute_types_allowed`.\n"]
+    pub fn set_compute_types_allowed(
+        mut self,
+        v: impl std::convert::Into<terrars::ListField<terrars::PrimField<std::string::String>>>,
+    ) -> Self {
+        self.compute_types_allowed = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `maximum_builds_allowed`.\n"]
-    pub fn set_maximum_builds_allowed(mut self, v: impl Into<PrimField<f64>>) -> Self {
-        self.maximum_builds_allowed = Some(v.into());
+    #[doc = "Set the field `maximum_builds_allowed`.\n"]
+    pub fn set_maximum_builds_allowed(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.maximum_builds_allowed = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl ToListMappable for CodebuildProjectBuildBatchConfigElRestrictionsEl {
-    type O = BlockAssignable<CodebuildProjectBuildBatchConfigElRestrictionsEl>;
+impl terrars::ToListMappable for CodebuildProjectBuildBatchConfigElRestrictionsEl {
+    type O = terrars::BlockAssignable<CodebuildProjectBuildBatchConfigElRestrictionsEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -933,12 +1007,15 @@ impl BuildCodebuildProjectBuildBatchConfigElRestrictionsEl {
 }
 
 pub struct CodebuildProjectBuildBatchConfigElRestrictionsElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for CodebuildProjectBuildBatchConfigElRestrictionsElRef {
-    fn new(shared: StackShared, base: String) -> CodebuildProjectBuildBatchConfigElRestrictionsElRef {
+impl terrars::Ref for CodebuildProjectBuildBatchConfigElRestrictionsElRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> CodebuildProjectBuildBatchConfigElRestrictionsElRef {
         CodebuildProjectBuildBatchConfigElRestrictionsElRef {
             shared: shared,
             base: base.to_string(),
@@ -947,73 +1024,73 @@ impl Ref for CodebuildProjectBuildBatchConfigElRestrictionsElRef {
 }
 
 impl CodebuildProjectBuildBatchConfigElRestrictionsElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `compute_types_allowed` after provisioning.\n"]
-    pub fn compute_types_allowed(&self) -> ListRef<PrimExpr<String>> {
-        ListRef::new(self.shared().clone(), format!("{}.compute_types_allowed", self.base))
+    #[doc = "Get a reference to the value of field `compute_types_allowed` after provisioning.\n"]
+    pub fn compute_types_allowed(&self) -> terrars::ListRef<terrars::PrimExpr<std::string::String>> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.compute_types_allowed", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `maximum_builds_allowed` after provisioning.\n"]
-    pub fn maximum_builds_allowed(&self) -> PrimExpr<f64> {
-        PrimExpr::new(self.shared().clone(), format!("{}.maximum_builds_allowed", self.base))
+    #[doc = "Get a reference to the value of field `maximum_builds_allowed` after provisioning.\n"]
+    pub fn maximum_builds_allowed(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.maximum_builds_allowed", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
 struct CodebuildProjectBuildBatchConfigElDynamic {
-    restrictions: Option<DynamicBlock<CodebuildProjectBuildBatchConfigElRestrictionsEl>>,
+    restrictions: std::option::Option<terrars::DynamicBlock<CodebuildProjectBuildBatchConfigElRestrictionsEl>>,
 }
 
 #[derive(Serialize)]
 pub struct CodebuildProjectBuildBatchConfigEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    combine_artifacts: Option<PrimField<bool>>,
-    service_role: PrimField<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    timeout_in_mins: Option<PrimField<f64>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    restrictions: Option<Vec<CodebuildProjectBuildBatchConfigElRestrictionsEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    combine_artifacts: std::option::Option<terrars::PrimField<bool>>,
+    service_role: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    timeout_in_mins: std::option::Option<terrars::PrimField<f64>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    restrictions: std::option::Option<std::vec::Vec<CodebuildProjectBuildBatchConfigElRestrictionsEl>>,
     dynamic: CodebuildProjectBuildBatchConfigElDynamic,
 }
 
 impl CodebuildProjectBuildBatchConfigEl {
-    #[doc= "Set the field `combine_artifacts`.\n"]
-    pub fn set_combine_artifacts(mut self, v: impl Into<PrimField<bool>>) -> Self {
-        self.combine_artifacts = Some(v.into());
+    #[doc = "Set the field `combine_artifacts`.\n"]
+    pub fn set_combine_artifacts(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
+        self.combine_artifacts = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `timeout_in_mins`.\n"]
-    pub fn set_timeout_in_mins(mut self, v: impl Into<PrimField<f64>>) -> Self {
-        self.timeout_in_mins = Some(v.into());
+    #[doc = "Set the field `timeout_in_mins`.\n"]
+    pub fn set_timeout_in_mins(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.timeout_in_mins = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `restrictions`.\n"]
+    #[doc = "Set the field `restrictions`.\n"]
     pub fn set_restrictions(
         mut self,
-        v: impl Into<BlockAssignable<CodebuildProjectBuildBatchConfigElRestrictionsEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<CodebuildProjectBuildBatchConfigElRestrictionsEl>>,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.restrictions = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.restrictions = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.restrictions = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.restrictions = std::option::Option::Some(d);
             },
         }
         self
     }
 }
 
-impl ToListMappable for CodebuildProjectBuildBatchConfigEl {
-    type O = BlockAssignable<CodebuildProjectBuildBatchConfigEl>;
+impl terrars::ToListMappable for CodebuildProjectBuildBatchConfigEl {
+    type O = terrars::BlockAssignable<CodebuildProjectBuildBatchConfigEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -1022,8 +1099,8 @@ impl ToListMappable for CodebuildProjectBuildBatchConfigEl {
 }
 
 pub struct BuildCodebuildProjectBuildBatchConfigEl {
-    #[doc= ""]
-    pub service_role: PrimField<String>,
+    #[doc = ""]
+    pub service_role: terrars::PrimField<std::string::String>,
 }
 
 impl BuildCodebuildProjectBuildBatchConfigEl {
@@ -1033,18 +1110,18 @@ impl BuildCodebuildProjectBuildBatchConfigEl {
             service_role: self.service_role,
             timeout_in_mins: core::default::Default::default(),
             restrictions: core::default::Default::default(),
-            dynamic: Default::default(),
+            dynamic: core::default::Default::default(),
         }
     }
 }
 
 pub struct CodebuildProjectBuildBatchConfigElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for CodebuildProjectBuildBatchConfigElRef {
-    fn new(shared: StackShared, base: String) -> CodebuildProjectBuildBatchConfigElRef {
+impl terrars::Ref for CodebuildProjectBuildBatchConfigElRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> CodebuildProjectBuildBatchConfigElRef {
         CodebuildProjectBuildBatchConfigElRef {
             shared: shared,
             base: base.to_string(),
@@ -1053,66 +1130,69 @@ impl Ref for CodebuildProjectBuildBatchConfigElRef {
 }
 
 impl CodebuildProjectBuildBatchConfigElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `combine_artifacts` after provisioning.\n"]
-    pub fn combine_artifacts(&self) -> PrimExpr<bool> {
-        PrimExpr::new(self.shared().clone(), format!("{}.combine_artifacts", self.base))
+    #[doc = "Get a reference to the value of field `combine_artifacts` after provisioning.\n"]
+    pub fn combine_artifacts(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.combine_artifacts", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `service_role` after provisioning.\n"]
-    pub fn service_role(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.service_role", self.base))
+    #[doc = "Get a reference to the value of field `service_role` after provisioning.\n"]
+    pub fn service_role(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.service_role", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `timeout_in_mins` after provisioning.\n"]
-    pub fn timeout_in_mins(&self) -> PrimExpr<f64> {
-        PrimExpr::new(self.shared().clone(), format!("{}.timeout_in_mins", self.base))
+    #[doc = "Get a reference to the value of field `timeout_in_mins` after provisioning.\n"]
+    pub fn timeout_in_mins(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.timeout_in_mins", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `restrictions` after provisioning.\n"]
-    pub fn restrictions(&self) -> ListRef<CodebuildProjectBuildBatchConfigElRestrictionsElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.restrictions", self.base))
+    #[doc = "Get a reference to the value of field `restrictions` after provisioning.\n"]
+    pub fn restrictions(&self) -> terrars::ListRef<CodebuildProjectBuildBatchConfigElRestrictionsElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.restrictions", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct CodebuildProjectCacheEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    location: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    modes: Option<ListField<PrimField<String>>>,
-    #[serde(rename = "type", skip_serializing_if = "Option::is_none")]
-    type_: Option<PrimField<String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    location: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    modes: std::option::Option<terrars::ListField<terrars::PrimField<std::string::String>>>,
+    #[serde(rename = "type", skip_serializing_if = "std::option::Option::is_none")]
+    type_: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
 impl CodebuildProjectCacheEl {
-    #[doc= "Set the field `location`.\n"]
-    pub fn set_location(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.location = Some(v.into());
+    #[doc = "Set the field `location`.\n"]
+    pub fn set_location(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.location = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `modes`.\n"]
-    pub fn set_modes(mut self, v: impl Into<ListField<PrimField<String>>>) -> Self {
-        self.modes = Some(v.into());
+    #[doc = "Set the field `modes`.\n"]
+    pub fn set_modes(
+        mut self,
+        v: impl std::convert::Into<terrars::ListField<terrars::PrimField<std::string::String>>>,
+    ) -> Self {
+        self.modes = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `type_`.\n"]
-    pub fn set_type(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.type_ = Some(v.into());
+    #[doc = "Set the field `type_`.\n"]
+    pub fn set_type(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.type_ = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl ToListMappable for CodebuildProjectCacheEl {
-    type O = BlockAssignable<CodebuildProjectCacheEl>;
+impl terrars::ToListMappable for CodebuildProjectCacheEl {
+    type O = terrars::BlockAssignable<CodebuildProjectCacheEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -1133,12 +1213,12 @@ impl BuildCodebuildProjectCacheEl {
 }
 
 pub struct CodebuildProjectCacheElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for CodebuildProjectCacheElRef {
-    fn new(shared: StackShared, base: String) -> CodebuildProjectCacheElRef {
+impl terrars::Ref for CodebuildProjectCacheElRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> CodebuildProjectCacheElRef {
         CodebuildProjectCacheElRef {
             shared: shared,
             base: base.to_string(),
@@ -1147,47 +1227,47 @@ impl Ref for CodebuildProjectCacheElRef {
 }
 
 impl CodebuildProjectCacheElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `location` after provisioning.\n"]
-    pub fn location(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.location", self.base))
+    #[doc = "Get a reference to the value of field `location` after provisioning.\n"]
+    pub fn location(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.location", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `modes` after provisioning.\n"]
-    pub fn modes(&self) -> ListRef<PrimExpr<String>> {
-        ListRef::new(self.shared().clone(), format!("{}.modes", self.base))
+    #[doc = "Get a reference to the value of field `modes` after provisioning.\n"]
+    pub fn modes(&self) -> terrars::ListRef<terrars::PrimExpr<std::string::String>> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.modes", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `type_` after provisioning.\n"]
-    pub fn type_(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.type", self.base))
+    #[doc = "Get a reference to the value of field `type_` after provisioning.\n"]
+    pub fn type_(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.type", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct CodebuildProjectEnvironmentElEnvironmentVariableEl {
-    name: PrimField<String>,
-    #[serde(rename = "type", skip_serializing_if = "Option::is_none")]
-    type_: Option<PrimField<String>>,
-    value: PrimField<String>,
+    name: terrars::PrimField<std::string::String>,
+    #[serde(rename = "type", skip_serializing_if = "std::option::Option::is_none")]
+    type_: std::option::Option<terrars::PrimField<std::string::String>>,
+    value: terrars::PrimField<std::string::String>,
 }
 
 impl CodebuildProjectEnvironmentElEnvironmentVariableEl {
-    #[doc= "Set the field `type_`.\n"]
-    pub fn set_type(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.type_ = Some(v.into());
+    #[doc = "Set the field `type_`.\n"]
+    pub fn set_type(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.type_ = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl ToListMappable for CodebuildProjectEnvironmentElEnvironmentVariableEl {
-    type O = BlockAssignable<CodebuildProjectEnvironmentElEnvironmentVariableEl>;
+impl terrars::ToListMappable for CodebuildProjectEnvironmentElEnvironmentVariableEl {
+    type O = terrars::BlockAssignable<CodebuildProjectEnvironmentElEnvironmentVariableEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -1196,10 +1276,10 @@ impl ToListMappable for CodebuildProjectEnvironmentElEnvironmentVariableEl {
 }
 
 pub struct BuildCodebuildProjectEnvironmentElEnvironmentVariableEl {
-    #[doc= ""]
-    pub name: PrimField<String>,
-    #[doc= ""]
-    pub value: PrimField<String>,
+    #[doc = ""]
+    pub name: terrars::PrimField<std::string::String>,
+    #[doc = ""]
+    pub value: terrars::PrimField<std::string::String>,
 }
 
 impl BuildCodebuildProjectEnvironmentElEnvironmentVariableEl {
@@ -1213,12 +1293,15 @@ impl BuildCodebuildProjectEnvironmentElEnvironmentVariableEl {
 }
 
 pub struct CodebuildProjectEnvironmentElEnvironmentVariableElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for CodebuildProjectEnvironmentElEnvironmentVariableElRef {
-    fn new(shared: StackShared, base: String) -> CodebuildProjectEnvironmentElEnvironmentVariableElRef {
+impl terrars::Ref for CodebuildProjectEnvironmentElEnvironmentVariableElRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> CodebuildProjectEnvironmentElEnvironmentVariableElRef {
         CodebuildProjectEnvironmentElEnvironmentVariableElRef {
             shared: shared,
             base: base.to_string(),
@@ -1227,39 +1310,39 @@ impl Ref for CodebuildProjectEnvironmentElEnvironmentVariableElRef {
 }
 
 impl CodebuildProjectEnvironmentElEnvironmentVariableElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `name` after provisioning.\n"]
-    pub fn name(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.name", self.base))
+    #[doc = "Get a reference to the value of field `name` after provisioning.\n"]
+    pub fn name(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `type_` after provisioning.\n"]
-    pub fn type_(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.type", self.base))
+    #[doc = "Get a reference to the value of field `type_` after provisioning.\n"]
+    pub fn type_(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.type", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `value` after provisioning.\n"]
-    pub fn value(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.value", self.base))
+    #[doc = "Get a reference to the value of field `value` after provisioning.\n"]
+    pub fn value(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.value", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct CodebuildProjectEnvironmentElRegistryCredentialEl {
-    credential: PrimField<String>,
-    credential_provider: PrimField<String>,
+    credential: terrars::PrimField<std::string::String>,
+    credential_provider: terrars::PrimField<std::string::String>,
 }
 
 impl CodebuildProjectEnvironmentElRegistryCredentialEl { }
 
-impl ToListMappable for CodebuildProjectEnvironmentElRegistryCredentialEl {
-    type O = BlockAssignable<CodebuildProjectEnvironmentElRegistryCredentialEl>;
+impl terrars::ToListMappable for CodebuildProjectEnvironmentElRegistryCredentialEl {
+    type O = terrars::BlockAssignable<CodebuildProjectEnvironmentElRegistryCredentialEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -1268,10 +1351,10 @@ impl ToListMappable for CodebuildProjectEnvironmentElRegistryCredentialEl {
 }
 
 pub struct BuildCodebuildProjectEnvironmentElRegistryCredentialEl {
-    #[doc= ""]
-    pub credential: PrimField<String>,
-    #[doc= ""]
-    pub credential_provider: PrimField<String>,
+    #[doc = ""]
+    pub credential: terrars::PrimField<std::string::String>,
+    #[doc = ""]
+    pub credential_provider: terrars::PrimField<std::string::String>,
 }
 
 impl BuildCodebuildProjectEnvironmentElRegistryCredentialEl {
@@ -1284,12 +1367,15 @@ impl BuildCodebuildProjectEnvironmentElRegistryCredentialEl {
 }
 
 pub struct CodebuildProjectEnvironmentElRegistryCredentialElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for CodebuildProjectEnvironmentElRegistryCredentialElRef {
-    fn new(shared: StackShared, base: String) -> CodebuildProjectEnvironmentElRegistryCredentialElRef {
+impl terrars::Ref for CodebuildProjectEnvironmentElRegistryCredentialElRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> CodebuildProjectEnvironmentElRegistryCredentialElRef {
         CodebuildProjectEnvironmentElRegistryCredentialElRef {
             shared: shared,
             base: base.to_string(),
@@ -1298,103 +1384,110 @@ impl Ref for CodebuildProjectEnvironmentElRegistryCredentialElRef {
 }
 
 impl CodebuildProjectEnvironmentElRegistryCredentialElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `credential` after provisioning.\n"]
-    pub fn credential(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.credential", self.base))
+    #[doc = "Get a reference to the value of field `credential` after provisioning.\n"]
+    pub fn credential(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.credential", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `credential_provider` after provisioning.\n"]
-    pub fn credential_provider(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.credential_provider", self.base))
+    #[doc = "Get a reference to the value of field `credential_provider` after provisioning.\n"]
+    pub fn credential_provider(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.credential_provider", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
 struct CodebuildProjectEnvironmentElDynamic {
-    environment_variable: Option<DynamicBlock<CodebuildProjectEnvironmentElEnvironmentVariableEl>>,
-    registry_credential: Option<DynamicBlock<CodebuildProjectEnvironmentElRegistryCredentialEl>>,
+    environment_variable: std
+    ::option
+    ::Option<terrars::DynamicBlock<CodebuildProjectEnvironmentElEnvironmentVariableEl>>,
+    registry_credential: std
+    ::option
+    ::Option<terrars::DynamicBlock<CodebuildProjectEnvironmentElRegistryCredentialEl>>,
 }
 
 #[derive(Serialize)]
 pub struct CodebuildProjectEnvironmentEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    certificate: Option<PrimField<String>>,
-    compute_type: PrimField<String>,
-    image: PrimField<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    image_pull_credentials_type: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    privileged_mode: Option<PrimField<bool>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    certificate: std::option::Option<terrars::PrimField<std::string::String>>,
+    compute_type: terrars::PrimField<std::string::String>,
+    image: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    image_pull_credentials_type: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    privileged_mode: std::option::Option<terrars::PrimField<bool>>,
     #[serde(rename = "type")]
-    type_: PrimField<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    environment_variable: Option<Vec<CodebuildProjectEnvironmentElEnvironmentVariableEl>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    registry_credential: Option<Vec<CodebuildProjectEnvironmentElRegistryCredentialEl>>,
+    type_: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    environment_variable: std::option::Option<std::vec::Vec<CodebuildProjectEnvironmentElEnvironmentVariableEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    registry_credential: std::option::Option<std::vec::Vec<CodebuildProjectEnvironmentElRegistryCredentialEl>>,
     dynamic: CodebuildProjectEnvironmentElDynamic,
 }
 
 impl CodebuildProjectEnvironmentEl {
-    #[doc= "Set the field `certificate`.\n"]
-    pub fn set_certificate(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.certificate = Some(v.into());
+    #[doc = "Set the field `certificate`.\n"]
+    pub fn set_certificate(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.certificate = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `image_pull_credentials_type`.\n"]
-    pub fn set_image_pull_credentials_type(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.image_pull_credentials_type = Some(v.into());
+    #[doc = "Set the field `image_pull_credentials_type`.\n"]
+    pub fn set_image_pull_credentials_type(
+        mut self,
+        v: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.image_pull_credentials_type = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `privileged_mode`.\n"]
-    pub fn set_privileged_mode(mut self, v: impl Into<PrimField<bool>>) -> Self {
-        self.privileged_mode = Some(v.into());
+    #[doc = "Set the field `privileged_mode`.\n"]
+    pub fn set_privileged_mode(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
+        self.privileged_mode = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `environment_variable`.\n"]
+    #[doc = "Set the field `environment_variable`.\n"]
     pub fn set_environment_variable(
         mut self,
-        v: impl Into<BlockAssignable<CodebuildProjectEnvironmentElEnvironmentVariableEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<CodebuildProjectEnvironmentElEnvironmentVariableEl>>,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.environment_variable = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.environment_variable = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.environment_variable = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.environment_variable = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Set the field `registry_credential`.\n"]
+    #[doc = "Set the field `registry_credential`.\n"]
     pub fn set_registry_credential(
         mut self,
-        v: impl Into<BlockAssignable<CodebuildProjectEnvironmentElRegistryCredentialEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<CodebuildProjectEnvironmentElRegistryCredentialEl>>,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.registry_credential = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.registry_credential = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.registry_credential = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.registry_credential = std::option::Option::Some(d);
             },
         }
         self
     }
 }
 
-impl ToListMappable for CodebuildProjectEnvironmentEl {
-    type O = BlockAssignable<CodebuildProjectEnvironmentEl>;
+impl terrars::ToListMappable for CodebuildProjectEnvironmentEl {
+    type O = terrars::BlockAssignable<CodebuildProjectEnvironmentEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -1403,12 +1496,12 @@ impl ToListMappable for CodebuildProjectEnvironmentEl {
 }
 
 pub struct BuildCodebuildProjectEnvironmentEl {
-    #[doc= ""]
-    pub compute_type: PrimField<String>,
-    #[doc= ""]
-    pub image: PrimField<String>,
-    #[doc= ""]
-    pub type_: PrimField<String>,
+    #[doc = ""]
+    pub compute_type: terrars::PrimField<std::string::String>,
+    #[doc = ""]
+    pub image: terrars::PrimField<std::string::String>,
+    #[doc = ""]
+    pub type_: terrars::PrimField<std::string::String>,
 }
 
 impl BuildCodebuildProjectEnvironmentEl {
@@ -1422,18 +1515,18 @@ impl BuildCodebuildProjectEnvironmentEl {
             type_: self.type_,
             environment_variable: core::default::Default::default(),
             registry_credential: core::default::Default::default(),
-            dynamic: Default::default(),
+            dynamic: core::default::Default::default(),
         }
     }
 }
 
 pub struct CodebuildProjectEnvironmentElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for CodebuildProjectEnvironmentElRef {
-    fn new(shared: StackShared, base: String) -> CodebuildProjectEnvironmentElRef {
+impl terrars::Ref for CodebuildProjectEnvironmentElRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> CodebuildProjectEnvironmentElRef {
         CodebuildProjectEnvironmentElRef {
             shared: shared,
             base: base.to_string(),
@@ -1442,102 +1535,102 @@ impl Ref for CodebuildProjectEnvironmentElRef {
 }
 
 impl CodebuildProjectEnvironmentElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `certificate` after provisioning.\n"]
-    pub fn certificate(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.certificate", self.base))
+    #[doc = "Get a reference to the value of field `certificate` after provisioning.\n"]
+    pub fn certificate(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.certificate", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `compute_type` after provisioning.\n"]
-    pub fn compute_type(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.compute_type", self.base))
+    #[doc = "Get a reference to the value of field `compute_type` after provisioning.\n"]
+    pub fn compute_type(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.compute_type", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `image` after provisioning.\n"]
-    pub fn image(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.image", self.base))
+    #[doc = "Get a reference to the value of field `image` after provisioning.\n"]
+    pub fn image(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.image", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `image_pull_credentials_type` after provisioning.\n"]
-    pub fn image_pull_credentials_type(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.image_pull_credentials_type", self.base))
+    #[doc = "Get a reference to the value of field `image_pull_credentials_type` after provisioning.\n"]
+    pub fn image_pull_credentials_type(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.image_pull_credentials_type", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `privileged_mode` after provisioning.\n"]
-    pub fn privileged_mode(&self) -> PrimExpr<bool> {
-        PrimExpr::new(self.shared().clone(), format!("{}.privileged_mode", self.base))
+    #[doc = "Get a reference to the value of field `privileged_mode` after provisioning.\n"]
+    pub fn privileged_mode(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.privileged_mode", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `type_` after provisioning.\n"]
-    pub fn type_(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.type", self.base))
+    #[doc = "Get a reference to the value of field `type_` after provisioning.\n"]
+    pub fn type_(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.type", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `environment_variable` after provisioning.\n"]
-    pub fn environment_variable(&self) -> ListRef<CodebuildProjectEnvironmentElEnvironmentVariableElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.environment_variable", self.base))
+    #[doc = "Get a reference to the value of field `environment_variable` after provisioning.\n"]
+    pub fn environment_variable(&self) -> terrars::ListRef<CodebuildProjectEnvironmentElEnvironmentVariableElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.environment_variable", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `registry_credential` after provisioning.\n"]
-    pub fn registry_credential(&self) -> ListRef<CodebuildProjectEnvironmentElRegistryCredentialElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.registry_credential", self.base))
+    #[doc = "Get a reference to the value of field `registry_credential` after provisioning.\n"]
+    pub fn registry_credential(&self) -> terrars::ListRef<CodebuildProjectEnvironmentElRegistryCredentialElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.registry_credential", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct CodebuildProjectFileSystemLocationsEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    identifier: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    location: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    mount_options: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    mount_point: Option<PrimField<String>>,
-    #[serde(rename = "type", skip_serializing_if = "Option::is_none")]
-    type_: Option<PrimField<String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    identifier: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    location: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    mount_options: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    mount_point: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(rename = "type", skip_serializing_if = "std::option::Option::is_none")]
+    type_: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
 impl CodebuildProjectFileSystemLocationsEl {
-    #[doc= "Set the field `identifier`.\n"]
-    pub fn set_identifier(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.identifier = Some(v.into());
+    #[doc = "Set the field `identifier`.\n"]
+    pub fn set_identifier(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.identifier = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `location`.\n"]
-    pub fn set_location(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.location = Some(v.into());
+    #[doc = "Set the field `location`.\n"]
+    pub fn set_location(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.location = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `mount_options`.\n"]
-    pub fn set_mount_options(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.mount_options = Some(v.into());
+    #[doc = "Set the field `mount_options`.\n"]
+    pub fn set_mount_options(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.mount_options = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `mount_point`.\n"]
-    pub fn set_mount_point(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.mount_point = Some(v.into());
+    #[doc = "Set the field `mount_point`.\n"]
+    pub fn set_mount_point(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.mount_point = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `type_`.\n"]
-    pub fn set_type(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.type_ = Some(v.into());
+    #[doc = "Set the field `type_`.\n"]
+    pub fn set_type(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.type_ = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl ToListMappable for CodebuildProjectFileSystemLocationsEl {
-    type O = BlockAssignable<CodebuildProjectFileSystemLocationsEl>;
+impl terrars::ToListMappable for CodebuildProjectFileSystemLocationsEl {
+    type O = terrars::BlockAssignable<CodebuildProjectFileSystemLocationsEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -1560,12 +1653,12 @@ impl BuildCodebuildProjectFileSystemLocationsEl {
 }
 
 pub struct CodebuildProjectFileSystemLocationsElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for CodebuildProjectFileSystemLocationsElRef {
-    fn new(shared: StackShared, base: String) -> CodebuildProjectFileSystemLocationsElRef {
+impl terrars::Ref for CodebuildProjectFileSystemLocationsElRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> CodebuildProjectFileSystemLocationsElRef {
         CodebuildProjectFileSystemLocationsElRef {
             shared: shared,
             base: base.to_string(),
@@ -1574,71 +1667,71 @@ impl Ref for CodebuildProjectFileSystemLocationsElRef {
 }
 
 impl CodebuildProjectFileSystemLocationsElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `identifier` after provisioning.\n"]
-    pub fn identifier(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.identifier", self.base))
+    #[doc = "Get a reference to the value of field `identifier` after provisioning.\n"]
+    pub fn identifier(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.identifier", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `location` after provisioning.\n"]
-    pub fn location(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.location", self.base))
+    #[doc = "Get a reference to the value of field `location` after provisioning.\n"]
+    pub fn location(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.location", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `mount_options` after provisioning.\n"]
-    pub fn mount_options(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.mount_options", self.base))
+    #[doc = "Get a reference to the value of field `mount_options` after provisioning.\n"]
+    pub fn mount_options(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.mount_options", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `mount_point` after provisioning.\n"]
-    pub fn mount_point(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.mount_point", self.base))
+    #[doc = "Get a reference to the value of field `mount_point` after provisioning.\n"]
+    pub fn mount_point(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.mount_point", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `type_` after provisioning.\n"]
-    pub fn type_(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.type", self.base))
+    #[doc = "Get a reference to the value of field `type_` after provisioning.\n"]
+    pub fn type_(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.type", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct CodebuildProjectLogsConfigElCloudwatchLogsEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    group_name: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    status: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    stream_name: Option<PrimField<String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    group_name: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    status: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    stream_name: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
 impl CodebuildProjectLogsConfigElCloudwatchLogsEl {
-    #[doc= "Set the field `group_name`.\n"]
-    pub fn set_group_name(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.group_name = Some(v.into());
+    #[doc = "Set the field `group_name`.\n"]
+    pub fn set_group_name(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.group_name = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `status`.\n"]
-    pub fn set_status(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.status = Some(v.into());
+    #[doc = "Set the field `status`.\n"]
+    pub fn set_status(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.status = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `stream_name`.\n"]
-    pub fn set_stream_name(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.stream_name = Some(v.into());
+    #[doc = "Set the field `stream_name`.\n"]
+    pub fn set_stream_name(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.stream_name = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl ToListMappable for CodebuildProjectLogsConfigElCloudwatchLogsEl {
-    type O = BlockAssignable<CodebuildProjectLogsConfigElCloudwatchLogsEl>;
+impl terrars::ToListMappable for CodebuildProjectLogsConfigElCloudwatchLogsEl {
+    type O = terrars::BlockAssignable<CodebuildProjectLogsConfigElCloudwatchLogsEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -1659,12 +1752,15 @@ impl BuildCodebuildProjectLogsConfigElCloudwatchLogsEl {
 }
 
 pub struct CodebuildProjectLogsConfigElCloudwatchLogsElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for CodebuildProjectLogsConfigElCloudwatchLogsElRef {
-    fn new(shared: StackShared, base: String) -> CodebuildProjectLogsConfigElCloudwatchLogsElRef {
+impl terrars::Ref for CodebuildProjectLogsConfigElCloudwatchLogsElRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> CodebuildProjectLogsConfigElCloudwatchLogsElRef {
         CodebuildProjectLogsConfigElCloudwatchLogsElRef {
             shared: shared,
             base: base.to_string(),
@@ -1673,69 +1769,72 @@ impl Ref for CodebuildProjectLogsConfigElCloudwatchLogsElRef {
 }
 
 impl CodebuildProjectLogsConfigElCloudwatchLogsElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `group_name` after provisioning.\n"]
-    pub fn group_name(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.group_name", self.base))
+    #[doc = "Get a reference to the value of field `group_name` after provisioning.\n"]
+    pub fn group_name(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.group_name", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `status` after provisioning.\n"]
-    pub fn status(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.status", self.base))
+    #[doc = "Get a reference to the value of field `status` after provisioning.\n"]
+    pub fn status(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.status", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `stream_name` after provisioning.\n"]
-    pub fn stream_name(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.stream_name", self.base))
+    #[doc = "Get a reference to the value of field `stream_name` after provisioning.\n"]
+    pub fn stream_name(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.stream_name", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct CodebuildProjectLogsConfigElS3LogsEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    bucket_owner_access: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    encryption_disabled: Option<PrimField<bool>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    location: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    status: Option<PrimField<String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    bucket_owner_access: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    encryption_disabled: std::option::Option<terrars::PrimField<bool>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    location: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    status: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
 impl CodebuildProjectLogsConfigElS3LogsEl {
-    #[doc= "Set the field `bucket_owner_access`.\n"]
-    pub fn set_bucket_owner_access(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.bucket_owner_access = Some(v.into());
+    #[doc = "Set the field `bucket_owner_access`.\n"]
+    pub fn set_bucket_owner_access(
+        mut self,
+        v: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.bucket_owner_access = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `encryption_disabled`.\n"]
-    pub fn set_encryption_disabled(mut self, v: impl Into<PrimField<bool>>) -> Self {
-        self.encryption_disabled = Some(v.into());
+    #[doc = "Set the field `encryption_disabled`.\n"]
+    pub fn set_encryption_disabled(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
+        self.encryption_disabled = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `location`.\n"]
-    pub fn set_location(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.location = Some(v.into());
+    #[doc = "Set the field `location`.\n"]
+    pub fn set_location(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.location = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `status`.\n"]
-    pub fn set_status(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.status = Some(v.into());
+    #[doc = "Set the field `status`.\n"]
+    pub fn set_status(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.status = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl ToListMappable for CodebuildProjectLogsConfigElS3LogsEl {
-    type O = BlockAssignable<CodebuildProjectLogsConfigElS3LogsEl>;
+impl terrars::ToListMappable for CodebuildProjectLogsConfigElS3LogsEl {
+    type O = terrars::BlockAssignable<CodebuildProjectLogsConfigElS3LogsEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -1757,12 +1856,12 @@ impl BuildCodebuildProjectLogsConfigElS3LogsEl {
 }
 
 pub struct CodebuildProjectLogsConfigElS3LogsElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for CodebuildProjectLogsConfigElS3LogsElRef {
-    fn new(shared: StackShared, base: String) -> CodebuildProjectLogsConfigElS3LogsElRef {
+impl terrars::Ref for CodebuildProjectLogsConfigElS3LogsElRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> CodebuildProjectLogsConfigElS3LogsElRef {
         CodebuildProjectLogsConfigElS3LogsElRef {
             shared: shared,
             base: base.to_string(),
@@ -1771,82 +1870,85 @@ impl Ref for CodebuildProjectLogsConfigElS3LogsElRef {
 }
 
 impl CodebuildProjectLogsConfigElS3LogsElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `bucket_owner_access` after provisioning.\n"]
-    pub fn bucket_owner_access(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.bucket_owner_access", self.base))
+    #[doc = "Get a reference to the value of field `bucket_owner_access` after provisioning.\n"]
+    pub fn bucket_owner_access(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.bucket_owner_access", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `encryption_disabled` after provisioning.\n"]
-    pub fn encryption_disabled(&self) -> PrimExpr<bool> {
-        PrimExpr::new(self.shared().clone(), format!("{}.encryption_disabled", self.base))
+    #[doc = "Get a reference to the value of field `encryption_disabled` after provisioning.\n"]
+    pub fn encryption_disabled(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.encryption_disabled", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `location` after provisioning.\n"]
-    pub fn location(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.location", self.base))
+    #[doc = "Get a reference to the value of field `location` after provisioning.\n"]
+    pub fn location(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.location", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `status` after provisioning.\n"]
-    pub fn status(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.status", self.base))
+    #[doc = "Get a reference to the value of field `status` after provisioning.\n"]
+    pub fn status(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.status", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
 struct CodebuildProjectLogsConfigElDynamic {
-    cloudwatch_logs: Option<DynamicBlock<CodebuildProjectLogsConfigElCloudwatchLogsEl>>,
-    s3_logs: Option<DynamicBlock<CodebuildProjectLogsConfigElS3LogsEl>>,
+    cloudwatch_logs: std::option::Option<terrars::DynamicBlock<CodebuildProjectLogsConfigElCloudwatchLogsEl>>,
+    s3_logs: std::option::Option<terrars::DynamicBlock<CodebuildProjectLogsConfigElS3LogsEl>>,
 }
 
 #[derive(Serialize)]
 pub struct CodebuildProjectLogsConfigEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    cloudwatch_logs: Option<Vec<CodebuildProjectLogsConfigElCloudwatchLogsEl>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    s3_logs: Option<Vec<CodebuildProjectLogsConfigElS3LogsEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    cloudwatch_logs: std::option::Option<std::vec::Vec<CodebuildProjectLogsConfigElCloudwatchLogsEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    s3_logs: std::option::Option<std::vec::Vec<CodebuildProjectLogsConfigElS3LogsEl>>,
     dynamic: CodebuildProjectLogsConfigElDynamic,
 }
 
 impl CodebuildProjectLogsConfigEl {
-    #[doc= "Set the field `cloudwatch_logs`.\n"]
+    #[doc = "Set the field `cloudwatch_logs`.\n"]
     pub fn set_cloudwatch_logs(
         mut self,
-        v: impl Into<BlockAssignable<CodebuildProjectLogsConfigElCloudwatchLogsEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<CodebuildProjectLogsConfigElCloudwatchLogsEl>>,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.cloudwatch_logs = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.cloudwatch_logs = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.cloudwatch_logs = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.cloudwatch_logs = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Set the field `s3_logs`.\n"]
-    pub fn set_s3_logs(mut self, v: impl Into<BlockAssignable<CodebuildProjectLogsConfigElS3LogsEl>>) -> Self {
+    #[doc = "Set the field `s3_logs`.\n"]
+    pub fn set_s3_logs(
+        mut self,
+        v: impl std::convert::Into<terrars::BlockAssignable<CodebuildProjectLogsConfigElS3LogsEl>>,
+    ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.s3_logs = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.s3_logs = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.s3_logs = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.s3_logs = std::option::Option::Some(d);
             },
         }
         self
     }
 }
 
-impl ToListMappable for CodebuildProjectLogsConfigEl {
-    type O = BlockAssignable<CodebuildProjectLogsConfigEl>;
+impl terrars::ToListMappable for CodebuildProjectLogsConfigEl {
+    type O = terrars::BlockAssignable<CodebuildProjectLogsConfigEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -1861,18 +1963,18 @@ impl BuildCodebuildProjectLogsConfigEl {
         CodebuildProjectLogsConfigEl {
             cloudwatch_logs: core::default::Default::default(),
             s3_logs: core::default::Default::default(),
-            dynamic: Default::default(),
+            dynamic: core::default::Default::default(),
         }
     }
 }
 
 pub struct CodebuildProjectLogsConfigElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for CodebuildProjectLogsConfigElRef {
-    fn new(shared: StackShared, base: String) -> CodebuildProjectLogsConfigElRef {
+impl terrars::Ref for CodebuildProjectLogsConfigElRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> CodebuildProjectLogsConfigElRef {
         CodebuildProjectLogsConfigElRef {
             shared: shared,
             base: base.to_string(),
@@ -1881,99 +1983,102 @@ impl Ref for CodebuildProjectLogsConfigElRef {
 }
 
 impl CodebuildProjectLogsConfigElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `cloudwatch_logs` after provisioning.\n"]
-    pub fn cloudwatch_logs(&self) -> ListRef<CodebuildProjectLogsConfigElCloudwatchLogsElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.cloudwatch_logs", self.base))
+    #[doc = "Get a reference to the value of field `cloudwatch_logs` after provisioning.\n"]
+    pub fn cloudwatch_logs(&self) -> terrars::ListRef<CodebuildProjectLogsConfigElCloudwatchLogsElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.cloudwatch_logs", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `s3_logs` after provisioning.\n"]
-    pub fn s3_logs(&self) -> ListRef<CodebuildProjectLogsConfigElS3LogsElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.s3_logs", self.base))
+    #[doc = "Get a reference to the value of field `s3_logs` after provisioning.\n"]
+    pub fn s3_logs(&self) -> terrars::ListRef<CodebuildProjectLogsConfigElS3LogsElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.s3_logs", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct CodebuildProjectSecondaryArtifactsEl {
-    artifact_identifier: PrimField<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    bucket_owner_access: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    encryption_disabled: Option<PrimField<bool>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    location: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    name: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    namespace_type: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    override_artifact_name: Option<PrimField<bool>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    packaging: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    path: Option<PrimField<String>>,
+    artifact_identifier: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    bucket_owner_access: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    encryption_disabled: std::option::Option<terrars::PrimField<bool>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    location: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    name: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    namespace_type: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    override_artifact_name: std::option::Option<terrars::PrimField<bool>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    packaging: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    path: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(rename = "type")]
-    type_: PrimField<String>,
+    type_: terrars::PrimField<std::string::String>,
 }
 
 impl CodebuildProjectSecondaryArtifactsEl {
-    #[doc= "Set the field `bucket_owner_access`.\n"]
-    pub fn set_bucket_owner_access(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.bucket_owner_access = Some(v.into());
+    #[doc = "Set the field `bucket_owner_access`.\n"]
+    pub fn set_bucket_owner_access(
+        mut self,
+        v: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.bucket_owner_access = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `encryption_disabled`.\n"]
-    pub fn set_encryption_disabled(mut self, v: impl Into<PrimField<bool>>) -> Self {
-        self.encryption_disabled = Some(v.into());
+    #[doc = "Set the field `encryption_disabled`.\n"]
+    pub fn set_encryption_disabled(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
+        self.encryption_disabled = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `location`.\n"]
-    pub fn set_location(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.location = Some(v.into());
+    #[doc = "Set the field `location`.\n"]
+    pub fn set_location(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.location = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `name`.\n"]
-    pub fn set_name(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.name = Some(v.into());
+    #[doc = "Set the field `name`.\n"]
+    pub fn set_name(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.name = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `namespace_type`.\n"]
-    pub fn set_namespace_type(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.namespace_type = Some(v.into());
+    #[doc = "Set the field `namespace_type`.\n"]
+    pub fn set_namespace_type(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.namespace_type = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `override_artifact_name`.\n"]
-    pub fn set_override_artifact_name(mut self, v: impl Into<PrimField<bool>>) -> Self {
-        self.override_artifact_name = Some(v.into());
+    #[doc = "Set the field `override_artifact_name`.\n"]
+    pub fn set_override_artifact_name(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
+        self.override_artifact_name = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `packaging`.\n"]
-    pub fn set_packaging(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.packaging = Some(v.into());
+    #[doc = "Set the field `packaging`.\n"]
+    pub fn set_packaging(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.packaging = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `path`.\n"]
-    pub fn set_path(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.path = Some(v.into());
+    #[doc = "Set the field `path`.\n"]
+    pub fn set_path(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.path = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl ToListMappable for CodebuildProjectSecondaryArtifactsEl {
-    type O = BlockAssignable<CodebuildProjectSecondaryArtifactsEl>;
+impl terrars::ToListMappable for CodebuildProjectSecondaryArtifactsEl {
+    type O = terrars::BlockAssignable<CodebuildProjectSecondaryArtifactsEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -1982,10 +2087,10 @@ impl ToListMappable for CodebuildProjectSecondaryArtifactsEl {
 }
 
 pub struct BuildCodebuildProjectSecondaryArtifactsEl {
-    #[doc= ""]
-    pub artifact_identifier: PrimField<String>,
-    #[doc= ""]
-    pub type_: PrimField<String>,
+    #[doc = ""]
+    pub artifact_identifier: terrars::PrimField<std::string::String>,
+    #[doc = ""]
+    pub type_: terrars::PrimField<std::string::String>,
 }
 
 impl BuildCodebuildProjectSecondaryArtifactsEl {
@@ -2006,12 +2111,12 @@ impl BuildCodebuildProjectSecondaryArtifactsEl {
 }
 
 pub struct CodebuildProjectSecondaryArtifactsElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for CodebuildProjectSecondaryArtifactsElRef {
-    fn new(shared: StackShared, base: String) -> CodebuildProjectSecondaryArtifactsElRef {
+impl terrars::Ref for CodebuildProjectSecondaryArtifactsElRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> CodebuildProjectSecondaryArtifactsElRef {
         CodebuildProjectSecondaryArtifactsElRef {
             shared: shared,
             base: base.to_string(),
@@ -2020,74 +2125,74 @@ impl Ref for CodebuildProjectSecondaryArtifactsElRef {
 }
 
 impl CodebuildProjectSecondaryArtifactsElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `artifact_identifier` after provisioning.\n"]
-    pub fn artifact_identifier(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.artifact_identifier", self.base))
+    #[doc = "Get a reference to the value of field `artifact_identifier` after provisioning.\n"]
+    pub fn artifact_identifier(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.artifact_identifier", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `bucket_owner_access` after provisioning.\n"]
-    pub fn bucket_owner_access(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.bucket_owner_access", self.base))
+    #[doc = "Get a reference to the value of field `bucket_owner_access` after provisioning.\n"]
+    pub fn bucket_owner_access(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.bucket_owner_access", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `encryption_disabled` after provisioning.\n"]
-    pub fn encryption_disabled(&self) -> PrimExpr<bool> {
-        PrimExpr::new(self.shared().clone(), format!("{}.encryption_disabled", self.base))
+    #[doc = "Get a reference to the value of field `encryption_disabled` after provisioning.\n"]
+    pub fn encryption_disabled(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.encryption_disabled", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `location` after provisioning.\n"]
-    pub fn location(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.location", self.base))
+    #[doc = "Get a reference to the value of field `location` after provisioning.\n"]
+    pub fn location(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.location", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `name` after provisioning.\n"]
-    pub fn name(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.name", self.base))
+    #[doc = "Get a reference to the value of field `name` after provisioning.\n"]
+    pub fn name(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `namespace_type` after provisioning.\n"]
-    pub fn namespace_type(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.namespace_type", self.base))
+    #[doc = "Get a reference to the value of field `namespace_type` after provisioning.\n"]
+    pub fn namespace_type(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.namespace_type", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `override_artifact_name` after provisioning.\n"]
-    pub fn override_artifact_name(&self) -> PrimExpr<bool> {
-        PrimExpr::new(self.shared().clone(), format!("{}.override_artifact_name", self.base))
+    #[doc = "Get a reference to the value of field `override_artifact_name` after provisioning.\n"]
+    pub fn override_artifact_name(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.override_artifact_name", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `packaging` after provisioning.\n"]
-    pub fn packaging(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.packaging", self.base))
+    #[doc = "Get a reference to the value of field `packaging` after provisioning.\n"]
+    pub fn packaging(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.packaging", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `path` after provisioning.\n"]
-    pub fn path(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.path", self.base))
+    #[doc = "Get a reference to the value of field `path` after provisioning.\n"]
+    pub fn path(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.path", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `type_` after provisioning.\n"]
-    pub fn type_(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.type", self.base))
+    #[doc = "Get a reference to the value of field `type_` after provisioning.\n"]
+    pub fn type_(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.type", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct CodebuildProjectSecondarySourceVersionEl {
-    source_identifier: PrimField<String>,
-    source_version: PrimField<String>,
+    source_identifier: terrars::PrimField<std::string::String>,
+    source_version: terrars::PrimField<std::string::String>,
 }
 
 impl CodebuildProjectSecondarySourceVersionEl { }
 
-impl ToListMappable for CodebuildProjectSecondarySourceVersionEl {
-    type O = BlockAssignable<CodebuildProjectSecondarySourceVersionEl>;
+impl terrars::ToListMappable for CodebuildProjectSecondarySourceVersionEl {
+    type O = terrars::BlockAssignable<CodebuildProjectSecondarySourceVersionEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -2096,10 +2201,10 @@ impl ToListMappable for CodebuildProjectSecondarySourceVersionEl {
 }
 
 pub struct BuildCodebuildProjectSecondarySourceVersionEl {
-    #[doc= ""]
-    pub source_identifier: PrimField<String>,
-    #[doc= ""]
-    pub source_version: PrimField<String>,
+    #[doc = ""]
+    pub source_identifier: terrars::PrimField<std::string::String>,
+    #[doc = ""]
+    pub source_version: terrars::PrimField<std::string::String>,
 }
 
 impl BuildCodebuildProjectSecondarySourceVersionEl {
@@ -2112,12 +2217,12 @@ impl BuildCodebuildProjectSecondarySourceVersionEl {
 }
 
 pub struct CodebuildProjectSecondarySourceVersionElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for CodebuildProjectSecondarySourceVersionElRef {
-    fn new(shared: StackShared, base: String) -> CodebuildProjectSecondarySourceVersionElRef {
+impl terrars::Ref for CodebuildProjectSecondarySourceVersionElRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> CodebuildProjectSecondarySourceVersionElRef {
         CodebuildProjectSecondarySourceVersionElRef {
             shared: shared,
             base: base.to_string(),
@@ -2126,42 +2231,42 @@ impl Ref for CodebuildProjectSecondarySourceVersionElRef {
 }
 
 impl CodebuildProjectSecondarySourceVersionElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `source_identifier` after provisioning.\n"]
-    pub fn source_identifier(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.source_identifier", self.base))
+    #[doc = "Get a reference to the value of field `source_identifier` after provisioning.\n"]
+    pub fn source_identifier(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.source_identifier", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `source_version` after provisioning.\n"]
-    pub fn source_version(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.source_version", self.base))
+    #[doc = "Get a reference to the value of field `source_version` after provisioning.\n"]
+    pub fn source_version(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.source_version", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct CodebuildProjectSecondarySourcesElAuthEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    resource: Option<PrimField<String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    resource: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(rename = "type")]
-    type_: PrimField<String>,
+    type_: terrars::PrimField<std::string::String>,
 }
 
 impl CodebuildProjectSecondarySourcesElAuthEl {
-    #[doc= "Set the field `resource`.\n"]
-    pub fn set_resource(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.resource = Some(v.into());
+    #[doc = "Set the field `resource`.\n"]
+    pub fn set_resource(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.resource = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl ToListMappable for CodebuildProjectSecondarySourcesElAuthEl {
-    type O = BlockAssignable<CodebuildProjectSecondarySourcesElAuthEl>;
+impl terrars::ToListMappable for CodebuildProjectSecondarySourcesElAuthEl {
+    type O = terrars::BlockAssignable<CodebuildProjectSecondarySourcesElAuthEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -2170,8 +2275,8 @@ impl ToListMappable for CodebuildProjectSecondarySourcesElAuthEl {
 }
 
 pub struct BuildCodebuildProjectSecondarySourcesElAuthEl {
-    #[doc= ""]
-    pub type_: PrimField<String>,
+    #[doc = ""]
+    pub type_: terrars::PrimField<std::string::String>,
 }
 
 impl BuildCodebuildProjectSecondarySourcesElAuthEl {
@@ -2184,12 +2289,12 @@ impl BuildCodebuildProjectSecondarySourcesElAuthEl {
 }
 
 pub struct CodebuildProjectSecondarySourcesElAuthElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for CodebuildProjectSecondarySourcesElAuthElRef {
-    fn new(shared: StackShared, base: String) -> CodebuildProjectSecondarySourcesElAuthElRef {
+impl terrars::Ref for CodebuildProjectSecondarySourcesElAuthElRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> CodebuildProjectSecondarySourcesElAuthElRef {
         CodebuildProjectSecondarySourcesElAuthElRef {
             shared: shared,
             base: base.to_string(),
@@ -2198,48 +2303,48 @@ impl Ref for CodebuildProjectSecondarySourcesElAuthElRef {
 }
 
 impl CodebuildProjectSecondarySourcesElAuthElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `resource` after provisioning.\n"]
-    pub fn resource(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.resource", self.base))
+    #[doc = "Get a reference to the value of field `resource` after provisioning.\n"]
+    pub fn resource(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.resource", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `type_` after provisioning.\n"]
-    pub fn type_(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.type", self.base))
+    #[doc = "Get a reference to the value of field `type_` after provisioning.\n"]
+    pub fn type_(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.type", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct CodebuildProjectSecondarySourcesElBuildStatusConfigEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    context: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    target_url: Option<PrimField<String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    context: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    target_url: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
 impl CodebuildProjectSecondarySourcesElBuildStatusConfigEl {
-    #[doc= "Set the field `context`.\n"]
-    pub fn set_context(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.context = Some(v.into());
+    #[doc = "Set the field `context`.\n"]
+    pub fn set_context(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.context = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `target_url`.\n"]
-    pub fn set_target_url(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.target_url = Some(v.into());
+    #[doc = "Set the field `target_url`.\n"]
+    pub fn set_target_url(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.target_url = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl ToListMappable for CodebuildProjectSecondarySourcesElBuildStatusConfigEl {
-    type O = BlockAssignable<CodebuildProjectSecondarySourcesElBuildStatusConfigEl>;
+impl terrars::ToListMappable for CodebuildProjectSecondarySourcesElBuildStatusConfigEl {
+    type O = terrars::BlockAssignable<CodebuildProjectSecondarySourcesElBuildStatusConfigEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -2259,12 +2364,15 @@ impl BuildCodebuildProjectSecondarySourcesElBuildStatusConfigEl {
 }
 
 pub struct CodebuildProjectSecondarySourcesElBuildStatusConfigElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for CodebuildProjectSecondarySourcesElBuildStatusConfigElRef {
-    fn new(shared: StackShared, base: String) -> CodebuildProjectSecondarySourcesElBuildStatusConfigElRef {
+impl terrars::Ref for CodebuildProjectSecondarySourcesElBuildStatusConfigElRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> CodebuildProjectSecondarySourcesElBuildStatusConfigElRef {
         CodebuildProjectSecondarySourcesElBuildStatusConfigElRef {
             shared: shared,
             base: base.to_string(),
@@ -2273,33 +2381,33 @@ impl Ref for CodebuildProjectSecondarySourcesElBuildStatusConfigElRef {
 }
 
 impl CodebuildProjectSecondarySourcesElBuildStatusConfigElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `context` after provisioning.\n"]
-    pub fn context(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.context", self.base))
+    #[doc = "Get a reference to the value of field `context` after provisioning.\n"]
+    pub fn context(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.context", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `target_url` after provisioning.\n"]
-    pub fn target_url(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.target_url", self.base))
+    #[doc = "Get a reference to the value of field `target_url` after provisioning.\n"]
+    pub fn target_url(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.target_url", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct CodebuildProjectSecondarySourcesElGitSubmodulesConfigEl {
-    fetch_submodules: PrimField<bool>,
+    fetch_submodules: terrars::PrimField<bool>,
 }
 
 impl CodebuildProjectSecondarySourcesElGitSubmodulesConfigEl { }
 
-impl ToListMappable for CodebuildProjectSecondarySourcesElGitSubmodulesConfigEl {
-    type O = BlockAssignable<CodebuildProjectSecondarySourcesElGitSubmodulesConfigEl>;
+impl terrars::ToListMappable for CodebuildProjectSecondarySourcesElGitSubmodulesConfigEl {
+    type O = terrars::BlockAssignable<CodebuildProjectSecondarySourcesElGitSubmodulesConfigEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -2308,8 +2416,8 @@ impl ToListMappable for CodebuildProjectSecondarySourcesElGitSubmodulesConfigEl 
 }
 
 pub struct BuildCodebuildProjectSecondarySourcesElGitSubmodulesConfigEl {
-    #[doc= ""]
-    pub fetch_submodules: PrimField<bool>,
+    #[doc = ""]
+    pub fetch_submodules: terrars::PrimField<bool>,
 }
 
 impl BuildCodebuildProjectSecondarySourcesElGitSubmodulesConfigEl {
@@ -2319,12 +2427,15 @@ impl BuildCodebuildProjectSecondarySourcesElGitSubmodulesConfigEl {
 }
 
 pub struct CodebuildProjectSecondarySourcesElGitSubmodulesConfigElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for CodebuildProjectSecondarySourcesElGitSubmodulesConfigElRef {
-    fn new(shared: StackShared, base: String) -> CodebuildProjectSecondarySourcesElGitSubmodulesConfigElRef {
+impl terrars::Ref for CodebuildProjectSecondarySourcesElGitSubmodulesConfigElRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> CodebuildProjectSecondarySourcesElGitSubmodulesConfigElRef {
         CodebuildProjectSecondarySourcesElGitSubmodulesConfigElRef {
             shared: shared,
             base: base.to_string(),
@@ -2333,129 +2444,141 @@ impl Ref for CodebuildProjectSecondarySourcesElGitSubmodulesConfigElRef {
 }
 
 impl CodebuildProjectSecondarySourcesElGitSubmodulesConfigElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `fetch_submodules` after provisioning.\n"]
-    pub fn fetch_submodules(&self) -> PrimExpr<bool> {
-        PrimExpr::new(self.shared().clone(), format!("{}.fetch_submodules", self.base))
+    #[doc = "Get a reference to the value of field `fetch_submodules` after provisioning.\n"]
+    pub fn fetch_submodules(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.fetch_submodules", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
 struct CodebuildProjectSecondarySourcesElDynamic {
-    auth: Option<DynamicBlock<CodebuildProjectSecondarySourcesElAuthEl>>,
-    build_status_config: Option<DynamicBlock<CodebuildProjectSecondarySourcesElBuildStatusConfigEl>>,
-    git_submodules_config: Option<DynamicBlock<CodebuildProjectSecondarySourcesElGitSubmodulesConfigEl>>,
+    auth: std::option::Option<terrars::DynamicBlock<CodebuildProjectSecondarySourcesElAuthEl>>,
+    build_status_config: std
+    ::option
+    ::Option<terrars::DynamicBlock<CodebuildProjectSecondarySourcesElBuildStatusConfigEl>>,
+    git_submodules_config: std
+    ::option
+    ::Option<terrars::DynamicBlock<CodebuildProjectSecondarySourcesElGitSubmodulesConfigEl>>,
 }
 
 #[derive(Serialize)]
 pub struct CodebuildProjectSecondarySourcesEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    buildspec: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    git_clone_depth: Option<PrimField<f64>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    insecure_ssl: Option<PrimField<bool>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    location: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    report_build_status: Option<PrimField<bool>>,
-    source_identifier: PrimField<String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    buildspec: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    git_clone_depth: std::option::Option<terrars::PrimField<f64>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    insecure_ssl: std::option::Option<terrars::PrimField<bool>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    location: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    report_build_status: std::option::Option<terrars::PrimField<bool>>,
+    source_identifier: terrars::PrimField<std::string::String>,
     #[serde(rename = "type")]
-    type_: PrimField<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    auth: Option<Vec<CodebuildProjectSecondarySourcesElAuthEl>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    build_status_config: Option<Vec<CodebuildProjectSecondarySourcesElBuildStatusConfigEl>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    git_submodules_config: Option<Vec<CodebuildProjectSecondarySourcesElGitSubmodulesConfigEl>>,
+    type_: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    auth: std::option::Option<std::vec::Vec<CodebuildProjectSecondarySourcesElAuthEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    build_status_config: std::option::Option<std::vec::Vec<CodebuildProjectSecondarySourcesElBuildStatusConfigEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    git_submodules_config: std::option::Option<std::vec::Vec<CodebuildProjectSecondarySourcesElGitSubmodulesConfigEl>>,
     dynamic: CodebuildProjectSecondarySourcesElDynamic,
 }
 
 impl CodebuildProjectSecondarySourcesEl {
-    #[doc= "Set the field `buildspec`.\n"]
-    pub fn set_buildspec(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.buildspec = Some(v.into());
+    #[doc = "Set the field `buildspec`.\n"]
+    pub fn set_buildspec(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.buildspec = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `git_clone_depth`.\n"]
-    pub fn set_git_clone_depth(mut self, v: impl Into<PrimField<f64>>) -> Self {
-        self.git_clone_depth = Some(v.into());
+    #[doc = "Set the field `git_clone_depth`.\n"]
+    pub fn set_git_clone_depth(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.git_clone_depth = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `insecure_ssl`.\n"]
-    pub fn set_insecure_ssl(mut self, v: impl Into<PrimField<bool>>) -> Self {
-        self.insecure_ssl = Some(v.into());
+    #[doc = "Set the field `insecure_ssl`.\n"]
+    pub fn set_insecure_ssl(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
+        self.insecure_ssl = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `location`.\n"]
-    pub fn set_location(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.location = Some(v.into());
+    #[doc = "Set the field `location`.\n"]
+    pub fn set_location(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.location = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `report_build_status`.\n"]
-    pub fn set_report_build_status(mut self, v: impl Into<PrimField<bool>>) -> Self {
-        self.report_build_status = Some(v.into());
+    #[doc = "Set the field `report_build_status`.\n"]
+    pub fn set_report_build_status(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
+        self.report_build_status = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `auth`.\n"]
-    pub fn set_auth(mut self, v: impl Into<BlockAssignable<CodebuildProjectSecondarySourcesElAuthEl>>) -> Self {
+    #[doc = "Set the field `auth`.\n"]
+    pub fn set_auth(
+        mut self,
+        v: impl std::convert::Into<terrars::BlockAssignable<CodebuildProjectSecondarySourcesElAuthEl>>,
+    ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.auth = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.auth = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.auth = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.auth = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Set the field `build_status_config`.\n"]
+    #[doc = "Set the field `build_status_config`.\n"]
     pub fn set_build_status_config(
         mut self,
-        v: impl Into<BlockAssignable<CodebuildProjectSecondarySourcesElBuildStatusConfigEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<CodebuildProjectSecondarySourcesElBuildStatusConfigEl>>,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.build_status_config = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.build_status_config = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.build_status_config = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.build_status_config = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Set the field `git_submodules_config`.\n"]
+    #[doc = "Set the field `git_submodules_config`.\n"]
     pub fn set_git_submodules_config(
         mut self,
-        v: impl Into<BlockAssignable<CodebuildProjectSecondarySourcesElGitSubmodulesConfigEl>>,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<terrars::BlockAssignable<CodebuildProjectSecondarySourcesElGitSubmodulesConfigEl>>,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.git_submodules_config = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.git_submodules_config = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.git_submodules_config = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.git_submodules_config = std::option::Option::Some(d);
             },
         }
         self
     }
 }
 
-impl ToListMappable for CodebuildProjectSecondarySourcesEl {
-    type O = BlockAssignable<CodebuildProjectSecondarySourcesEl>;
+impl terrars::ToListMappable for CodebuildProjectSecondarySourcesEl {
+    type O = terrars::BlockAssignable<CodebuildProjectSecondarySourcesEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -2464,10 +2587,10 @@ impl ToListMappable for CodebuildProjectSecondarySourcesEl {
 }
 
 pub struct BuildCodebuildProjectSecondarySourcesEl {
-    #[doc= ""]
-    pub source_identifier: PrimField<String>,
-    #[doc= ""]
-    pub type_: PrimField<String>,
+    #[doc = ""]
+    pub source_identifier: terrars::PrimField<std::string::String>,
+    #[doc = ""]
+    pub type_: terrars::PrimField<std::string::String>,
 }
 
 impl BuildCodebuildProjectSecondarySourcesEl {
@@ -2483,18 +2606,18 @@ impl BuildCodebuildProjectSecondarySourcesEl {
             auth: core::default::Default::default(),
             build_status_config: core::default::Default::default(),
             git_submodules_config: core::default::Default::default(),
-            dynamic: Default::default(),
+            dynamic: core::default::Default::default(),
         }
     }
 }
 
 pub struct CodebuildProjectSecondarySourcesElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for CodebuildProjectSecondarySourcesElRef {
-    fn new(shared: StackShared, base: String) -> CodebuildProjectSecondarySourcesElRef {
+impl terrars::Ref for CodebuildProjectSecondarySourcesElRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> CodebuildProjectSecondarySourcesElRef {
         CodebuildProjectSecondarySourcesElRef {
             shared: shared,
             base: base.to_string(),
@@ -2503,82 +2626,82 @@ impl Ref for CodebuildProjectSecondarySourcesElRef {
 }
 
 impl CodebuildProjectSecondarySourcesElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `buildspec` after provisioning.\n"]
-    pub fn buildspec(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.buildspec", self.base))
+    #[doc = "Get a reference to the value of field `buildspec` after provisioning.\n"]
+    pub fn buildspec(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.buildspec", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `git_clone_depth` after provisioning.\n"]
-    pub fn git_clone_depth(&self) -> PrimExpr<f64> {
-        PrimExpr::new(self.shared().clone(), format!("{}.git_clone_depth", self.base))
+    #[doc = "Get a reference to the value of field `git_clone_depth` after provisioning.\n"]
+    pub fn git_clone_depth(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.git_clone_depth", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `insecure_ssl` after provisioning.\n"]
-    pub fn insecure_ssl(&self) -> PrimExpr<bool> {
-        PrimExpr::new(self.shared().clone(), format!("{}.insecure_ssl", self.base))
+    #[doc = "Get a reference to the value of field `insecure_ssl` after provisioning.\n"]
+    pub fn insecure_ssl(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.insecure_ssl", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `location` after provisioning.\n"]
-    pub fn location(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.location", self.base))
+    #[doc = "Get a reference to the value of field `location` after provisioning.\n"]
+    pub fn location(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.location", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `report_build_status` after provisioning.\n"]
-    pub fn report_build_status(&self) -> PrimExpr<bool> {
-        PrimExpr::new(self.shared().clone(), format!("{}.report_build_status", self.base))
+    #[doc = "Get a reference to the value of field `report_build_status` after provisioning.\n"]
+    pub fn report_build_status(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.report_build_status", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `source_identifier` after provisioning.\n"]
-    pub fn source_identifier(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.source_identifier", self.base))
+    #[doc = "Get a reference to the value of field `source_identifier` after provisioning.\n"]
+    pub fn source_identifier(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.source_identifier", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `type_` after provisioning.\n"]
-    pub fn type_(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.type", self.base))
+    #[doc = "Get a reference to the value of field `type_` after provisioning.\n"]
+    pub fn type_(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.type", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `auth` after provisioning.\n"]
-    pub fn auth(&self) -> ListRef<CodebuildProjectSecondarySourcesElAuthElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.auth", self.base))
+    #[doc = "Get a reference to the value of field `auth` after provisioning.\n"]
+    pub fn auth(&self) -> terrars::ListRef<CodebuildProjectSecondarySourcesElAuthElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.auth", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `build_status_config` after provisioning.\n"]
-    pub fn build_status_config(&self) -> ListRef<CodebuildProjectSecondarySourcesElBuildStatusConfigElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.build_status_config", self.base))
+    #[doc = "Get a reference to the value of field `build_status_config` after provisioning.\n"]
+    pub fn build_status_config(&self) -> terrars::ListRef<CodebuildProjectSecondarySourcesElBuildStatusConfigElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.build_status_config", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `git_submodules_config` after provisioning.\n"]
-    pub fn git_submodules_config(&self) -> ListRef<CodebuildProjectSecondarySourcesElGitSubmodulesConfigElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.git_submodules_config", self.base))
+    #[doc = "Get a reference to the value of field `git_submodules_config` after provisioning.\n"]
+    pub fn git_submodules_config(&self) -> terrars::ListRef<CodebuildProjectSecondarySourcesElGitSubmodulesConfigElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.git_submodules_config", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct CodebuildProjectSourceElAuthEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    resource: Option<PrimField<String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    resource: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(rename = "type")]
-    type_: PrimField<String>,
+    type_: terrars::PrimField<std::string::String>,
 }
 
 impl CodebuildProjectSourceElAuthEl {
-    #[doc= "Set the field `resource`.\n"]
-    pub fn set_resource(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.resource = Some(v.into());
+    #[doc = "Set the field `resource`.\n"]
+    pub fn set_resource(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.resource = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl ToListMappable for CodebuildProjectSourceElAuthEl {
-    type O = BlockAssignable<CodebuildProjectSourceElAuthEl>;
+impl terrars::ToListMappable for CodebuildProjectSourceElAuthEl {
+    type O = terrars::BlockAssignable<CodebuildProjectSourceElAuthEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -2587,8 +2710,8 @@ impl ToListMappable for CodebuildProjectSourceElAuthEl {
 }
 
 pub struct BuildCodebuildProjectSourceElAuthEl {
-    #[doc= ""]
-    pub type_: PrimField<String>,
+    #[doc = ""]
+    pub type_: terrars::PrimField<std::string::String>,
 }
 
 impl BuildCodebuildProjectSourceElAuthEl {
@@ -2601,12 +2724,12 @@ impl BuildCodebuildProjectSourceElAuthEl {
 }
 
 pub struct CodebuildProjectSourceElAuthElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for CodebuildProjectSourceElAuthElRef {
-    fn new(shared: StackShared, base: String) -> CodebuildProjectSourceElAuthElRef {
+impl terrars::Ref for CodebuildProjectSourceElAuthElRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> CodebuildProjectSourceElAuthElRef {
         CodebuildProjectSourceElAuthElRef {
             shared: shared,
             base: base.to_string(),
@@ -2615,48 +2738,48 @@ impl Ref for CodebuildProjectSourceElAuthElRef {
 }
 
 impl CodebuildProjectSourceElAuthElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `resource` after provisioning.\n"]
-    pub fn resource(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.resource", self.base))
+    #[doc = "Get a reference to the value of field `resource` after provisioning.\n"]
+    pub fn resource(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.resource", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `type_` after provisioning.\n"]
-    pub fn type_(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.type", self.base))
+    #[doc = "Get a reference to the value of field `type_` after provisioning.\n"]
+    pub fn type_(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.type", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct CodebuildProjectSourceElBuildStatusConfigEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    context: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    target_url: Option<PrimField<String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    context: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    target_url: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
 impl CodebuildProjectSourceElBuildStatusConfigEl {
-    #[doc= "Set the field `context`.\n"]
-    pub fn set_context(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.context = Some(v.into());
+    #[doc = "Set the field `context`.\n"]
+    pub fn set_context(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.context = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `target_url`.\n"]
-    pub fn set_target_url(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.target_url = Some(v.into());
+    #[doc = "Set the field `target_url`.\n"]
+    pub fn set_target_url(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.target_url = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl ToListMappable for CodebuildProjectSourceElBuildStatusConfigEl {
-    type O = BlockAssignable<CodebuildProjectSourceElBuildStatusConfigEl>;
+impl terrars::ToListMappable for CodebuildProjectSourceElBuildStatusConfigEl {
+    type O = terrars::BlockAssignable<CodebuildProjectSourceElBuildStatusConfigEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -2676,12 +2799,15 @@ impl BuildCodebuildProjectSourceElBuildStatusConfigEl {
 }
 
 pub struct CodebuildProjectSourceElBuildStatusConfigElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for CodebuildProjectSourceElBuildStatusConfigElRef {
-    fn new(shared: StackShared, base: String) -> CodebuildProjectSourceElBuildStatusConfigElRef {
+impl terrars::Ref for CodebuildProjectSourceElBuildStatusConfigElRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> CodebuildProjectSourceElBuildStatusConfigElRef {
         CodebuildProjectSourceElBuildStatusConfigElRef {
             shared: shared,
             base: base.to_string(),
@@ -2690,33 +2816,33 @@ impl Ref for CodebuildProjectSourceElBuildStatusConfigElRef {
 }
 
 impl CodebuildProjectSourceElBuildStatusConfigElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `context` after provisioning.\n"]
-    pub fn context(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.context", self.base))
+    #[doc = "Get a reference to the value of field `context` after provisioning.\n"]
+    pub fn context(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.context", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `target_url` after provisioning.\n"]
-    pub fn target_url(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.target_url", self.base))
+    #[doc = "Get a reference to the value of field `target_url` after provisioning.\n"]
+    pub fn target_url(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.target_url", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct CodebuildProjectSourceElGitSubmodulesConfigEl {
-    fetch_submodules: PrimField<bool>,
+    fetch_submodules: terrars::PrimField<bool>,
 }
 
 impl CodebuildProjectSourceElGitSubmodulesConfigEl { }
 
-impl ToListMappable for CodebuildProjectSourceElGitSubmodulesConfigEl {
-    type O = BlockAssignable<CodebuildProjectSourceElGitSubmodulesConfigEl>;
+impl terrars::ToListMappable for CodebuildProjectSourceElGitSubmodulesConfigEl {
+    type O = terrars::BlockAssignable<CodebuildProjectSourceElGitSubmodulesConfigEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -2725,8 +2851,8 @@ impl ToListMappable for CodebuildProjectSourceElGitSubmodulesConfigEl {
 }
 
 pub struct BuildCodebuildProjectSourceElGitSubmodulesConfigEl {
-    #[doc= ""]
-    pub fetch_submodules: PrimField<bool>,
+    #[doc = ""]
+    pub fetch_submodules: terrars::PrimField<bool>,
 }
 
 impl BuildCodebuildProjectSourceElGitSubmodulesConfigEl {
@@ -2736,12 +2862,15 @@ impl BuildCodebuildProjectSourceElGitSubmodulesConfigEl {
 }
 
 pub struct CodebuildProjectSourceElGitSubmodulesConfigElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for CodebuildProjectSourceElGitSubmodulesConfigElRef {
-    fn new(shared: StackShared, base: String) -> CodebuildProjectSourceElGitSubmodulesConfigElRef {
+impl terrars::Ref for CodebuildProjectSourceElGitSubmodulesConfigElRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> CodebuildProjectSourceElGitSubmodulesConfigElRef {
         CodebuildProjectSourceElGitSubmodulesConfigElRef {
             shared: shared,
             base: base.to_string(),
@@ -2750,128 +2879,133 @@ impl Ref for CodebuildProjectSourceElGitSubmodulesConfigElRef {
 }
 
 impl CodebuildProjectSourceElGitSubmodulesConfigElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `fetch_submodules` after provisioning.\n"]
-    pub fn fetch_submodules(&self) -> PrimExpr<bool> {
-        PrimExpr::new(self.shared().clone(), format!("{}.fetch_submodules", self.base))
+    #[doc = "Get a reference to the value of field `fetch_submodules` after provisioning.\n"]
+    pub fn fetch_submodules(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.fetch_submodules", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
 struct CodebuildProjectSourceElDynamic {
-    auth: Option<DynamicBlock<CodebuildProjectSourceElAuthEl>>,
-    build_status_config: Option<DynamicBlock<CodebuildProjectSourceElBuildStatusConfigEl>>,
-    git_submodules_config: Option<DynamicBlock<CodebuildProjectSourceElGitSubmodulesConfigEl>>,
+    auth: std::option::Option<terrars::DynamicBlock<CodebuildProjectSourceElAuthEl>>,
+    build_status_config: std::option::Option<terrars::DynamicBlock<CodebuildProjectSourceElBuildStatusConfigEl>>,
+    git_submodules_config: std
+    ::option
+    ::Option<terrars::DynamicBlock<CodebuildProjectSourceElGitSubmodulesConfigEl>>,
 }
 
 #[derive(Serialize)]
 pub struct CodebuildProjectSourceEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    buildspec: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    git_clone_depth: Option<PrimField<f64>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    insecure_ssl: Option<PrimField<bool>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    location: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    report_build_status: Option<PrimField<bool>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    buildspec: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    git_clone_depth: std::option::Option<terrars::PrimField<f64>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    insecure_ssl: std::option::Option<terrars::PrimField<bool>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    location: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    report_build_status: std::option::Option<terrars::PrimField<bool>>,
     #[serde(rename = "type")]
-    type_: PrimField<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    auth: Option<Vec<CodebuildProjectSourceElAuthEl>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    build_status_config: Option<Vec<CodebuildProjectSourceElBuildStatusConfigEl>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    git_submodules_config: Option<Vec<CodebuildProjectSourceElGitSubmodulesConfigEl>>,
+    type_: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    auth: std::option::Option<std::vec::Vec<CodebuildProjectSourceElAuthEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    build_status_config: std::option::Option<std::vec::Vec<CodebuildProjectSourceElBuildStatusConfigEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    git_submodules_config: std::option::Option<std::vec::Vec<CodebuildProjectSourceElGitSubmodulesConfigEl>>,
     dynamic: CodebuildProjectSourceElDynamic,
 }
 
 impl CodebuildProjectSourceEl {
-    #[doc= "Set the field `buildspec`.\n"]
-    pub fn set_buildspec(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.buildspec = Some(v.into());
+    #[doc = "Set the field `buildspec`.\n"]
+    pub fn set_buildspec(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.buildspec = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `git_clone_depth`.\n"]
-    pub fn set_git_clone_depth(mut self, v: impl Into<PrimField<f64>>) -> Self {
-        self.git_clone_depth = Some(v.into());
+    #[doc = "Set the field `git_clone_depth`.\n"]
+    pub fn set_git_clone_depth(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.git_clone_depth = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `insecure_ssl`.\n"]
-    pub fn set_insecure_ssl(mut self, v: impl Into<PrimField<bool>>) -> Self {
-        self.insecure_ssl = Some(v.into());
+    #[doc = "Set the field `insecure_ssl`.\n"]
+    pub fn set_insecure_ssl(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
+        self.insecure_ssl = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `location`.\n"]
-    pub fn set_location(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.location = Some(v.into());
+    #[doc = "Set the field `location`.\n"]
+    pub fn set_location(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.location = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `report_build_status`.\n"]
-    pub fn set_report_build_status(mut self, v: impl Into<PrimField<bool>>) -> Self {
-        self.report_build_status = Some(v.into());
+    #[doc = "Set the field `report_build_status`.\n"]
+    pub fn set_report_build_status(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
+        self.report_build_status = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `auth`.\n"]
-    pub fn set_auth(mut self, v: impl Into<BlockAssignable<CodebuildProjectSourceElAuthEl>>) -> Self {
+    #[doc = "Set the field `auth`.\n"]
+    pub fn set_auth(
+        mut self,
+        v: impl std::convert::Into<terrars::BlockAssignable<CodebuildProjectSourceElAuthEl>>,
+    ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.auth = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.auth = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.auth = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.auth = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Set the field `build_status_config`.\n"]
+    #[doc = "Set the field `build_status_config`.\n"]
     pub fn set_build_status_config(
         mut self,
-        v: impl Into<BlockAssignable<CodebuildProjectSourceElBuildStatusConfigEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<CodebuildProjectSourceElBuildStatusConfigEl>>,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.build_status_config = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.build_status_config = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.build_status_config = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.build_status_config = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Set the field `git_submodules_config`.\n"]
+    #[doc = "Set the field `git_submodules_config`.\n"]
     pub fn set_git_submodules_config(
         mut self,
-        v: impl Into<BlockAssignable<CodebuildProjectSourceElGitSubmodulesConfigEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<CodebuildProjectSourceElGitSubmodulesConfigEl>>,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.git_submodules_config = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.git_submodules_config = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.git_submodules_config = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.git_submodules_config = std::option::Option::Some(d);
             },
         }
         self
     }
 }
 
-impl ToListMappable for CodebuildProjectSourceEl {
-    type O = BlockAssignable<CodebuildProjectSourceEl>;
+impl terrars::ToListMappable for CodebuildProjectSourceEl {
+    type O = terrars::BlockAssignable<CodebuildProjectSourceEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -2880,8 +3014,8 @@ impl ToListMappable for CodebuildProjectSourceEl {
 }
 
 pub struct BuildCodebuildProjectSourceEl {
-    #[doc= ""]
-    pub type_: PrimField<String>,
+    #[doc = ""]
+    pub type_: terrars::PrimField<std::string::String>,
 }
 
 impl BuildCodebuildProjectSourceEl {
@@ -2896,18 +3030,18 @@ impl BuildCodebuildProjectSourceEl {
             auth: core::default::Default::default(),
             build_status_config: core::default::Default::default(),
             git_submodules_config: core::default::Default::default(),
-            dynamic: Default::default(),
+            dynamic: core::default::Default::default(),
         }
     }
 }
 
 pub struct CodebuildProjectSourceElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for CodebuildProjectSourceElRef {
-    fn new(shared: StackShared, base: String) -> CodebuildProjectSourceElRef {
+impl terrars::Ref for CodebuildProjectSourceElRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> CodebuildProjectSourceElRef {
         CodebuildProjectSourceElRef {
             shared: shared,
             base: base.to_string(),
@@ -2916,70 +3050,70 @@ impl Ref for CodebuildProjectSourceElRef {
 }
 
 impl CodebuildProjectSourceElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `buildspec` after provisioning.\n"]
-    pub fn buildspec(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.buildspec", self.base))
+    #[doc = "Get a reference to the value of field `buildspec` after provisioning.\n"]
+    pub fn buildspec(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.buildspec", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `git_clone_depth` after provisioning.\n"]
-    pub fn git_clone_depth(&self) -> PrimExpr<f64> {
-        PrimExpr::new(self.shared().clone(), format!("{}.git_clone_depth", self.base))
+    #[doc = "Get a reference to the value of field `git_clone_depth` after provisioning.\n"]
+    pub fn git_clone_depth(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.git_clone_depth", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `insecure_ssl` after provisioning.\n"]
-    pub fn insecure_ssl(&self) -> PrimExpr<bool> {
-        PrimExpr::new(self.shared().clone(), format!("{}.insecure_ssl", self.base))
+    #[doc = "Get a reference to the value of field `insecure_ssl` after provisioning.\n"]
+    pub fn insecure_ssl(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.insecure_ssl", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `location` after provisioning.\n"]
-    pub fn location(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.location", self.base))
+    #[doc = "Get a reference to the value of field `location` after provisioning.\n"]
+    pub fn location(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.location", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `report_build_status` after provisioning.\n"]
-    pub fn report_build_status(&self) -> PrimExpr<bool> {
-        PrimExpr::new(self.shared().clone(), format!("{}.report_build_status", self.base))
+    #[doc = "Get a reference to the value of field `report_build_status` after provisioning.\n"]
+    pub fn report_build_status(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.report_build_status", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `type_` after provisioning.\n"]
-    pub fn type_(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.type", self.base))
+    #[doc = "Get a reference to the value of field `type_` after provisioning.\n"]
+    pub fn type_(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.type", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `auth` after provisioning.\n"]
-    pub fn auth(&self) -> ListRef<CodebuildProjectSourceElAuthElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.auth", self.base))
+    #[doc = "Get a reference to the value of field `auth` after provisioning.\n"]
+    pub fn auth(&self) -> terrars::ListRef<CodebuildProjectSourceElAuthElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.auth", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `build_status_config` after provisioning.\n"]
-    pub fn build_status_config(&self) -> ListRef<CodebuildProjectSourceElBuildStatusConfigElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.build_status_config", self.base))
+    #[doc = "Get a reference to the value of field `build_status_config` after provisioning.\n"]
+    pub fn build_status_config(&self) -> terrars::ListRef<CodebuildProjectSourceElBuildStatusConfigElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.build_status_config", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `git_submodules_config` after provisioning.\n"]
-    pub fn git_submodules_config(&self) -> ListRef<CodebuildProjectSourceElGitSubmodulesConfigElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.git_submodules_config", self.base))
+    #[doc = "Get a reference to the value of field `git_submodules_config` after provisioning.\n"]
+    pub fn git_submodules_config(&self) -> terrars::ListRef<CodebuildProjectSourceElGitSubmodulesConfigElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.git_submodules_config", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct CodebuildProjectVpcConfigEl {
-    security_group_ids: SetField<PrimField<String>>,
-    subnets: SetField<PrimField<String>>,
-    vpc_id: PrimField<String>,
+    security_group_ids: terrars::SetField<terrars::PrimField<std::string::String>>,
+    subnets: terrars::SetField<terrars::PrimField<std::string::String>>,
+    vpc_id: terrars::PrimField<std::string::String>,
 }
 
 impl CodebuildProjectVpcConfigEl { }
 
-impl ToListMappable for CodebuildProjectVpcConfigEl {
-    type O = BlockAssignable<CodebuildProjectVpcConfigEl>;
+impl terrars::ToListMappable for CodebuildProjectVpcConfigEl {
+    type O = terrars::BlockAssignable<CodebuildProjectVpcConfigEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -2988,12 +3122,12 @@ impl ToListMappable for CodebuildProjectVpcConfigEl {
 }
 
 pub struct BuildCodebuildProjectVpcConfigEl {
-    #[doc= ""]
-    pub security_group_ids: SetField<PrimField<String>>,
-    #[doc= ""]
-    pub subnets: SetField<PrimField<String>>,
-    #[doc= ""]
-    pub vpc_id: PrimField<String>,
+    #[doc = ""]
+    pub security_group_ids: terrars::SetField<terrars::PrimField<std::string::String>>,
+    #[doc = ""]
+    pub subnets: terrars::SetField<terrars::PrimField<std::string::String>>,
+    #[doc = ""]
+    pub vpc_id: terrars::PrimField<std::string::String>,
 }
 
 impl BuildCodebuildProjectVpcConfigEl {
@@ -3007,12 +3141,12 @@ impl BuildCodebuildProjectVpcConfigEl {
 }
 
 pub struct CodebuildProjectVpcConfigElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for CodebuildProjectVpcConfigElRef {
-    fn new(shared: StackShared, base: String) -> CodebuildProjectVpcConfigElRef {
+impl terrars::Ref for CodebuildProjectVpcConfigElRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> CodebuildProjectVpcConfigElRef {
         CodebuildProjectVpcConfigElRef {
             shared: shared,
             base: base.to_string(),
@@ -3021,37 +3155,37 @@ impl Ref for CodebuildProjectVpcConfigElRef {
 }
 
 impl CodebuildProjectVpcConfigElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `security_group_ids` after provisioning.\n"]
-    pub fn security_group_ids(&self) -> SetRef<PrimExpr<String>> {
-        SetRef::new(self.shared().clone(), format!("{}.security_group_ids", self.base))
+    #[doc = "Get a reference to the value of field `security_group_ids` after provisioning.\n"]
+    pub fn security_group_ids(&self) -> terrars::SetRef<terrars::PrimExpr<std::string::String>> {
+        terrars::SetRef::new(self.shared().clone(), format!("{}.security_group_ids", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `subnets` after provisioning.\n"]
-    pub fn subnets(&self) -> SetRef<PrimExpr<String>> {
-        SetRef::new(self.shared().clone(), format!("{}.subnets", self.base))
+    #[doc = "Get a reference to the value of field `subnets` after provisioning.\n"]
+    pub fn subnets(&self) -> terrars::SetRef<terrars::PrimExpr<std::string::String>> {
+        terrars::SetRef::new(self.shared().clone(), format!("{}.subnets", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `vpc_id` after provisioning.\n"]
-    pub fn vpc_id(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.vpc_id", self.base))
+    #[doc = "Get a reference to the value of field `vpc_id` after provisioning.\n"]
+    pub fn vpc_id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.vpc_id", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
 struct CodebuildProjectDynamic {
-    artifacts: Option<DynamicBlock<CodebuildProjectArtifactsEl>>,
-    build_batch_config: Option<DynamicBlock<CodebuildProjectBuildBatchConfigEl>>,
-    cache: Option<DynamicBlock<CodebuildProjectCacheEl>>,
-    environment: Option<DynamicBlock<CodebuildProjectEnvironmentEl>>,
-    file_system_locations: Option<DynamicBlock<CodebuildProjectFileSystemLocationsEl>>,
-    logs_config: Option<DynamicBlock<CodebuildProjectLogsConfigEl>>,
-    secondary_artifacts: Option<DynamicBlock<CodebuildProjectSecondaryArtifactsEl>>,
-    secondary_source_version: Option<DynamicBlock<CodebuildProjectSecondarySourceVersionEl>>,
-    secondary_sources: Option<DynamicBlock<CodebuildProjectSecondarySourcesEl>>,
-    source: Option<DynamicBlock<CodebuildProjectSourceEl>>,
-    vpc_config: Option<DynamicBlock<CodebuildProjectVpcConfigEl>>,
+    artifacts: std::option::Option<terrars::DynamicBlock<CodebuildProjectArtifactsEl>>,
+    build_batch_config: std::option::Option<terrars::DynamicBlock<CodebuildProjectBuildBatchConfigEl>>,
+    cache: std::option::Option<terrars::DynamicBlock<CodebuildProjectCacheEl>>,
+    environment: std::option::Option<terrars::DynamicBlock<CodebuildProjectEnvironmentEl>>,
+    file_system_locations: std::option::Option<terrars::DynamicBlock<CodebuildProjectFileSystemLocationsEl>>,
+    logs_config: std::option::Option<terrars::DynamicBlock<CodebuildProjectLogsConfigEl>>,
+    secondary_artifacts: std::option::Option<terrars::DynamicBlock<CodebuildProjectSecondaryArtifactsEl>>,
+    secondary_source_version: std::option::Option<terrars::DynamicBlock<CodebuildProjectSecondarySourceVersionEl>>,
+    secondary_sources: std::option::Option<terrars::DynamicBlock<CodebuildProjectSecondarySourcesEl>>,
+    source: std::option::Option<terrars::DynamicBlock<CodebuildProjectSourceEl>>,
+    vpc_config: std::option::Option<terrars::DynamicBlock<CodebuildProjectVpcConfigEl>>,
 }

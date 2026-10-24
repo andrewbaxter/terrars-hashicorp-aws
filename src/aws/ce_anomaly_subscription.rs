@@ -1,60 +1,64 @@
 use serde::Serialize;
-use std::cell::RefCell;
-use std::rc::Rc;
-use terrars::*;
+use terrars::{
+    Referable as _,
+    Resource_ as _,
+    Ref as _,
+};
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
 struct CeAnomalySubscriptionData {
-    #[serde(skip_serializing_if = "Vec::is_empty")]
-    depends_on: Vec<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    provider: Option<String>,
-    #[serde(skip_serializing_if = "SerdeSkipDefault::is_default")]
-    lifecycle: ResourceLifecycle,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    for_each: Option<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    account_id: Option<PrimField<String>>,
-    frequency: PrimField<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    id: Option<PrimField<String>>,
-    monitor_arn_list: ListField<PrimField<String>>,
-    name: PrimField<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    tags: Option<RecField<PrimField<String>>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    tags_all: Option<RecField<PrimField<String>>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    threshold: Option<PrimField<f64>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    subscriber: Option<Vec<CeAnomalySubscriptionSubscriberEl>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    threshold_expression: Option<Vec<CeAnomalySubscriptionThresholdExpressionEl>>,
+    #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
+    depends_on: std::vec::Vec<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    provider: std::option::Option<std::string::String>,
+    #[serde(skip_serializing_if = "terrars::SerdeSkipDefault::is_default")]
+    lifecycle: terrars::ResourceLifecycle,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    for_each: std::option::Option<std::string::String>,
+    #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
+    provisioner: std::vec::Vec<terrars::Provisioner>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    account_id: std::option::Option<terrars::PrimField<std::string::String>>,
+    frequency: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    id: std::option::Option<terrars::PrimField<std::string::String>>,
+    monitor_arn_list: terrars::ListField<terrars::PrimField<std::string::String>>,
+    name: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    tags: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    tags_all: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    threshold: std::option::Option<terrars::PrimField<f64>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    subscriber: std::option::Option<std::vec::Vec<CeAnomalySubscriptionSubscriberEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    threshold_expression: std::option::Option<std::vec::Vec<CeAnomalySubscriptionThresholdExpressionEl>>,
     dynamic: CeAnomalySubscriptionDynamic,
 }
 
 struct CeAnomalySubscription_ {
-    shared: StackShared,
-    tf_id: String,
-    data: RefCell<CeAnomalySubscriptionData>,
+    shared: terrars::StackShared,
+    tf_id: std::string::String,
+    data: std::cell::RefCell<CeAnomalySubscriptionData>,
 }
 
 #[derive(Clone)]
-pub struct CeAnomalySubscription(Rc<CeAnomalySubscription_>);
+pub struct CeAnomalySubscription(std::rc::Rc<CeAnomalySubscription_>);
 
 impl CeAnomalySubscription {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.0.shared
     }
 
-    pub fn depends_on(self, dep: &impl Referable) -> Self {
+    pub fn depends_on(self, dep: &impl terrars::Referable) -> Self {
         self.0.data.borrow_mut().depends_on.push(dep.extract_ref());
         self
     }
 
     pub fn set_provider(self, provider: &ProviderAws) -> Self {
-        self.0.data.borrow_mut().provider = Some(provider.provider_ref());
+        self.0.data.borrow_mut().provider = std::option::Option::Some(provider.provider_ref());
         self
     }
 
@@ -69,174 +73,216 @@ impl CeAnomalySubscription {
     }
 
     pub fn ignore_changes_to_all(self) -> Self {
-        self.0.data.borrow_mut().lifecycle.ignore_changes = Some(IgnoreChanges::All(IgnoreChangesAll::All));
+        self.0.data.borrow_mut().lifecycle.ignore_changes =
+            std::option::Option::Some(terrars::IgnoreChanges::All(terrars::IgnoreChangesAll::All));
         self
     }
 
-    pub fn ignore_changes_to_attr(self, attr: impl ToString) -> Self {
+    pub fn ignore_changes_to_attr(self, attr: impl std::string::ToString) -> Self {
         {
             let mut d = self.0.data.borrow_mut();
             if match &mut d.lifecycle.ignore_changes {
-                Some(i) => match i {
-                    IgnoreChanges::All(_) => {
+                std::option::Option::Some(i) => match i {
+                    terrars::IgnoreChanges::All(_) => {
                         true
                     },
-                    IgnoreChanges::Refs(r) => {
+                    terrars::IgnoreChanges::Refs(r) => {
                         r.push(attr.to_string());
                         false
                     },
                 },
-                None => true,
+                std::option::Option::None => true,
             } {
-                d.lifecycle.ignore_changes = Some(IgnoreChanges::Refs(vec![attr.to_string()]));
+                d.lifecycle.ignore_changes =
+                    std::option::Option::Some(terrars::IgnoreChanges::Refs(vec![attr.to_string()]));
             }
         }
         self
     }
 
-    pub fn replace_triggered_by_resource(self, r: &impl Resource) -> Self {
+    pub fn replace_triggered_by_resource(self, r: &impl terrars::Resource) -> Self {
         self.0.data.borrow_mut().lifecycle.replace_triggered_by.push(r.extract_ref());
         self
     }
 
-    pub fn replace_triggered_by_attr(self, attr: impl ToString) -> Self {
+    pub fn replace_triggered_by_attr(self, attr: impl std::string::ToString) -> Self {
         self.0.data.borrow_mut().lifecycle.replace_triggered_by.push(attr.to_string());
         self
     }
 
-    #[doc= "Set the field `account_id`.\n"]
-    pub fn set_account_id(self, v: impl Into<PrimField<String>>) -> Self {
-        self.0.data.borrow_mut().account_id = Some(v.into());
+    #[doc = r" Add a provisioner (ex: `local-exec`, `remote-exec`, `file`) to this resource."]
+    #[doc = r" Provisioners run in the order they're added."]
+    pub fn add_provisioner(self, v: impl std::convert::Into<terrars::Provisioner>) -> Self {
+        self.0.data.borrow_mut().provisioner.push(v.into());
         self
     }
 
-    #[doc= "Set the field `id`.\n"]
-    pub fn set_id(self, v: impl Into<PrimField<String>>) -> Self {
-        self.0.data.borrow_mut().id = Some(v.into());
-        self
-    }
-
-    #[doc= "Set the field `tags`.\n"]
-    pub fn set_tags(self, v: impl Into<RecField<PrimField<String>>>) -> Self {
-        self.0.data.borrow_mut().tags = Some(v.into());
-        self
-    }
-
-    #[doc= "Set the field `tags_all`.\n"]
-    pub fn set_tags_all(self, v: impl Into<RecField<PrimField<String>>>) -> Self {
-        self.0.data.borrow_mut().tags_all = Some(v.into());
-        self
-    }
-
-    #[doc= "Set the field `threshold`.\n"]
-    pub fn set_threshold(self, v: impl Into<PrimField<f64>>) -> Self {
-        self.0.data.borrow_mut().threshold = Some(v.into());
-        self
-    }
-
-    #[doc= "Set the field `subscriber`.\n"]
-    pub fn set_subscriber(self, v: impl Into<BlockAssignable<CeAnomalySubscriptionSubscriberEl>>) -> Self {
-        match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.0.data.borrow_mut().subscriber = Some(v);
-            },
-            BlockAssignable::Dynamic(d) => {
-                self.0.data.borrow_mut().dynamic.subscriber = Some(d);
-            },
-        }
-        self
-    }
-
-    #[doc= "Set the field `threshold_expression`.\n"]
-    pub fn set_threshold_expression(
+    pub fn add_lifecycle_precondition(
         self,
-        v: impl Into<BlockAssignable<CeAnomalySubscriptionThresholdExpressionEl>>,
+        condition: impl std::convert::Into<terrars::PrimField<bool>>,
+        error_message: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.0.data.borrow_mut().lifecycle.precondition.push(terrars::LifecycleCondition {
+            condition: condition.into(),
+            error_message: error_message.into(),
+        });
+        self
+    }
+
+    pub fn add_lifecycle_postcondition(
+        self,
+        condition: impl std::convert::Into<terrars::PrimField<bool>>,
+        error_message: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.0.data.borrow_mut().lifecycle.postcondition.push(terrars::LifecycleCondition {
+            condition: condition.into(),
+            error_message: error_message.into(),
+        });
+        self
+    }
+
+    #[doc = "Set the field `account_id`.\n"]
+    pub fn set_account_id(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().account_id = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `id`.\n"]
+    pub fn set_id(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().id = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `tags`.\n"]
+    pub fn set_tags(
+        self,
+        v: impl std::convert::Into<terrars::RecField<terrars::PrimField<std::string::String>>>,
+    ) -> Self {
+        self.0.data.borrow_mut().tags = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `tags_all`.\n"]
+    pub fn set_tags_all(
+        self,
+        v: impl std::convert::Into<terrars::RecField<terrars::PrimField<std::string::String>>>,
+    ) -> Self {
+        self.0.data.borrow_mut().tags_all = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `threshold`.\n"]
+    pub fn set_threshold(self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.0.data.borrow_mut().threshold = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `subscriber`.\n"]
+    pub fn set_subscriber(
+        self,
+        v: impl std::convert::Into<terrars::BlockAssignable<CeAnomalySubscriptionSubscriberEl>>,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.0.data.borrow_mut().threshold_expression = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.0.data.borrow_mut().subscriber = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.0.data.borrow_mut().dynamic.threshold_expression = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.0.data.borrow_mut().dynamic.subscriber = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Get a reference to the value of field `account_id` after provisioning.\n"]
-    pub fn account_id(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.account_id", self.extract_ref()))
+    #[doc = "Set the field `threshold_expression`.\n"]
+    pub fn set_threshold_expression(
+        self,
+        v: impl std::convert::Into<terrars::BlockAssignable<CeAnomalySubscriptionThresholdExpressionEl>>,
+    ) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.0.data.borrow_mut().threshold_expression = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.0.data.borrow_mut().dynamic.threshold_expression = std::option::Option::Some(d);
+            },
+        }
+        self
     }
 
-    #[doc= "Get a reference to the value of field `arn` after provisioning.\n"]
-    pub fn arn(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.arn", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `account_id` after provisioning.\n"]
+    pub fn account_id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.account_id", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `frequency` after provisioning.\n"]
-    pub fn frequency(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.frequency", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `arn` after provisioning.\n"]
+    pub fn arn(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.arn", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `id` after provisioning.\n"]
-    pub fn id(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `frequency` after provisioning.\n"]
+    pub fn frequency(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.frequency", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `monitor_arn_list` after provisioning.\n"]
-    pub fn monitor_arn_list(&self) -> ListRef<PrimExpr<String>> {
-        ListRef::new(self.shared().clone(), format!("{}.monitor_arn_list", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
+    pub fn id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `name` after provisioning.\n"]
-    pub fn name(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `monitor_arn_list` after provisioning.\n"]
+    pub fn monitor_arn_list(&self) -> terrars::ListRef<terrars::PrimExpr<std::string::String>> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.monitor_arn_list", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `tags` after provisioning.\n"]
-    pub fn tags(&self) -> RecRef<PrimExpr<String>> {
-        RecRef::new(self.shared().clone(), format!("{}.tags", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `name` after provisioning.\n"]
+    pub fn name(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `tags_all` after provisioning.\n"]
-    pub fn tags_all(&self) -> RecRef<PrimExpr<String>> {
-        RecRef::new(self.shared().clone(), format!("{}.tags_all", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `tags` after provisioning.\n"]
+    pub fn tags(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
+        terrars::RecRef::new(self.shared().clone(), format!("{}.tags", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `threshold` after provisioning.\n"]
-    pub fn threshold(&self) -> PrimExpr<f64> {
-        PrimExpr::new(self.shared().clone(), format!("{}.threshold", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `tags_all` after provisioning.\n"]
+    pub fn tags_all(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
+        terrars::RecRef::new(self.shared().clone(), format!("{}.tags_all", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `threshold_expression` after provisioning.\n"]
-    pub fn threshold_expression(&self) -> ListRef<CeAnomalySubscriptionThresholdExpressionElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.threshold_expression", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `threshold` after provisioning.\n"]
+    pub fn threshold(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.threshold", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `threshold_expression` after provisioning.\n"]
+    pub fn threshold_expression(&self) -> terrars::ListRef<CeAnomalySubscriptionThresholdExpressionElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.threshold_expression", self.extract_ref()))
     }
 }
 
-impl Referable for CeAnomalySubscription {
-    fn extract_ref(&self) -> String {
+impl terrars::Referable for CeAnomalySubscription {
+    fn extract_ref(&self) -> std::string::String {
         format!("{}.{}", self.0.extract_resource_type(), self.0.extract_tf_id())
     }
 }
 
-impl Resource for CeAnomalySubscription { }
+impl terrars::Resource for CeAnomalySubscription { }
 
-impl ToListMappable for CeAnomalySubscription {
-    type O = ListRef<CeAnomalySubscriptionRef>;
+impl terrars::ToListMappable for CeAnomalySubscription {
+    type O = terrars::ListRef<CeAnomalySubscriptionRef>;
 
-    fn do_map(self, base: String) -> Self::O {
-        self.0.data.borrow_mut().for_each = Some(format!("${{{}}}", base));
-        ListRef::new(self.0.shared.clone(), self.extract_ref())
+    fn do_map(self, base: std::string::String) -> Self::O {
+        self.0.data.borrow_mut().for_each = std::option::Option::Some(format!("${{{}}}", base));
+        terrars::ListRef::new(self.0.shared.clone(), self.extract_ref())
     }
 }
 
-impl Resource_ for CeAnomalySubscription_ {
-    fn extract_resource_type(&self) -> String {
+impl terrars::Resource_ for CeAnomalySubscription_ {
+    fn extract_resource_type(&self) -> std::string::String {
         "aws_ce_anomaly_subscription".into()
     }
 
-    fn extract_tf_id(&self) -> String {
+    fn extract_tf_id(&self) -> std::string::String {
         self.tf_id.clone()
     }
 
@@ -246,25 +292,26 @@ impl Resource_ for CeAnomalySubscription_ {
 }
 
 pub struct BuildCeAnomalySubscription {
-    pub tf_id: String,
-    #[doc= ""]
-    pub frequency: PrimField<String>,
-    #[doc= ""]
-    pub monitor_arn_list: ListField<PrimField<String>>,
-    #[doc= ""]
-    pub name: PrimField<String>,
+    pub tf_id: std::string::String,
+    #[doc = ""]
+    pub frequency: terrars::PrimField<std::string::String>,
+    #[doc = ""]
+    pub monitor_arn_list: terrars::ListField<terrars::PrimField<std::string::String>>,
+    #[doc = ""]
+    pub name: terrars::PrimField<std::string::String>,
 }
 
 impl BuildCeAnomalySubscription {
-    pub fn build(self, stack: &mut Stack) -> CeAnomalySubscription {
-        let out = CeAnomalySubscription(Rc::new(CeAnomalySubscription_ {
+    pub fn build(self, stack: &mut terrars::Stack) -> CeAnomalySubscription {
+        let out = CeAnomalySubscription(std::rc::Rc::new(CeAnomalySubscription_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: RefCell::new(CeAnomalySubscriptionData {
+            data: std::cell::RefCell::new(CeAnomalySubscriptionData {
                 depends_on: core::default::Default::default(),
-                provider: None,
+                provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
-                for_each: None,
+                for_each: std::option::Option::None,
+                provisioner: core::default::Default::default(),
                 account_id: core::default::Default::default(),
                 frequency: self.frequency,
                 id: core::default::Default::default(),
@@ -275,7 +322,7 @@ impl BuildCeAnomalySubscription {
                 threshold: core::default::Default::default(),
                 subscriber: core::default::Default::default(),
                 threshold_expression: core::default::Default::default(),
-                dynamic: Default::default(),
+                dynamic: core::default::Default::default(),
             }),
         }));
         stack.add_resource(out.0.clone());
@@ -284,12 +331,12 @@ impl BuildCeAnomalySubscription {
 }
 
 pub struct CeAnomalySubscriptionRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for CeAnomalySubscriptionRef {
-    fn new(shared: StackShared, base: String) -> Self {
+impl terrars::Ref for CeAnomalySubscriptionRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> Self {
         Self {
             shared: shared,
             base: base,
@@ -298,79 +345,79 @@ impl Ref for CeAnomalySubscriptionRef {
 }
 
 impl CeAnomalySubscriptionRef {
-    fn extract_ref(&self) -> String {
+    fn extract_ref(&self) -> std::string::String {
         self.base.clone()
     }
 
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `account_id` after provisioning.\n"]
-    pub fn account_id(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.account_id", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `account_id` after provisioning.\n"]
+    pub fn account_id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.account_id", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `arn` after provisioning.\n"]
-    pub fn arn(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.arn", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `arn` after provisioning.\n"]
+    pub fn arn(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.arn", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `frequency` after provisioning.\n"]
-    pub fn frequency(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.frequency", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `frequency` after provisioning.\n"]
+    pub fn frequency(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.frequency", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `id` after provisioning.\n"]
-    pub fn id(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
+    pub fn id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `monitor_arn_list` after provisioning.\n"]
-    pub fn monitor_arn_list(&self) -> ListRef<PrimExpr<String>> {
-        ListRef::new(self.shared().clone(), format!("{}.monitor_arn_list", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `monitor_arn_list` after provisioning.\n"]
+    pub fn monitor_arn_list(&self) -> terrars::ListRef<terrars::PrimExpr<std::string::String>> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.monitor_arn_list", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `name` after provisioning.\n"]
-    pub fn name(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `name` after provisioning.\n"]
+    pub fn name(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `tags` after provisioning.\n"]
-    pub fn tags(&self) -> RecRef<PrimExpr<String>> {
-        RecRef::new(self.shared().clone(), format!("{}.tags", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `tags` after provisioning.\n"]
+    pub fn tags(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
+        terrars::RecRef::new(self.shared().clone(), format!("{}.tags", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `tags_all` after provisioning.\n"]
-    pub fn tags_all(&self) -> RecRef<PrimExpr<String>> {
-        RecRef::new(self.shared().clone(), format!("{}.tags_all", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `tags_all` after provisioning.\n"]
+    pub fn tags_all(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
+        terrars::RecRef::new(self.shared().clone(), format!("{}.tags_all", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `threshold` after provisioning.\n"]
-    pub fn threshold(&self) -> PrimExpr<f64> {
-        PrimExpr::new(self.shared().clone(), format!("{}.threshold", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `threshold` after provisioning.\n"]
+    pub fn threshold(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.threshold", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `threshold_expression` after provisioning.\n"]
-    pub fn threshold_expression(&self) -> ListRef<CeAnomalySubscriptionThresholdExpressionElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.threshold_expression", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `threshold_expression` after provisioning.\n"]
+    pub fn threshold_expression(&self) -> terrars::ListRef<CeAnomalySubscriptionThresholdExpressionElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.threshold_expression", self.extract_ref()))
     }
 }
 
 #[derive(Serialize)]
 pub struct CeAnomalySubscriptionSubscriberEl {
-    address: PrimField<String>,
+    address: terrars::PrimField<std::string::String>,
     #[serde(rename = "type")]
-    type_: PrimField<String>,
+    type_: terrars::PrimField<std::string::String>,
 }
 
 impl CeAnomalySubscriptionSubscriberEl { }
 
-impl ToListMappable for CeAnomalySubscriptionSubscriberEl {
-    type O = BlockAssignable<CeAnomalySubscriptionSubscriberEl>;
+impl terrars::ToListMappable for CeAnomalySubscriptionSubscriberEl {
+    type O = terrars::BlockAssignable<CeAnomalySubscriptionSubscriberEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -379,10 +426,10 @@ impl ToListMappable for CeAnomalySubscriptionSubscriberEl {
 }
 
 pub struct BuildCeAnomalySubscriptionSubscriberEl {
-    #[doc= ""]
-    pub address: PrimField<String>,
-    #[doc= ""]
-    pub type_: PrimField<String>,
+    #[doc = ""]
+    pub address: terrars::PrimField<std::string::String>,
+    #[doc = ""]
+    pub type_: terrars::PrimField<std::string::String>,
 }
 
 impl BuildCeAnomalySubscriptionSubscriberEl {
@@ -395,12 +442,12 @@ impl BuildCeAnomalySubscriptionSubscriberEl {
 }
 
 pub struct CeAnomalySubscriptionSubscriberElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for CeAnomalySubscriptionSubscriberElRef {
-    fn new(shared: StackShared, base: String) -> CeAnomalySubscriptionSubscriberElRef {
+impl terrars::Ref for CeAnomalySubscriptionSubscriberElRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> CeAnomalySubscriptionSubscriberElRef {
         CeAnomalySubscriptionSubscriberElRef {
             shared: shared,
             base: base.to_string(),
@@ -409,56 +456,62 @@ impl Ref for CeAnomalySubscriptionSubscriberElRef {
 }
 
 impl CeAnomalySubscriptionSubscriberElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `address` after provisioning.\n"]
-    pub fn address(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.address", self.base))
+    #[doc = "Get a reference to the value of field `address` after provisioning.\n"]
+    pub fn address(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.address", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `type_` after provisioning.\n"]
-    pub fn type_(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.type", self.base))
+    #[doc = "Get a reference to the value of field `type_` after provisioning.\n"]
+    pub fn type_(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.type", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct CeAnomalySubscriptionThresholdExpressionElAndElCostCategoryEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    key: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    match_options: Option<SetField<PrimField<String>>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    values: Option<SetField<PrimField<String>>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    key: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    match_options: std::option::Option<terrars::SetField<terrars::PrimField<std::string::String>>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    values: std::option::Option<terrars::SetField<terrars::PrimField<std::string::String>>>,
 }
 
 impl CeAnomalySubscriptionThresholdExpressionElAndElCostCategoryEl {
-    #[doc= "Set the field `key`.\n"]
-    pub fn set_key(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.key = Some(v.into());
+    #[doc = "Set the field `key`.\n"]
+    pub fn set_key(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.key = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `match_options`.\n"]
-    pub fn set_match_options(mut self, v: impl Into<SetField<PrimField<String>>>) -> Self {
-        self.match_options = Some(v.into());
+    #[doc = "Set the field `match_options`.\n"]
+    pub fn set_match_options(
+        mut self,
+        v: impl std::convert::Into<terrars::SetField<terrars::PrimField<std::string::String>>>,
+    ) -> Self {
+        self.match_options = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `values`.\n"]
-    pub fn set_values(mut self, v: impl Into<SetField<PrimField<String>>>) -> Self {
-        self.values = Some(v.into());
+    #[doc = "Set the field `values`.\n"]
+    pub fn set_values(
+        mut self,
+        v: impl std::convert::Into<terrars::SetField<terrars::PrimField<std::string::String>>>,
+    ) -> Self {
+        self.values = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl ToListMappable for CeAnomalySubscriptionThresholdExpressionElAndElCostCategoryEl {
-    type O = BlockAssignable<CeAnomalySubscriptionThresholdExpressionElAndElCostCategoryEl>;
+impl terrars::ToListMappable for CeAnomalySubscriptionThresholdExpressionElAndElCostCategoryEl {
+    type O = terrars::BlockAssignable<CeAnomalySubscriptionThresholdExpressionElAndElCostCategoryEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -479,12 +532,15 @@ impl BuildCeAnomalySubscriptionThresholdExpressionElAndElCostCategoryEl {
 }
 
 pub struct CeAnomalySubscriptionThresholdExpressionElAndElCostCategoryElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for CeAnomalySubscriptionThresholdExpressionElAndElCostCategoryElRef {
-    fn new(shared: StackShared, base: String) -> CeAnomalySubscriptionThresholdExpressionElAndElCostCategoryElRef {
+impl terrars::Ref for CeAnomalySubscriptionThresholdExpressionElAndElCostCategoryElRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> CeAnomalySubscriptionThresholdExpressionElAndElCostCategoryElRef {
         CeAnomalySubscriptionThresholdExpressionElAndElCostCategoryElRef {
             shared: shared,
             base: base.to_string(),
@@ -493,61 +549,67 @@ impl Ref for CeAnomalySubscriptionThresholdExpressionElAndElCostCategoryElRef {
 }
 
 impl CeAnomalySubscriptionThresholdExpressionElAndElCostCategoryElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `key` after provisioning.\n"]
-    pub fn key(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.key", self.base))
+    #[doc = "Get a reference to the value of field `key` after provisioning.\n"]
+    pub fn key(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.key", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `match_options` after provisioning.\n"]
-    pub fn match_options(&self) -> SetRef<PrimExpr<String>> {
-        SetRef::new(self.shared().clone(), format!("{}.match_options", self.base))
+    #[doc = "Get a reference to the value of field `match_options` after provisioning.\n"]
+    pub fn match_options(&self) -> terrars::SetRef<terrars::PrimExpr<std::string::String>> {
+        terrars::SetRef::new(self.shared().clone(), format!("{}.match_options", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `values` after provisioning.\n"]
-    pub fn values(&self) -> SetRef<PrimExpr<String>> {
-        SetRef::new(self.shared().clone(), format!("{}.values", self.base))
+    #[doc = "Get a reference to the value of field `values` after provisioning.\n"]
+    pub fn values(&self) -> terrars::SetRef<terrars::PrimExpr<std::string::String>> {
+        terrars::SetRef::new(self.shared().clone(), format!("{}.values", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct CeAnomalySubscriptionThresholdExpressionElAndElDimensionEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    key: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    match_options: Option<SetField<PrimField<String>>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    values: Option<SetField<PrimField<String>>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    key: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    match_options: std::option::Option<terrars::SetField<terrars::PrimField<std::string::String>>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    values: std::option::Option<terrars::SetField<terrars::PrimField<std::string::String>>>,
 }
 
 impl CeAnomalySubscriptionThresholdExpressionElAndElDimensionEl {
-    #[doc= "Set the field `key`.\n"]
-    pub fn set_key(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.key = Some(v.into());
+    #[doc = "Set the field `key`.\n"]
+    pub fn set_key(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.key = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `match_options`.\n"]
-    pub fn set_match_options(mut self, v: impl Into<SetField<PrimField<String>>>) -> Self {
-        self.match_options = Some(v.into());
+    #[doc = "Set the field `match_options`.\n"]
+    pub fn set_match_options(
+        mut self,
+        v: impl std::convert::Into<terrars::SetField<terrars::PrimField<std::string::String>>>,
+    ) -> Self {
+        self.match_options = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `values`.\n"]
-    pub fn set_values(mut self, v: impl Into<SetField<PrimField<String>>>) -> Self {
-        self.values = Some(v.into());
+    #[doc = "Set the field `values`.\n"]
+    pub fn set_values(
+        mut self,
+        v: impl std::convert::Into<terrars::SetField<terrars::PrimField<std::string::String>>>,
+    ) -> Self {
+        self.values = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl ToListMappable for CeAnomalySubscriptionThresholdExpressionElAndElDimensionEl {
-    type O = BlockAssignable<CeAnomalySubscriptionThresholdExpressionElAndElDimensionEl>;
+impl terrars::ToListMappable for CeAnomalySubscriptionThresholdExpressionElAndElDimensionEl {
+    type O = terrars::BlockAssignable<CeAnomalySubscriptionThresholdExpressionElAndElDimensionEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -568,12 +630,15 @@ impl BuildCeAnomalySubscriptionThresholdExpressionElAndElDimensionEl {
 }
 
 pub struct CeAnomalySubscriptionThresholdExpressionElAndElDimensionElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for CeAnomalySubscriptionThresholdExpressionElAndElDimensionElRef {
-    fn new(shared: StackShared, base: String) -> CeAnomalySubscriptionThresholdExpressionElAndElDimensionElRef {
+impl terrars::Ref for CeAnomalySubscriptionThresholdExpressionElAndElDimensionElRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> CeAnomalySubscriptionThresholdExpressionElAndElDimensionElRef {
         CeAnomalySubscriptionThresholdExpressionElAndElDimensionElRef {
             shared: shared,
             base: base.to_string(),
@@ -582,61 +647,67 @@ impl Ref for CeAnomalySubscriptionThresholdExpressionElAndElDimensionElRef {
 }
 
 impl CeAnomalySubscriptionThresholdExpressionElAndElDimensionElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `key` after provisioning.\n"]
-    pub fn key(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.key", self.base))
+    #[doc = "Get a reference to the value of field `key` after provisioning.\n"]
+    pub fn key(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.key", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `match_options` after provisioning.\n"]
-    pub fn match_options(&self) -> SetRef<PrimExpr<String>> {
-        SetRef::new(self.shared().clone(), format!("{}.match_options", self.base))
+    #[doc = "Get a reference to the value of field `match_options` after provisioning.\n"]
+    pub fn match_options(&self) -> terrars::SetRef<terrars::PrimExpr<std::string::String>> {
+        terrars::SetRef::new(self.shared().clone(), format!("{}.match_options", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `values` after provisioning.\n"]
-    pub fn values(&self) -> SetRef<PrimExpr<String>> {
-        SetRef::new(self.shared().clone(), format!("{}.values", self.base))
+    #[doc = "Get a reference to the value of field `values` after provisioning.\n"]
+    pub fn values(&self) -> terrars::SetRef<terrars::PrimExpr<std::string::String>> {
+        terrars::SetRef::new(self.shared().clone(), format!("{}.values", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct CeAnomalySubscriptionThresholdExpressionElAndElTagsEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    key: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    match_options: Option<SetField<PrimField<String>>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    values: Option<SetField<PrimField<String>>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    key: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    match_options: std::option::Option<terrars::SetField<terrars::PrimField<std::string::String>>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    values: std::option::Option<terrars::SetField<terrars::PrimField<std::string::String>>>,
 }
 
 impl CeAnomalySubscriptionThresholdExpressionElAndElTagsEl {
-    #[doc= "Set the field `key`.\n"]
-    pub fn set_key(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.key = Some(v.into());
+    #[doc = "Set the field `key`.\n"]
+    pub fn set_key(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.key = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `match_options`.\n"]
-    pub fn set_match_options(mut self, v: impl Into<SetField<PrimField<String>>>) -> Self {
-        self.match_options = Some(v.into());
+    #[doc = "Set the field `match_options`.\n"]
+    pub fn set_match_options(
+        mut self,
+        v: impl std::convert::Into<terrars::SetField<terrars::PrimField<std::string::String>>>,
+    ) -> Self {
+        self.match_options = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `values`.\n"]
-    pub fn set_values(mut self, v: impl Into<SetField<PrimField<String>>>) -> Self {
-        self.values = Some(v.into());
+    #[doc = "Set the field `values`.\n"]
+    pub fn set_values(
+        mut self,
+        v: impl std::convert::Into<terrars::SetField<terrars::PrimField<std::string::String>>>,
+    ) -> Self {
+        self.values = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl ToListMappable for CeAnomalySubscriptionThresholdExpressionElAndElTagsEl {
-    type O = BlockAssignable<CeAnomalySubscriptionThresholdExpressionElAndElTagsEl>;
+impl terrars::ToListMappable for CeAnomalySubscriptionThresholdExpressionElAndElTagsEl {
+    type O = terrars::BlockAssignable<CeAnomalySubscriptionThresholdExpressionElAndElTagsEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -657,12 +728,15 @@ impl BuildCeAnomalySubscriptionThresholdExpressionElAndElTagsEl {
 }
 
 pub struct CeAnomalySubscriptionThresholdExpressionElAndElTagsElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for CeAnomalySubscriptionThresholdExpressionElAndElTagsElRef {
-    fn new(shared: StackShared, base: String) -> CeAnomalySubscriptionThresholdExpressionElAndElTagsElRef {
+impl terrars::Ref for CeAnomalySubscriptionThresholdExpressionElAndElTagsElRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> CeAnomalySubscriptionThresholdExpressionElAndElTagsElRef {
         CeAnomalySubscriptionThresholdExpressionElAndElTagsElRef {
             shared: shared,
             base: base.to_string(),
@@ -671,99 +745,113 @@ impl Ref for CeAnomalySubscriptionThresholdExpressionElAndElTagsElRef {
 }
 
 impl CeAnomalySubscriptionThresholdExpressionElAndElTagsElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `key` after provisioning.\n"]
-    pub fn key(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.key", self.base))
+    #[doc = "Get a reference to the value of field `key` after provisioning.\n"]
+    pub fn key(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.key", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `match_options` after provisioning.\n"]
-    pub fn match_options(&self) -> SetRef<PrimExpr<String>> {
-        SetRef::new(self.shared().clone(), format!("{}.match_options", self.base))
+    #[doc = "Get a reference to the value of field `match_options` after provisioning.\n"]
+    pub fn match_options(&self) -> terrars::SetRef<terrars::PrimExpr<std::string::String>> {
+        terrars::SetRef::new(self.shared().clone(), format!("{}.match_options", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `values` after provisioning.\n"]
-    pub fn values(&self) -> SetRef<PrimExpr<String>> {
-        SetRef::new(self.shared().clone(), format!("{}.values", self.base))
+    #[doc = "Get a reference to the value of field `values` after provisioning.\n"]
+    pub fn values(&self) -> terrars::SetRef<terrars::PrimExpr<std::string::String>> {
+        terrars::SetRef::new(self.shared().clone(), format!("{}.values", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
 struct CeAnomalySubscriptionThresholdExpressionElAndElDynamic {
-    cost_category: Option<DynamicBlock<CeAnomalySubscriptionThresholdExpressionElAndElCostCategoryEl>>,
-    dimension: Option<DynamicBlock<CeAnomalySubscriptionThresholdExpressionElAndElDimensionEl>>,
-    tags: Option<DynamicBlock<CeAnomalySubscriptionThresholdExpressionElAndElTagsEl>>,
+    cost_category: std
+    ::option
+    ::Option<terrars::DynamicBlock<CeAnomalySubscriptionThresholdExpressionElAndElCostCategoryEl>>,
+    dimension: std
+    ::option
+    ::Option<terrars::DynamicBlock<CeAnomalySubscriptionThresholdExpressionElAndElDimensionEl>>,
+    tags: std::option::Option<terrars::DynamicBlock<CeAnomalySubscriptionThresholdExpressionElAndElTagsEl>>,
 }
 
 #[derive(Serialize)]
 pub struct CeAnomalySubscriptionThresholdExpressionElAndEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    cost_category: Option<Vec<CeAnomalySubscriptionThresholdExpressionElAndElCostCategoryEl>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    dimension: Option<Vec<CeAnomalySubscriptionThresholdExpressionElAndElDimensionEl>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    tags: Option<Vec<CeAnomalySubscriptionThresholdExpressionElAndElTagsEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    cost_category: std::option::Option<std::vec::Vec<CeAnomalySubscriptionThresholdExpressionElAndElCostCategoryEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    dimension: std::option::Option<std::vec::Vec<CeAnomalySubscriptionThresholdExpressionElAndElDimensionEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    tags: std::option::Option<std::vec::Vec<CeAnomalySubscriptionThresholdExpressionElAndElTagsEl>>,
     dynamic: CeAnomalySubscriptionThresholdExpressionElAndElDynamic,
 }
 
 impl CeAnomalySubscriptionThresholdExpressionElAndEl {
-    #[doc= "Set the field `cost_category`.\n"]
+    #[doc = "Set the field `cost_category`.\n"]
     pub fn set_cost_category(
         mut self,
-        v: impl Into<BlockAssignable<CeAnomalySubscriptionThresholdExpressionElAndElCostCategoryEl>>,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<terrars::BlockAssignable<CeAnomalySubscriptionThresholdExpressionElAndElCostCategoryEl>>,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.cost_category = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.cost_category = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.cost_category = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.cost_category = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Set the field `dimension`.\n"]
+    #[doc = "Set the field `dimension`.\n"]
     pub fn set_dimension(
         mut self,
-        v: impl Into<BlockAssignable<CeAnomalySubscriptionThresholdExpressionElAndElDimensionEl>>,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<terrars::BlockAssignable<CeAnomalySubscriptionThresholdExpressionElAndElDimensionEl>>,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.dimension = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.dimension = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.dimension = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.dimension = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Set the field `tags`.\n"]
+    #[doc = "Set the field `tags`.\n"]
     pub fn set_tags(
         mut self,
-        v: impl Into<BlockAssignable<CeAnomalySubscriptionThresholdExpressionElAndElTagsEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<CeAnomalySubscriptionThresholdExpressionElAndElTagsEl>>,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.tags = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.tags = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.tags = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.tags = std::option::Option::Some(d);
             },
         }
         self
     }
 }
 
-impl ToListMappable for CeAnomalySubscriptionThresholdExpressionElAndEl {
-    type O = BlockAssignable<CeAnomalySubscriptionThresholdExpressionElAndEl>;
+impl terrars::ToListMappable for CeAnomalySubscriptionThresholdExpressionElAndEl {
+    type O = terrars::BlockAssignable<CeAnomalySubscriptionThresholdExpressionElAndEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -779,18 +867,21 @@ impl BuildCeAnomalySubscriptionThresholdExpressionElAndEl {
             cost_category: core::default::Default::default(),
             dimension: core::default::Default::default(),
             tags: core::default::Default::default(),
-            dynamic: Default::default(),
+            dynamic: core::default::Default::default(),
         }
     }
 }
 
 pub struct CeAnomalySubscriptionThresholdExpressionElAndElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for CeAnomalySubscriptionThresholdExpressionElAndElRef {
-    fn new(shared: StackShared, base: String) -> CeAnomalySubscriptionThresholdExpressionElAndElRef {
+impl terrars::Ref for CeAnomalySubscriptionThresholdExpressionElAndElRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> CeAnomalySubscriptionThresholdExpressionElAndElRef {
         CeAnomalySubscriptionThresholdExpressionElAndElRef {
             shared: shared,
             base: base.to_string(),
@@ -799,61 +890,67 @@ impl Ref for CeAnomalySubscriptionThresholdExpressionElAndElRef {
 }
 
 impl CeAnomalySubscriptionThresholdExpressionElAndElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `cost_category` after provisioning.\n"]
-    pub fn cost_category(&self) -> ListRef<CeAnomalySubscriptionThresholdExpressionElAndElCostCategoryElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.cost_category", self.base))
+    #[doc = "Get a reference to the value of field `cost_category` after provisioning.\n"]
+    pub fn cost_category(&self) -> terrars::ListRef<CeAnomalySubscriptionThresholdExpressionElAndElCostCategoryElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.cost_category", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `dimension` after provisioning.\n"]
-    pub fn dimension(&self) -> ListRef<CeAnomalySubscriptionThresholdExpressionElAndElDimensionElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.dimension", self.base))
+    #[doc = "Get a reference to the value of field `dimension` after provisioning.\n"]
+    pub fn dimension(&self) -> terrars::ListRef<CeAnomalySubscriptionThresholdExpressionElAndElDimensionElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.dimension", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `tags` after provisioning.\n"]
-    pub fn tags(&self) -> ListRef<CeAnomalySubscriptionThresholdExpressionElAndElTagsElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.tags", self.base))
+    #[doc = "Get a reference to the value of field `tags` after provisioning.\n"]
+    pub fn tags(&self) -> terrars::ListRef<CeAnomalySubscriptionThresholdExpressionElAndElTagsElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.tags", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct CeAnomalySubscriptionThresholdExpressionElCostCategoryEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    key: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    match_options: Option<SetField<PrimField<String>>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    values: Option<SetField<PrimField<String>>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    key: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    match_options: std::option::Option<terrars::SetField<terrars::PrimField<std::string::String>>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    values: std::option::Option<terrars::SetField<terrars::PrimField<std::string::String>>>,
 }
 
 impl CeAnomalySubscriptionThresholdExpressionElCostCategoryEl {
-    #[doc= "Set the field `key`.\n"]
-    pub fn set_key(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.key = Some(v.into());
+    #[doc = "Set the field `key`.\n"]
+    pub fn set_key(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.key = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `match_options`.\n"]
-    pub fn set_match_options(mut self, v: impl Into<SetField<PrimField<String>>>) -> Self {
-        self.match_options = Some(v.into());
+    #[doc = "Set the field `match_options`.\n"]
+    pub fn set_match_options(
+        mut self,
+        v: impl std::convert::Into<terrars::SetField<terrars::PrimField<std::string::String>>>,
+    ) -> Self {
+        self.match_options = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `values`.\n"]
-    pub fn set_values(mut self, v: impl Into<SetField<PrimField<String>>>) -> Self {
-        self.values = Some(v.into());
+    #[doc = "Set the field `values`.\n"]
+    pub fn set_values(
+        mut self,
+        v: impl std::convert::Into<terrars::SetField<terrars::PrimField<std::string::String>>>,
+    ) -> Self {
+        self.values = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl ToListMappable for CeAnomalySubscriptionThresholdExpressionElCostCategoryEl {
-    type O = BlockAssignable<CeAnomalySubscriptionThresholdExpressionElCostCategoryEl>;
+impl terrars::ToListMappable for CeAnomalySubscriptionThresholdExpressionElCostCategoryEl {
+    type O = terrars::BlockAssignable<CeAnomalySubscriptionThresholdExpressionElCostCategoryEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -874,12 +971,15 @@ impl BuildCeAnomalySubscriptionThresholdExpressionElCostCategoryEl {
 }
 
 pub struct CeAnomalySubscriptionThresholdExpressionElCostCategoryElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for CeAnomalySubscriptionThresholdExpressionElCostCategoryElRef {
-    fn new(shared: StackShared, base: String) -> CeAnomalySubscriptionThresholdExpressionElCostCategoryElRef {
+impl terrars::Ref for CeAnomalySubscriptionThresholdExpressionElCostCategoryElRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> CeAnomalySubscriptionThresholdExpressionElCostCategoryElRef {
         CeAnomalySubscriptionThresholdExpressionElCostCategoryElRef {
             shared: shared,
             base: base.to_string(),
@@ -888,61 +988,67 @@ impl Ref for CeAnomalySubscriptionThresholdExpressionElCostCategoryElRef {
 }
 
 impl CeAnomalySubscriptionThresholdExpressionElCostCategoryElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `key` after provisioning.\n"]
-    pub fn key(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.key", self.base))
+    #[doc = "Get a reference to the value of field `key` after provisioning.\n"]
+    pub fn key(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.key", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `match_options` after provisioning.\n"]
-    pub fn match_options(&self) -> SetRef<PrimExpr<String>> {
-        SetRef::new(self.shared().clone(), format!("{}.match_options", self.base))
+    #[doc = "Get a reference to the value of field `match_options` after provisioning.\n"]
+    pub fn match_options(&self) -> terrars::SetRef<terrars::PrimExpr<std::string::String>> {
+        terrars::SetRef::new(self.shared().clone(), format!("{}.match_options", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `values` after provisioning.\n"]
-    pub fn values(&self) -> SetRef<PrimExpr<String>> {
-        SetRef::new(self.shared().clone(), format!("{}.values", self.base))
+    #[doc = "Get a reference to the value of field `values` after provisioning.\n"]
+    pub fn values(&self) -> terrars::SetRef<terrars::PrimExpr<std::string::String>> {
+        terrars::SetRef::new(self.shared().clone(), format!("{}.values", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct CeAnomalySubscriptionThresholdExpressionElDimensionEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    key: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    match_options: Option<SetField<PrimField<String>>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    values: Option<SetField<PrimField<String>>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    key: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    match_options: std::option::Option<terrars::SetField<terrars::PrimField<std::string::String>>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    values: std::option::Option<terrars::SetField<terrars::PrimField<std::string::String>>>,
 }
 
 impl CeAnomalySubscriptionThresholdExpressionElDimensionEl {
-    #[doc= "Set the field `key`.\n"]
-    pub fn set_key(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.key = Some(v.into());
+    #[doc = "Set the field `key`.\n"]
+    pub fn set_key(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.key = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `match_options`.\n"]
-    pub fn set_match_options(mut self, v: impl Into<SetField<PrimField<String>>>) -> Self {
-        self.match_options = Some(v.into());
+    #[doc = "Set the field `match_options`.\n"]
+    pub fn set_match_options(
+        mut self,
+        v: impl std::convert::Into<terrars::SetField<terrars::PrimField<std::string::String>>>,
+    ) -> Self {
+        self.match_options = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `values`.\n"]
-    pub fn set_values(mut self, v: impl Into<SetField<PrimField<String>>>) -> Self {
-        self.values = Some(v.into());
+    #[doc = "Set the field `values`.\n"]
+    pub fn set_values(
+        mut self,
+        v: impl std::convert::Into<terrars::SetField<terrars::PrimField<std::string::String>>>,
+    ) -> Self {
+        self.values = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl ToListMappable for CeAnomalySubscriptionThresholdExpressionElDimensionEl {
-    type O = BlockAssignable<CeAnomalySubscriptionThresholdExpressionElDimensionEl>;
+impl terrars::ToListMappable for CeAnomalySubscriptionThresholdExpressionElDimensionEl {
+    type O = terrars::BlockAssignable<CeAnomalySubscriptionThresholdExpressionElDimensionEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -963,12 +1069,15 @@ impl BuildCeAnomalySubscriptionThresholdExpressionElDimensionEl {
 }
 
 pub struct CeAnomalySubscriptionThresholdExpressionElDimensionElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for CeAnomalySubscriptionThresholdExpressionElDimensionElRef {
-    fn new(shared: StackShared, base: String) -> CeAnomalySubscriptionThresholdExpressionElDimensionElRef {
+impl terrars::Ref for CeAnomalySubscriptionThresholdExpressionElDimensionElRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> CeAnomalySubscriptionThresholdExpressionElDimensionElRef {
         CeAnomalySubscriptionThresholdExpressionElDimensionElRef {
             shared: shared,
             base: base.to_string(),
@@ -977,61 +1086,67 @@ impl Ref for CeAnomalySubscriptionThresholdExpressionElDimensionElRef {
 }
 
 impl CeAnomalySubscriptionThresholdExpressionElDimensionElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `key` after provisioning.\n"]
-    pub fn key(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.key", self.base))
+    #[doc = "Get a reference to the value of field `key` after provisioning.\n"]
+    pub fn key(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.key", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `match_options` after provisioning.\n"]
-    pub fn match_options(&self) -> SetRef<PrimExpr<String>> {
-        SetRef::new(self.shared().clone(), format!("{}.match_options", self.base))
+    #[doc = "Get a reference to the value of field `match_options` after provisioning.\n"]
+    pub fn match_options(&self) -> terrars::SetRef<terrars::PrimExpr<std::string::String>> {
+        terrars::SetRef::new(self.shared().clone(), format!("{}.match_options", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `values` after provisioning.\n"]
-    pub fn values(&self) -> SetRef<PrimExpr<String>> {
-        SetRef::new(self.shared().clone(), format!("{}.values", self.base))
+    #[doc = "Get a reference to the value of field `values` after provisioning.\n"]
+    pub fn values(&self) -> terrars::SetRef<terrars::PrimExpr<std::string::String>> {
+        terrars::SetRef::new(self.shared().clone(), format!("{}.values", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct CeAnomalySubscriptionThresholdExpressionElNotElCostCategoryEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    key: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    match_options: Option<SetField<PrimField<String>>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    values: Option<SetField<PrimField<String>>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    key: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    match_options: std::option::Option<terrars::SetField<terrars::PrimField<std::string::String>>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    values: std::option::Option<terrars::SetField<terrars::PrimField<std::string::String>>>,
 }
 
 impl CeAnomalySubscriptionThresholdExpressionElNotElCostCategoryEl {
-    #[doc= "Set the field `key`.\n"]
-    pub fn set_key(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.key = Some(v.into());
+    #[doc = "Set the field `key`.\n"]
+    pub fn set_key(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.key = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `match_options`.\n"]
-    pub fn set_match_options(mut self, v: impl Into<SetField<PrimField<String>>>) -> Self {
-        self.match_options = Some(v.into());
+    #[doc = "Set the field `match_options`.\n"]
+    pub fn set_match_options(
+        mut self,
+        v: impl std::convert::Into<terrars::SetField<terrars::PrimField<std::string::String>>>,
+    ) -> Self {
+        self.match_options = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `values`.\n"]
-    pub fn set_values(mut self, v: impl Into<SetField<PrimField<String>>>) -> Self {
-        self.values = Some(v.into());
+    #[doc = "Set the field `values`.\n"]
+    pub fn set_values(
+        mut self,
+        v: impl std::convert::Into<terrars::SetField<terrars::PrimField<std::string::String>>>,
+    ) -> Self {
+        self.values = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl ToListMappable for CeAnomalySubscriptionThresholdExpressionElNotElCostCategoryEl {
-    type O = BlockAssignable<CeAnomalySubscriptionThresholdExpressionElNotElCostCategoryEl>;
+impl terrars::ToListMappable for CeAnomalySubscriptionThresholdExpressionElNotElCostCategoryEl {
+    type O = terrars::BlockAssignable<CeAnomalySubscriptionThresholdExpressionElNotElCostCategoryEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -1052,12 +1167,15 @@ impl BuildCeAnomalySubscriptionThresholdExpressionElNotElCostCategoryEl {
 }
 
 pub struct CeAnomalySubscriptionThresholdExpressionElNotElCostCategoryElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for CeAnomalySubscriptionThresholdExpressionElNotElCostCategoryElRef {
-    fn new(shared: StackShared, base: String) -> CeAnomalySubscriptionThresholdExpressionElNotElCostCategoryElRef {
+impl terrars::Ref for CeAnomalySubscriptionThresholdExpressionElNotElCostCategoryElRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> CeAnomalySubscriptionThresholdExpressionElNotElCostCategoryElRef {
         CeAnomalySubscriptionThresholdExpressionElNotElCostCategoryElRef {
             shared: shared,
             base: base.to_string(),
@@ -1066,61 +1184,67 @@ impl Ref for CeAnomalySubscriptionThresholdExpressionElNotElCostCategoryElRef {
 }
 
 impl CeAnomalySubscriptionThresholdExpressionElNotElCostCategoryElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `key` after provisioning.\n"]
-    pub fn key(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.key", self.base))
+    #[doc = "Get a reference to the value of field `key` after provisioning.\n"]
+    pub fn key(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.key", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `match_options` after provisioning.\n"]
-    pub fn match_options(&self) -> SetRef<PrimExpr<String>> {
-        SetRef::new(self.shared().clone(), format!("{}.match_options", self.base))
+    #[doc = "Get a reference to the value of field `match_options` after provisioning.\n"]
+    pub fn match_options(&self) -> terrars::SetRef<terrars::PrimExpr<std::string::String>> {
+        terrars::SetRef::new(self.shared().clone(), format!("{}.match_options", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `values` after provisioning.\n"]
-    pub fn values(&self) -> SetRef<PrimExpr<String>> {
-        SetRef::new(self.shared().clone(), format!("{}.values", self.base))
+    #[doc = "Get a reference to the value of field `values` after provisioning.\n"]
+    pub fn values(&self) -> terrars::SetRef<terrars::PrimExpr<std::string::String>> {
+        terrars::SetRef::new(self.shared().clone(), format!("{}.values", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct CeAnomalySubscriptionThresholdExpressionElNotElDimensionEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    key: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    match_options: Option<SetField<PrimField<String>>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    values: Option<SetField<PrimField<String>>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    key: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    match_options: std::option::Option<terrars::SetField<terrars::PrimField<std::string::String>>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    values: std::option::Option<terrars::SetField<terrars::PrimField<std::string::String>>>,
 }
 
 impl CeAnomalySubscriptionThresholdExpressionElNotElDimensionEl {
-    #[doc= "Set the field `key`.\n"]
-    pub fn set_key(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.key = Some(v.into());
+    #[doc = "Set the field `key`.\n"]
+    pub fn set_key(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.key = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `match_options`.\n"]
-    pub fn set_match_options(mut self, v: impl Into<SetField<PrimField<String>>>) -> Self {
-        self.match_options = Some(v.into());
+    #[doc = "Set the field `match_options`.\n"]
+    pub fn set_match_options(
+        mut self,
+        v: impl std::convert::Into<terrars::SetField<terrars::PrimField<std::string::String>>>,
+    ) -> Self {
+        self.match_options = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `values`.\n"]
-    pub fn set_values(mut self, v: impl Into<SetField<PrimField<String>>>) -> Self {
-        self.values = Some(v.into());
+    #[doc = "Set the field `values`.\n"]
+    pub fn set_values(
+        mut self,
+        v: impl std::convert::Into<terrars::SetField<terrars::PrimField<std::string::String>>>,
+    ) -> Self {
+        self.values = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl ToListMappable for CeAnomalySubscriptionThresholdExpressionElNotElDimensionEl {
-    type O = BlockAssignable<CeAnomalySubscriptionThresholdExpressionElNotElDimensionEl>;
+impl terrars::ToListMappable for CeAnomalySubscriptionThresholdExpressionElNotElDimensionEl {
+    type O = terrars::BlockAssignable<CeAnomalySubscriptionThresholdExpressionElNotElDimensionEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -1141,12 +1265,15 @@ impl BuildCeAnomalySubscriptionThresholdExpressionElNotElDimensionEl {
 }
 
 pub struct CeAnomalySubscriptionThresholdExpressionElNotElDimensionElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for CeAnomalySubscriptionThresholdExpressionElNotElDimensionElRef {
-    fn new(shared: StackShared, base: String) -> CeAnomalySubscriptionThresholdExpressionElNotElDimensionElRef {
+impl terrars::Ref for CeAnomalySubscriptionThresholdExpressionElNotElDimensionElRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> CeAnomalySubscriptionThresholdExpressionElNotElDimensionElRef {
         CeAnomalySubscriptionThresholdExpressionElNotElDimensionElRef {
             shared: shared,
             base: base.to_string(),
@@ -1155,61 +1282,67 @@ impl Ref for CeAnomalySubscriptionThresholdExpressionElNotElDimensionElRef {
 }
 
 impl CeAnomalySubscriptionThresholdExpressionElNotElDimensionElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `key` after provisioning.\n"]
-    pub fn key(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.key", self.base))
+    #[doc = "Get a reference to the value of field `key` after provisioning.\n"]
+    pub fn key(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.key", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `match_options` after provisioning.\n"]
-    pub fn match_options(&self) -> SetRef<PrimExpr<String>> {
-        SetRef::new(self.shared().clone(), format!("{}.match_options", self.base))
+    #[doc = "Get a reference to the value of field `match_options` after provisioning.\n"]
+    pub fn match_options(&self) -> terrars::SetRef<terrars::PrimExpr<std::string::String>> {
+        terrars::SetRef::new(self.shared().clone(), format!("{}.match_options", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `values` after provisioning.\n"]
-    pub fn values(&self) -> SetRef<PrimExpr<String>> {
-        SetRef::new(self.shared().clone(), format!("{}.values", self.base))
+    #[doc = "Get a reference to the value of field `values` after provisioning.\n"]
+    pub fn values(&self) -> terrars::SetRef<terrars::PrimExpr<std::string::String>> {
+        terrars::SetRef::new(self.shared().clone(), format!("{}.values", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct CeAnomalySubscriptionThresholdExpressionElNotElTagsEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    key: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    match_options: Option<SetField<PrimField<String>>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    values: Option<SetField<PrimField<String>>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    key: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    match_options: std::option::Option<terrars::SetField<terrars::PrimField<std::string::String>>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    values: std::option::Option<terrars::SetField<terrars::PrimField<std::string::String>>>,
 }
 
 impl CeAnomalySubscriptionThresholdExpressionElNotElTagsEl {
-    #[doc= "Set the field `key`.\n"]
-    pub fn set_key(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.key = Some(v.into());
+    #[doc = "Set the field `key`.\n"]
+    pub fn set_key(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.key = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `match_options`.\n"]
-    pub fn set_match_options(mut self, v: impl Into<SetField<PrimField<String>>>) -> Self {
-        self.match_options = Some(v.into());
+    #[doc = "Set the field `match_options`.\n"]
+    pub fn set_match_options(
+        mut self,
+        v: impl std::convert::Into<terrars::SetField<terrars::PrimField<std::string::String>>>,
+    ) -> Self {
+        self.match_options = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `values`.\n"]
-    pub fn set_values(mut self, v: impl Into<SetField<PrimField<String>>>) -> Self {
-        self.values = Some(v.into());
+    #[doc = "Set the field `values`.\n"]
+    pub fn set_values(
+        mut self,
+        v: impl std::convert::Into<terrars::SetField<terrars::PrimField<std::string::String>>>,
+    ) -> Self {
+        self.values = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl ToListMappable for CeAnomalySubscriptionThresholdExpressionElNotElTagsEl {
-    type O = BlockAssignable<CeAnomalySubscriptionThresholdExpressionElNotElTagsEl>;
+impl terrars::ToListMappable for CeAnomalySubscriptionThresholdExpressionElNotElTagsEl {
+    type O = terrars::BlockAssignable<CeAnomalySubscriptionThresholdExpressionElNotElTagsEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -1230,12 +1363,15 @@ impl BuildCeAnomalySubscriptionThresholdExpressionElNotElTagsEl {
 }
 
 pub struct CeAnomalySubscriptionThresholdExpressionElNotElTagsElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for CeAnomalySubscriptionThresholdExpressionElNotElTagsElRef {
-    fn new(shared: StackShared, base: String) -> CeAnomalySubscriptionThresholdExpressionElNotElTagsElRef {
+impl terrars::Ref for CeAnomalySubscriptionThresholdExpressionElNotElTagsElRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> CeAnomalySubscriptionThresholdExpressionElNotElTagsElRef {
         CeAnomalySubscriptionThresholdExpressionElNotElTagsElRef {
             shared: shared,
             base: base.to_string(),
@@ -1244,99 +1380,113 @@ impl Ref for CeAnomalySubscriptionThresholdExpressionElNotElTagsElRef {
 }
 
 impl CeAnomalySubscriptionThresholdExpressionElNotElTagsElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `key` after provisioning.\n"]
-    pub fn key(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.key", self.base))
+    #[doc = "Get a reference to the value of field `key` after provisioning.\n"]
+    pub fn key(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.key", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `match_options` after provisioning.\n"]
-    pub fn match_options(&self) -> SetRef<PrimExpr<String>> {
-        SetRef::new(self.shared().clone(), format!("{}.match_options", self.base))
+    #[doc = "Get a reference to the value of field `match_options` after provisioning.\n"]
+    pub fn match_options(&self) -> terrars::SetRef<terrars::PrimExpr<std::string::String>> {
+        terrars::SetRef::new(self.shared().clone(), format!("{}.match_options", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `values` after provisioning.\n"]
-    pub fn values(&self) -> SetRef<PrimExpr<String>> {
-        SetRef::new(self.shared().clone(), format!("{}.values", self.base))
+    #[doc = "Get a reference to the value of field `values` after provisioning.\n"]
+    pub fn values(&self) -> terrars::SetRef<terrars::PrimExpr<std::string::String>> {
+        terrars::SetRef::new(self.shared().clone(), format!("{}.values", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
 struct CeAnomalySubscriptionThresholdExpressionElNotElDynamic {
-    cost_category: Option<DynamicBlock<CeAnomalySubscriptionThresholdExpressionElNotElCostCategoryEl>>,
-    dimension: Option<DynamicBlock<CeAnomalySubscriptionThresholdExpressionElNotElDimensionEl>>,
-    tags: Option<DynamicBlock<CeAnomalySubscriptionThresholdExpressionElNotElTagsEl>>,
+    cost_category: std
+    ::option
+    ::Option<terrars::DynamicBlock<CeAnomalySubscriptionThresholdExpressionElNotElCostCategoryEl>>,
+    dimension: std
+    ::option
+    ::Option<terrars::DynamicBlock<CeAnomalySubscriptionThresholdExpressionElNotElDimensionEl>>,
+    tags: std::option::Option<terrars::DynamicBlock<CeAnomalySubscriptionThresholdExpressionElNotElTagsEl>>,
 }
 
 #[derive(Serialize)]
 pub struct CeAnomalySubscriptionThresholdExpressionElNotEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    cost_category: Option<Vec<CeAnomalySubscriptionThresholdExpressionElNotElCostCategoryEl>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    dimension: Option<Vec<CeAnomalySubscriptionThresholdExpressionElNotElDimensionEl>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    tags: Option<Vec<CeAnomalySubscriptionThresholdExpressionElNotElTagsEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    cost_category: std::option::Option<std::vec::Vec<CeAnomalySubscriptionThresholdExpressionElNotElCostCategoryEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    dimension: std::option::Option<std::vec::Vec<CeAnomalySubscriptionThresholdExpressionElNotElDimensionEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    tags: std::option::Option<std::vec::Vec<CeAnomalySubscriptionThresholdExpressionElNotElTagsEl>>,
     dynamic: CeAnomalySubscriptionThresholdExpressionElNotElDynamic,
 }
 
 impl CeAnomalySubscriptionThresholdExpressionElNotEl {
-    #[doc= "Set the field `cost_category`.\n"]
+    #[doc = "Set the field `cost_category`.\n"]
     pub fn set_cost_category(
         mut self,
-        v: impl Into<BlockAssignable<CeAnomalySubscriptionThresholdExpressionElNotElCostCategoryEl>>,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<terrars::BlockAssignable<CeAnomalySubscriptionThresholdExpressionElNotElCostCategoryEl>>,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.cost_category = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.cost_category = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.cost_category = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.cost_category = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Set the field `dimension`.\n"]
+    #[doc = "Set the field `dimension`.\n"]
     pub fn set_dimension(
         mut self,
-        v: impl Into<BlockAssignable<CeAnomalySubscriptionThresholdExpressionElNotElDimensionEl>>,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<terrars::BlockAssignable<CeAnomalySubscriptionThresholdExpressionElNotElDimensionEl>>,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.dimension = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.dimension = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.dimension = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.dimension = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Set the field `tags`.\n"]
+    #[doc = "Set the field `tags`.\n"]
     pub fn set_tags(
         mut self,
-        v: impl Into<BlockAssignable<CeAnomalySubscriptionThresholdExpressionElNotElTagsEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<CeAnomalySubscriptionThresholdExpressionElNotElTagsEl>>,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.tags = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.tags = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.tags = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.tags = std::option::Option::Some(d);
             },
         }
         self
     }
 }
 
-impl ToListMappable for CeAnomalySubscriptionThresholdExpressionElNotEl {
-    type O = BlockAssignable<CeAnomalySubscriptionThresholdExpressionElNotEl>;
+impl terrars::ToListMappable for CeAnomalySubscriptionThresholdExpressionElNotEl {
+    type O = terrars::BlockAssignable<CeAnomalySubscriptionThresholdExpressionElNotEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -1352,18 +1502,21 @@ impl BuildCeAnomalySubscriptionThresholdExpressionElNotEl {
             cost_category: core::default::Default::default(),
             dimension: core::default::Default::default(),
             tags: core::default::Default::default(),
-            dynamic: Default::default(),
+            dynamic: core::default::Default::default(),
         }
     }
 }
 
 pub struct CeAnomalySubscriptionThresholdExpressionElNotElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for CeAnomalySubscriptionThresholdExpressionElNotElRef {
-    fn new(shared: StackShared, base: String) -> CeAnomalySubscriptionThresholdExpressionElNotElRef {
+impl terrars::Ref for CeAnomalySubscriptionThresholdExpressionElNotElRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> CeAnomalySubscriptionThresholdExpressionElNotElRef {
         CeAnomalySubscriptionThresholdExpressionElNotElRef {
             shared: shared,
             base: base.to_string(),
@@ -1372,61 +1525,67 @@ impl Ref for CeAnomalySubscriptionThresholdExpressionElNotElRef {
 }
 
 impl CeAnomalySubscriptionThresholdExpressionElNotElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `cost_category` after provisioning.\n"]
-    pub fn cost_category(&self) -> ListRef<CeAnomalySubscriptionThresholdExpressionElNotElCostCategoryElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.cost_category", self.base))
+    #[doc = "Get a reference to the value of field `cost_category` after provisioning.\n"]
+    pub fn cost_category(&self) -> terrars::ListRef<CeAnomalySubscriptionThresholdExpressionElNotElCostCategoryElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.cost_category", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `dimension` after provisioning.\n"]
-    pub fn dimension(&self) -> ListRef<CeAnomalySubscriptionThresholdExpressionElNotElDimensionElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.dimension", self.base))
+    #[doc = "Get a reference to the value of field `dimension` after provisioning.\n"]
+    pub fn dimension(&self) -> terrars::ListRef<CeAnomalySubscriptionThresholdExpressionElNotElDimensionElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.dimension", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `tags` after provisioning.\n"]
-    pub fn tags(&self) -> ListRef<CeAnomalySubscriptionThresholdExpressionElNotElTagsElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.tags", self.base))
+    #[doc = "Get a reference to the value of field `tags` after provisioning.\n"]
+    pub fn tags(&self) -> terrars::ListRef<CeAnomalySubscriptionThresholdExpressionElNotElTagsElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.tags", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct CeAnomalySubscriptionThresholdExpressionElOrElCostCategoryEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    key: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    match_options: Option<SetField<PrimField<String>>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    values: Option<SetField<PrimField<String>>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    key: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    match_options: std::option::Option<terrars::SetField<terrars::PrimField<std::string::String>>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    values: std::option::Option<terrars::SetField<terrars::PrimField<std::string::String>>>,
 }
 
 impl CeAnomalySubscriptionThresholdExpressionElOrElCostCategoryEl {
-    #[doc= "Set the field `key`.\n"]
-    pub fn set_key(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.key = Some(v.into());
+    #[doc = "Set the field `key`.\n"]
+    pub fn set_key(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.key = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `match_options`.\n"]
-    pub fn set_match_options(mut self, v: impl Into<SetField<PrimField<String>>>) -> Self {
-        self.match_options = Some(v.into());
+    #[doc = "Set the field `match_options`.\n"]
+    pub fn set_match_options(
+        mut self,
+        v: impl std::convert::Into<terrars::SetField<terrars::PrimField<std::string::String>>>,
+    ) -> Self {
+        self.match_options = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `values`.\n"]
-    pub fn set_values(mut self, v: impl Into<SetField<PrimField<String>>>) -> Self {
-        self.values = Some(v.into());
+    #[doc = "Set the field `values`.\n"]
+    pub fn set_values(
+        mut self,
+        v: impl std::convert::Into<terrars::SetField<terrars::PrimField<std::string::String>>>,
+    ) -> Self {
+        self.values = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl ToListMappable for CeAnomalySubscriptionThresholdExpressionElOrElCostCategoryEl {
-    type O = BlockAssignable<CeAnomalySubscriptionThresholdExpressionElOrElCostCategoryEl>;
+impl terrars::ToListMappable for CeAnomalySubscriptionThresholdExpressionElOrElCostCategoryEl {
+    type O = terrars::BlockAssignable<CeAnomalySubscriptionThresholdExpressionElOrElCostCategoryEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -1447,12 +1606,15 @@ impl BuildCeAnomalySubscriptionThresholdExpressionElOrElCostCategoryEl {
 }
 
 pub struct CeAnomalySubscriptionThresholdExpressionElOrElCostCategoryElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for CeAnomalySubscriptionThresholdExpressionElOrElCostCategoryElRef {
-    fn new(shared: StackShared, base: String) -> CeAnomalySubscriptionThresholdExpressionElOrElCostCategoryElRef {
+impl terrars::Ref for CeAnomalySubscriptionThresholdExpressionElOrElCostCategoryElRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> CeAnomalySubscriptionThresholdExpressionElOrElCostCategoryElRef {
         CeAnomalySubscriptionThresholdExpressionElOrElCostCategoryElRef {
             shared: shared,
             base: base.to_string(),
@@ -1461,61 +1623,67 @@ impl Ref for CeAnomalySubscriptionThresholdExpressionElOrElCostCategoryElRef {
 }
 
 impl CeAnomalySubscriptionThresholdExpressionElOrElCostCategoryElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `key` after provisioning.\n"]
-    pub fn key(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.key", self.base))
+    #[doc = "Get a reference to the value of field `key` after provisioning.\n"]
+    pub fn key(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.key", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `match_options` after provisioning.\n"]
-    pub fn match_options(&self) -> SetRef<PrimExpr<String>> {
-        SetRef::new(self.shared().clone(), format!("{}.match_options", self.base))
+    #[doc = "Get a reference to the value of field `match_options` after provisioning.\n"]
+    pub fn match_options(&self) -> terrars::SetRef<terrars::PrimExpr<std::string::String>> {
+        terrars::SetRef::new(self.shared().clone(), format!("{}.match_options", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `values` after provisioning.\n"]
-    pub fn values(&self) -> SetRef<PrimExpr<String>> {
-        SetRef::new(self.shared().clone(), format!("{}.values", self.base))
+    #[doc = "Get a reference to the value of field `values` after provisioning.\n"]
+    pub fn values(&self) -> terrars::SetRef<terrars::PrimExpr<std::string::String>> {
+        terrars::SetRef::new(self.shared().clone(), format!("{}.values", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct CeAnomalySubscriptionThresholdExpressionElOrElDimensionEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    key: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    match_options: Option<SetField<PrimField<String>>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    values: Option<SetField<PrimField<String>>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    key: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    match_options: std::option::Option<terrars::SetField<terrars::PrimField<std::string::String>>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    values: std::option::Option<terrars::SetField<terrars::PrimField<std::string::String>>>,
 }
 
 impl CeAnomalySubscriptionThresholdExpressionElOrElDimensionEl {
-    #[doc= "Set the field `key`.\n"]
-    pub fn set_key(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.key = Some(v.into());
+    #[doc = "Set the field `key`.\n"]
+    pub fn set_key(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.key = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `match_options`.\n"]
-    pub fn set_match_options(mut self, v: impl Into<SetField<PrimField<String>>>) -> Self {
-        self.match_options = Some(v.into());
+    #[doc = "Set the field `match_options`.\n"]
+    pub fn set_match_options(
+        mut self,
+        v: impl std::convert::Into<terrars::SetField<terrars::PrimField<std::string::String>>>,
+    ) -> Self {
+        self.match_options = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `values`.\n"]
-    pub fn set_values(mut self, v: impl Into<SetField<PrimField<String>>>) -> Self {
-        self.values = Some(v.into());
+    #[doc = "Set the field `values`.\n"]
+    pub fn set_values(
+        mut self,
+        v: impl std::convert::Into<terrars::SetField<terrars::PrimField<std::string::String>>>,
+    ) -> Self {
+        self.values = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl ToListMappable for CeAnomalySubscriptionThresholdExpressionElOrElDimensionEl {
-    type O = BlockAssignable<CeAnomalySubscriptionThresholdExpressionElOrElDimensionEl>;
+impl terrars::ToListMappable for CeAnomalySubscriptionThresholdExpressionElOrElDimensionEl {
+    type O = terrars::BlockAssignable<CeAnomalySubscriptionThresholdExpressionElOrElDimensionEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -1536,12 +1704,15 @@ impl BuildCeAnomalySubscriptionThresholdExpressionElOrElDimensionEl {
 }
 
 pub struct CeAnomalySubscriptionThresholdExpressionElOrElDimensionElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for CeAnomalySubscriptionThresholdExpressionElOrElDimensionElRef {
-    fn new(shared: StackShared, base: String) -> CeAnomalySubscriptionThresholdExpressionElOrElDimensionElRef {
+impl terrars::Ref for CeAnomalySubscriptionThresholdExpressionElOrElDimensionElRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> CeAnomalySubscriptionThresholdExpressionElOrElDimensionElRef {
         CeAnomalySubscriptionThresholdExpressionElOrElDimensionElRef {
             shared: shared,
             base: base.to_string(),
@@ -1550,61 +1721,67 @@ impl Ref for CeAnomalySubscriptionThresholdExpressionElOrElDimensionElRef {
 }
 
 impl CeAnomalySubscriptionThresholdExpressionElOrElDimensionElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `key` after provisioning.\n"]
-    pub fn key(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.key", self.base))
+    #[doc = "Get a reference to the value of field `key` after provisioning.\n"]
+    pub fn key(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.key", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `match_options` after provisioning.\n"]
-    pub fn match_options(&self) -> SetRef<PrimExpr<String>> {
-        SetRef::new(self.shared().clone(), format!("{}.match_options", self.base))
+    #[doc = "Get a reference to the value of field `match_options` after provisioning.\n"]
+    pub fn match_options(&self) -> terrars::SetRef<terrars::PrimExpr<std::string::String>> {
+        terrars::SetRef::new(self.shared().clone(), format!("{}.match_options", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `values` after provisioning.\n"]
-    pub fn values(&self) -> SetRef<PrimExpr<String>> {
-        SetRef::new(self.shared().clone(), format!("{}.values", self.base))
+    #[doc = "Get a reference to the value of field `values` after provisioning.\n"]
+    pub fn values(&self) -> terrars::SetRef<terrars::PrimExpr<std::string::String>> {
+        terrars::SetRef::new(self.shared().clone(), format!("{}.values", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct CeAnomalySubscriptionThresholdExpressionElOrElTagsEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    key: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    match_options: Option<SetField<PrimField<String>>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    values: Option<SetField<PrimField<String>>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    key: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    match_options: std::option::Option<terrars::SetField<terrars::PrimField<std::string::String>>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    values: std::option::Option<terrars::SetField<terrars::PrimField<std::string::String>>>,
 }
 
 impl CeAnomalySubscriptionThresholdExpressionElOrElTagsEl {
-    #[doc= "Set the field `key`.\n"]
-    pub fn set_key(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.key = Some(v.into());
+    #[doc = "Set the field `key`.\n"]
+    pub fn set_key(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.key = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `match_options`.\n"]
-    pub fn set_match_options(mut self, v: impl Into<SetField<PrimField<String>>>) -> Self {
-        self.match_options = Some(v.into());
+    #[doc = "Set the field `match_options`.\n"]
+    pub fn set_match_options(
+        mut self,
+        v: impl std::convert::Into<terrars::SetField<terrars::PrimField<std::string::String>>>,
+    ) -> Self {
+        self.match_options = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `values`.\n"]
-    pub fn set_values(mut self, v: impl Into<SetField<PrimField<String>>>) -> Self {
-        self.values = Some(v.into());
+    #[doc = "Set the field `values`.\n"]
+    pub fn set_values(
+        mut self,
+        v: impl std::convert::Into<terrars::SetField<terrars::PrimField<std::string::String>>>,
+    ) -> Self {
+        self.values = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl ToListMappable for CeAnomalySubscriptionThresholdExpressionElOrElTagsEl {
-    type O = BlockAssignable<CeAnomalySubscriptionThresholdExpressionElOrElTagsEl>;
+impl terrars::ToListMappable for CeAnomalySubscriptionThresholdExpressionElOrElTagsEl {
+    type O = terrars::BlockAssignable<CeAnomalySubscriptionThresholdExpressionElOrElTagsEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -1625,12 +1802,15 @@ impl BuildCeAnomalySubscriptionThresholdExpressionElOrElTagsEl {
 }
 
 pub struct CeAnomalySubscriptionThresholdExpressionElOrElTagsElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for CeAnomalySubscriptionThresholdExpressionElOrElTagsElRef {
-    fn new(shared: StackShared, base: String) -> CeAnomalySubscriptionThresholdExpressionElOrElTagsElRef {
+impl terrars::Ref for CeAnomalySubscriptionThresholdExpressionElOrElTagsElRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> CeAnomalySubscriptionThresholdExpressionElOrElTagsElRef {
         CeAnomalySubscriptionThresholdExpressionElOrElTagsElRef {
             shared: shared,
             base: base.to_string(),
@@ -1639,99 +1819,111 @@ impl Ref for CeAnomalySubscriptionThresholdExpressionElOrElTagsElRef {
 }
 
 impl CeAnomalySubscriptionThresholdExpressionElOrElTagsElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `key` after provisioning.\n"]
-    pub fn key(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.key", self.base))
+    #[doc = "Get a reference to the value of field `key` after provisioning.\n"]
+    pub fn key(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.key", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `match_options` after provisioning.\n"]
-    pub fn match_options(&self) -> SetRef<PrimExpr<String>> {
-        SetRef::new(self.shared().clone(), format!("{}.match_options", self.base))
+    #[doc = "Get a reference to the value of field `match_options` after provisioning.\n"]
+    pub fn match_options(&self) -> terrars::SetRef<terrars::PrimExpr<std::string::String>> {
+        terrars::SetRef::new(self.shared().clone(), format!("{}.match_options", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `values` after provisioning.\n"]
-    pub fn values(&self) -> SetRef<PrimExpr<String>> {
-        SetRef::new(self.shared().clone(), format!("{}.values", self.base))
+    #[doc = "Get a reference to the value of field `values` after provisioning.\n"]
+    pub fn values(&self) -> terrars::SetRef<terrars::PrimExpr<std::string::String>> {
+        terrars::SetRef::new(self.shared().clone(), format!("{}.values", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
 struct CeAnomalySubscriptionThresholdExpressionElOrElDynamic {
-    cost_category: Option<DynamicBlock<CeAnomalySubscriptionThresholdExpressionElOrElCostCategoryEl>>,
-    dimension: Option<DynamicBlock<CeAnomalySubscriptionThresholdExpressionElOrElDimensionEl>>,
-    tags: Option<DynamicBlock<CeAnomalySubscriptionThresholdExpressionElOrElTagsEl>>,
+    cost_category: std
+    ::option
+    ::Option<terrars::DynamicBlock<CeAnomalySubscriptionThresholdExpressionElOrElCostCategoryEl>>,
+    dimension: std::option::Option<terrars::DynamicBlock<CeAnomalySubscriptionThresholdExpressionElOrElDimensionEl>>,
+    tags: std::option::Option<terrars::DynamicBlock<CeAnomalySubscriptionThresholdExpressionElOrElTagsEl>>,
 }
 
 #[derive(Serialize)]
 pub struct CeAnomalySubscriptionThresholdExpressionElOrEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    cost_category: Option<Vec<CeAnomalySubscriptionThresholdExpressionElOrElCostCategoryEl>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    dimension: Option<Vec<CeAnomalySubscriptionThresholdExpressionElOrElDimensionEl>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    tags: Option<Vec<CeAnomalySubscriptionThresholdExpressionElOrElTagsEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    cost_category: std::option::Option<std::vec::Vec<CeAnomalySubscriptionThresholdExpressionElOrElCostCategoryEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    dimension: std::option::Option<std::vec::Vec<CeAnomalySubscriptionThresholdExpressionElOrElDimensionEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    tags: std::option::Option<std::vec::Vec<CeAnomalySubscriptionThresholdExpressionElOrElTagsEl>>,
     dynamic: CeAnomalySubscriptionThresholdExpressionElOrElDynamic,
 }
 
 impl CeAnomalySubscriptionThresholdExpressionElOrEl {
-    #[doc= "Set the field `cost_category`.\n"]
+    #[doc = "Set the field `cost_category`.\n"]
     pub fn set_cost_category(
         mut self,
-        v: impl Into<BlockAssignable<CeAnomalySubscriptionThresholdExpressionElOrElCostCategoryEl>>,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<terrars::BlockAssignable<CeAnomalySubscriptionThresholdExpressionElOrElCostCategoryEl>>,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.cost_category = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.cost_category = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.cost_category = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.cost_category = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Set the field `dimension`.\n"]
+    #[doc = "Set the field `dimension`.\n"]
     pub fn set_dimension(
         mut self,
-        v: impl Into<BlockAssignable<CeAnomalySubscriptionThresholdExpressionElOrElDimensionEl>>,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<terrars::BlockAssignable<CeAnomalySubscriptionThresholdExpressionElOrElDimensionEl>>,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.dimension = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.dimension = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.dimension = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.dimension = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Set the field `tags`.\n"]
+    #[doc = "Set the field `tags`.\n"]
     pub fn set_tags(
         mut self,
-        v: impl Into<BlockAssignable<CeAnomalySubscriptionThresholdExpressionElOrElTagsEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<CeAnomalySubscriptionThresholdExpressionElOrElTagsEl>>,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.tags = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.tags = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.tags = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.tags = std::option::Option::Some(d);
             },
         }
         self
     }
 }
 
-impl ToListMappable for CeAnomalySubscriptionThresholdExpressionElOrEl {
-    type O = BlockAssignable<CeAnomalySubscriptionThresholdExpressionElOrEl>;
+impl terrars::ToListMappable for CeAnomalySubscriptionThresholdExpressionElOrEl {
+    type O = terrars::BlockAssignable<CeAnomalySubscriptionThresholdExpressionElOrEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -1747,18 +1939,21 @@ impl BuildCeAnomalySubscriptionThresholdExpressionElOrEl {
             cost_category: core::default::Default::default(),
             dimension: core::default::Default::default(),
             tags: core::default::Default::default(),
-            dynamic: Default::default(),
+            dynamic: core::default::Default::default(),
         }
     }
 }
 
 pub struct CeAnomalySubscriptionThresholdExpressionElOrElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for CeAnomalySubscriptionThresholdExpressionElOrElRef {
-    fn new(shared: StackShared, base: String) -> CeAnomalySubscriptionThresholdExpressionElOrElRef {
+impl terrars::Ref for CeAnomalySubscriptionThresholdExpressionElOrElRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> CeAnomalySubscriptionThresholdExpressionElOrElRef {
         CeAnomalySubscriptionThresholdExpressionElOrElRef {
             shared: shared,
             base: base.to_string(),
@@ -1767,61 +1962,67 @@ impl Ref for CeAnomalySubscriptionThresholdExpressionElOrElRef {
 }
 
 impl CeAnomalySubscriptionThresholdExpressionElOrElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `cost_category` after provisioning.\n"]
-    pub fn cost_category(&self) -> ListRef<CeAnomalySubscriptionThresholdExpressionElOrElCostCategoryElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.cost_category", self.base))
+    #[doc = "Get a reference to the value of field `cost_category` after provisioning.\n"]
+    pub fn cost_category(&self) -> terrars::ListRef<CeAnomalySubscriptionThresholdExpressionElOrElCostCategoryElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.cost_category", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `dimension` after provisioning.\n"]
-    pub fn dimension(&self) -> ListRef<CeAnomalySubscriptionThresholdExpressionElOrElDimensionElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.dimension", self.base))
+    #[doc = "Get a reference to the value of field `dimension` after provisioning.\n"]
+    pub fn dimension(&self) -> terrars::ListRef<CeAnomalySubscriptionThresholdExpressionElOrElDimensionElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.dimension", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `tags` after provisioning.\n"]
-    pub fn tags(&self) -> ListRef<CeAnomalySubscriptionThresholdExpressionElOrElTagsElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.tags", self.base))
+    #[doc = "Get a reference to the value of field `tags` after provisioning.\n"]
+    pub fn tags(&self) -> terrars::ListRef<CeAnomalySubscriptionThresholdExpressionElOrElTagsElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.tags", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct CeAnomalySubscriptionThresholdExpressionElTagsEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    key: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    match_options: Option<SetField<PrimField<String>>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    values: Option<SetField<PrimField<String>>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    key: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    match_options: std::option::Option<terrars::SetField<terrars::PrimField<std::string::String>>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    values: std::option::Option<terrars::SetField<terrars::PrimField<std::string::String>>>,
 }
 
 impl CeAnomalySubscriptionThresholdExpressionElTagsEl {
-    #[doc= "Set the field `key`.\n"]
-    pub fn set_key(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.key = Some(v.into());
+    #[doc = "Set the field `key`.\n"]
+    pub fn set_key(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.key = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `match_options`.\n"]
-    pub fn set_match_options(mut self, v: impl Into<SetField<PrimField<String>>>) -> Self {
-        self.match_options = Some(v.into());
+    #[doc = "Set the field `match_options`.\n"]
+    pub fn set_match_options(
+        mut self,
+        v: impl std::convert::Into<terrars::SetField<terrars::PrimField<std::string::String>>>,
+    ) -> Self {
+        self.match_options = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `values`.\n"]
-    pub fn set_values(mut self, v: impl Into<SetField<PrimField<String>>>) -> Self {
-        self.values = Some(v.into());
+    #[doc = "Set the field `values`.\n"]
+    pub fn set_values(
+        mut self,
+        v: impl std::convert::Into<terrars::SetField<terrars::PrimField<std::string::String>>>,
+    ) -> Self {
+        self.values = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl ToListMappable for CeAnomalySubscriptionThresholdExpressionElTagsEl {
-    type O = BlockAssignable<CeAnomalySubscriptionThresholdExpressionElTagsEl>;
+impl terrars::ToListMappable for CeAnomalySubscriptionThresholdExpressionElTagsEl {
+    type O = terrars::BlockAssignable<CeAnomalySubscriptionThresholdExpressionElTagsEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -1842,12 +2043,15 @@ impl BuildCeAnomalySubscriptionThresholdExpressionElTagsEl {
 }
 
 pub struct CeAnomalySubscriptionThresholdExpressionElTagsElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for CeAnomalySubscriptionThresholdExpressionElTagsElRef {
-    fn new(shared: StackShared, base: String) -> CeAnomalySubscriptionThresholdExpressionElTagsElRef {
+impl terrars::Ref for CeAnomalySubscriptionThresholdExpressionElTagsElRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> CeAnomalySubscriptionThresholdExpressionElTagsElRef {
         CeAnomalySubscriptionThresholdExpressionElTagsElRef {
             shared: shared,
             base: base.to_string(),
@@ -1856,144 +2060,163 @@ impl Ref for CeAnomalySubscriptionThresholdExpressionElTagsElRef {
 }
 
 impl CeAnomalySubscriptionThresholdExpressionElTagsElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `key` after provisioning.\n"]
-    pub fn key(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.key", self.base))
+    #[doc = "Get a reference to the value of field `key` after provisioning.\n"]
+    pub fn key(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.key", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `match_options` after provisioning.\n"]
-    pub fn match_options(&self) -> SetRef<PrimExpr<String>> {
-        SetRef::new(self.shared().clone(), format!("{}.match_options", self.base))
+    #[doc = "Get a reference to the value of field `match_options` after provisioning.\n"]
+    pub fn match_options(&self) -> terrars::SetRef<terrars::PrimExpr<std::string::String>> {
+        terrars::SetRef::new(self.shared().clone(), format!("{}.match_options", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `values` after provisioning.\n"]
-    pub fn values(&self) -> SetRef<PrimExpr<String>> {
-        SetRef::new(self.shared().clone(), format!("{}.values", self.base))
+    #[doc = "Get a reference to the value of field `values` after provisioning.\n"]
+    pub fn values(&self) -> terrars::SetRef<terrars::PrimExpr<std::string::String>> {
+        terrars::SetRef::new(self.shared().clone(), format!("{}.values", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
 struct CeAnomalySubscriptionThresholdExpressionElDynamic {
-    and: Option<DynamicBlock<CeAnomalySubscriptionThresholdExpressionElAndEl>>,
-    cost_category: Option<DynamicBlock<CeAnomalySubscriptionThresholdExpressionElCostCategoryEl>>,
-    dimension: Option<DynamicBlock<CeAnomalySubscriptionThresholdExpressionElDimensionEl>>,
-    not: Option<DynamicBlock<CeAnomalySubscriptionThresholdExpressionElNotEl>>,
-    or: Option<DynamicBlock<CeAnomalySubscriptionThresholdExpressionElOrEl>>,
-    tags: Option<DynamicBlock<CeAnomalySubscriptionThresholdExpressionElTagsEl>>,
+    and: std::option::Option<terrars::DynamicBlock<CeAnomalySubscriptionThresholdExpressionElAndEl>>,
+    cost_category: std
+    ::option
+    ::Option<terrars::DynamicBlock<CeAnomalySubscriptionThresholdExpressionElCostCategoryEl>>,
+    dimension: std::option::Option<terrars::DynamicBlock<CeAnomalySubscriptionThresholdExpressionElDimensionEl>>,
+    not: std::option::Option<terrars::DynamicBlock<CeAnomalySubscriptionThresholdExpressionElNotEl>>,
+    or: std::option::Option<terrars::DynamicBlock<CeAnomalySubscriptionThresholdExpressionElOrEl>>,
+    tags: std::option::Option<terrars::DynamicBlock<CeAnomalySubscriptionThresholdExpressionElTagsEl>>,
 }
 
 #[derive(Serialize)]
 pub struct CeAnomalySubscriptionThresholdExpressionEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    and: Option<Vec<CeAnomalySubscriptionThresholdExpressionElAndEl>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    cost_category: Option<Vec<CeAnomalySubscriptionThresholdExpressionElCostCategoryEl>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    dimension: Option<Vec<CeAnomalySubscriptionThresholdExpressionElDimensionEl>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    not: Option<Vec<CeAnomalySubscriptionThresholdExpressionElNotEl>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    or: Option<Vec<CeAnomalySubscriptionThresholdExpressionElOrEl>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    tags: Option<Vec<CeAnomalySubscriptionThresholdExpressionElTagsEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    and: std::option::Option<std::vec::Vec<CeAnomalySubscriptionThresholdExpressionElAndEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    cost_category: std::option::Option<std::vec::Vec<CeAnomalySubscriptionThresholdExpressionElCostCategoryEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    dimension: std::option::Option<std::vec::Vec<CeAnomalySubscriptionThresholdExpressionElDimensionEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    not: std::option::Option<std::vec::Vec<CeAnomalySubscriptionThresholdExpressionElNotEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    or: std::option::Option<std::vec::Vec<CeAnomalySubscriptionThresholdExpressionElOrEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    tags: std::option::Option<std::vec::Vec<CeAnomalySubscriptionThresholdExpressionElTagsEl>>,
     dynamic: CeAnomalySubscriptionThresholdExpressionElDynamic,
 }
 
 impl CeAnomalySubscriptionThresholdExpressionEl {
-    #[doc= "Set the field `and`.\n"]
-    pub fn set_and(mut self, v: impl Into<BlockAssignable<CeAnomalySubscriptionThresholdExpressionElAndEl>>) -> Self {
+    #[doc = "Set the field `and`.\n"]
+    pub fn set_and(
+        mut self,
+        v: impl std::convert::Into<terrars::BlockAssignable<CeAnomalySubscriptionThresholdExpressionElAndEl>>,
+    ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.and = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.and = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.and = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.and = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Set the field `cost_category`.\n"]
+    #[doc = "Set the field `cost_category`.\n"]
     pub fn set_cost_category(
         mut self,
-        v: impl Into<BlockAssignable<CeAnomalySubscriptionThresholdExpressionElCostCategoryEl>>,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<terrars::BlockAssignable<CeAnomalySubscriptionThresholdExpressionElCostCategoryEl>>,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.cost_category = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.cost_category = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.cost_category = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.cost_category = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Set the field `dimension`.\n"]
+    #[doc = "Set the field `dimension`.\n"]
     pub fn set_dimension(
         mut self,
-        v: impl Into<BlockAssignable<CeAnomalySubscriptionThresholdExpressionElDimensionEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<CeAnomalySubscriptionThresholdExpressionElDimensionEl>>,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.dimension = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.dimension = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.dimension = Some(d);
-            },
-        }
-        self
-    }
-
-    #[doc= "Set the field `not`.\n"]
-    pub fn set_not(mut self, v: impl Into<BlockAssignable<CeAnomalySubscriptionThresholdExpressionElNotEl>>) -> Self {
-        match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.not = Some(v);
-            },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.not = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.dimension = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Set the field `or`.\n"]
-    pub fn set_or(mut self, v: impl Into<BlockAssignable<CeAnomalySubscriptionThresholdExpressionElOrEl>>) -> Self {
+    #[doc = "Set the field `not`.\n"]
+    pub fn set_not(
+        mut self,
+        v: impl std::convert::Into<terrars::BlockAssignable<CeAnomalySubscriptionThresholdExpressionElNotEl>>,
+    ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.or = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.not = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.or = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.not = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Set the field `tags`.\n"]
-    pub fn set_tags(mut self, v: impl Into<BlockAssignable<CeAnomalySubscriptionThresholdExpressionElTagsEl>>) -> Self {
+    #[doc = "Set the field `or`.\n"]
+    pub fn set_or(
+        mut self,
+        v: impl std::convert::Into<terrars::BlockAssignable<CeAnomalySubscriptionThresholdExpressionElOrEl>>,
+    ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.tags = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.or = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.tags = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.or = std::option::Option::Some(d);
+            },
+        }
+        self
+    }
+
+    #[doc = "Set the field `tags`.\n"]
+    pub fn set_tags(
+        mut self,
+        v: impl std::convert::Into<terrars::BlockAssignable<CeAnomalySubscriptionThresholdExpressionElTagsEl>>,
+    ) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.tags = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.tags = std::option::Option::Some(d);
             },
         }
         self
     }
 }
 
-impl ToListMappable for CeAnomalySubscriptionThresholdExpressionEl {
-    type O = BlockAssignable<CeAnomalySubscriptionThresholdExpressionEl>;
+impl terrars::ToListMappable for CeAnomalySubscriptionThresholdExpressionEl {
+    type O = terrars::BlockAssignable<CeAnomalySubscriptionThresholdExpressionEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -2012,18 +2235,18 @@ impl BuildCeAnomalySubscriptionThresholdExpressionEl {
             not: core::default::Default::default(),
             or: core::default::Default::default(),
             tags: core::default::Default::default(),
-            dynamic: Default::default(),
+            dynamic: core::default::Default::default(),
         }
     }
 }
 
 pub struct CeAnomalySubscriptionThresholdExpressionElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for CeAnomalySubscriptionThresholdExpressionElRef {
-    fn new(shared: StackShared, base: String) -> CeAnomalySubscriptionThresholdExpressionElRef {
+impl terrars::Ref for CeAnomalySubscriptionThresholdExpressionElRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> CeAnomalySubscriptionThresholdExpressionElRef {
         CeAnomalySubscriptionThresholdExpressionElRef {
             shared: shared,
             base: base.to_string(),
@@ -2032,33 +2255,33 @@ impl Ref for CeAnomalySubscriptionThresholdExpressionElRef {
 }
 
 impl CeAnomalySubscriptionThresholdExpressionElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `cost_category` after provisioning.\n"]
-    pub fn cost_category(&self) -> ListRef<CeAnomalySubscriptionThresholdExpressionElCostCategoryElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.cost_category", self.base))
+    #[doc = "Get a reference to the value of field `cost_category` after provisioning.\n"]
+    pub fn cost_category(&self) -> terrars::ListRef<CeAnomalySubscriptionThresholdExpressionElCostCategoryElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.cost_category", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `dimension` after provisioning.\n"]
-    pub fn dimension(&self) -> ListRef<CeAnomalySubscriptionThresholdExpressionElDimensionElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.dimension", self.base))
+    #[doc = "Get a reference to the value of field `dimension` after provisioning.\n"]
+    pub fn dimension(&self) -> terrars::ListRef<CeAnomalySubscriptionThresholdExpressionElDimensionElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.dimension", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `not` after provisioning.\n"]
-    pub fn not(&self) -> ListRef<CeAnomalySubscriptionThresholdExpressionElNotElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.not", self.base))
+    #[doc = "Get a reference to the value of field `not` after provisioning.\n"]
+    pub fn not(&self) -> terrars::ListRef<CeAnomalySubscriptionThresholdExpressionElNotElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.not", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `tags` after provisioning.\n"]
-    pub fn tags(&self) -> ListRef<CeAnomalySubscriptionThresholdExpressionElTagsElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.tags", self.base))
+    #[doc = "Get a reference to the value of field `tags` after provisioning.\n"]
+    pub fn tags(&self) -> terrars::ListRef<CeAnomalySubscriptionThresholdExpressionElTagsElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.tags", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
 struct CeAnomalySubscriptionDynamic {
-    subscriber: Option<DynamicBlock<CeAnomalySubscriptionSubscriberEl>>,
-    threshold_expression: Option<DynamicBlock<CeAnomalySubscriptionThresholdExpressionEl>>,
+    subscriber: std::option::Option<terrars::DynamicBlock<CeAnomalySubscriptionSubscriberEl>>,
+    threshold_expression: std::option::Option<terrars::DynamicBlock<CeAnomalySubscriptionThresholdExpressionEl>>,
 }

@@ -1,52 +1,56 @@
 use serde::Serialize;
-use std::cell::RefCell;
-use std::rc::Rc;
-use terrars::*;
+use terrars::{
+    Referable as _,
+    Resource_ as _,
+    Ref as _,
+};
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
 struct OpensearchOutboundConnectionData {
-    #[serde(skip_serializing_if = "Vec::is_empty")]
-    depends_on: Vec<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    provider: Option<String>,
-    #[serde(skip_serializing_if = "SerdeSkipDefault::is_default")]
-    lifecycle: ResourceLifecycle,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    for_each: Option<String>,
-    connection_alias: PrimField<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    id: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    local_domain_info: Option<Vec<OpensearchOutboundConnectionLocalDomainInfoEl>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    remote_domain_info: Option<Vec<OpensearchOutboundConnectionRemoteDomainInfoEl>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    timeouts: Option<OpensearchOutboundConnectionTimeoutsEl>,
+    #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
+    depends_on: std::vec::Vec<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    provider: std::option::Option<std::string::String>,
+    #[serde(skip_serializing_if = "terrars::SerdeSkipDefault::is_default")]
+    lifecycle: terrars::ResourceLifecycle,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    for_each: std::option::Option<std::string::String>,
+    #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
+    provisioner: std::vec::Vec<terrars::Provisioner>,
+    connection_alias: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    id: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    local_domain_info: std::option::Option<std::vec::Vec<OpensearchOutboundConnectionLocalDomainInfoEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    remote_domain_info: std::option::Option<std::vec::Vec<OpensearchOutboundConnectionRemoteDomainInfoEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    timeouts: std::option::Option<OpensearchOutboundConnectionTimeoutsEl>,
     dynamic: OpensearchOutboundConnectionDynamic,
 }
 
 struct OpensearchOutboundConnection_ {
-    shared: StackShared,
-    tf_id: String,
-    data: RefCell<OpensearchOutboundConnectionData>,
+    shared: terrars::StackShared,
+    tf_id: std::string::String,
+    data: std::cell::RefCell<OpensearchOutboundConnectionData>,
 }
 
 #[derive(Clone)]
-pub struct OpensearchOutboundConnection(Rc<OpensearchOutboundConnection_>);
+pub struct OpensearchOutboundConnection(std::rc::Rc<OpensearchOutboundConnection_>);
 
 impl OpensearchOutboundConnection {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.0.shared
     }
 
-    pub fn depends_on(self, dep: &impl Referable) -> Self {
+    pub fn depends_on(self, dep: &impl terrars::Referable) -> Self {
         self.0.data.borrow_mut().depends_on.push(dep.extract_ref());
         self
     }
 
     pub fn set_provider(self, provider: &ProviderAws) -> Self {
-        self.0.data.borrow_mut().provider = Some(provider.provider_ref());
+        self.0.data.borrow_mut().provider = std::option::Option::Some(provider.provider_ref());
         self
     }
 
@@ -61,111 +65,144 @@ impl OpensearchOutboundConnection {
     }
 
     pub fn ignore_changes_to_all(self) -> Self {
-        self.0.data.borrow_mut().lifecycle.ignore_changes = Some(IgnoreChanges::All(IgnoreChangesAll::All));
+        self.0.data.borrow_mut().lifecycle.ignore_changes =
+            std::option::Option::Some(terrars::IgnoreChanges::All(terrars::IgnoreChangesAll::All));
         self
     }
 
-    pub fn ignore_changes_to_attr(self, attr: impl ToString) -> Self {
+    pub fn ignore_changes_to_attr(self, attr: impl std::string::ToString) -> Self {
         {
             let mut d = self.0.data.borrow_mut();
             if match &mut d.lifecycle.ignore_changes {
-                Some(i) => match i {
-                    IgnoreChanges::All(_) => {
+                std::option::Option::Some(i) => match i {
+                    terrars::IgnoreChanges::All(_) => {
                         true
                     },
-                    IgnoreChanges::Refs(r) => {
+                    terrars::IgnoreChanges::Refs(r) => {
                         r.push(attr.to_string());
                         false
                     },
                 },
-                None => true,
+                std::option::Option::None => true,
             } {
-                d.lifecycle.ignore_changes = Some(IgnoreChanges::Refs(vec![attr.to_string()]));
+                d.lifecycle.ignore_changes =
+                    std::option::Option::Some(terrars::IgnoreChanges::Refs(vec![attr.to_string()]));
             }
         }
         self
     }
 
-    pub fn replace_triggered_by_resource(self, r: &impl Resource) -> Self {
+    pub fn replace_triggered_by_resource(self, r: &impl terrars::Resource) -> Self {
         self.0.data.borrow_mut().lifecycle.replace_triggered_by.push(r.extract_ref());
         self
     }
 
-    pub fn replace_triggered_by_attr(self, attr: impl ToString) -> Self {
+    pub fn replace_triggered_by_attr(self, attr: impl std::string::ToString) -> Self {
         self.0.data.borrow_mut().lifecycle.replace_triggered_by.push(attr.to_string());
         self
     }
 
-    #[doc= "Set the field `id`.\n"]
-    pub fn set_id(self, v: impl Into<PrimField<String>>) -> Self {
-        self.0.data.borrow_mut().id = Some(v.into());
+    #[doc = r" Add a provisioner (ex: `local-exec`, `remote-exec`, `file`) to this resource."]
+    #[doc = r" Provisioners run in the order they're added."]
+    pub fn add_provisioner(self, v: impl std::convert::Into<terrars::Provisioner>) -> Self {
+        self.0.data.borrow_mut().provisioner.push(v.into());
         self
     }
 
-    #[doc= "Set the field `local_domain_info`.\n"]
+    pub fn add_lifecycle_precondition(
+        self,
+        condition: impl std::convert::Into<terrars::PrimField<bool>>,
+        error_message: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.0.data.borrow_mut().lifecycle.precondition.push(terrars::LifecycleCondition {
+            condition: condition.into(),
+            error_message: error_message.into(),
+        });
+        self
+    }
+
+    pub fn add_lifecycle_postcondition(
+        self,
+        condition: impl std::convert::Into<terrars::PrimField<bool>>,
+        error_message: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.0.data.borrow_mut().lifecycle.postcondition.push(terrars::LifecycleCondition {
+            condition: condition.into(),
+            error_message: error_message.into(),
+        });
+        self
+    }
+
+    #[doc = "Set the field `id`.\n"]
+    pub fn set_id(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().id = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `local_domain_info`.\n"]
     pub fn set_local_domain_info(
         self,
-        v: impl Into<BlockAssignable<OpensearchOutboundConnectionLocalDomainInfoEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<OpensearchOutboundConnectionLocalDomainInfoEl>>,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.0.data.borrow_mut().local_domain_info = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.0.data.borrow_mut().local_domain_info = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.0.data.borrow_mut().dynamic.local_domain_info = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.0.data.borrow_mut().dynamic.local_domain_info = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Set the field `remote_domain_info`.\n"]
+    #[doc = "Set the field `remote_domain_info`.\n"]
     pub fn set_remote_domain_info(
         self,
-        v: impl Into<BlockAssignable<OpensearchOutboundConnectionRemoteDomainInfoEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<OpensearchOutboundConnectionRemoteDomainInfoEl>>,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.0.data.borrow_mut().remote_domain_info = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.0.data.borrow_mut().remote_domain_info = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.0.data.borrow_mut().dynamic.remote_domain_info = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.0.data.borrow_mut().dynamic.remote_domain_info = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Set the field `timeouts`.\n"]
-    pub fn set_timeouts(self, v: impl Into<OpensearchOutboundConnectionTimeoutsEl>) -> Self {
-        self.0.data.borrow_mut().timeouts = Some(v.into());
+    #[doc = "Set the field `timeouts`.\n"]
+    pub fn set_timeouts(self, v: impl std::convert::Into<OpensearchOutboundConnectionTimeoutsEl>) -> Self {
+        self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Get a reference to the value of field `connection_alias` after provisioning.\n"]
-    pub fn connection_alias(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.connection_alias", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `connection_alias` after provisioning.\n"]
+    pub fn connection_alias(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.connection_alias", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `connection_status` after provisioning.\n"]
-    pub fn connection_status(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.connection_status", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `connection_status` after provisioning.\n"]
+    pub fn connection_status(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.connection_status", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `id` after provisioning.\n"]
-    pub fn id(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
+    pub fn id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `local_domain_info` after provisioning.\n"]
-    pub fn local_domain_info(&self) -> ListRef<OpensearchOutboundConnectionLocalDomainInfoElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.local_domain_info", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `local_domain_info` after provisioning.\n"]
+    pub fn local_domain_info(&self) -> terrars::ListRef<OpensearchOutboundConnectionLocalDomainInfoElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.local_domain_info", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `remote_domain_info` after provisioning.\n"]
-    pub fn remote_domain_info(&self) -> ListRef<OpensearchOutboundConnectionRemoteDomainInfoElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.remote_domain_info", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `remote_domain_info` after provisioning.\n"]
+    pub fn remote_domain_info(&self) -> terrars::ListRef<OpensearchOutboundConnectionRemoteDomainInfoElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.remote_domain_info", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `timeouts` after provisioning.\n"]
+    #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
     pub fn timeouts(&self) -> OpensearchOutboundConnectionTimeoutsElRef {
         OpensearchOutboundConnectionTimeoutsElRef::new(
             self.shared().clone(),
@@ -174,29 +211,29 @@ impl OpensearchOutboundConnection {
     }
 }
 
-impl Referable for OpensearchOutboundConnection {
-    fn extract_ref(&self) -> String {
+impl terrars::Referable for OpensearchOutboundConnection {
+    fn extract_ref(&self) -> std::string::String {
         format!("{}.{}", self.0.extract_resource_type(), self.0.extract_tf_id())
     }
 }
 
-impl Resource for OpensearchOutboundConnection { }
+impl terrars::Resource for OpensearchOutboundConnection { }
 
-impl ToListMappable for OpensearchOutboundConnection {
-    type O = ListRef<OpensearchOutboundConnectionRef>;
+impl terrars::ToListMappable for OpensearchOutboundConnection {
+    type O = terrars::ListRef<OpensearchOutboundConnectionRef>;
 
-    fn do_map(self, base: String) -> Self::O {
-        self.0.data.borrow_mut().for_each = Some(format!("${{{}}}", base));
-        ListRef::new(self.0.shared.clone(), self.extract_ref())
+    fn do_map(self, base: std::string::String) -> Self::O {
+        self.0.data.borrow_mut().for_each = std::option::Option::Some(format!("${{{}}}", base));
+        terrars::ListRef::new(self.0.shared.clone(), self.extract_ref())
     }
 }
 
-impl Resource_ for OpensearchOutboundConnection_ {
-    fn extract_resource_type(&self) -> String {
+impl terrars::Resource_ for OpensearchOutboundConnection_ {
+    fn extract_resource_type(&self) -> std::string::String {
         "aws_opensearch_outbound_connection".into()
     }
 
-    fn extract_tf_id(&self) -> String {
+    fn extract_tf_id(&self) -> std::string::String {
         self.tf_id.clone()
     }
 
@@ -206,27 +243,28 @@ impl Resource_ for OpensearchOutboundConnection_ {
 }
 
 pub struct BuildOpensearchOutboundConnection {
-    pub tf_id: String,
-    #[doc= ""]
-    pub connection_alias: PrimField<String>,
+    pub tf_id: std::string::String,
+    #[doc = ""]
+    pub connection_alias: terrars::PrimField<std::string::String>,
 }
 
 impl BuildOpensearchOutboundConnection {
-    pub fn build(self, stack: &mut Stack) -> OpensearchOutboundConnection {
-        let out = OpensearchOutboundConnection(Rc::new(OpensearchOutboundConnection_ {
+    pub fn build(self, stack: &mut terrars::Stack) -> OpensearchOutboundConnection {
+        let out = OpensearchOutboundConnection(std::rc::Rc::new(OpensearchOutboundConnection_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: RefCell::new(OpensearchOutboundConnectionData {
+            data: std::cell::RefCell::new(OpensearchOutboundConnectionData {
                 depends_on: core::default::Default::default(),
-                provider: None,
+                provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
-                for_each: None,
+                for_each: std::option::Option::None,
+                provisioner: core::default::Default::default(),
                 connection_alias: self.connection_alias,
                 id: core::default::Default::default(),
                 local_domain_info: core::default::Default::default(),
                 remote_domain_info: core::default::Default::default(),
                 timeouts: core::default::Default::default(),
-                dynamic: Default::default(),
+                dynamic: core::default::Default::default(),
             }),
         }));
         stack.add_resource(out.0.clone());
@@ -235,12 +273,12 @@ impl BuildOpensearchOutboundConnection {
 }
 
 pub struct OpensearchOutboundConnectionRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for OpensearchOutboundConnectionRef {
-    fn new(shared: StackShared, base: String) -> Self {
+impl terrars::Ref for OpensearchOutboundConnectionRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> Self {
         Self {
             shared: shared,
             base: base,
@@ -249,40 +287,40 @@ impl Ref for OpensearchOutboundConnectionRef {
 }
 
 impl OpensearchOutboundConnectionRef {
-    fn extract_ref(&self) -> String {
+    fn extract_ref(&self) -> std::string::String {
         self.base.clone()
     }
 
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `connection_alias` after provisioning.\n"]
-    pub fn connection_alias(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.connection_alias", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `connection_alias` after provisioning.\n"]
+    pub fn connection_alias(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.connection_alias", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `connection_status` after provisioning.\n"]
-    pub fn connection_status(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.connection_status", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `connection_status` after provisioning.\n"]
+    pub fn connection_status(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.connection_status", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `id` after provisioning.\n"]
-    pub fn id(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
+    pub fn id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `local_domain_info` after provisioning.\n"]
-    pub fn local_domain_info(&self) -> ListRef<OpensearchOutboundConnectionLocalDomainInfoElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.local_domain_info", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `local_domain_info` after provisioning.\n"]
+    pub fn local_domain_info(&self) -> terrars::ListRef<OpensearchOutboundConnectionLocalDomainInfoElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.local_domain_info", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `remote_domain_info` after provisioning.\n"]
-    pub fn remote_domain_info(&self) -> ListRef<OpensearchOutboundConnectionRemoteDomainInfoElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.remote_domain_info", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `remote_domain_info` after provisioning.\n"]
+    pub fn remote_domain_info(&self) -> terrars::ListRef<OpensearchOutboundConnectionRemoteDomainInfoElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.remote_domain_info", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `timeouts` after provisioning.\n"]
+    #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
     pub fn timeouts(&self) -> OpensearchOutboundConnectionTimeoutsElRef {
         OpensearchOutboundConnectionTimeoutsElRef::new(
             self.shared().clone(),
@@ -293,18 +331,18 @@ impl OpensearchOutboundConnectionRef {
 
 #[derive(Serialize)]
 pub struct OpensearchOutboundConnectionLocalDomainInfoEl {
-    domain_name: PrimField<String>,
-    owner_id: PrimField<String>,
-    region: PrimField<String>,
+    domain_name: terrars::PrimField<std::string::String>,
+    owner_id: terrars::PrimField<std::string::String>,
+    region: terrars::PrimField<std::string::String>,
 }
 
 impl OpensearchOutboundConnectionLocalDomainInfoEl { }
 
-impl ToListMappable for OpensearchOutboundConnectionLocalDomainInfoEl {
-    type O = BlockAssignable<OpensearchOutboundConnectionLocalDomainInfoEl>;
+impl terrars::ToListMappable for OpensearchOutboundConnectionLocalDomainInfoEl {
+    type O = terrars::BlockAssignable<OpensearchOutboundConnectionLocalDomainInfoEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -313,12 +351,12 @@ impl ToListMappable for OpensearchOutboundConnectionLocalDomainInfoEl {
 }
 
 pub struct BuildOpensearchOutboundConnectionLocalDomainInfoEl {
-    #[doc= ""]
-    pub domain_name: PrimField<String>,
-    #[doc= ""]
-    pub owner_id: PrimField<String>,
-    #[doc= ""]
-    pub region: PrimField<String>,
+    #[doc = ""]
+    pub domain_name: terrars::PrimField<std::string::String>,
+    #[doc = ""]
+    pub owner_id: terrars::PrimField<std::string::String>,
+    #[doc = ""]
+    pub region: terrars::PrimField<std::string::String>,
 }
 
 impl BuildOpensearchOutboundConnectionLocalDomainInfoEl {
@@ -332,12 +370,15 @@ impl BuildOpensearchOutboundConnectionLocalDomainInfoEl {
 }
 
 pub struct OpensearchOutboundConnectionLocalDomainInfoElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for OpensearchOutboundConnectionLocalDomainInfoElRef {
-    fn new(shared: StackShared, base: String) -> OpensearchOutboundConnectionLocalDomainInfoElRef {
+impl terrars::Ref for OpensearchOutboundConnectionLocalDomainInfoElRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> OpensearchOutboundConnectionLocalDomainInfoElRef {
         OpensearchOutboundConnectionLocalDomainInfoElRef {
             shared: shared,
             base: base.to_string(),
@@ -346,40 +387,40 @@ impl Ref for OpensearchOutboundConnectionLocalDomainInfoElRef {
 }
 
 impl OpensearchOutboundConnectionLocalDomainInfoElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `domain_name` after provisioning.\n"]
-    pub fn domain_name(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.domain_name", self.base))
+    #[doc = "Get a reference to the value of field `domain_name` after provisioning.\n"]
+    pub fn domain_name(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.domain_name", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `owner_id` after provisioning.\n"]
-    pub fn owner_id(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.owner_id", self.base))
+    #[doc = "Get a reference to the value of field `owner_id` after provisioning.\n"]
+    pub fn owner_id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.owner_id", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `region` after provisioning.\n"]
-    pub fn region(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.region", self.base))
+    #[doc = "Get a reference to the value of field `region` after provisioning.\n"]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct OpensearchOutboundConnectionRemoteDomainInfoEl {
-    domain_name: PrimField<String>,
-    owner_id: PrimField<String>,
-    region: PrimField<String>,
+    domain_name: terrars::PrimField<std::string::String>,
+    owner_id: terrars::PrimField<std::string::String>,
+    region: terrars::PrimField<std::string::String>,
 }
 
 impl OpensearchOutboundConnectionRemoteDomainInfoEl { }
 
-impl ToListMappable for OpensearchOutboundConnectionRemoteDomainInfoEl {
-    type O = BlockAssignable<OpensearchOutboundConnectionRemoteDomainInfoEl>;
+impl terrars::ToListMappable for OpensearchOutboundConnectionRemoteDomainInfoEl {
+    type O = terrars::BlockAssignable<OpensearchOutboundConnectionRemoteDomainInfoEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -388,12 +429,12 @@ impl ToListMappable for OpensearchOutboundConnectionRemoteDomainInfoEl {
 }
 
 pub struct BuildOpensearchOutboundConnectionRemoteDomainInfoEl {
-    #[doc= ""]
-    pub domain_name: PrimField<String>,
-    #[doc= ""]
-    pub owner_id: PrimField<String>,
-    #[doc= ""]
-    pub region: PrimField<String>,
+    #[doc = ""]
+    pub domain_name: terrars::PrimField<std::string::String>,
+    #[doc = ""]
+    pub owner_id: terrars::PrimField<std::string::String>,
+    #[doc = ""]
+    pub region: terrars::PrimField<std::string::String>,
 }
 
 impl BuildOpensearchOutboundConnectionRemoteDomainInfoEl {
@@ -407,12 +448,15 @@ impl BuildOpensearchOutboundConnectionRemoteDomainInfoEl {
 }
 
 pub struct OpensearchOutboundConnectionRemoteDomainInfoElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for OpensearchOutboundConnectionRemoteDomainInfoElRef {
-    fn new(shared: StackShared, base: String) -> OpensearchOutboundConnectionRemoteDomainInfoElRef {
+impl terrars::Ref for OpensearchOutboundConnectionRemoteDomainInfoElRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> OpensearchOutboundConnectionRemoteDomainInfoElRef {
         OpensearchOutboundConnectionRemoteDomainInfoElRef {
             shared: shared,
             base: base.to_string(),
@@ -421,53 +465,53 @@ impl Ref for OpensearchOutboundConnectionRemoteDomainInfoElRef {
 }
 
 impl OpensearchOutboundConnectionRemoteDomainInfoElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `domain_name` after provisioning.\n"]
-    pub fn domain_name(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.domain_name", self.base))
+    #[doc = "Get a reference to the value of field `domain_name` after provisioning.\n"]
+    pub fn domain_name(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.domain_name", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `owner_id` after provisioning.\n"]
-    pub fn owner_id(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.owner_id", self.base))
+    #[doc = "Get a reference to the value of field `owner_id` after provisioning.\n"]
+    pub fn owner_id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.owner_id", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `region` after provisioning.\n"]
-    pub fn region(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.region", self.base))
+    #[doc = "Get a reference to the value of field `region` after provisioning.\n"]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct OpensearchOutboundConnectionTimeoutsEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    create: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    delete: Option<PrimField<String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    create: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    delete: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
 impl OpensearchOutboundConnectionTimeoutsEl {
-    #[doc= "Set the field `create`.\n"]
-    pub fn set_create(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.create = Some(v.into());
+    #[doc = "Set the field `create`.\n"]
+    pub fn set_create(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.create = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `delete`.\n"]
-    pub fn set_delete(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.delete = Some(v.into());
+    #[doc = "Set the field `delete`.\n"]
+    pub fn set_delete(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.delete = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl ToListMappable for OpensearchOutboundConnectionTimeoutsEl {
-    type O = BlockAssignable<OpensearchOutboundConnectionTimeoutsEl>;
+impl terrars::ToListMappable for OpensearchOutboundConnectionTimeoutsEl {
+    type O = terrars::BlockAssignable<OpensearchOutboundConnectionTimeoutsEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -487,12 +531,12 @@ impl BuildOpensearchOutboundConnectionTimeoutsEl {
 }
 
 pub struct OpensearchOutboundConnectionTimeoutsElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for OpensearchOutboundConnectionTimeoutsElRef {
-    fn new(shared: StackShared, base: String) -> OpensearchOutboundConnectionTimeoutsElRef {
+impl terrars::Ref for OpensearchOutboundConnectionTimeoutsElRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> OpensearchOutboundConnectionTimeoutsElRef {
         OpensearchOutboundConnectionTimeoutsElRef {
             shared: shared,
             base: base.to_string(),
@@ -501,23 +545,23 @@ impl Ref for OpensearchOutboundConnectionTimeoutsElRef {
 }
 
 impl OpensearchOutboundConnectionTimeoutsElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `create` after provisioning.\n"]
-    pub fn create(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.create", self.base))
+    #[doc = "Get a reference to the value of field `create` after provisioning.\n"]
+    pub fn create(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.create", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `delete` after provisioning.\n"]
-    pub fn delete(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.delete", self.base))
+    #[doc = "Get a reference to the value of field `delete` after provisioning.\n"]
+    pub fn delete(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.delete", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
 struct OpensearchOutboundConnectionDynamic {
-    local_domain_info: Option<DynamicBlock<OpensearchOutboundConnectionLocalDomainInfoEl>>,
-    remote_domain_info: Option<DynamicBlock<OpensearchOutboundConnectionRemoteDomainInfoEl>>,
+    local_domain_info: std::option::Option<terrars::DynamicBlock<OpensearchOutboundConnectionLocalDomainInfoEl>>,
+    remote_domain_info: std::option::Option<terrars::DynamicBlock<OpensearchOutboundConnectionRemoteDomainInfoEl>>,
 }

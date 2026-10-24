@@ -1,95 +1,99 @@
 use serde::Serialize;
-use std::cell::RefCell;
-use std::rc::Rc;
-use terrars::*;
+use terrars::{
+    Referable as _,
+    Resource_ as _,
+    Ref as _,
+};
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
 struct IotTopicRuleData {
-    #[serde(skip_serializing_if = "Vec::is_empty")]
-    depends_on: Vec<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    provider: Option<String>,
-    #[serde(skip_serializing_if = "SerdeSkipDefault::is_default")]
-    lifecycle: ResourceLifecycle,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    for_each: Option<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    description: Option<PrimField<String>>,
-    enabled: PrimField<bool>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    id: Option<PrimField<String>>,
-    name: PrimField<String>,
-    sql: PrimField<String>,
-    sql_version: PrimField<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    tags: Option<RecField<PrimField<String>>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    tags_all: Option<RecField<PrimField<String>>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    cloudwatch_alarm: Option<Vec<IotTopicRuleCloudwatchAlarmEl>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    cloudwatch_logs: Option<Vec<IotTopicRuleCloudwatchLogsEl>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    cloudwatch_metric: Option<Vec<IotTopicRuleCloudwatchMetricEl>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    dynamodb: Option<Vec<IotTopicRuleDynamodbEl>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    dynamodbv2: Option<Vec<IotTopicRuleDynamodbv2El>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    elasticsearch: Option<Vec<IotTopicRuleElasticsearchEl>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    error_action: Option<Vec<IotTopicRuleErrorActionEl>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    firehose: Option<Vec<IotTopicRuleFirehoseEl>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    http: Option<Vec<IotTopicRuleHttpEl>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    iot_analytics: Option<Vec<IotTopicRuleIotAnalyticsEl>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    iot_events: Option<Vec<IotTopicRuleIotEventsEl>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    kafka: Option<Vec<IotTopicRuleKafkaEl>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    kinesis: Option<Vec<IotTopicRuleKinesisEl>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    lambda: Option<Vec<IotTopicRuleLambdaEl>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    republish: Option<Vec<IotTopicRuleRepublishEl>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    s3: Option<Vec<IotTopicRuleS3El>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    sns: Option<Vec<IotTopicRuleSnsEl>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    sqs: Option<Vec<IotTopicRuleSqsEl>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    step_functions: Option<Vec<IotTopicRuleStepFunctionsEl>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    timestream: Option<Vec<IotTopicRuleTimestreamEl>>,
+    #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
+    depends_on: std::vec::Vec<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    provider: std::option::Option<std::string::String>,
+    #[serde(skip_serializing_if = "terrars::SerdeSkipDefault::is_default")]
+    lifecycle: terrars::ResourceLifecycle,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    for_each: std::option::Option<std::string::String>,
+    #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
+    provisioner: std::vec::Vec<terrars::Provisioner>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    description: std::option::Option<terrars::PrimField<std::string::String>>,
+    enabled: terrars::PrimField<bool>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    id: std::option::Option<terrars::PrimField<std::string::String>>,
+    name: terrars::PrimField<std::string::String>,
+    sql: terrars::PrimField<std::string::String>,
+    sql_version: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    tags: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    tags_all: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    cloudwatch_alarm: std::option::Option<std::vec::Vec<IotTopicRuleCloudwatchAlarmEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    cloudwatch_logs: std::option::Option<std::vec::Vec<IotTopicRuleCloudwatchLogsEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    cloudwatch_metric: std::option::Option<std::vec::Vec<IotTopicRuleCloudwatchMetricEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    dynamodb: std::option::Option<std::vec::Vec<IotTopicRuleDynamodbEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    dynamodbv2: std::option::Option<std::vec::Vec<IotTopicRuleDynamodbv2El>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    elasticsearch: std::option::Option<std::vec::Vec<IotTopicRuleElasticsearchEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    error_action: std::option::Option<std::vec::Vec<IotTopicRuleErrorActionEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    firehose: std::option::Option<std::vec::Vec<IotTopicRuleFirehoseEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    http: std::option::Option<std::vec::Vec<IotTopicRuleHttpEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    iot_analytics: std::option::Option<std::vec::Vec<IotTopicRuleIotAnalyticsEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    iot_events: std::option::Option<std::vec::Vec<IotTopicRuleIotEventsEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    kafka: std::option::Option<std::vec::Vec<IotTopicRuleKafkaEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    kinesis: std::option::Option<std::vec::Vec<IotTopicRuleKinesisEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    lambda: std::option::Option<std::vec::Vec<IotTopicRuleLambdaEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    republish: std::option::Option<std::vec::Vec<IotTopicRuleRepublishEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    s3: std::option::Option<std::vec::Vec<IotTopicRuleS3El>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    sns: std::option::Option<std::vec::Vec<IotTopicRuleSnsEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    sqs: std::option::Option<std::vec::Vec<IotTopicRuleSqsEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    step_functions: std::option::Option<std::vec::Vec<IotTopicRuleStepFunctionsEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    timestream: std::option::Option<std::vec::Vec<IotTopicRuleTimestreamEl>>,
     dynamic: IotTopicRuleDynamic,
 }
 
 struct IotTopicRule_ {
-    shared: StackShared,
-    tf_id: String,
-    data: RefCell<IotTopicRuleData>,
+    shared: terrars::StackShared,
+    tf_id: std::string::String,
+    data: std::cell::RefCell<IotTopicRuleData>,
 }
 
 #[derive(Clone)]
-pub struct IotTopicRule(Rc<IotTopicRule_>);
+pub struct IotTopicRule(std::rc::Rc<IotTopicRule_>);
 
 impl IotTopicRule {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.0.shared
     }
 
-    pub fn depends_on(self, dep: &impl Referable) -> Self {
+    pub fn depends_on(self, dep: &impl terrars::Referable) -> Self {
         self.0.data.borrow_mut().depends_on.push(dep.extract_ref());
         self
     }
 
     pub fn set_provider(self, provider: &ProviderAws) -> Self {
-        self.0.data.borrow_mut().provider = Some(provider.provider_ref());
+        self.0.data.borrow_mut().provider = std::option::Option::Some(provider.provider_ref());
         self
     }
 
@@ -104,399 +108,459 @@ impl IotTopicRule {
     }
 
     pub fn ignore_changes_to_all(self) -> Self {
-        self.0.data.borrow_mut().lifecycle.ignore_changes = Some(IgnoreChanges::All(IgnoreChangesAll::All));
+        self.0.data.borrow_mut().lifecycle.ignore_changes =
+            std::option::Option::Some(terrars::IgnoreChanges::All(terrars::IgnoreChangesAll::All));
         self
     }
 
-    pub fn ignore_changes_to_attr(self, attr: impl ToString) -> Self {
+    pub fn ignore_changes_to_attr(self, attr: impl std::string::ToString) -> Self {
         {
             let mut d = self.0.data.borrow_mut();
             if match &mut d.lifecycle.ignore_changes {
-                Some(i) => match i {
-                    IgnoreChanges::All(_) => {
+                std::option::Option::Some(i) => match i {
+                    terrars::IgnoreChanges::All(_) => {
                         true
                     },
-                    IgnoreChanges::Refs(r) => {
+                    terrars::IgnoreChanges::Refs(r) => {
                         r.push(attr.to_string());
                         false
                     },
                 },
-                None => true,
+                std::option::Option::None => true,
             } {
-                d.lifecycle.ignore_changes = Some(IgnoreChanges::Refs(vec![attr.to_string()]));
+                d.lifecycle.ignore_changes =
+                    std::option::Option::Some(terrars::IgnoreChanges::Refs(vec![attr.to_string()]));
             }
         }
         self
     }
 
-    pub fn replace_triggered_by_resource(self, r: &impl Resource) -> Self {
+    pub fn replace_triggered_by_resource(self, r: &impl terrars::Resource) -> Self {
         self.0.data.borrow_mut().lifecycle.replace_triggered_by.push(r.extract_ref());
         self
     }
 
-    pub fn replace_triggered_by_attr(self, attr: impl ToString) -> Self {
+    pub fn replace_triggered_by_attr(self, attr: impl std::string::ToString) -> Self {
         self.0.data.borrow_mut().lifecycle.replace_triggered_by.push(attr.to_string());
         self
     }
 
-    #[doc= "Set the field `description`.\n"]
-    pub fn set_description(self, v: impl Into<PrimField<String>>) -> Self {
-        self.0.data.borrow_mut().description = Some(v.into());
+    #[doc = r" Add a provisioner (ex: `local-exec`, `remote-exec`, `file`) to this resource."]
+    #[doc = r" Provisioners run in the order they're added."]
+    pub fn add_provisioner(self, v: impl std::convert::Into<terrars::Provisioner>) -> Self {
+        self.0.data.borrow_mut().provisioner.push(v.into());
         self
     }
 
-    #[doc= "Set the field `id`.\n"]
-    pub fn set_id(self, v: impl Into<PrimField<String>>) -> Self {
-        self.0.data.borrow_mut().id = Some(v.into());
+    pub fn add_lifecycle_precondition(
+        self,
+        condition: impl std::convert::Into<terrars::PrimField<bool>>,
+        error_message: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.0.data.borrow_mut().lifecycle.precondition.push(terrars::LifecycleCondition {
+            condition: condition.into(),
+            error_message: error_message.into(),
+        });
         self
     }
 
-    #[doc= "Set the field `tags`.\n"]
-    pub fn set_tags(self, v: impl Into<RecField<PrimField<String>>>) -> Self {
-        self.0.data.borrow_mut().tags = Some(v.into());
+    pub fn add_lifecycle_postcondition(
+        self,
+        condition: impl std::convert::Into<terrars::PrimField<bool>>,
+        error_message: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.0.data.borrow_mut().lifecycle.postcondition.push(terrars::LifecycleCondition {
+            condition: condition.into(),
+            error_message: error_message.into(),
+        });
         self
     }
 
-    #[doc= "Set the field `tags_all`.\n"]
-    pub fn set_tags_all(self, v: impl Into<RecField<PrimField<String>>>) -> Self {
-        self.0.data.borrow_mut().tags_all = Some(v.into());
+    #[doc = "Set the field `description`.\n"]
+    pub fn set_description(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().description = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `cloudwatch_alarm`.\n"]
-    pub fn set_cloudwatch_alarm(self, v: impl Into<BlockAssignable<IotTopicRuleCloudwatchAlarmEl>>) -> Self {
+    #[doc = "Set the field `id`.\n"]
+    pub fn set_id(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().id = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `tags`.\n"]
+    pub fn set_tags(
+        self,
+        v: impl std::convert::Into<terrars::RecField<terrars::PrimField<std::string::String>>>,
+    ) -> Self {
+        self.0.data.borrow_mut().tags = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `tags_all`.\n"]
+    pub fn set_tags_all(
+        self,
+        v: impl std::convert::Into<terrars::RecField<terrars::PrimField<std::string::String>>>,
+    ) -> Self {
+        self.0.data.borrow_mut().tags_all = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `cloudwatch_alarm`.\n"]
+    pub fn set_cloudwatch_alarm(
+        self,
+        v: impl std::convert::Into<terrars::BlockAssignable<IotTopicRuleCloudwatchAlarmEl>>,
+    ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.0.data.borrow_mut().cloudwatch_alarm = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.0.data.borrow_mut().cloudwatch_alarm = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.0.data.borrow_mut().dynamic.cloudwatch_alarm = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.0.data.borrow_mut().dynamic.cloudwatch_alarm = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Set the field `cloudwatch_logs`.\n"]
-    pub fn set_cloudwatch_logs(self, v: impl Into<BlockAssignable<IotTopicRuleCloudwatchLogsEl>>) -> Self {
+    #[doc = "Set the field `cloudwatch_logs`.\n"]
+    pub fn set_cloudwatch_logs(
+        self,
+        v: impl std::convert::Into<terrars::BlockAssignable<IotTopicRuleCloudwatchLogsEl>>,
+    ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.0.data.borrow_mut().cloudwatch_logs = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.0.data.borrow_mut().cloudwatch_logs = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.0.data.borrow_mut().dynamic.cloudwatch_logs = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.0.data.borrow_mut().dynamic.cloudwatch_logs = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Set the field `cloudwatch_metric`.\n"]
-    pub fn set_cloudwatch_metric(self, v: impl Into<BlockAssignable<IotTopicRuleCloudwatchMetricEl>>) -> Self {
+    #[doc = "Set the field `cloudwatch_metric`.\n"]
+    pub fn set_cloudwatch_metric(
+        self,
+        v: impl std::convert::Into<terrars::BlockAssignable<IotTopicRuleCloudwatchMetricEl>>,
+    ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.0.data.borrow_mut().cloudwatch_metric = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.0.data.borrow_mut().cloudwatch_metric = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.0.data.borrow_mut().dynamic.cloudwatch_metric = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.0.data.borrow_mut().dynamic.cloudwatch_metric = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Set the field `dynamodb`.\n"]
-    pub fn set_dynamodb(self, v: impl Into<BlockAssignable<IotTopicRuleDynamodbEl>>) -> Self {
+    #[doc = "Set the field `dynamodb`.\n"]
+    pub fn set_dynamodb(self, v: impl std::convert::Into<terrars::BlockAssignable<IotTopicRuleDynamodbEl>>) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.0.data.borrow_mut().dynamodb = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.0.data.borrow_mut().dynamodb = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.0.data.borrow_mut().dynamic.dynamodb = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.0.data.borrow_mut().dynamic.dynamodb = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Set the field `dynamodbv2`.\n"]
-    pub fn set_dynamodbv2(self, v: impl Into<BlockAssignable<IotTopicRuleDynamodbv2El>>) -> Self {
+    #[doc = "Set the field `dynamodbv2`.\n"]
+    pub fn set_dynamodbv2(self, v: impl std::convert::Into<terrars::BlockAssignable<IotTopicRuleDynamodbv2El>>) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.0.data.borrow_mut().dynamodbv2 = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.0.data.borrow_mut().dynamodbv2 = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.0.data.borrow_mut().dynamic.dynamodbv2 = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.0.data.borrow_mut().dynamic.dynamodbv2 = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Set the field `elasticsearch`.\n"]
-    pub fn set_elasticsearch(self, v: impl Into<BlockAssignable<IotTopicRuleElasticsearchEl>>) -> Self {
+    #[doc = "Set the field `elasticsearch`.\n"]
+    pub fn set_elasticsearch(
+        self,
+        v: impl std::convert::Into<terrars::BlockAssignable<IotTopicRuleElasticsearchEl>>,
+    ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.0.data.borrow_mut().elasticsearch = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.0.data.borrow_mut().elasticsearch = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.0.data.borrow_mut().dynamic.elasticsearch = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.0.data.borrow_mut().dynamic.elasticsearch = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Set the field `error_action`.\n"]
-    pub fn set_error_action(self, v: impl Into<BlockAssignable<IotTopicRuleErrorActionEl>>) -> Self {
+    #[doc = "Set the field `error_action`.\n"]
+    pub fn set_error_action(
+        self,
+        v: impl std::convert::Into<terrars::BlockAssignable<IotTopicRuleErrorActionEl>>,
+    ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.0.data.borrow_mut().error_action = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.0.data.borrow_mut().error_action = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.0.data.borrow_mut().dynamic.error_action = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.0.data.borrow_mut().dynamic.error_action = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Set the field `firehose`.\n"]
-    pub fn set_firehose(self, v: impl Into<BlockAssignable<IotTopicRuleFirehoseEl>>) -> Self {
+    #[doc = "Set the field `firehose`.\n"]
+    pub fn set_firehose(self, v: impl std::convert::Into<terrars::BlockAssignable<IotTopicRuleFirehoseEl>>) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.0.data.borrow_mut().firehose = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.0.data.borrow_mut().firehose = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.0.data.borrow_mut().dynamic.firehose = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.0.data.borrow_mut().dynamic.firehose = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Set the field `http`.\n"]
-    pub fn set_http(self, v: impl Into<BlockAssignable<IotTopicRuleHttpEl>>) -> Self {
+    #[doc = "Set the field `http`.\n"]
+    pub fn set_http(self, v: impl std::convert::Into<terrars::BlockAssignable<IotTopicRuleHttpEl>>) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.0.data.borrow_mut().http = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.0.data.borrow_mut().http = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.0.data.borrow_mut().dynamic.http = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.0.data.borrow_mut().dynamic.http = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Set the field `iot_analytics`.\n"]
-    pub fn set_iot_analytics(self, v: impl Into<BlockAssignable<IotTopicRuleIotAnalyticsEl>>) -> Self {
+    #[doc = "Set the field `iot_analytics`.\n"]
+    pub fn set_iot_analytics(
+        self,
+        v: impl std::convert::Into<terrars::BlockAssignable<IotTopicRuleIotAnalyticsEl>>,
+    ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.0.data.borrow_mut().iot_analytics = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.0.data.borrow_mut().iot_analytics = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.0.data.borrow_mut().dynamic.iot_analytics = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.0.data.borrow_mut().dynamic.iot_analytics = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Set the field `iot_events`.\n"]
-    pub fn set_iot_events(self, v: impl Into<BlockAssignable<IotTopicRuleIotEventsEl>>) -> Self {
+    #[doc = "Set the field `iot_events`.\n"]
+    pub fn set_iot_events(self, v: impl std::convert::Into<terrars::BlockAssignable<IotTopicRuleIotEventsEl>>) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.0.data.borrow_mut().iot_events = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.0.data.borrow_mut().iot_events = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.0.data.borrow_mut().dynamic.iot_events = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.0.data.borrow_mut().dynamic.iot_events = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Set the field `kafka`.\n"]
-    pub fn set_kafka(self, v: impl Into<BlockAssignable<IotTopicRuleKafkaEl>>) -> Self {
+    #[doc = "Set the field `kafka`.\n"]
+    pub fn set_kafka(self, v: impl std::convert::Into<terrars::BlockAssignable<IotTopicRuleKafkaEl>>) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.0.data.borrow_mut().kafka = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.0.data.borrow_mut().kafka = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.0.data.borrow_mut().dynamic.kafka = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.0.data.borrow_mut().dynamic.kafka = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Set the field `kinesis`.\n"]
-    pub fn set_kinesis(self, v: impl Into<BlockAssignable<IotTopicRuleKinesisEl>>) -> Self {
+    #[doc = "Set the field `kinesis`.\n"]
+    pub fn set_kinesis(self, v: impl std::convert::Into<terrars::BlockAssignable<IotTopicRuleKinesisEl>>) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.0.data.borrow_mut().kinesis = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.0.data.borrow_mut().kinesis = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.0.data.borrow_mut().dynamic.kinesis = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.0.data.borrow_mut().dynamic.kinesis = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Set the field `lambda`.\n"]
-    pub fn set_lambda(self, v: impl Into<BlockAssignable<IotTopicRuleLambdaEl>>) -> Self {
+    #[doc = "Set the field `lambda`.\n"]
+    pub fn set_lambda(self, v: impl std::convert::Into<terrars::BlockAssignable<IotTopicRuleLambdaEl>>) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.0.data.borrow_mut().lambda = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.0.data.borrow_mut().lambda = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.0.data.borrow_mut().dynamic.lambda = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.0.data.borrow_mut().dynamic.lambda = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Set the field `republish`.\n"]
-    pub fn set_republish(self, v: impl Into<BlockAssignable<IotTopicRuleRepublishEl>>) -> Self {
+    #[doc = "Set the field `republish`.\n"]
+    pub fn set_republish(self, v: impl std::convert::Into<terrars::BlockAssignable<IotTopicRuleRepublishEl>>) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.0.data.borrow_mut().republish = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.0.data.borrow_mut().republish = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.0.data.borrow_mut().dynamic.republish = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.0.data.borrow_mut().dynamic.republish = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Set the field `s3`.\n"]
-    pub fn set_s3(self, v: impl Into<BlockAssignable<IotTopicRuleS3El>>) -> Self {
+    #[doc = "Set the field `s3`.\n"]
+    pub fn set_s3(self, v: impl std::convert::Into<terrars::BlockAssignable<IotTopicRuleS3El>>) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.0.data.borrow_mut().s3 = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.0.data.borrow_mut().s3 = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.0.data.borrow_mut().dynamic.s3 = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.0.data.borrow_mut().dynamic.s3 = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Set the field `sns`.\n"]
-    pub fn set_sns(self, v: impl Into<BlockAssignable<IotTopicRuleSnsEl>>) -> Self {
+    #[doc = "Set the field `sns`.\n"]
+    pub fn set_sns(self, v: impl std::convert::Into<terrars::BlockAssignable<IotTopicRuleSnsEl>>) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.0.data.borrow_mut().sns = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.0.data.borrow_mut().sns = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.0.data.borrow_mut().dynamic.sns = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.0.data.borrow_mut().dynamic.sns = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Set the field `sqs`.\n"]
-    pub fn set_sqs(self, v: impl Into<BlockAssignable<IotTopicRuleSqsEl>>) -> Self {
+    #[doc = "Set the field `sqs`.\n"]
+    pub fn set_sqs(self, v: impl std::convert::Into<terrars::BlockAssignable<IotTopicRuleSqsEl>>) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.0.data.borrow_mut().sqs = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.0.data.borrow_mut().sqs = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.0.data.borrow_mut().dynamic.sqs = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.0.data.borrow_mut().dynamic.sqs = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Set the field `step_functions`.\n"]
-    pub fn set_step_functions(self, v: impl Into<BlockAssignable<IotTopicRuleStepFunctionsEl>>) -> Self {
+    #[doc = "Set the field `step_functions`.\n"]
+    pub fn set_step_functions(
+        self,
+        v: impl std::convert::Into<terrars::BlockAssignable<IotTopicRuleStepFunctionsEl>>,
+    ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.0.data.borrow_mut().step_functions = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.0.data.borrow_mut().step_functions = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.0.data.borrow_mut().dynamic.step_functions = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.0.data.borrow_mut().dynamic.step_functions = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Set the field `timestream`.\n"]
-    pub fn set_timestream(self, v: impl Into<BlockAssignable<IotTopicRuleTimestreamEl>>) -> Self {
+    #[doc = "Set the field `timestream`.\n"]
+    pub fn set_timestream(self, v: impl std::convert::Into<terrars::BlockAssignable<IotTopicRuleTimestreamEl>>) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.0.data.borrow_mut().timestream = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.0.data.borrow_mut().timestream = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.0.data.borrow_mut().dynamic.timestream = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.0.data.borrow_mut().dynamic.timestream = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Get a reference to the value of field `arn` after provisioning.\n"]
-    pub fn arn(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.arn", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `arn` after provisioning.\n"]
+    pub fn arn(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.arn", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `description` after provisioning.\n"]
-    pub fn description(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.description", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `description` after provisioning.\n"]
+    pub fn description(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.description", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `enabled` after provisioning.\n"]
-    pub fn enabled(&self) -> PrimExpr<bool> {
-        PrimExpr::new(self.shared().clone(), format!("{}.enabled", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `enabled` after provisioning.\n"]
+    pub fn enabled(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.enabled", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `id` after provisioning.\n"]
-    pub fn id(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
+    pub fn id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `name` after provisioning.\n"]
-    pub fn name(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `name` after provisioning.\n"]
+    pub fn name(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `sql` after provisioning.\n"]
-    pub fn sql(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.sql", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `sql` after provisioning.\n"]
+    pub fn sql(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.sql", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `sql_version` after provisioning.\n"]
-    pub fn sql_version(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.sql_version", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `sql_version` after provisioning.\n"]
+    pub fn sql_version(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.sql_version", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `tags` after provisioning.\n"]
-    pub fn tags(&self) -> RecRef<PrimExpr<String>> {
-        RecRef::new(self.shared().clone(), format!("{}.tags", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `tags` after provisioning.\n"]
+    pub fn tags(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
+        terrars::RecRef::new(self.shared().clone(), format!("{}.tags", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `tags_all` after provisioning.\n"]
-    pub fn tags_all(&self) -> RecRef<PrimExpr<String>> {
-        RecRef::new(self.shared().clone(), format!("{}.tags_all", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `tags_all` after provisioning.\n"]
+    pub fn tags_all(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
+        terrars::RecRef::new(self.shared().clone(), format!("{}.tags_all", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `error_action` after provisioning.\n"]
-    pub fn error_action(&self) -> ListRef<IotTopicRuleErrorActionElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.error_action", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `error_action` after provisioning.\n"]
+    pub fn error_action(&self) -> terrars::ListRef<IotTopicRuleErrorActionElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.error_action", self.extract_ref()))
     }
 }
 
-impl Referable for IotTopicRule {
-    fn extract_ref(&self) -> String {
+impl terrars::Referable for IotTopicRule {
+    fn extract_ref(&self) -> std::string::String {
         format!("{}.{}", self.0.extract_resource_type(), self.0.extract_tf_id())
     }
 }
 
-impl Resource for IotTopicRule { }
+impl terrars::Resource for IotTopicRule { }
 
-impl ToListMappable for IotTopicRule {
-    type O = ListRef<IotTopicRuleRef>;
+impl terrars::ToListMappable for IotTopicRule {
+    type O = terrars::ListRef<IotTopicRuleRef>;
 
-    fn do_map(self, base: String) -> Self::O {
-        self.0.data.borrow_mut().for_each = Some(format!("${{{}}}", base));
-        ListRef::new(self.0.shared.clone(), self.extract_ref())
+    fn do_map(self, base: std::string::String) -> Self::O {
+        self.0.data.borrow_mut().for_each = std::option::Option::Some(format!("${{{}}}", base));
+        terrars::ListRef::new(self.0.shared.clone(), self.extract_ref())
     }
 }
 
-impl Resource_ for IotTopicRule_ {
-    fn extract_resource_type(&self) -> String {
+impl terrars::Resource_ for IotTopicRule_ {
+    fn extract_resource_type(&self) -> std::string::String {
         "aws_iot_topic_rule".into()
     }
 
-    fn extract_tf_id(&self) -> String {
+    fn extract_tf_id(&self) -> std::string::String {
         self.tf_id.clone()
     }
 
@@ -506,27 +570,28 @@ impl Resource_ for IotTopicRule_ {
 }
 
 pub struct BuildIotTopicRule {
-    pub tf_id: String,
-    #[doc= ""]
-    pub enabled: PrimField<bool>,
-    #[doc= ""]
-    pub name: PrimField<String>,
-    #[doc= ""]
-    pub sql: PrimField<String>,
-    #[doc= ""]
-    pub sql_version: PrimField<String>,
+    pub tf_id: std::string::String,
+    #[doc = ""]
+    pub enabled: terrars::PrimField<bool>,
+    #[doc = ""]
+    pub name: terrars::PrimField<std::string::String>,
+    #[doc = ""]
+    pub sql: terrars::PrimField<std::string::String>,
+    #[doc = ""]
+    pub sql_version: terrars::PrimField<std::string::String>,
 }
 
 impl BuildIotTopicRule {
-    pub fn build(self, stack: &mut Stack) -> IotTopicRule {
-        let out = IotTopicRule(Rc::new(IotTopicRule_ {
+    pub fn build(self, stack: &mut terrars::Stack) -> IotTopicRule {
+        let out = IotTopicRule(std::rc::Rc::new(IotTopicRule_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: RefCell::new(IotTopicRuleData {
+            data: std::cell::RefCell::new(IotTopicRuleData {
                 depends_on: core::default::Default::default(),
-                provider: None,
+                provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
-                for_each: None,
+                for_each: std::option::Option::None,
+                provisioner: core::default::Default::default(),
                 description: core::default::Default::default(),
                 enabled: self.enabled,
                 id: core::default::Default::default(),
@@ -555,7 +620,7 @@ impl BuildIotTopicRule {
                 sqs: core::default::Default::default(),
                 step_functions: core::default::Default::default(),
                 timestream: core::default::Default::default(),
-                dynamic: Default::default(),
+                dynamic: core::default::Default::default(),
             }),
         }));
         stack.add_resource(out.0.clone());
@@ -564,12 +629,12 @@ impl BuildIotTopicRule {
 }
 
 pub struct IotTopicRuleRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for IotTopicRuleRef {
-    fn new(shared: StackShared, base: String) -> Self {
+impl terrars::Ref for IotTopicRuleRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> Self {
         Self {
             shared: shared,
             base: base,
@@ -578,80 +643,80 @@ impl Ref for IotTopicRuleRef {
 }
 
 impl IotTopicRuleRef {
-    fn extract_ref(&self) -> String {
+    fn extract_ref(&self) -> std::string::String {
         self.base.clone()
     }
 
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `arn` after provisioning.\n"]
-    pub fn arn(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.arn", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `arn` after provisioning.\n"]
+    pub fn arn(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.arn", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `description` after provisioning.\n"]
-    pub fn description(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.description", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `description` after provisioning.\n"]
+    pub fn description(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.description", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `enabled` after provisioning.\n"]
-    pub fn enabled(&self) -> PrimExpr<bool> {
-        PrimExpr::new(self.shared().clone(), format!("{}.enabled", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `enabled` after provisioning.\n"]
+    pub fn enabled(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.enabled", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `id` after provisioning.\n"]
-    pub fn id(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
+    pub fn id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `name` after provisioning.\n"]
-    pub fn name(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `name` after provisioning.\n"]
+    pub fn name(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `sql` after provisioning.\n"]
-    pub fn sql(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.sql", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `sql` after provisioning.\n"]
+    pub fn sql(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.sql", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `sql_version` after provisioning.\n"]
-    pub fn sql_version(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.sql_version", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `sql_version` after provisioning.\n"]
+    pub fn sql_version(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.sql_version", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `tags` after provisioning.\n"]
-    pub fn tags(&self) -> RecRef<PrimExpr<String>> {
-        RecRef::new(self.shared().clone(), format!("{}.tags", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `tags` after provisioning.\n"]
+    pub fn tags(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
+        terrars::RecRef::new(self.shared().clone(), format!("{}.tags", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `tags_all` after provisioning.\n"]
-    pub fn tags_all(&self) -> RecRef<PrimExpr<String>> {
-        RecRef::new(self.shared().clone(), format!("{}.tags_all", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `tags_all` after provisioning.\n"]
+    pub fn tags_all(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
+        terrars::RecRef::new(self.shared().clone(), format!("{}.tags_all", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `error_action` after provisioning.\n"]
-    pub fn error_action(&self) -> ListRef<IotTopicRuleErrorActionElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.error_action", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `error_action` after provisioning.\n"]
+    pub fn error_action(&self) -> terrars::ListRef<IotTopicRuleErrorActionElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.error_action", self.extract_ref()))
     }
 }
 
 #[derive(Serialize)]
 pub struct IotTopicRuleCloudwatchAlarmEl {
-    alarm_name: PrimField<String>,
-    role_arn: PrimField<String>,
-    state_reason: PrimField<String>,
-    state_value: PrimField<String>,
+    alarm_name: terrars::PrimField<std::string::String>,
+    role_arn: terrars::PrimField<std::string::String>,
+    state_reason: terrars::PrimField<std::string::String>,
+    state_value: terrars::PrimField<std::string::String>,
 }
 
 impl IotTopicRuleCloudwatchAlarmEl { }
 
-impl ToListMappable for IotTopicRuleCloudwatchAlarmEl {
-    type O = BlockAssignable<IotTopicRuleCloudwatchAlarmEl>;
+impl terrars::ToListMappable for IotTopicRuleCloudwatchAlarmEl {
+    type O = terrars::BlockAssignable<IotTopicRuleCloudwatchAlarmEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -660,14 +725,14 @@ impl ToListMappable for IotTopicRuleCloudwatchAlarmEl {
 }
 
 pub struct BuildIotTopicRuleCloudwatchAlarmEl {
-    #[doc= ""]
-    pub alarm_name: PrimField<String>,
-    #[doc= ""]
-    pub role_arn: PrimField<String>,
-    #[doc= ""]
-    pub state_reason: PrimField<String>,
-    #[doc= ""]
-    pub state_value: PrimField<String>,
+    #[doc = ""]
+    pub alarm_name: terrars::PrimField<std::string::String>,
+    #[doc = ""]
+    pub role_arn: terrars::PrimField<std::string::String>,
+    #[doc = ""]
+    pub state_reason: terrars::PrimField<std::string::String>,
+    #[doc = ""]
+    pub state_value: terrars::PrimField<std::string::String>,
 }
 
 impl BuildIotTopicRuleCloudwatchAlarmEl {
@@ -682,12 +747,12 @@ impl BuildIotTopicRuleCloudwatchAlarmEl {
 }
 
 pub struct IotTopicRuleCloudwatchAlarmElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for IotTopicRuleCloudwatchAlarmElRef {
-    fn new(shared: StackShared, base: String) -> IotTopicRuleCloudwatchAlarmElRef {
+impl terrars::Ref for IotTopicRuleCloudwatchAlarmElRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> IotTopicRuleCloudwatchAlarmElRef {
         IotTopicRuleCloudwatchAlarmElRef {
             shared: shared,
             base: base.to_string(),
@@ -696,44 +761,44 @@ impl Ref for IotTopicRuleCloudwatchAlarmElRef {
 }
 
 impl IotTopicRuleCloudwatchAlarmElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `alarm_name` after provisioning.\n"]
-    pub fn alarm_name(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.alarm_name", self.base))
+    #[doc = "Get a reference to the value of field `alarm_name` after provisioning.\n"]
+    pub fn alarm_name(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.alarm_name", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `role_arn` after provisioning.\n"]
-    pub fn role_arn(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.role_arn", self.base))
+    #[doc = "Get a reference to the value of field `role_arn` after provisioning.\n"]
+    pub fn role_arn(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.role_arn", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `state_reason` after provisioning.\n"]
-    pub fn state_reason(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.state_reason", self.base))
+    #[doc = "Get a reference to the value of field `state_reason` after provisioning.\n"]
+    pub fn state_reason(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.state_reason", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `state_value` after provisioning.\n"]
-    pub fn state_value(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.state_value", self.base))
+    #[doc = "Get a reference to the value of field `state_value` after provisioning.\n"]
+    pub fn state_value(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.state_value", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct IotTopicRuleCloudwatchLogsEl {
-    log_group_name: PrimField<String>,
-    role_arn: PrimField<String>,
+    log_group_name: terrars::PrimField<std::string::String>,
+    role_arn: terrars::PrimField<std::string::String>,
 }
 
 impl IotTopicRuleCloudwatchLogsEl { }
 
-impl ToListMappable for IotTopicRuleCloudwatchLogsEl {
-    type O = BlockAssignable<IotTopicRuleCloudwatchLogsEl>;
+impl terrars::ToListMappable for IotTopicRuleCloudwatchLogsEl {
+    type O = terrars::BlockAssignable<IotTopicRuleCloudwatchLogsEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -742,10 +807,10 @@ impl ToListMappable for IotTopicRuleCloudwatchLogsEl {
 }
 
 pub struct BuildIotTopicRuleCloudwatchLogsEl {
-    #[doc= ""]
-    pub log_group_name: PrimField<String>,
-    #[doc= ""]
-    pub role_arn: PrimField<String>,
+    #[doc = ""]
+    pub log_group_name: terrars::PrimField<std::string::String>,
+    #[doc = ""]
+    pub role_arn: terrars::PrimField<std::string::String>,
 }
 
 impl BuildIotTopicRuleCloudwatchLogsEl {
@@ -758,12 +823,12 @@ impl BuildIotTopicRuleCloudwatchLogsEl {
 }
 
 pub struct IotTopicRuleCloudwatchLogsElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for IotTopicRuleCloudwatchLogsElRef {
-    fn new(shared: StackShared, base: String) -> IotTopicRuleCloudwatchLogsElRef {
+impl terrars::Ref for IotTopicRuleCloudwatchLogsElRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> IotTopicRuleCloudwatchLogsElRef {
         IotTopicRuleCloudwatchLogsElRef {
             shared: shared,
             base: base.to_string(),
@@ -772,45 +837,45 @@ impl Ref for IotTopicRuleCloudwatchLogsElRef {
 }
 
 impl IotTopicRuleCloudwatchLogsElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `log_group_name` after provisioning.\n"]
-    pub fn log_group_name(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.log_group_name", self.base))
+    #[doc = "Get a reference to the value of field `log_group_name` after provisioning.\n"]
+    pub fn log_group_name(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.log_group_name", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `role_arn` after provisioning.\n"]
-    pub fn role_arn(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.role_arn", self.base))
+    #[doc = "Get a reference to the value of field `role_arn` after provisioning.\n"]
+    pub fn role_arn(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.role_arn", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct IotTopicRuleCloudwatchMetricEl {
-    metric_name: PrimField<String>,
-    metric_namespace: PrimField<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    metric_timestamp: Option<PrimField<String>>,
-    metric_unit: PrimField<String>,
-    metric_value: PrimField<String>,
-    role_arn: PrimField<String>,
+    metric_name: terrars::PrimField<std::string::String>,
+    metric_namespace: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    metric_timestamp: std::option::Option<terrars::PrimField<std::string::String>>,
+    metric_unit: terrars::PrimField<std::string::String>,
+    metric_value: terrars::PrimField<std::string::String>,
+    role_arn: terrars::PrimField<std::string::String>,
 }
 
 impl IotTopicRuleCloudwatchMetricEl {
-    #[doc= "Set the field `metric_timestamp`.\n"]
-    pub fn set_metric_timestamp(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.metric_timestamp = Some(v.into());
+    #[doc = "Set the field `metric_timestamp`.\n"]
+    pub fn set_metric_timestamp(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.metric_timestamp = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl ToListMappable for IotTopicRuleCloudwatchMetricEl {
-    type O = BlockAssignable<IotTopicRuleCloudwatchMetricEl>;
+impl terrars::ToListMappable for IotTopicRuleCloudwatchMetricEl {
+    type O = terrars::BlockAssignable<IotTopicRuleCloudwatchMetricEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -819,16 +884,16 @@ impl ToListMappable for IotTopicRuleCloudwatchMetricEl {
 }
 
 pub struct BuildIotTopicRuleCloudwatchMetricEl {
-    #[doc= ""]
-    pub metric_name: PrimField<String>,
-    #[doc= ""]
-    pub metric_namespace: PrimField<String>,
-    #[doc= ""]
-    pub metric_unit: PrimField<String>,
-    #[doc= ""]
-    pub metric_value: PrimField<String>,
-    #[doc= ""]
-    pub role_arn: PrimField<String>,
+    #[doc = ""]
+    pub metric_name: terrars::PrimField<std::string::String>,
+    #[doc = ""]
+    pub metric_namespace: terrars::PrimField<std::string::String>,
+    #[doc = ""]
+    pub metric_unit: terrars::PrimField<std::string::String>,
+    #[doc = ""]
+    pub metric_value: terrars::PrimField<std::string::String>,
+    #[doc = ""]
+    pub role_arn: terrars::PrimField<std::string::String>,
 }
 
 impl BuildIotTopicRuleCloudwatchMetricEl {
@@ -845,12 +910,12 @@ impl BuildIotTopicRuleCloudwatchMetricEl {
 }
 
 pub struct IotTopicRuleCloudwatchMetricElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for IotTopicRuleCloudwatchMetricElRef {
-    fn new(shared: StackShared, base: String) -> IotTopicRuleCloudwatchMetricElRef {
+impl terrars::Ref for IotTopicRuleCloudwatchMetricElRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> IotTopicRuleCloudwatchMetricElRef {
         IotTopicRuleCloudwatchMetricElRef {
             shared: shared,
             base: base.to_string(),
@@ -859,104 +924,104 @@ impl Ref for IotTopicRuleCloudwatchMetricElRef {
 }
 
 impl IotTopicRuleCloudwatchMetricElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `metric_name` after provisioning.\n"]
-    pub fn metric_name(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.metric_name", self.base))
+    #[doc = "Get a reference to the value of field `metric_name` after provisioning.\n"]
+    pub fn metric_name(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.metric_name", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `metric_namespace` after provisioning.\n"]
-    pub fn metric_namespace(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.metric_namespace", self.base))
+    #[doc = "Get a reference to the value of field `metric_namespace` after provisioning.\n"]
+    pub fn metric_namespace(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.metric_namespace", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `metric_timestamp` after provisioning.\n"]
-    pub fn metric_timestamp(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.metric_timestamp", self.base))
+    #[doc = "Get a reference to the value of field `metric_timestamp` after provisioning.\n"]
+    pub fn metric_timestamp(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.metric_timestamp", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `metric_unit` after provisioning.\n"]
-    pub fn metric_unit(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.metric_unit", self.base))
+    #[doc = "Get a reference to the value of field `metric_unit` after provisioning.\n"]
+    pub fn metric_unit(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.metric_unit", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `metric_value` after provisioning.\n"]
-    pub fn metric_value(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.metric_value", self.base))
+    #[doc = "Get a reference to the value of field `metric_value` after provisioning.\n"]
+    pub fn metric_value(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.metric_value", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `role_arn` after provisioning.\n"]
-    pub fn role_arn(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.role_arn", self.base))
+    #[doc = "Get a reference to the value of field `role_arn` after provisioning.\n"]
+    pub fn role_arn(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.role_arn", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct IotTopicRuleDynamodbEl {
-    hash_key_field: PrimField<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    hash_key_type: Option<PrimField<String>>,
-    hash_key_value: PrimField<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    operation: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    payload_field: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    range_key_field: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    range_key_type: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    range_key_value: Option<PrimField<String>>,
-    role_arn: PrimField<String>,
-    table_name: PrimField<String>,
+    hash_key_field: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    hash_key_type: std::option::Option<terrars::PrimField<std::string::String>>,
+    hash_key_value: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    operation: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    payload_field: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    range_key_field: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    range_key_type: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    range_key_value: std::option::Option<terrars::PrimField<std::string::String>>,
+    role_arn: terrars::PrimField<std::string::String>,
+    table_name: terrars::PrimField<std::string::String>,
 }
 
 impl IotTopicRuleDynamodbEl {
-    #[doc= "Set the field `hash_key_type`.\n"]
-    pub fn set_hash_key_type(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.hash_key_type = Some(v.into());
+    #[doc = "Set the field `hash_key_type`.\n"]
+    pub fn set_hash_key_type(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.hash_key_type = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `operation`.\n"]
-    pub fn set_operation(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.operation = Some(v.into());
+    #[doc = "Set the field `operation`.\n"]
+    pub fn set_operation(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.operation = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `payload_field`.\n"]
-    pub fn set_payload_field(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.payload_field = Some(v.into());
+    #[doc = "Set the field `payload_field`.\n"]
+    pub fn set_payload_field(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.payload_field = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `range_key_field`.\n"]
-    pub fn set_range_key_field(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.range_key_field = Some(v.into());
+    #[doc = "Set the field `range_key_field`.\n"]
+    pub fn set_range_key_field(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.range_key_field = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `range_key_type`.\n"]
-    pub fn set_range_key_type(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.range_key_type = Some(v.into());
+    #[doc = "Set the field `range_key_type`.\n"]
+    pub fn set_range_key_type(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.range_key_type = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `range_key_value`.\n"]
-    pub fn set_range_key_value(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.range_key_value = Some(v.into());
+    #[doc = "Set the field `range_key_value`.\n"]
+    pub fn set_range_key_value(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.range_key_value = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl ToListMappable for IotTopicRuleDynamodbEl {
-    type O = BlockAssignable<IotTopicRuleDynamodbEl>;
+impl terrars::ToListMappable for IotTopicRuleDynamodbEl {
+    type O = terrars::BlockAssignable<IotTopicRuleDynamodbEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -965,14 +1030,14 @@ impl ToListMappable for IotTopicRuleDynamodbEl {
 }
 
 pub struct BuildIotTopicRuleDynamodbEl {
-    #[doc= ""]
-    pub hash_key_field: PrimField<String>,
-    #[doc= ""]
-    pub hash_key_value: PrimField<String>,
-    #[doc= ""]
-    pub role_arn: PrimField<String>,
-    #[doc= ""]
-    pub table_name: PrimField<String>,
+    #[doc = ""]
+    pub hash_key_field: terrars::PrimField<std::string::String>,
+    #[doc = ""]
+    pub hash_key_value: terrars::PrimField<std::string::String>,
+    #[doc = ""]
+    pub role_arn: terrars::PrimField<std::string::String>,
+    #[doc = ""]
+    pub table_name: terrars::PrimField<std::string::String>,
 }
 
 impl BuildIotTopicRuleDynamodbEl {
@@ -993,12 +1058,12 @@ impl BuildIotTopicRuleDynamodbEl {
 }
 
 pub struct IotTopicRuleDynamodbElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for IotTopicRuleDynamodbElRef {
-    fn new(shared: StackShared, base: String) -> IotTopicRuleDynamodbElRef {
+impl terrars::Ref for IotTopicRuleDynamodbElRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> IotTopicRuleDynamodbElRef {
         IotTopicRuleDynamodbElRef {
             shared: shared,
             base: base.to_string(),
@@ -1007,73 +1072,73 @@ impl Ref for IotTopicRuleDynamodbElRef {
 }
 
 impl IotTopicRuleDynamodbElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `hash_key_field` after provisioning.\n"]
-    pub fn hash_key_field(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.hash_key_field", self.base))
+    #[doc = "Get a reference to the value of field `hash_key_field` after provisioning.\n"]
+    pub fn hash_key_field(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.hash_key_field", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `hash_key_type` after provisioning.\n"]
-    pub fn hash_key_type(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.hash_key_type", self.base))
+    #[doc = "Get a reference to the value of field `hash_key_type` after provisioning.\n"]
+    pub fn hash_key_type(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.hash_key_type", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `hash_key_value` after provisioning.\n"]
-    pub fn hash_key_value(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.hash_key_value", self.base))
+    #[doc = "Get a reference to the value of field `hash_key_value` after provisioning.\n"]
+    pub fn hash_key_value(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.hash_key_value", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `operation` after provisioning.\n"]
-    pub fn operation(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.operation", self.base))
+    #[doc = "Get a reference to the value of field `operation` after provisioning.\n"]
+    pub fn operation(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.operation", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `payload_field` after provisioning.\n"]
-    pub fn payload_field(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.payload_field", self.base))
+    #[doc = "Get a reference to the value of field `payload_field` after provisioning.\n"]
+    pub fn payload_field(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.payload_field", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `range_key_field` after provisioning.\n"]
-    pub fn range_key_field(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.range_key_field", self.base))
+    #[doc = "Get a reference to the value of field `range_key_field` after provisioning.\n"]
+    pub fn range_key_field(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.range_key_field", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `range_key_type` after provisioning.\n"]
-    pub fn range_key_type(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.range_key_type", self.base))
+    #[doc = "Get a reference to the value of field `range_key_type` after provisioning.\n"]
+    pub fn range_key_type(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.range_key_type", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `range_key_value` after provisioning.\n"]
-    pub fn range_key_value(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.range_key_value", self.base))
+    #[doc = "Get a reference to the value of field `range_key_value` after provisioning.\n"]
+    pub fn range_key_value(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.range_key_value", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `role_arn` after provisioning.\n"]
-    pub fn role_arn(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.role_arn", self.base))
+    #[doc = "Get a reference to the value of field `role_arn` after provisioning.\n"]
+    pub fn role_arn(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.role_arn", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `table_name` after provisioning.\n"]
-    pub fn table_name(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.table_name", self.base))
+    #[doc = "Get a reference to the value of field `table_name` after provisioning.\n"]
+    pub fn table_name(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.table_name", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct IotTopicRuleDynamodbv2ElPutItemEl {
-    table_name: PrimField<String>,
+    table_name: terrars::PrimField<std::string::String>,
 }
 
 impl IotTopicRuleDynamodbv2ElPutItemEl { }
 
-impl ToListMappable for IotTopicRuleDynamodbv2ElPutItemEl {
-    type O = BlockAssignable<IotTopicRuleDynamodbv2ElPutItemEl>;
+impl terrars::ToListMappable for IotTopicRuleDynamodbv2ElPutItemEl {
+    type O = terrars::BlockAssignable<IotTopicRuleDynamodbv2ElPutItemEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -1082,8 +1147,8 @@ impl ToListMappable for IotTopicRuleDynamodbv2ElPutItemEl {
 }
 
 pub struct BuildIotTopicRuleDynamodbv2ElPutItemEl {
-    #[doc= ""]
-    pub table_name: PrimField<String>,
+    #[doc = ""]
+    pub table_name: terrars::PrimField<std::string::String>,
 }
 
 impl BuildIotTopicRuleDynamodbv2ElPutItemEl {
@@ -1093,12 +1158,12 @@ impl BuildIotTopicRuleDynamodbv2ElPutItemEl {
 }
 
 pub struct IotTopicRuleDynamodbv2ElPutItemElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for IotTopicRuleDynamodbv2ElPutItemElRef {
-    fn new(shared: StackShared, base: String) -> IotTopicRuleDynamodbv2ElPutItemElRef {
+impl terrars::Ref for IotTopicRuleDynamodbv2ElPutItemElRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> IotTopicRuleDynamodbv2ElPutItemElRef {
         IotTopicRuleDynamodbv2ElPutItemElRef {
             shared: shared,
             base: base.to_string(),
@@ -1107,49 +1172,52 @@ impl Ref for IotTopicRuleDynamodbv2ElPutItemElRef {
 }
 
 impl IotTopicRuleDynamodbv2ElPutItemElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `table_name` after provisioning.\n"]
-    pub fn table_name(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.table_name", self.base))
+    #[doc = "Get a reference to the value of field `table_name` after provisioning.\n"]
+    pub fn table_name(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.table_name", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
 struct IotTopicRuleDynamodbv2ElDynamic {
-    put_item: Option<DynamicBlock<IotTopicRuleDynamodbv2ElPutItemEl>>,
+    put_item: std::option::Option<terrars::DynamicBlock<IotTopicRuleDynamodbv2ElPutItemEl>>,
 }
 
 #[derive(Serialize)]
 pub struct IotTopicRuleDynamodbv2El {
-    role_arn: PrimField<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    put_item: Option<Vec<IotTopicRuleDynamodbv2ElPutItemEl>>,
+    role_arn: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    put_item: std::option::Option<std::vec::Vec<IotTopicRuleDynamodbv2ElPutItemEl>>,
     dynamic: IotTopicRuleDynamodbv2ElDynamic,
 }
 
 impl IotTopicRuleDynamodbv2El {
-    #[doc= "Set the field `put_item`.\n"]
-    pub fn set_put_item(mut self, v: impl Into<BlockAssignable<IotTopicRuleDynamodbv2ElPutItemEl>>) -> Self {
+    #[doc = "Set the field `put_item`.\n"]
+    pub fn set_put_item(
+        mut self,
+        v: impl std::convert::Into<terrars::BlockAssignable<IotTopicRuleDynamodbv2ElPutItemEl>>,
+    ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.put_item = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.put_item = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.put_item = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.put_item = std::option::Option::Some(d);
             },
         }
         self
     }
 }
 
-impl ToListMappable for IotTopicRuleDynamodbv2El {
-    type O = BlockAssignable<IotTopicRuleDynamodbv2El>;
+impl terrars::ToListMappable for IotTopicRuleDynamodbv2El {
+    type O = terrars::BlockAssignable<IotTopicRuleDynamodbv2El>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -1158,8 +1226,8 @@ impl ToListMappable for IotTopicRuleDynamodbv2El {
 }
 
 pub struct BuildIotTopicRuleDynamodbv2El {
-    #[doc= ""]
-    pub role_arn: PrimField<String>,
+    #[doc = ""]
+    pub role_arn: terrars::PrimField<std::string::String>,
 }
 
 impl BuildIotTopicRuleDynamodbv2El {
@@ -1167,18 +1235,18 @@ impl BuildIotTopicRuleDynamodbv2El {
         IotTopicRuleDynamodbv2El {
             role_arn: self.role_arn,
             put_item: core::default::Default::default(),
-            dynamic: Default::default(),
+            dynamic: core::default::Default::default(),
         }
     }
 }
 
 pub struct IotTopicRuleDynamodbv2ElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for IotTopicRuleDynamodbv2ElRef {
-    fn new(shared: StackShared, base: String) -> IotTopicRuleDynamodbv2ElRef {
+impl terrars::Ref for IotTopicRuleDynamodbv2ElRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> IotTopicRuleDynamodbv2ElRef {
         IotTopicRuleDynamodbv2ElRef {
             shared: shared,
             base: base.to_string(),
@@ -1187,38 +1255,38 @@ impl Ref for IotTopicRuleDynamodbv2ElRef {
 }
 
 impl IotTopicRuleDynamodbv2ElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `role_arn` after provisioning.\n"]
-    pub fn role_arn(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.role_arn", self.base))
+    #[doc = "Get a reference to the value of field `role_arn` after provisioning.\n"]
+    pub fn role_arn(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.role_arn", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `put_item` after provisioning.\n"]
-    pub fn put_item(&self) -> ListRef<IotTopicRuleDynamodbv2ElPutItemElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.put_item", self.base))
+    #[doc = "Get a reference to the value of field `put_item` after provisioning.\n"]
+    pub fn put_item(&self) -> terrars::ListRef<IotTopicRuleDynamodbv2ElPutItemElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.put_item", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct IotTopicRuleElasticsearchEl {
-    endpoint: PrimField<String>,
-    id: PrimField<String>,
-    index: PrimField<String>,
-    role_arn: PrimField<String>,
+    endpoint: terrars::PrimField<std::string::String>,
+    id: terrars::PrimField<std::string::String>,
+    index: terrars::PrimField<std::string::String>,
+    role_arn: terrars::PrimField<std::string::String>,
     #[serde(rename = "type")]
-    type_: PrimField<String>,
+    type_: terrars::PrimField<std::string::String>,
 }
 
 impl IotTopicRuleElasticsearchEl { }
 
-impl ToListMappable for IotTopicRuleElasticsearchEl {
-    type O = BlockAssignable<IotTopicRuleElasticsearchEl>;
+impl terrars::ToListMappable for IotTopicRuleElasticsearchEl {
+    type O = terrars::BlockAssignable<IotTopicRuleElasticsearchEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -1227,16 +1295,16 @@ impl ToListMappable for IotTopicRuleElasticsearchEl {
 }
 
 pub struct BuildIotTopicRuleElasticsearchEl {
-    #[doc= ""]
-    pub endpoint: PrimField<String>,
-    #[doc= ""]
-    pub id: PrimField<String>,
-    #[doc= ""]
-    pub index: PrimField<String>,
-    #[doc= ""]
-    pub role_arn: PrimField<String>,
-    #[doc= ""]
-    pub type_: PrimField<String>,
+    #[doc = ""]
+    pub endpoint: terrars::PrimField<std::string::String>,
+    #[doc = ""]
+    pub id: terrars::PrimField<std::string::String>,
+    #[doc = ""]
+    pub index: terrars::PrimField<std::string::String>,
+    #[doc = ""]
+    pub role_arn: terrars::PrimField<std::string::String>,
+    #[doc = ""]
+    pub type_: terrars::PrimField<std::string::String>,
 }
 
 impl BuildIotTopicRuleElasticsearchEl {
@@ -1252,12 +1320,12 @@ impl BuildIotTopicRuleElasticsearchEl {
 }
 
 pub struct IotTopicRuleElasticsearchElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for IotTopicRuleElasticsearchElRef {
-    fn new(shared: StackShared, base: String) -> IotTopicRuleElasticsearchElRef {
+impl terrars::Ref for IotTopicRuleElasticsearchElRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> IotTopicRuleElasticsearchElRef {
         IotTopicRuleElasticsearchElRef {
             shared: shared,
             base: base.to_string(),
@@ -1266,51 +1334,51 @@ impl Ref for IotTopicRuleElasticsearchElRef {
 }
 
 impl IotTopicRuleElasticsearchElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `endpoint` after provisioning.\n"]
-    pub fn endpoint(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.endpoint", self.base))
+    #[doc = "Get a reference to the value of field `endpoint` after provisioning.\n"]
+    pub fn endpoint(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.endpoint", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `id` after provisioning.\n"]
-    pub fn id(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.id", self.base))
+    #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
+    pub fn id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `index` after provisioning.\n"]
-    pub fn index(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.index", self.base))
+    #[doc = "Get a reference to the value of field `index` after provisioning.\n"]
+    pub fn index(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.index", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `role_arn` after provisioning.\n"]
-    pub fn role_arn(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.role_arn", self.base))
+    #[doc = "Get a reference to the value of field `role_arn` after provisioning.\n"]
+    pub fn role_arn(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.role_arn", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `type_` after provisioning.\n"]
-    pub fn type_(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.type", self.base))
+    #[doc = "Get a reference to the value of field `type_` after provisioning.\n"]
+    pub fn type_(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.type", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct IotTopicRuleErrorActionElCloudwatchAlarmEl {
-    alarm_name: PrimField<String>,
-    role_arn: PrimField<String>,
-    state_reason: PrimField<String>,
-    state_value: PrimField<String>,
+    alarm_name: terrars::PrimField<std::string::String>,
+    role_arn: terrars::PrimField<std::string::String>,
+    state_reason: terrars::PrimField<std::string::String>,
+    state_value: terrars::PrimField<std::string::String>,
 }
 
 impl IotTopicRuleErrorActionElCloudwatchAlarmEl { }
 
-impl ToListMappable for IotTopicRuleErrorActionElCloudwatchAlarmEl {
-    type O = BlockAssignable<IotTopicRuleErrorActionElCloudwatchAlarmEl>;
+impl terrars::ToListMappable for IotTopicRuleErrorActionElCloudwatchAlarmEl {
+    type O = terrars::BlockAssignable<IotTopicRuleErrorActionElCloudwatchAlarmEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -1319,14 +1387,14 @@ impl ToListMappable for IotTopicRuleErrorActionElCloudwatchAlarmEl {
 }
 
 pub struct BuildIotTopicRuleErrorActionElCloudwatchAlarmEl {
-    #[doc= ""]
-    pub alarm_name: PrimField<String>,
-    #[doc= ""]
-    pub role_arn: PrimField<String>,
-    #[doc= ""]
-    pub state_reason: PrimField<String>,
-    #[doc= ""]
-    pub state_value: PrimField<String>,
+    #[doc = ""]
+    pub alarm_name: terrars::PrimField<std::string::String>,
+    #[doc = ""]
+    pub role_arn: terrars::PrimField<std::string::String>,
+    #[doc = ""]
+    pub state_reason: terrars::PrimField<std::string::String>,
+    #[doc = ""]
+    pub state_value: terrars::PrimField<std::string::String>,
 }
 
 impl BuildIotTopicRuleErrorActionElCloudwatchAlarmEl {
@@ -1341,12 +1409,12 @@ impl BuildIotTopicRuleErrorActionElCloudwatchAlarmEl {
 }
 
 pub struct IotTopicRuleErrorActionElCloudwatchAlarmElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for IotTopicRuleErrorActionElCloudwatchAlarmElRef {
-    fn new(shared: StackShared, base: String) -> IotTopicRuleErrorActionElCloudwatchAlarmElRef {
+impl terrars::Ref for IotTopicRuleErrorActionElCloudwatchAlarmElRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> IotTopicRuleErrorActionElCloudwatchAlarmElRef {
         IotTopicRuleErrorActionElCloudwatchAlarmElRef {
             shared: shared,
             base: base.to_string(),
@@ -1355,44 +1423,44 @@ impl Ref for IotTopicRuleErrorActionElCloudwatchAlarmElRef {
 }
 
 impl IotTopicRuleErrorActionElCloudwatchAlarmElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `alarm_name` after provisioning.\n"]
-    pub fn alarm_name(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.alarm_name", self.base))
+    #[doc = "Get a reference to the value of field `alarm_name` after provisioning.\n"]
+    pub fn alarm_name(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.alarm_name", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `role_arn` after provisioning.\n"]
-    pub fn role_arn(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.role_arn", self.base))
+    #[doc = "Get a reference to the value of field `role_arn` after provisioning.\n"]
+    pub fn role_arn(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.role_arn", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `state_reason` after provisioning.\n"]
-    pub fn state_reason(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.state_reason", self.base))
+    #[doc = "Get a reference to the value of field `state_reason` after provisioning.\n"]
+    pub fn state_reason(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.state_reason", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `state_value` after provisioning.\n"]
-    pub fn state_value(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.state_value", self.base))
+    #[doc = "Get a reference to the value of field `state_value` after provisioning.\n"]
+    pub fn state_value(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.state_value", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct IotTopicRuleErrorActionElCloudwatchLogsEl {
-    log_group_name: PrimField<String>,
-    role_arn: PrimField<String>,
+    log_group_name: terrars::PrimField<std::string::String>,
+    role_arn: terrars::PrimField<std::string::String>,
 }
 
 impl IotTopicRuleErrorActionElCloudwatchLogsEl { }
 
-impl ToListMappable for IotTopicRuleErrorActionElCloudwatchLogsEl {
-    type O = BlockAssignable<IotTopicRuleErrorActionElCloudwatchLogsEl>;
+impl terrars::ToListMappable for IotTopicRuleErrorActionElCloudwatchLogsEl {
+    type O = terrars::BlockAssignable<IotTopicRuleErrorActionElCloudwatchLogsEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -1401,10 +1469,10 @@ impl ToListMappable for IotTopicRuleErrorActionElCloudwatchLogsEl {
 }
 
 pub struct BuildIotTopicRuleErrorActionElCloudwatchLogsEl {
-    #[doc= ""]
-    pub log_group_name: PrimField<String>,
-    #[doc= ""]
-    pub role_arn: PrimField<String>,
+    #[doc = ""]
+    pub log_group_name: terrars::PrimField<std::string::String>,
+    #[doc = ""]
+    pub role_arn: terrars::PrimField<std::string::String>,
 }
 
 impl BuildIotTopicRuleErrorActionElCloudwatchLogsEl {
@@ -1417,12 +1485,12 @@ impl BuildIotTopicRuleErrorActionElCloudwatchLogsEl {
 }
 
 pub struct IotTopicRuleErrorActionElCloudwatchLogsElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for IotTopicRuleErrorActionElCloudwatchLogsElRef {
-    fn new(shared: StackShared, base: String) -> IotTopicRuleErrorActionElCloudwatchLogsElRef {
+impl terrars::Ref for IotTopicRuleErrorActionElCloudwatchLogsElRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> IotTopicRuleErrorActionElCloudwatchLogsElRef {
         IotTopicRuleErrorActionElCloudwatchLogsElRef {
             shared: shared,
             base: base.to_string(),
@@ -1431,45 +1499,45 @@ impl Ref for IotTopicRuleErrorActionElCloudwatchLogsElRef {
 }
 
 impl IotTopicRuleErrorActionElCloudwatchLogsElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `log_group_name` after provisioning.\n"]
-    pub fn log_group_name(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.log_group_name", self.base))
+    #[doc = "Get a reference to the value of field `log_group_name` after provisioning.\n"]
+    pub fn log_group_name(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.log_group_name", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `role_arn` after provisioning.\n"]
-    pub fn role_arn(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.role_arn", self.base))
+    #[doc = "Get a reference to the value of field `role_arn` after provisioning.\n"]
+    pub fn role_arn(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.role_arn", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct IotTopicRuleErrorActionElCloudwatchMetricEl {
-    metric_name: PrimField<String>,
-    metric_namespace: PrimField<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    metric_timestamp: Option<PrimField<String>>,
-    metric_unit: PrimField<String>,
-    metric_value: PrimField<String>,
-    role_arn: PrimField<String>,
+    metric_name: terrars::PrimField<std::string::String>,
+    metric_namespace: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    metric_timestamp: std::option::Option<terrars::PrimField<std::string::String>>,
+    metric_unit: terrars::PrimField<std::string::String>,
+    metric_value: terrars::PrimField<std::string::String>,
+    role_arn: terrars::PrimField<std::string::String>,
 }
 
 impl IotTopicRuleErrorActionElCloudwatchMetricEl {
-    #[doc= "Set the field `metric_timestamp`.\n"]
-    pub fn set_metric_timestamp(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.metric_timestamp = Some(v.into());
+    #[doc = "Set the field `metric_timestamp`.\n"]
+    pub fn set_metric_timestamp(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.metric_timestamp = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl ToListMappable for IotTopicRuleErrorActionElCloudwatchMetricEl {
-    type O = BlockAssignable<IotTopicRuleErrorActionElCloudwatchMetricEl>;
+impl terrars::ToListMappable for IotTopicRuleErrorActionElCloudwatchMetricEl {
+    type O = terrars::BlockAssignable<IotTopicRuleErrorActionElCloudwatchMetricEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -1478,16 +1546,16 @@ impl ToListMappable for IotTopicRuleErrorActionElCloudwatchMetricEl {
 }
 
 pub struct BuildIotTopicRuleErrorActionElCloudwatchMetricEl {
-    #[doc= ""]
-    pub metric_name: PrimField<String>,
-    #[doc= ""]
-    pub metric_namespace: PrimField<String>,
-    #[doc= ""]
-    pub metric_unit: PrimField<String>,
-    #[doc= ""]
-    pub metric_value: PrimField<String>,
-    #[doc= ""]
-    pub role_arn: PrimField<String>,
+    #[doc = ""]
+    pub metric_name: terrars::PrimField<std::string::String>,
+    #[doc = ""]
+    pub metric_namespace: terrars::PrimField<std::string::String>,
+    #[doc = ""]
+    pub metric_unit: terrars::PrimField<std::string::String>,
+    #[doc = ""]
+    pub metric_value: terrars::PrimField<std::string::String>,
+    #[doc = ""]
+    pub role_arn: terrars::PrimField<std::string::String>,
 }
 
 impl BuildIotTopicRuleErrorActionElCloudwatchMetricEl {
@@ -1504,12 +1572,15 @@ impl BuildIotTopicRuleErrorActionElCloudwatchMetricEl {
 }
 
 pub struct IotTopicRuleErrorActionElCloudwatchMetricElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for IotTopicRuleErrorActionElCloudwatchMetricElRef {
-    fn new(shared: StackShared, base: String) -> IotTopicRuleErrorActionElCloudwatchMetricElRef {
+impl terrars::Ref for IotTopicRuleErrorActionElCloudwatchMetricElRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> IotTopicRuleErrorActionElCloudwatchMetricElRef {
         IotTopicRuleErrorActionElCloudwatchMetricElRef {
             shared: shared,
             base: base.to_string(),
@@ -1518,104 +1589,104 @@ impl Ref for IotTopicRuleErrorActionElCloudwatchMetricElRef {
 }
 
 impl IotTopicRuleErrorActionElCloudwatchMetricElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `metric_name` after provisioning.\n"]
-    pub fn metric_name(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.metric_name", self.base))
+    #[doc = "Get a reference to the value of field `metric_name` after provisioning.\n"]
+    pub fn metric_name(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.metric_name", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `metric_namespace` after provisioning.\n"]
-    pub fn metric_namespace(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.metric_namespace", self.base))
+    #[doc = "Get a reference to the value of field `metric_namespace` after provisioning.\n"]
+    pub fn metric_namespace(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.metric_namespace", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `metric_timestamp` after provisioning.\n"]
-    pub fn metric_timestamp(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.metric_timestamp", self.base))
+    #[doc = "Get a reference to the value of field `metric_timestamp` after provisioning.\n"]
+    pub fn metric_timestamp(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.metric_timestamp", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `metric_unit` after provisioning.\n"]
-    pub fn metric_unit(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.metric_unit", self.base))
+    #[doc = "Get a reference to the value of field `metric_unit` after provisioning.\n"]
+    pub fn metric_unit(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.metric_unit", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `metric_value` after provisioning.\n"]
-    pub fn metric_value(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.metric_value", self.base))
+    #[doc = "Get a reference to the value of field `metric_value` after provisioning.\n"]
+    pub fn metric_value(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.metric_value", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `role_arn` after provisioning.\n"]
-    pub fn role_arn(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.role_arn", self.base))
+    #[doc = "Get a reference to the value of field `role_arn` after provisioning.\n"]
+    pub fn role_arn(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.role_arn", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct IotTopicRuleErrorActionElDynamodbEl {
-    hash_key_field: PrimField<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    hash_key_type: Option<PrimField<String>>,
-    hash_key_value: PrimField<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    operation: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    payload_field: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    range_key_field: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    range_key_type: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    range_key_value: Option<PrimField<String>>,
-    role_arn: PrimField<String>,
-    table_name: PrimField<String>,
+    hash_key_field: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    hash_key_type: std::option::Option<terrars::PrimField<std::string::String>>,
+    hash_key_value: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    operation: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    payload_field: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    range_key_field: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    range_key_type: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    range_key_value: std::option::Option<terrars::PrimField<std::string::String>>,
+    role_arn: terrars::PrimField<std::string::String>,
+    table_name: terrars::PrimField<std::string::String>,
 }
 
 impl IotTopicRuleErrorActionElDynamodbEl {
-    #[doc= "Set the field `hash_key_type`.\n"]
-    pub fn set_hash_key_type(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.hash_key_type = Some(v.into());
+    #[doc = "Set the field `hash_key_type`.\n"]
+    pub fn set_hash_key_type(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.hash_key_type = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `operation`.\n"]
-    pub fn set_operation(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.operation = Some(v.into());
+    #[doc = "Set the field `operation`.\n"]
+    pub fn set_operation(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.operation = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `payload_field`.\n"]
-    pub fn set_payload_field(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.payload_field = Some(v.into());
+    #[doc = "Set the field `payload_field`.\n"]
+    pub fn set_payload_field(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.payload_field = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `range_key_field`.\n"]
-    pub fn set_range_key_field(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.range_key_field = Some(v.into());
+    #[doc = "Set the field `range_key_field`.\n"]
+    pub fn set_range_key_field(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.range_key_field = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `range_key_type`.\n"]
-    pub fn set_range_key_type(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.range_key_type = Some(v.into());
+    #[doc = "Set the field `range_key_type`.\n"]
+    pub fn set_range_key_type(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.range_key_type = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `range_key_value`.\n"]
-    pub fn set_range_key_value(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.range_key_value = Some(v.into());
+    #[doc = "Set the field `range_key_value`.\n"]
+    pub fn set_range_key_value(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.range_key_value = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl ToListMappable for IotTopicRuleErrorActionElDynamodbEl {
-    type O = BlockAssignable<IotTopicRuleErrorActionElDynamodbEl>;
+impl terrars::ToListMappable for IotTopicRuleErrorActionElDynamodbEl {
+    type O = terrars::BlockAssignable<IotTopicRuleErrorActionElDynamodbEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -1624,14 +1695,14 @@ impl ToListMappable for IotTopicRuleErrorActionElDynamodbEl {
 }
 
 pub struct BuildIotTopicRuleErrorActionElDynamodbEl {
-    #[doc= ""]
-    pub hash_key_field: PrimField<String>,
-    #[doc= ""]
-    pub hash_key_value: PrimField<String>,
-    #[doc= ""]
-    pub role_arn: PrimField<String>,
-    #[doc= ""]
-    pub table_name: PrimField<String>,
+    #[doc = ""]
+    pub hash_key_field: terrars::PrimField<std::string::String>,
+    #[doc = ""]
+    pub hash_key_value: terrars::PrimField<std::string::String>,
+    #[doc = ""]
+    pub role_arn: terrars::PrimField<std::string::String>,
+    #[doc = ""]
+    pub table_name: terrars::PrimField<std::string::String>,
 }
 
 impl BuildIotTopicRuleErrorActionElDynamodbEl {
@@ -1652,12 +1723,12 @@ impl BuildIotTopicRuleErrorActionElDynamodbEl {
 }
 
 pub struct IotTopicRuleErrorActionElDynamodbElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for IotTopicRuleErrorActionElDynamodbElRef {
-    fn new(shared: StackShared, base: String) -> IotTopicRuleErrorActionElDynamodbElRef {
+impl terrars::Ref for IotTopicRuleErrorActionElDynamodbElRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> IotTopicRuleErrorActionElDynamodbElRef {
         IotTopicRuleErrorActionElDynamodbElRef {
             shared: shared,
             base: base.to_string(),
@@ -1666,73 +1737,73 @@ impl Ref for IotTopicRuleErrorActionElDynamodbElRef {
 }
 
 impl IotTopicRuleErrorActionElDynamodbElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `hash_key_field` after provisioning.\n"]
-    pub fn hash_key_field(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.hash_key_field", self.base))
+    #[doc = "Get a reference to the value of field `hash_key_field` after provisioning.\n"]
+    pub fn hash_key_field(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.hash_key_field", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `hash_key_type` after provisioning.\n"]
-    pub fn hash_key_type(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.hash_key_type", self.base))
+    #[doc = "Get a reference to the value of field `hash_key_type` after provisioning.\n"]
+    pub fn hash_key_type(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.hash_key_type", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `hash_key_value` after provisioning.\n"]
-    pub fn hash_key_value(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.hash_key_value", self.base))
+    #[doc = "Get a reference to the value of field `hash_key_value` after provisioning.\n"]
+    pub fn hash_key_value(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.hash_key_value", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `operation` after provisioning.\n"]
-    pub fn operation(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.operation", self.base))
+    #[doc = "Get a reference to the value of field `operation` after provisioning.\n"]
+    pub fn operation(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.operation", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `payload_field` after provisioning.\n"]
-    pub fn payload_field(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.payload_field", self.base))
+    #[doc = "Get a reference to the value of field `payload_field` after provisioning.\n"]
+    pub fn payload_field(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.payload_field", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `range_key_field` after provisioning.\n"]
-    pub fn range_key_field(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.range_key_field", self.base))
+    #[doc = "Get a reference to the value of field `range_key_field` after provisioning.\n"]
+    pub fn range_key_field(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.range_key_field", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `range_key_type` after provisioning.\n"]
-    pub fn range_key_type(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.range_key_type", self.base))
+    #[doc = "Get a reference to the value of field `range_key_type` after provisioning.\n"]
+    pub fn range_key_type(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.range_key_type", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `range_key_value` after provisioning.\n"]
-    pub fn range_key_value(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.range_key_value", self.base))
+    #[doc = "Get a reference to the value of field `range_key_value` after provisioning.\n"]
+    pub fn range_key_value(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.range_key_value", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `role_arn` after provisioning.\n"]
-    pub fn role_arn(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.role_arn", self.base))
+    #[doc = "Get a reference to the value of field `role_arn` after provisioning.\n"]
+    pub fn role_arn(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.role_arn", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `table_name` after provisioning.\n"]
-    pub fn table_name(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.table_name", self.base))
+    #[doc = "Get a reference to the value of field `table_name` after provisioning.\n"]
+    pub fn table_name(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.table_name", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct IotTopicRuleErrorActionElDynamodbv2ElPutItemEl {
-    table_name: PrimField<String>,
+    table_name: terrars::PrimField<std::string::String>,
 }
 
 impl IotTopicRuleErrorActionElDynamodbv2ElPutItemEl { }
 
-impl ToListMappable for IotTopicRuleErrorActionElDynamodbv2ElPutItemEl {
-    type O = BlockAssignable<IotTopicRuleErrorActionElDynamodbv2ElPutItemEl>;
+impl terrars::ToListMappable for IotTopicRuleErrorActionElDynamodbv2ElPutItemEl {
+    type O = terrars::BlockAssignable<IotTopicRuleErrorActionElDynamodbv2ElPutItemEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -1741,8 +1812,8 @@ impl ToListMappable for IotTopicRuleErrorActionElDynamodbv2ElPutItemEl {
 }
 
 pub struct BuildIotTopicRuleErrorActionElDynamodbv2ElPutItemEl {
-    #[doc= ""]
-    pub table_name: PrimField<String>,
+    #[doc = ""]
+    pub table_name: terrars::PrimField<std::string::String>,
 }
 
 impl BuildIotTopicRuleErrorActionElDynamodbv2ElPutItemEl {
@@ -1752,12 +1823,15 @@ impl BuildIotTopicRuleErrorActionElDynamodbv2ElPutItemEl {
 }
 
 pub struct IotTopicRuleErrorActionElDynamodbv2ElPutItemElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for IotTopicRuleErrorActionElDynamodbv2ElPutItemElRef {
-    fn new(shared: StackShared, base: String) -> IotTopicRuleErrorActionElDynamodbv2ElPutItemElRef {
+impl terrars::Ref for IotTopicRuleErrorActionElDynamodbv2ElPutItemElRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> IotTopicRuleErrorActionElDynamodbv2ElPutItemElRef {
         IotTopicRuleErrorActionElDynamodbv2ElPutItemElRef {
             shared: shared,
             base: base.to_string(),
@@ -1766,52 +1840,52 @@ impl Ref for IotTopicRuleErrorActionElDynamodbv2ElPutItemElRef {
 }
 
 impl IotTopicRuleErrorActionElDynamodbv2ElPutItemElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `table_name` after provisioning.\n"]
-    pub fn table_name(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.table_name", self.base))
+    #[doc = "Get a reference to the value of field `table_name` after provisioning.\n"]
+    pub fn table_name(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.table_name", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
 struct IotTopicRuleErrorActionElDynamodbv2ElDynamic {
-    put_item: Option<DynamicBlock<IotTopicRuleErrorActionElDynamodbv2ElPutItemEl>>,
+    put_item: std::option::Option<terrars::DynamicBlock<IotTopicRuleErrorActionElDynamodbv2ElPutItemEl>>,
 }
 
 #[derive(Serialize)]
 pub struct IotTopicRuleErrorActionElDynamodbv2El {
-    role_arn: PrimField<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    put_item: Option<Vec<IotTopicRuleErrorActionElDynamodbv2ElPutItemEl>>,
+    role_arn: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    put_item: std::option::Option<std::vec::Vec<IotTopicRuleErrorActionElDynamodbv2ElPutItemEl>>,
     dynamic: IotTopicRuleErrorActionElDynamodbv2ElDynamic,
 }
 
 impl IotTopicRuleErrorActionElDynamodbv2El {
-    #[doc= "Set the field `put_item`.\n"]
+    #[doc = "Set the field `put_item`.\n"]
     pub fn set_put_item(
         mut self,
-        v: impl Into<BlockAssignable<IotTopicRuleErrorActionElDynamodbv2ElPutItemEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<IotTopicRuleErrorActionElDynamodbv2ElPutItemEl>>,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.put_item = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.put_item = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.put_item = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.put_item = std::option::Option::Some(d);
             },
         }
         self
     }
 }
 
-impl ToListMappable for IotTopicRuleErrorActionElDynamodbv2El {
-    type O = BlockAssignable<IotTopicRuleErrorActionElDynamodbv2El>;
+impl terrars::ToListMappable for IotTopicRuleErrorActionElDynamodbv2El {
+    type O = terrars::BlockAssignable<IotTopicRuleErrorActionElDynamodbv2El>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -1820,8 +1894,8 @@ impl ToListMappable for IotTopicRuleErrorActionElDynamodbv2El {
 }
 
 pub struct BuildIotTopicRuleErrorActionElDynamodbv2El {
-    #[doc= ""]
-    pub role_arn: PrimField<String>,
+    #[doc = ""]
+    pub role_arn: terrars::PrimField<std::string::String>,
 }
 
 impl BuildIotTopicRuleErrorActionElDynamodbv2El {
@@ -1829,18 +1903,18 @@ impl BuildIotTopicRuleErrorActionElDynamodbv2El {
         IotTopicRuleErrorActionElDynamodbv2El {
             role_arn: self.role_arn,
             put_item: core::default::Default::default(),
-            dynamic: Default::default(),
+            dynamic: core::default::Default::default(),
         }
     }
 }
 
 pub struct IotTopicRuleErrorActionElDynamodbv2ElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for IotTopicRuleErrorActionElDynamodbv2ElRef {
-    fn new(shared: StackShared, base: String) -> IotTopicRuleErrorActionElDynamodbv2ElRef {
+impl terrars::Ref for IotTopicRuleErrorActionElDynamodbv2ElRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> IotTopicRuleErrorActionElDynamodbv2ElRef {
         IotTopicRuleErrorActionElDynamodbv2ElRef {
             shared: shared,
             base: base.to_string(),
@@ -1849,38 +1923,38 @@ impl Ref for IotTopicRuleErrorActionElDynamodbv2ElRef {
 }
 
 impl IotTopicRuleErrorActionElDynamodbv2ElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `role_arn` after provisioning.\n"]
-    pub fn role_arn(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.role_arn", self.base))
+    #[doc = "Get a reference to the value of field `role_arn` after provisioning.\n"]
+    pub fn role_arn(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.role_arn", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `put_item` after provisioning.\n"]
-    pub fn put_item(&self) -> ListRef<IotTopicRuleErrorActionElDynamodbv2ElPutItemElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.put_item", self.base))
+    #[doc = "Get a reference to the value of field `put_item` after provisioning.\n"]
+    pub fn put_item(&self) -> terrars::ListRef<IotTopicRuleErrorActionElDynamodbv2ElPutItemElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.put_item", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct IotTopicRuleErrorActionElElasticsearchEl {
-    endpoint: PrimField<String>,
-    id: PrimField<String>,
-    index: PrimField<String>,
-    role_arn: PrimField<String>,
+    endpoint: terrars::PrimField<std::string::String>,
+    id: terrars::PrimField<std::string::String>,
+    index: terrars::PrimField<std::string::String>,
+    role_arn: terrars::PrimField<std::string::String>,
     #[serde(rename = "type")]
-    type_: PrimField<String>,
+    type_: terrars::PrimField<std::string::String>,
 }
 
 impl IotTopicRuleErrorActionElElasticsearchEl { }
 
-impl ToListMappable for IotTopicRuleErrorActionElElasticsearchEl {
-    type O = BlockAssignable<IotTopicRuleErrorActionElElasticsearchEl>;
+impl terrars::ToListMappable for IotTopicRuleErrorActionElElasticsearchEl {
+    type O = terrars::BlockAssignable<IotTopicRuleErrorActionElElasticsearchEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -1889,16 +1963,16 @@ impl ToListMappable for IotTopicRuleErrorActionElElasticsearchEl {
 }
 
 pub struct BuildIotTopicRuleErrorActionElElasticsearchEl {
-    #[doc= ""]
-    pub endpoint: PrimField<String>,
-    #[doc= ""]
-    pub id: PrimField<String>,
-    #[doc= ""]
-    pub index: PrimField<String>,
-    #[doc= ""]
-    pub role_arn: PrimField<String>,
-    #[doc= ""]
-    pub type_: PrimField<String>,
+    #[doc = ""]
+    pub endpoint: terrars::PrimField<std::string::String>,
+    #[doc = ""]
+    pub id: terrars::PrimField<std::string::String>,
+    #[doc = ""]
+    pub index: terrars::PrimField<std::string::String>,
+    #[doc = ""]
+    pub role_arn: terrars::PrimField<std::string::String>,
+    #[doc = ""]
+    pub type_: terrars::PrimField<std::string::String>,
 }
 
 impl BuildIotTopicRuleErrorActionElElasticsearchEl {
@@ -1914,12 +1988,12 @@ impl BuildIotTopicRuleErrorActionElElasticsearchEl {
 }
 
 pub struct IotTopicRuleErrorActionElElasticsearchElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for IotTopicRuleErrorActionElElasticsearchElRef {
-    fn new(shared: StackShared, base: String) -> IotTopicRuleErrorActionElElasticsearchElRef {
+impl terrars::Ref for IotTopicRuleErrorActionElElasticsearchElRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> IotTopicRuleErrorActionElElasticsearchElRef {
         IotTopicRuleErrorActionElElasticsearchElRef {
             shared: shared,
             base: base.to_string(),
@@ -1928,57 +2002,57 @@ impl Ref for IotTopicRuleErrorActionElElasticsearchElRef {
 }
 
 impl IotTopicRuleErrorActionElElasticsearchElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `endpoint` after provisioning.\n"]
-    pub fn endpoint(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.endpoint", self.base))
+    #[doc = "Get a reference to the value of field `endpoint` after provisioning.\n"]
+    pub fn endpoint(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.endpoint", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `id` after provisioning.\n"]
-    pub fn id(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.id", self.base))
+    #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
+    pub fn id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `index` after provisioning.\n"]
-    pub fn index(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.index", self.base))
+    #[doc = "Get a reference to the value of field `index` after provisioning.\n"]
+    pub fn index(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.index", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `role_arn` after provisioning.\n"]
-    pub fn role_arn(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.role_arn", self.base))
+    #[doc = "Get a reference to the value of field `role_arn` after provisioning.\n"]
+    pub fn role_arn(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.role_arn", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `type_` after provisioning.\n"]
-    pub fn type_(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.type", self.base))
+    #[doc = "Get a reference to the value of field `type_` after provisioning.\n"]
+    pub fn type_(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.type", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct IotTopicRuleErrorActionElFirehoseEl {
-    delivery_stream_name: PrimField<String>,
-    role_arn: PrimField<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    separator: Option<PrimField<String>>,
+    delivery_stream_name: terrars::PrimField<std::string::String>,
+    role_arn: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    separator: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
 impl IotTopicRuleErrorActionElFirehoseEl {
-    #[doc= "Set the field `separator`.\n"]
-    pub fn set_separator(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.separator = Some(v.into());
+    #[doc = "Set the field `separator`.\n"]
+    pub fn set_separator(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.separator = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl ToListMappable for IotTopicRuleErrorActionElFirehoseEl {
-    type O = BlockAssignable<IotTopicRuleErrorActionElFirehoseEl>;
+impl terrars::ToListMappable for IotTopicRuleErrorActionElFirehoseEl {
+    type O = terrars::BlockAssignable<IotTopicRuleErrorActionElFirehoseEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -1987,10 +2061,10 @@ impl ToListMappable for IotTopicRuleErrorActionElFirehoseEl {
 }
 
 pub struct BuildIotTopicRuleErrorActionElFirehoseEl {
-    #[doc= ""]
-    pub delivery_stream_name: PrimField<String>,
-    #[doc= ""]
-    pub role_arn: PrimField<String>,
+    #[doc = ""]
+    pub delivery_stream_name: terrars::PrimField<std::string::String>,
+    #[doc = ""]
+    pub role_arn: terrars::PrimField<std::string::String>,
 }
 
 impl BuildIotTopicRuleErrorActionElFirehoseEl {
@@ -2004,12 +2078,12 @@ impl BuildIotTopicRuleErrorActionElFirehoseEl {
 }
 
 pub struct IotTopicRuleErrorActionElFirehoseElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for IotTopicRuleErrorActionElFirehoseElRef {
-    fn new(shared: StackShared, base: String) -> IotTopicRuleErrorActionElFirehoseElRef {
+impl terrars::Ref for IotTopicRuleErrorActionElFirehoseElRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> IotTopicRuleErrorActionElFirehoseElRef {
         IotTopicRuleErrorActionElFirehoseElRef {
             shared: shared,
             base: base.to_string(),
@@ -2018,39 +2092,39 @@ impl Ref for IotTopicRuleErrorActionElFirehoseElRef {
 }
 
 impl IotTopicRuleErrorActionElFirehoseElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `delivery_stream_name` after provisioning.\n"]
-    pub fn delivery_stream_name(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.delivery_stream_name", self.base))
+    #[doc = "Get a reference to the value of field `delivery_stream_name` after provisioning.\n"]
+    pub fn delivery_stream_name(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.delivery_stream_name", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `role_arn` after provisioning.\n"]
-    pub fn role_arn(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.role_arn", self.base))
+    #[doc = "Get a reference to the value of field `role_arn` after provisioning.\n"]
+    pub fn role_arn(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.role_arn", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `separator` after provisioning.\n"]
-    pub fn separator(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.separator", self.base))
+    #[doc = "Get a reference to the value of field `separator` after provisioning.\n"]
+    pub fn separator(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.separator", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct IotTopicRuleErrorActionElHttpElHttpHeaderEl {
-    key: PrimField<String>,
-    value: PrimField<String>,
+    key: terrars::PrimField<std::string::String>,
+    value: terrars::PrimField<std::string::String>,
 }
 
 impl IotTopicRuleErrorActionElHttpElHttpHeaderEl { }
 
-impl ToListMappable for IotTopicRuleErrorActionElHttpElHttpHeaderEl {
-    type O = BlockAssignable<IotTopicRuleErrorActionElHttpElHttpHeaderEl>;
+impl terrars::ToListMappable for IotTopicRuleErrorActionElHttpElHttpHeaderEl {
+    type O = terrars::BlockAssignable<IotTopicRuleErrorActionElHttpElHttpHeaderEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -2059,10 +2133,10 @@ impl ToListMappable for IotTopicRuleErrorActionElHttpElHttpHeaderEl {
 }
 
 pub struct BuildIotTopicRuleErrorActionElHttpElHttpHeaderEl {
-    #[doc= ""]
-    pub key: PrimField<String>,
-    #[doc= ""]
-    pub value: PrimField<String>,
+    #[doc = ""]
+    pub key: terrars::PrimField<std::string::String>,
+    #[doc = ""]
+    pub value: terrars::PrimField<std::string::String>,
 }
 
 impl BuildIotTopicRuleErrorActionElHttpElHttpHeaderEl {
@@ -2075,12 +2149,15 @@ impl BuildIotTopicRuleErrorActionElHttpElHttpHeaderEl {
 }
 
 pub struct IotTopicRuleErrorActionElHttpElHttpHeaderElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for IotTopicRuleErrorActionElHttpElHttpHeaderElRef {
-    fn new(shared: StackShared, base: String) -> IotTopicRuleErrorActionElHttpElHttpHeaderElRef {
+impl terrars::Ref for IotTopicRuleErrorActionElHttpElHttpHeaderElRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> IotTopicRuleErrorActionElHttpElHttpHeaderElRef {
         IotTopicRuleErrorActionElHttpElHttpHeaderElRef {
             shared: shared,
             base: base.to_string(),
@@ -2089,65 +2166,65 @@ impl Ref for IotTopicRuleErrorActionElHttpElHttpHeaderElRef {
 }
 
 impl IotTopicRuleErrorActionElHttpElHttpHeaderElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `key` after provisioning.\n"]
-    pub fn key(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.key", self.base))
+    #[doc = "Get a reference to the value of field `key` after provisioning.\n"]
+    pub fn key(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.key", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `value` after provisioning.\n"]
-    pub fn value(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.value", self.base))
+    #[doc = "Get a reference to the value of field `value` after provisioning.\n"]
+    pub fn value(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.value", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
 struct IotTopicRuleErrorActionElHttpElDynamic {
-    http_header: Option<DynamicBlock<IotTopicRuleErrorActionElHttpElHttpHeaderEl>>,
+    http_header: std::option::Option<terrars::DynamicBlock<IotTopicRuleErrorActionElHttpElHttpHeaderEl>>,
 }
 
 #[derive(Serialize)]
 pub struct IotTopicRuleErrorActionElHttpEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    confirmation_url: Option<PrimField<String>>,
-    url: PrimField<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    http_header: Option<Vec<IotTopicRuleErrorActionElHttpElHttpHeaderEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    confirmation_url: std::option::Option<terrars::PrimField<std::string::String>>,
+    url: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    http_header: std::option::Option<std::vec::Vec<IotTopicRuleErrorActionElHttpElHttpHeaderEl>>,
     dynamic: IotTopicRuleErrorActionElHttpElDynamic,
 }
 
 impl IotTopicRuleErrorActionElHttpEl {
-    #[doc= "Set the field `confirmation_url`.\n"]
-    pub fn set_confirmation_url(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.confirmation_url = Some(v.into());
+    #[doc = "Set the field `confirmation_url`.\n"]
+    pub fn set_confirmation_url(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.confirmation_url = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `http_header`.\n"]
+    #[doc = "Set the field `http_header`.\n"]
     pub fn set_http_header(
         mut self,
-        v: impl Into<BlockAssignable<IotTopicRuleErrorActionElHttpElHttpHeaderEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<IotTopicRuleErrorActionElHttpElHttpHeaderEl>>,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.http_header = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.http_header = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.http_header = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.http_header = std::option::Option::Some(d);
             },
         }
         self
     }
 }
 
-impl ToListMappable for IotTopicRuleErrorActionElHttpEl {
-    type O = BlockAssignable<IotTopicRuleErrorActionElHttpEl>;
+impl terrars::ToListMappable for IotTopicRuleErrorActionElHttpEl {
+    type O = terrars::BlockAssignable<IotTopicRuleErrorActionElHttpEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -2156,8 +2233,8 @@ impl ToListMappable for IotTopicRuleErrorActionElHttpEl {
 }
 
 pub struct BuildIotTopicRuleErrorActionElHttpEl {
-    #[doc= ""]
-    pub url: PrimField<String>,
+    #[doc = ""]
+    pub url: terrars::PrimField<std::string::String>,
 }
 
 impl BuildIotTopicRuleErrorActionElHttpEl {
@@ -2166,18 +2243,18 @@ impl BuildIotTopicRuleErrorActionElHttpEl {
             confirmation_url: core::default::Default::default(),
             url: self.url,
             http_header: core::default::Default::default(),
-            dynamic: Default::default(),
+            dynamic: core::default::Default::default(),
         }
     }
 }
 
 pub struct IotTopicRuleErrorActionElHttpElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for IotTopicRuleErrorActionElHttpElRef {
-    fn new(shared: StackShared, base: String) -> IotTopicRuleErrorActionElHttpElRef {
+impl terrars::Ref for IotTopicRuleErrorActionElHttpElRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> IotTopicRuleErrorActionElHttpElRef {
         IotTopicRuleErrorActionElHttpElRef {
             shared: shared,
             base: base.to_string(),
@@ -2186,39 +2263,39 @@ impl Ref for IotTopicRuleErrorActionElHttpElRef {
 }
 
 impl IotTopicRuleErrorActionElHttpElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `confirmation_url` after provisioning.\n"]
-    pub fn confirmation_url(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.confirmation_url", self.base))
+    #[doc = "Get a reference to the value of field `confirmation_url` after provisioning.\n"]
+    pub fn confirmation_url(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.confirmation_url", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `url` after provisioning.\n"]
-    pub fn url(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.url", self.base))
+    #[doc = "Get a reference to the value of field `url` after provisioning.\n"]
+    pub fn url(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.url", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `http_header` after provisioning.\n"]
-    pub fn http_header(&self) -> ListRef<IotTopicRuleErrorActionElHttpElHttpHeaderElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.http_header", self.base))
+    #[doc = "Get a reference to the value of field `http_header` after provisioning.\n"]
+    pub fn http_header(&self) -> terrars::ListRef<IotTopicRuleErrorActionElHttpElHttpHeaderElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.http_header", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct IotTopicRuleErrorActionElIotAnalyticsEl {
-    channel_name: PrimField<String>,
-    role_arn: PrimField<String>,
+    channel_name: terrars::PrimField<std::string::String>,
+    role_arn: terrars::PrimField<std::string::String>,
 }
 
 impl IotTopicRuleErrorActionElIotAnalyticsEl { }
 
-impl ToListMappable for IotTopicRuleErrorActionElIotAnalyticsEl {
-    type O = BlockAssignable<IotTopicRuleErrorActionElIotAnalyticsEl>;
+impl terrars::ToListMappable for IotTopicRuleErrorActionElIotAnalyticsEl {
+    type O = terrars::BlockAssignable<IotTopicRuleErrorActionElIotAnalyticsEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -2227,10 +2304,10 @@ impl ToListMappable for IotTopicRuleErrorActionElIotAnalyticsEl {
 }
 
 pub struct BuildIotTopicRuleErrorActionElIotAnalyticsEl {
-    #[doc= ""]
-    pub channel_name: PrimField<String>,
-    #[doc= ""]
-    pub role_arn: PrimField<String>,
+    #[doc = ""]
+    pub channel_name: terrars::PrimField<std::string::String>,
+    #[doc = ""]
+    pub role_arn: terrars::PrimField<std::string::String>,
 }
 
 impl BuildIotTopicRuleErrorActionElIotAnalyticsEl {
@@ -2243,12 +2320,12 @@ impl BuildIotTopicRuleErrorActionElIotAnalyticsEl {
 }
 
 pub struct IotTopicRuleErrorActionElIotAnalyticsElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for IotTopicRuleErrorActionElIotAnalyticsElRef {
-    fn new(shared: StackShared, base: String) -> IotTopicRuleErrorActionElIotAnalyticsElRef {
+impl terrars::Ref for IotTopicRuleErrorActionElIotAnalyticsElRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> IotTopicRuleErrorActionElIotAnalyticsElRef {
         IotTopicRuleErrorActionElIotAnalyticsElRef {
             shared: shared,
             base: base.to_string(),
@@ -2257,42 +2334,42 @@ impl Ref for IotTopicRuleErrorActionElIotAnalyticsElRef {
 }
 
 impl IotTopicRuleErrorActionElIotAnalyticsElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `channel_name` after provisioning.\n"]
-    pub fn channel_name(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.channel_name", self.base))
+    #[doc = "Get a reference to the value of field `channel_name` after provisioning.\n"]
+    pub fn channel_name(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.channel_name", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `role_arn` after provisioning.\n"]
-    pub fn role_arn(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.role_arn", self.base))
+    #[doc = "Get a reference to the value of field `role_arn` after provisioning.\n"]
+    pub fn role_arn(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.role_arn", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct IotTopicRuleErrorActionElIotEventsEl {
-    input_name: PrimField<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    message_id: Option<PrimField<String>>,
-    role_arn: PrimField<String>,
+    input_name: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    message_id: std::option::Option<terrars::PrimField<std::string::String>>,
+    role_arn: terrars::PrimField<std::string::String>,
 }
 
 impl IotTopicRuleErrorActionElIotEventsEl {
-    #[doc= "Set the field `message_id`.\n"]
-    pub fn set_message_id(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.message_id = Some(v.into());
+    #[doc = "Set the field `message_id`.\n"]
+    pub fn set_message_id(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.message_id = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl ToListMappable for IotTopicRuleErrorActionElIotEventsEl {
-    type O = BlockAssignable<IotTopicRuleErrorActionElIotEventsEl>;
+impl terrars::ToListMappable for IotTopicRuleErrorActionElIotEventsEl {
+    type O = terrars::BlockAssignable<IotTopicRuleErrorActionElIotEventsEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -2301,10 +2378,10 @@ impl ToListMappable for IotTopicRuleErrorActionElIotEventsEl {
 }
 
 pub struct BuildIotTopicRuleErrorActionElIotEventsEl {
-    #[doc= ""]
-    pub input_name: PrimField<String>,
-    #[doc= ""]
-    pub role_arn: PrimField<String>,
+    #[doc = ""]
+    pub input_name: terrars::PrimField<std::string::String>,
+    #[doc = ""]
+    pub role_arn: terrars::PrimField<std::string::String>,
 }
 
 impl BuildIotTopicRuleErrorActionElIotEventsEl {
@@ -2318,12 +2395,12 @@ impl BuildIotTopicRuleErrorActionElIotEventsEl {
 }
 
 pub struct IotTopicRuleErrorActionElIotEventsElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for IotTopicRuleErrorActionElIotEventsElRef {
-    fn new(shared: StackShared, base: String) -> IotTopicRuleErrorActionElIotEventsElRef {
+impl terrars::Ref for IotTopicRuleErrorActionElIotEventsElRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> IotTopicRuleErrorActionElIotEventsElRef {
         IotTopicRuleErrorActionElIotEventsElRef {
             shared: shared,
             base: base.to_string(),
@@ -2332,56 +2409,56 @@ impl Ref for IotTopicRuleErrorActionElIotEventsElRef {
 }
 
 impl IotTopicRuleErrorActionElIotEventsElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `input_name` after provisioning.\n"]
-    pub fn input_name(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.input_name", self.base))
+    #[doc = "Get a reference to the value of field `input_name` after provisioning.\n"]
+    pub fn input_name(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.input_name", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `message_id` after provisioning.\n"]
-    pub fn message_id(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.message_id", self.base))
+    #[doc = "Get a reference to the value of field `message_id` after provisioning.\n"]
+    pub fn message_id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.message_id", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `role_arn` after provisioning.\n"]
-    pub fn role_arn(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.role_arn", self.base))
+    #[doc = "Get a reference to the value of field `role_arn` after provisioning.\n"]
+    pub fn role_arn(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.role_arn", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct IotTopicRuleErrorActionElKafkaEl {
-    client_properties: RecField<PrimField<String>>,
-    destination_arn: PrimField<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    key: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    partition: Option<PrimField<String>>,
-    topic: PrimField<String>,
+    client_properties: terrars::RecField<terrars::PrimField<std::string::String>>,
+    destination_arn: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    key: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    partition: std::option::Option<terrars::PrimField<std::string::String>>,
+    topic: terrars::PrimField<std::string::String>,
 }
 
 impl IotTopicRuleErrorActionElKafkaEl {
-    #[doc= "Set the field `key`.\n"]
-    pub fn set_key(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.key = Some(v.into());
+    #[doc = "Set the field `key`.\n"]
+    pub fn set_key(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.key = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `partition`.\n"]
-    pub fn set_partition(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.partition = Some(v.into());
+    #[doc = "Set the field `partition`.\n"]
+    pub fn set_partition(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.partition = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl ToListMappable for IotTopicRuleErrorActionElKafkaEl {
-    type O = BlockAssignable<IotTopicRuleErrorActionElKafkaEl>;
+impl terrars::ToListMappable for IotTopicRuleErrorActionElKafkaEl {
+    type O = terrars::BlockAssignable<IotTopicRuleErrorActionElKafkaEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -2390,12 +2467,12 @@ impl ToListMappable for IotTopicRuleErrorActionElKafkaEl {
 }
 
 pub struct BuildIotTopicRuleErrorActionElKafkaEl {
-    #[doc= ""]
-    pub client_properties: RecField<PrimField<String>>,
-    #[doc= ""]
-    pub destination_arn: PrimField<String>,
-    #[doc= ""]
-    pub topic: PrimField<String>,
+    #[doc = ""]
+    pub client_properties: terrars::RecField<terrars::PrimField<std::string::String>>,
+    #[doc = ""]
+    pub destination_arn: terrars::PrimField<std::string::String>,
+    #[doc = ""]
+    pub topic: terrars::PrimField<std::string::String>,
 }
 
 impl BuildIotTopicRuleErrorActionElKafkaEl {
@@ -2411,12 +2488,12 @@ impl BuildIotTopicRuleErrorActionElKafkaEl {
 }
 
 pub struct IotTopicRuleErrorActionElKafkaElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for IotTopicRuleErrorActionElKafkaElRef {
-    fn new(shared: StackShared, base: String) -> IotTopicRuleErrorActionElKafkaElRef {
+impl terrars::Ref for IotTopicRuleErrorActionElKafkaElRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> IotTopicRuleErrorActionElKafkaElRef {
         IotTopicRuleErrorActionElKafkaElRef {
             shared: shared,
             base: base.to_string(),
@@ -2425,57 +2502,57 @@ impl Ref for IotTopicRuleErrorActionElKafkaElRef {
 }
 
 impl IotTopicRuleErrorActionElKafkaElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `client_properties` after provisioning.\n"]
-    pub fn client_properties(&self) -> RecRef<PrimExpr<String>> {
-        RecRef::new(self.shared().clone(), format!("{}.client_properties", self.base))
+    #[doc = "Get a reference to the value of field `client_properties` after provisioning.\n"]
+    pub fn client_properties(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
+        terrars::RecRef::new(self.shared().clone(), format!("{}.client_properties", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `destination_arn` after provisioning.\n"]
-    pub fn destination_arn(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.destination_arn", self.base))
+    #[doc = "Get a reference to the value of field `destination_arn` after provisioning.\n"]
+    pub fn destination_arn(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.destination_arn", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `key` after provisioning.\n"]
-    pub fn key(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.key", self.base))
+    #[doc = "Get a reference to the value of field `key` after provisioning.\n"]
+    pub fn key(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.key", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `partition` after provisioning.\n"]
-    pub fn partition(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.partition", self.base))
+    #[doc = "Get a reference to the value of field `partition` after provisioning.\n"]
+    pub fn partition(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.partition", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `topic` after provisioning.\n"]
-    pub fn topic(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.topic", self.base))
+    #[doc = "Get a reference to the value of field `topic` after provisioning.\n"]
+    pub fn topic(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.topic", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct IotTopicRuleErrorActionElKinesisEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    partition_key: Option<PrimField<String>>,
-    role_arn: PrimField<String>,
-    stream_name: PrimField<String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    partition_key: std::option::Option<terrars::PrimField<std::string::String>>,
+    role_arn: terrars::PrimField<std::string::String>,
+    stream_name: terrars::PrimField<std::string::String>,
 }
 
 impl IotTopicRuleErrorActionElKinesisEl {
-    #[doc= "Set the field `partition_key`.\n"]
-    pub fn set_partition_key(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.partition_key = Some(v.into());
+    #[doc = "Set the field `partition_key`.\n"]
+    pub fn set_partition_key(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.partition_key = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl ToListMappable for IotTopicRuleErrorActionElKinesisEl {
-    type O = BlockAssignable<IotTopicRuleErrorActionElKinesisEl>;
+impl terrars::ToListMappable for IotTopicRuleErrorActionElKinesisEl {
+    type O = terrars::BlockAssignable<IotTopicRuleErrorActionElKinesisEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -2484,10 +2561,10 @@ impl ToListMappable for IotTopicRuleErrorActionElKinesisEl {
 }
 
 pub struct BuildIotTopicRuleErrorActionElKinesisEl {
-    #[doc= ""]
-    pub role_arn: PrimField<String>,
-    #[doc= ""]
-    pub stream_name: PrimField<String>,
+    #[doc = ""]
+    pub role_arn: terrars::PrimField<std::string::String>,
+    #[doc = ""]
+    pub stream_name: terrars::PrimField<std::string::String>,
 }
 
 impl BuildIotTopicRuleErrorActionElKinesisEl {
@@ -2501,12 +2578,12 @@ impl BuildIotTopicRuleErrorActionElKinesisEl {
 }
 
 pub struct IotTopicRuleErrorActionElKinesisElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for IotTopicRuleErrorActionElKinesisElRef {
-    fn new(shared: StackShared, base: String) -> IotTopicRuleErrorActionElKinesisElRef {
+impl terrars::Ref for IotTopicRuleErrorActionElKinesisElRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> IotTopicRuleErrorActionElKinesisElRef {
         IotTopicRuleErrorActionElKinesisElRef {
             shared: shared,
             base: base.to_string(),
@@ -2515,38 +2592,38 @@ impl Ref for IotTopicRuleErrorActionElKinesisElRef {
 }
 
 impl IotTopicRuleErrorActionElKinesisElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `partition_key` after provisioning.\n"]
-    pub fn partition_key(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.partition_key", self.base))
+    #[doc = "Get a reference to the value of field `partition_key` after provisioning.\n"]
+    pub fn partition_key(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.partition_key", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `role_arn` after provisioning.\n"]
-    pub fn role_arn(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.role_arn", self.base))
+    #[doc = "Get a reference to the value of field `role_arn` after provisioning.\n"]
+    pub fn role_arn(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.role_arn", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `stream_name` after provisioning.\n"]
-    pub fn stream_name(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.stream_name", self.base))
+    #[doc = "Get a reference to the value of field `stream_name` after provisioning.\n"]
+    pub fn stream_name(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.stream_name", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct IotTopicRuleErrorActionElLambdaEl {
-    function_arn: PrimField<String>,
+    function_arn: terrars::PrimField<std::string::String>,
 }
 
 impl IotTopicRuleErrorActionElLambdaEl { }
 
-impl ToListMappable for IotTopicRuleErrorActionElLambdaEl {
-    type O = BlockAssignable<IotTopicRuleErrorActionElLambdaEl>;
+impl terrars::ToListMappable for IotTopicRuleErrorActionElLambdaEl {
+    type O = terrars::BlockAssignable<IotTopicRuleErrorActionElLambdaEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -2555,8 +2632,8 @@ impl ToListMappable for IotTopicRuleErrorActionElLambdaEl {
 }
 
 pub struct BuildIotTopicRuleErrorActionElLambdaEl {
-    #[doc= ""]
-    pub function_arn: PrimField<String>,
+    #[doc = ""]
+    pub function_arn: terrars::PrimField<std::string::String>,
 }
 
 impl BuildIotTopicRuleErrorActionElLambdaEl {
@@ -2566,12 +2643,12 @@ impl BuildIotTopicRuleErrorActionElLambdaEl {
 }
 
 pub struct IotTopicRuleErrorActionElLambdaElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for IotTopicRuleErrorActionElLambdaElRef {
-    fn new(shared: StackShared, base: String) -> IotTopicRuleErrorActionElLambdaElRef {
+impl terrars::Ref for IotTopicRuleErrorActionElLambdaElRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> IotTopicRuleErrorActionElLambdaElRef {
         IotTopicRuleErrorActionElLambdaElRef {
             shared: shared,
             base: base.to_string(),
@@ -2580,37 +2657,37 @@ impl Ref for IotTopicRuleErrorActionElLambdaElRef {
 }
 
 impl IotTopicRuleErrorActionElLambdaElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `function_arn` after provisioning.\n"]
-    pub fn function_arn(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.function_arn", self.base))
+    #[doc = "Get a reference to the value of field `function_arn` after provisioning.\n"]
+    pub fn function_arn(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.function_arn", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct IotTopicRuleErrorActionElRepublishEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    qos: Option<PrimField<f64>>,
-    role_arn: PrimField<String>,
-    topic: PrimField<String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    qos: std::option::Option<terrars::PrimField<f64>>,
+    role_arn: terrars::PrimField<std::string::String>,
+    topic: terrars::PrimField<std::string::String>,
 }
 
 impl IotTopicRuleErrorActionElRepublishEl {
-    #[doc= "Set the field `qos`.\n"]
-    pub fn set_qos(mut self, v: impl Into<PrimField<f64>>) -> Self {
-        self.qos = Some(v.into());
+    #[doc = "Set the field `qos`.\n"]
+    pub fn set_qos(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.qos = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl ToListMappable for IotTopicRuleErrorActionElRepublishEl {
-    type O = BlockAssignable<IotTopicRuleErrorActionElRepublishEl>;
+impl terrars::ToListMappable for IotTopicRuleErrorActionElRepublishEl {
+    type O = terrars::BlockAssignable<IotTopicRuleErrorActionElRepublishEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -2619,10 +2696,10 @@ impl ToListMappable for IotTopicRuleErrorActionElRepublishEl {
 }
 
 pub struct BuildIotTopicRuleErrorActionElRepublishEl {
-    #[doc= ""]
-    pub role_arn: PrimField<String>,
-    #[doc= ""]
-    pub topic: PrimField<String>,
+    #[doc = ""]
+    pub role_arn: terrars::PrimField<std::string::String>,
+    #[doc = ""]
+    pub topic: terrars::PrimField<std::string::String>,
 }
 
 impl BuildIotTopicRuleErrorActionElRepublishEl {
@@ -2636,12 +2713,12 @@ impl BuildIotTopicRuleErrorActionElRepublishEl {
 }
 
 pub struct IotTopicRuleErrorActionElRepublishElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for IotTopicRuleErrorActionElRepublishElRef {
-    fn new(shared: StackShared, base: String) -> IotTopicRuleErrorActionElRepublishElRef {
+impl terrars::Ref for IotTopicRuleErrorActionElRepublishElRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> IotTopicRuleErrorActionElRepublishElRef {
         IotTopicRuleErrorActionElRepublishElRef {
             shared: shared,
             base: base.to_string(),
@@ -2650,48 +2727,48 @@ impl Ref for IotTopicRuleErrorActionElRepublishElRef {
 }
 
 impl IotTopicRuleErrorActionElRepublishElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `qos` after provisioning.\n"]
-    pub fn qos(&self) -> PrimExpr<f64> {
-        PrimExpr::new(self.shared().clone(), format!("{}.qos", self.base))
+    #[doc = "Get a reference to the value of field `qos` after provisioning.\n"]
+    pub fn qos(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.qos", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `role_arn` after provisioning.\n"]
-    pub fn role_arn(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.role_arn", self.base))
+    #[doc = "Get a reference to the value of field `role_arn` after provisioning.\n"]
+    pub fn role_arn(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.role_arn", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `topic` after provisioning.\n"]
-    pub fn topic(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.topic", self.base))
+    #[doc = "Get a reference to the value of field `topic` after provisioning.\n"]
+    pub fn topic(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.topic", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct IotTopicRuleErrorActionElS3El {
-    bucket_name: PrimField<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    canned_acl: Option<PrimField<String>>,
-    key: PrimField<String>,
-    role_arn: PrimField<String>,
+    bucket_name: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    canned_acl: std::option::Option<terrars::PrimField<std::string::String>>,
+    key: terrars::PrimField<std::string::String>,
+    role_arn: terrars::PrimField<std::string::String>,
 }
 
 impl IotTopicRuleErrorActionElS3El {
-    #[doc= "Set the field `canned_acl`.\n"]
-    pub fn set_canned_acl(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.canned_acl = Some(v.into());
+    #[doc = "Set the field `canned_acl`.\n"]
+    pub fn set_canned_acl(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.canned_acl = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl ToListMappable for IotTopicRuleErrorActionElS3El {
-    type O = BlockAssignable<IotTopicRuleErrorActionElS3El>;
+impl terrars::ToListMappable for IotTopicRuleErrorActionElS3El {
+    type O = terrars::BlockAssignable<IotTopicRuleErrorActionElS3El>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -2700,12 +2777,12 @@ impl ToListMappable for IotTopicRuleErrorActionElS3El {
 }
 
 pub struct BuildIotTopicRuleErrorActionElS3El {
-    #[doc= ""]
-    pub bucket_name: PrimField<String>,
-    #[doc= ""]
-    pub key: PrimField<String>,
-    #[doc= ""]
-    pub role_arn: PrimField<String>,
+    #[doc = ""]
+    pub bucket_name: terrars::PrimField<std::string::String>,
+    #[doc = ""]
+    pub key: terrars::PrimField<std::string::String>,
+    #[doc = ""]
+    pub role_arn: terrars::PrimField<std::string::String>,
 }
 
 impl BuildIotTopicRuleErrorActionElS3El {
@@ -2720,12 +2797,12 @@ impl BuildIotTopicRuleErrorActionElS3El {
 }
 
 pub struct IotTopicRuleErrorActionElS3ElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for IotTopicRuleErrorActionElS3ElRef {
-    fn new(shared: StackShared, base: String) -> IotTopicRuleErrorActionElS3ElRef {
+impl terrars::Ref for IotTopicRuleErrorActionElS3ElRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> IotTopicRuleErrorActionElS3ElRef {
         IotTopicRuleErrorActionElS3ElRef {
             shared: shared,
             base: base.to_string(),
@@ -2734,52 +2811,52 @@ impl Ref for IotTopicRuleErrorActionElS3ElRef {
 }
 
 impl IotTopicRuleErrorActionElS3ElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `bucket_name` after provisioning.\n"]
-    pub fn bucket_name(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.bucket_name", self.base))
+    #[doc = "Get a reference to the value of field `bucket_name` after provisioning.\n"]
+    pub fn bucket_name(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.bucket_name", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `canned_acl` after provisioning.\n"]
-    pub fn canned_acl(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.canned_acl", self.base))
+    #[doc = "Get a reference to the value of field `canned_acl` after provisioning.\n"]
+    pub fn canned_acl(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.canned_acl", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `key` after provisioning.\n"]
-    pub fn key(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.key", self.base))
+    #[doc = "Get a reference to the value of field `key` after provisioning.\n"]
+    pub fn key(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.key", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `role_arn` after provisioning.\n"]
-    pub fn role_arn(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.role_arn", self.base))
+    #[doc = "Get a reference to the value of field `role_arn` after provisioning.\n"]
+    pub fn role_arn(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.role_arn", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct IotTopicRuleErrorActionElSnsEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    message_format: Option<PrimField<String>>,
-    role_arn: PrimField<String>,
-    target_arn: PrimField<String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    message_format: std::option::Option<terrars::PrimField<std::string::String>>,
+    role_arn: terrars::PrimField<std::string::String>,
+    target_arn: terrars::PrimField<std::string::String>,
 }
 
 impl IotTopicRuleErrorActionElSnsEl {
-    #[doc= "Set the field `message_format`.\n"]
-    pub fn set_message_format(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.message_format = Some(v.into());
+    #[doc = "Set the field `message_format`.\n"]
+    pub fn set_message_format(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.message_format = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl ToListMappable for IotTopicRuleErrorActionElSnsEl {
-    type O = BlockAssignable<IotTopicRuleErrorActionElSnsEl>;
+impl terrars::ToListMappable for IotTopicRuleErrorActionElSnsEl {
+    type O = terrars::BlockAssignable<IotTopicRuleErrorActionElSnsEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -2788,10 +2865,10 @@ impl ToListMappable for IotTopicRuleErrorActionElSnsEl {
 }
 
 pub struct BuildIotTopicRuleErrorActionElSnsEl {
-    #[doc= ""]
-    pub role_arn: PrimField<String>,
-    #[doc= ""]
-    pub target_arn: PrimField<String>,
+    #[doc = ""]
+    pub role_arn: terrars::PrimField<std::string::String>,
+    #[doc = ""]
+    pub target_arn: terrars::PrimField<std::string::String>,
 }
 
 impl BuildIotTopicRuleErrorActionElSnsEl {
@@ -2805,12 +2882,12 @@ impl BuildIotTopicRuleErrorActionElSnsEl {
 }
 
 pub struct IotTopicRuleErrorActionElSnsElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for IotTopicRuleErrorActionElSnsElRef {
-    fn new(shared: StackShared, base: String) -> IotTopicRuleErrorActionElSnsElRef {
+impl terrars::Ref for IotTopicRuleErrorActionElSnsElRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> IotTopicRuleErrorActionElSnsElRef {
         IotTopicRuleErrorActionElSnsElRef {
             shared: shared,
             base: base.to_string(),
@@ -2819,40 +2896,40 @@ impl Ref for IotTopicRuleErrorActionElSnsElRef {
 }
 
 impl IotTopicRuleErrorActionElSnsElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `message_format` after provisioning.\n"]
-    pub fn message_format(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.message_format", self.base))
+    #[doc = "Get a reference to the value of field `message_format` after provisioning.\n"]
+    pub fn message_format(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.message_format", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `role_arn` after provisioning.\n"]
-    pub fn role_arn(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.role_arn", self.base))
+    #[doc = "Get a reference to the value of field `role_arn` after provisioning.\n"]
+    pub fn role_arn(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.role_arn", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `target_arn` after provisioning.\n"]
-    pub fn target_arn(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.target_arn", self.base))
+    #[doc = "Get a reference to the value of field `target_arn` after provisioning.\n"]
+    pub fn target_arn(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.target_arn", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct IotTopicRuleErrorActionElSqsEl {
-    queue_url: PrimField<String>,
-    role_arn: PrimField<String>,
-    use_base64: PrimField<bool>,
+    queue_url: terrars::PrimField<std::string::String>,
+    role_arn: terrars::PrimField<std::string::String>,
+    use_base64: terrars::PrimField<bool>,
 }
 
 impl IotTopicRuleErrorActionElSqsEl { }
 
-impl ToListMappable for IotTopicRuleErrorActionElSqsEl {
-    type O = BlockAssignable<IotTopicRuleErrorActionElSqsEl>;
+impl terrars::ToListMappable for IotTopicRuleErrorActionElSqsEl {
+    type O = terrars::BlockAssignable<IotTopicRuleErrorActionElSqsEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -2861,12 +2938,12 @@ impl ToListMappable for IotTopicRuleErrorActionElSqsEl {
 }
 
 pub struct BuildIotTopicRuleErrorActionElSqsEl {
-    #[doc= ""]
-    pub queue_url: PrimField<String>,
-    #[doc= ""]
-    pub role_arn: PrimField<String>,
-    #[doc= ""]
-    pub use_base64: PrimField<bool>,
+    #[doc = ""]
+    pub queue_url: terrars::PrimField<std::string::String>,
+    #[doc = ""]
+    pub role_arn: terrars::PrimField<std::string::String>,
+    #[doc = ""]
+    pub use_base64: terrars::PrimField<bool>,
 }
 
 impl BuildIotTopicRuleErrorActionElSqsEl {
@@ -2880,12 +2957,12 @@ impl BuildIotTopicRuleErrorActionElSqsEl {
 }
 
 pub struct IotTopicRuleErrorActionElSqsElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for IotTopicRuleErrorActionElSqsElRef {
-    fn new(shared: StackShared, base: String) -> IotTopicRuleErrorActionElSqsElRef {
+impl terrars::Ref for IotTopicRuleErrorActionElSqsElRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> IotTopicRuleErrorActionElSqsElRef {
         IotTopicRuleErrorActionElSqsElRef {
             shared: shared,
             base: base.to_string(),
@@ -2894,47 +2971,50 @@ impl Ref for IotTopicRuleErrorActionElSqsElRef {
 }
 
 impl IotTopicRuleErrorActionElSqsElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `queue_url` after provisioning.\n"]
-    pub fn queue_url(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.queue_url", self.base))
+    #[doc = "Get a reference to the value of field `queue_url` after provisioning.\n"]
+    pub fn queue_url(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.queue_url", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `role_arn` after provisioning.\n"]
-    pub fn role_arn(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.role_arn", self.base))
+    #[doc = "Get a reference to the value of field `role_arn` after provisioning.\n"]
+    pub fn role_arn(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.role_arn", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `use_base64` after provisioning.\n"]
-    pub fn use_base64(&self) -> PrimExpr<bool> {
-        PrimExpr::new(self.shared().clone(), format!("{}.use_base64", self.base))
+    #[doc = "Get a reference to the value of field `use_base64` after provisioning.\n"]
+    pub fn use_base64(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.use_base64", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct IotTopicRuleErrorActionElStepFunctionsEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    execution_name_prefix: Option<PrimField<String>>,
-    role_arn: PrimField<String>,
-    state_machine_name: PrimField<String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    execution_name_prefix: std::option::Option<terrars::PrimField<std::string::String>>,
+    role_arn: terrars::PrimField<std::string::String>,
+    state_machine_name: terrars::PrimField<std::string::String>,
 }
 
 impl IotTopicRuleErrorActionElStepFunctionsEl {
-    #[doc= "Set the field `execution_name_prefix`.\n"]
-    pub fn set_execution_name_prefix(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.execution_name_prefix = Some(v.into());
+    #[doc = "Set the field `execution_name_prefix`.\n"]
+    pub fn set_execution_name_prefix(
+        mut self,
+        v: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.execution_name_prefix = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl ToListMappable for IotTopicRuleErrorActionElStepFunctionsEl {
-    type O = BlockAssignable<IotTopicRuleErrorActionElStepFunctionsEl>;
+impl terrars::ToListMappable for IotTopicRuleErrorActionElStepFunctionsEl {
+    type O = terrars::BlockAssignable<IotTopicRuleErrorActionElStepFunctionsEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -2943,10 +3023,10 @@ impl ToListMappable for IotTopicRuleErrorActionElStepFunctionsEl {
 }
 
 pub struct BuildIotTopicRuleErrorActionElStepFunctionsEl {
-    #[doc= ""]
-    pub role_arn: PrimField<String>,
-    #[doc= ""]
-    pub state_machine_name: PrimField<String>,
+    #[doc = ""]
+    pub role_arn: terrars::PrimField<std::string::String>,
+    #[doc = ""]
+    pub state_machine_name: terrars::PrimField<std::string::String>,
 }
 
 impl BuildIotTopicRuleErrorActionElStepFunctionsEl {
@@ -2960,12 +3040,12 @@ impl BuildIotTopicRuleErrorActionElStepFunctionsEl {
 }
 
 pub struct IotTopicRuleErrorActionElStepFunctionsElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for IotTopicRuleErrorActionElStepFunctionsElRef {
-    fn new(shared: StackShared, base: String) -> IotTopicRuleErrorActionElStepFunctionsElRef {
+impl terrars::Ref for IotTopicRuleErrorActionElStepFunctionsElRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> IotTopicRuleErrorActionElStepFunctionsElRef {
         IotTopicRuleErrorActionElStepFunctionsElRef {
             shared: shared,
             base: base.to_string(),
@@ -2974,39 +3054,39 @@ impl Ref for IotTopicRuleErrorActionElStepFunctionsElRef {
 }
 
 impl IotTopicRuleErrorActionElStepFunctionsElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `execution_name_prefix` after provisioning.\n"]
-    pub fn execution_name_prefix(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.execution_name_prefix", self.base))
+    #[doc = "Get a reference to the value of field `execution_name_prefix` after provisioning.\n"]
+    pub fn execution_name_prefix(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.execution_name_prefix", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `role_arn` after provisioning.\n"]
-    pub fn role_arn(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.role_arn", self.base))
+    #[doc = "Get a reference to the value of field `role_arn` after provisioning.\n"]
+    pub fn role_arn(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.role_arn", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `state_machine_name` after provisioning.\n"]
-    pub fn state_machine_name(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.state_machine_name", self.base))
+    #[doc = "Get a reference to the value of field `state_machine_name` after provisioning.\n"]
+    pub fn state_machine_name(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.state_machine_name", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct IotTopicRuleErrorActionElTimestreamElDimensionEl {
-    name: PrimField<String>,
-    value: PrimField<String>,
+    name: terrars::PrimField<std::string::String>,
+    value: terrars::PrimField<std::string::String>,
 }
 
 impl IotTopicRuleErrorActionElTimestreamElDimensionEl { }
 
-impl ToListMappable for IotTopicRuleErrorActionElTimestreamElDimensionEl {
-    type O = BlockAssignable<IotTopicRuleErrorActionElTimestreamElDimensionEl>;
+impl terrars::ToListMappable for IotTopicRuleErrorActionElTimestreamElDimensionEl {
+    type O = terrars::BlockAssignable<IotTopicRuleErrorActionElTimestreamElDimensionEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -3015,10 +3095,10 @@ impl ToListMappable for IotTopicRuleErrorActionElTimestreamElDimensionEl {
 }
 
 pub struct BuildIotTopicRuleErrorActionElTimestreamElDimensionEl {
-    #[doc= ""]
-    pub name: PrimField<String>,
-    #[doc= ""]
-    pub value: PrimField<String>,
+    #[doc = ""]
+    pub name: terrars::PrimField<std::string::String>,
+    #[doc = ""]
+    pub value: terrars::PrimField<std::string::String>,
 }
 
 impl BuildIotTopicRuleErrorActionElTimestreamElDimensionEl {
@@ -3031,12 +3111,15 @@ impl BuildIotTopicRuleErrorActionElTimestreamElDimensionEl {
 }
 
 pub struct IotTopicRuleErrorActionElTimestreamElDimensionElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for IotTopicRuleErrorActionElTimestreamElDimensionElRef {
-    fn new(shared: StackShared, base: String) -> IotTopicRuleErrorActionElTimestreamElDimensionElRef {
+impl terrars::Ref for IotTopicRuleErrorActionElTimestreamElDimensionElRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> IotTopicRuleErrorActionElTimestreamElDimensionElRef {
         IotTopicRuleErrorActionElTimestreamElDimensionElRef {
             shared: shared,
             base: base.to_string(),
@@ -3045,34 +3128,34 @@ impl Ref for IotTopicRuleErrorActionElTimestreamElDimensionElRef {
 }
 
 impl IotTopicRuleErrorActionElTimestreamElDimensionElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `name` after provisioning.\n"]
-    pub fn name(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.name", self.base))
+    #[doc = "Get a reference to the value of field `name` after provisioning.\n"]
+    pub fn name(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `value` after provisioning.\n"]
-    pub fn value(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.value", self.base))
+    #[doc = "Get a reference to the value of field `value` after provisioning.\n"]
+    pub fn value(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.value", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct IotTopicRuleErrorActionElTimestreamElTimestampEl {
-    unit: PrimField<String>,
-    value: PrimField<String>,
+    unit: terrars::PrimField<std::string::String>,
+    value: terrars::PrimField<std::string::String>,
 }
 
 impl IotTopicRuleErrorActionElTimestreamElTimestampEl { }
 
-impl ToListMappable for IotTopicRuleErrorActionElTimestreamElTimestampEl {
-    type O = BlockAssignable<IotTopicRuleErrorActionElTimestreamElTimestampEl>;
+impl terrars::ToListMappable for IotTopicRuleErrorActionElTimestreamElTimestampEl {
+    type O = terrars::BlockAssignable<IotTopicRuleErrorActionElTimestreamElTimestampEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -3081,10 +3164,10 @@ impl ToListMappable for IotTopicRuleErrorActionElTimestreamElTimestampEl {
 }
 
 pub struct BuildIotTopicRuleErrorActionElTimestreamElTimestampEl {
-    #[doc= ""]
-    pub unit: PrimField<String>,
-    #[doc= ""]
-    pub value: PrimField<String>,
+    #[doc = ""]
+    pub unit: terrars::PrimField<std::string::String>,
+    #[doc = ""]
+    pub value: terrars::PrimField<std::string::String>,
 }
 
 impl BuildIotTopicRuleErrorActionElTimestreamElTimestampEl {
@@ -3097,12 +3180,15 @@ impl BuildIotTopicRuleErrorActionElTimestreamElTimestampEl {
 }
 
 pub struct IotTopicRuleErrorActionElTimestreamElTimestampElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for IotTopicRuleErrorActionElTimestreamElTimestampElRef {
-    fn new(shared: StackShared, base: String) -> IotTopicRuleErrorActionElTimestreamElTimestampElRef {
+impl terrars::Ref for IotTopicRuleErrorActionElTimestreamElTimestampElRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> IotTopicRuleErrorActionElTimestreamElTimestampElRef {
         IotTopicRuleErrorActionElTimestreamElTimestampElRef {
             shared: shared,
             base: base.to_string(),
@@ -3111,78 +3197,78 @@ impl Ref for IotTopicRuleErrorActionElTimestreamElTimestampElRef {
 }
 
 impl IotTopicRuleErrorActionElTimestreamElTimestampElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `unit` after provisioning.\n"]
-    pub fn unit(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.unit", self.base))
+    #[doc = "Get a reference to the value of field `unit` after provisioning.\n"]
+    pub fn unit(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.unit", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `value` after provisioning.\n"]
-    pub fn value(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.value", self.base))
+    #[doc = "Get a reference to the value of field `value` after provisioning.\n"]
+    pub fn value(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.value", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
 struct IotTopicRuleErrorActionElTimestreamElDynamic {
-    dimension: Option<DynamicBlock<IotTopicRuleErrorActionElTimestreamElDimensionEl>>,
-    timestamp: Option<DynamicBlock<IotTopicRuleErrorActionElTimestreamElTimestampEl>>,
+    dimension: std::option::Option<terrars::DynamicBlock<IotTopicRuleErrorActionElTimestreamElDimensionEl>>,
+    timestamp: std::option::Option<terrars::DynamicBlock<IotTopicRuleErrorActionElTimestreamElTimestampEl>>,
 }
 
 #[derive(Serialize)]
 pub struct IotTopicRuleErrorActionElTimestreamEl {
-    database_name: PrimField<String>,
-    role_arn: PrimField<String>,
-    table_name: PrimField<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    dimension: Option<Vec<IotTopicRuleErrorActionElTimestreamElDimensionEl>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    timestamp: Option<Vec<IotTopicRuleErrorActionElTimestreamElTimestampEl>>,
+    database_name: terrars::PrimField<std::string::String>,
+    role_arn: terrars::PrimField<std::string::String>,
+    table_name: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    dimension: std::option::Option<std::vec::Vec<IotTopicRuleErrorActionElTimestreamElDimensionEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    timestamp: std::option::Option<std::vec::Vec<IotTopicRuleErrorActionElTimestreamElTimestampEl>>,
     dynamic: IotTopicRuleErrorActionElTimestreamElDynamic,
 }
 
 impl IotTopicRuleErrorActionElTimestreamEl {
-    #[doc= "Set the field `dimension`.\n"]
+    #[doc = "Set the field `dimension`.\n"]
     pub fn set_dimension(
         mut self,
-        v: impl Into<BlockAssignable<IotTopicRuleErrorActionElTimestreamElDimensionEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<IotTopicRuleErrorActionElTimestreamElDimensionEl>>,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.dimension = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.dimension = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.dimension = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.dimension = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Set the field `timestamp`.\n"]
+    #[doc = "Set the field `timestamp`.\n"]
     pub fn set_timestamp(
         mut self,
-        v: impl Into<BlockAssignable<IotTopicRuleErrorActionElTimestreamElTimestampEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<IotTopicRuleErrorActionElTimestreamElTimestampEl>>,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.timestamp = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.timestamp = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.timestamp = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.timestamp = std::option::Option::Some(d);
             },
         }
         self
     }
 }
 
-impl ToListMappable for IotTopicRuleErrorActionElTimestreamEl {
-    type O = BlockAssignable<IotTopicRuleErrorActionElTimestreamEl>;
+impl terrars::ToListMappable for IotTopicRuleErrorActionElTimestreamEl {
+    type O = terrars::BlockAssignable<IotTopicRuleErrorActionElTimestreamEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -3191,12 +3277,12 @@ impl ToListMappable for IotTopicRuleErrorActionElTimestreamEl {
 }
 
 pub struct BuildIotTopicRuleErrorActionElTimestreamEl {
-    #[doc= ""]
-    pub database_name: PrimField<String>,
-    #[doc= ""]
-    pub role_arn: PrimField<String>,
-    #[doc= ""]
-    pub table_name: PrimField<String>,
+    #[doc = ""]
+    pub database_name: terrars::PrimField<std::string::String>,
+    #[doc = ""]
+    pub role_arn: terrars::PrimField<std::string::String>,
+    #[doc = ""]
+    pub table_name: terrars::PrimField<std::string::String>,
 }
 
 impl BuildIotTopicRuleErrorActionElTimestreamEl {
@@ -3207,18 +3293,18 @@ impl BuildIotTopicRuleErrorActionElTimestreamEl {
             table_name: self.table_name,
             dimension: core::default::Default::default(),
             timestamp: core::default::Default::default(),
-            dynamic: Default::default(),
+            dynamic: core::default::Default::default(),
         }
     }
 }
 
 pub struct IotTopicRuleErrorActionElTimestreamElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for IotTopicRuleErrorActionElTimestreamElRef {
-    fn new(shared: StackShared, base: String) -> IotTopicRuleErrorActionElTimestreamElRef {
+impl terrars::Ref for IotTopicRuleErrorActionElTimestreamElRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> IotTopicRuleErrorActionElTimestreamElRef {
         IotTopicRuleErrorActionElTimestreamElRef {
             shared: shared,
             base: base.to_string(),
@@ -3227,363 +3313,408 @@ impl Ref for IotTopicRuleErrorActionElTimestreamElRef {
 }
 
 impl IotTopicRuleErrorActionElTimestreamElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `database_name` after provisioning.\n"]
-    pub fn database_name(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.database_name", self.base))
+    #[doc = "Get a reference to the value of field `database_name` after provisioning.\n"]
+    pub fn database_name(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.database_name", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `role_arn` after provisioning.\n"]
-    pub fn role_arn(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.role_arn", self.base))
+    #[doc = "Get a reference to the value of field `role_arn` after provisioning.\n"]
+    pub fn role_arn(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.role_arn", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `table_name` after provisioning.\n"]
-    pub fn table_name(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.table_name", self.base))
+    #[doc = "Get a reference to the value of field `table_name` after provisioning.\n"]
+    pub fn table_name(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.table_name", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `timestamp` after provisioning.\n"]
-    pub fn timestamp(&self) -> ListRef<IotTopicRuleErrorActionElTimestreamElTimestampElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.timestamp", self.base))
+    #[doc = "Get a reference to the value of field `timestamp` after provisioning.\n"]
+    pub fn timestamp(&self) -> terrars::ListRef<IotTopicRuleErrorActionElTimestreamElTimestampElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.timestamp", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
 struct IotTopicRuleErrorActionElDynamic {
-    cloudwatch_alarm: Option<DynamicBlock<IotTopicRuleErrorActionElCloudwatchAlarmEl>>,
-    cloudwatch_logs: Option<DynamicBlock<IotTopicRuleErrorActionElCloudwatchLogsEl>>,
-    cloudwatch_metric: Option<DynamicBlock<IotTopicRuleErrorActionElCloudwatchMetricEl>>,
-    dynamodb: Option<DynamicBlock<IotTopicRuleErrorActionElDynamodbEl>>,
-    dynamodbv2: Option<DynamicBlock<IotTopicRuleErrorActionElDynamodbv2El>>,
-    elasticsearch: Option<DynamicBlock<IotTopicRuleErrorActionElElasticsearchEl>>,
-    firehose: Option<DynamicBlock<IotTopicRuleErrorActionElFirehoseEl>>,
-    http: Option<DynamicBlock<IotTopicRuleErrorActionElHttpEl>>,
-    iot_analytics: Option<DynamicBlock<IotTopicRuleErrorActionElIotAnalyticsEl>>,
-    iot_events: Option<DynamicBlock<IotTopicRuleErrorActionElIotEventsEl>>,
-    kafka: Option<DynamicBlock<IotTopicRuleErrorActionElKafkaEl>>,
-    kinesis: Option<DynamicBlock<IotTopicRuleErrorActionElKinesisEl>>,
-    lambda: Option<DynamicBlock<IotTopicRuleErrorActionElLambdaEl>>,
-    republish: Option<DynamicBlock<IotTopicRuleErrorActionElRepublishEl>>,
-    s3: Option<DynamicBlock<IotTopicRuleErrorActionElS3El>>,
-    sns: Option<DynamicBlock<IotTopicRuleErrorActionElSnsEl>>,
-    sqs: Option<DynamicBlock<IotTopicRuleErrorActionElSqsEl>>,
-    step_functions: Option<DynamicBlock<IotTopicRuleErrorActionElStepFunctionsEl>>,
-    timestream: Option<DynamicBlock<IotTopicRuleErrorActionElTimestreamEl>>,
+    cloudwatch_alarm: std::option::Option<terrars::DynamicBlock<IotTopicRuleErrorActionElCloudwatchAlarmEl>>,
+    cloudwatch_logs: std::option::Option<terrars::DynamicBlock<IotTopicRuleErrorActionElCloudwatchLogsEl>>,
+    cloudwatch_metric: std::option::Option<terrars::DynamicBlock<IotTopicRuleErrorActionElCloudwatchMetricEl>>,
+    dynamodb: std::option::Option<terrars::DynamicBlock<IotTopicRuleErrorActionElDynamodbEl>>,
+    dynamodbv2: std::option::Option<terrars::DynamicBlock<IotTopicRuleErrorActionElDynamodbv2El>>,
+    elasticsearch: std::option::Option<terrars::DynamicBlock<IotTopicRuleErrorActionElElasticsearchEl>>,
+    firehose: std::option::Option<terrars::DynamicBlock<IotTopicRuleErrorActionElFirehoseEl>>,
+    http: std::option::Option<terrars::DynamicBlock<IotTopicRuleErrorActionElHttpEl>>,
+    iot_analytics: std::option::Option<terrars::DynamicBlock<IotTopicRuleErrorActionElIotAnalyticsEl>>,
+    iot_events: std::option::Option<terrars::DynamicBlock<IotTopicRuleErrorActionElIotEventsEl>>,
+    kafka: std::option::Option<terrars::DynamicBlock<IotTopicRuleErrorActionElKafkaEl>>,
+    kinesis: std::option::Option<terrars::DynamicBlock<IotTopicRuleErrorActionElKinesisEl>>,
+    lambda: std::option::Option<terrars::DynamicBlock<IotTopicRuleErrorActionElLambdaEl>>,
+    republish: std::option::Option<terrars::DynamicBlock<IotTopicRuleErrorActionElRepublishEl>>,
+    s3: std::option::Option<terrars::DynamicBlock<IotTopicRuleErrorActionElS3El>>,
+    sns: std::option::Option<terrars::DynamicBlock<IotTopicRuleErrorActionElSnsEl>>,
+    sqs: std::option::Option<terrars::DynamicBlock<IotTopicRuleErrorActionElSqsEl>>,
+    step_functions: std::option::Option<terrars::DynamicBlock<IotTopicRuleErrorActionElStepFunctionsEl>>,
+    timestream: std::option::Option<terrars::DynamicBlock<IotTopicRuleErrorActionElTimestreamEl>>,
 }
 
 #[derive(Serialize)]
 pub struct IotTopicRuleErrorActionEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    cloudwatch_alarm: Option<Vec<IotTopicRuleErrorActionElCloudwatchAlarmEl>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    cloudwatch_logs: Option<Vec<IotTopicRuleErrorActionElCloudwatchLogsEl>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    cloudwatch_metric: Option<Vec<IotTopicRuleErrorActionElCloudwatchMetricEl>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    dynamodb: Option<Vec<IotTopicRuleErrorActionElDynamodbEl>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    dynamodbv2: Option<Vec<IotTopicRuleErrorActionElDynamodbv2El>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    elasticsearch: Option<Vec<IotTopicRuleErrorActionElElasticsearchEl>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    firehose: Option<Vec<IotTopicRuleErrorActionElFirehoseEl>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    http: Option<Vec<IotTopicRuleErrorActionElHttpEl>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    iot_analytics: Option<Vec<IotTopicRuleErrorActionElIotAnalyticsEl>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    iot_events: Option<Vec<IotTopicRuleErrorActionElIotEventsEl>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    kafka: Option<Vec<IotTopicRuleErrorActionElKafkaEl>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    kinesis: Option<Vec<IotTopicRuleErrorActionElKinesisEl>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    lambda: Option<Vec<IotTopicRuleErrorActionElLambdaEl>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    republish: Option<Vec<IotTopicRuleErrorActionElRepublishEl>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    s3: Option<Vec<IotTopicRuleErrorActionElS3El>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    sns: Option<Vec<IotTopicRuleErrorActionElSnsEl>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    sqs: Option<Vec<IotTopicRuleErrorActionElSqsEl>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    step_functions: Option<Vec<IotTopicRuleErrorActionElStepFunctionsEl>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    timestream: Option<Vec<IotTopicRuleErrorActionElTimestreamEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    cloudwatch_alarm: std::option::Option<std::vec::Vec<IotTopicRuleErrorActionElCloudwatchAlarmEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    cloudwatch_logs: std::option::Option<std::vec::Vec<IotTopicRuleErrorActionElCloudwatchLogsEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    cloudwatch_metric: std::option::Option<std::vec::Vec<IotTopicRuleErrorActionElCloudwatchMetricEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    dynamodb: std::option::Option<std::vec::Vec<IotTopicRuleErrorActionElDynamodbEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    dynamodbv2: std::option::Option<std::vec::Vec<IotTopicRuleErrorActionElDynamodbv2El>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    elasticsearch: std::option::Option<std::vec::Vec<IotTopicRuleErrorActionElElasticsearchEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    firehose: std::option::Option<std::vec::Vec<IotTopicRuleErrorActionElFirehoseEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    http: std::option::Option<std::vec::Vec<IotTopicRuleErrorActionElHttpEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    iot_analytics: std::option::Option<std::vec::Vec<IotTopicRuleErrorActionElIotAnalyticsEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    iot_events: std::option::Option<std::vec::Vec<IotTopicRuleErrorActionElIotEventsEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    kafka: std::option::Option<std::vec::Vec<IotTopicRuleErrorActionElKafkaEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    kinesis: std::option::Option<std::vec::Vec<IotTopicRuleErrorActionElKinesisEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    lambda: std::option::Option<std::vec::Vec<IotTopicRuleErrorActionElLambdaEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    republish: std::option::Option<std::vec::Vec<IotTopicRuleErrorActionElRepublishEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    s3: std::option::Option<std::vec::Vec<IotTopicRuleErrorActionElS3El>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    sns: std::option::Option<std::vec::Vec<IotTopicRuleErrorActionElSnsEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    sqs: std::option::Option<std::vec::Vec<IotTopicRuleErrorActionElSqsEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    step_functions: std::option::Option<std::vec::Vec<IotTopicRuleErrorActionElStepFunctionsEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    timestream: std::option::Option<std::vec::Vec<IotTopicRuleErrorActionElTimestreamEl>>,
     dynamic: IotTopicRuleErrorActionElDynamic,
 }
 
 impl IotTopicRuleErrorActionEl {
-    #[doc= "Set the field `cloudwatch_alarm`.\n"]
+    #[doc = "Set the field `cloudwatch_alarm`.\n"]
     pub fn set_cloudwatch_alarm(
         mut self,
-        v: impl Into<BlockAssignable<IotTopicRuleErrorActionElCloudwatchAlarmEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<IotTopicRuleErrorActionElCloudwatchAlarmEl>>,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.cloudwatch_alarm = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.cloudwatch_alarm = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.cloudwatch_alarm = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.cloudwatch_alarm = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Set the field `cloudwatch_logs`.\n"]
+    #[doc = "Set the field `cloudwatch_logs`.\n"]
     pub fn set_cloudwatch_logs(
         mut self,
-        v: impl Into<BlockAssignable<IotTopicRuleErrorActionElCloudwatchLogsEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<IotTopicRuleErrorActionElCloudwatchLogsEl>>,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.cloudwatch_logs = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.cloudwatch_logs = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.cloudwatch_logs = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.cloudwatch_logs = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Set the field `cloudwatch_metric`.\n"]
+    #[doc = "Set the field `cloudwatch_metric`.\n"]
     pub fn set_cloudwatch_metric(
         mut self,
-        v: impl Into<BlockAssignable<IotTopicRuleErrorActionElCloudwatchMetricEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<IotTopicRuleErrorActionElCloudwatchMetricEl>>,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.cloudwatch_metric = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.cloudwatch_metric = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.cloudwatch_metric = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.cloudwatch_metric = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Set the field `dynamodb`.\n"]
-    pub fn set_dynamodb(mut self, v: impl Into<BlockAssignable<IotTopicRuleErrorActionElDynamodbEl>>) -> Self {
+    #[doc = "Set the field `dynamodb`.\n"]
+    pub fn set_dynamodb(
+        mut self,
+        v: impl std::convert::Into<terrars::BlockAssignable<IotTopicRuleErrorActionElDynamodbEl>>,
+    ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.dynamodb = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.dynamodb = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.dynamodb = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.dynamodb = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Set the field `dynamodbv2`.\n"]
-    pub fn set_dynamodbv2(mut self, v: impl Into<BlockAssignable<IotTopicRuleErrorActionElDynamodbv2El>>) -> Self {
+    #[doc = "Set the field `dynamodbv2`.\n"]
+    pub fn set_dynamodbv2(
+        mut self,
+        v: impl std::convert::Into<terrars::BlockAssignable<IotTopicRuleErrorActionElDynamodbv2El>>,
+    ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.dynamodbv2 = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.dynamodbv2 = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.dynamodbv2 = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.dynamodbv2 = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Set the field `elasticsearch`.\n"]
-    pub fn set_elasticsearch(mut self, v: impl Into<BlockAssignable<IotTopicRuleErrorActionElElasticsearchEl>>) -> Self {
+    #[doc = "Set the field `elasticsearch`.\n"]
+    pub fn set_elasticsearch(
+        mut self,
+        v: impl std::convert::Into<terrars::BlockAssignable<IotTopicRuleErrorActionElElasticsearchEl>>,
+    ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.elasticsearch = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.elasticsearch = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.elasticsearch = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.elasticsearch = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Set the field `firehose`.\n"]
-    pub fn set_firehose(mut self, v: impl Into<BlockAssignable<IotTopicRuleErrorActionElFirehoseEl>>) -> Self {
+    #[doc = "Set the field `firehose`.\n"]
+    pub fn set_firehose(
+        mut self,
+        v: impl std::convert::Into<terrars::BlockAssignable<IotTopicRuleErrorActionElFirehoseEl>>,
+    ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.firehose = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.firehose = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.firehose = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.firehose = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Set the field `http`.\n"]
-    pub fn set_http(mut self, v: impl Into<BlockAssignable<IotTopicRuleErrorActionElHttpEl>>) -> Self {
+    #[doc = "Set the field `http`.\n"]
+    pub fn set_http(
+        mut self,
+        v: impl std::convert::Into<terrars::BlockAssignable<IotTopicRuleErrorActionElHttpEl>>,
+    ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.http = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.http = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.http = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.http = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Set the field `iot_analytics`.\n"]
-    pub fn set_iot_analytics(mut self, v: impl Into<BlockAssignable<IotTopicRuleErrorActionElIotAnalyticsEl>>) -> Self {
+    #[doc = "Set the field `iot_analytics`.\n"]
+    pub fn set_iot_analytics(
+        mut self,
+        v: impl std::convert::Into<terrars::BlockAssignable<IotTopicRuleErrorActionElIotAnalyticsEl>>,
+    ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.iot_analytics = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.iot_analytics = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.iot_analytics = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.iot_analytics = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Set the field `iot_events`.\n"]
-    pub fn set_iot_events(mut self, v: impl Into<BlockAssignable<IotTopicRuleErrorActionElIotEventsEl>>) -> Self {
+    #[doc = "Set the field `iot_events`.\n"]
+    pub fn set_iot_events(
+        mut self,
+        v: impl std::convert::Into<terrars::BlockAssignable<IotTopicRuleErrorActionElIotEventsEl>>,
+    ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.iot_events = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.iot_events = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.iot_events = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.iot_events = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Set the field `kafka`.\n"]
-    pub fn set_kafka(mut self, v: impl Into<BlockAssignable<IotTopicRuleErrorActionElKafkaEl>>) -> Self {
+    #[doc = "Set the field `kafka`.\n"]
+    pub fn set_kafka(
+        mut self,
+        v: impl std::convert::Into<terrars::BlockAssignable<IotTopicRuleErrorActionElKafkaEl>>,
+    ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.kafka = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.kafka = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.kafka = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.kafka = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Set the field `kinesis`.\n"]
-    pub fn set_kinesis(mut self, v: impl Into<BlockAssignable<IotTopicRuleErrorActionElKinesisEl>>) -> Self {
+    #[doc = "Set the field `kinesis`.\n"]
+    pub fn set_kinesis(
+        mut self,
+        v: impl std::convert::Into<terrars::BlockAssignable<IotTopicRuleErrorActionElKinesisEl>>,
+    ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.kinesis = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.kinesis = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.kinesis = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.kinesis = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Set the field `lambda`.\n"]
-    pub fn set_lambda(mut self, v: impl Into<BlockAssignable<IotTopicRuleErrorActionElLambdaEl>>) -> Self {
+    #[doc = "Set the field `lambda`.\n"]
+    pub fn set_lambda(
+        mut self,
+        v: impl std::convert::Into<terrars::BlockAssignable<IotTopicRuleErrorActionElLambdaEl>>,
+    ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.lambda = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.lambda = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.lambda = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.lambda = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Set the field `republish`.\n"]
-    pub fn set_republish(mut self, v: impl Into<BlockAssignable<IotTopicRuleErrorActionElRepublishEl>>) -> Self {
+    #[doc = "Set the field `republish`.\n"]
+    pub fn set_republish(
+        mut self,
+        v: impl std::convert::Into<terrars::BlockAssignable<IotTopicRuleErrorActionElRepublishEl>>,
+    ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.republish = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.republish = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.republish = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.republish = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Set the field `s3`.\n"]
-    pub fn set_s3(mut self, v: impl Into<BlockAssignable<IotTopicRuleErrorActionElS3El>>) -> Self {
+    #[doc = "Set the field `s3`.\n"]
+    pub fn set_s3(
+        mut self,
+        v: impl std::convert::Into<terrars::BlockAssignable<IotTopicRuleErrorActionElS3El>>,
+    ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.s3 = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.s3 = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.s3 = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.s3 = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Set the field `sns`.\n"]
-    pub fn set_sns(mut self, v: impl Into<BlockAssignable<IotTopicRuleErrorActionElSnsEl>>) -> Self {
+    #[doc = "Set the field `sns`.\n"]
+    pub fn set_sns(
+        mut self,
+        v: impl std::convert::Into<terrars::BlockAssignable<IotTopicRuleErrorActionElSnsEl>>,
+    ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.sns = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.sns = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.sns = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.sns = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Set the field `sqs`.\n"]
-    pub fn set_sqs(mut self, v: impl Into<BlockAssignable<IotTopicRuleErrorActionElSqsEl>>) -> Self {
+    #[doc = "Set the field `sqs`.\n"]
+    pub fn set_sqs(
+        mut self,
+        v: impl std::convert::Into<terrars::BlockAssignable<IotTopicRuleErrorActionElSqsEl>>,
+    ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.sqs = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.sqs = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.sqs = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.sqs = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Set the field `step_functions`.\n"]
+    #[doc = "Set the field `step_functions`.\n"]
     pub fn set_step_functions(
         mut self,
-        v: impl Into<BlockAssignable<IotTopicRuleErrorActionElStepFunctionsEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<IotTopicRuleErrorActionElStepFunctionsEl>>,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.step_functions = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.step_functions = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.step_functions = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.step_functions = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Set the field `timestream`.\n"]
-    pub fn set_timestream(mut self, v: impl Into<BlockAssignable<IotTopicRuleErrorActionElTimestreamEl>>) -> Self {
+    #[doc = "Set the field `timestream`.\n"]
+    pub fn set_timestream(
+        mut self,
+        v: impl std::convert::Into<terrars::BlockAssignable<IotTopicRuleErrorActionElTimestreamEl>>,
+    ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.timestream = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.timestream = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.timestream = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.timestream = std::option::Option::Some(d);
             },
         }
         self
     }
 }
 
-impl ToListMappable for IotTopicRuleErrorActionEl {
-    type O = BlockAssignable<IotTopicRuleErrorActionEl>;
+impl terrars::ToListMappable for IotTopicRuleErrorActionEl {
+    type O = terrars::BlockAssignable<IotTopicRuleErrorActionEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -3615,18 +3746,18 @@ impl BuildIotTopicRuleErrorActionEl {
             sqs: core::default::Default::default(),
             step_functions: core::default::Default::default(),
             timestream: core::default::Default::default(),
-            dynamic: Default::default(),
+            dynamic: core::default::Default::default(),
         }
     }
 }
 
 pub struct IotTopicRuleErrorActionElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for IotTopicRuleErrorActionElRef {
-    fn new(shared: StackShared, base: String) -> IotTopicRuleErrorActionElRef {
+impl terrars::Ref for IotTopicRuleErrorActionElRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> IotTopicRuleErrorActionElRef {
         IotTopicRuleErrorActionElRef {
             shared: shared,
             base: base.to_string(),
@@ -3635,127 +3766,127 @@ impl Ref for IotTopicRuleErrorActionElRef {
 }
 
 impl IotTopicRuleErrorActionElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `cloudwatch_alarm` after provisioning.\n"]
-    pub fn cloudwatch_alarm(&self) -> ListRef<IotTopicRuleErrorActionElCloudwatchAlarmElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.cloudwatch_alarm", self.base))
+    #[doc = "Get a reference to the value of field `cloudwatch_alarm` after provisioning.\n"]
+    pub fn cloudwatch_alarm(&self) -> terrars::ListRef<IotTopicRuleErrorActionElCloudwatchAlarmElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.cloudwatch_alarm", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `cloudwatch_logs` after provisioning.\n"]
-    pub fn cloudwatch_logs(&self) -> ListRef<IotTopicRuleErrorActionElCloudwatchLogsElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.cloudwatch_logs", self.base))
+    #[doc = "Get a reference to the value of field `cloudwatch_logs` after provisioning.\n"]
+    pub fn cloudwatch_logs(&self) -> terrars::ListRef<IotTopicRuleErrorActionElCloudwatchLogsElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.cloudwatch_logs", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `cloudwatch_metric` after provisioning.\n"]
-    pub fn cloudwatch_metric(&self) -> ListRef<IotTopicRuleErrorActionElCloudwatchMetricElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.cloudwatch_metric", self.base))
+    #[doc = "Get a reference to the value of field `cloudwatch_metric` after provisioning.\n"]
+    pub fn cloudwatch_metric(&self) -> terrars::ListRef<IotTopicRuleErrorActionElCloudwatchMetricElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.cloudwatch_metric", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `dynamodb` after provisioning.\n"]
-    pub fn dynamodb(&self) -> ListRef<IotTopicRuleErrorActionElDynamodbElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.dynamodb", self.base))
+    #[doc = "Get a reference to the value of field `dynamodb` after provisioning.\n"]
+    pub fn dynamodb(&self) -> terrars::ListRef<IotTopicRuleErrorActionElDynamodbElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.dynamodb", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `dynamodbv2` after provisioning.\n"]
-    pub fn dynamodbv2(&self) -> ListRef<IotTopicRuleErrorActionElDynamodbv2ElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.dynamodbv2", self.base))
+    #[doc = "Get a reference to the value of field `dynamodbv2` after provisioning.\n"]
+    pub fn dynamodbv2(&self) -> terrars::ListRef<IotTopicRuleErrorActionElDynamodbv2ElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.dynamodbv2", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `elasticsearch` after provisioning.\n"]
-    pub fn elasticsearch(&self) -> ListRef<IotTopicRuleErrorActionElElasticsearchElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.elasticsearch", self.base))
+    #[doc = "Get a reference to the value of field `elasticsearch` after provisioning.\n"]
+    pub fn elasticsearch(&self) -> terrars::ListRef<IotTopicRuleErrorActionElElasticsearchElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.elasticsearch", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `firehose` after provisioning.\n"]
-    pub fn firehose(&self) -> ListRef<IotTopicRuleErrorActionElFirehoseElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.firehose", self.base))
+    #[doc = "Get a reference to the value of field `firehose` after provisioning.\n"]
+    pub fn firehose(&self) -> terrars::ListRef<IotTopicRuleErrorActionElFirehoseElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.firehose", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `http` after provisioning.\n"]
-    pub fn http(&self) -> ListRef<IotTopicRuleErrorActionElHttpElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.http", self.base))
+    #[doc = "Get a reference to the value of field `http` after provisioning.\n"]
+    pub fn http(&self) -> terrars::ListRef<IotTopicRuleErrorActionElHttpElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.http", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `iot_analytics` after provisioning.\n"]
-    pub fn iot_analytics(&self) -> ListRef<IotTopicRuleErrorActionElIotAnalyticsElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.iot_analytics", self.base))
+    #[doc = "Get a reference to the value of field `iot_analytics` after provisioning.\n"]
+    pub fn iot_analytics(&self) -> terrars::ListRef<IotTopicRuleErrorActionElIotAnalyticsElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.iot_analytics", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `iot_events` after provisioning.\n"]
-    pub fn iot_events(&self) -> ListRef<IotTopicRuleErrorActionElIotEventsElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.iot_events", self.base))
+    #[doc = "Get a reference to the value of field `iot_events` after provisioning.\n"]
+    pub fn iot_events(&self) -> terrars::ListRef<IotTopicRuleErrorActionElIotEventsElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.iot_events", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `kafka` after provisioning.\n"]
-    pub fn kafka(&self) -> ListRef<IotTopicRuleErrorActionElKafkaElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.kafka", self.base))
+    #[doc = "Get a reference to the value of field `kafka` after provisioning.\n"]
+    pub fn kafka(&self) -> terrars::ListRef<IotTopicRuleErrorActionElKafkaElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.kafka", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `kinesis` after provisioning.\n"]
-    pub fn kinesis(&self) -> ListRef<IotTopicRuleErrorActionElKinesisElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.kinesis", self.base))
+    #[doc = "Get a reference to the value of field `kinesis` after provisioning.\n"]
+    pub fn kinesis(&self) -> terrars::ListRef<IotTopicRuleErrorActionElKinesisElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.kinesis", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `lambda` after provisioning.\n"]
-    pub fn lambda(&self) -> ListRef<IotTopicRuleErrorActionElLambdaElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.lambda", self.base))
+    #[doc = "Get a reference to the value of field `lambda` after provisioning.\n"]
+    pub fn lambda(&self) -> terrars::ListRef<IotTopicRuleErrorActionElLambdaElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.lambda", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `republish` after provisioning.\n"]
-    pub fn republish(&self) -> ListRef<IotTopicRuleErrorActionElRepublishElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.republish", self.base))
+    #[doc = "Get a reference to the value of field `republish` after provisioning.\n"]
+    pub fn republish(&self) -> terrars::ListRef<IotTopicRuleErrorActionElRepublishElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.republish", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `s3` after provisioning.\n"]
-    pub fn s3(&self) -> ListRef<IotTopicRuleErrorActionElS3ElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.s3", self.base))
+    #[doc = "Get a reference to the value of field `s3` after provisioning.\n"]
+    pub fn s3(&self) -> terrars::ListRef<IotTopicRuleErrorActionElS3ElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.s3", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `sns` after provisioning.\n"]
-    pub fn sns(&self) -> ListRef<IotTopicRuleErrorActionElSnsElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.sns", self.base))
+    #[doc = "Get a reference to the value of field `sns` after provisioning.\n"]
+    pub fn sns(&self) -> terrars::ListRef<IotTopicRuleErrorActionElSnsElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.sns", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `sqs` after provisioning.\n"]
-    pub fn sqs(&self) -> ListRef<IotTopicRuleErrorActionElSqsElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.sqs", self.base))
+    #[doc = "Get a reference to the value of field `sqs` after provisioning.\n"]
+    pub fn sqs(&self) -> terrars::ListRef<IotTopicRuleErrorActionElSqsElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.sqs", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `step_functions` after provisioning.\n"]
-    pub fn step_functions(&self) -> ListRef<IotTopicRuleErrorActionElStepFunctionsElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.step_functions", self.base))
+    #[doc = "Get a reference to the value of field `step_functions` after provisioning.\n"]
+    pub fn step_functions(&self) -> terrars::ListRef<IotTopicRuleErrorActionElStepFunctionsElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.step_functions", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `timestream` after provisioning.\n"]
-    pub fn timestream(&self) -> ListRef<IotTopicRuleErrorActionElTimestreamElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.timestream", self.base))
+    #[doc = "Get a reference to the value of field `timestream` after provisioning.\n"]
+    pub fn timestream(&self) -> terrars::ListRef<IotTopicRuleErrorActionElTimestreamElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.timestream", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct IotTopicRuleFirehoseEl {
-    delivery_stream_name: PrimField<String>,
-    role_arn: PrimField<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    separator: Option<PrimField<String>>,
+    delivery_stream_name: terrars::PrimField<std::string::String>,
+    role_arn: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    separator: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
 impl IotTopicRuleFirehoseEl {
-    #[doc= "Set the field `separator`.\n"]
-    pub fn set_separator(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.separator = Some(v.into());
+    #[doc = "Set the field `separator`.\n"]
+    pub fn set_separator(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.separator = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl ToListMappable for IotTopicRuleFirehoseEl {
-    type O = BlockAssignable<IotTopicRuleFirehoseEl>;
+impl terrars::ToListMappable for IotTopicRuleFirehoseEl {
+    type O = terrars::BlockAssignable<IotTopicRuleFirehoseEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -3764,10 +3895,10 @@ impl ToListMappable for IotTopicRuleFirehoseEl {
 }
 
 pub struct BuildIotTopicRuleFirehoseEl {
-    #[doc= ""]
-    pub delivery_stream_name: PrimField<String>,
-    #[doc= ""]
-    pub role_arn: PrimField<String>,
+    #[doc = ""]
+    pub delivery_stream_name: terrars::PrimField<std::string::String>,
+    #[doc = ""]
+    pub role_arn: terrars::PrimField<std::string::String>,
 }
 
 impl BuildIotTopicRuleFirehoseEl {
@@ -3781,12 +3912,12 @@ impl BuildIotTopicRuleFirehoseEl {
 }
 
 pub struct IotTopicRuleFirehoseElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for IotTopicRuleFirehoseElRef {
-    fn new(shared: StackShared, base: String) -> IotTopicRuleFirehoseElRef {
+impl terrars::Ref for IotTopicRuleFirehoseElRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> IotTopicRuleFirehoseElRef {
         IotTopicRuleFirehoseElRef {
             shared: shared,
             base: base.to_string(),
@@ -3795,39 +3926,39 @@ impl Ref for IotTopicRuleFirehoseElRef {
 }
 
 impl IotTopicRuleFirehoseElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `delivery_stream_name` after provisioning.\n"]
-    pub fn delivery_stream_name(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.delivery_stream_name", self.base))
+    #[doc = "Get a reference to the value of field `delivery_stream_name` after provisioning.\n"]
+    pub fn delivery_stream_name(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.delivery_stream_name", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `role_arn` after provisioning.\n"]
-    pub fn role_arn(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.role_arn", self.base))
+    #[doc = "Get a reference to the value of field `role_arn` after provisioning.\n"]
+    pub fn role_arn(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.role_arn", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `separator` after provisioning.\n"]
-    pub fn separator(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.separator", self.base))
+    #[doc = "Get a reference to the value of field `separator` after provisioning.\n"]
+    pub fn separator(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.separator", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct IotTopicRuleHttpElHttpHeaderEl {
-    key: PrimField<String>,
-    value: PrimField<String>,
+    key: terrars::PrimField<std::string::String>,
+    value: terrars::PrimField<std::string::String>,
 }
 
 impl IotTopicRuleHttpElHttpHeaderEl { }
 
-impl ToListMappable for IotTopicRuleHttpElHttpHeaderEl {
-    type O = BlockAssignable<IotTopicRuleHttpElHttpHeaderEl>;
+impl terrars::ToListMappable for IotTopicRuleHttpElHttpHeaderEl {
+    type O = terrars::BlockAssignable<IotTopicRuleHttpElHttpHeaderEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -3836,10 +3967,10 @@ impl ToListMappable for IotTopicRuleHttpElHttpHeaderEl {
 }
 
 pub struct BuildIotTopicRuleHttpElHttpHeaderEl {
-    #[doc= ""]
-    pub key: PrimField<String>,
-    #[doc= ""]
-    pub value: PrimField<String>,
+    #[doc = ""]
+    pub key: terrars::PrimField<std::string::String>,
+    #[doc = ""]
+    pub value: terrars::PrimField<std::string::String>,
 }
 
 impl BuildIotTopicRuleHttpElHttpHeaderEl {
@@ -3852,12 +3983,12 @@ impl BuildIotTopicRuleHttpElHttpHeaderEl {
 }
 
 pub struct IotTopicRuleHttpElHttpHeaderElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for IotTopicRuleHttpElHttpHeaderElRef {
-    fn new(shared: StackShared, base: String) -> IotTopicRuleHttpElHttpHeaderElRef {
+impl terrars::Ref for IotTopicRuleHttpElHttpHeaderElRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> IotTopicRuleHttpElHttpHeaderElRef {
         IotTopicRuleHttpElHttpHeaderElRef {
             shared: shared,
             base: base.to_string(),
@@ -3866,62 +3997,65 @@ impl Ref for IotTopicRuleHttpElHttpHeaderElRef {
 }
 
 impl IotTopicRuleHttpElHttpHeaderElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `key` after provisioning.\n"]
-    pub fn key(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.key", self.base))
+    #[doc = "Get a reference to the value of field `key` after provisioning.\n"]
+    pub fn key(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.key", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `value` after provisioning.\n"]
-    pub fn value(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.value", self.base))
+    #[doc = "Get a reference to the value of field `value` after provisioning.\n"]
+    pub fn value(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.value", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
 struct IotTopicRuleHttpElDynamic {
-    http_header: Option<DynamicBlock<IotTopicRuleHttpElHttpHeaderEl>>,
+    http_header: std::option::Option<terrars::DynamicBlock<IotTopicRuleHttpElHttpHeaderEl>>,
 }
 
 #[derive(Serialize)]
 pub struct IotTopicRuleHttpEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    confirmation_url: Option<PrimField<String>>,
-    url: PrimField<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    http_header: Option<Vec<IotTopicRuleHttpElHttpHeaderEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    confirmation_url: std::option::Option<terrars::PrimField<std::string::String>>,
+    url: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    http_header: std::option::Option<std::vec::Vec<IotTopicRuleHttpElHttpHeaderEl>>,
     dynamic: IotTopicRuleHttpElDynamic,
 }
 
 impl IotTopicRuleHttpEl {
-    #[doc= "Set the field `confirmation_url`.\n"]
-    pub fn set_confirmation_url(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.confirmation_url = Some(v.into());
+    #[doc = "Set the field `confirmation_url`.\n"]
+    pub fn set_confirmation_url(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.confirmation_url = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `http_header`.\n"]
-    pub fn set_http_header(mut self, v: impl Into<BlockAssignable<IotTopicRuleHttpElHttpHeaderEl>>) -> Self {
+    #[doc = "Set the field `http_header`.\n"]
+    pub fn set_http_header(
+        mut self,
+        v: impl std::convert::Into<terrars::BlockAssignable<IotTopicRuleHttpElHttpHeaderEl>>,
+    ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.http_header = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.http_header = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.http_header = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.http_header = std::option::Option::Some(d);
             },
         }
         self
     }
 }
 
-impl ToListMappable for IotTopicRuleHttpEl {
-    type O = BlockAssignable<IotTopicRuleHttpEl>;
+impl terrars::ToListMappable for IotTopicRuleHttpEl {
+    type O = terrars::BlockAssignable<IotTopicRuleHttpEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -3930,8 +4064,8 @@ impl ToListMappable for IotTopicRuleHttpEl {
 }
 
 pub struct BuildIotTopicRuleHttpEl {
-    #[doc= ""]
-    pub url: PrimField<String>,
+    #[doc = ""]
+    pub url: terrars::PrimField<std::string::String>,
 }
 
 impl BuildIotTopicRuleHttpEl {
@@ -3940,18 +4074,18 @@ impl BuildIotTopicRuleHttpEl {
             confirmation_url: core::default::Default::default(),
             url: self.url,
             http_header: core::default::Default::default(),
-            dynamic: Default::default(),
+            dynamic: core::default::Default::default(),
         }
     }
 }
 
 pub struct IotTopicRuleHttpElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for IotTopicRuleHttpElRef {
-    fn new(shared: StackShared, base: String) -> IotTopicRuleHttpElRef {
+impl terrars::Ref for IotTopicRuleHttpElRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> IotTopicRuleHttpElRef {
         IotTopicRuleHttpElRef {
             shared: shared,
             base: base.to_string(),
@@ -3960,39 +4094,39 @@ impl Ref for IotTopicRuleHttpElRef {
 }
 
 impl IotTopicRuleHttpElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `confirmation_url` after provisioning.\n"]
-    pub fn confirmation_url(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.confirmation_url", self.base))
+    #[doc = "Get a reference to the value of field `confirmation_url` after provisioning.\n"]
+    pub fn confirmation_url(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.confirmation_url", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `url` after provisioning.\n"]
-    pub fn url(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.url", self.base))
+    #[doc = "Get a reference to the value of field `url` after provisioning.\n"]
+    pub fn url(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.url", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `http_header` after provisioning.\n"]
-    pub fn http_header(&self) -> ListRef<IotTopicRuleHttpElHttpHeaderElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.http_header", self.base))
+    #[doc = "Get a reference to the value of field `http_header` after provisioning.\n"]
+    pub fn http_header(&self) -> terrars::ListRef<IotTopicRuleHttpElHttpHeaderElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.http_header", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct IotTopicRuleIotAnalyticsEl {
-    channel_name: PrimField<String>,
-    role_arn: PrimField<String>,
+    channel_name: terrars::PrimField<std::string::String>,
+    role_arn: terrars::PrimField<std::string::String>,
 }
 
 impl IotTopicRuleIotAnalyticsEl { }
 
-impl ToListMappable for IotTopicRuleIotAnalyticsEl {
-    type O = BlockAssignable<IotTopicRuleIotAnalyticsEl>;
+impl terrars::ToListMappable for IotTopicRuleIotAnalyticsEl {
+    type O = terrars::BlockAssignable<IotTopicRuleIotAnalyticsEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -4001,10 +4135,10 @@ impl ToListMappable for IotTopicRuleIotAnalyticsEl {
 }
 
 pub struct BuildIotTopicRuleIotAnalyticsEl {
-    #[doc= ""]
-    pub channel_name: PrimField<String>,
-    #[doc= ""]
-    pub role_arn: PrimField<String>,
+    #[doc = ""]
+    pub channel_name: terrars::PrimField<std::string::String>,
+    #[doc = ""]
+    pub role_arn: terrars::PrimField<std::string::String>,
 }
 
 impl BuildIotTopicRuleIotAnalyticsEl {
@@ -4017,12 +4151,12 @@ impl BuildIotTopicRuleIotAnalyticsEl {
 }
 
 pub struct IotTopicRuleIotAnalyticsElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for IotTopicRuleIotAnalyticsElRef {
-    fn new(shared: StackShared, base: String) -> IotTopicRuleIotAnalyticsElRef {
+impl terrars::Ref for IotTopicRuleIotAnalyticsElRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> IotTopicRuleIotAnalyticsElRef {
         IotTopicRuleIotAnalyticsElRef {
             shared: shared,
             base: base.to_string(),
@@ -4031,42 +4165,42 @@ impl Ref for IotTopicRuleIotAnalyticsElRef {
 }
 
 impl IotTopicRuleIotAnalyticsElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `channel_name` after provisioning.\n"]
-    pub fn channel_name(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.channel_name", self.base))
+    #[doc = "Get a reference to the value of field `channel_name` after provisioning.\n"]
+    pub fn channel_name(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.channel_name", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `role_arn` after provisioning.\n"]
-    pub fn role_arn(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.role_arn", self.base))
+    #[doc = "Get a reference to the value of field `role_arn` after provisioning.\n"]
+    pub fn role_arn(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.role_arn", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct IotTopicRuleIotEventsEl {
-    input_name: PrimField<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    message_id: Option<PrimField<String>>,
-    role_arn: PrimField<String>,
+    input_name: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    message_id: std::option::Option<terrars::PrimField<std::string::String>>,
+    role_arn: terrars::PrimField<std::string::String>,
 }
 
 impl IotTopicRuleIotEventsEl {
-    #[doc= "Set the field `message_id`.\n"]
-    pub fn set_message_id(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.message_id = Some(v.into());
+    #[doc = "Set the field `message_id`.\n"]
+    pub fn set_message_id(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.message_id = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl ToListMappable for IotTopicRuleIotEventsEl {
-    type O = BlockAssignable<IotTopicRuleIotEventsEl>;
+impl terrars::ToListMappable for IotTopicRuleIotEventsEl {
+    type O = terrars::BlockAssignable<IotTopicRuleIotEventsEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -4075,10 +4209,10 @@ impl ToListMappable for IotTopicRuleIotEventsEl {
 }
 
 pub struct BuildIotTopicRuleIotEventsEl {
-    #[doc= ""]
-    pub input_name: PrimField<String>,
-    #[doc= ""]
-    pub role_arn: PrimField<String>,
+    #[doc = ""]
+    pub input_name: terrars::PrimField<std::string::String>,
+    #[doc = ""]
+    pub role_arn: terrars::PrimField<std::string::String>,
 }
 
 impl BuildIotTopicRuleIotEventsEl {
@@ -4092,12 +4226,12 @@ impl BuildIotTopicRuleIotEventsEl {
 }
 
 pub struct IotTopicRuleIotEventsElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for IotTopicRuleIotEventsElRef {
-    fn new(shared: StackShared, base: String) -> IotTopicRuleIotEventsElRef {
+impl terrars::Ref for IotTopicRuleIotEventsElRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> IotTopicRuleIotEventsElRef {
         IotTopicRuleIotEventsElRef {
             shared: shared,
             base: base.to_string(),
@@ -4106,56 +4240,56 @@ impl Ref for IotTopicRuleIotEventsElRef {
 }
 
 impl IotTopicRuleIotEventsElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `input_name` after provisioning.\n"]
-    pub fn input_name(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.input_name", self.base))
+    #[doc = "Get a reference to the value of field `input_name` after provisioning.\n"]
+    pub fn input_name(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.input_name", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `message_id` after provisioning.\n"]
-    pub fn message_id(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.message_id", self.base))
+    #[doc = "Get a reference to the value of field `message_id` after provisioning.\n"]
+    pub fn message_id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.message_id", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `role_arn` after provisioning.\n"]
-    pub fn role_arn(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.role_arn", self.base))
+    #[doc = "Get a reference to the value of field `role_arn` after provisioning.\n"]
+    pub fn role_arn(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.role_arn", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct IotTopicRuleKafkaEl {
-    client_properties: RecField<PrimField<String>>,
-    destination_arn: PrimField<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    key: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    partition: Option<PrimField<String>>,
-    topic: PrimField<String>,
+    client_properties: terrars::RecField<terrars::PrimField<std::string::String>>,
+    destination_arn: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    key: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    partition: std::option::Option<terrars::PrimField<std::string::String>>,
+    topic: terrars::PrimField<std::string::String>,
 }
 
 impl IotTopicRuleKafkaEl {
-    #[doc= "Set the field `key`.\n"]
-    pub fn set_key(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.key = Some(v.into());
+    #[doc = "Set the field `key`.\n"]
+    pub fn set_key(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.key = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `partition`.\n"]
-    pub fn set_partition(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.partition = Some(v.into());
+    #[doc = "Set the field `partition`.\n"]
+    pub fn set_partition(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.partition = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl ToListMappable for IotTopicRuleKafkaEl {
-    type O = BlockAssignable<IotTopicRuleKafkaEl>;
+impl terrars::ToListMappable for IotTopicRuleKafkaEl {
+    type O = terrars::BlockAssignable<IotTopicRuleKafkaEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -4164,12 +4298,12 @@ impl ToListMappable for IotTopicRuleKafkaEl {
 }
 
 pub struct BuildIotTopicRuleKafkaEl {
-    #[doc= ""]
-    pub client_properties: RecField<PrimField<String>>,
-    #[doc= ""]
-    pub destination_arn: PrimField<String>,
-    #[doc= ""]
-    pub topic: PrimField<String>,
+    #[doc = ""]
+    pub client_properties: terrars::RecField<terrars::PrimField<std::string::String>>,
+    #[doc = ""]
+    pub destination_arn: terrars::PrimField<std::string::String>,
+    #[doc = ""]
+    pub topic: terrars::PrimField<std::string::String>,
 }
 
 impl BuildIotTopicRuleKafkaEl {
@@ -4185,12 +4319,12 @@ impl BuildIotTopicRuleKafkaEl {
 }
 
 pub struct IotTopicRuleKafkaElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for IotTopicRuleKafkaElRef {
-    fn new(shared: StackShared, base: String) -> IotTopicRuleKafkaElRef {
+impl terrars::Ref for IotTopicRuleKafkaElRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> IotTopicRuleKafkaElRef {
         IotTopicRuleKafkaElRef {
             shared: shared,
             base: base.to_string(),
@@ -4199,57 +4333,57 @@ impl Ref for IotTopicRuleKafkaElRef {
 }
 
 impl IotTopicRuleKafkaElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `client_properties` after provisioning.\n"]
-    pub fn client_properties(&self) -> RecRef<PrimExpr<String>> {
-        RecRef::new(self.shared().clone(), format!("{}.client_properties", self.base))
+    #[doc = "Get a reference to the value of field `client_properties` after provisioning.\n"]
+    pub fn client_properties(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
+        terrars::RecRef::new(self.shared().clone(), format!("{}.client_properties", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `destination_arn` after provisioning.\n"]
-    pub fn destination_arn(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.destination_arn", self.base))
+    #[doc = "Get a reference to the value of field `destination_arn` after provisioning.\n"]
+    pub fn destination_arn(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.destination_arn", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `key` after provisioning.\n"]
-    pub fn key(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.key", self.base))
+    #[doc = "Get a reference to the value of field `key` after provisioning.\n"]
+    pub fn key(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.key", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `partition` after provisioning.\n"]
-    pub fn partition(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.partition", self.base))
+    #[doc = "Get a reference to the value of field `partition` after provisioning.\n"]
+    pub fn partition(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.partition", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `topic` after provisioning.\n"]
-    pub fn topic(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.topic", self.base))
+    #[doc = "Get a reference to the value of field `topic` after provisioning.\n"]
+    pub fn topic(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.topic", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct IotTopicRuleKinesisEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    partition_key: Option<PrimField<String>>,
-    role_arn: PrimField<String>,
-    stream_name: PrimField<String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    partition_key: std::option::Option<terrars::PrimField<std::string::String>>,
+    role_arn: terrars::PrimField<std::string::String>,
+    stream_name: terrars::PrimField<std::string::String>,
 }
 
 impl IotTopicRuleKinesisEl {
-    #[doc= "Set the field `partition_key`.\n"]
-    pub fn set_partition_key(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.partition_key = Some(v.into());
+    #[doc = "Set the field `partition_key`.\n"]
+    pub fn set_partition_key(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.partition_key = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl ToListMappable for IotTopicRuleKinesisEl {
-    type O = BlockAssignable<IotTopicRuleKinesisEl>;
+impl terrars::ToListMappable for IotTopicRuleKinesisEl {
+    type O = terrars::BlockAssignable<IotTopicRuleKinesisEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -4258,10 +4392,10 @@ impl ToListMappable for IotTopicRuleKinesisEl {
 }
 
 pub struct BuildIotTopicRuleKinesisEl {
-    #[doc= ""]
-    pub role_arn: PrimField<String>,
-    #[doc= ""]
-    pub stream_name: PrimField<String>,
+    #[doc = ""]
+    pub role_arn: terrars::PrimField<std::string::String>,
+    #[doc = ""]
+    pub stream_name: terrars::PrimField<std::string::String>,
 }
 
 impl BuildIotTopicRuleKinesisEl {
@@ -4275,12 +4409,12 @@ impl BuildIotTopicRuleKinesisEl {
 }
 
 pub struct IotTopicRuleKinesisElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for IotTopicRuleKinesisElRef {
-    fn new(shared: StackShared, base: String) -> IotTopicRuleKinesisElRef {
+impl terrars::Ref for IotTopicRuleKinesisElRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> IotTopicRuleKinesisElRef {
         IotTopicRuleKinesisElRef {
             shared: shared,
             base: base.to_string(),
@@ -4289,38 +4423,38 @@ impl Ref for IotTopicRuleKinesisElRef {
 }
 
 impl IotTopicRuleKinesisElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `partition_key` after provisioning.\n"]
-    pub fn partition_key(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.partition_key", self.base))
+    #[doc = "Get a reference to the value of field `partition_key` after provisioning.\n"]
+    pub fn partition_key(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.partition_key", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `role_arn` after provisioning.\n"]
-    pub fn role_arn(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.role_arn", self.base))
+    #[doc = "Get a reference to the value of field `role_arn` after provisioning.\n"]
+    pub fn role_arn(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.role_arn", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `stream_name` after provisioning.\n"]
-    pub fn stream_name(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.stream_name", self.base))
+    #[doc = "Get a reference to the value of field `stream_name` after provisioning.\n"]
+    pub fn stream_name(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.stream_name", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct IotTopicRuleLambdaEl {
-    function_arn: PrimField<String>,
+    function_arn: terrars::PrimField<std::string::String>,
 }
 
 impl IotTopicRuleLambdaEl { }
 
-impl ToListMappable for IotTopicRuleLambdaEl {
-    type O = BlockAssignable<IotTopicRuleLambdaEl>;
+impl terrars::ToListMappable for IotTopicRuleLambdaEl {
+    type O = terrars::BlockAssignable<IotTopicRuleLambdaEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -4329,8 +4463,8 @@ impl ToListMappable for IotTopicRuleLambdaEl {
 }
 
 pub struct BuildIotTopicRuleLambdaEl {
-    #[doc= ""]
-    pub function_arn: PrimField<String>,
+    #[doc = ""]
+    pub function_arn: terrars::PrimField<std::string::String>,
 }
 
 impl BuildIotTopicRuleLambdaEl {
@@ -4340,12 +4474,12 @@ impl BuildIotTopicRuleLambdaEl {
 }
 
 pub struct IotTopicRuleLambdaElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for IotTopicRuleLambdaElRef {
-    fn new(shared: StackShared, base: String) -> IotTopicRuleLambdaElRef {
+impl terrars::Ref for IotTopicRuleLambdaElRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> IotTopicRuleLambdaElRef {
         IotTopicRuleLambdaElRef {
             shared: shared,
             base: base.to_string(),
@@ -4354,37 +4488,37 @@ impl Ref for IotTopicRuleLambdaElRef {
 }
 
 impl IotTopicRuleLambdaElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `function_arn` after provisioning.\n"]
-    pub fn function_arn(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.function_arn", self.base))
+    #[doc = "Get a reference to the value of field `function_arn` after provisioning.\n"]
+    pub fn function_arn(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.function_arn", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct IotTopicRuleRepublishEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    qos: Option<PrimField<f64>>,
-    role_arn: PrimField<String>,
-    topic: PrimField<String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    qos: std::option::Option<terrars::PrimField<f64>>,
+    role_arn: terrars::PrimField<std::string::String>,
+    topic: terrars::PrimField<std::string::String>,
 }
 
 impl IotTopicRuleRepublishEl {
-    #[doc= "Set the field `qos`.\n"]
-    pub fn set_qos(mut self, v: impl Into<PrimField<f64>>) -> Self {
-        self.qos = Some(v.into());
+    #[doc = "Set the field `qos`.\n"]
+    pub fn set_qos(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.qos = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl ToListMappable for IotTopicRuleRepublishEl {
-    type O = BlockAssignable<IotTopicRuleRepublishEl>;
+impl terrars::ToListMappable for IotTopicRuleRepublishEl {
+    type O = terrars::BlockAssignable<IotTopicRuleRepublishEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -4393,10 +4527,10 @@ impl ToListMappable for IotTopicRuleRepublishEl {
 }
 
 pub struct BuildIotTopicRuleRepublishEl {
-    #[doc= ""]
-    pub role_arn: PrimField<String>,
-    #[doc= ""]
-    pub topic: PrimField<String>,
+    #[doc = ""]
+    pub role_arn: terrars::PrimField<std::string::String>,
+    #[doc = ""]
+    pub topic: terrars::PrimField<std::string::String>,
 }
 
 impl BuildIotTopicRuleRepublishEl {
@@ -4410,12 +4544,12 @@ impl BuildIotTopicRuleRepublishEl {
 }
 
 pub struct IotTopicRuleRepublishElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for IotTopicRuleRepublishElRef {
-    fn new(shared: StackShared, base: String) -> IotTopicRuleRepublishElRef {
+impl terrars::Ref for IotTopicRuleRepublishElRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> IotTopicRuleRepublishElRef {
         IotTopicRuleRepublishElRef {
             shared: shared,
             base: base.to_string(),
@@ -4424,48 +4558,48 @@ impl Ref for IotTopicRuleRepublishElRef {
 }
 
 impl IotTopicRuleRepublishElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `qos` after provisioning.\n"]
-    pub fn qos(&self) -> PrimExpr<f64> {
-        PrimExpr::new(self.shared().clone(), format!("{}.qos", self.base))
+    #[doc = "Get a reference to the value of field `qos` after provisioning.\n"]
+    pub fn qos(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.qos", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `role_arn` after provisioning.\n"]
-    pub fn role_arn(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.role_arn", self.base))
+    #[doc = "Get a reference to the value of field `role_arn` after provisioning.\n"]
+    pub fn role_arn(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.role_arn", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `topic` after provisioning.\n"]
-    pub fn topic(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.topic", self.base))
+    #[doc = "Get a reference to the value of field `topic` after provisioning.\n"]
+    pub fn topic(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.topic", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct IotTopicRuleS3El {
-    bucket_name: PrimField<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    canned_acl: Option<PrimField<String>>,
-    key: PrimField<String>,
-    role_arn: PrimField<String>,
+    bucket_name: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    canned_acl: std::option::Option<terrars::PrimField<std::string::String>>,
+    key: terrars::PrimField<std::string::String>,
+    role_arn: terrars::PrimField<std::string::String>,
 }
 
 impl IotTopicRuleS3El {
-    #[doc= "Set the field `canned_acl`.\n"]
-    pub fn set_canned_acl(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.canned_acl = Some(v.into());
+    #[doc = "Set the field `canned_acl`.\n"]
+    pub fn set_canned_acl(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.canned_acl = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl ToListMappable for IotTopicRuleS3El {
-    type O = BlockAssignable<IotTopicRuleS3El>;
+impl terrars::ToListMappable for IotTopicRuleS3El {
+    type O = terrars::BlockAssignable<IotTopicRuleS3El>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -4474,12 +4608,12 @@ impl ToListMappable for IotTopicRuleS3El {
 }
 
 pub struct BuildIotTopicRuleS3El {
-    #[doc= ""]
-    pub bucket_name: PrimField<String>,
-    #[doc= ""]
-    pub key: PrimField<String>,
-    #[doc= ""]
-    pub role_arn: PrimField<String>,
+    #[doc = ""]
+    pub bucket_name: terrars::PrimField<std::string::String>,
+    #[doc = ""]
+    pub key: terrars::PrimField<std::string::String>,
+    #[doc = ""]
+    pub role_arn: terrars::PrimField<std::string::String>,
 }
 
 impl BuildIotTopicRuleS3El {
@@ -4494,12 +4628,12 @@ impl BuildIotTopicRuleS3El {
 }
 
 pub struct IotTopicRuleS3ElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for IotTopicRuleS3ElRef {
-    fn new(shared: StackShared, base: String) -> IotTopicRuleS3ElRef {
+impl terrars::Ref for IotTopicRuleS3ElRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> IotTopicRuleS3ElRef {
         IotTopicRuleS3ElRef {
             shared: shared,
             base: base.to_string(),
@@ -4508,52 +4642,52 @@ impl Ref for IotTopicRuleS3ElRef {
 }
 
 impl IotTopicRuleS3ElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `bucket_name` after provisioning.\n"]
-    pub fn bucket_name(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.bucket_name", self.base))
+    #[doc = "Get a reference to the value of field `bucket_name` after provisioning.\n"]
+    pub fn bucket_name(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.bucket_name", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `canned_acl` after provisioning.\n"]
-    pub fn canned_acl(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.canned_acl", self.base))
+    #[doc = "Get a reference to the value of field `canned_acl` after provisioning.\n"]
+    pub fn canned_acl(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.canned_acl", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `key` after provisioning.\n"]
-    pub fn key(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.key", self.base))
+    #[doc = "Get a reference to the value of field `key` after provisioning.\n"]
+    pub fn key(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.key", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `role_arn` after provisioning.\n"]
-    pub fn role_arn(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.role_arn", self.base))
+    #[doc = "Get a reference to the value of field `role_arn` after provisioning.\n"]
+    pub fn role_arn(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.role_arn", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct IotTopicRuleSnsEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    message_format: Option<PrimField<String>>,
-    role_arn: PrimField<String>,
-    target_arn: PrimField<String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    message_format: std::option::Option<terrars::PrimField<std::string::String>>,
+    role_arn: terrars::PrimField<std::string::String>,
+    target_arn: terrars::PrimField<std::string::String>,
 }
 
 impl IotTopicRuleSnsEl {
-    #[doc= "Set the field `message_format`.\n"]
-    pub fn set_message_format(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.message_format = Some(v.into());
+    #[doc = "Set the field `message_format`.\n"]
+    pub fn set_message_format(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.message_format = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl ToListMappable for IotTopicRuleSnsEl {
-    type O = BlockAssignable<IotTopicRuleSnsEl>;
+impl terrars::ToListMappable for IotTopicRuleSnsEl {
+    type O = terrars::BlockAssignable<IotTopicRuleSnsEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -4562,10 +4696,10 @@ impl ToListMappable for IotTopicRuleSnsEl {
 }
 
 pub struct BuildIotTopicRuleSnsEl {
-    #[doc= ""]
-    pub role_arn: PrimField<String>,
-    #[doc= ""]
-    pub target_arn: PrimField<String>,
+    #[doc = ""]
+    pub role_arn: terrars::PrimField<std::string::String>,
+    #[doc = ""]
+    pub target_arn: terrars::PrimField<std::string::String>,
 }
 
 impl BuildIotTopicRuleSnsEl {
@@ -4579,12 +4713,12 @@ impl BuildIotTopicRuleSnsEl {
 }
 
 pub struct IotTopicRuleSnsElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for IotTopicRuleSnsElRef {
-    fn new(shared: StackShared, base: String) -> IotTopicRuleSnsElRef {
+impl terrars::Ref for IotTopicRuleSnsElRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> IotTopicRuleSnsElRef {
         IotTopicRuleSnsElRef {
             shared: shared,
             base: base.to_string(),
@@ -4593,40 +4727,40 @@ impl Ref for IotTopicRuleSnsElRef {
 }
 
 impl IotTopicRuleSnsElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `message_format` after provisioning.\n"]
-    pub fn message_format(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.message_format", self.base))
+    #[doc = "Get a reference to the value of field `message_format` after provisioning.\n"]
+    pub fn message_format(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.message_format", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `role_arn` after provisioning.\n"]
-    pub fn role_arn(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.role_arn", self.base))
+    #[doc = "Get a reference to the value of field `role_arn` after provisioning.\n"]
+    pub fn role_arn(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.role_arn", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `target_arn` after provisioning.\n"]
-    pub fn target_arn(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.target_arn", self.base))
+    #[doc = "Get a reference to the value of field `target_arn` after provisioning.\n"]
+    pub fn target_arn(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.target_arn", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct IotTopicRuleSqsEl {
-    queue_url: PrimField<String>,
-    role_arn: PrimField<String>,
-    use_base64: PrimField<bool>,
+    queue_url: terrars::PrimField<std::string::String>,
+    role_arn: terrars::PrimField<std::string::String>,
+    use_base64: terrars::PrimField<bool>,
 }
 
 impl IotTopicRuleSqsEl { }
 
-impl ToListMappable for IotTopicRuleSqsEl {
-    type O = BlockAssignable<IotTopicRuleSqsEl>;
+impl terrars::ToListMappable for IotTopicRuleSqsEl {
+    type O = terrars::BlockAssignable<IotTopicRuleSqsEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -4635,12 +4769,12 @@ impl ToListMappable for IotTopicRuleSqsEl {
 }
 
 pub struct BuildIotTopicRuleSqsEl {
-    #[doc= ""]
-    pub queue_url: PrimField<String>,
-    #[doc= ""]
-    pub role_arn: PrimField<String>,
-    #[doc= ""]
-    pub use_base64: PrimField<bool>,
+    #[doc = ""]
+    pub queue_url: terrars::PrimField<std::string::String>,
+    #[doc = ""]
+    pub role_arn: terrars::PrimField<std::string::String>,
+    #[doc = ""]
+    pub use_base64: terrars::PrimField<bool>,
 }
 
 impl BuildIotTopicRuleSqsEl {
@@ -4654,12 +4788,12 @@ impl BuildIotTopicRuleSqsEl {
 }
 
 pub struct IotTopicRuleSqsElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for IotTopicRuleSqsElRef {
-    fn new(shared: StackShared, base: String) -> IotTopicRuleSqsElRef {
+impl terrars::Ref for IotTopicRuleSqsElRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> IotTopicRuleSqsElRef {
         IotTopicRuleSqsElRef {
             shared: shared,
             base: base.to_string(),
@@ -4668,47 +4802,50 @@ impl Ref for IotTopicRuleSqsElRef {
 }
 
 impl IotTopicRuleSqsElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `queue_url` after provisioning.\n"]
-    pub fn queue_url(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.queue_url", self.base))
+    #[doc = "Get a reference to the value of field `queue_url` after provisioning.\n"]
+    pub fn queue_url(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.queue_url", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `role_arn` after provisioning.\n"]
-    pub fn role_arn(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.role_arn", self.base))
+    #[doc = "Get a reference to the value of field `role_arn` after provisioning.\n"]
+    pub fn role_arn(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.role_arn", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `use_base64` after provisioning.\n"]
-    pub fn use_base64(&self) -> PrimExpr<bool> {
-        PrimExpr::new(self.shared().clone(), format!("{}.use_base64", self.base))
+    #[doc = "Get a reference to the value of field `use_base64` after provisioning.\n"]
+    pub fn use_base64(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.use_base64", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct IotTopicRuleStepFunctionsEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    execution_name_prefix: Option<PrimField<String>>,
-    role_arn: PrimField<String>,
-    state_machine_name: PrimField<String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    execution_name_prefix: std::option::Option<terrars::PrimField<std::string::String>>,
+    role_arn: terrars::PrimField<std::string::String>,
+    state_machine_name: terrars::PrimField<std::string::String>,
 }
 
 impl IotTopicRuleStepFunctionsEl {
-    #[doc= "Set the field `execution_name_prefix`.\n"]
-    pub fn set_execution_name_prefix(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.execution_name_prefix = Some(v.into());
+    #[doc = "Set the field `execution_name_prefix`.\n"]
+    pub fn set_execution_name_prefix(
+        mut self,
+        v: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.execution_name_prefix = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl ToListMappable for IotTopicRuleStepFunctionsEl {
-    type O = BlockAssignable<IotTopicRuleStepFunctionsEl>;
+impl terrars::ToListMappable for IotTopicRuleStepFunctionsEl {
+    type O = terrars::BlockAssignable<IotTopicRuleStepFunctionsEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -4717,10 +4854,10 @@ impl ToListMappable for IotTopicRuleStepFunctionsEl {
 }
 
 pub struct BuildIotTopicRuleStepFunctionsEl {
-    #[doc= ""]
-    pub role_arn: PrimField<String>,
-    #[doc= ""]
-    pub state_machine_name: PrimField<String>,
+    #[doc = ""]
+    pub role_arn: terrars::PrimField<std::string::String>,
+    #[doc = ""]
+    pub state_machine_name: terrars::PrimField<std::string::String>,
 }
 
 impl BuildIotTopicRuleStepFunctionsEl {
@@ -4734,12 +4871,12 @@ impl BuildIotTopicRuleStepFunctionsEl {
 }
 
 pub struct IotTopicRuleStepFunctionsElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for IotTopicRuleStepFunctionsElRef {
-    fn new(shared: StackShared, base: String) -> IotTopicRuleStepFunctionsElRef {
+impl terrars::Ref for IotTopicRuleStepFunctionsElRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> IotTopicRuleStepFunctionsElRef {
         IotTopicRuleStepFunctionsElRef {
             shared: shared,
             base: base.to_string(),
@@ -4748,39 +4885,39 @@ impl Ref for IotTopicRuleStepFunctionsElRef {
 }
 
 impl IotTopicRuleStepFunctionsElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `execution_name_prefix` after provisioning.\n"]
-    pub fn execution_name_prefix(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.execution_name_prefix", self.base))
+    #[doc = "Get a reference to the value of field `execution_name_prefix` after provisioning.\n"]
+    pub fn execution_name_prefix(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.execution_name_prefix", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `role_arn` after provisioning.\n"]
-    pub fn role_arn(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.role_arn", self.base))
+    #[doc = "Get a reference to the value of field `role_arn` after provisioning.\n"]
+    pub fn role_arn(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.role_arn", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `state_machine_name` after provisioning.\n"]
-    pub fn state_machine_name(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.state_machine_name", self.base))
+    #[doc = "Get a reference to the value of field `state_machine_name` after provisioning.\n"]
+    pub fn state_machine_name(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.state_machine_name", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct IotTopicRuleTimestreamElDimensionEl {
-    name: PrimField<String>,
-    value: PrimField<String>,
+    name: terrars::PrimField<std::string::String>,
+    value: terrars::PrimField<std::string::String>,
 }
 
 impl IotTopicRuleTimestreamElDimensionEl { }
 
-impl ToListMappable for IotTopicRuleTimestreamElDimensionEl {
-    type O = BlockAssignable<IotTopicRuleTimestreamElDimensionEl>;
+impl terrars::ToListMappable for IotTopicRuleTimestreamElDimensionEl {
+    type O = terrars::BlockAssignable<IotTopicRuleTimestreamElDimensionEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -4789,10 +4926,10 @@ impl ToListMappable for IotTopicRuleTimestreamElDimensionEl {
 }
 
 pub struct BuildIotTopicRuleTimestreamElDimensionEl {
-    #[doc= ""]
-    pub name: PrimField<String>,
-    #[doc= ""]
-    pub value: PrimField<String>,
+    #[doc = ""]
+    pub name: terrars::PrimField<std::string::String>,
+    #[doc = ""]
+    pub value: terrars::PrimField<std::string::String>,
 }
 
 impl BuildIotTopicRuleTimestreamElDimensionEl {
@@ -4805,12 +4942,12 @@ impl BuildIotTopicRuleTimestreamElDimensionEl {
 }
 
 pub struct IotTopicRuleTimestreamElDimensionElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for IotTopicRuleTimestreamElDimensionElRef {
-    fn new(shared: StackShared, base: String) -> IotTopicRuleTimestreamElDimensionElRef {
+impl terrars::Ref for IotTopicRuleTimestreamElDimensionElRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> IotTopicRuleTimestreamElDimensionElRef {
         IotTopicRuleTimestreamElDimensionElRef {
             shared: shared,
             base: base.to_string(),
@@ -4819,34 +4956,34 @@ impl Ref for IotTopicRuleTimestreamElDimensionElRef {
 }
 
 impl IotTopicRuleTimestreamElDimensionElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `name` after provisioning.\n"]
-    pub fn name(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.name", self.base))
+    #[doc = "Get a reference to the value of field `name` after provisioning.\n"]
+    pub fn name(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `value` after provisioning.\n"]
-    pub fn value(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.value", self.base))
+    #[doc = "Get a reference to the value of field `value` after provisioning.\n"]
+    pub fn value(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.value", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct IotTopicRuleTimestreamElTimestampEl {
-    unit: PrimField<String>,
-    value: PrimField<String>,
+    unit: terrars::PrimField<std::string::String>,
+    value: terrars::PrimField<std::string::String>,
 }
 
 impl IotTopicRuleTimestreamElTimestampEl { }
 
-impl ToListMappable for IotTopicRuleTimestreamElTimestampEl {
-    type O = BlockAssignable<IotTopicRuleTimestreamElTimestampEl>;
+impl terrars::ToListMappable for IotTopicRuleTimestreamElTimestampEl {
+    type O = terrars::BlockAssignable<IotTopicRuleTimestreamElTimestampEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -4855,10 +4992,10 @@ impl ToListMappable for IotTopicRuleTimestreamElTimestampEl {
 }
 
 pub struct BuildIotTopicRuleTimestreamElTimestampEl {
-    #[doc= ""]
-    pub unit: PrimField<String>,
-    #[doc= ""]
-    pub value: PrimField<String>,
+    #[doc = ""]
+    pub unit: terrars::PrimField<std::string::String>,
+    #[doc = ""]
+    pub value: terrars::PrimField<std::string::String>,
 }
 
 impl BuildIotTopicRuleTimestreamElTimestampEl {
@@ -4871,12 +5008,12 @@ impl BuildIotTopicRuleTimestreamElTimestampEl {
 }
 
 pub struct IotTopicRuleTimestreamElTimestampElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for IotTopicRuleTimestreamElTimestampElRef {
-    fn new(shared: StackShared, base: String) -> IotTopicRuleTimestreamElTimestampElRef {
+impl terrars::Ref for IotTopicRuleTimestreamElTimestampElRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> IotTopicRuleTimestreamElTimestampElRef {
         IotTopicRuleTimestreamElTimestampElRef {
             shared: shared,
             base: base.to_string(),
@@ -4885,72 +5022,78 @@ impl Ref for IotTopicRuleTimestreamElTimestampElRef {
 }
 
 impl IotTopicRuleTimestreamElTimestampElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `unit` after provisioning.\n"]
-    pub fn unit(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.unit", self.base))
+    #[doc = "Get a reference to the value of field `unit` after provisioning.\n"]
+    pub fn unit(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.unit", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `value` after provisioning.\n"]
-    pub fn value(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.value", self.base))
+    #[doc = "Get a reference to the value of field `value` after provisioning.\n"]
+    pub fn value(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.value", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
 struct IotTopicRuleTimestreamElDynamic {
-    dimension: Option<DynamicBlock<IotTopicRuleTimestreamElDimensionEl>>,
-    timestamp: Option<DynamicBlock<IotTopicRuleTimestreamElTimestampEl>>,
+    dimension: std::option::Option<terrars::DynamicBlock<IotTopicRuleTimestreamElDimensionEl>>,
+    timestamp: std::option::Option<terrars::DynamicBlock<IotTopicRuleTimestreamElTimestampEl>>,
 }
 
 #[derive(Serialize)]
 pub struct IotTopicRuleTimestreamEl {
-    database_name: PrimField<String>,
-    role_arn: PrimField<String>,
-    table_name: PrimField<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    dimension: Option<Vec<IotTopicRuleTimestreamElDimensionEl>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    timestamp: Option<Vec<IotTopicRuleTimestreamElTimestampEl>>,
+    database_name: terrars::PrimField<std::string::String>,
+    role_arn: terrars::PrimField<std::string::String>,
+    table_name: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    dimension: std::option::Option<std::vec::Vec<IotTopicRuleTimestreamElDimensionEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    timestamp: std::option::Option<std::vec::Vec<IotTopicRuleTimestreamElTimestampEl>>,
     dynamic: IotTopicRuleTimestreamElDynamic,
 }
 
 impl IotTopicRuleTimestreamEl {
-    #[doc= "Set the field `dimension`.\n"]
-    pub fn set_dimension(mut self, v: impl Into<BlockAssignable<IotTopicRuleTimestreamElDimensionEl>>) -> Self {
+    #[doc = "Set the field `dimension`.\n"]
+    pub fn set_dimension(
+        mut self,
+        v: impl std::convert::Into<terrars::BlockAssignable<IotTopicRuleTimestreamElDimensionEl>>,
+    ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.dimension = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.dimension = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.dimension = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.dimension = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Set the field `timestamp`.\n"]
-    pub fn set_timestamp(mut self, v: impl Into<BlockAssignable<IotTopicRuleTimestreamElTimestampEl>>) -> Self {
+    #[doc = "Set the field `timestamp`.\n"]
+    pub fn set_timestamp(
+        mut self,
+        v: impl std::convert::Into<terrars::BlockAssignable<IotTopicRuleTimestreamElTimestampEl>>,
+    ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.timestamp = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.timestamp = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.timestamp = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.timestamp = std::option::Option::Some(d);
             },
         }
         self
     }
 }
 
-impl ToListMappable for IotTopicRuleTimestreamEl {
-    type O = BlockAssignable<IotTopicRuleTimestreamEl>;
+impl terrars::ToListMappable for IotTopicRuleTimestreamEl {
+    type O = terrars::BlockAssignable<IotTopicRuleTimestreamEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -4959,12 +5102,12 @@ impl ToListMappable for IotTopicRuleTimestreamEl {
 }
 
 pub struct BuildIotTopicRuleTimestreamEl {
-    #[doc= ""]
-    pub database_name: PrimField<String>,
-    #[doc= ""]
-    pub role_arn: PrimField<String>,
-    #[doc= ""]
-    pub table_name: PrimField<String>,
+    #[doc = ""]
+    pub database_name: terrars::PrimField<std::string::String>,
+    #[doc = ""]
+    pub role_arn: terrars::PrimField<std::string::String>,
+    #[doc = ""]
+    pub table_name: terrars::PrimField<std::string::String>,
 }
 
 impl BuildIotTopicRuleTimestreamEl {
@@ -4975,18 +5118,18 @@ impl BuildIotTopicRuleTimestreamEl {
             table_name: self.table_name,
             dimension: core::default::Default::default(),
             timestamp: core::default::Default::default(),
-            dynamic: Default::default(),
+            dynamic: core::default::Default::default(),
         }
     }
 }
 
 pub struct IotTopicRuleTimestreamElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for IotTopicRuleTimestreamElRef {
-    fn new(shared: StackShared, base: String) -> IotTopicRuleTimestreamElRef {
+impl terrars::Ref for IotTopicRuleTimestreamElRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> IotTopicRuleTimestreamElRef {
         IotTopicRuleTimestreamElRef {
             shared: shared,
             base: base.to_string(),
@@ -4995,51 +5138,51 @@ impl Ref for IotTopicRuleTimestreamElRef {
 }
 
 impl IotTopicRuleTimestreamElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `database_name` after provisioning.\n"]
-    pub fn database_name(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.database_name", self.base))
+    #[doc = "Get a reference to the value of field `database_name` after provisioning.\n"]
+    pub fn database_name(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.database_name", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `role_arn` after provisioning.\n"]
-    pub fn role_arn(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.role_arn", self.base))
+    #[doc = "Get a reference to the value of field `role_arn` after provisioning.\n"]
+    pub fn role_arn(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.role_arn", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `table_name` after provisioning.\n"]
-    pub fn table_name(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.table_name", self.base))
+    #[doc = "Get a reference to the value of field `table_name` after provisioning.\n"]
+    pub fn table_name(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.table_name", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `timestamp` after provisioning.\n"]
-    pub fn timestamp(&self) -> ListRef<IotTopicRuleTimestreamElTimestampElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.timestamp", self.base))
+    #[doc = "Get a reference to the value of field `timestamp` after provisioning.\n"]
+    pub fn timestamp(&self) -> terrars::ListRef<IotTopicRuleTimestreamElTimestampElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.timestamp", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
 struct IotTopicRuleDynamic {
-    cloudwatch_alarm: Option<DynamicBlock<IotTopicRuleCloudwatchAlarmEl>>,
-    cloudwatch_logs: Option<DynamicBlock<IotTopicRuleCloudwatchLogsEl>>,
-    cloudwatch_metric: Option<DynamicBlock<IotTopicRuleCloudwatchMetricEl>>,
-    dynamodb: Option<DynamicBlock<IotTopicRuleDynamodbEl>>,
-    dynamodbv2: Option<DynamicBlock<IotTopicRuleDynamodbv2El>>,
-    elasticsearch: Option<DynamicBlock<IotTopicRuleElasticsearchEl>>,
-    error_action: Option<DynamicBlock<IotTopicRuleErrorActionEl>>,
-    firehose: Option<DynamicBlock<IotTopicRuleFirehoseEl>>,
-    http: Option<DynamicBlock<IotTopicRuleHttpEl>>,
-    iot_analytics: Option<DynamicBlock<IotTopicRuleIotAnalyticsEl>>,
-    iot_events: Option<DynamicBlock<IotTopicRuleIotEventsEl>>,
-    kafka: Option<DynamicBlock<IotTopicRuleKafkaEl>>,
-    kinesis: Option<DynamicBlock<IotTopicRuleKinesisEl>>,
-    lambda: Option<DynamicBlock<IotTopicRuleLambdaEl>>,
-    republish: Option<DynamicBlock<IotTopicRuleRepublishEl>>,
-    s3: Option<DynamicBlock<IotTopicRuleS3El>>,
-    sns: Option<DynamicBlock<IotTopicRuleSnsEl>>,
-    sqs: Option<DynamicBlock<IotTopicRuleSqsEl>>,
-    step_functions: Option<DynamicBlock<IotTopicRuleStepFunctionsEl>>,
-    timestream: Option<DynamicBlock<IotTopicRuleTimestreamEl>>,
+    cloudwatch_alarm: std::option::Option<terrars::DynamicBlock<IotTopicRuleCloudwatchAlarmEl>>,
+    cloudwatch_logs: std::option::Option<terrars::DynamicBlock<IotTopicRuleCloudwatchLogsEl>>,
+    cloudwatch_metric: std::option::Option<terrars::DynamicBlock<IotTopicRuleCloudwatchMetricEl>>,
+    dynamodb: std::option::Option<terrars::DynamicBlock<IotTopicRuleDynamodbEl>>,
+    dynamodbv2: std::option::Option<terrars::DynamicBlock<IotTopicRuleDynamodbv2El>>,
+    elasticsearch: std::option::Option<terrars::DynamicBlock<IotTopicRuleElasticsearchEl>>,
+    error_action: std::option::Option<terrars::DynamicBlock<IotTopicRuleErrorActionEl>>,
+    firehose: std::option::Option<terrars::DynamicBlock<IotTopicRuleFirehoseEl>>,
+    http: std::option::Option<terrars::DynamicBlock<IotTopicRuleHttpEl>>,
+    iot_analytics: std::option::Option<terrars::DynamicBlock<IotTopicRuleIotAnalyticsEl>>,
+    iot_events: std::option::Option<terrars::DynamicBlock<IotTopicRuleIotEventsEl>>,
+    kafka: std::option::Option<terrars::DynamicBlock<IotTopicRuleKafkaEl>>,
+    kinesis: std::option::Option<terrars::DynamicBlock<IotTopicRuleKinesisEl>>,
+    lambda: std::option::Option<terrars::DynamicBlock<IotTopicRuleLambdaEl>>,
+    republish: std::option::Option<terrars::DynamicBlock<IotTopicRuleRepublishEl>>,
+    s3: std::option::Option<terrars::DynamicBlock<IotTopicRuleS3El>>,
+    sns: std::option::Option<terrars::DynamicBlock<IotTopicRuleSnsEl>>,
+    sqs: std::option::Option<terrars::DynamicBlock<IotTopicRuleSqsEl>>,
+    step_functions: std::option::Option<terrars::DynamicBlock<IotTopicRuleStepFunctionsEl>>,
+    timestream: std::option::Option<terrars::DynamicBlock<IotTopicRuleTimestreamEl>>,
 }

@@ -1,49 +1,53 @@
 use serde::Serialize;
-use std::cell::RefCell;
-use std::rc::Rc;
-use terrars::*;
+use terrars::{
+    Referable as _,
+    Resource_ as _,
+    Ref as _,
+};
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
 struct AccessanalyzerArchiveRuleData {
-    #[serde(skip_serializing_if = "Vec::is_empty")]
-    depends_on: Vec<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    provider: Option<String>,
-    #[serde(skip_serializing_if = "SerdeSkipDefault::is_default")]
-    lifecycle: ResourceLifecycle,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    for_each: Option<String>,
-    analyzer_name: PrimField<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    id: Option<PrimField<String>>,
-    rule_name: PrimField<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    filter: Option<Vec<AccessanalyzerArchiveRuleFilterEl>>,
+    #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
+    depends_on: std::vec::Vec<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    provider: std::option::Option<std::string::String>,
+    #[serde(skip_serializing_if = "terrars::SerdeSkipDefault::is_default")]
+    lifecycle: terrars::ResourceLifecycle,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    for_each: std::option::Option<std::string::String>,
+    #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
+    provisioner: std::vec::Vec<terrars::Provisioner>,
+    analyzer_name: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    id: std::option::Option<terrars::PrimField<std::string::String>>,
+    rule_name: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    filter: std::option::Option<std::vec::Vec<AccessanalyzerArchiveRuleFilterEl>>,
     dynamic: AccessanalyzerArchiveRuleDynamic,
 }
 
 struct AccessanalyzerArchiveRule_ {
-    shared: StackShared,
-    tf_id: String,
-    data: RefCell<AccessanalyzerArchiveRuleData>,
+    shared: terrars::StackShared,
+    tf_id: std::string::String,
+    data: std::cell::RefCell<AccessanalyzerArchiveRuleData>,
 }
 
 #[derive(Clone)]
-pub struct AccessanalyzerArchiveRule(Rc<AccessanalyzerArchiveRule_>);
+pub struct AccessanalyzerArchiveRule(std::rc::Rc<AccessanalyzerArchiveRule_>);
 
 impl AccessanalyzerArchiveRule {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.0.shared
     }
 
-    pub fn depends_on(self, dep: &impl Referable) -> Self {
+    pub fn depends_on(self, dep: &impl terrars::Referable) -> Self {
         self.0.data.borrow_mut().depends_on.push(dep.extract_ref());
         self
     }
 
     pub fn set_provider(self, provider: &ProviderAws) -> Self {
-        self.0.data.borrow_mut().provider = Some(provider.provider_ref());
+        self.0.data.borrow_mut().provider = std::option::Option::Some(provider.provider_ref());
         self
     }
 
@@ -58,99 +62,135 @@ impl AccessanalyzerArchiveRule {
     }
 
     pub fn ignore_changes_to_all(self) -> Self {
-        self.0.data.borrow_mut().lifecycle.ignore_changes = Some(IgnoreChanges::All(IgnoreChangesAll::All));
+        self.0.data.borrow_mut().lifecycle.ignore_changes =
+            std::option::Option::Some(terrars::IgnoreChanges::All(terrars::IgnoreChangesAll::All));
         self
     }
 
-    pub fn ignore_changes_to_attr(self, attr: impl ToString) -> Self {
+    pub fn ignore_changes_to_attr(self, attr: impl std::string::ToString) -> Self {
         {
             let mut d = self.0.data.borrow_mut();
             if match &mut d.lifecycle.ignore_changes {
-                Some(i) => match i {
-                    IgnoreChanges::All(_) => {
+                std::option::Option::Some(i) => match i {
+                    terrars::IgnoreChanges::All(_) => {
                         true
                     },
-                    IgnoreChanges::Refs(r) => {
+                    terrars::IgnoreChanges::Refs(r) => {
                         r.push(attr.to_string());
                         false
                     },
                 },
-                None => true,
+                std::option::Option::None => true,
             } {
-                d.lifecycle.ignore_changes = Some(IgnoreChanges::Refs(vec![attr.to_string()]));
+                d.lifecycle.ignore_changes =
+                    std::option::Option::Some(terrars::IgnoreChanges::Refs(vec![attr.to_string()]));
             }
         }
         self
     }
 
-    pub fn replace_triggered_by_resource(self, r: &impl Resource) -> Self {
+    pub fn replace_triggered_by_resource(self, r: &impl terrars::Resource) -> Self {
         self.0.data.borrow_mut().lifecycle.replace_triggered_by.push(r.extract_ref());
         self
     }
 
-    pub fn replace_triggered_by_attr(self, attr: impl ToString) -> Self {
+    pub fn replace_triggered_by_attr(self, attr: impl std::string::ToString) -> Self {
         self.0.data.borrow_mut().lifecycle.replace_triggered_by.push(attr.to_string());
         self
     }
 
-    #[doc= "Set the field `id`.\n"]
-    pub fn set_id(self, v: impl Into<PrimField<String>>) -> Self {
-        self.0.data.borrow_mut().id = Some(v.into());
+    #[doc = r" Add a provisioner (ex: `local-exec`, `remote-exec`, `file`) to this resource."]
+    #[doc = r" Provisioners run in the order they're added."]
+    pub fn add_provisioner(self, v: impl std::convert::Into<terrars::Provisioner>) -> Self {
+        self.0.data.borrow_mut().provisioner.push(v.into());
         self
     }
 
-    #[doc= "Set the field `filter`.\n"]
-    pub fn set_filter(self, v: impl Into<BlockAssignable<AccessanalyzerArchiveRuleFilterEl>>) -> Self {
+    pub fn add_lifecycle_precondition(
+        self,
+        condition: impl std::convert::Into<terrars::PrimField<bool>>,
+        error_message: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.0.data.borrow_mut().lifecycle.precondition.push(terrars::LifecycleCondition {
+            condition: condition.into(),
+            error_message: error_message.into(),
+        });
+        self
+    }
+
+    pub fn add_lifecycle_postcondition(
+        self,
+        condition: impl std::convert::Into<terrars::PrimField<bool>>,
+        error_message: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.0.data.borrow_mut().lifecycle.postcondition.push(terrars::LifecycleCondition {
+            condition: condition.into(),
+            error_message: error_message.into(),
+        });
+        self
+    }
+
+    #[doc = "Set the field `id`.\n"]
+    pub fn set_id(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().id = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `filter`.\n"]
+    pub fn set_filter(
+        self,
+        v: impl std::convert::Into<terrars::BlockAssignable<AccessanalyzerArchiveRuleFilterEl>>,
+    ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.0.data.borrow_mut().filter = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.0.data.borrow_mut().filter = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.0.data.borrow_mut().dynamic.filter = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.0.data.borrow_mut().dynamic.filter = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Get a reference to the value of field `analyzer_name` after provisioning.\n"]
-    pub fn analyzer_name(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.analyzer_name", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `analyzer_name` after provisioning.\n"]
+    pub fn analyzer_name(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.analyzer_name", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `id` after provisioning.\n"]
-    pub fn id(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
+    pub fn id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `rule_name` after provisioning.\n"]
-    pub fn rule_name(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.rule_name", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `rule_name` after provisioning.\n"]
+    pub fn rule_name(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.rule_name", self.extract_ref()))
     }
 }
 
-impl Referable for AccessanalyzerArchiveRule {
-    fn extract_ref(&self) -> String {
+impl terrars::Referable for AccessanalyzerArchiveRule {
+    fn extract_ref(&self) -> std::string::String {
         format!("{}.{}", self.0.extract_resource_type(), self.0.extract_tf_id())
     }
 }
 
-impl Resource for AccessanalyzerArchiveRule { }
+impl terrars::Resource for AccessanalyzerArchiveRule { }
 
-impl ToListMappable for AccessanalyzerArchiveRule {
-    type O = ListRef<AccessanalyzerArchiveRuleRef>;
+impl terrars::ToListMappable for AccessanalyzerArchiveRule {
+    type O = terrars::ListRef<AccessanalyzerArchiveRuleRef>;
 
-    fn do_map(self, base: String) -> Self::O {
-        self.0.data.borrow_mut().for_each = Some(format!("${{{}}}", base));
-        ListRef::new(self.0.shared.clone(), self.extract_ref())
+    fn do_map(self, base: std::string::String) -> Self::O {
+        self.0.data.borrow_mut().for_each = std::option::Option::Some(format!("${{{}}}", base));
+        terrars::ListRef::new(self.0.shared.clone(), self.extract_ref())
     }
 }
 
-impl Resource_ for AccessanalyzerArchiveRule_ {
-    fn extract_resource_type(&self) -> String {
+impl terrars::Resource_ for AccessanalyzerArchiveRule_ {
+    fn extract_resource_type(&self) -> std::string::String {
         "aws_accessanalyzer_archive_rule".into()
     }
 
-    fn extract_tf_id(&self) -> String {
+    fn extract_tf_id(&self) -> std::string::String {
         self.tf_id.clone()
     }
 
@@ -160,28 +200,29 @@ impl Resource_ for AccessanalyzerArchiveRule_ {
 }
 
 pub struct BuildAccessanalyzerArchiveRule {
-    pub tf_id: String,
-    #[doc= ""]
-    pub analyzer_name: PrimField<String>,
-    #[doc= ""]
-    pub rule_name: PrimField<String>,
+    pub tf_id: std::string::String,
+    #[doc = ""]
+    pub analyzer_name: terrars::PrimField<std::string::String>,
+    #[doc = ""]
+    pub rule_name: terrars::PrimField<std::string::String>,
 }
 
 impl BuildAccessanalyzerArchiveRule {
-    pub fn build(self, stack: &mut Stack) -> AccessanalyzerArchiveRule {
-        let out = AccessanalyzerArchiveRule(Rc::new(AccessanalyzerArchiveRule_ {
+    pub fn build(self, stack: &mut terrars::Stack) -> AccessanalyzerArchiveRule {
+        let out = AccessanalyzerArchiveRule(std::rc::Rc::new(AccessanalyzerArchiveRule_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: RefCell::new(AccessanalyzerArchiveRuleData {
+            data: std::cell::RefCell::new(AccessanalyzerArchiveRuleData {
                 depends_on: core::default::Default::default(),
-                provider: None,
+                provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
-                for_each: None,
+                for_each: std::option::Option::None,
+                provisioner: core::default::Default::default(),
                 analyzer_name: self.analyzer_name,
                 id: core::default::Default::default(),
                 rule_name: self.rule_name,
                 filter: core::default::Default::default(),
-                dynamic: Default::default(),
+                dynamic: core::default::Default::default(),
             }),
         }));
         stack.add_resource(out.0.clone());
@@ -190,12 +231,12 @@ impl BuildAccessanalyzerArchiveRule {
 }
 
 pub struct AccessanalyzerArchiveRuleRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for AccessanalyzerArchiveRuleRef {
-    fn new(shared: StackShared, base: String) -> Self {
+impl terrars::Ref for AccessanalyzerArchiveRuleRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> Self {
         Self {
             shared: shared,
             base: base,
@@ -204,74 +245,83 @@ impl Ref for AccessanalyzerArchiveRuleRef {
 }
 
 impl AccessanalyzerArchiveRuleRef {
-    fn extract_ref(&self) -> String {
+    fn extract_ref(&self) -> std::string::String {
         self.base.clone()
     }
 
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `analyzer_name` after provisioning.\n"]
-    pub fn analyzer_name(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.analyzer_name", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `analyzer_name` after provisioning.\n"]
+    pub fn analyzer_name(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.analyzer_name", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `id` after provisioning.\n"]
-    pub fn id(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
+    pub fn id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `rule_name` after provisioning.\n"]
-    pub fn rule_name(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.rule_name", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `rule_name` after provisioning.\n"]
+    pub fn rule_name(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.rule_name", self.extract_ref()))
     }
 }
 
 #[derive(Serialize)]
 pub struct AccessanalyzerArchiveRuleFilterEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    contains: Option<ListField<PrimField<String>>>,
-    criteria: PrimField<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    eq: Option<ListField<PrimField<String>>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    exists: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    neq: Option<ListField<PrimField<String>>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    contains: std::option::Option<terrars::ListField<terrars::PrimField<std::string::String>>>,
+    criteria: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    eq: std::option::Option<terrars::ListField<terrars::PrimField<std::string::String>>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    exists: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    neq: std::option::Option<terrars::ListField<terrars::PrimField<std::string::String>>>,
 }
 
 impl AccessanalyzerArchiveRuleFilterEl {
-    #[doc= "Set the field `contains`.\n"]
-    pub fn set_contains(mut self, v: impl Into<ListField<PrimField<String>>>) -> Self {
-        self.contains = Some(v.into());
+    #[doc = "Set the field `contains`.\n"]
+    pub fn set_contains(
+        mut self,
+        v: impl std::convert::Into<terrars::ListField<terrars::PrimField<std::string::String>>>,
+    ) -> Self {
+        self.contains = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `eq`.\n"]
-    pub fn set_eq(mut self, v: impl Into<ListField<PrimField<String>>>) -> Self {
-        self.eq = Some(v.into());
+    #[doc = "Set the field `eq`.\n"]
+    pub fn set_eq(
+        mut self,
+        v: impl std::convert::Into<terrars::ListField<terrars::PrimField<std::string::String>>>,
+    ) -> Self {
+        self.eq = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `exists`.\n"]
-    pub fn set_exists(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.exists = Some(v.into());
+    #[doc = "Set the field `exists`.\n"]
+    pub fn set_exists(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.exists = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `neq`.\n"]
-    pub fn set_neq(mut self, v: impl Into<ListField<PrimField<String>>>) -> Self {
-        self.neq = Some(v.into());
+    #[doc = "Set the field `neq`.\n"]
+    pub fn set_neq(
+        mut self,
+        v: impl std::convert::Into<terrars::ListField<terrars::PrimField<std::string::String>>>,
+    ) -> Self {
+        self.neq = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl ToListMappable for AccessanalyzerArchiveRuleFilterEl {
-    type O = BlockAssignable<AccessanalyzerArchiveRuleFilterEl>;
+impl terrars::ToListMappable for AccessanalyzerArchiveRuleFilterEl {
+    type O = terrars::BlockAssignable<AccessanalyzerArchiveRuleFilterEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -280,8 +330,8 @@ impl ToListMappable for AccessanalyzerArchiveRuleFilterEl {
 }
 
 pub struct BuildAccessanalyzerArchiveRuleFilterEl {
-    #[doc= ""]
-    pub criteria: PrimField<String>,
+    #[doc = ""]
+    pub criteria: terrars::PrimField<std::string::String>,
 }
 
 impl BuildAccessanalyzerArchiveRuleFilterEl {
@@ -297,12 +347,12 @@ impl BuildAccessanalyzerArchiveRuleFilterEl {
 }
 
 pub struct AccessanalyzerArchiveRuleFilterElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for AccessanalyzerArchiveRuleFilterElRef {
-    fn new(shared: StackShared, base: String) -> AccessanalyzerArchiveRuleFilterElRef {
+impl terrars::Ref for AccessanalyzerArchiveRuleFilterElRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> AccessanalyzerArchiveRuleFilterElRef {
         AccessanalyzerArchiveRuleFilterElRef {
             shared: shared,
             base: base.to_string(),
@@ -311,37 +361,37 @@ impl Ref for AccessanalyzerArchiveRuleFilterElRef {
 }
 
 impl AccessanalyzerArchiveRuleFilterElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `contains` after provisioning.\n"]
-    pub fn contains(&self) -> ListRef<PrimExpr<String>> {
-        ListRef::new(self.shared().clone(), format!("{}.contains", self.base))
+    #[doc = "Get a reference to the value of field `contains` after provisioning.\n"]
+    pub fn contains(&self) -> terrars::ListRef<terrars::PrimExpr<std::string::String>> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.contains", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `criteria` after provisioning.\n"]
-    pub fn criteria(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.criteria", self.base))
+    #[doc = "Get a reference to the value of field `criteria` after provisioning.\n"]
+    pub fn criteria(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.criteria", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `eq` after provisioning.\n"]
-    pub fn eq(&self) -> ListRef<PrimExpr<String>> {
-        ListRef::new(self.shared().clone(), format!("{}.eq", self.base))
+    #[doc = "Get a reference to the value of field `eq` after provisioning.\n"]
+    pub fn eq(&self) -> terrars::ListRef<terrars::PrimExpr<std::string::String>> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.eq", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `exists` after provisioning.\n"]
-    pub fn exists(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.exists", self.base))
+    #[doc = "Get a reference to the value of field `exists` after provisioning.\n"]
+    pub fn exists(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.exists", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `neq` after provisioning.\n"]
-    pub fn neq(&self) -> ListRef<PrimExpr<String>> {
-        ListRef::new(self.shared().clone(), format!("{}.neq", self.base))
+    #[doc = "Get a reference to the value of field `neq` after provisioning.\n"]
+    pub fn neq(&self) -> terrars::ListRef<terrars::PrimExpr<std::string::String>> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.neq", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
 struct AccessanalyzerArchiveRuleDynamic {
-    filter: Option<DynamicBlock<AccessanalyzerArchiveRuleFilterEl>>,
+    filter: std::option::Option<terrars::DynamicBlock<AccessanalyzerArchiveRuleFilterEl>>,
 }

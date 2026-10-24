@@ -1,111 +1,139 @@
 use serde::Serialize;
-use std::cell::RefCell;
-use std::rc::Rc;
-use terrars::*;
+use terrars::{
+    Referable as _,
+    Datasource_ as _,
+    Ref as _,
+};
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
 struct DataLambdaCodeSigningConfigData {
-    #[serde(skip_serializing_if = "Vec::is_empty")]
-    depends_on: Vec<String>,
-    #[serde(skip_serializing_if = "SerdeSkipDefault::is_default")]
-    provider: Option<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    for_each: Option<String>,
-    arn: PrimField<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    id: Option<PrimField<String>>,
+    #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
+    depends_on: std::vec::Vec<std::string::String>,
+    #[serde(skip_serializing_if = "terrars::SerdeSkipDefault::is_default")]
+    provider: std::option::Option<std::string::String>,
+    #[serde(skip_serializing_if = "terrars::SerdeSkipDefault::is_default")]
+    lifecycle: terrars::DatasourceLifecycle,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    for_each: std::option::Option<std::string::String>,
+    arn: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    id: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
 struct DataLambdaCodeSigningConfig_ {
-    shared: StackShared,
-    tf_id: String,
-    data: RefCell<DataLambdaCodeSigningConfigData>,
+    shared: terrars::StackShared,
+    tf_id: std::string::String,
+    data: std::cell::RefCell<DataLambdaCodeSigningConfigData>,
 }
 
 #[derive(Clone)]
-pub struct DataLambdaCodeSigningConfig(Rc<DataLambdaCodeSigningConfig_>);
+pub struct DataLambdaCodeSigningConfig(std::rc::Rc<DataLambdaCodeSigningConfig_>);
 
 impl DataLambdaCodeSigningConfig {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.0.shared
     }
 
-    pub fn depends_on(self, dep: &impl Referable) -> Self {
+    pub fn depends_on(self, dep: &impl terrars::Referable) -> Self {
         self.0.data.borrow_mut().depends_on.push(dep.extract_ref());
         self
     }
 
     pub fn set_provider(&self, provider: &ProviderAws) -> &Self {
-        self.0.data.borrow_mut().provider = Some(provider.provider_ref());
+        self.0.data.borrow_mut().provider = std::option::Option::Some(provider.provider_ref());
         self
     }
 
-    #[doc= "Set the field `id`.\n"]
-    pub fn set_id(self, v: impl Into<PrimField<String>>) -> Self {
-        self.0.data.borrow_mut().id = Some(v.into());
+    pub fn add_lifecycle_precondition(
+        self,
+        condition: impl std::convert::Into<terrars::PrimField<bool>>,
+        error_message: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.0.data.borrow_mut().lifecycle.precondition.push(terrars::LifecycleCondition {
+            condition: condition.into(),
+            error_message: error_message.into(),
+        });
         self
     }
 
-    #[doc= "Get a reference to the value of field `allowed_publishers` after provisioning.\n"]
-    pub fn allowed_publishers(&self) -> ListRef<DataLambdaCodeSigningConfigAllowedPublishersElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.allowed_publishers", self.extract_ref()))
+    pub fn add_lifecycle_postcondition(
+        self,
+        condition: impl std::convert::Into<terrars::PrimField<bool>>,
+        error_message: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.0.data.borrow_mut().lifecycle.postcondition.push(terrars::LifecycleCondition {
+            condition: condition.into(),
+            error_message: error_message.into(),
+        });
+        self
     }
 
-    #[doc= "Get a reference to the value of field `arn` after provisioning.\n"]
-    pub fn arn(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.arn", self.extract_ref()))
+    #[doc = "Set the field `id`.\n"]
+    pub fn set_id(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().id = std::option::Option::Some(v.into());
+        self
     }
 
-    #[doc= "Get a reference to the value of field `config_id` after provisioning.\n"]
-    pub fn config_id(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.config_id", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `allowed_publishers` after provisioning.\n"]
+    pub fn allowed_publishers(&self) -> terrars::ListRef<DataLambdaCodeSigningConfigAllowedPublishersElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.allowed_publishers", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `description` after provisioning.\n"]
-    pub fn description(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.description", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `arn` after provisioning.\n"]
+    pub fn arn(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.arn", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `id` after provisioning.\n"]
-    pub fn id(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `config_id` after provisioning.\n"]
+    pub fn config_id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.config_id", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `last_modified` after provisioning.\n"]
-    pub fn last_modified(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.last_modified", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `description` after provisioning.\n"]
+    pub fn description(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.description", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `policies` after provisioning.\n"]
-    pub fn policies(&self) -> ListRef<DataLambdaCodeSigningConfigPoliciesElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.policies", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
+    pub fn id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `last_modified` after provisioning.\n"]
+    pub fn last_modified(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.last_modified", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `policies` after provisioning.\n"]
+    pub fn policies(&self) -> terrars::ListRef<DataLambdaCodeSigningConfigPoliciesElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.policies", self.extract_ref()))
     }
 }
 
-impl Referable for DataLambdaCodeSigningConfig {
-    fn extract_ref(&self) -> String {
+impl terrars::Referable for DataLambdaCodeSigningConfig {
+    fn extract_ref(&self) -> std::string::String {
         format!("data.{}.{}", self.0.extract_datasource_type(), self.0.extract_tf_id())
     }
 }
 
-impl Datasource for DataLambdaCodeSigningConfig { }
+impl terrars::Datasource for DataLambdaCodeSigningConfig { }
 
-impl ToListMappable for DataLambdaCodeSigningConfig {
-    type O = ListRef<DataLambdaCodeSigningConfigRef>;
+impl terrars::ToListMappable for DataLambdaCodeSigningConfig {
+    type O = terrars::ListRef<DataLambdaCodeSigningConfigRef>;
 
-    fn do_map(self, base: String) -> Self::O {
-        self.0.data.borrow_mut().for_each = Some(format!("${{{}}}", base));
-        ListRef::new(self.0.shared.clone(), self.extract_ref())
+    fn do_map(self, base: std::string::String) -> Self::O {
+        self.0.data.borrow_mut().for_each = std::option::Option::Some(format!("${{{}}}", base));
+        terrars::ListRef::new(self.0.shared.clone(), self.extract_ref())
     }
 }
 
-impl Datasource_ for DataLambdaCodeSigningConfig_ {
-    fn extract_datasource_type(&self) -> String {
+impl terrars::Datasource_ for DataLambdaCodeSigningConfig_ {
+    fn extract_datasource_type(&self) -> std::string::String {
         "aws_lambda_code_signing_config".into()
     }
 
-    fn extract_tf_id(&self) -> String {
+    fn extract_tf_id(&self) -> std::string::String {
         self.tf_id.clone()
     }
 
@@ -115,20 +143,21 @@ impl Datasource_ for DataLambdaCodeSigningConfig_ {
 }
 
 pub struct BuildDataLambdaCodeSigningConfig {
-    pub tf_id: String,
-    #[doc= ""]
-    pub arn: PrimField<String>,
+    pub tf_id: std::string::String,
+    #[doc = ""]
+    pub arn: terrars::PrimField<std::string::String>,
 }
 
 impl BuildDataLambdaCodeSigningConfig {
-    pub fn build(self, stack: &mut Stack) -> DataLambdaCodeSigningConfig {
-        let out = DataLambdaCodeSigningConfig(Rc::new(DataLambdaCodeSigningConfig_ {
+    pub fn build(self, stack: &mut terrars::Stack) -> DataLambdaCodeSigningConfig {
+        let out = DataLambdaCodeSigningConfig(std::rc::Rc::new(DataLambdaCodeSigningConfig_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: RefCell::new(DataLambdaCodeSigningConfigData {
+            data: std::cell::RefCell::new(DataLambdaCodeSigningConfigData {
                 depends_on: core::default::Default::default(),
-                provider: None,
-                for_each: None,
+                provider: std::option::Option::None,
+                lifecycle: core::default::Default::default(),
+                for_each: std::option::Option::None,
                 arn: self.arn,
                 id: core::default::Default::default(),
             }),
@@ -139,12 +168,12 @@ impl BuildDataLambdaCodeSigningConfig {
 }
 
 pub struct DataLambdaCodeSigningConfigRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for DataLambdaCodeSigningConfigRef {
-    fn new(shared: StackShared, base: String) -> Self {
+impl terrars::Ref for DataLambdaCodeSigningConfigRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> Self {
         Self {
             shared: shared,
             base: base,
@@ -153,69 +182,72 @@ impl Ref for DataLambdaCodeSigningConfigRef {
 }
 
 impl DataLambdaCodeSigningConfigRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    fn extract_ref(&self) -> String {
+    fn extract_ref(&self) -> std::string::String {
         self.base.clone()
     }
 
-    #[doc= "Get a reference to the value of field `allowed_publishers` after provisioning.\n"]
-    pub fn allowed_publishers(&self) -> ListRef<DataLambdaCodeSigningConfigAllowedPublishersElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.allowed_publishers", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `allowed_publishers` after provisioning.\n"]
+    pub fn allowed_publishers(&self) -> terrars::ListRef<DataLambdaCodeSigningConfigAllowedPublishersElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.allowed_publishers", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `arn` after provisioning.\n"]
-    pub fn arn(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.arn", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `arn` after provisioning.\n"]
+    pub fn arn(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.arn", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `config_id` after provisioning.\n"]
-    pub fn config_id(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.config_id", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `config_id` after provisioning.\n"]
+    pub fn config_id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.config_id", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `description` after provisioning.\n"]
-    pub fn description(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.description", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `description` after provisioning.\n"]
+    pub fn description(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.description", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `id` after provisioning.\n"]
-    pub fn id(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
+    pub fn id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `last_modified` after provisioning.\n"]
-    pub fn last_modified(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.last_modified", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `last_modified` after provisioning.\n"]
+    pub fn last_modified(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.last_modified", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `policies` after provisioning.\n"]
-    pub fn policies(&self) -> ListRef<DataLambdaCodeSigningConfigPoliciesElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.policies", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `policies` after provisioning.\n"]
+    pub fn policies(&self) -> terrars::ListRef<DataLambdaCodeSigningConfigPoliciesElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.policies", self.extract_ref()))
     }
 }
 
 #[derive(Serialize)]
 pub struct DataLambdaCodeSigningConfigAllowedPublishersEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    signing_profile_version_arns: Option<SetField<PrimField<String>>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    signing_profile_version_arns: std::option::Option<terrars::SetField<terrars::PrimField<std::string::String>>>,
 }
 
 impl DataLambdaCodeSigningConfigAllowedPublishersEl {
-    #[doc= "Set the field `signing_profile_version_arns`.\n"]
-    pub fn set_signing_profile_version_arns(mut self, v: impl Into<SetField<PrimField<String>>>) -> Self {
-        self.signing_profile_version_arns = Some(v.into());
+    #[doc = "Set the field `signing_profile_version_arns`.\n"]
+    pub fn set_signing_profile_version_arns(
+        mut self,
+        v: impl std::convert::Into<terrars::SetField<terrars::PrimField<std::string::String>>>,
+    ) -> Self {
+        self.signing_profile_version_arns = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl ToListMappable for DataLambdaCodeSigningConfigAllowedPublishersEl {
-    type O = BlockAssignable<DataLambdaCodeSigningConfigAllowedPublishersEl>;
+impl terrars::ToListMappable for DataLambdaCodeSigningConfigAllowedPublishersEl {
+    type O = terrars::BlockAssignable<DataLambdaCodeSigningConfigAllowedPublishersEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -234,12 +266,15 @@ impl BuildDataLambdaCodeSigningConfigAllowedPublishersEl {
 }
 
 pub struct DataLambdaCodeSigningConfigAllowedPublishersElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for DataLambdaCodeSigningConfigAllowedPublishersElRef {
-    fn new(shared: StackShared, base: String) -> DataLambdaCodeSigningConfigAllowedPublishersElRef {
+impl terrars::Ref for DataLambdaCodeSigningConfigAllowedPublishersElRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> DataLambdaCodeSigningConfigAllowedPublishersElRef {
         DataLambdaCodeSigningConfigAllowedPublishersElRef {
             shared: shared,
             base: base.to_string(),
@@ -248,35 +283,38 @@ impl Ref for DataLambdaCodeSigningConfigAllowedPublishersElRef {
 }
 
 impl DataLambdaCodeSigningConfigAllowedPublishersElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `signing_profile_version_arns` after provisioning.\n"]
-    pub fn signing_profile_version_arns(&self) -> SetRef<PrimExpr<String>> {
-        SetRef::new(self.shared().clone(), format!("{}.signing_profile_version_arns", self.base))
+    #[doc = "Get a reference to the value of field `signing_profile_version_arns` after provisioning.\n"]
+    pub fn signing_profile_version_arns(&self) -> terrars::SetRef<terrars::PrimExpr<std::string::String>> {
+        terrars::SetRef::new(self.shared().clone(), format!("{}.signing_profile_version_arns", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct DataLambdaCodeSigningConfigPoliciesEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    untrusted_artifact_on_deployment: Option<PrimField<String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    untrusted_artifact_on_deployment: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
 impl DataLambdaCodeSigningConfigPoliciesEl {
-    #[doc= "Set the field `untrusted_artifact_on_deployment`.\n"]
-    pub fn set_untrusted_artifact_on_deployment(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.untrusted_artifact_on_deployment = Some(v.into());
+    #[doc = "Set the field `untrusted_artifact_on_deployment`.\n"]
+    pub fn set_untrusted_artifact_on_deployment(
+        mut self,
+        v: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.untrusted_artifact_on_deployment = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl ToListMappable for DataLambdaCodeSigningConfigPoliciesEl {
-    type O = BlockAssignable<DataLambdaCodeSigningConfigPoliciesEl>;
+impl terrars::ToListMappable for DataLambdaCodeSigningConfigPoliciesEl {
+    type O = terrars::BlockAssignable<DataLambdaCodeSigningConfigPoliciesEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -293,12 +331,12 @@ impl BuildDataLambdaCodeSigningConfigPoliciesEl {
 }
 
 pub struct DataLambdaCodeSigningConfigPoliciesElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for DataLambdaCodeSigningConfigPoliciesElRef {
-    fn new(shared: StackShared, base: String) -> DataLambdaCodeSigningConfigPoliciesElRef {
+impl terrars::Ref for DataLambdaCodeSigningConfigPoliciesElRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataLambdaCodeSigningConfigPoliciesElRef {
         DataLambdaCodeSigningConfigPoliciesElRef {
             shared: shared,
             base: base.to_string(),
@@ -307,12 +345,12 @@ impl Ref for DataLambdaCodeSigningConfigPoliciesElRef {
 }
 
 impl DataLambdaCodeSigningConfigPoliciesElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `untrusted_artifact_on_deployment` after provisioning.\n"]
-    pub fn untrusted_artifact_on_deployment(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.untrusted_artifact_on_deployment", self.base))
+    #[doc = "Get a reference to the value of field `untrusted_artifact_on_deployment` after provisioning.\n"]
+    pub fn untrusted_artifact_on_deployment(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.untrusted_artifact_on_deployment", self.base))
     }
 }

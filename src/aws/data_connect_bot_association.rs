@@ -1,107 +1,138 @@
 use serde::Serialize;
-use std::cell::RefCell;
-use std::rc::Rc;
-use terrars::*;
+use terrars::{
+    Referable as _,
+    Datasource_ as _,
+    Ref as _,
+};
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
 struct DataConnectBotAssociationData {
-    #[serde(skip_serializing_if = "Vec::is_empty")]
-    depends_on: Vec<String>,
-    #[serde(skip_serializing_if = "SerdeSkipDefault::is_default")]
-    provider: Option<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    for_each: Option<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    id: Option<PrimField<String>>,
-    instance_id: PrimField<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    lex_bot: Option<Vec<DataConnectBotAssociationLexBotEl>>,
+    #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
+    depends_on: std::vec::Vec<std::string::String>,
+    #[serde(skip_serializing_if = "terrars::SerdeSkipDefault::is_default")]
+    provider: std::option::Option<std::string::String>,
+    #[serde(skip_serializing_if = "terrars::SerdeSkipDefault::is_default")]
+    lifecycle: terrars::DatasourceLifecycle,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    for_each: std::option::Option<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    id: std::option::Option<terrars::PrimField<std::string::String>>,
+    instance_id: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    lex_bot: std::option::Option<std::vec::Vec<DataConnectBotAssociationLexBotEl>>,
     dynamic: DataConnectBotAssociationDynamic,
 }
 
 struct DataConnectBotAssociation_ {
-    shared: StackShared,
-    tf_id: String,
-    data: RefCell<DataConnectBotAssociationData>,
+    shared: terrars::StackShared,
+    tf_id: std::string::String,
+    data: std::cell::RefCell<DataConnectBotAssociationData>,
 }
 
 #[derive(Clone)]
-pub struct DataConnectBotAssociation(Rc<DataConnectBotAssociation_>);
+pub struct DataConnectBotAssociation(std::rc::Rc<DataConnectBotAssociation_>);
 
 impl DataConnectBotAssociation {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.0.shared
     }
 
-    pub fn depends_on(self, dep: &impl Referable) -> Self {
+    pub fn depends_on(self, dep: &impl terrars::Referable) -> Self {
         self.0.data.borrow_mut().depends_on.push(dep.extract_ref());
         self
     }
 
     pub fn set_provider(&self, provider: &ProviderAws) -> &Self {
-        self.0.data.borrow_mut().provider = Some(provider.provider_ref());
+        self.0.data.borrow_mut().provider = std::option::Option::Some(provider.provider_ref());
         self
     }
 
-    #[doc= "Set the field `id`.\n"]
-    pub fn set_id(self, v: impl Into<PrimField<String>>) -> Self {
-        self.0.data.borrow_mut().id = Some(v.into());
+    pub fn add_lifecycle_precondition(
+        self,
+        condition: impl std::convert::Into<terrars::PrimField<bool>>,
+        error_message: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.0.data.borrow_mut().lifecycle.precondition.push(terrars::LifecycleCondition {
+            condition: condition.into(),
+            error_message: error_message.into(),
+        });
         self
     }
 
-    #[doc= "Set the field `lex_bot`.\n"]
-    pub fn set_lex_bot(self, v: impl Into<BlockAssignable<DataConnectBotAssociationLexBotEl>>) -> Self {
+    pub fn add_lifecycle_postcondition(
+        self,
+        condition: impl std::convert::Into<terrars::PrimField<bool>>,
+        error_message: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.0.data.borrow_mut().lifecycle.postcondition.push(terrars::LifecycleCondition {
+            condition: condition.into(),
+            error_message: error_message.into(),
+        });
+        self
+    }
+
+    #[doc = "Set the field `id`.\n"]
+    pub fn set_id(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().id = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `lex_bot`.\n"]
+    pub fn set_lex_bot(
+        self,
+        v: impl std::convert::Into<terrars::BlockAssignable<DataConnectBotAssociationLexBotEl>>,
+    ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.0.data.borrow_mut().lex_bot = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.0.data.borrow_mut().lex_bot = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.0.data.borrow_mut().dynamic.lex_bot = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.0.data.borrow_mut().dynamic.lex_bot = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Get a reference to the value of field `id` after provisioning.\n"]
-    pub fn id(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
+    pub fn id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `instance_id` after provisioning.\n"]
-    pub fn instance_id(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.instance_id", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `instance_id` after provisioning.\n"]
+    pub fn instance_id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.instance_id", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `lex_bot` after provisioning.\n"]
-    pub fn lex_bot(&self) -> ListRef<DataConnectBotAssociationLexBotElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.lex_bot", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `lex_bot` after provisioning.\n"]
+    pub fn lex_bot(&self) -> terrars::ListRef<DataConnectBotAssociationLexBotElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.lex_bot", self.extract_ref()))
     }
 }
 
-impl Referable for DataConnectBotAssociation {
-    fn extract_ref(&self) -> String {
+impl terrars::Referable for DataConnectBotAssociation {
+    fn extract_ref(&self) -> std::string::String {
         format!("data.{}.{}", self.0.extract_datasource_type(), self.0.extract_tf_id())
     }
 }
 
-impl Datasource for DataConnectBotAssociation { }
+impl terrars::Datasource for DataConnectBotAssociation { }
 
-impl ToListMappable for DataConnectBotAssociation {
-    type O = ListRef<DataConnectBotAssociationRef>;
+impl terrars::ToListMappable for DataConnectBotAssociation {
+    type O = terrars::ListRef<DataConnectBotAssociationRef>;
 
-    fn do_map(self, base: String) -> Self::O {
-        self.0.data.borrow_mut().for_each = Some(format!("${{{}}}", base));
-        ListRef::new(self.0.shared.clone(), self.extract_ref())
+    fn do_map(self, base: std::string::String) -> Self::O {
+        self.0.data.borrow_mut().for_each = std::option::Option::Some(format!("${{{}}}", base));
+        terrars::ListRef::new(self.0.shared.clone(), self.extract_ref())
     }
 }
 
-impl Datasource_ for DataConnectBotAssociation_ {
-    fn extract_datasource_type(&self) -> String {
+impl terrars::Datasource_ for DataConnectBotAssociation_ {
+    fn extract_datasource_type(&self) -> std::string::String {
         "aws_connect_bot_association".into()
     }
 
-    fn extract_tf_id(&self) -> String {
+    fn extract_tf_id(&self) -> std::string::String {
         self.tf_id.clone()
     }
 
@@ -111,24 +142,25 @@ impl Datasource_ for DataConnectBotAssociation_ {
 }
 
 pub struct BuildDataConnectBotAssociation {
-    pub tf_id: String,
-    #[doc= ""]
-    pub instance_id: PrimField<String>,
+    pub tf_id: std::string::String,
+    #[doc = ""]
+    pub instance_id: terrars::PrimField<std::string::String>,
 }
 
 impl BuildDataConnectBotAssociation {
-    pub fn build(self, stack: &mut Stack) -> DataConnectBotAssociation {
-        let out = DataConnectBotAssociation(Rc::new(DataConnectBotAssociation_ {
+    pub fn build(self, stack: &mut terrars::Stack) -> DataConnectBotAssociation {
+        let out = DataConnectBotAssociation(std::rc::Rc::new(DataConnectBotAssociation_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: RefCell::new(DataConnectBotAssociationData {
+            data: std::cell::RefCell::new(DataConnectBotAssociationData {
                 depends_on: core::default::Default::default(),
-                provider: None,
-                for_each: None,
+                provider: std::option::Option::None,
+                lifecycle: core::default::Default::default(),
+                for_each: std::option::Option::None,
                 id: core::default::Default::default(),
                 instance_id: self.instance_id,
                 lex_bot: core::default::Default::default(),
-                dynamic: Default::default(),
+                dynamic: core::default::Default::default(),
             }),
         }));
         stack.add_datasource(out.0.clone());
@@ -137,12 +169,12 @@ impl BuildDataConnectBotAssociation {
 }
 
 pub struct DataConnectBotAssociationRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for DataConnectBotAssociationRef {
-    fn new(shared: StackShared, base: String) -> Self {
+impl terrars::Ref for DataConnectBotAssociationRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> Self {
         Self {
             shared: shared,
             base: base,
@@ -151,50 +183,50 @@ impl Ref for DataConnectBotAssociationRef {
 }
 
 impl DataConnectBotAssociationRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    fn extract_ref(&self) -> String {
+    fn extract_ref(&self) -> std::string::String {
         self.base.clone()
     }
 
-    #[doc= "Get a reference to the value of field `id` after provisioning.\n"]
-    pub fn id(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
+    pub fn id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `instance_id` after provisioning.\n"]
-    pub fn instance_id(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.instance_id", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `instance_id` after provisioning.\n"]
+    pub fn instance_id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.instance_id", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `lex_bot` after provisioning.\n"]
-    pub fn lex_bot(&self) -> ListRef<DataConnectBotAssociationLexBotElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.lex_bot", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `lex_bot` after provisioning.\n"]
+    pub fn lex_bot(&self) -> terrars::ListRef<DataConnectBotAssociationLexBotElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.lex_bot", self.extract_ref()))
     }
 }
 
 #[derive(Serialize)]
 pub struct DataConnectBotAssociationLexBotEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    lex_region: Option<PrimField<String>>,
-    name: PrimField<String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    lex_region: std::option::Option<terrars::PrimField<std::string::String>>,
+    name: terrars::PrimField<std::string::String>,
 }
 
 impl DataConnectBotAssociationLexBotEl {
-    #[doc= "Set the field `lex_region`.\n"]
-    pub fn set_lex_region(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.lex_region = Some(v.into());
+    #[doc = "Set the field `lex_region`.\n"]
+    pub fn set_lex_region(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.lex_region = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl ToListMappable for DataConnectBotAssociationLexBotEl {
-    type O = BlockAssignable<DataConnectBotAssociationLexBotEl>;
+impl terrars::ToListMappable for DataConnectBotAssociationLexBotEl {
+    type O = terrars::BlockAssignable<DataConnectBotAssociationLexBotEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -203,8 +235,8 @@ impl ToListMappable for DataConnectBotAssociationLexBotEl {
 }
 
 pub struct BuildDataConnectBotAssociationLexBotEl {
-    #[doc= ""]
-    pub name: PrimField<String>,
+    #[doc = ""]
+    pub name: terrars::PrimField<std::string::String>,
 }
 
 impl BuildDataConnectBotAssociationLexBotEl {
@@ -217,12 +249,12 @@ impl BuildDataConnectBotAssociationLexBotEl {
 }
 
 pub struct DataConnectBotAssociationLexBotElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for DataConnectBotAssociationLexBotElRef {
-    fn new(shared: StackShared, base: String) -> DataConnectBotAssociationLexBotElRef {
+impl terrars::Ref for DataConnectBotAssociationLexBotElRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataConnectBotAssociationLexBotElRef {
         DataConnectBotAssociationLexBotElRef {
             shared: shared,
             base: base.to_string(),
@@ -231,22 +263,22 @@ impl Ref for DataConnectBotAssociationLexBotElRef {
 }
 
 impl DataConnectBotAssociationLexBotElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `lex_region` after provisioning.\n"]
-    pub fn lex_region(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.lex_region", self.base))
+    #[doc = "Get a reference to the value of field `lex_region` after provisioning.\n"]
+    pub fn lex_region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.lex_region", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `name` after provisioning.\n"]
-    pub fn name(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.name", self.base))
+    #[doc = "Get a reference to the value of field `name` after provisioning.\n"]
+    pub fn name(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
 struct DataConnectBotAssociationDynamic {
-    lex_bot: Option<DynamicBlock<DataConnectBotAssociationLexBotEl>>,
+    lex_bot: std::option::Option<terrars::DynamicBlock<DataConnectBotAssociationLexBotEl>>,
 }

@@ -1,59 +1,63 @@
 use serde::Serialize;
-use std::cell::RefCell;
-use std::rc::Rc;
-use terrars::*;
+use terrars::{
+    Referable as _,
+    Resource_ as _,
+    Ref as _,
+};
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
 struct IvsRecordingConfigurationData {
-    #[serde(skip_serializing_if = "Vec::is_empty")]
-    depends_on: Vec<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    provider: Option<String>,
-    #[serde(skip_serializing_if = "SerdeSkipDefault::is_default")]
-    lifecycle: ResourceLifecycle,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    for_each: Option<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    id: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    name: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    recording_reconnect_window_seconds: Option<PrimField<f64>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    tags: Option<RecField<PrimField<String>>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    tags_all: Option<RecField<PrimField<String>>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    destination_configuration: Option<Vec<IvsRecordingConfigurationDestinationConfigurationEl>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    thumbnail_configuration: Option<Vec<IvsRecordingConfigurationThumbnailConfigurationEl>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    timeouts: Option<IvsRecordingConfigurationTimeoutsEl>,
+    #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
+    depends_on: std::vec::Vec<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    provider: std::option::Option<std::string::String>,
+    #[serde(skip_serializing_if = "terrars::SerdeSkipDefault::is_default")]
+    lifecycle: terrars::ResourceLifecycle,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    for_each: std::option::Option<std::string::String>,
+    #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
+    provisioner: std::vec::Vec<terrars::Provisioner>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    id: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    name: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    recording_reconnect_window_seconds: std::option::Option<terrars::PrimField<f64>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    tags: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    tags_all: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    destination_configuration: std::option::Option<std::vec::Vec<IvsRecordingConfigurationDestinationConfigurationEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    thumbnail_configuration: std::option::Option<std::vec::Vec<IvsRecordingConfigurationThumbnailConfigurationEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    timeouts: std::option::Option<IvsRecordingConfigurationTimeoutsEl>,
     dynamic: IvsRecordingConfigurationDynamic,
 }
 
 struct IvsRecordingConfiguration_ {
-    shared: StackShared,
-    tf_id: String,
-    data: RefCell<IvsRecordingConfigurationData>,
+    shared: terrars::StackShared,
+    tf_id: std::string::String,
+    data: std::cell::RefCell<IvsRecordingConfigurationData>,
 }
 
 #[derive(Clone)]
-pub struct IvsRecordingConfiguration(Rc<IvsRecordingConfiguration_>);
+pub struct IvsRecordingConfiguration(std::rc::Rc<IvsRecordingConfiguration_>);
 
 impl IvsRecordingConfiguration {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.0.shared
     }
 
-    pub fn depends_on(self, dep: &impl Referable) -> Self {
+    pub fn depends_on(self, dep: &impl terrars::Referable) -> Self {
         self.0.data.borrow_mut().depends_on.push(dep.extract_ref());
         self
     }
 
     pub fn set_provider(self, provider: &ProviderAws) -> Self {
-        self.0.data.borrow_mut().provider = Some(provider.provider_ref());
+        self.0.data.borrow_mut().provider = std::option::Option::Some(provider.provider_ref());
         self
     }
 
@@ -68,155 +72,197 @@ impl IvsRecordingConfiguration {
     }
 
     pub fn ignore_changes_to_all(self) -> Self {
-        self.0.data.borrow_mut().lifecycle.ignore_changes = Some(IgnoreChanges::All(IgnoreChangesAll::All));
+        self.0.data.borrow_mut().lifecycle.ignore_changes =
+            std::option::Option::Some(terrars::IgnoreChanges::All(terrars::IgnoreChangesAll::All));
         self
     }
 
-    pub fn ignore_changes_to_attr(self, attr: impl ToString) -> Self {
+    pub fn ignore_changes_to_attr(self, attr: impl std::string::ToString) -> Self {
         {
             let mut d = self.0.data.borrow_mut();
             if match &mut d.lifecycle.ignore_changes {
-                Some(i) => match i {
-                    IgnoreChanges::All(_) => {
+                std::option::Option::Some(i) => match i {
+                    terrars::IgnoreChanges::All(_) => {
                         true
                     },
-                    IgnoreChanges::Refs(r) => {
+                    terrars::IgnoreChanges::Refs(r) => {
                         r.push(attr.to_string());
                         false
                     },
                 },
-                None => true,
+                std::option::Option::None => true,
             } {
-                d.lifecycle.ignore_changes = Some(IgnoreChanges::Refs(vec![attr.to_string()]));
+                d.lifecycle.ignore_changes =
+                    std::option::Option::Some(terrars::IgnoreChanges::Refs(vec![attr.to_string()]));
             }
         }
         self
     }
 
-    pub fn replace_triggered_by_resource(self, r: &impl Resource) -> Self {
+    pub fn replace_triggered_by_resource(self, r: &impl terrars::Resource) -> Self {
         self.0.data.borrow_mut().lifecycle.replace_triggered_by.push(r.extract_ref());
         self
     }
 
-    pub fn replace_triggered_by_attr(self, attr: impl ToString) -> Self {
+    pub fn replace_triggered_by_attr(self, attr: impl std::string::ToString) -> Self {
         self.0.data.borrow_mut().lifecycle.replace_triggered_by.push(attr.to_string());
         self
     }
 
-    #[doc= "Set the field `id`.\n"]
-    pub fn set_id(self, v: impl Into<PrimField<String>>) -> Self {
-        self.0.data.borrow_mut().id = Some(v.into());
+    #[doc = r" Add a provisioner (ex: `local-exec`, `remote-exec`, `file`) to this resource."]
+    #[doc = r" Provisioners run in the order they're added."]
+    pub fn add_provisioner(self, v: impl std::convert::Into<terrars::Provisioner>) -> Self {
+        self.0.data.borrow_mut().provisioner.push(v.into());
         self
     }
 
-    #[doc= "Set the field `name`.\n"]
-    pub fn set_name(self, v: impl Into<PrimField<String>>) -> Self {
-        self.0.data.borrow_mut().name = Some(v.into());
+    pub fn add_lifecycle_precondition(
+        self,
+        condition: impl std::convert::Into<terrars::PrimField<bool>>,
+        error_message: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.0.data.borrow_mut().lifecycle.precondition.push(terrars::LifecycleCondition {
+            condition: condition.into(),
+            error_message: error_message.into(),
+        });
         self
     }
 
-    #[doc= "Set the field `recording_reconnect_window_seconds`.\n"]
-    pub fn set_recording_reconnect_window_seconds(self, v: impl Into<PrimField<f64>>) -> Self {
-        self.0.data.borrow_mut().recording_reconnect_window_seconds = Some(v.into());
+    pub fn add_lifecycle_postcondition(
+        self,
+        condition: impl std::convert::Into<terrars::PrimField<bool>>,
+        error_message: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.0.data.borrow_mut().lifecycle.postcondition.push(terrars::LifecycleCondition {
+            condition: condition.into(),
+            error_message: error_message.into(),
+        });
         self
     }
 
-    #[doc= "Set the field `tags`.\n"]
-    pub fn set_tags(self, v: impl Into<RecField<PrimField<String>>>) -> Self {
-        self.0.data.borrow_mut().tags = Some(v.into());
+    #[doc = "Set the field `id`.\n"]
+    pub fn set_id(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().id = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `tags_all`.\n"]
-    pub fn set_tags_all(self, v: impl Into<RecField<PrimField<String>>>) -> Self {
-        self.0.data.borrow_mut().tags_all = Some(v.into());
+    #[doc = "Set the field `name`.\n"]
+    pub fn set_name(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().name = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `destination_configuration`.\n"]
+    #[doc = "Set the field `recording_reconnect_window_seconds`.\n"]
+    pub fn set_recording_reconnect_window_seconds(self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.0.data.borrow_mut().recording_reconnect_window_seconds = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `tags`.\n"]
+    pub fn set_tags(
+        self,
+        v: impl std::convert::Into<terrars::RecField<terrars::PrimField<std::string::String>>>,
+    ) -> Self {
+        self.0.data.borrow_mut().tags = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `tags_all`.\n"]
+    pub fn set_tags_all(
+        self,
+        v: impl std::convert::Into<terrars::RecField<terrars::PrimField<std::string::String>>>,
+    ) -> Self {
+        self.0.data.borrow_mut().tags_all = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `destination_configuration`.\n"]
     pub fn set_destination_configuration(
         self,
-        v: impl Into<BlockAssignable<IvsRecordingConfigurationDestinationConfigurationEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<IvsRecordingConfigurationDestinationConfigurationEl>>,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.0.data.borrow_mut().destination_configuration = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.0.data.borrow_mut().destination_configuration = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.0.data.borrow_mut().dynamic.destination_configuration = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.0.data.borrow_mut().dynamic.destination_configuration = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Set the field `thumbnail_configuration`.\n"]
+    #[doc = "Set the field `thumbnail_configuration`.\n"]
     pub fn set_thumbnail_configuration(
         self,
-        v: impl Into<BlockAssignable<IvsRecordingConfigurationThumbnailConfigurationEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<IvsRecordingConfigurationThumbnailConfigurationEl>>,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.0.data.borrow_mut().thumbnail_configuration = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.0.data.borrow_mut().thumbnail_configuration = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.0.data.borrow_mut().dynamic.thumbnail_configuration = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.0.data.borrow_mut().dynamic.thumbnail_configuration = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Set the field `timeouts`.\n"]
-    pub fn set_timeouts(self, v: impl Into<IvsRecordingConfigurationTimeoutsEl>) -> Self {
-        self.0.data.borrow_mut().timeouts = Some(v.into());
+    #[doc = "Set the field `timeouts`.\n"]
+    pub fn set_timeouts(self, v: impl std::convert::Into<IvsRecordingConfigurationTimeoutsEl>) -> Self {
+        self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Get a reference to the value of field `arn` after provisioning.\n"]
-    pub fn arn(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.arn", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `arn` after provisioning.\n"]
+    pub fn arn(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.arn", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `id` after provisioning.\n"]
-    pub fn id(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
+    pub fn id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `name` after provisioning.\n"]
-    pub fn name(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `name` after provisioning.\n"]
+    pub fn name(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `recording_reconnect_window_seconds` after provisioning.\n"]
-    pub fn recording_reconnect_window_seconds(&self) -> PrimExpr<f64> {
-        PrimExpr::new(self.shared().clone(), format!("{}.recording_reconnect_window_seconds", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `recording_reconnect_window_seconds` after provisioning.\n"]
+    pub fn recording_reconnect_window_seconds(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(
+            self.shared().clone(),
+            format!("{}.recording_reconnect_window_seconds", self.extract_ref()),
+        )
     }
 
-    #[doc= "Get a reference to the value of field `state` after provisioning.\n"]
-    pub fn state(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.state", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `state` after provisioning.\n"]
+    pub fn state(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.state", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `tags` after provisioning.\n"]
-    pub fn tags(&self) -> RecRef<PrimExpr<String>> {
-        RecRef::new(self.shared().clone(), format!("{}.tags", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `tags` after provisioning.\n"]
+    pub fn tags(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
+        terrars::RecRef::new(self.shared().clone(), format!("{}.tags", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `tags_all` after provisioning.\n"]
-    pub fn tags_all(&self) -> RecRef<PrimExpr<String>> {
-        RecRef::new(self.shared().clone(), format!("{}.tags_all", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `tags_all` after provisioning.\n"]
+    pub fn tags_all(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
+        terrars::RecRef::new(self.shared().clone(), format!("{}.tags_all", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `destination_configuration` after provisioning.\n"]
-    pub fn destination_configuration(&self) -> ListRef<IvsRecordingConfigurationDestinationConfigurationElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.destination_configuration", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `destination_configuration` after provisioning.\n"]
+    pub fn destination_configuration(&self) -> terrars::ListRef<IvsRecordingConfigurationDestinationConfigurationElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.destination_configuration", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `thumbnail_configuration` after provisioning.\n"]
-    pub fn thumbnail_configuration(&self) -> ListRef<IvsRecordingConfigurationThumbnailConfigurationElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.thumbnail_configuration", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `thumbnail_configuration` after provisioning.\n"]
+    pub fn thumbnail_configuration(&self) -> terrars::ListRef<IvsRecordingConfigurationThumbnailConfigurationElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.thumbnail_configuration", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `timeouts` after provisioning.\n"]
+    #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
     pub fn timeouts(&self) -> IvsRecordingConfigurationTimeoutsElRef {
         IvsRecordingConfigurationTimeoutsElRef::new(
             self.shared().clone(),
@@ -225,29 +271,29 @@ impl IvsRecordingConfiguration {
     }
 }
 
-impl Referable for IvsRecordingConfiguration {
-    fn extract_ref(&self) -> String {
+impl terrars::Referable for IvsRecordingConfiguration {
+    fn extract_ref(&self) -> std::string::String {
         format!("{}.{}", self.0.extract_resource_type(), self.0.extract_tf_id())
     }
 }
 
-impl Resource for IvsRecordingConfiguration { }
+impl terrars::Resource for IvsRecordingConfiguration { }
 
-impl ToListMappable for IvsRecordingConfiguration {
-    type O = ListRef<IvsRecordingConfigurationRef>;
+impl terrars::ToListMappable for IvsRecordingConfiguration {
+    type O = terrars::ListRef<IvsRecordingConfigurationRef>;
 
-    fn do_map(self, base: String) -> Self::O {
-        self.0.data.borrow_mut().for_each = Some(format!("${{{}}}", base));
-        ListRef::new(self.0.shared.clone(), self.extract_ref())
+    fn do_map(self, base: std::string::String) -> Self::O {
+        self.0.data.borrow_mut().for_each = std::option::Option::Some(format!("${{{}}}", base));
+        terrars::ListRef::new(self.0.shared.clone(), self.extract_ref())
     }
 }
 
-impl Resource_ for IvsRecordingConfiguration_ {
-    fn extract_resource_type(&self) -> String {
+impl terrars::Resource_ for IvsRecordingConfiguration_ {
+    fn extract_resource_type(&self) -> std::string::String {
         "aws_ivs_recording_configuration".into()
     }
 
-    fn extract_tf_id(&self) -> String {
+    fn extract_tf_id(&self) -> std::string::String {
         self.tf_id.clone()
     }
 
@@ -257,19 +303,20 @@ impl Resource_ for IvsRecordingConfiguration_ {
 }
 
 pub struct BuildIvsRecordingConfiguration {
-    pub tf_id: String,
+    pub tf_id: std::string::String,
 }
 
 impl BuildIvsRecordingConfiguration {
-    pub fn build(self, stack: &mut Stack) -> IvsRecordingConfiguration {
-        let out = IvsRecordingConfiguration(Rc::new(IvsRecordingConfiguration_ {
+    pub fn build(self, stack: &mut terrars::Stack) -> IvsRecordingConfiguration {
+        let out = IvsRecordingConfiguration(std::rc::Rc::new(IvsRecordingConfiguration_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: RefCell::new(IvsRecordingConfigurationData {
+            data: std::cell::RefCell::new(IvsRecordingConfigurationData {
                 depends_on: core::default::Default::default(),
-                provider: None,
+                provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
-                for_each: None,
+                for_each: std::option::Option::None,
+                provisioner: core::default::Default::default(),
                 id: core::default::Default::default(),
                 name: core::default::Default::default(),
                 recording_reconnect_window_seconds: core::default::Default::default(),
@@ -278,7 +325,7 @@ impl BuildIvsRecordingConfiguration {
                 destination_configuration: core::default::Default::default(),
                 thumbnail_configuration: core::default::Default::default(),
                 timeouts: core::default::Default::default(),
-                dynamic: Default::default(),
+                dynamic: core::default::Default::default(),
             }),
         }));
         stack.add_resource(out.0.clone());
@@ -287,12 +334,12 @@ impl BuildIvsRecordingConfiguration {
 }
 
 pub struct IvsRecordingConfigurationRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for IvsRecordingConfigurationRef {
-    fn new(shared: StackShared, base: String) -> Self {
+impl terrars::Ref for IvsRecordingConfigurationRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> Self {
         Self {
             shared: shared,
             base: base,
@@ -301,60 +348,63 @@ impl Ref for IvsRecordingConfigurationRef {
 }
 
 impl IvsRecordingConfigurationRef {
-    fn extract_ref(&self) -> String {
+    fn extract_ref(&self) -> std::string::String {
         self.base.clone()
     }
 
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `arn` after provisioning.\n"]
-    pub fn arn(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.arn", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `arn` after provisioning.\n"]
+    pub fn arn(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.arn", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `id` after provisioning.\n"]
-    pub fn id(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
+    pub fn id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `name` after provisioning.\n"]
-    pub fn name(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `name` after provisioning.\n"]
+    pub fn name(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `recording_reconnect_window_seconds` after provisioning.\n"]
-    pub fn recording_reconnect_window_seconds(&self) -> PrimExpr<f64> {
-        PrimExpr::new(self.shared().clone(), format!("{}.recording_reconnect_window_seconds", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `recording_reconnect_window_seconds` after provisioning.\n"]
+    pub fn recording_reconnect_window_seconds(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(
+            self.shared().clone(),
+            format!("{}.recording_reconnect_window_seconds", self.extract_ref()),
+        )
     }
 
-    #[doc= "Get a reference to the value of field `state` after provisioning.\n"]
-    pub fn state(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.state", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `state` after provisioning.\n"]
+    pub fn state(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.state", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `tags` after provisioning.\n"]
-    pub fn tags(&self) -> RecRef<PrimExpr<String>> {
-        RecRef::new(self.shared().clone(), format!("{}.tags", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `tags` after provisioning.\n"]
+    pub fn tags(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
+        terrars::RecRef::new(self.shared().clone(), format!("{}.tags", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `tags_all` after provisioning.\n"]
-    pub fn tags_all(&self) -> RecRef<PrimExpr<String>> {
-        RecRef::new(self.shared().clone(), format!("{}.tags_all", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `tags_all` after provisioning.\n"]
+    pub fn tags_all(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
+        terrars::RecRef::new(self.shared().clone(), format!("{}.tags_all", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `destination_configuration` after provisioning.\n"]
-    pub fn destination_configuration(&self) -> ListRef<IvsRecordingConfigurationDestinationConfigurationElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.destination_configuration", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `destination_configuration` after provisioning.\n"]
+    pub fn destination_configuration(&self) -> terrars::ListRef<IvsRecordingConfigurationDestinationConfigurationElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.destination_configuration", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `thumbnail_configuration` after provisioning.\n"]
-    pub fn thumbnail_configuration(&self) -> ListRef<IvsRecordingConfigurationThumbnailConfigurationElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.thumbnail_configuration", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `thumbnail_configuration` after provisioning.\n"]
+    pub fn thumbnail_configuration(&self) -> terrars::ListRef<IvsRecordingConfigurationThumbnailConfigurationElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.thumbnail_configuration", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `timeouts` after provisioning.\n"]
+    #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
     pub fn timeouts(&self) -> IvsRecordingConfigurationTimeoutsElRef {
         IvsRecordingConfigurationTimeoutsElRef::new(
             self.shared().clone(),
@@ -365,16 +415,16 @@ impl IvsRecordingConfigurationRef {
 
 #[derive(Serialize)]
 pub struct IvsRecordingConfigurationDestinationConfigurationElS3El {
-    bucket_name: PrimField<String>,
+    bucket_name: terrars::PrimField<std::string::String>,
 }
 
 impl IvsRecordingConfigurationDestinationConfigurationElS3El { }
 
-impl ToListMappable for IvsRecordingConfigurationDestinationConfigurationElS3El {
-    type O = BlockAssignable<IvsRecordingConfigurationDestinationConfigurationElS3El>;
+impl terrars::ToListMappable for IvsRecordingConfigurationDestinationConfigurationElS3El {
+    type O = terrars::BlockAssignable<IvsRecordingConfigurationDestinationConfigurationElS3El>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -383,8 +433,8 @@ impl ToListMappable for IvsRecordingConfigurationDestinationConfigurationElS3El 
 }
 
 pub struct BuildIvsRecordingConfigurationDestinationConfigurationElS3El {
-    #[doc= ""]
-    pub bucket_name: PrimField<String>,
+    #[doc = ""]
+    pub bucket_name: terrars::PrimField<std::string::String>,
 }
 
 impl BuildIvsRecordingConfigurationDestinationConfigurationElS3El {
@@ -394,12 +444,15 @@ impl BuildIvsRecordingConfigurationDestinationConfigurationElS3El {
 }
 
 pub struct IvsRecordingConfigurationDestinationConfigurationElS3ElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for IvsRecordingConfigurationDestinationConfigurationElS3ElRef {
-    fn new(shared: StackShared, base: String) -> IvsRecordingConfigurationDestinationConfigurationElS3ElRef {
+impl terrars::Ref for IvsRecordingConfigurationDestinationConfigurationElS3ElRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> IvsRecordingConfigurationDestinationConfigurationElS3ElRef {
         IvsRecordingConfigurationDestinationConfigurationElS3ElRef {
             shared: shared,
             base: base.to_string(),
@@ -408,51 +461,56 @@ impl Ref for IvsRecordingConfigurationDestinationConfigurationElS3ElRef {
 }
 
 impl IvsRecordingConfigurationDestinationConfigurationElS3ElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `bucket_name` after provisioning.\n"]
-    pub fn bucket_name(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.bucket_name", self.base))
+    #[doc = "Get a reference to the value of field `bucket_name` after provisioning.\n"]
+    pub fn bucket_name(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.bucket_name", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
 struct IvsRecordingConfigurationDestinationConfigurationElDynamic {
-    s3: Option<DynamicBlock<IvsRecordingConfigurationDestinationConfigurationElS3El>>,
+    s3: std::option::Option<terrars::DynamicBlock<IvsRecordingConfigurationDestinationConfigurationElS3El>>,
 }
 
 #[derive(Serialize)]
 pub struct IvsRecordingConfigurationDestinationConfigurationEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    s3: Option<Vec<IvsRecordingConfigurationDestinationConfigurationElS3El>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    s3: std::option::Option<std::vec::Vec<IvsRecordingConfigurationDestinationConfigurationElS3El>>,
     dynamic: IvsRecordingConfigurationDestinationConfigurationElDynamic,
 }
 
 impl IvsRecordingConfigurationDestinationConfigurationEl {
-    #[doc= "Set the field `s3`.\n"]
+    #[doc = "Set the field `s3`.\n"]
     pub fn set_s3(
         mut self,
-        v: impl Into<BlockAssignable<IvsRecordingConfigurationDestinationConfigurationElS3El>>,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<terrars::BlockAssignable<IvsRecordingConfigurationDestinationConfigurationElS3El>>,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.s3 = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.s3 = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.s3 = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.s3 = std::option::Option::Some(d);
             },
         }
         self
     }
 }
 
-impl ToListMappable for IvsRecordingConfigurationDestinationConfigurationEl {
-    type O = BlockAssignable<IvsRecordingConfigurationDestinationConfigurationEl>;
+impl terrars::ToListMappable for IvsRecordingConfigurationDestinationConfigurationEl {
+    type O = terrars::BlockAssignable<IvsRecordingConfigurationDestinationConfigurationEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -466,18 +524,21 @@ impl BuildIvsRecordingConfigurationDestinationConfigurationEl {
     pub fn build(self) -> IvsRecordingConfigurationDestinationConfigurationEl {
         IvsRecordingConfigurationDestinationConfigurationEl {
             s3: core::default::Default::default(),
-            dynamic: Default::default(),
+            dynamic: core::default::Default::default(),
         }
     }
 }
 
 pub struct IvsRecordingConfigurationDestinationConfigurationElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for IvsRecordingConfigurationDestinationConfigurationElRef {
-    fn new(shared: StackShared, base: String) -> IvsRecordingConfigurationDestinationConfigurationElRef {
+impl terrars::Ref for IvsRecordingConfigurationDestinationConfigurationElRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> IvsRecordingConfigurationDestinationConfigurationElRef {
         IvsRecordingConfigurationDestinationConfigurationElRef {
             shared: shared,
             base: base.to_string(),
@@ -486,43 +547,43 @@ impl Ref for IvsRecordingConfigurationDestinationConfigurationElRef {
 }
 
 impl IvsRecordingConfigurationDestinationConfigurationElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `s3` after provisioning.\n"]
-    pub fn s3(&self) -> ListRef<IvsRecordingConfigurationDestinationConfigurationElS3ElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.s3", self.base))
+    #[doc = "Get a reference to the value of field `s3` after provisioning.\n"]
+    pub fn s3(&self) -> terrars::ListRef<IvsRecordingConfigurationDestinationConfigurationElS3ElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.s3", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct IvsRecordingConfigurationThumbnailConfigurationEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    recording_mode: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    target_interval_seconds: Option<PrimField<f64>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    recording_mode: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    target_interval_seconds: std::option::Option<terrars::PrimField<f64>>,
 }
 
 impl IvsRecordingConfigurationThumbnailConfigurationEl {
-    #[doc= "Set the field `recording_mode`.\n"]
-    pub fn set_recording_mode(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.recording_mode = Some(v.into());
+    #[doc = "Set the field `recording_mode`.\n"]
+    pub fn set_recording_mode(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.recording_mode = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `target_interval_seconds`.\n"]
-    pub fn set_target_interval_seconds(mut self, v: impl Into<PrimField<f64>>) -> Self {
-        self.target_interval_seconds = Some(v.into());
+    #[doc = "Set the field `target_interval_seconds`.\n"]
+    pub fn set_target_interval_seconds(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.target_interval_seconds = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl ToListMappable for IvsRecordingConfigurationThumbnailConfigurationEl {
-    type O = BlockAssignable<IvsRecordingConfigurationThumbnailConfigurationEl>;
+impl terrars::ToListMappable for IvsRecordingConfigurationThumbnailConfigurationEl {
+    type O = terrars::BlockAssignable<IvsRecordingConfigurationThumbnailConfigurationEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -542,12 +603,15 @@ impl BuildIvsRecordingConfigurationThumbnailConfigurationEl {
 }
 
 pub struct IvsRecordingConfigurationThumbnailConfigurationElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for IvsRecordingConfigurationThumbnailConfigurationElRef {
-    fn new(shared: StackShared, base: String) -> IvsRecordingConfigurationThumbnailConfigurationElRef {
+impl terrars::Ref for IvsRecordingConfigurationThumbnailConfigurationElRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> IvsRecordingConfigurationThumbnailConfigurationElRef {
         IvsRecordingConfigurationThumbnailConfigurationElRef {
             shared: shared,
             base: base.to_string(),
@@ -556,48 +620,48 @@ impl Ref for IvsRecordingConfigurationThumbnailConfigurationElRef {
 }
 
 impl IvsRecordingConfigurationThumbnailConfigurationElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `recording_mode` after provisioning.\n"]
-    pub fn recording_mode(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.recording_mode", self.base))
+    #[doc = "Get a reference to the value of field `recording_mode` after provisioning.\n"]
+    pub fn recording_mode(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.recording_mode", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `target_interval_seconds` after provisioning.\n"]
-    pub fn target_interval_seconds(&self) -> PrimExpr<f64> {
-        PrimExpr::new(self.shared().clone(), format!("{}.target_interval_seconds", self.base))
+    #[doc = "Get a reference to the value of field `target_interval_seconds` after provisioning.\n"]
+    pub fn target_interval_seconds(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.target_interval_seconds", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct IvsRecordingConfigurationTimeoutsEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    create: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    delete: Option<PrimField<String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    create: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    delete: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
 impl IvsRecordingConfigurationTimeoutsEl {
-    #[doc= "Set the field `create`.\n"]
-    pub fn set_create(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.create = Some(v.into());
+    #[doc = "Set the field `create`.\n"]
+    pub fn set_create(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.create = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `delete`.\n"]
-    pub fn set_delete(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.delete = Some(v.into());
+    #[doc = "Set the field `delete`.\n"]
+    pub fn set_delete(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.delete = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl ToListMappable for IvsRecordingConfigurationTimeoutsEl {
-    type O = BlockAssignable<IvsRecordingConfigurationTimeoutsEl>;
+impl terrars::ToListMappable for IvsRecordingConfigurationTimeoutsEl {
+    type O = terrars::BlockAssignable<IvsRecordingConfigurationTimeoutsEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -617,12 +681,12 @@ impl BuildIvsRecordingConfigurationTimeoutsEl {
 }
 
 pub struct IvsRecordingConfigurationTimeoutsElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for IvsRecordingConfigurationTimeoutsElRef {
-    fn new(shared: StackShared, base: String) -> IvsRecordingConfigurationTimeoutsElRef {
+impl terrars::Ref for IvsRecordingConfigurationTimeoutsElRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> IvsRecordingConfigurationTimeoutsElRef {
         IvsRecordingConfigurationTimeoutsElRef {
             shared: shared,
             base: base.to_string(),
@@ -631,23 +695,27 @@ impl Ref for IvsRecordingConfigurationTimeoutsElRef {
 }
 
 impl IvsRecordingConfigurationTimeoutsElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `create` after provisioning.\n"]
-    pub fn create(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.create", self.base))
+    #[doc = "Get a reference to the value of field `create` after provisioning.\n"]
+    pub fn create(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.create", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `delete` after provisioning.\n"]
-    pub fn delete(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.delete", self.base))
+    #[doc = "Get a reference to the value of field `delete` after provisioning.\n"]
+    pub fn delete(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.delete", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
 struct IvsRecordingConfigurationDynamic {
-    destination_configuration: Option<DynamicBlock<IvsRecordingConfigurationDestinationConfigurationEl>>,
-    thumbnail_configuration: Option<DynamicBlock<IvsRecordingConfigurationThumbnailConfigurationEl>>,
+    destination_configuration: std
+    ::option
+    ::Option<terrars::DynamicBlock<IvsRecordingConfigurationDestinationConfigurationEl>>,
+    thumbnail_configuration: std
+    ::option
+    ::Option<terrars::DynamicBlock<IvsRecordingConfigurationThumbnailConfigurationEl>>,
 }

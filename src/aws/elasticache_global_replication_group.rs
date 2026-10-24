@@ -1,60 +1,64 @@
 use serde::Serialize;
-use std::cell::RefCell;
-use std::rc::Rc;
-use terrars::*;
+use terrars::{
+    Referable as _,
+    Resource_ as _,
+    Ref as _,
+};
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
 struct ElasticacheGlobalReplicationGroupData {
-    #[serde(skip_serializing_if = "Vec::is_empty")]
-    depends_on: Vec<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    provider: Option<String>,
-    #[serde(skip_serializing_if = "SerdeSkipDefault::is_default")]
-    lifecycle: ResourceLifecycle,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    for_each: Option<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    automatic_failover_enabled: Option<PrimField<bool>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    cache_node_type: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    engine_version: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    global_replication_group_description: Option<PrimField<String>>,
-    global_replication_group_id_suffix: PrimField<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    id: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    num_node_groups: Option<PrimField<f64>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    parameter_group_name: Option<PrimField<String>>,
-    primary_replication_group_id: PrimField<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    timeouts: Option<ElasticacheGlobalReplicationGroupTimeoutsEl>,
+    #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
+    depends_on: std::vec::Vec<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    provider: std::option::Option<std::string::String>,
+    #[serde(skip_serializing_if = "terrars::SerdeSkipDefault::is_default")]
+    lifecycle: terrars::ResourceLifecycle,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    for_each: std::option::Option<std::string::String>,
+    #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
+    provisioner: std::vec::Vec<terrars::Provisioner>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    automatic_failover_enabled: std::option::Option<terrars::PrimField<bool>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    cache_node_type: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    engine_version: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    global_replication_group_description: std::option::Option<terrars::PrimField<std::string::String>>,
+    global_replication_group_id_suffix: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    id: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    num_node_groups: std::option::Option<terrars::PrimField<f64>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    parameter_group_name: std::option::Option<terrars::PrimField<std::string::String>>,
+    primary_replication_group_id: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    timeouts: std::option::Option<ElasticacheGlobalReplicationGroupTimeoutsEl>,
 }
 
 struct ElasticacheGlobalReplicationGroup_ {
-    shared: StackShared,
-    tf_id: String,
-    data: RefCell<ElasticacheGlobalReplicationGroupData>,
+    shared: terrars::StackShared,
+    tf_id: std::string::String,
+    data: std::cell::RefCell<ElasticacheGlobalReplicationGroupData>,
 }
 
 #[derive(Clone)]
-pub struct ElasticacheGlobalReplicationGroup(Rc<ElasticacheGlobalReplicationGroup_>);
+pub struct ElasticacheGlobalReplicationGroup(std::rc::Rc<ElasticacheGlobalReplicationGroup_>);
 
 impl ElasticacheGlobalReplicationGroup {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.0.shared
     }
 
-    pub fn depends_on(self, dep: &impl Referable) -> Self {
+    pub fn depends_on(self, dep: &impl terrars::Referable) -> Self {
         self.0.data.borrow_mut().depends_on.push(dep.extract_ref());
         self
     }
 
     pub fn set_provider(self, provider: &ProviderAws) -> Self {
-        self.0.data.borrow_mut().provider = Some(provider.provider_ref());
+        self.0.data.borrow_mut().provider = std::option::Option::Some(provider.provider_ref());
         self
     }
 
@@ -69,180 +73,222 @@ impl ElasticacheGlobalReplicationGroup {
     }
 
     pub fn ignore_changes_to_all(self) -> Self {
-        self.0.data.borrow_mut().lifecycle.ignore_changes = Some(IgnoreChanges::All(IgnoreChangesAll::All));
+        self.0.data.borrow_mut().lifecycle.ignore_changes =
+            std::option::Option::Some(terrars::IgnoreChanges::All(terrars::IgnoreChangesAll::All));
         self
     }
 
-    pub fn ignore_changes_to_attr(self, attr: impl ToString) -> Self {
+    pub fn ignore_changes_to_attr(self, attr: impl std::string::ToString) -> Self {
         {
             let mut d = self.0.data.borrow_mut();
             if match &mut d.lifecycle.ignore_changes {
-                Some(i) => match i {
-                    IgnoreChanges::All(_) => {
+                std::option::Option::Some(i) => match i {
+                    terrars::IgnoreChanges::All(_) => {
                         true
                     },
-                    IgnoreChanges::Refs(r) => {
+                    terrars::IgnoreChanges::Refs(r) => {
                         r.push(attr.to_string());
                         false
                     },
                 },
-                None => true,
+                std::option::Option::None => true,
             } {
-                d.lifecycle.ignore_changes = Some(IgnoreChanges::Refs(vec![attr.to_string()]));
+                d.lifecycle.ignore_changes =
+                    std::option::Option::Some(terrars::IgnoreChanges::Refs(vec![attr.to_string()]));
             }
         }
         self
     }
 
-    pub fn replace_triggered_by_resource(self, r: &impl Resource) -> Self {
+    pub fn replace_triggered_by_resource(self, r: &impl terrars::Resource) -> Self {
         self.0.data.borrow_mut().lifecycle.replace_triggered_by.push(r.extract_ref());
         self
     }
 
-    pub fn replace_triggered_by_attr(self, attr: impl ToString) -> Self {
+    pub fn replace_triggered_by_attr(self, attr: impl std::string::ToString) -> Self {
         self.0.data.borrow_mut().lifecycle.replace_triggered_by.push(attr.to_string());
         self
     }
 
-    #[doc= "Set the field `automatic_failover_enabled`.\n"]
-    pub fn set_automatic_failover_enabled(self, v: impl Into<PrimField<bool>>) -> Self {
-        self.0.data.borrow_mut().automatic_failover_enabled = Some(v.into());
+    #[doc = r" Add a provisioner (ex: `local-exec`, `remote-exec`, `file`) to this resource."]
+    #[doc = r" Provisioners run in the order they're added."]
+    pub fn add_provisioner(self, v: impl std::convert::Into<terrars::Provisioner>) -> Self {
+        self.0.data.borrow_mut().provisioner.push(v.into());
         self
     }
 
-    #[doc= "Set the field `cache_node_type`.\n"]
-    pub fn set_cache_node_type(self, v: impl Into<PrimField<String>>) -> Self {
-        self.0.data.borrow_mut().cache_node_type = Some(v.into());
+    pub fn add_lifecycle_precondition(
+        self,
+        condition: impl std::convert::Into<terrars::PrimField<bool>>,
+        error_message: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.0.data.borrow_mut().lifecycle.precondition.push(terrars::LifecycleCondition {
+            condition: condition.into(),
+            error_message: error_message.into(),
+        });
         self
     }
 
-    #[doc= "Set the field `engine_version`.\n"]
-    pub fn set_engine_version(self, v: impl Into<PrimField<String>>) -> Self {
-        self.0.data.borrow_mut().engine_version = Some(v.into());
+    pub fn add_lifecycle_postcondition(
+        self,
+        condition: impl std::convert::Into<terrars::PrimField<bool>>,
+        error_message: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.0.data.borrow_mut().lifecycle.postcondition.push(terrars::LifecycleCondition {
+            condition: condition.into(),
+            error_message: error_message.into(),
+        });
         self
     }
 
-    #[doc= "Set the field `global_replication_group_description`.\n"]
-    pub fn set_global_replication_group_description(self, v: impl Into<PrimField<String>>) -> Self {
-        self.0.data.borrow_mut().global_replication_group_description = Some(v.into());
+    #[doc = "Set the field `automatic_failover_enabled`.\n"]
+    pub fn set_automatic_failover_enabled(self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
+        self.0.data.borrow_mut().automatic_failover_enabled = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `id`.\n"]
-    pub fn set_id(self, v: impl Into<PrimField<String>>) -> Self {
-        self.0.data.borrow_mut().id = Some(v.into());
+    #[doc = "Set the field `cache_node_type`.\n"]
+    pub fn set_cache_node_type(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().cache_node_type = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `num_node_groups`.\n"]
-    pub fn set_num_node_groups(self, v: impl Into<PrimField<f64>>) -> Self {
-        self.0.data.borrow_mut().num_node_groups = Some(v.into());
+    #[doc = "Set the field `engine_version`.\n"]
+    pub fn set_engine_version(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().engine_version = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `parameter_group_name`.\n"]
-    pub fn set_parameter_group_name(self, v: impl Into<PrimField<String>>) -> Self {
-        self.0.data.borrow_mut().parameter_group_name = Some(v.into());
+    #[doc = "Set the field `global_replication_group_description`.\n"]
+    pub fn set_global_replication_group_description(
+        self,
+        v: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.0.data.borrow_mut().global_replication_group_description = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `timeouts`.\n"]
-    pub fn set_timeouts(self, v: impl Into<ElasticacheGlobalReplicationGroupTimeoutsEl>) -> Self {
-        self.0.data.borrow_mut().timeouts = Some(v.into());
+    #[doc = "Set the field `id`.\n"]
+    pub fn set_id(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().id = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Get a reference to the value of field `arn` after provisioning.\n"]
-    pub fn arn(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.arn", self.extract_ref()))
+    #[doc = "Set the field `num_node_groups`.\n"]
+    pub fn set_num_node_groups(self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.0.data.borrow_mut().num_node_groups = std::option::Option::Some(v.into());
+        self
     }
 
-    #[doc= "Get a reference to the value of field `at_rest_encryption_enabled` after provisioning.\n"]
-    pub fn at_rest_encryption_enabled(&self) -> PrimExpr<bool> {
-        PrimExpr::new(self.shared().clone(), format!("{}.at_rest_encryption_enabled", self.extract_ref()))
+    #[doc = "Set the field `parameter_group_name`.\n"]
+    pub fn set_parameter_group_name(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().parameter_group_name = std::option::Option::Some(v.into());
+        self
     }
 
-    #[doc= "Get a reference to the value of field `auth_token_enabled` after provisioning.\n"]
-    pub fn auth_token_enabled(&self) -> PrimExpr<bool> {
-        PrimExpr::new(self.shared().clone(), format!("{}.auth_token_enabled", self.extract_ref()))
+    #[doc = "Set the field `timeouts`.\n"]
+    pub fn set_timeouts(self, v: impl std::convert::Into<ElasticacheGlobalReplicationGroupTimeoutsEl>) -> Self {
+        self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
+        self
     }
 
-    #[doc= "Get a reference to the value of field `automatic_failover_enabled` after provisioning.\n"]
-    pub fn automatic_failover_enabled(&self) -> PrimExpr<bool> {
-        PrimExpr::new(self.shared().clone(), format!("{}.automatic_failover_enabled", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `arn` after provisioning.\n"]
+    pub fn arn(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.arn", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `cache_node_type` after provisioning.\n"]
-    pub fn cache_node_type(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.cache_node_type", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `at_rest_encryption_enabled` after provisioning.\n"]
+    pub fn at_rest_encryption_enabled(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.at_rest_encryption_enabled", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `cluster_enabled` after provisioning.\n"]
-    pub fn cluster_enabled(&self) -> PrimExpr<bool> {
-        PrimExpr::new(self.shared().clone(), format!("{}.cluster_enabled", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `auth_token_enabled` after provisioning.\n"]
+    pub fn auth_token_enabled(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.auth_token_enabled", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `engine` after provisioning.\n"]
-    pub fn engine(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.engine", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `automatic_failover_enabled` after provisioning.\n"]
+    pub fn automatic_failover_enabled(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.automatic_failover_enabled", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `engine_version` after provisioning.\n"]
-    pub fn engine_version(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.engine_version", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `cache_node_type` after provisioning.\n"]
+    pub fn cache_node_type(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.cache_node_type", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `engine_version_actual` after provisioning.\n"]
-    pub fn engine_version_actual(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.engine_version_actual", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `cluster_enabled` after provisioning.\n"]
+    pub fn cluster_enabled(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.cluster_enabled", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `global_node_groups` after provisioning.\n"]
-    pub fn global_node_groups(&self) -> SetRef<ElasticacheGlobalReplicationGroupGlobalNodeGroupsElRef> {
-        SetRef::new(self.shared().clone(), format!("{}.global_node_groups", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `engine` after provisioning.\n"]
+    pub fn engine(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.engine", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `global_replication_group_description` after provisioning.\n"]
-    pub fn global_replication_group_description(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.global_replication_group_description", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `engine_version` after provisioning.\n"]
+    pub fn engine_version(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.engine_version", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `global_replication_group_id` after provisioning.\n"]
-    pub fn global_replication_group_id(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.global_replication_group_id", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `engine_version_actual` after provisioning.\n"]
+    pub fn engine_version_actual(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.engine_version_actual", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `global_replication_group_id_suffix` after provisioning.\n"]
-    pub fn global_replication_group_id_suffix(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.global_replication_group_id_suffix", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `global_node_groups` after provisioning.\n"]
+    pub fn global_node_groups(&self) -> terrars::SetRef<ElasticacheGlobalReplicationGroupGlobalNodeGroupsElRef> {
+        terrars::SetRef::new(self.shared().clone(), format!("{}.global_node_groups", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `id` after provisioning.\n"]
-    pub fn id(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `global_replication_group_description` after provisioning.\n"]
+    pub fn global_replication_group_description(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(
+            self.shared().clone(),
+            format!("{}.global_replication_group_description", self.extract_ref()),
+        )
     }
 
-    #[doc= "Get a reference to the value of field `num_node_groups` after provisioning.\n"]
-    pub fn num_node_groups(&self) -> PrimExpr<f64> {
-        PrimExpr::new(self.shared().clone(), format!("{}.num_node_groups", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `global_replication_group_id` after provisioning.\n"]
+    pub fn global_replication_group_id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.global_replication_group_id", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `parameter_group_name` after provisioning.\n"]
-    pub fn parameter_group_name(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.parameter_group_name", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `global_replication_group_id_suffix` after provisioning.\n"]
+    pub fn global_replication_group_id_suffix(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(
+            self.shared().clone(),
+            format!("{}.global_replication_group_id_suffix", self.extract_ref()),
+        )
     }
 
-    #[doc= "Get a reference to the value of field `primary_replication_group_id` after provisioning.\n"]
-    pub fn primary_replication_group_id(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.primary_replication_group_id", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
+    pub fn id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `transit_encryption_enabled` after provisioning.\n"]
-    pub fn transit_encryption_enabled(&self) -> PrimExpr<bool> {
-        PrimExpr::new(self.shared().clone(), format!("{}.transit_encryption_enabled", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `num_node_groups` after provisioning.\n"]
+    pub fn num_node_groups(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.num_node_groups", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `timeouts` after provisioning.\n"]
+    #[doc = "Get a reference to the value of field `parameter_group_name` after provisioning.\n"]
+    pub fn parameter_group_name(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.parameter_group_name", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `primary_replication_group_id` after provisioning.\n"]
+    pub fn primary_replication_group_id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.primary_replication_group_id", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `transit_encryption_enabled` after provisioning.\n"]
+    pub fn transit_encryption_enabled(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.transit_encryption_enabled", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
     pub fn timeouts(&self) -> ElasticacheGlobalReplicationGroupTimeoutsElRef {
         ElasticacheGlobalReplicationGroupTimeoutsElRef::new(
             self.shared().clone(),
@@ -251,29 +297,29 @@ impl ElasticacheGlobalReplicationGroup {
     }
 }
 
-impl Referable for ElasticacheGlobalReplicationGroup {
-    fn extract_ref(&self) -> String {
+impl terrars::Referable for ElasticacheGlobalReplicationGroup {
+    fn extract_ref(&self) -> std::string::String {
         format!("{}.{}", self.0.extract_resource_type(), self.0.extract_tf_id())
     }
 }
 
-impl Resource for ElasticacheGlobalReplicationGroup { }
+impl terrars::Resource for ElasticacheGlobalReplicationGroup { }
 
-impl ToListMappable for ElasticacheGlobalReplicationGroup {
-    type O = ListRef<ElasticacheGlobalReplicationGroupRef>;
+impl terrars::ToListMappable for ElasticacheGlobalReplicationGroup {
+    type O = terrars::ListRef<ElasticacheGlobalReplicationGroupRef>;
 
-    fn do_map(self, base: String) -> Self::O {
-        self.0.data.borrow_mut().for_each = Some(format!("${{{}}}", base));
-        ListRef::new(self.0.shared.clone(), self.extract_ref())
+    fn do_map(self, base: std::string::String) -> Self::O {
+        self.0.data.borrow_mut().for_each = std::option::Option::Some(format!("${{{}}}", base));
+        terrars::ListRef::new(self.0.shared.clone(), self.extract_ref())
     }
 }
 
-impl Resource_ for ElasticacheGlobalReplicationGroup_ {
-    fn extract_resource_type(&self) -> String {
+impl terrars::Resource_ for ElasticacheGlobalReplicationGroup_ {
+    fn extract_resource_type(&self) -> std::string::String {
         "aws_elasticache_global_replication_group".into()
     }
 
-    fn extract_tf_id(&self) -> String {
+    fn extract_tf_id(&self) -> std::string::String {
         self.tf_id.clone()
     }
 
@@ -283,23 +329,24 @@ impl Resource_ for ElasticacheGlobalReplicationGroup_ {
 }
 
 pub struct BuildElasticacheGlobalReplicationGroup {
-    pub tf_id: String,
-    #[doc= ""]
-    pub global_replication_group_id_suffix: PrimField<String>,
-    #[doc= ""]
-    pub primary_replication_group_id: PrimField<String>,
+    pub tf_id: std::string::String,
+    #[doc = ""]
+    pub global_replication_group_id_suffix: terrars::PrimField<std::string::String>,
+    #[doc = ""]
+    pub primary_replication_group_id: terrars::PrimField<std::string::String>,
 }
 
 impl BuildElasticacheGlobalReplicationGroup {
-    pub fn build(self, stack: &mut Stack) -> ElasticacheGlobalReplicationGroup {
-        let out = ElasticacheGlobalReplicationGroup(Rc::new(ElasticacheGlobalReplicationGroup_ {
+    pub fn build(self, stack: &mut terrars::Stack) -> ElasticacheGlobalReplicationGroup {
+        let out = ElasticacheGlobalReplicationGroup(std::rc::Rc::new(ElasticacheGlobalReplicationGroup_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: RefCell::new(ElasticacheGlobalReplicationGroupData {
+            data: std::cell::RefCell::new(ElasticacheGlobalReplicationGroupData {
                 depends_on: core::default::Default::default(),
-                provider: None,
+                provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
-                for_each: None,
+                for_each: std::option::Option::None,
+                provisioner: core::default::Default::default(),
                 automatic_failover_enabled: core::default::Default::default(),
                 cache_node_type: core::default::Default::default(),
                 engine_version: core::default::Default::default(),
@@ -318,12 +365,12 @@ impl BuildElasticacheGlobalReplicationGroup {
 }
 
 pub struct ElasticacheGlobalReplicationGroupRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for ElasticacheGlobalReplicationGroupRef {
-    fn new(shared: StackShared, base: String) -> Self {
+impl terrars::Ref for ElasticacheGlobalReplicationGroupRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> Self {
         Self {
             shared: shared,
             base: base,
@@ -332,105 +379,111 @@ impl Ref for ElasticacheGlobalReplicationGroupRef {
 }
 
 impl ElasticacheGlobalReplicationGroupRef {
-    fn extract_ref(&self) -> String {
+    fn extract_ref(&self) -> std::string::String {
         self.base.clone()
     }
 
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `arn` after provisioning.\n"]
-    pub fn arn(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.arn", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `arn` after provisioning.\n"]
+    pub fn arn(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.arn", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `at_rest_encryption_enabled` after provisioning.\n"]
-    pub fn at_rest_encryption_enabled(&self) -> PrimExpr<bool> {
-        PrimExpr::new(self.shared().clone(), format!("{}.at_rest_encryption_enabled", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `at_rest_encryption_enabled` after provisioning.\n"]
+    pub fn at_rest_encryption_enabled(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.at_rest_encryption_enabled", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `auth_token_enabled` after provisioning.\n"]
-    pub fn auth_token_enabled(&self) -> PrimExpr<bool> {
-        PrimExpr::new(self.shared().clone(), format!("{}.auth_token_enabled", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `auth_token_enabled` after provisioning.\n"]
+    pub fn auth_token_enabled(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.auth_token_enabled", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `automatic_failover_enabled` after provisioning.\n"]
-    pub fn automatic_failover_enabled(&self) -> PrimExpr<bool> {
-        PrimExpr::new(self.shared().clone(), format!("{}.automatic_failover_enabled", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `automatic_failover_enabled` after provisioning.\n"]
+    pub fn automatic_failover_enabled(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.automatic_failover_enabled", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `cache_node_type` after provisioning.\n"]
-    pub fn cache_node_type(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.cache_node_type", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `cache_node_type` after provisioning.\n"]
+    pub fn cache_node_type(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.cache_node_type", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `cluster_enabled` after provisioning.\n"]
-    pub fn cluster_enabled(&self) -> PrimExpr<bool> {
-        PrimExpr::new(self.shared().clone(), format!("{}.cluster_enabled", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `cluster_enabled` after provisioning.\n"]
+    pub fn cluster_enabled(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.cluster_enabled", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `engine` after provisioning.\n"]
-    pub fn engine(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.engine", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `engine` after provisioning.\n"]
+    pub fn engine(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.engine", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `engine_version` after provisioning.\n"]
-    pub fn engine_version(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.engine_version", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `engine_version` after provisioning.\n"]
+    pub fn engine_version(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.engine_version", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `engine_version_actual` after provisioning.\n"]
-    pub fn engine_version_actual(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.engine_version_actual", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `engine_version_actual` after provisioning.\n"]
+    pub fn engine_version_actual(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.engine_version_actual", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `global_node_groups` after provisioning.\n"]
-    pub fn global_node_groups(&self) -> SetRef<ElasticacheGlobalReplicationGroupGlobalNodeGroupsElRef> {
-        SetRef::new(self.shared().clone(), format!("{}.global_node_groups", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `global_node_groups` after provisioning.\n"]
+    pub fn global_node_groups(&self) -> terrars::SetRef<ElasticacheGlobalReplicationGroupGlobalNodeGroupsElRef> {
+        terrars::SetRef::new(self.shared().clone(), format!("{}.global_node_groups", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `global_replication_group_description` after provisioning.\n"]
-    pub fn global_replication_group_description(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.global_replication_group_description", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `global_replication_group_description` after provisioning.\n"]
+    pub fn global_replication_group_description(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(
+            self.shared().clone(),
+            format!("{}.global_replication_group_description", self.extract_ref()),
+        )
     }
 
-    #[doc= "Get a reference to the value of field `global_replication_group_id` after provisioning.\n"]
-    pub fn global_replication_group_id(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.global_replication_group_id", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `global_replication_group_id` after provisioning.\n"]
+    pub fn global_replication_group_id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.global_replication_group_id", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `global_replication_group_id_suffix` after provisioning.\n"]
-    pub fn global_replication_group_id_suffix(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.global_replication_group_id_suffix", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `global_replication_group_id_suffix` after provisioning.\n"]
+    pub fn global_replication_group_id_suffix(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(
+            self.shared().clone(),
+            format!("{}.global_replication_group_id_suffix", self.extract_ref()),
+        )
     }
 
-    #[doc= "Get a reference to the value of field `id` after provisioning.\n"]
-    pub fn id(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
+    pub fn id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `num_node_groups` after provisioning.\n"]
-    pub fn num_node_groups(&self) -> PrimExpr<f64> {
-        PrimExpr::new(self.shared().clone(), format!("{}.num_node_groups", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `num_node_groups` after provisioning.\n"]
+    pub fn num_node_groups(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.num_node_groups", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `parameter_group_name` after provisioning.\n"]
-    pub fn parameter_group_name(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.parameter_group_name", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `parameter_group_name` after provisioning.\n"]
+    pub fn parameter_group_name(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.parameter_group_name", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `primary_replication_group_id` after provisioning.\n"]
-    pub fn primary_replication_group_id(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.primary_replication_group_id", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `primary_replication_group_id` after provisioning.\n"]
+    pub fn primary_replication_group_id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.primary_replication_group_id", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `transit_encryption_enabled` after provisioning.\n"]
-    pub fn transit_encryption_enabled(&self) -> PrimExpr<bool> {
-        PrimExpr::new(self.shared().clone(), format!("{}.transit_encryption_enabled", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `transit_encryption_enabled` after provisioning.\n"]
+    pub fn transit_encryption_enabled(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.transit_encryption_enabled", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `timeouts` after provisioning.\n"]
+    #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
     pub fn timeouts(&self) -> ElasticacheGlobalReplicationGroupTimeoutsElRef {
         ElasticacheGlobalReplicationGroupTimeoutsElRef::new(
             self.shared().clone(),
@@ -441,31 +494,34 @@ impl ElasticacheGlobalReplicationGroupRef {
 
 #[derive(Serialize)]
 pub struct ElasticacheGlobalReplicationGroupGlobalNodeGroupsEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    global_node_group_id: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    slots: Option<PrimField<String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    global_node_group_id: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    slots: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
 impl ElasticacheGlobalReplicationGroupGlobalNodeGroupsEl {
-    #[doc= "Set the field `global_node_group_id`.\n"]
-    pub fn set_global_node_group_id(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.global_node_group_id = Some(v.into());
+    #[doc = "Set the field `global_node_group_id`.\n"]
+    pub fn set_global_node_group_id(
+        mut self,
+        v: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.global_node_group_id = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `slots`.\n"]
-    pub fn set_slots(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.slots = Some(v.into());
+    #[doc = "Set the field `slots`.\n"]
+    pub fn set_slots(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.slots = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl ToListMappable for ElasticacheGlobalReplicationGroupGlobalNodeGroupsEl {
-    type O = BlockAssignable<ElasticacheGlobalReplicationGroupGlobalNodeGroupsEl>;
+impl terrars::ToListMappable for ElasticacheGlobalReplicationGroupGlobalNodeGroupsEl {
+    type O = terrars::BlockAssignable<ElasticacheGlobalReplicationGroupGlobalNodeGroupsEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -485,12 +541,15 @@ impl BuildElasticacheGlobalReplicationGroupGlobalNodeGroupsEl {
 }
 
 pub struct ElasticacheGlobalReplicationGroupGlobalNodeGroupsElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for ElasticacheGlobalReplicationGroupGlobalNodeGroupsElRef {
-    fn new(shared: StackShared, base: String) -> ElasticacheGlobalReplicationGroupGlobalNodeGroupsElRef {
+impl terrars::Ref for ElasticacheGlobalReplicationGroupGlobalNodeGroupsElRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> ElasticacheGlobalReplicationGroupGlobalNodeGroupsElRef {
         ElasticacheGlobalReplicationGroupGlobalNodeGroupsElRef {
             shared: shared,
             base: base.to_string(),
@@ -499,56 +558,56 @@ impl Ref for ElasticacheGlobalReplicationGroupGlobalNodeGroupsElRef {
 }
 
 impl ElasticacheGlobalReplicationGroupGlobalNodeGroupsElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `global_node_group_id` after provisioning.\n"]
-    pub fn global_node_group_id(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.global_node_group_id", self.base))
+    #[doc = "Get a reference to the value of field `global_node_group_id` after provisioning.\n"]
+    pub fn global_node_group_id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.global_node_group_id", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `slots` after provisioning.\n"]
-    pub fn slots(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.slots", self.base))
+    #[doc = "Get a reference to the value of field `slots` after provisioning.\n"]
+    pub fn slots(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.slots", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct ElasticacheGlobalReplicationGroupTimeoutsEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    create: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    delete: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    update: Option<PrimField<String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    create: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    delete: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    update: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
 impl ElasticacheGlobalReplicationGroupTimeoutsEl {
-    #[doc= "Set the field `create`.\n"]
-    pub fn set_create(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.create = Some(v.into());
+    #[doc = "Set the field `create`.\n"]
+    pub fn set_create(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.create = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `delete`.\n"]
-    pub fn set_delete(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.delete = Some(v.into());
+    #[doc = "Set the field `delete`.\n"]
+    pub fn set_delete(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.delete = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `update`.\n"]
-    pub fn set_update(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.update = Some(v.into());
+    #[doc = "Set the field `update`.\n"]
+    pub fn set_update(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.update = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl ToListMappable for ElasticacheGlobalReplicationGroupTimeoutsEl {
-    type O = BlockAssignable<ElasticacheGlobalReplicationGroupTimeoutsEl>;
+impl terrars::ToListMappable for ElasticacheGlobalReplicationGroupTimeoutsEl {
+    type O = terrars::BlockAssignable<ElasticacheGlobalReplicationGroupTimeoutsEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -569,12 +628,15 @@ impl BuildElasticacheGlobalReplicationGroupTimeoutsEl {
 }
 
 pub struct ElasticacheGlobalReplicationGroupTimeoutsElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for ElasticacheGlobalReplicationGroupTimeoutsElRef {
-    fn new(shared: StackShared, base: String) -> ElasticacheGlobalReplicationGroupTimeoutsElRef {
+impl terrars::Ref for ElasticacheGlobalReplicationGroupTimeoutsElRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> ElasticacheGlobalReplicationGroupTimeoutsElRef {
         ElasticacheGlobalReplicationGroupTimeoutsElRef {
             shared: shared,
             base: base.to_string(),
@@ -583,22 +645,22 @@ impl Ref for ElasticacheGlobalReplicationGroupTimeoutsElRef {
 }
 
 impl ElasticacheGlobalReplicationGroupTimeoutsElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `create` after provisioning.\n"]
-    pub fn create(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.create", self.base))
+    #[doc = "Get a reference to the value of field `create` after provisioning.\n"]
+    pub fn create(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.create", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `delete` after provisioning.\n"]
-    pub fn delete(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.delete", self.base))
+    #[doc = "Get a reference to the value of field `delete` after provisioning.\n"]
+    pub fn delete(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.delete", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `update` after provisioning.\n"]
-    pub fn update(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.update", self.base))
+    #[doc = "Get a reference to the value of field `update` after provisioning.\n"]
+    pub fn update(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.update", self.base))
     }
 }

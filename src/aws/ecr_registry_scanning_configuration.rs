@@ -1,48 +1,52 @@
 use serde::Serialize;
-use std::cell::RefCell;
-use std::rc::Rc;
-use terrars::*;
+use terrars::{
+    Referable as _,
+    Resource_ as _,
+    Ref as _,
+};
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
 struct EcrRegistryScanningConfigurationData {
-    #[serde(skip_serializing_if = "Vec::is_empty")]
-    depends_on: Vec<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    provider: Option<String>,
-    #[serde(skip_serializing_if = "SerdeSkipDefault::is_default")]
-    lifecycle: ResourceLifecycle,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    for_each: Option<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    id: Option<PrimField<String>>,
-    scan_type: PrimField<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    rule: Option<Vec<EcrRegistryScanningConfigurationRuleEl>>,
+    #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
+    depends_on: std::vec::Vec<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    provider: std::option::Option<std::string::String>,
+    #[serde(skip_serializing_if = "terrars::SerdeSkipDefault::is_default")]
+    lifecycle: terrars::ResourceLifecycle,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    for_each: std::option::Option<std::string::String>,
+    #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
+    provisioner: std::vec::Vec<terrars::Provisioner>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    id: std::option::Option<terrars::PrimField<std::string::String>>,
+    scan_type: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    rule: std::option::Option<std::vec::Vec<EcrRegistryScanningConfigurationRuleEl>>,
     dynamic: EcrRegistryScanningConfigurationDynamic,
 }
 
 struct EcrRegistryScanningConfiguration_ {
-    shared: StackShared,
-    tf_id: String,
-    data: RefCell<EcrRegistryScanningConfigurationData>,
+    shared: terrars::StackShared,
+    tf_id: std::string::String,
+    data: std::cell::RefCell<EcrRegistryScanningConfigurationData>,
 }
 
 #[derive(Clone)]
-pub struct EcrRegistryScanningConfiguration(Rc<EcrRegistryScanningConfiguration_>);
+pub struct EcrRegistryScanningConfiguration(std::rc::Rc<EcrRegistryScanningConfiguration_>);
 
 impl EcrRegistryScanningConfiguration {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.0.shared
     }
 
-    pub fn depends_on(self, dep: &impl Referable) -> Self {
+    pub fn depends_on(self, dep: &impl terrars::Referable) -> Self {
         self.0.data.borrow_mut().depends_on.push(dep.extract_ref());
         self
     }
 
     pub fn set_provider(self, provider: &ProviderAws) -> Self {
-        self.0.data.borrow_mut().provider = Some(provider.provider_ref());
+        self.0.data.borrow_mut().provider = std::option::Option::Some(provider.provider_ref());
         self
     }
 
@@ -57,99 +61,135 @@ impl EcrRegistryScanningConfiguration {
     }
 
     pub fn ignore_changes_to_all(self) -> Self {
-        self.0.data.borrow_mut().lifecycle.ignore_changes = Some(IgnoreChanges::All(IgnoreChangesAll::All));
+        self.0.data.borrow_mut().lifecycle.ignore_changes =
+            std::option::Option::Some(terrars::IgnoreChanges::All(terrars::IgnoreChangesAll::All));
         self
     }
 
-    pub fn ignore_changes_to_attr(self, attr: impl ToString) -> Self {
+    pub fn ignore_changes_to_attr(self, attr: impl std::string::ToString) -> Self {
         {
             let mut d = self.0.data.borrow_mut();
             if match &mut d.lifecycle.ignore_changes {
-                Some(i) => match i {
-                    IgnoreChanges::All(_) => {
+                std::option::Option::Some(i) => match i {
+                    terrars::IgnoreChanges::All(_) => {
                         true
                     },
-                    IgnoreChanges::Refs(r) => {
+                    terrars::IgnoreChanges::Refs(r) => {
                         r.push(attr.to_string());
                         false
                     },
                 },
-                None => true,
+                std::option::Option::None => true,
             } {
-                d.lifecycle.ignore_changes = Some(IgnoreChanges::Refs(vec![attr.to_string()]));
+                d.lifecycle.ignore_changes =
+                    std::option::Option::Some(terrars::IgnoreChanges::Refs(vec![attr.to_string()]));
             }
         }
         self
     }
 
-    pub fn replace_triggered_by_resource(self, r: &impl Resource) -> Self {
+    pub fn replace_triggered_by_resource(self, r: &impl terrars::Resource) -> Self {
         self.0.data.borrow_mut().lifecycle.replace_triggered_by.push(r.extract_ref());
         self
     }
 
-    pub fn replace_triggered_by_attr(self, attr: impl ToString) -> Self {
+    pub fn replace_triggered_by_attr(self, attr: impl std::string::ToString) -> Self {
         self.0.data.borrow_mut().lifecycle.replace_triggered_by.push(attr.to_string());
         self
     }
 
-    #[doc= "Set the field `id`.\n"]
-    pub fn set_id(self, v: impl Into<PrimField<String>>) -> Self {
-        self.0.data.borrow_mut().id = Some(v.into());
+    #[doc = r" Add a provisioner (ex: `local-exec`, `remote-exec`, `file`) to this resource."]
+    #[doc = r" Provisioners run in the order they're added."]
+    pub fn add_provisioner(self, v: impl std::convert::Into<terrars::Provisioner>) -> Self {
+        self.0.data.borrow_mut().provisioner.push(v.into());
         self
     }
 
-    #[doc= "Set the field `rule`.\n"]
-    pub fn set_rule(self, v: impl Into<BlockAssignable<EcrRegistryScanningConfigurationRuleEl>>) -> Self {
+    pub fn add_lifecycle_precondition(
+        self,
+        condition: impl std::convert::Into<terrars::PrimField<bool>>,
+        error_message: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.0.data.borrow_mut().lifecycle.precondition.push(terrars::LifecycleCondition {
+            condition: condition.into(),
+            error_message: error_message.into(),
+        });
+        self
+    }
+
+    pub fn add_lifecycle_postcondition(
+        self,
+        condition: impl std::convert::Into<terrars::PrimField<bool>>,
+        error_message: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.0.data.borrow_mut().lifecycle.postcondition.push(terrars::LifecycleCondition {
+            condition: condition.into(),
+            error_message: error_message.into(),
+        });
+        self
+    }
+
+    #[doc = "Set the field `id`.\n"]
+    pub fn set_id(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().id = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `rule`.\n"]
+    pub fn set_rule(
+        self,
+        v: impl std::convert::Into<terrars::BlockAssignable<EcrRegistryScanningConfigurationRuleEl>>,
+    ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.0.data.borrow_mut().rule = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.0.data.borrow_mut().rule = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.0.data.borrow_mut().dynamic.rule = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.0.data.borrow_mut().dynamic.rule = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Get a reference to the value of field `id` after provisioning.\n"]
-    pub fn id(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
+    pub fn id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `registry_id` after provisioning.\n"]
-    pub fn registry_id(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.registry_id", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `registry_id` after provisioning.\n"]
+    pub fn registry_id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.registry_id", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `scan_type` after provisioning.\n"]
-    pub fn scan_type(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.scan_type", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `scan_type` after provisioning.\n"]
+    pub fn scan_type(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.scan_type", self.extract_ref()))
     }
 }
 
-impl Referable for EcrRegistryScanningConfiguration {
-    fn extract_ref(&self) -> String {
+impl terrars::Referable for EcrRegistryScanningConfiguration {
+    fn extract_ref(&self) -> std::string::String {
         format!("{}.{}", self.0.extract_resource_type(), self.0.extract_tf_id())
     }
 }
 
-impl Resource for EcrRegistryScanningConfiguration { }
+impl terrars::Resource for EcrRegistryScanningConfiguration { }
 
-impl ToListMappable for EcrRegistryScanningConfiguration {
-    type O = ListRef<EcrRegistryScanningConfigurationRef>;
+impl terrars::ToListMappable for EcrRegistryScanningConfiguration {
+    type O = terrars::ListRef<EcrRegistryScanningConfigurationRef>;
 
-    fn do_map(self, base: String) -> Self::O {
-        self.0.data.borrow_mut().for_each = Some(format!("${{{}}}", base));
-        ListRef::new(self.0.shared.clone(), self.extract_ref())
+    fn do_map(self, base: std::string::String) -> Self::O {
+        self.0.data.borrow_mut().for_each = std::option::Option::Some(format!("${{{}}}", base));
+        terrars::ListRef::new(self.0.shared.clone(), self.extract_ref())
     }
 }
 
-impl Resource_ for EcrRegistryScanningConfiguration_ {
-    fn extract_resource_type(&self) -> String {
+impl terrars::Resource_ for EcrRegistryScanningConfiguration_ {
+    fn extract_resource_type(&self) -> std::string::String {
         "aws_ecr_registry_scanning_configuration".into()
     }
 
-    fn extract_tf_id(&self) -> String {
+    fn extract_tf_id(&self) -> std::string::String {
         self.tf_id.clone()
     }
 
@@ -159,25 +199,26 @@ impl Resource_ for EcrRegistryScanningConfiguration_ {
 }
 
 pub struct BuildEcrRegistryScanningConfiguration {
-    pub tf_id: String,
-    #[doc= ""]
-    pub scan_type: PrimField<String>,
+    pub tf_id: std::string::String,
+    #[doc = ""]
+    pub scan_type: terrars::PrimField<std::string::String>,
 }
 
 impl BuildEcrRegistryScanningConfiguration {
-    pub fn build(self, stack: &mut Stack) -> EcrRegistryScanningConfiguration {
-        let out = EcrRegistryScanningConfiguration(Rc::new(EcrRegistryScanningConfiguration_ {
+    pub fn build(self, stack: &mut terrars::Stack) -> EcrRegistryScanningConfiguration {
+        let out = EcrRegistryScanningConfiguration(std::rc::Rc::new(EcrRegistryScanningConfiguration_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: RefCell::new(EcrRegistryScanningConfigurationData {
+            data: std::cell::RefCell::new(EcrRegistryScanningConfigurationData {
                 depends_on: core::default::Default::default(),
-                provider: None,
+                provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
-                for_each: None,
+                for_each: std::option::Option::None,
+                provisioner: core::default::Default::default(),
                 id: core::default::Default::default(),
                 scan_type: self.scan_type,
                 rule: core::default::Default::default(),
-                dynamic: Default::default(),
+                dynamic: core::default::Default::default(),
             }),
         }));
         stack.add_resource(out.0.clone());
@@ -186,12 +227,12 @@ impl BuildEcrRegistryScanningConfiguration {
 }
 
 pub struct EcrRegistryScanningConfigurationRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for EcrRegistryScanningConfigurationRef {
-    fn new(shared: StackShared, base: String) -> Self {
+impl terrars::Ref for EcrRegistryScanningConfigurationRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> Self {
         Self {
             shared: shared,
             base: base,
@@ -200,43 +241,43 @@ impl Ref for EcrRegistryScanningConfigurationRef {
 }
 
 impl EcrRegistryScanningConfigurationRef {
-    fn extract_ref(&self) -> String {
+    fn extract_ref(&self) -> std::string::String {
         self.base.clone()
     }
 
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `id` after provisioning.\n"]
-    pub fn id(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
+    pub fn id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `registry_id` after provisioning.\n"]
-    pub fn registry_id(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.registry_id", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `registry_id` after provisioning.\n"]
+    pub fn registry_id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.registry_id", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `scan_type` after provisioning.\n"]
-    pub fn scan_type(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.scan_type", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `scan_type` after provisioning.\n"]
+    pub fn scan_type(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.scan_type", self.extract_ref()))
     }
 }
 
 #[derive(Serialize)]
 pub struct EcrRegistryScanningConfigurationRuleElRepositoryFilterEl {
-    filter: PrimField<String>,
-    filter_type: PrimField<String>,
+    filter: terrars::PrimField<std::string::String>,
+    filter_type: terrars::PrimField<std::string::String>,
 }
 
 impl EcrRegistryScanningConfigurationRuleElRepositoryFilterEl { }
 
-impl ToListMappable for EcrRegistryScanningConfigurationRuleElRepositoryFilterEl {
-    type O = BlockAssignable<EcrRegistryScanningConfigurationRuleElRepositoryFilterEl>;
+impl terrars::ToListMappable for EcrRegistryScanningConfigurationRuleElRepositoryFilterEl {
+    type O = terrars::BlockAssignable<EcrRegistryScanningConfigurationRuleElRepositoryFilterEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -245,10 +286,10 @@ impl ToListMappable for EcrRegistryScanningConfigurationRuleElRepositoryFilterEl
 }
 
 pub struct BuildEcrRegistryScanningConfigurationRuleElRepositoryFilterEl {
-    #[doc= ""]
-    pub filter: PrimField<String>,
-    #[doc= ""]
-    pub filter_type: PrimField<String>,
+    #[doc = ""]
+    pub filter: terrars::PrimField<std::string::String>,
+    #[doc = ""]
+    pub filter_type: terrars::PrimField<std::string::String>,
 }
 
 impl BuildEcrRegistryScanningConfigurationRuleElRepositoryFilterEl {
@@ -261,12 +302,15 @@ impl BuildEcrRegistryScanningConfigurationRuleElRepositoryFilterEl {
 }
 
 pub struct EcrRegistryScanningConfigurationRuleElRepositoryFilterElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for EcrRegistryScanningConfigurationRuleElRepositoryFilterElRef {
-    fn new(shared: StackShared, base: String) -> EcrRegistryScanningConfigurationRuleElRepositoryFilterElRef {
+impl terrars::Ref for EcrRegistryScanningConfigurationRuleElRepositoryFilterElRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> EcrRegistryScanningConfigurationRuleElRepositoryFilterElRef {
         EcrRegistryScanningConfigurationRuleElRepositoryFilterElRef {
             shared: shared,
             base: base.to_string(),
@@ -275,57 +319,64 @@ impl Ref for EcrRegistryScanningConfigurationRuleElRepositoryFilterElRef {
 }
 
 impl EcrRegistryScanningConfigurationRuleElRepositoryFilterElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `filter` after provisioning.\n"]
-    pub fn filter(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.filter", self.base))
+    #[doc = "Get a reference to the value of field `filter` after provisioning.\n"]
+    pub fn filter(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.filter", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `filter_type` after provisioning.\n"]
-    pub fn filter_type(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.filter_type", self.base))
+    #[doc = "Get a reference to the value of field `filter_type` after provisioning.\n"]
+    pub fn filter_type(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.filter_type", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
 struct EcrRegistryScanningConfigurationRuleElDynamic {
-    repository_filter: Option<DynamicBlock<EcrRegistryScanningConfigurationRuleElRepositoryFilterEl>>,
+    repository_filter: std
+    ::option
+    ::Option<terrars::DynamicBlock<EcrRegistryScanningConfigurationRuleElRepositoryFilterEl>>,
 }
 
 #[derive(Serialize)]
 pub struct EcrRegistryScanningConfigurationRuleEl {
-    scan_frequency: PrimField<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    repository_filter: Option<Vec<EcrRegistryScanningConfigurationRuleElRepositoryFilterEl>>,
+    scan_frequency: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    repository_filter: std::option::Option<std::vec::Vec<EcrRegistryScanningConfigurationRuleElRepositoryFilterEl>>,
     dynamic: EcrRegistryScanningConfigurationRuleElDynamic,
 }
 
 impl EcrRegistryScanningConfigurationRuleEl {
-    #[doc= "Set the field `repository_filter`.\n"]
+    #[doc = "Set the field `repository_filter`.\n"]
     pub fn set_repository_filter(
         mut self,
-        v: impl Into<BlockAssignable<EcrRegistryScanningConfigurationRuleElRepositoryFilterEl>>,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<terrars::BlockAssignable<EcrRegistryScanningConfigurationRuleElRepositoryFilterEl>>,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.repository_filter = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.repository_filter = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.repository_filter = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.repository_filter = std::option::Option::Some(d);
             },
         }
         self
     }
 }
 
-impl ToListMappable for EcrRegistryScanningConfigurationRuleEl {
-    type O = BlockAssignable<EcrRegistryScanningConfigurationRuleEl>;
+impl terrars::ToListMappable for EcrRegistryScanningConfigurationRuleEl {
+    type O = terrars::BlockAssignable<EcrRegistryScanningConfigurationRuleEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -334,8 +385,8 @@ impl ToListMappable for EcrRegistryScanningConfigurationRuleEl {
 }
 
 pub struct BuildEcrRegistryScanningConfigurationRuleEl {
-    #[doc= ""]
-    pub scan_frequency: PrimField<String>,
+    #[doc = ""]
+    pub scan_frequency: terrars::PrimField<std::string::String>,
 }
 
 impl BuildEcrRegistryScanningConfigurationRuleEl {
@@ -343,18 +394,18 @@ impl BuildEcrRegistryScanningConfigurationRuleEl {
         EcrRegistryScanningConfigurationRuleEl {
             scan_frequency: self.scan_frequency,
             repository_filter: core::default::Default::default(),
-            dynamic: Default::default(),
+            dynamic: core::default::Default::default(),
         }
     }
 }
 
 pub struct EcrRegistryScanningConfigurationRuleElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for EcrRegistryScanningConfigurationRuleElRef {
-    fn new(shared: StackShared, base: String) -> EcrRegistryScanningConfigurationRuleElRef {
+impl terrars::Ref for EcrRegistryScanningConfigurationRuleElRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> EcrRegistryScanningConfigurationRuleElRef {
         EcrRegistryScanningConfigurationRuleElRef {
             shared: shared,
             base: base.to_string(),
@@ -363,17 +414,17 @@ impl Ref for EcrRegistryScanningConfigurationRuleElRef {
 }
 
 impl EcrRegistryScanningConfigurationRuleElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `scan_frequency` after provisioning.\n"]
-    pub fn scan_frequency(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.scan_frequency", self.base))
+    #[doc = "Get a reference to the value of field `scan_frequency` after provisioning.\n"]
+    pub fn scan_frequency(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.scan_frequency", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
 struct EcrRegistryScanningConfigurationDynamic {
-    rule: Option<DynamicBlock<EcrRegistryScanningConfigurationRuleEl>>,
+    rule: std::option::Option<terrars::DynamicBlock<EcrRegistryScanningConfigurationRuleEl>>,
 }

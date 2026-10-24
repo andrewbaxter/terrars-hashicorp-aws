@@ -1,64 +1,68 @@
 use serde::Serialize;
-use std::cell::RefCell;
-use std::rc::Rc;
-use terrars::*;
+use terrars::{
+    Referable as _,
+    Resource_ as _,
+    Ref as _,
+};
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
 struct CognitoUserData {
-    #[serde(skip_serializing_if = "Vec::is_empty")]
-    depends_on: Vec<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    provider: Option<String>,
-    #[serde(skip_serializing_if = "SerdeSkipDefault::is_default")]
-    lifecycle: ResourceLifecycle,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    for_each: Option<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    attributes: Option<RecField<PrimField<String>>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    client_metadata: Option<RecField<PrimField<String>>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    desired_delivery_mediums: Option<SetField<PrimField<String>>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    enabled: Option<PrimField<bool>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    force_alias_creation: Option<PrimField<bool>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    id: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    message_action: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    password: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    temporary_password: Option<PrimField<String>>,
-    user_pool_id: PrimField<String>,
-    username: PrimField<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    validation_data: Option<RecField<PrimField<String>>>,
+    #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
+    depends_on: std::vec::Vec<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    provider: std::option::Option<std::string::String>,
+    #[serde(skip_serializing_if = "terrars::SerdeSkipDefault::is_default")]
+    lifecycle: terrars::ResourceLifecycle,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    for_each: std::option::Option<std::string::String>,
+    #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
+    provisioner: std::vec::Vec<terrars::Provisioner>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    attributes: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    client_metadata: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    desired_delivery_mediums: std::option::Option<terrars::SetField<terrars::PrimField<std::string::String>>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    enabled: std::option::Option<terrars::PrimField<bool>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    force_alias_creation: std::option::Option<terrars::PrimField<bool>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    id: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    message_action: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    password: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    temporary_password: std::option::Option<terrars::PrimField<std::string::String>>,
+    user_pool_id: terrars::PrimField<std::string::String>,
+    username: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    validation_data: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
 }
 
 struct CognitoUser_ {
-    shared: StackShared,
-    tf_id: String,
-    data: RefCell<CognitoUserData>,
+    shared: terrars::StackShared,
+    tf_id: std::string::String,
+    data: std::cell::RefCell<CognitoUserData>,
 }
 
 #[derive(Clone)]
-pub struct CognitoUser(Rc<CognitoUser_>);
+pub struct CognitoUser(std::rc::Rc<CognitoUser_>);
 
 impl CognitoUser {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.0.shared
     }
 
-    pub fn depends_on(self, dep: &impl Referable) -> Self {
+    pub fn depends_on(self, dep: &impl terrars::Referable) -> Self {
         self.0.data.borrow_mut().depends_on.push(dep.extract_ref());
         self
     }
 
     pub fn set_provider(self, provider: &ProviderAws) -> Self {
-        self.0.data.borrow_mut().provider = Some(provider.provider_ref());
+        self.0.data.borrow_mut().provider = std::option::Option::Some(provider.provider_ref());
         self
     }
 
@@ -73,215 +77,260 @@ impl CognitoUser {
     }
 
     pub fn ignore_changes_to_all(self) -> Self {
-        self.0.data.borrow_mut().lifecycle.ignore_changes = Some(IgnoreChanges::All(IgnoreChangesAll::All));
+        self.0.data.borrow_mut().lifecycle.ignore_changes =
+            std::option::Option::Some(terrars::IgnoreChanges::All(terrars::IgnoreChangesAll::All));
         self
     }
 
-    pub fn ignore_changes_to_attr(self, attr: impl ToString) -> Self {
+    pub fn ignore_changes_to_attr(self, attr: impl std::string::ToString) -> Self {
         {
             let mut d = self.0.data.borrow_mut();
             if match &mut d.lifecycle.ignore_changes {
-                Some(i) => match i {
-                    IgnoreChanges::All(_) => {
+                std::option::Option::Some(i) => match i {
+                    terrars::IgnoreChanges::All(_) => {
                         true
                     },
-                    IgnoreChanges::Refs(r) => {
+                    terrars::IgnoreChanges::Refs(r) => {
                         r.push(attr.to_string());
                         false
                     },
                 },
-                None => true,
+                std::option::Option::None => true,
             } {
-                d.lifecycle.ignore_changes = Some(IgnoreChanges::Refs(vec![attr.to_string()]));
+                d.lifecycle.ignore_changes =
+                    std::option::Option::Some(terrars::IgnoreChanges::Refs(vec![attr.to_string()]));
             }
         }
         self
     }
 
-    pub fn replace_triggered_by_resource(self, r: &impl Resource) -> Self {
+    pub fn replace_triggered_by_resource(self, r: &impl terrars::Resource) -> Self {
         self.0.data.borrow_mut().lifecycle.replace_triggered_by.push(r.extract_ref());
         self
     }
 
-    pub fn replace_triggered_by_attr(self, attr: impl ToString) -> Self {
+    pub fn replace_triggered_by_attr(self, attr: impl std::string::ToString) -> Self {
         self.0.data.borrow_mut().lifecycle.replace_triggered_by.push(attr.to_string());
         self
     }
 
-    #[doc= "Set the field `attributes`.\n"]
-    pub fn set_attributes(self, v: impl Into<RecField<PrimField<String>>>) -> Self {
-        self.0.data.borrow_mut().attributes = Some(v.into());
+    #[doc = r" Add a provisioner (ex: `local-exec`, `remote-exec`, `file`) to this resource."]
+    #[doc = r" Provisioners run in the order they're added."]
+    pub fn add_provisioner(self, v: impl std::convert::Into<terrars::Provisioner>) -> Self {
+        self.0.data.borrow_mut().provisioner.push(v.into());
         self
     }
 
-    #[doc= "Set the field `client_metadata`.\n"]
-    pub fn set_client_metadata(self, v: impl Into<RecField<PrimField<String>>>) -> Self {
-        self.0.data.borrow_mut().client_metadata = Some(v.into());
+    pub fn add_lifecycle_precondition(
+        self,
+        condition: impl std::convert::Into<terrars::PrimField<bool>>,
+        error_message: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.0.data.borrow_mut().lifecycle.precondition.push(terrars::LifecycleCondition {
+            condition: condition.into(),
+            error_message: error_message.into(),
+        });
         self
     }
 
-    #[doc= "Set the field `desired_delivery_mediums`.\n"]
-    pub fn set_desired_delivery_mediums(self, v: impl Into<SetField<PrimField<String>>>) -> Self {
-        self.0.data.borrow_mut().desired_delivery_mediums = Some(v.into());
+    pub fn add_lifecycle_postcondition(
+        self,
+        condition: impl std::convert::Into<terrars::PrimField<bool>>,
+        error_message: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.0.data.borrow_mut().lifecycle.postcondition.push(terrars::LifecycleCondition {
+            condition: condition.into(),
+            error_message: error_message.into(),
+        });
         self
     }
 
-    #[doc= "Set the field `enabled`.\n"]
-    pub fn set_enabled(self, v: impl Into<PrimField<bool>>) -> Self {
-        self.0.data.borrow_mut().enabled = Some(v.into());
+    #[doc = "Set the field `attributes`.\n"]
+    pub fn set_attributes(
+        self,
+        v: impl std::convert::Into<terrars::RecField<terrars::PrimField<std::string::String>>>,
+    ) -> Self {
+        self.0.data.borrow_mut().attributes = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `force_alias_creation`.\n"]
-    pub fn set_force_alias_creation(self, v: impl Into<PrimField<bool>>) -> Self {
-        self.0.data.borrow_mut().force_alias_creation = Some(v.into());
+    #[doc = "Set the field `client_metadata`.\n"]
+    pub fn set_client_metadata(
+        self,
+        v: impl std::convert::Into<terrars::RecField<terrars::PrimField<std::string::String>>>,
+    ) -> Self {
+        self.0.data.borrow_mut().client_metadata = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `id`.\n"]
-    pub fn set_id(self, v: impl Into<PrimField<String>>) -> Self {
-        self.0.data.borrow_mut().id = Some(v.into());
+    #[doc = "Set the field `desired_delivery_mediums`.\n"]
+    pub fn set_desired_delivery_mediums(
+        self,
+        v: impl std::convert::Into<terrars::SetField<terrars::PrimField<std::string::String>>>,
+    ) -> Self {
+        self.0.data.borrow_mut().desired_delivery_mediums = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `message_action`.\n"]
-    pub fn set_message_action(self, v: impl Into<PrimField<String>>) -> Self {
-        self.0.data.borrow_mut().message_action = Some(v.into());
+    #[doc = "Set the field `enabled`.\n"]
+    pub fn set_enabled(self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
+        self.0.data.borrow_mut().enabled = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `password`.\n"]
-    pub fn set_password(self, v: impl Into<PrimField<String>>) -> Self {
-        self.0.data.borrow_mut().password = Some(v.into());
+    #[doc = "Set the field `force_alias_creation`.\n"]
+    pub fn set_force_alias_creation(self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
+        self.0.data.borrow_mut().force_alias_creation = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `temporary_password`.\n"]
-    pub fn set_temporary_password(self, v: impl Into<PrimField<String>>) -> Self {
-        self.0.data.borrow_mut().temporary_password = Some(v.into());
+    #[doc = "Set the field `id`.\n"]
+    pub fn set_id(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().id = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `validation_data`.\n"]
-    pub fn set_validation_data(self, v: impl Into<RecField<PrimField<String>>>) -> Self {
-        self.0.data.borrow_mut().validation_data = Some(v.into());
+    #[doc = "Set the field `message_action`.\n"]
+    pub fn set_message_action(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().message_action = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Get a reference to the value of field `attributes` after provisioning.\n"]
-    pub fn attributes(&self) -> RecRef<PrimExpr<String>> {
-        RecRef::new(self.shared().clone(), format!("{}.attributes", self.extract_ref()))
+    #[doc = "Set the field `password`.\n"]
+    pub fn set_password(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().password = std::option::Option::Some(v.into());
+        self
     }
 
-    #[doc= "Get a reference to the value of field `client_metadata` after provisioning.\n"]
-    pub fn client_metadata(&self) -> RecRef<PrimExpr<String>> {
-        RecRef::new(self.shared().clone(), format!("{}.client_metadata", self.extract_ref()))
+    #[doc = "Set the field `temporary_password`.\n"]
+    pub fn set_temporary_password(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().temporary_password = std::option::Option::Some(v.into());
+        self
     }
 
-    #[doc= "Get a reference to the value of field `creation_date` after provisioning.\n"]
-    pub fn creation_date(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.creation_date", self.extract_ref()))
+    #[doc = "Set the field `validation_data`.\n"]
+    pub fn set_validation_data(
+        self,
+        v: impl std::convert::Into<terrars::RecField<terrars::PrimField<std::string::String>>>,
+    ) -> Self {
+        self.0.data.borrow_mut().validation_data = std::option::Option::Some(v.into());
+        self
     }
 
-    #[doc= "Get a reference to the value of field `desired_delivery_mediums` after provisioning.\n"]
-    pub fn desired_delivery_mediums(&self) -> SetRef<PrimExpr<String>> {
-        SetRef::new(self.shared().clone(), format!("{}.desired_delivery_mediums", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `attributes` after provisioning.\n"]
+    pub fn attributes(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
+        terrars::RecRef::new(self.shared().clone(), format!("{}.attributes", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `enabled` after provisioning.\n"]
-    pub fn enabled(&self) -> PrimExpr<bool> {
-        PrimExpr::new(self.shared().clone(), format!("{}.enabled", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `client_metadata` after provisioning.\n"]
+    pub fn client_metadata(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
+        terrars::RecRef::new(self.shared().clone(), format!("{}.client_metadata", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `force_alias_creation` after provisioning.\n"]
-    pub fn force_alias_creation(&self) -> PrimExpr<bool> {
-        PrimExpr::new(self.shared().clone(), format!("{}.force_alias_creation", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `creation_date` after provisioning.\n"]
+    pub fn creation_date(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.creation_date", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `id` after provisioning.\n"]
-    pub fn id(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `desired_delivery_mediums` after provisioning.\n"]
+    pub fn desired_delivery_mediums(&self) -> terrars::SetRef<terrars::PrimExpr<std::string::String>> {
+        terrars::SetRef::new(self.shared().clone(), format!("{}.desired_delivery_mediums", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `last_modified_date` after provisioning.\n"]
-    pub fn last_modified_date(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.last_modified_date", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `enabled` after provisioning.\n"]
+    pub fn enabled(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.enabled", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `message_action` after provisioning.\n"]
-    pub fn message_action(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.message_action", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `force_alias_creation` after provisioning.\n"]
+    pub fn force_alias_creation(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.force_alias_creation", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `mfa_setting_list` after provisioning.\n"]
-    pub fn mfa_setting_list(&self) -> SetRef<PrimExpr<String>> {
-        SetRef::new(self.shared().clone(), format!("{}.mfa_setting_list", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
+    pub fn id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `password` after provisioning.\n"]
-    pub fn password(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.password", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `last_modified_date` after provisioning.\n"]
+    pub fn last_modified_date(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.last_modified_date", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `preferred_mfa_setting` after provisioning.\n"]
-    pub fn preferred_mfa_setting(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.preferred_mfa_setting", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `message_action` after provisioning.\n"]
+    pub fn message_action(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.message_action", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `status` after provisioning.\n"]
-    pub fn status(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.status", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `mfa_setting_list` after provisioning.\n"]
+    pub fn mfa_setting_list(&self) -> terrars::SetRef<terrars::PrimExpr<std::string::String>> {
+        terrars::SetRef::new(self.shared().clone(), format!("{}.mfa_setting_list", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `sub` after provisioning.\n"]
-    pub fn sub(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.sub", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `password` after provisioning.\n"]
+    pub fn password(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.password", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `temporary_password` after provisioning.\n"]
-    pub fn temporary_password(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.temporary_password", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `preferred_mfa_setting` after provisioning.\n"]
+    pub fn preferred_mfa_setting(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.preferred_mfa_setting", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `user_pool_id` after provisioning.\n"]
-    pub fn user_pool_id(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.user_pool_id", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `status` after provisioning.\n"]
+    pub fn status(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.status", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `username` after provisioning.\n"]
-    pub fn username(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.username", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `sub` after provisioning.\n"]
+    pub fn sub(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.sub", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `validation_data` after provisioning.\n"]
-    pub fn validation_data(&self) -> RecRef<PrimExpr<String>> {
-        RecRef::new(self.shared().clone(), format!("{}.validation_data", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `temporary_password` after provisioning.\n"]
+    pub fn temporary_password(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.temporary_password", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `user_pool_id` after provisioning.\n"]
+    pub fn user_pool_id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.user_pool_id", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `username` after provisioning.\n"]
+    pub fn username(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.username", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `validation_data` after provisioning.\n"]
+    pub fn validation_data(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
+        terrars::RecRef::new(self.shared().clone(), format!("{}.validation_data", self.extract_ref()))
     }
 }
 
-impl Referable for CognitoUser {
-    fn extract_ref(&self) -> String {
+impl terrars::Referable for CognitoUser {
+    fn extract_ref(&self) -> std::string::String {
         format!("{}.{}", self.0.extract_resource_type(), self.0.extract_tf_id())
     }
 }
 
-impl Resource for CognitoUser { }
+impl terrars::Resource for CognitoUser { }
 
-impl ToListMappable for CognitoUser {
-    type O = ListRef<CognitoUserRef>;
+impl terrars::ToListMappable for CognitoUser {
+    type O = terrars::ListRef<CognitoUserRef>;
 
-    fn do_map(self, base: String) -> Self::O {
-        self.0.data.borrow_mut().for_each = Some(format!("${{{}}}", base));
-        ListRef::new(self.0.shared.clone(), self.extract_ref())
+    fn do_map(self, base: std::string::String) -> Self::O {
+        self.0.data.borrow_mut().for_each = std::option::Option::Some(format!("${{{}}}", base));
+        terrars::ListRef::new(self.0.shared.clone(), self.extract_ref())
     }
 }
 
-impl Resource_ for CognitoUser_ {
-    fn extract_resource_type(&self) -> String {
+impl terrars::Resource_ for CognitoUser_ {
+    fn extract_resource_type(&self) -> std::string::String {
         "aws_cognito_user".into()
     }
 
-    fn extract_tf_id(&self) -> String {
+    fn extract_tf_id(&self) -> std::string::String {
         self.tf_id.clone()
     }
 
@@ -291,23 +340,24 @@ impl Resource_ for CognitoUser_ {
 }
 
 pub struct BuildCognitoUser {
-    pub tf_id: String,
-    #[doc= ""]
-    pub user_pool_id: PrimField<String>,
-    #[doc= ""]
-    pub username: PrimField<String>,
+    pub tf_id: std::string::String,
+    #[doc = ""]
+    pub user_pool_id: terrars::PrimField<std::string::String>,
+    #[doc = ""]
+    pub username: terrars::PrimField<std::string::String>,
 }
 
 impl BuildCognitoUser {
-    pub fn build(self, stack: &mut Stack) -> CognitoUser {
-        let out = CognitoUser(Rc::new(CognitoUser_ {
+    pub fn build(self, stack: &mut terrars::Stack) -> CognitoUser {
+        let out = CognitoUser(std::rc::Rc::new(CognitoUser_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: RefCell::new(CognitoUserData {
+            data: std::cell::RefCell::new(CognitoUserData {
                 depends_on: core::default::Default::default(),
-                provider: None,
+                provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
-                for_each: None,
+                for_each: std::option::Option::None,
+                provisioner: core::default::Default::default(),
                 attributes: core::default::Default::default(),
                 client_metadata: core::default::Default::default(),
                 desired_delivery_mediums: core::default::Default::default(),
@@ -328,12 +378,12 @@ impl BuildCognitoUser {
 }
 
 pub struct CognitoUserRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for CognitoUserRef {
-    fn new(shared: StackShared, base: String) -> Self {
+impl terrars::Ref for CognitoUserRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> Self {
         Self {
             shared: shared,
             base: base,
@@ -342,101 +392,101 @@ impl Ref for CognitoUserRef {
 }
 
 impl CognitoUserRef {
-    fn extract_ref(&self) -> String {
+    fn extract_ref(&self) -> std::string::String {
         self.base.clone()
     }
 
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `attributes` after provisioning.\n"]
-    pub fn attributes(&self) -> RecRef<PrimExpr<String>> {
-        RecRef::new(self.shared().clone(), format!("{}.attributes", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `attributes` after provisioning.\n"]
+    pub fn attributes(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
+        terrars::RecRef::new(self.shared().clone(), format!("{}.attributes", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `client_metadata` after provisioning.\n"]
-    pub fn client_metadata(&self) -> RecRef<PrimExpr<String>> {
-        RecRef::new(self.shared().clone(), format!("{}.client_metadata", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `client_metadata` after provisioning.\n"]
+    pub fn client_metadata(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
+        terrars::RecRef::new(self.shared().clone(), format!("{}.client_metadata", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `creation_date` after provisioning.\n"]
-    pub fn creation_date(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.creation_date", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `creation_date` after provisioning.\n"]
+    pub fn creation_date(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.creation_date", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `desired_delivery_mediums` after provisioning.\n"]
-    pub fn desired_delivery_mediums(&self) -> SetRef<PrimExpr<String>> {
-        SetRef::new(self.shared().clone(), format!("{}.desired_delivery_mediums", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `desired_delivery_mediums` after provisioning.\n"]
+    pub fn desired_delivery_mediums(&self) -> terrars::SetRef<terrars::PrimExpr<std::string::String>> {
+        terrars::SetRef::new(self.shared().clone(), format!("{}.desired_delivery_mediums", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `enabled` after provisioning.\n"]
-    pub fn enabled(&self) -> PrimExpr<bool> {
-        PrimExpr::new(self.shared().clone(), format!("{}.enabled", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `enabled` after provisioning.\n"]
+    pub fn enabled(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.enabled", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `force_alias_creation` after provisioning.\n"]
-    pub fn force_alias_creation(&self) -> PrimExpr<bool> {
-        PrimExpr::new(self.shared().clone(), format!("{}.force_alias_creation", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `force_alias_creation` after provisioning.\n"]
+    pub fn force_alias_creation(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.force_alias_creation", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `id` after provisioning.\n"]
-    pub fn id(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
+    pub fn id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `last_modified_date` after provisioning.\n"]
-    pub fn last_modified_date(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.last_modified_date", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `last_modified_date` after provisioning.\n"]
+    pub fn last_modified_date(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.last_modified_date", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `message_action` after provisioning.\n"]
-    pub fn message_action(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.message_action", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `message_action` after provisioning.\n"]
+    pub fn message_action(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.message_action", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `mfa_setting_list` after provisioning.\n"]
-    pub fn mfa_setting_list(&self) -> SetRef<PrimExpr<String>> {
-        SetRef::new(self.shared().clone(), format!("{}.mfa_setting_list", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `mfa_setting_list` after provisioning.\n"]
+    pub fn mfa_setting_list(&self) -> terrars::SetRef<terrars::PrimExpr<std::string::String>> {
+        terrars::SetRef::new(self.shared().clone(), format!("{}.mfa_setting_list", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `password` after provisioning.\n"]
-    pub fn password(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.password", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `password` after provisioning.\n"]
+    pub fn password(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.password", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `preferred_mfa_setting` after provisioning.\n"]
-    pub fn preferred_mfa_setting(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.preferred_mfa_setting", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `preferred_mfa_setting` after provisioning.\n"]
+    pub fn preferred_mfa_setting(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.preferred_mfa_setting", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `status` after provisioning.\n"]
-    pub fn status(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.status", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `status` after provisioning.\n"]
+    pub fn status(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.status", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `sub` after provisioning.\n"]
-    pub fn sub(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.sub", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `sub` after provisioning.\n"]
+    pub fn sub(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.sub", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `temporary_password` after provisioning.\n"]
-    pub fn temporary_password(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.temporary_password", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `temporary_password` after provisioning.\n"]
+    pub fn temporary_password(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.temporary_password", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `user_pool_id` after provisioning.\n"]
-    pub fn user_pool_id(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.user_pool_id", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `user_pool_id` after provisioning.\n"]
+    pub fn user_pool_id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.user_pool_id", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `username` after provisioning.\n"]
-    pub fn username(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.username", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `username` after provisioning.\n"]
+    pub fn username(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.username", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `validation_data` after provisioning.\n"]
-    pub fn validation_data(&self) -> RecRef<PrimExpr<String>> {
-        RecRef::new(self.shared().clone(), format!("{}.validation_data", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `validation_data` after provisioning.\n"]
+    pub fn validation_data(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
+        terrars::RecRef::new(self.shared().clone(), format!("{}.validation_data", self.extract_ref()))
     }
 }

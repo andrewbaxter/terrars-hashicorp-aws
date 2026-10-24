@@ -1,53 +1,57 @@
 use serde::Serialize;
-use std::cell::RefCell;
-use std::rc::Rc;
-use terrars::*;
+use terrars::{
+    Referable as _,
+    Resource_ as _,
+    Ref as _,
+};
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
 struct MskconnectCustomPluginData {
-    #[serde(skip_serializing_if = "Vec::is_empty")]
-    depends_on: Vec<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    provider: Option<String>,
-    #[serde(skip_serializing_if = "SerdeSkipDefault::is_default")]
-    lifecycle: ResourceLifecycle,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    for_each: Option<String>,
-    content_type: PrimField<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    description: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    id: Option<PrimField<String>>,
-    name: PrimField<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    location: Option<Vec<MskconnectCustomPluginLocationEl>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    timeouts: Option<MskconnectCustomPluginTimeoutsEl>,
+    #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
+    depends_on: std::vec::Vec<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    provider: std::option::Option<std::string::String>,
+    #[serde(skip_serializing_if = "terrars::SerdeSkipDefault::is_default")]
+    lifecycle: terrars::ResourceLifecycle,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    for_each: std::option::Option<std::string::String>,
+    #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
+    provisioner: std::vec::Vec<terrars::Provisioner>,
+    content_type: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    description: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    id: std::option::Option<terrars::PrimField<std::string::String>>,
+    name: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    location: std::option::Option<std::vec::Vec<MskconnectCustomPluginLocationEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    timeouts: std::option::Option<MskconnectCustomPluginTimeoutsEl>,
     dynamic: MskconnectCustomPluginDynamic,
 }
 
 struct MskconnectCustomPlugin_ {
-    shared: StackShared,
-    tf_id: String,
-    data: RefCell<MskconnectCustomPluginData>,
+    shared: terrars::StackShared,
+    tf_id: std::string::String,
+    data: std::cell::RefCell<MskconnectCustomPluginData>,
 }
 
 #[derive(Clone)]
-pub struct MskconnectCustomPlugin(Rc<MskconnectCustomPlugin_>);
+pub struct MskconnectCustomPlugin(std::rc::Rc<MskconnectCustomPlugin_>);
 
 impl MskconnectCustomPlugin {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.0.shared
     }
 
-    pub fn depends_on(self, dep: &impl Referable) -> Self {
+    pub fn depends_on(self, dep: &impl terrars::Referable) -> Self {
         self.0.data.borrow_mut().depends_on.push(dep.extract_ref());
         self
     }
 
     pub fn set_provider(self, provider: &ProviderAws) -> Self {
-        self.0.data.borrow_mut().provider = Some(provider.provider_ref());
+        self.0.data.borrow_mut().provider = std::option::Option::Some(provider.provider_ref());
         self
     }
 
@@ -62,141 +66,177 @@ impl MskconnectCustomPlugin {
     }
 
     pub fn ignore_changes_to_all(self) -> Self {
-        self.0.data.borrow_mut().lifecycle.ignore_changes = Some(IgnoreChanges::All(IgnoreChangesAll::All));
+        self.0.data.borrow_mut().lifecycle.ignore_changes =
+            std::option::Option::Some(terrars::IgnoreChanges::All(terrars::IgnoreChangesAll::All));
         self
     }
 
-    pub fn ignore_changes_to_attr(self, attr: impl ToString) -> Self {
+    pub fn ignore_changes_to_attr(self, attr: impl std::string::ToString) -> Self {
         {
             let mut d = self.0.data.borrow_mut();
             if match &mut d.lifecycle.ignore_changes {
-                Some(i) => match i {
-                    IgnoreChanges::All(_) => {
+                std::option::Option::Some(i) => match i {
+                    terrars::IgnoreChanges::All(_) => {
                         true
                     },
-                    IgnoreChanges::Refs(r) => {
+                    terrars::IgnoreChanges::Refs(r) => {
                         r.push(attr.to_string());
                         false
                     },
                 },
-                None => true,
+                std::option::Option::None => true,
             } {
-                d.lifecycle.ignore_changes = Some(IgnoreChanges::Refs(vec![attr.to_string()]));
+                d.lifecycle.ignore_changes =
+                    std::option::Option::Some(terrars::IgnoreChanges::Refs(vec![attr.to_string()]));
             }
         }
         self
     }
 
-    pub fn replace_triggered_by_resource(self, r: &impl Resource) -> Self {
+    pub fn replace_triggered_by_resource(self, r: &impl terrars::Resource) -> Self {
         self.0.data.borrow_mut().lifecycle.replace_triggered_by.push(r.extract_ref());
         self
     }
 
-    pub fn replace_triggered_by_attr(self, attr: impl ToString) -> Self {
+    pub fn replace_triggered_by_attr(self, attr: impl std::string::ToString) -> Self {
         self.0.data.borrow_mut().lifecycle.replace_triggered_by.push(attr.to_string());
         self
     }
 
-    #[doc= "Set the field `description`.\n"]
-    pub fn set_description(self, v: impl Into<PrimField<String>>) -> Self {
-        self.0.data.borrow_mut().description = Some(v.into());
+    #[doc = r" Add a provisioner (ex: `local-exec`, `remote-exec`, `file`) to this resource."]
+    #[doc = r" Provisioners run in the order they're added."]
+    pub fn add_provisioner(self, v: impl std::convert::Into<terrars::Provisioner>) -> Self {
+        self.0.data.borrow_mut().provisioner.push(v.into());
         self
     }
 
-    #[doc= "Set the field `id`.\n"]
-    pub fn set_id(self, v: impl Into<PrimField<String>>) -> Self {
-        self.0.data.borrow_mut().id = Some(v.into());
+    pub fn add_lifecycle_precondition(
+        self,
+        condition: impl std::convert::Into<terrars::PrimField<bool>>,
+        error_message: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.0.data.borrow_mut().lifecycle.precondition.push(terrars::LifecycleCondition {
+            condition: condition.into(),
+            error_message: error_message.into(),
+        });
         self
     }
 
-    #[doc= "Set the field `location`.\n"]
-    pub fn set_location(self, v: impl Into<BlockAssignable<MskconnectCustomPluginLocationEl>>) -> Self {
+    pub fn add_lifecycle_postcondition(
+        self,
+        condition: impl std::convert::Into<terrars::PrimField<bool>>,
+        error_message: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.0.data.borrow_mut().lifecycle.postcondition.push(terrars::LifecycleCondition {
+            condition: condition.into(),
+            error_message: error_message.into(),
+        });
+        self
+    }
+
+    #[doc = "Set the field `description`.\n"]
+    pub fn set_description(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().description = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `id`.\n"]
+    pub fn set_id(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().id = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `location`.\n"]
+    pub fn set_location(
+        self,
+        v: impl std::convert::Into<terrars::BlockAssignable<MskconnectCustomPluginLocationEl>>,
+    ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.0.data.borrow_mut().location = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.0.data.borrow_mut().location = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.0.data.borrow_mut().dynamic.location = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.0.data.borrow_mut().dynamic.location = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Set the field `timeouts`.\n"]
-    pub fn set_timeouts(self, v: impl Into<MskconnectCustomPluginTimeoutsEl>) -> Self {
-        self.0.data.borrow_mut().timeouts = Some(v.into());
+    #[doc = "Set the field `timeouts`.\n"]
+    pub fn set_timeouts(self, v: impl std::convert::Into<MskconnectCustomPluginTimeoutsEl>) -> Self {
+        self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Get a reference to the value of field `arn` after provisioning.\n"]
-    pub fn arn(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.arn", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `arn` after provisioning.\n"]
+    pub fn arn(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.arn", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `content_type` after provisioning.\n"]
-    pub fn content_type(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.content_type", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `content_type` after provisioning.\n"]
+    pub fn content_type(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.content_type", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `description` after provisioning.\n"]
-    pub fn description(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.description", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `description` after provisioning.\n"]
+    pub fn description(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.description", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `id` after provisioning.\n"]
-    pub fn id(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
+    pub fn id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `latest_revision` after provisioning.\n"]
-    pub fn latest_revision(&self) -> PrimExpr<f64> {
-        PrimExpr::new(self.shared().clone(), format!("{}.latest_revision", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `latest_revision` after provisioning.\n"]
+    pub fn latest_revision(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.latest_revision", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `name` after provisioning.\n"]
-    pub fn name(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `name` after provisioning.\n"]
+    pub fn name(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `state` after provisioning.\n"]
-    pub fn state(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.state", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `state` after provisioning.\n"]
+    pub fn state(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.state", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `location` after provisioning.\n"]
-    pub fn location(&self) -> ListRef<MskconnectCustomPluginLocationElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.location", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `location` after provisioning.\n"]
+    pub fn location(&self) -> terrars::ListRef<MskconnectCustomPluginLocationElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.location", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `timeouts` after provisioning.\n"]
+    #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
     pub fn timeouts(&self) -> MskconnectCustomPluginTimeoutsElRef {
         MskconnectCustomPluginTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
-impl Referable for MskconnectCustomPlugin {
-    fn extract_ref(&self) -> String {
+impl terrars::Referable for MskconnectCustomPlugin {
+    fn extract_ref(&self) -> std::string::String {
         format!("{}.{}", self.0.extract_resource_type(), self.0.extract_tf_id())
     }
 }
 
-impl Resource for MskconnectCustomPlugin { }
+impl terrars::Resource for MskconnectCustomPlugin { }
 
-impl ToListMappable for MskconnectCustomPlugin {
-    type O = ListRef<MskconnectCustomPluginRef>;
+impl terrars::ToListMappable for MskconnectCustomPlugin {
+    type O = terrars::ListRef<MskconnectCustomPluginRef>;
 
-    fn do_map(self, base: String) -> Self::O {
-        self.0.data.borrow_mut().for_each = Some(format!("${{{}}}", base));
-        ListRef::new(self.0.shared.clone(), self.extract_ref())
+    fn do_map(self, base: std::string::String) -> Self::O {
+        self.0.data.borrow_mut().for_each = std::option::Option::Some(format!("${{{}}}", base));
+        terrars::ListRef::new(self.0.shared.clone(), self.extract_ref())
     }
 }
 
-impl Resource_ for MskconnectCustomPlugin_ {
-    fn extract_resource_type(&self) -> String {
+impl terrars::Resource_ for MskconnectCustomPlugin_ {
+    fn extract_resource_type(&self) -> std::string::String {
         "aws_mskconnect_custom_plugin".into()
     }
 
-    fn extract_tf_id(&self) -> String {
+    fn extract_tf_id(&self) -> std::string::String {
         self.tf_id.clone()
     }
 
@@ -206,30 +246,31 @@ impl Resource_ for MskconnectCustomPlugin_ {
 }
 
 pub struct BuildMskconnectCustomPlugin {
-    pub tf_id: String,
-    #[doc= ""]
-    pub content_type: PrimField<String>,
-    #[doc= ""]
-    pub name: PrimField<String>,
+    pub tf_id: std::string::String,
+    #[doc = ""]
+    pub content_type: terrars::PrimField<std::string::String>,
+    #[doc = ""]
+    pub name: terrars::PrimField<std::string::String>,
 }
 
 impl BuildMskconnectCustomPlugin {
-    pub fn build(self, stack: &mut Stack) -> MskconnectCustomPlugin {
-        let out = MskconnectCustomPlugin(Rc::new(MskconnectCustomPlugin_ {
+    pub fn build(self, stack: &mut terrars::Stack) -> MskconnectCustomPlugin {
+        let out = MskconnectCustomPlugin(std::rc::Rc::new(MskconnectCustomPlugin_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: RefCell::new(MskconnectCustomPluginData {
+            data: std::cell::RefCell::new(MskconnectCustomPluginData {
                 depends_on: core::default::Default::default(),
-                provider: None,
+                provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
-                for_each: None,
+                for_each: std::option::Option::None,
+                provisioner: core::default::Default::default(),
                 content_type: self.content_type,
                 description: core::default::Default::default(),
                 id: core::default::Default::default(),
                 name: self.name,
                 location: core::default::Default::default(),
                 timeouts: core::default::Default::default(),
-                dynamic: Default::default(),
+                dynamic: core::default::Default::default(),
             }),
         }));
         stack.add_resource(out.0.clone());
@@ -238,12 +279,12 @@ impl BuildMskconnectCustomPlugin {
 }
 
 pub struct MskconnectCustomPluginRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for MskconnectCustomPluginRef {
-    fn new(shared: StackShared, base: String) -> Self {
+impl terrars::Ref for MskconnectCustomPluginRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> Self {
         Self {
             shared: shared,
             base: base,
@@ -252,55 +293,55 @@ impl Ref for MskconnectCustomPluginRef {
 }
 
 impl MskconnectCustomPluginRef {
-    fn extract_ref(&self) -> String {
+    fn extract_ref(&self) -> std::string::String {
         self.base.clone()
     }
 
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `arn` after provisioning.\n"]
-    pub fn arn(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.arn", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `arn` after provisioning.\n"]
+    pub fn arn(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.arn", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `content_type` after provisioning.\n"]
-    pub fn content_type(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.content_type", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `content_type` after provisioning.\n"]
+    pub fn content_type(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.content_type", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `description` after provisioning.\n"]
-    pub fn description(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.description", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `description` after provisioning.\n"]
+    pub fn description(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.description", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `id` after provisioning.\n"]
-    pub fn id(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
+    pub fn id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `latest_revision` after provisioning.\n"]
-    pub fn latest_revision(&self) -> PrimExpr<f64> {
-        PrimExpr::new(self.shared().clone(), format!("{}.latest_revision", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `latest_revision` after provisioning.\n"]
+    pub fn latest_revision(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.latest_revision", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `name` after provisioning.\n"]
-    pub fn name(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `name` after provisioning.\n"]
+    pub fn name(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `state` after provisioning.\n"]
-    pub fn state(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.state", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `state` after provisioning.\n"]
+    pub fn state(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.state", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `location` after provisioning.\n"]
-    pub fn location(&self) -> ListRef<MskconnectCustomPluginLocationElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.location", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `location` after provisioning.\n"]
+    pub fn location(&self) -> terrars::ListRef<MskconnectCustomPluginLocationElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.location", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `timeouts` after provisioning.\n"]
+    #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
     pub fn timeouts(&self) -> MskconnectCustomPluginTimeoutsElRef {
         MskconnectCustomPluginTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
@@ -308,25 +349,25 @@ impl MskconnectCustomPluginRef {
 
 #[derive(Serialize)]
 pub struct MskconnectCustomPluginLocationElS3El {
-    bucket_arn: PrimField<String>,
-    file_key: PrimField<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    object_version: Option<PrimField<String>>,
+    bucket_arn: terrars::PrimField<std::string::String>,
+    file_key: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    object_version: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
 impl MskconnectCustomPluginLocationElS3El {
-    #[doc= "Set the field `object_version`.\n"]
-    pub fn set_object_version(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.object_version = Some(v.into());
+    #[doc = "Set the field `object_version`.\n"]
+    pub fn set_object_version(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.object_version = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl ToListMappable for MskconnectCustomPluginLocationElS3El {
-    type O = BlockAssignable<MskconnectCustomPluginLocationElS3El>;
+impl terrars::ToListMappable for MskconnectCustomPluginLocationElS3El {
+    type O = terrars::BlockAssignable<MskconnectCustomPluginLocationElS3El>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -335,10 +376,10 @@ impl ToListMappable for MskconnectCustomPluginLocationElS3El {
 }
 
 pub struct BuildMskconnectCustomPluginLocationElS3El {
-    #[doc= ""]
-    pub bucket_arn: PrimField<String>,
-    #[doc= ""]
-    pub file_key: PrimField<String>,
+    #[doc = ""]
+    pub bucket_arn: terrars::PrimField<std::string::String>,
+    #[doc = ""]
+    pub file_key: terrars::PrimField<std::string::String>,
 }
 
 impl BuildMskconnectCustomPluginLocationElS3El {
@@ -352,12 +393,12 @@ impl BuildMskconnectCustomPluginLocationElS3El {
 }
 
 pub struct MskconnectCustomPluginLocationElS3ElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for MskconnectCustomPluginLocationElS3ElRef {
-    fn new(shared: StackShared, base: String) -> MskconnectCustomPluginLocationElS3ElRef {
+impl terrars::Ref for MskconnectCustomPluginLocationElS3ElRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> MskconnectCustomPluginLocationElS3ElRef {
         MskconnectCustomPluginLocationElS3ElRef {
             shared: shared,
             base: base.to_string(),
@@ -366,58 +407,61 @@ impl Ref for MskconnectCustomPluginLocationElS3ElRef {
 }
 
 impl MskconnectCustomPluginLocationElS3ElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `bucket_arn` after provisioning.\n"]
-    pub fn bucket_arn(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.bucket_arn", self.base))
+    #[doc = "Get a reference to the value of field `bucket_arn` after provisioning.\n"]
+    pub fn bucket_arn(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.bucket_arn", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `file_key` after provisioning.\n"]
-    pub fn file_key(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.file_key", self.base))
+    #[doc = "Get a reference to the value of field `file_key` after provisioning.\n"]
+    pub fn file_key(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.file_key", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `object_version` after provisioning.\n"]
-    pub fn object_version(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.object_version", self.base))
+    #[doc = "Get a reference to the value of field `object_version` after provisioning.\n"]
+    pub fn object_version(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.object_version", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
 struct MskconnectCustomPluginLocationElDynamic {
-    s3: Option<DynamicBlock<MskconnectCustomPluginLocationElS3El>>,
+    s3: std::option::Option<terrars::DynamicBlock<MskconnectCustomPluginLocationElS3El>>,
 }
 
 #[derive(Serialize)]
 pub struct MskconnectCustomPluginLocationEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    s3: Option<Vec<MskconnectCustomPluginLocationElS3El>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    s3: std::option::Option<std::vec::Vec<MskconnectCustomPluginLocationElS3El>>,
     dynamic: MskconnectCustomPluginLocationElDynamic,
 }
 
 impl MskconnectCustomPluginLocationEl {
-    #[doc= "Set the field `s3`.\n"]
-    pub fn set_s3(mut self, v: impl Into<BlockAssignable<MskconnectCustomPluginLocationElS3El>>) -> Self {
+    #[doc = "Set the field `s3`.\n"]
+    pub fn set_s3(
+        mut self,
+        v: impl std::convert::Into<terrars::BlockAssignable<MskconnectCustomPluginLocationElS3El>>,
+    ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.s3 = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.s3 = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.s3 = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.s3 = std::option::Option::Some(d);
             },
         }
         self
     }
 }
 
-impl ToListMappable for MskconnectCustomPluginLocationEl {
-    type O = BlockAssignable<MskconnectCustomPluginLocationEl>;
+impl terrars::ToListMappable for MskconnectCustomPluginLocationEl {
+    type O = terrars::BlockAssignable<MskconnectCustomPluginLocationEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -431,18 +475,18 @@ impl BuildMskconnectCustomPluginLocationEl {
     pub fn build(self) -> MskconnectCustomPluginLocationEl {
         MskconnectCustomPluginLocationEl {
             s3: core::default::Default::default(),
-            dynamic: Default::default(),
+            dynamic: core::default::Default::default(),
         }
     }
 }
 
 pub struct MskconnectCustomPluginLocationElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for MskconnectCustomPluginLocationElRef {
-    fn new(shared: StackShared, base: String) -> MskconnectCustomPluginLocationElRef {
+impl terrars::Ref for MskconnectCustomPluginLocationElRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> MskconnectCustomPluginLocationElRef {
         MskconnectCustomPluginLocationElRef {
             shared: shared,
             base: base.to_string(),
@@ -451,43 +495,43 @@ impl Ref for MskconnectCustomPluginLocationElRef {
 }
 
 impl MskconnectCustomPluginLocationElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `s3` after provisioning.\n"]
-    pub fn s3(&self) -> ListRef<MskconnectCustomPluginLocationElS3ElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.s3", self.base))
+    #[doc = "Get a reference to the value of field `s3` after provisioning.\n"]
+    pub fn s3(&self) -> terrars::ListRef<MskconnectCustomPluginLocationElS3ElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.s3", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct MskconnectCustomPluginTimeoutsEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    create: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    delete: Option<PrimField<String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    create: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    delete: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
 impl MskconnectCustomPluginTimeoutsEl {
-    #[doc= "Set the field `create`.\n"]
-    pub fn set_create(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.create = Some(v.into());
+    #[doc = "Set the field `create`.\n"]
+    pub fn set_create(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.create = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `delete`.\n"]
-    pub fn set_delete(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.delete = Some(v.into());
+    #[doc = "Set the field `delete`.\n"]
+    pub fn set_delete(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.delete = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl ToListMappable for MskconnectCustomPluginTimeoutsEl {
-    type O = BlockAssignable<MskconnectCustomPluginTimeoutsEl>;
+impl terrars::ToListMappable for MskconnectCustomPluginTimeoutsEl {
+    type O = terrars::BlockAssignable<MskconnectCustomPluginTimeoutsEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -507,12 +551,12 @@ impl BuildMskconnectCustomPluginTimeoutsEl {
 }
 
 pub struct MskconnectCustomPluginTimeoutsElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for MskconnectCustomPluginTimeoutsElRef {
-    fn new(shared: StackShared, base: String) -> MskconnectCustomPluginTimeoutsElRef {
+impl terrars::Ref for MskconnectCustomPluginTimeoutsElRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> MskconnectCustomPluginTimeoutsElRef {
         MskconnectCustomPluginTimeoutsElRef {
             shared: shared,
             base: base.to_string(),
@@ -521,22 +565,22 @@ impl Ref for MskconnectCustomPluginTimeoutsElRef {
 }
 
 impl MskconnectCustomPluginTimeoutsElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `create` after provisioning.\n"]
-    pub fn create(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.create", self.base))
+    #[doc = "Get a reference to the value of field `create` after provisioning.\n"]
+    pub fn create(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.create", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `delete` after provisioning.\n"]
-    pub fn delete(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.delete", self.base))
+    #[doc = "Get a reference to the value of field `delete` after provisioning.\n"]
+    pub fn delete(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.delete", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
 struct MskconnectCustomPluginDynamic {
-    location: Option<DynamicBlock<MskconnectCustomPluginLocationEl>>,
+    location: std::option::Option<terrars::DynamicBlock<MskconnectCustomPluginLocationEl>>,
 }

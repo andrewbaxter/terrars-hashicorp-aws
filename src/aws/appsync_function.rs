@@ -1,64 +1,68 @@
 use serde::Serialize;
-use std::cell::RefCell;
-use std::rc::Rc;
-use terrars::*;
+use terrars::{
+    Referable as _,
+    Resource_ as _,
+    Ref as _,
+};
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
 struct AppsyncFunctionData {
-    #[serde(skip_serializing_if = "Vec::is_empty")]
-    depends_on: Vec<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    provider: Option<String>,
-    #[serde(skip_serializing_if = "SerdeSkipDefault::is_default")]
-    lifecycle: ResourceLifecycle,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    for_each: Option<String>,
-    api_id: PrimField<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    code: Option<PrimField<String>>,
-    data_source: PrimField<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    description: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    function_version: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    id: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    max_batch_size: Option<PrimField<f64>>,
-    name: PrimField<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    request_mapping_template: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    response_mapping_template: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    runtime: Option<Vec<AppsyncFunctionRuntimeEl>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    sync_config: Option<Vec<AppsyncFunctionSyncConfigEl>>,
+    #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
+    depends_on: std::vec::Vec<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    provider: std::option::Option<std::string::String>,
+    #[serde(skip_serializing_if = "terrars::SerdeSkipDefault::is_default")]
+    lifecycle: terrars::ResourceLifecycle,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    for_each: std::option::Option<std::string::String>,
+    #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
+    provisioner: std::vec::Vec<terrars::Provisioner>,
+    api_id: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    code: std::option::Option<terrars::PrimField<std::string::String>>,
+    data_source: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    description: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    function_version: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    id: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    max_batch_size: std::option::Option<terrars::PrimField<f64>>,
+    name: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    request_mapping_template: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    response_mapping_template: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    runtime: std::option::Option<std::vec::Vec<AppsyncFunctionRuntimeEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    sync_config: std::option::Option<std::vec::Vec<AppsyncFunctionSyncConfigEl>>,
     dynamic: AppsyncFunctionDynamic,
 }
 
 struct AppsyncFunction_ {
-    shared: StackShared,
-    tf_id: String,
-    data: RefCell<AppsyncFunctionData>,
+    shared: terrars::StackShared,
+    tf_id: std::string::String,
+    data: std::cell::RefCell<AppsyncFunctionData>,
 }
 
 #[derive(Clone)]
-pub struct AppsyncFunction(Rc<AppsyncFunction_>);
+pub struct AppsyncFunction(std::rc::Rc<AppsyncFunction_>);
 
 impl AppsyncFunction {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.0.shared
     }
 
-    pub fn depends_on(self, dep: &impl Referable) -> Self {
+    pub fn depends_on(self, dep: &impl terrars::Referable) -> Self {
         self.0.data.borrow_mut().depends_on.push(dep.extract_ref());
         self
     }
 
     pub fn set_provider(self, provider: &ProviderAws) -> Self {
-        self.0.data.borrow_mut().provider = Some(provider.provider_ref());
+        self.0.data.borrow_mut().provider = std::option::Option::Some(provider.provider_ref());
         self
     }
 
@@ -73,203 +77,245 @@ impl AppsyncFunction {
     }
 
     pub fn ignore_changes_to_all(self) -> Self {
-        self.0.data.borrow_mut().lifecycle.ignore_changes = Some(IgnoreChanges::All(IgnoreChangesAll::All));
+        self.0.data.borrow_mut().lifecycle.ignore_changes =
+            std::option::Option::Some(terrars::IgnoreChanges::All(terrars::IgnoreChangesAll::All));
         self
     }
 
-    pub fn ignore_changes_to_attr(self, attr: impl ToString) -> Self {
+    pub fn ignore_changes_to_attr(self, attr: impl std::string::ToString) -> Self {
         {
             let mut d = self.0.data.borrow_mut();
             if match &mut d.lifecycle.ignore_changes {
-                Some(i) => match i {
-                    IgnoreChanges::All(_) => {
+                std::option::Option::Some(i) => match i {
+                    terrars::IgnoreChanges::All(_) => {
                         true
                     },
-                    IgnoreChanges::Refs(r) => {
+                    terrars::IgnoreChanges::Refs(r) => {
                         r.push(attr.to_string());
                         false
                     },
                 },
-                None => true,
+                std::option::Option::None => true,
             } {
-                d.lifecycle.ignore_changes = Some(IgnoreChanges::Refs(vec![attr.to_string()]));
+                d.lifecycle.ignore_changes =
+                    std::option::Option::Some(terrars::IgnoreChanges::Refs(vec![attr.to_string()]));
             }
         }
         self
     }
 
-    pub fn replace_triggered_by_resource(self, r: &impl Resource) -> Self {
+    pub fn replace_triggered_by_resource(self, r: &impl terrars::Resource) -> Self {
         self.0.data.borrow_mut().lifecycle.replace_triggered_by.push(r.extract_ref());
         self
     }
 
-    pub fn replace_triggered_by_attr(self, attr: impl ToString) -> Self {
+    pub fn replace_triggered_by_attr(self, attr: impl std::string::ToString) -> Self {
         self.0.data.borrow_mut().lifecycle.replace_triggered_by.push(attr.to_string());
         self
     }
 
-    #[doc= "Set the field `code`.\n"]
-    pub fn set_code(self, v: impl Into<PrimField<String>>) -> Self {
-        self.0.data.borrow_mut().code = Some(v.into());
+    #[doc = r" Add a provisioner (ex: `local-exec`, `remote-exec`, `file`) to this resource."]
+    #[doc = r" Provisioners run in the order they're added."]
+    pub fn add_provisioner(self, v: impl std::convert::Into<terrars::Provisioner>) -> Self {
+        self.0.data.borrow_mut().provisioner.push(v.into());
         self
     }
 
-    #[doc= "Set the field `description`.\n"]
-    pub fn set_description(self, v: impl Into<PrimField<String>>) -> Self {
-        self.0.data.borrow_mut().description = Some(v.into());
+    pub fn add_lifecycle_precondition(
+        self,
+        condition: impl std::convert::Into<terrars::PrimField<bool>>,
+        error_message: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.0.data.borrow_mut().lifecycle.precondition.push(terrars::LifecycleCondition {
+            condition: condition.into(),
+            error_message: error_message.into(),
+        });
         self
     }
 
-    #[doc= "Set the field `function_version`.\n"]
-    pub fn set_function_version(self, v: impl Into<PrimField<String>>) -> Self {
-        self.0.data.borrow_mut().function_version = Some(v.into());
+    pub fn add_lifecycle_postcondition(
+        self,
+        condition: impl std::convert::Into<terrars::PrimField<bool>>,
+        error_message: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.0.data.borrow_mut().lifecycle.postcondition.push(terrars::LifecycleCondition {
+            condition: condition.into(),
+            error_message: error_message.into(),
+        });
         self
     }
 
-    #[doc= "Set the field `id`.\n"]
-    pub fn set_id(self, v: impl Into<PrimField<String>>) -> Self {
-        self.0.data.borrow_mut().id = Some(v.into());
+    #[doc = "Set the field `code`.\n"]
+    pub fn set_code(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().code = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `max_batch_size`.\n"]
-    pub fn set_max_batch_size(self, v: impl Into<PrimField<f64>>) -> Self {
-        self.0.data.borrow_mut().max_batch_size = Some(v.into());
+    #[doc = "Set the field `description`.\n"]
+    pub fn set_description(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().description = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `request_mapping_template`.\n"]
-    pub fn set_request_mapping_template(self, v: impl Into<PrimField<String>>) -> Self {
-        self.0.data.borrow_mut().request_mapping_template = Some(v.into());
+    #[doc = "Set the field `function_version`.\n"]
+    pub fn set_function_version(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().function_version = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `response_mapping_template`.\n"]
-    pub fn set_response_mapping_template(self, v: impl Into<PrimField<String>>) -> Self {
-        self.0.data.borrow_mut().response_mapping_template = Some(v.into());
+    #[doc = "Set the field `id`.\n"]
+    pub fn set_id(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().id = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `runtime`.\n"]
-    pub fn set_runtime(self, v: impl Into<BlockAssignable<AppsyncFunctionRuntimeEl>>) -> Self {
+    #[doc = "Set the field `max_batch_size`.\n"]
+    pub fn set_max_batch_size(self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.0.data.borrow_mut().max_batch_size = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `request_mapping_template`.\n"]
+    pub fn set_request_mapping_template(
+        self,
+        v: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.0.data.borrow_mut().request_mapping_template = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `response_mapping_template`.\n"]
+    pub fn set_response_mapping_template(
+        self,
+        v: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.0.data.borrow_mut().response_mapping_template = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `runtime`.\n"]
+    pub fn set_runtime(self, v: impl std::convert::Into<terrars::BlockAssignable<AppsyncFunctionRuntimeEl>>) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.0.data.borrow_mut().runtime = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.0.data.borrow_mut().runtime = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.0.data.borrow_mut().dynamic.runtime = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.0.data.borrow_mut().dynamic.runtime = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Set the field `sync_config`.\n"]
-    pub fn set_sync_config(self, v: impl Into<BlockAssignable<AppsyncFunctionSyncConfigEl>>) -> Self {
+    #[doc = "Set the field `sync_config`.\n"]
+    pub fn set_sync_config(
+        self,
+        v: impl std::convert::Into<terrars::BlockAssignable<AppsyncFunctionSyncConfigEl>>,
+    ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.0.data.borrow_mut().sync_config = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.0.data.borrow_mut().sync_config = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.0.data.borrow_mut().dynamic.sync_config = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.0.data.borrow_mut().dynamic.sync_config = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Get a reference to the value of field `api_id` after provisioning.\n"]
-    pub fn api_id(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.api_id", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `api_id` after provisioning.\n"]
+    pub fn api_id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.api_id", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `arn` after provisioning.\n"]
-    pub fn arn(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.arn", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `arn` after provisioning.\n"]
+    pub fn arn(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.arn", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `code` after provisioning.\n"]
-    pub fn code(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.code", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `code` after provisioning.\n"]
+    pub fn code(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.code", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `data_source` after provisioning.\n"]
-    pub fn data_source(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.data_source", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `data_source` after provisioning.\n"]
+    pub fn data_source(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.data_source", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `description` after provisioning.\n"]
-    pub fn description(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.description", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `description` after provisioning.\n"]
+    pub fn description(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.description", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `function_id` after provisioning.\n"]
-    pub fn function_id(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.function_id", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `function_id` after provisioning.\n"]
+    pub fn function_id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.function_id", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `function_version` after provisioning.\n"]
-    pub fn function_version(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.function_version", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `function_version` after provisioning.\n"]
+    pub fn function_version(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.function_version", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `id` after provisioning.\n"]
-    pub fn id(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
+    pub fn id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `max_batch_size` after provisioning.\n"]
-    pub fn max_batch_size(&self) -> PrimExpr<f64> {
-        PrimExpr::new(self.shared().clone(), format!("{}.max_batch_size", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `max_batch_size` after provisioning.\n"]
+    pub fn max_batch_size(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.max_batch_size", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `name` after provisioning.\n"]
-    pub fn name(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `name` after provisioning.\n"]
+    pub fn name(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `request_mapping_template` after provisioning.\n"]
-    pub fn request_mapping_template(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.request_mapping_template", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `request_mapping_template` after provisioning.\n"]
+    pub fn request_mapping_template(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.request_mapping_template", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `response_mapping_template` after provisioning.\n"]
-    pub fn response_mapping_template(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.response_mapping_template", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `response_mapping_template` after provisioning.\n"]
+    pub fn response_mapping_template(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.response_mapping_template", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `runtime` after provisioning.\n"]
-    pub fn runtime(&self) -> ListRef<AppsyncFunctionRuntimeElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.runtime", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `runtime` after provisioning.\n"]
+    pub fn runtime(&self) -> terrars::ListRef<AppsyncFunctionRuntimeElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.runtime", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `sync_config` after provisioning.\n"]
-    pub fn sync_config(&self) -> ListRef<AppsyncFunctionSyncConfigElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.sync_config", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `sync_config` after provisioning.\n"]
+    pub fn sync_config(&self) -> terrars::ListRef<AppsyncFunctionSyncConfigElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.sync_config", self.extract_ref()))
     }
 }
 
-impl Referable for AppsyncFunction {
-    fn extract_ref(&self) -> String {
+impl terrars::Referable for AppsyncFunction {
+    fn extract_ref(&self) -> std::string::String {
         format!("{}.{}", self.0.extract_resource_type(), self.0.extract_tf_id())
     }
 }
 
-impl Resource for AppsyncFunction { }
+impl terrars::Resource for AppsyncFunction { }
 
-impl ToListMappable for AppsyncFunction {
-    type O = ListRef<AppsyncFunctionRef>;
+impl terrars::ToListMappable for AppsyncFunction {
+    type O = terrars::ListRef<AppsyncFunctionRef>;
 
-    fn do_map(self, base: String) -> Self::O {
-        self.0.data.borrow_mut().for_each = Some(format!("${{{}}}", base));
-        ListRef::new(self.0.shared.clone(), self.extract_ref())
+    fn do_map(self, base: std::string::String) -> Self::O {
+        self.0.data.borrow_mut().for_each = std::option::Option::Some(format!("${{{}}}", base));
+        terrars::ListRef::new(self.0.shared.clone(), self.extract_ref())
     }
 }
 
-impl Resource_ for AppsyncFunction_ {
-    fn extract_resource_type(&self) -> String {
+impl terrars::Resource_ for AppsyncFunction_ {
+    fn extract_resource_type(&self) -> std::string::String {
         "aws_appsync_function".into()
     }
 
-    fn extract_tf_id(&self) -> String {
+    fn extract_tf_id(&self) -> std::string::String {
         self.tf_id.clone()
     }
 
@@ -279,25 +325,26 @@ impl Resource_ for AppsyncFunction_ {
 }
 
 pub struct BuildAppsyncFunction {
-    pub tf_id: String,
-    #[doc= ""]
-    pub api_id: PrimField<String>,
-    #[doc= ""]
-    pub data_source: PrimField<String>,
-    #[doc= ""]
-    pub name: PrimField<String>,
+    pub tf_id: std::string::String,
+    #[doc = ""]
+    pub api_id: terrars::PrimField<std::string::String>,
+    #[doc = ""]
+    pub data_source: terrars::PrimField<std::string::String>,
+    #[doc = ""]
+    pub name: terrars::PrimField<std::string::String>,
 }
 
 impl BuildAppsyncFunction {
-    pub fn build(self, stack: &mut Stack) -> AppsyncFunction {
-        let out = AppsyncFunction(Rc::new(AppsyncFunction_ {
+    pub fn build(self, stack: &mut terrars::Stack) -> AppsyncFunction {
+        let out = AppsyncFunction(std::rc::Rc::new(AppsyncFunction_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: RefCell::new(AppsyncFunctionData {
+            data: std::cell::RefCell::new(AppsyncFunctionData {
                 depends_on: core::default::Default::default(),
-                provider: None,
+                provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
-                for_each: None,
+                for_each: std::option::Option::None,
+                provisioner: core::default::Default::default(),
                 api_id: self.api_id,
                 code: core::default::Default::default(),
                 data_source: self.data_source,
@@ -310,7 +357,7 @@ impl BuildAppsyncFunction {
                 response_mapping_template: core::default::Default::default(),
                 runtime: core::default::Default::default(),
                 sync_config: core::default::Default::default(),
-                dynamic: Default::default(),
+                dynamic: core::default::Default::default(),
             }),
         }));
         stack.add_resource(out.0.clone());
@@ -319,12 +366,12 @@ impl BuildAppsyncFunction {
 }
 
 pub struct AppsyncFunctionRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for AppsyncFunctionRef {
-    fn new(shared: StackShared, base: String) -> Self {
+impl terrars::Ref for AppsyncFunctionRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> Self {
         Self {
             shared: shared,
             base: base,
@@ -333,98 +380,98 @@ impl Ref for AppsyncFunctionRef {
 }
 
 impl AppsyncFunctionRef {
-    fn extract_ref(&self) -> String {
+    fn extract_ref(&self) -> std::string::String {
         self.base.clone()
     }
 
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `api_id` after provisioning.\n"]
-    pub fn api_id(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.api_id", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `api_id` after provisioning.\n"]
+    pub fn api_id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.api_id", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `arn` after provisioning.\n"]
-    pub fn arn(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.arn", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `arn` after provisioning.\n"]
+    pub fn arn(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.arn", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `code` after provisioning.\n"]
-    pub fn code(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.code", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `code` after provisioning.\n"]
+    pub fn code(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.code", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `data_source` after provisioning.\n"]
-    pub fn data_source(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.data_source", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `data_source` after provisioning.\n"]
+    pub fn data_source(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.data_source", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `description` after provisioning.\n"]
-    pub fn description(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.description", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `description` after provisioning.\n"]
+    pub fn description(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.description", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `function_id` after provisioning.\n"]
-    pub fn function_id(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.function_id", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `function_id` after provisioning.\n"]
+    pub fn function_id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.function_id", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `function_version` after provisioning.\n"]
-    pub fn function_version(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.function_version", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `function_version` after provisioning.\n"]
+    pub fn function_version(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.function_version", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `id` after provisioning.\n"]
-    pub fn id(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
+    pub fn id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `max_batch_size` after provisioning.\n"]
-    pub fn max_batch_size(&self) -> PrimExpr<f64> {
-        PrimExpr::new(self.shared().clone(), format!("{}.max_batch_size", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `max_batch_size` after provisioning.\n"]
+    pub fn max_batch_size(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.max_batch_size", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `name` after provisioning.\n"]
-    pub fn name(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `name` after provisioning.\n"]
+    pub fn name(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `request_mapping_template` after provisioning.\n"]
-    pub fn request_mapping_template(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.request_mapping_template", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `request_mapping_template` after provisioning.\n"]
+    pub fn request_mapping_template(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.request_mapping_template", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `response_mapping_template` after provisioning.\n"]
-    pub fn response_mapping_template(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.response_mapping_template", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `response_mapping_template` after provisioning.\n"]
+    pub fn response_mapping_template(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.response_mapping_template", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `runtime` after provisioning.\n"]
-    pub fn runtime(&self) -> ListRef<AppsyncFunctionRuntimeElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.runtime", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `runtime` after provisioning.\n"]
+    pub fn runtime(&self) -> terrars::ListRef<AppsyncFunctionRuntimeElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.runtime", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `sync_config` after provisioning.\n"]
-    pub fn sync_config(&self) -> ListRef<AppsyncFunctionSyncConfigElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.sync_config", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `sync_config` after provisioning.\n"]
+    pub fn sync_config(&self) -> terrars::ListRef<AppsyncFunctionSyncConfigElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.sync_config", self.extract_ref()))
     }
 }
 
 #[derive(Serialize)]
 pub struct AppsyncFunctionRuntimeEl {
-    name: PrimField<String>,
-    runtime_version: PrimField<String>,
+    name: terrars::PrimField<std::string::String>,
+    runtime_version: terrars::PrimField<std::string::String>,
 }
 
 impl AppsyncFunctionRuntimeEl { }
 
-impl ToListMappable for AppsyncFunctionRuntimeEl {
-    type O = BlockAssignable<AppsyncFunctionRuntimeEl>;
+impl terrars::ToListMappable for AppsyncFunctionRuntimeEl {
+    type O = terrars::BlockAssignable<AppsyncFunctionRuntimeEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -433,10 +480,10 @@ impl ToListMappable for AppsyncFunctionRuntimeEl {
 }
 
 pub struct BuildAppsyncFunctionRuntimeEl {
-    #[doc= ""]
-    pub name: PrimField<String>,
-    #[doc= ""]
-    pub runtime_version: PrimField<String>,
+    #[doc = ""]
+    pub name: terrars::PrimField<std::string::String>,
+    #[doc = ""]
+    pub runtime_version: terrars::PrimField<std::string::String>,
 }
 
 impl BuildAppsyncFunctionRuntimeEl {
@@ -449,12 +496,12 @@ impl BuildAppsyncFunctionRuntimeEl {
 }
 
 pub struct AppsyncFunctionRuntimeElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for AppsyncFunctionRuntimeElRef {
-    fn new(shared: StackShared, base: String) -> AppsyncFunctionRuntimeElRef {
+impl terrars::Ref for AppsyncFunctionRuntimeElRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> AppsyncFunctionRuntimeElRef {
         AppsyncFunctionRuntimeElRef {
             shared: shared,
             base: base.to_string(),
@@ -463,40 +510,43 @@ impl Ref for AppsyncFunctionRuntimeElRef {
 }
 
 impl AppsyncFunctionRuntimeElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `name` after provisioning.\n"]
-    pub fn name(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.name", self.base))
+    #[doc = "Get a reference to the value of field `name` after provisioning.\n"]
+    pub fn name(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `runtime_version` after provisioning.\n"]
-    pub fn runtime_version(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.runtime_version", self.base))
+    #[doc = "Get a reference to the value of field `runtime_version` after provisioning.\n"]
+    pub fn runtime_version(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.runtime_version", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct AppsyncFunctionSyncConfigElLambdaConflictHandlerConfigEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    lambda_conflict_handler_arn: Option<PrimField<String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    lambda_conflict_handler_arn: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
 impl AppsyncFunctionSyncConfigElLambdaConflictHandlerConfigEl {
-    #[doc= "Set the field `lambda_conflict_handler_arn`.\n"]
-    pub fn set_lambda_conflict_handler_arn(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.lambda_conflict_handler_arn = Some(v.into());
+    #[doc = "Set the field `lambda_conflict_handler_arn`.\n"]
+    pub fn set_lambda_conflict_handler_arn(
+        mut self,
+        v: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.lambda_conflict_handler_arn = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl ToListMappable for AppsyncFunctionSyncConfigElLambdaConflictHandlerConfigEl {
-    type O = BlockAssignable<AppsyncFunctionSyncConfigElLambdaConflictHandlerConfigEl>;
+impl terrars::ToListMappable for AppsyncFunctionSyncConfigElLambdaConflictHandlerConfigEl {
+    type O = terrars::BlockAssignable<AppsyncFunctionSyncConfigElLambdaConflictHandlerConfigEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -515,12 +565,15 @@ impl BuildAppsyncFunctionSyncConfigElLambdaConflictHandlerConfigEl {
 }
 
 pub struct AppsyncFunctionSyncConfigElLambdaConflictHandlerConfigElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for AppsyncFunctionSyncConfigElLambdaConflictHandlerConfigElRef {
-    fn new(shared: StackShared, base: String) -> AppsyncFunctionSyncConfigElLambdaConflictHandlerConfigElRef {
+impl terrars::Ref for AppsyncFunctionSyncConfigElLambdaConflictHandlerConfigElRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> AppsyncFunctionSyncConfigElLambdaConflictHandlerConfigElRef {
         AppsyncFunctionSyncConfigElLambdaConflictHandlerConfigElRef {
             shared: shared,
             base: base.to_string(),
@@ -529,67 +582,79 @@ impl Ref for AppsyncFunctionSyncConfigElLambdaConflictHandlerConfigElRef {
 }
 
 impl AppsyncFunctionSyncConfigElLambdaConflictHandlerConfigElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `lambda_conflict_handler_arn` after provisioning.\n"]
-    pub fn lambda_conflict_handler_arn(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.lambda_conflict_handler_arn", self.base))
+    #[doc = "Get a reference to the value of field `lambda_conflict_handler_arn` after provisioning.\n"]
+    pub fn lambda_conflict_handler_arn(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.lambda_conflict_handler_arn", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
 struct AppsyncFunctionSyncConfigElDynamic {
-    lambda_conflict_handler_config: Option<DynamicBlock<AppsyncFunctionSyncConfigElLambdaConflictHandlerConfigEl>>,
+    lambda_conflict_handler_config: std
+    ::option
+    ::Option<terrars::DynamicBlock<AppsyncFunctionSyncConfigElLambdaConflictHandlerConfigEl>>,
 }
 
 #[derive(Serialize)]
 pub struct AppsyncFunctionSyncConfigEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    conflict_detection: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    conflict_handler: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    lambda_conflict_handler_config: Option<Vec<AppsyncFunctionSyncConfigElLambdaConflictHandlerConfigEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    conflict_detection: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    conflict_handler: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    lambda_conflict_handler_config: std
+    ::option
+    ::Option<std::vec::Vec<AppsyncFunctionSyncConfigElLambdaConflictHandlerConfigEl>>,
     dynamic: AppsyncFunctionSyncConfigElDynamic,
 }
 
 impl AppsyncFunctionSyncConfigEl {
-    #[doc= "Set the field `conflict_detection`.\n"]
-    pub fn set_conflict_detection(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.conflict_detection = Some(v.into());
+    #[doc = "Set the field `conflict_detection`.\n"]
+    pub fn set_conflict_detection(
+        mut self,
+        v: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.conflict_detection = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `conflict_handler`.\n"]
-    pub fn set_conflict_handler(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.conflict_handler = Some(v.into());
+    #[doc = "Set the field `conflict_handler`.\n"]
+    pub fn set_conflict_handler(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.conflict_handler = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `lambda_conflict_handler_config`.\n"]
+    #[doc = "Set the field `lambda_conflict_handler_config`.\n"]
     pub fn set_lambda_conflict_handler_config(
         mut self,
-        v: impl Into<BlockAssignable<AppsyncFunctionSyncConfigElLambdaConflictHandlerConfigEl>>,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<terrars::BlockAssignable<AppsyncFunctionSyncConfigElLambdaConflictHandlerConfigEl>>,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.lambda_conflict_handler_config = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.lambda_conflict_handler_config = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.lambda_conflict_handler_config = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.lambda_conflict_handler_config = std::option::Option::Some(d);
             },
         }
         self
     }
 }
 
-impl ToListMappable for AppsyncFunctionSyncConfigEl {
-    type O = BlockAssignable<AppsyncFunctionSyncConfigEl>;
+impl terrars::ToListMappable for AppsyncFunctionSyncConfigEl {
+    type O = terrars::BlockAssignable<AppsyncFunctionSyncConfigEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -605,18 +670,18 @@ impl BuildAppsyncFunctionSyncConfigEl {
             conflict_detection: core::default::Default::default(),
             conflict_handler: core::default::Default::default(),
             lambda_conflict_handler_config: core::default::Default::default(),
-            dynamic: Default::default(),
+            dynamic: core::default::Default::default(),
         }
     }
 }
 
 pub struct AppsyncFunctionSyncConfigElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for AppsyncFunctionSyncConfigElRef {
-    fn new(shared: StackShared, base: String) -> AppsyncFunctionSyncConfigElRef {
+impl terrars::Ref for AppsyncFunctionSyncConfigElRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> AppsyncFunctionSyncConfigElRef {
         AppsyncFunctionSyncConfigElRef {
             shared: shared,
             base: base.to_string(),
@@ -625,28 +690,30 @@ impl Ref for AppsyncFunctionSyncConfigElRef {
 }
 
 impl AppsyncFunctionSyncConfigElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `conflict_detection` after provisioning.\n"]
-    pub fn conflict_detection(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.conflict_detection", self.base))
+    #[doc = "Get a reference to the value of field `conflict_detection` after provisioning.\n"]
+    pub fn conflict_detection(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.conflict_detection", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `conflict_handler` after provisioning.\n"]
-    pub fn conflict_handler(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.conflict_handler", self.base))
+    #[doc = "Get a reference to the value of field `conflict_handler` after provisioning.\n"]
+    pub fn conflict_handler(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.conflict_handler", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `lambda_conflict_handler_config` after provisioning.\n"]
-    pub fn lambda_conflict_handler_config(&self) -> ListRef<AppsyncFunctionSyncConfigElLambdaConflictHandlerConfigElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.lambda_conflict_handler_config", self.base))
+    #[doc = "Get a reference to the value of field `lambda_conflict_handler_config` after provisioning.\n"]
+    pub fn lambda_conflict_handler_config(
+        &self,
+    ) -> terrars::ListRef<AppsyncFunctionSyncConfigElLambdaConflictHandlerConfigElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.lambda_conflict_handler_config", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
 struct AppsyncFunctionDynamic {
-    runtime: Option<DynamicBlock<AppsyncFunctionRuntimeEl>>,
-    sync_config: Option<DynamicBlock<AppsyncFunctionSyncConfigEl>>,
+    runtime: std::option::Option<terrars::DynamicBlock<AppsyncFunctionRuntimeEl>>,
+    sync_config: std::option::Option<terrars::DynamicBlock<AppsyncFunctionSyncConfigEl>>,
 }

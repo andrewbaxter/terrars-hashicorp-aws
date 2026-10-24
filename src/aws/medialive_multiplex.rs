@@ -1,57 +1,61 @@
 use serde::Serialize;
-use std::cell::RefCell;
-use std::rc::Rc;
-use terrars::*;
+use terrars::{
+    Referable as _,
+    Resource_ as _,
+    Ref as _,
+};
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
 struct MedialiveMultiplexData {
-    #[serde(skip_serializing_if = "Vec::is_empty")]
-    depends_on: Vec<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    provider: Option<String>,
-    #[serde(skip_serializing_if = "SerdeSkipDefault::is_default")]
-    lifecycle: ResourceLifecycle,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    for_each: Option<String>,
-    availability_zones: ListField<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    id: Option<PrimField<String>>,
-    name: PrimField<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    start_multiplex: Option<PrimField<bool>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    tags: Option<RecField<PrimField<String>>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    tags_all: Option<RecField<PrimField<String>>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    multiplex_settings: Option<Vec<MedialiveMultiplexMultiplexSettingsEl>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    timeouts: Option<MedialiveMultiplexTimeoutsEl>,
+    #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
+    depends_on: std::vec::Vec<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    provider: std::option::Option<std::string::String>,
+    #[serde(skip_serializing_if = "terrars::SerdeSkipDefault::is_default")]
+    lifecycle: terrars::ResourceLifecycle,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    for_each: std::option::Option<std::string::String>,
+    #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
+    provisioner: std::vec::Vec<terrars::Provisioner>,
+    availability_zones: terrars::ListField<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    id: std::option::Option<terrars::PrimField<std::string::String>>,
+    name: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    start_multiplex: std::option::Option<terrars::PrimField<bool>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    tags: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    tags_all: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    multiplex_settings: std::option::Option<std::vec::Vec<MedialiveMultiplexMultiplexSettingsEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    timeouts: std::option::Option<MedialiveMultiplexTimeoutsEl>,
     dynamic: MedialiveMultiplexDynamic,
 }
 
 struct MedialiveMultiplex_ {
-    shared: StackShared,
-    tf_id: String,
-    data: RefCell<MedialiveMultiplexData>,
+    shared: terrars::StackShared,
+    tf_id: std::string::String,
+    data: std::cell::RefCell<MedialiveMultiplexData>,
 }
 
 #[derive(Clone)]
-pub struct MedialiveMultiplex(Rc<MedialiveMultiplex_>);
+pub struct MedialiveMultiplex(std::rc::Rc<MedialiveMultiplex_>);
 
 impl MedialiveMultiplex {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.0.shared
     }
 
-    pub fn depends_on(self, dep: &impl Referable) -> Self {
+    pub fn depends_on(self, dep: &impl terrars::Referable) -> Self {
         self.0.data.borrow_mut().depends_on.push(dep.extract_ref());
         self
     }
 
     pub fn set_provider(self, provider: &ProviderAws) -> Self {
-        self.0.data.borrow_mut().provider = Some(provider.provider_ref());
+        self.0.data.borrow_mut().provider = std::option::Option::Some(provider.provider_ref());
         self
     }
 
@@ -66,153 +70,195 @@ impl MedialiveMultiplex {
     }
 
     pub fn ignore_changes_to_all(self) -> Self {
-        self.0.data.borrow_mut().lifecycle.ignore_changes = Some(IgnoreChanges::All(IgnoreChangesAll::All));
+        self.0.data.borrow_mut().lifecycle.ignore_changes =
+            std::option::Option::Some(terrars::IgnoreChanges::All(terrars::IgnoreChangesAll::All));
         self
     }
 
-    pub fn ignore_changes_to_attr(self, attr: impl ToString) -> Self {
+    pub fn ignore_changes_to_attr(self, attr: impl std::string::ToString) -> Self {
         {
             let mut d = self.0.data.borrow_mut();
             if match &mut d.lifecycle.ignore_changes {
-                Some(i) => match i {
-                    IgnoreChanges::All(_) => {
+                std::option::Option::Some(i) => match i {
+                    terrars::IgnoreChanges::All(_) => {
                         true
                     },
-                    IgnoreChanges::Refs(r) => {
+                    terrars::IgnoreChanges::Refs(r) => {
                         r.push(attr.to_string());
                         false
                     },
                 },
-                None => true,
+                std::option::Option::None => true,
             } {
-                d.lifecycle.ignore_changes = Some(IgnoreChanges::Refs(vec![attr.to_string()]));
+                d.lifecycle.ignore_changes =
+                    std::option::Option::Some(terrars::IgnoreChanges::Refs(vec![attr.to_string()]));
             }
         }
         self
     }
 
-    pub fn replace_triggered_by_resource(self, r: &impl Resource) -> Self {
+    pub fn replace_triggered_by_resource(self, r: &impl terrars::Resource) -> Self {
         self.0.data.borrow_mut().lifecycle.replace_triggered_by.push(r.extract_ref());
         self
     }
 
-    pub fn replace_triggered_by_attr(self, attr: impl ToString) -> Self {
+    pub fn replace_triggered_by_attr(self, attr: impl std::string::ToString) -> Self {
         self.0.data.borrow_mut().lifecycle.replace_triggered_by.push(attr.to_string());
         self
     }
 
-    #[doc= "Set the field `id`.\n"]
-    pub fn set_id(self, v: impl Into<PrimField<String>>) -> Self {
-        self.0.data.borrow_mut().id = Some(v.into());
+    #[doc = r" Add a provisioner (ex: `local-exec`, `remote-exec`, `file`) to this resource."]
+    #[doc = r" Provisioners run in the order they're added."]
+    pub fn add_provisioner(self, v: impl std::convert::Into<terrars::Provisioner>) -> Self {
+        self.0.data.borrow_mut().provisioner.push(v.into());
         self
     }
 
-    #[doc= "Set the field `start_multiplex`.\n"]
-    pub fn set_start_multiplex(self, v: impl Into<PrimField<bool>>) -> Self {
-        self.0.data.borrow_mut().start_multiplex = Some(v.into());
+    pub fn add_lifecycle_precondition(
+        self,
+        condition: impl std::convert::Into<terrars::PrimField<bool>>,
+        error_message: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.0.data.borrow_mut().lifecycle.precondition.push(terrars::LifecycleCondition {
+            condition: condition.into(),
+            error_message: error_message.into(),
+        });
         self
     }
 
-    #[doc= "Set the field `tags`.\n"]
-    pub fn set_tags(self, v: impl Into<RecField<PrimField<String>>>) -> Self {
-        self.0.data.borrow_mut().tags = Some(v.into());
+    pub fn add_lifecycle_postcondition(
+        self,
+        condition: impl std::convert::Into<terrars::PrimField<bool>>,
+        error_message: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.0.data.borrow_mut().lifecycle.postcondition.push(terrars::LifecycleCondition {
+            condition: condition.into(),
+            error_message: error_message.into(),
+        });
         self
     }
 
-    #[doc= "Set the field `tags_all`.\n"]
-    pub fn set_tags_all(self, v: impl Into<RecField<PrimField<String>>>) -> Self {
-        self.0.data.borrow_mut().tags_all = Some(v.into());
+    #[doc = "Set the field `id`.\n"]
+    pub fn set_id(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().id = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `multiplex_settings`.\n"]
-    pub fn set_multiplex_settings(self, v: impl Into<BlockAssignable<MedialiveMultiplexMultiplexSettingsEl>>) -> Self {
+    #[doc = "Set the field `start_multiplex`.\n"]
+    pub fn set_start_multiplex(self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
+        self.0.data.borrow_mut().start_multiplex = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `tags`.\n"]
+    pub fn set_tags(
+        self,
+        v: impl std::convert::Into<terrars::RecField<terrars::PrimField<std::string::String>>>,
+    ) -> Self {
+        self.0.data.borrow_mut().tags = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `tags_all`.\n"]
+    pub fn set_tags_all(
+        self,
+        v: impl std::convert::Into<terrars::RecField<terrars::PrimField<std::string::String>>>,
+    ) -> Self {
+        self.0.data.borrow_mut().tags_all = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `multiplex_settings`.\n"]
+    pub fn set_multiplex_settings(
+        self,
+        v: impl std::convert::Into<terrars::BlockAssignable<MedialiveMultiplexMultiplexSettingsEl>>,
+    ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.0.data.borrow_mut().multiplex_settings = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.0.data.borrow_mut().multiplex_settings = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.0.data.borrow_mut().dynamic.multiplex_settings = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.0.data.borrow_mut().dynamic.multiplex_settings = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Set the field `timeouts`.\n"]
-    pub fn set_timeouts(self, v: impl Into<MedialiveMultiplexTimeoutsEl>) -> Self {
-        self.0.data.borrow_mut().timeouts = Some(v.into());
+    #[doc = "Set the field `timeouts`.\n"]
+    pub fn set_timeouts(self, v: impl std::convert::Into<MedialiveMultiplexTimeoutsEl>) -> Self {
+        self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Get a reference to the value of field `arn` after provisioning.\n"]
-    pub fn arn(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.arn", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `arn` after provisioning.\n"]
+    pub fn arn(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.arn", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `availability_zones` after provisioning.\n"]
-    pub fn availability_zones(&self) -> ListRef<PrimExpr<String>> {
-        ListRef::new(self.shared().clone(), format!("{}.availability_zones", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `availability_zones` after provisioning.\n"]
+    pub fn availability_zones(&self) -> terrars::ListRef<terrars::PrimExpr<std::string::String>> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.availability_zones", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `id` after provisioning.\n"]
-    pub fn id(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
+    pub fn id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `name` after provisioning.\n"]
-    pub fn name(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `name` after provisioning.\n"]
+    pub fn name(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `start_multiplex` after provisioning.\n"]
-    pub fn start_multiplex(&self) -> PrimExpr<bool> {
-        PrimExpr::new(self.shared().clone(), format!("{}.start_multiplex", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `start_multiplex` after provisioning.\n"]
+    pub fn start_multiplex(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.start_multiplex", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `tags` after provisioning.\n"]
-    pub fn tags(&self) -> RecRef<PrimExpr<String>> {
-        RecRef::new(self.shared().clone(), format!("{}.tags", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `tags` after provisioning.\n"]
+    pub fn tags(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
+        terrars::RecRef::new(self.shared().clone(), format!("{}.tags", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `tags_all` after provisioning.\n"]
-    pub fn tags_all(&self) -> RecRef<PrimExpr<String>> {
-        RecRef::new(self.shared().clone(), format!("{}.tags_all", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `tags_all` after provisioning.\n"]
+    pub fn tags_all(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
+        terrars::RecRef::new(self.shared().clone(), format!("{}.tags_all", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `multiplex_settings` after provisioning.\n"]
-    pub fn multiplex_settings(&self) -> ListRef<MedialiveMultiplexMultiplexSettingsElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.multiplex_settings", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `multiplex_settings` after provisioning.\n"]
+    pub fn multiplex_settings(&self) -> terrars::ListRef<MedialiveMultiplexMultiplexSettingsElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.multiplex_settings", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `timeouts` after provisioning.\n"]
+    #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
     pub fn timeouts(&self) -> MedialiveMultiplexTimeoutsElRef {
         MedialiveMultiplexTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
-impl Referable for MedialiveMultiplex {
-    fn extract_ref(&self) -> String {
+impl terrars::Referable for MedialiveMultiplex {
+    fn extract_ref(&self) -> std::string::String {
         format!("{}.{}", self.0.extract_resource_type(), self.0.extract_tf_id())
     }
 }
 
-impl Resource for MedialiveMultiplex { }
+impl terrars::Resource for MedialiveMultiplex { }
 
-impl ToListMappable for MedialiveMultiplex {
-    type O = ListRef<MedialiveMultiplexRef>;
+impl terrars::ToListMappable for MedialiveMultiplex {
+    type O = terrars::ListRef<MedialiveMultiplexRef>;
 
-    fn do_map(self, base: String) -> Self::O {
-        self.0.data.borrow_mut().for_each = Some(format!("${{{}}}", base));
-        ListRef::new(self.0.shared.clone(), self.extract_ref())
+    fn do_map(self, base: std::string::String) -> Self::O {
+        self.0.data.borrow_mut().for_each = std::option::Option::Some(format!("${{{}}}", base));
+        terrars::ListRef::new(self.0.shared.clone(), self.extract_ref())
     }
 }
 
-impl Resource_ for MedialiveMultiplex_ {
-    fn extract_resource_type(&self) -> String {
+impl terrars::Resource_ for MedialiveMultiplex_ {
+    fn extract_resource_type(&self) -> std::string::String {
         "aws_medialive_multiplex".into()
     }
 
-    fn extract_tf_id(&self) -> String {
+    fn extract_tf_id(&self) -> std::string::String {
         self.tf_id.clone()
     }
 
@@ -222,23 +268,24 @@ impl Resource_ for MedialiveMultiplex_ {
 }
 
 pub struct BuildMedialiveMultiplex {
-    pub tf_id: String,
-    #[doc= ""]
-    pub availability_zones: ListField<PrimField<String>>,
-    #[doc= ""]
-    pub name: PrimField<String>,
+    pub tf_id: std::string::String,
+    #[doc = ""]
+    pub availability_zones: terrars::ListField<terrars::PrimField<std::string::String>>,
+    #[doc = ""]
+    pub name: terrars::PrimField<std::string::String>,
 }
 
 impl BuildMedialiveMultiplex {
-    pub fn build(self, stack: &mut Stack) -> MedialiveMultiplex {
-        let out = MedialiveMultiplex(Rc::new(MedialiveMultiplex_ {
+    pub fn build(self, stack: &mut terrars::Stack) -> MedialiveMultiplex {
+        let out = MedialiveMultiplex(std::rc::Rc::new(MedialiveMultiplex_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: RefCell::new(MedialiveMultiplexData {
+            data: std::cell::RefCell::new(MedialiveMultiplexData {
                 depends_on: core::default::Default::default(),
-                provider: None,
+                provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
-                for_each: None,
+                for_each: std::option::Option::None,
+                provisioner: core::default::Default::default(),
                 availability_zones: self.availability_zones,
                 id: core::default::Default::default(),
                 name: self.name,
@@ -247,7 +294,7 @@ impl BuildMedialiveMultiplex {
                 tags_all: core::default::Default::default(),
                 multiplex_settings: core::default::Default::default(),
                 timeouts: core::default::Default::default(),
-                dynamic: Default::default(),
+                dynamic: core::default::Default::default(),
             }),
         }));
         stack.add_resource(out.0.clone());
@@ -256,12 +303,12 @@ impl BuildMedialiveMultiplex {
 }
 
 pub struct MedialiveMultiplexRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for MedialiveMultiplexRef {
-    fn new(shared: StackShared, base: String) -> Self {
+impl terrars::Ref for MedialiveMultiplexRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> Self {
         Self {
             shared: shared,
             base: base,
@@ -270,55 +317,55 @@ impl Ref for MedialiveMultiplexRef {
 }
 
 impl MedialiveMultiplexRef {
-    fn extract_ref(&self) -> String {
+    fn extract_ref(&self) -> std::string::String {
         self.base.clone()
     }
 
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `arn` after provisioning.\n"]
-    pub fn arn(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.arn", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `arn` after provisioning.\n"]
+    pub fn arn(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.arn", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `availability_zones` after provisioning.\n"]
-    pub fn availability_zones(&self) -> ListRef<PrimExpr<String>> {
-        ListRef::new(self.shared().clone(), format!("{}.availability_zones", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `availability_zones` after provisioning.\n"]
+    pub fn availability_zones(&self) -> terrars::ListRef<terrars::PrimExpr<std::string::String>> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.availability_zones", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `id` after provisioning.\n"]
-    pub fn id(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
+    pub fn id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `name` after provisioning.\n"]
-    pub fn name(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `name` after provisioning.\n"]
+    pub fn name(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `start_multiplex` after provisioning.\n"]
-    pub fn start_multiplex(&self) -> PrimExpr<bool> {
-        PrimExpr::new(self.shared().clone(), format!("{}.start_multiplex", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `start_multiplex` after provisioning.\n"]
+    pub fn start_multiplex(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.start_multiplex", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `tags` after provisioning.\n"]
-    pub fn tags(&self) -> RecRef<PrimExpr<String>> {
-        RecRef::new(self.shared().clone(), format!("{}.tags", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `tags` after provisioning.\n"]
+    pub fn tags(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
+        terrars::RecRef::new(self.shared().clone(), format!("{}.tags", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `tags_all` after provisioning.\n"]
-    pub fn tags_all(&self) -> RecRef<PrimExpr<String>> {
-        RecRef::new(self.shared().clone(), format!("{}.tags_all", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `tags_all` after provisioning.\n"]
+    pub fn tags_all(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
+        terrars::RecRef::new(self.shared().clone(), format!("{}.tags_all", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `multiplex_settings` after provisioning.\n"]
-    pub fn multiplex_settings(&self) -> ListRef<MedialiveMultiplexMultiplexSettingsElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.multiplex_settings", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `multiplex_settings` after provisioning.\n"]
+    pub fn multiplex_settings(&self) -> terrars::ListRef<MedialiveMultiplexMultiplexSettingsElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.multiplex_settings", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `timeouts` after provisioning.\n"]
+    #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
     pub fn timeouts(&self) -> MedialiveMultiplexTimeoutsElRef {
         MedialiveMultiplexTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
@@ -326,33 +373,36 @@ impl MedialiveMultiplexRef {
 
 #[derive(Serialize)]
 pub struct MedialiveMultiplexMultiplexSettingsEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    maximum_video_buffer_delay_milliseconds: Option<PrimField<f64>>,
-    transport_stream_bitrate: PrimField<f64>,
-    transport_stream_id: PrimField<f64>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    transport_stream_reserved_bitrate: Option<PrimField<f64>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    maximum_video_buffer_delay_milliseconds: std::option::Option<terrars::PrimField<f64>>,
+    transport_stream_bitrate: terrars::PrimField<f64>,
+    transport_stream_id: terrars::PrimField<f64>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    transport_stream_reserved_bitrate: std::option::Option<terrars::PrimField<f64>>,
 }
 
 impl MedialiveMultiplexMultiplexSettingsEl {
-    #[doc= "Set the field `maximum_video_buffer_delay_milliseconds`.\n"]
-    pub fn set_maximum_video_buffer_delay_milliseconds(mut self, v: impl Into<PrimField<f64>>) -> Self {
-        self.maximum_video_buffer_delay_milliseconds = Some(v.into());
+    #[doc = "Set the field `maximum_video_buffer_delay_milliseconds`.\n"]
+    pub fn set_maximum_video_buffer_delay_milliseconds(
+        mut self,
+        v: impl std::convert::Into<terrars::PrimField<f64>>,
+    ) -> Self {
+        self.maximum_video_buffer_delay_milliseconds = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `transport_stream_reserved_bitrate`.\n"]
-    pub fn set_transport_stream_reserved_bitrate(mut self, v: impl Into<PrimField<f64>>) -> Self {
-        self.transport_stream_reserved_bitrate = Some(v.into());
+    #[doc = "Set the field `transport_stream_reserved_bitrate`.\n"]
+    pub fn set_transport_stream_reserved_bitrate(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.transport_stream_reserved_bitrate = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl ToListMappable for MedialiveMultiplexMultiplexSettingsEl {
-    type O = BlockAssignable<MedialiveMultiplexMultiplexSettingsEl>;
+impl terrars::ToListMappable for MedialiveMultiplexMultiplexSettingsEl {
+    type O = terrars::BlockAssignable<MedialiveMultiplexMultiplexSettingsEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -361,10 +411,10 @@ impl ToListMappable for MedialiveMultiplexMultiplexSettingsEl {
 }
 
 pub struct BuildMedialiveMultiplexMultiplexSettingsEl {
-    #[doc= ""]
-    pub transport_stream_bitrate: PrimField<f64>,
-    #[doc= ""]
-    pub transport_stream_id: PrimField<f64>,
+    #[doc = ""]
+    pub transport_stream_bitrate: terrars::PrimField<f64>,
+    #[doc = ""]
+    pub transport_stream_id: terrars::PrimField<f64>,
 }
 
 impl BuildMedialiveMultiplexMultiplexSettingsEl {
@@ -379,12 +429,12 @@ impl BuildMedialiveMultiplexMultiplexSettingsEl {
 }
 
 pub struct MedialiveMultiplexMultiplexSettingsElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for MedialiveMultiplexMultiplexSettingsElRef {
-    fn new(shared: StackShared, base: String) -> MedialiveMultiplexMultiplexSettingsElRef {
+impl terrars::Ref for MedialiveMultiplexMultiplexSettingsElRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> MedialiveMultiplexMultiplexSettingsElRef {
         MedialiveMultiplexMultiplexSettingsElRef {
             shared: shared,
             base: base.to_string(),
@@ -393,66 +443,69 @@ impl Ref for MedialiveMultiplexMultiplexSettingsElRef {
 }
 
 impl MedialiveMultiplexMultiplexSettingsElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `maximum_video_buffer_delay_milliseconds` after provisioning.\n"]
-    pub fn maximum_video_buffer_delay_milliseconds(&self) -> PrimExpr<f64> {
-        PrimExpr::new(self.shared().clone(), format!("{}.maximum_video_buffer_delay_milliseconds", self.base))
+    #[doc = "Get a reference to the value of field `maximum_video_buffer_delay_milliseconds` after provisioning.\n"]
+    pub fn maximum_video_buffer_delay_milliseconds(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(
+            self.shared().clone(),
+            format!("{}.maximum_video_buffer_delay_milliseconds", self.base),
+        )
     }
 
-    #[doc= "Get a reference to the value of field `transport_stream_bitrate` after provisioning.\n"]
-    pub fn transport_stream_bitrate(&self) -> PrimExpr<f64> {
-        PrimExpr::new(self.shared().clone(), format!("{}.transport_stream_bitrate", self.base))
+    #[doc = "Get a reference to the value of field `transport_stream_bitrate` after provisioning.\n"]
+    pub fn transport_stream_bitrate(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.transport_stream_bitrate", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `transport_stream_id` after provisioning.\n"]
-    pub fn transport_stream_id(&self) -> PrimExpr<f64> {
-        PrimExpr::new(self.shared().clone(), format!("{}.transport_stream_id", self.base))
+    #[doc = "Get a reference to the value of field `transport_stream_id` after provisioning.\n"]
+    pub fn transport_stream_id(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.transport_stream_id", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `transport_stream_reserved_bitrate` after provisioning.\n"]
-    pub fn transport_stream_reserved_bitrate(&self) -> PrimExpr<f64> {
-        PrimExpr::new(self.shared().clone(), format!("{}.transport_stream_reserved_bitrate", self.base))
+    #[doc = "Get a reference to the value of field `transport_stream_reserved_bitrate` after provisioning.\n"]
+    pub fn transport_stream_reserved_bitrate(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.transport_stream_reserved_bitrate", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct MedialiveMultiplexTimeoutsEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    create: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    delete: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    update: Option<PrimField<String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    create: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    delete: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    update: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
 impl MedialiveMultiplexTimeoutsEl {
-    #[doc= "Set the field `create`.\n"]
-    pub fn set_create(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.create = Some(v.into());
+    #[doc = "Set the field `create`.\n"]
+    pub fn set_create(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.create = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `delete`.\n"]
-    pub fn set_delete(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.delete = Some(v.into());
+    #[doc = "Set the field `delete`.\n"]
+    pub fn set_delete(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.delete = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `update`.\n"]
-    pub fn set_update(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.update = Some(v.into());
+    #[doc = "Set the field `update`.\n"]
+    pub fn set_update(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.update = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl ToListMappable for MedialiveMultiplexTimeoutsEl {
-    type O = BlockAssignable<MedialiveMultiplexTimeoutsEl>;
+impl terrars::ToListMappable for MedialiveMultiplexTimeoutsEl {
+    type O = terrars::BlockAssignable<MedialiveMultiplexTimeoutsEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -473,12 +526,12 @@ impl BuildMedialiveMultiplexTimeoutsEl {
 }
 
 pub struct MedialiveMultiplexTimeoutsElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for MedialiveMultiplexTimeoutsElRef {
-    fn new(shared: StackShared, base: String) -> MedialiveMultiplexTimeoutsElRef {
+impl terrars::Ref for MedialiveMultiplexTimeoutsElRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> MedialiveMultiplexTimeoutsElRef {
         MedialiveMultiplexTimeoutsElRef {
             shared: shared,
             base: base.to_string(),
@@ -487,27 +540,27 @@ impl Ref for MedialiveMultiplexTimeoutsElRef {
 }
 
 impl MedialiveMultiplexTimeoutsElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `create` after provisioning.\n"]
-    pub fn create(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.create", self.base))
+    #[doc = "Get a reference to the value of field `create` after provisioning.\n"]
+    pub fn create(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.create", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `delete` after provisioning.\n"]
-    pub fn delete(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.delete", self.base))
+    #[doc = "Get a reference to the value of field `delete` after provisioning.\n"]
+    pub fn delete(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.delete", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `update` after provisioning.\n"]
-    pub fn update(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.update", self.base))
+    #[doc = "Get a reference to the value of field `update` after provisioning.\n"]
+    pub fn update(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.update", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
 struct MedialiveMultiplexDynamic {
-    multiplex_settings: Option<DynamicBlock<MedialiveMultiplexMultiplexSettingsEl>>,
+    multiplex_settings: std::option::Option<terrars::DynamicBlock<MedialiveMultiplexMultiplexSettingsEl>>,
 }

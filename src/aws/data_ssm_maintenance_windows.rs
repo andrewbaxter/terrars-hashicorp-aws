@@ -1,101 +1,132 @@
 use serde::Serialize;
-use std::cell::RefCell;
-use std::rc::Rc;
-use terrars::*;
+use terrars::{
+    Referable as _,
+    Datasource_ as _,
+    Ref as _,
+};
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
 struct DataSsmMaintenanceWindowsData {
-    #[serde(skip_serializing_if = "Vec::is_empty")]
-    depends_on: Vec<String>,
-    #[serde(skip_serializing_if = "SerdeSkipDefault::is_default")]
-    provider: Option<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    for_each: Option<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    id: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    filter: Option<Vec<DataSsmMaintenanceWindowsFilterEl>>,
+    #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
+    depends_on: std::vec::Vec<std::string::String>,
+    #[serde(skip_serializing_if = "terrars::SerdeSkipDefault::is_default")]
+    provider: std::option::Option<std::string::String>,
+    #[serde(skip_serializing_if = "terrars::SerdeSkipDefault::is_default")]
+    lifecycle: terrars::DatasourceLifecycle,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    for_each: std::option::Option<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    id: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    filter: std::option::Option<std::vec::Vec<DataSsmMaintenanceWindowsFilterEl>>,
     dynamic: DataSsmMaintenanceWindowsDynamic,
 }
 
 struct DataSsmMaintenanceWindows_ {
-    shared: StackShared,
-    tf_id: String,
-    data: RefCell<DataSsmMaintenanceWindowsData>,
+    shared: terrars::StackShared,
+    tf_id: std::string::String,
+    data: std::cell::RefCell<DataSsmMaintenanceWindowsData>,
 }
 
 #[derive(Clone)]
-pub struct DataSsmMaintenanceWindows(Rc<DataSsmMaintenanceWindows_>);
+pub struct DataSsmMaintenanceWindows(std::rc::Rc<DataSsmMaintenanceWindows_>);
 
 impl DataSsmMaintenanceWindows {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.0.shared
     }
 
-    pub fn depends_on(self, dep: &impl Referable) -> Self {
+    pub fn depends_on(self, dep: &impl terrars::Referable) -> Self {
         self.0.data.borrow_mut().depends_on.push(dep.extract_ref());
         self
     }
 
     pub fn set_provider(&self, provider: &ProviderAws) -> &Self {
-        self.0.data.borrow_mut().provider = Some(provider.provider_ref());
+        self.0.data.borrow_mut().provider = std::option::Option::Some(provider.provider_ref());
         self
     }
 
-    #[doc= "Set the field `id`.\n"]
-    pub fn set_id(self, v: impl Into<PrimField<String>>) -> Self {
-        self.0.data.borrow_mut().id = Some(v.into());
+    pub fn add_lifecycle_precondition(
+        self,
+        condition: impl std::convert::Into<terrars::PrimField<bool>>,
+        error_message: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.0.data.borrow_mut().lifecycle.precondition.push(terrars::LifecycleCondition {
+            condition: condition.into(),
+            error_message: error_message.into(),
+        });
         self
     }
 
-    #[doc= "Set the field `filter`.\n"]
-    pub fn set_filter(self, v: impl Into<BlockAssignable<DataSsmMaintenanceWindowsFilterEl>>) -> Self {
+    pub fn add_lifecycle_postcondition(
+        self,
+        condition: impl std::convert::Into<terrars::PrimField<bool>>,
+        error_message: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.0.data.borrow_mut().lifecycle.postcondition.push(terrars::LifecycleCondition {
+            condition: condition.into(),
+            error_message: error_message.into(),
+        });
+        self
+    }
+
+    #[doc = "Set the field `id`.\n"]
+    pub fn set_id(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().id = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `filter`.\n"]
+    pub fn set_filter(
+        self,
+        v: impl std::convert::Into<terrars::BlockAssignable<DataSsmMaintenanceWindowsFilterEl>>,
+    ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.0.data.borrow_mut().filter = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.0.data.borrow_mut().filter = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.0.data.borrow_mut().dynamic.filter = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.0.data.borrow_mut().dynamic.filter = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Get a reference to the value of field `id` after provisioning.\n"]
-    pub fn id(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
+    pub fn id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `ids` after provisioning.\n"]
-    pub fn ids(&self) -> ListRef<PrimExpr<String>> {
-        ListRef::new(self.shared().clone(), format!("{}.ids", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `ids` after provisioning.\n"]
+    pub fn ids(&self) -> terrars::ListRef<terrars::PrimExpr<std::string::String>> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.ids", self.extract_ref()))
     }
 }
 
-impl Referable for DataSsmMaintenanceWindows {
-    fn extract_ref(&self) -> String {
+impl terrars::Referable for DataSsmMaintenanceWindows {
+    fn extract_ref(&self) -> std::string::String {
         format!("data.{}.{}", self.0.extract_datasource_type(), self.0.extract_tf_id())
     }
 }
 
-impl Datasource for DataSsmMaintenanceWindows { }
+impl terrars::Datasource for DataSsmMaintenanceWindows { }
 
-impl ToListMappable for DataSsmMaintenanceWindows {
-    type O = ListRef<DataSsmMaintenanceWindowsRef>;
+impl terrars::ToListMappable for DataSsmMaintenanceWindows {
+    type O = terrars::ListRef<DataSsmMaintenanceWindowsRef>;
 
-    fn do_map(self, base: String) -> Self::O {
-        self.0.data.borrow_mut().for_each = Some(format!("${{{}}}", base));
-        ListRef::new(self.0.shared.clone(), self.extract_ref())
+    fn do_map(self, base: std::string::String) -> Self::O {
+        self.0.data.borrow_mut().for_each = std::option::Option::Some(format!("${{{}}}", base));
+        terrars::ListRef::new(self.0.shared.clone(), self.extract_ref())
     }
 }
 
-impl Datasource_ for DataSsmMaintenanceWindows_ {
-    fn extract_datasource_type(&self) -> String {
+impl terrars::Datasource_ for DataSsmMaintenanceWindows_ {
+    fn extract_datasource_type(&self) -> std::string::String {
         "aws_ssm_maintenance_windows".into()
     }
 
-    fn extract_tf_id(&self) -> String {
+    fn extract_tf_id(&self) -> std::string::String {
         self.tf_id.clone()
     }
 
@@ -105,21 +136,22 @@ impl Datasource_ for DataSsmMaintenanceWindows_ {
 }
 
 pub struct BuildDataSsmMaintenanceWindows {
-    pub tf_id: String,
+    pub tf_id: std::string::String,
 }
 
 impl BuildDataSsmMaintenanceWindows {
-    pub fn build(self, stack: &mut Stack) -> DataSsmMaintenanceWindows {
-        let out = DataSsmMaintenanceWindows(Rc::new(DataSsmMaintenanceWindows_ {
+    pub fn build(self, stack: &mut terrars::Stack) -> DataSsmMaintenanceWindows {
+        let out = DataSsmMaintenanceWindows(std::rc::Rc::new(DataSsmMaintenanceWindows_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: RefCell::new(DataSsmMaintenanceWindowsData {
+            data: std::cell::RefCell::new(DataSsmMaintenanceWindowsData {
                 depends_on: core::default::Default::default(),
-                provider: None,
-                for_each: None,
+                provider: std::option::Option::None,
+                lifecycle: core::default::Default::default(),
+                for_each: std::option::Option::None,
                 id: core::default::Default::default(),
                 filter: core::default::Default::default(),
-                dynamic: Default::default(),
+                dynamic: core::default::Default::default(),
             }),
         }));
         stack.add_datasource(out.0.clone());
@@ -128,12 +160,12 @@ impl BuildDataSsmMaintenanceWindows {
 }
 
 pub struct DataSsmMaintenanceWindowsRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for DataSsmMaintenanceWindowsRef {
-    fn new(shared: StackShared, base: String) -> Self {
+impl terrars::Ref for DataSsmMaintenanceWindowsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> Self {
         Self {
             shared: shared,
             base: base,
@@ -142,38 +174,38 @@ impl Ref for DataSsmMaintenanceWindowsRef {
 }
 
 impl DataSsmMaintenanceWindowsRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    fn extract_ref(&self) -> String {
+    fn extract_ref(&self) -> std::string::String {
         self.base.clone()
     }
 
-    #[doc= "Get a reference to the value of field `id` after provisioning.\n"]
-    pub fn id(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
+    pub fn id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `ids` after provisioning.\n"]
-    pub fn ids(&self) -> ListRef<PrimExpr<String>> {
-        ListRef::new(self.shared().clone(), format!("{}.ids", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `ids` after provisioning.\n"]
+    pub fn ids(&self) -> terrars::ListRef<terrars::PrimExpr<std::string::String>> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.ids", self.extract_ref()))
     }
 }
 
 #[derive(Serialize)]
 pub struct DataSsmMaintenanceWindowsFilterEl {
-    name: PrimField<String>,
-    values: ListField<PrimField<String>>,
+    name: terrars::PrimField<std::string::String>,
+    values: terrars::ListField<terrars::PrimField<std::string::String>>,
 }
 
 impl DataSsmMaintenanceWindowsFilterEl { }
 
-impl ToListMappable for DataSsmMaintenanceWindowsFilterEl {
-    type O = BlockAssignable<DataSsmMaintenanceWindowsFilterEl>;
+impl terrars::ToListMappable for DataSsmMaintenanceWindowsFilterEl {
+    type O = terrars::BlockAssignable<DataSsmMaintenanceWindowsFilterEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -182,10 +214,10 @@ impl ToListMappable for DataSsmMaintenanceWindowsFilterEl {
 }
 
 pub struct BuildDataSsmMaintenanceWindowsFilterEl {
-    #[doc= ""]
-    pub name: PrimField<String>,
-    #[doc= ""]
-    pub values: ListField<PrimField<String>>,
+    #[doc = ""]
+    pub name: terrars::PrimField<std::string::String>,
+    #[doc = ""]
+    pub values: terrars::ListField<terrars::PrimField<std::string::String>>,
 }
 
 impl BuildDataSsmMaintenanceWindowsFilterEl {
@@ -198,12 +230,12 @@ impl BuildDataSsmMaintenanceWindowsFilterEl {
 }
 
 pub struct DataSsmMaintenanceWindowsFilterElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for DataSsmMaintenanceWindowsFilterElRef {
-    fn new(shared: StackShared, base: String) -> DataSsmMaintenanceWindowsFilterElRef {
+impl terrars::Ref for DataSsmMaintenanceWindowsFilterElRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataSsmMaintenanceWindowsFilterElRef {
         DataSsmMaintenanceWindowsFilterElRef {
             shared: shared,
             base: base.to_string(),
@@ -212,22 +244,22 @@ impl Ref for DataSsmMaintenanceWindowsFilterElRef {
 }
 
 impl DataSsmMaintenanceWindowsFilterElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `name` after provisioning.\n"]
-    pub fn name(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.name", self.base))
+    #[doc = "Get a reference to the value of field `name` after provisioning.\n"]
+    pub fn name(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `values` after provisioning.\n"]
-    pub fn values(&self) -> ListRef<PrimExpr<String>> {
-        ListRef::new(self.shared().clone(), format!("{}.values", self.base))
+    #[doc = "Get a reference to the value of field `values` after provisioning.\n"]
+    pub fn values(&self) -> terrars::ListRef<terrars::PrimExpr<std::string::String>> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.values", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
 struct DataSsmMaintenanceWindowsDynamic {
-    filter: Option<DynamicBlock<DataSsmMaintenanceWindowsFilterEl>>,
+    filter: std::option::Option<terrars::DynamicBlock<DataSsmMaintenanceWindowsFilterEl>>,
 }

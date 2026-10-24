@@ -1,53 +1,57 @@
 use serde::Serialize;
-use std::cell::RefCell;
-use std::rc::Rc;
-use terrars::*;
+use terrars::{
+    Referable as _,
+    Resource_ as _,
+    Ref as _,
+};
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
 struct GluePartitionIndexData {
-    #[serde(skip_serializing_if = "Vec::is_empty")]
-    depends_on: Vec<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    provider: Option<String>,
-    #[serde(skip_serializing_if = "SerdeSkipDefault::is_default")]
-    lifecycle: ResourceLifecycle,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    for_each: Option<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    catalog_id: Option<PrimField<String>>,
-    database_name: PrimField<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    id: Option<PrimField<String>>,
-    table_name: PrimField<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    partition_index: Option<Vec<GluePartitionIndexPartitionIndexEl>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    timeouts: Option<GluePartitionIndexTimeoutsEl>,
+    #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
+    depends_on: std::vec::Vec<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    provider: std::option::Option<std::string::String>,
+    #[serde(skip_serializing_if = "terrars::SerdeSkipDefault::is_default")]
+    lifecycle: terrars::ResourceLifecycle,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    for_each: std::option::Option<std::string::String>,
+    #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
+    provisioner: std::vec::Vec<terrars::Provisioner>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    catalog_id: std::option::Option<terrars::PrimField<std::string::String>>,
+    database_name: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    id: std::option::Option<terrars::PrimField<std::string::String>>,
+    table_name: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    partition_index: std::option::Option<std::vec::Vec<GluePartitionIndexPartitionIndexEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    timeouts: std::option::Option<GluePartitionIndexTimeoutsEl>,
     dynamic: GluePartitionIndexDynamic,
 }
 
 struct GluePartitionIndex_ {
-    shared: StackShared,
-    tf_id: String,
-    data: RefCell<GluePartitionIndexData>,
+    shared: terrars::StackShared,
+    tf_id: std::string::String,
+    data: std::cell::RefCell<GluePartitionIndexData>,
 }
 
 #[derive(Clone)]
-pub struct GluePartitionIndex(Rc<GluePartitionIndex_>);
+pub struct GluePartitionIndex(std::rc::Rc<GluePartitionIndex_>);
 
 impl GluePartitionIndex {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.0.shared
     }
 
-    pub fn depends_on(self, dep: &impl Referable) -> Self {
+    pub fn depends_on(self, dep: &impl terrars::Referable) -> Self {
         self.0.data.borrow_mut().depends_on.push(dep.extract_ref());
         self
     }
 
     pub fn set_provider(self, provider: &ProviderAws) -> Self {
-        self.0.data.borrow_mut().provider = Some(provider.provider_ref());
+        self.0.data.borrow_mut().provider = std::option::Option::Some(provider.provider_ref());
         self
     }
 
@@ -62,126 +66,162 @@ impl GluePartitionIndex {
     }
 
     pub fn ignore_changes_to_all(self) -> Self {
-        self.0.data.borrow_mut().lifecycle.ignore_changes = Some(IgnoreChanges::All(IgnoreChangesAll::All));
+        self.0.data.borrow_mut().lifecycle.ignore_changes =
+            std::option::Option::Some(terrars::IgnoreChanges::All(terrars::IgnoreChangesAll::All));
         self
     }
 
-    pub fn ignore_changes_to_attr(self, attr: impl ToString) -> Self {
+    pub fn ignore_changes_to_attr(self, attr: impl std::string::ToString) -> Self {
         {
             let mut d = self.0.data.borrow_mut();
             if match &mut d.lifecycle.ignore_changes {
-                Some(i) => match i {
-                    IgnoreChanges::All(_) => {
+                std::option::Option::Some(i) => match i {
+                    terrars::IgnoreChanges::All(_) => {
                         true
                     },
-                    IgnoreChanges::Refs(r) => {
+                    terrars::IgnoreChanges::Refs(r) => {
                         r.push(attr.to_string());
                         false
                     },
                 },
-                None => true,
+                std::option::Option::None => true,
             } {
-                d.lifecycle.ignore_changes = Some(IgnoreChanges::Refs(vec![attr.to_string()]));
+                d.lifecycle.ignore_changes =
+                    std::option::Option::Some(terrars::IgnoreChanges::Refs(vec![attr.to_string()]));
             }
         }
         self
     }
 
-    pub fn replace_triggered_by_resource(self, r: &impl Resource) -> Self {
+    pub fn replace_triggered_by_resource(self, r: &impl terrars::Resource) -> Self {
         self.0.data.borrow_mut().lifecycle.replace_triggered_by.push(r.extract_ref());
         self
     }
 
-    pub fn replace_triggered_by_attr(self, attr: impl ToString) -> Self {
+    pub fn replace_triggered_by_attr(self, attr: impl std::string::ToString) -> Self {
         self.0.data.borrow_mut().lifecycle.replace_triggered_by.push(attr.to_string());
         self
     }
 
-    #[doc= "Set the field `catalog_id`.\n"]
-    pub fn set_catalog_id(self, v: impl Into<PrimField<String>>) -> Self {
-        self.0.data.borrow_mut().catalog_id = Some(v.into());
+    #[doc = r" Add a provisioner (ex: `local-exec`, `remote-exec`, `file`) to this resource."]
+    #[doc = r" Provisioners run in the order they're added."]
+    pub fn add_provisioner(self, v: impl std::convert::Into<terrars::Provisioner>) -> Self {
+        self.0.data.borrow_mut().provisioner.push(v.into());
         self
     }
 
-    #[doc= "Set the field `id`.\n"]
-    pub fn set_id(self, v: impl Into<PrimField<String>>) -> Self {
-        self.0.data.borrow_mut().id = Some(v.into());
+    pub fn add_lifecycle_precondition(
+        self,
+        condition: impl std::convert::Into<terrars::PrimField<bool>>,
+        error_message: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.0.data.borrow_mut().lifecycle.precondition.push(terrars::LifecycleCondition {
+            condition: condition.into(),
+            error_message: error_message.into(),
+        });
         self
     }
 
-    #[doc= "Set the field `partition_index`.\n"]
-    pub fn set_partition_index(self, v: impl Into<BlockAssignable<GluePartitionIndexPartitionIndexEl>>) -> Self {
+    pub fn add_lifecycle_postcondition(
+        self,
+        condition: impl std::convert::Into<terrars::PrimField<bool>>,
+        error_message: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.0.data.borrow_mut().lifecycle.postcondition.push(terrars::LifecycleCondition {
+            condition: condition.into(),
+            error_message: error_message.into(),
+        });
+        self
+    }
+
+    #[doc = "Set the field `catalog_id`.\n"]
+    pub fn set_catalog_id(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().catalog_id = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `id`.\n"]
+    pub fn set_id(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().id = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `partition_index`.\n"]
+    pub fn set_partition_index(
+        self,
+        v: impl std::convert::Into<terrars::BlockAssignable<GluePartitionIndexPartitionIndexEl>>,
+    ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.0.data.borrow_mut().partition_index = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.0.data.borrow_mut().partition_index = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.0.data.borrow_mut().dynamic.partition_index = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.0.data.borrow_mut().dynamic.partition_index = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Set the field `timeouts`.\n"]
-    pub fn set_timeouts(self, v: impl Into<GluePartitionIndexTimeoutsEl>) -> Self {
-        self.0.data.borrow_mut().timeouts = Some(v.into());
+    #[doc = "Set the field `timeouts`.\n"]
+    pub fn set_timeouts(self, v: impl std::convert::Into<GluePartitionIndexTimeoutsEl>) -> Self {
+        self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Get a reference to the value of field `catalog_id` after provisioning.\n"]
-    pub fn catalog_id(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.catalog_id", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `catalog_id` after provisioning.\n"]
+    pub fn catalog_id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.catalog_id", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `database_name` after provisioning.\n"]
-    pub fn database_name(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.database_name", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `database_name` after provisioning.\n"]
+    pub fn database_name(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.database_name", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `id` after provisioning.\n"]
-    pub fn id(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
+    pub fn id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `table_name` after provisioning.\n"]
-    pub fn table_name(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.table_name", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `table_name` after provisioning.\n"]
+    pub fn table_name(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.table_name", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `partition_index` after provisioning.\n"]
-    pub fn partition_index(&self) -> ListRef<GluePartitionIndexPartitionIndexElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.partition_index", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `partition_index` after provisioning.\n"]
+    pub fn partition_index(&self) -> terrars::ListRef<GluePartitionIndexPartitionIndexElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.partition_index", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `timeouts` after provisioning.\n"]
+    #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
     pub fn timeouts(&self) -> GluePartitionIndexTimeoutsElRef {
         GluePartitionIndexTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
-impl Referable for GluePartitionIndex {
-    fn extract_ref(&self) -> String {
+impl terrars::Referable for GluePartitionIndex {
+    fn extract_ref(&self) -> std::string::String {
         format!("{}.{}", self.0.extract_resource_type(), self.0.extract_tf_id())
     }
 }
 
-impl Resource for GluePartitionIndex { }
+impl terrars::Resource for GluePartitionIndex { }
 
-impl ToListMappable for GluePartitionIndex {
-    type O = ListRef<GluePartitionIndexRef>;
+impl terrars::ToListMappable for GluePartitionIndex {
+    type O = terrars::ListRef<GluePartitionIndexRef>;
 
-    fn do_map(self, base: String) -> Self::O {
-        self.0.data.borrow_mut().for_each = Some(format!("${{{}}}", base));
-        ListRef::new(self.0.shared.clone(), self.extract_ref())
+    fn do_map(self, base: std::string::String) -> Self::O {
+        self.0.data.borrow_mut().for_each = std::option::Option::Some(format!("${{{}}}", base));
+        terrars::ListRef::new(self.0.shared.clone(), self.extract_ref())
     }
 }
 
-impl Resource_ for GluePartitionIndex_ {
-    fn extract_resource_type(&self) -> String {
+impl terrars::Resource_ for GluePartitionIndex_ {
+    fn extract_resource_type(&self) -> std::string::String {
         "aws_glue_partition_index".into()
     }
 
-    fn extract_tf_id(&self) -> String {
+    fn extract_tf_id(&self) -> std::string::String {
         self.tf_id.clone()
     }
 
@@ -191,30 +231,31 @@ impl Resource_ for GluePartitionIndex_ {
 }
 
 pub struct BuildGluePartitionIndex {
-    pub tf_id: String,
-    #[doc= ""]
-    pub database_name: PrimField<String>,
-    #[doc= ""]
-    pub table_name: PrimField<String>,
+    pub tf_id: std::string::String,
+    #[doc = ""]
+    pub database_name: terrars::PrimField<std::string::String>,
+    #[doc = ""]
+    pub table_name: terrars::PrimField<std::string::String>,
 }
 
 impl BuildGluePartitionIndex {
-    pub fn build(self, stack: &mut Stack) -> GluePartitionIndex {
-        let out = GluePartitionIndex(Rc::new(GluePartitionIndex_ {
+    pub fn build(self, stack: &mut terrars::Stack) -> GluePartitionIndex {
+        let out = GluePartitionIndex(std::rc::Rc::new(GluePartitionIndex_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: RefCell::new(GluePartitionIndexData {
+            data: std::cell::RefCell::new(GluePartitionIndexData {
                 depends_on: core::default::Default::default(),
-                provider: None,
+                provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
-                for_each: None,
+                for_each: std::option::Option::None,
+                provisioner: core::default::Default::default(),
                 catalog_id: core::default::Default::default(),
                 database_name: self.database_name,
                 id: core::default::Default::default(),
                 table_name: self.table_name,
                 partition_index: core::default::Default::default(),
                 timeouts: core::default::Default::default(),
-                dynamic: Default::default(),
+                dynamic: core::default::Default::default(),
             }),
         }));
         stack.add_resource(out.0.clone());
@@ -223,12 +264,12 @@ impl BuildGluePartitionIndex {
 }
 
 pub struct GluePartitionIndexRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for GluePartitionIndexRef {
-    fn new(shared: StackShared, base: String) -> Self {
+impl terrars::Ref for GluePartitionIndexRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> Self {
         Self {
             shared: shared,
             base: base,
@@ -237,40 +278,40 @@ impl Ref for GluePartitionIndexRef {
 }
 
 impl GluePartitionIndexRef {
-    fn extract_ref(&self) -> String {
+    fn extract_ref(&self) -> std::string::String {
         self.base.clone()
     }
 
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `catalog_id` after provisioning.\n"]
-    pub fn catalog_id(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.catalog_id", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `catalog_id` after provisioning.\n"]
+    pub fn catalog_id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.catalog_id", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `database_name` after provisioning.\n"]
-    pub fn database_name(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.database_name", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `database_name` after provisioning.\n"]
+    pub fn database_name(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.database_name", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `id` after provisioning.\n"]
-    pub fn id(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
+    pub fn id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `table_name` after provisioning.\n"]
-    pub fn table_name(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.table_name", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `table_name` after provisioning.\n"]
+    pub fn table_name(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.table_name", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `partition_index` after provisioning.\n"]
-    pub fn partition_index(&self) -> ListRef<GluePartitionIndexPartitionIndexElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.partition_index", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `partition_index` after provisioning.\n"]
+    pub fn partition_index(&self) -> terrars::ListRef<GluePartitionIndexPartitionIndexElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.partition_index", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `timeouts` after provisioning.\n"]
+    #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
     pub fn timeouts(&self) -> GluePartitionIndexTimeoutsElRef {
         GluePartitionIndexTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
@@ -278,31 +319,34 @@ impl GluePartitionIndexRef {
 
 #[derive(Serialize)]
 pub struct GluePartitionIndexPartitionIndexEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    index_name: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    keys: Option<ListField<PrimField<String>>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    index_name: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    keys: std::option::Option<terrars::ListField<terrars::PrimField<std::string::String>>>,
 }
 
 impl GluePartitionIndexPartitionIndexEl {
-    #[doc= "Set the field `index_name`.\n"]
-    pub fn set_index_name(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.index_name = Some(v.into());
+    #[doc = "Set the field `index_name`.\n"]
+    pub fn set_index_name(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.index_name = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `keys`.\n"]
-    pub fn set_keys(mut self, v: impl Into<ListField<PrimField<String>>>) -> Self {
-        self.keys = Some(v.into());
+    #[doc = "Set the field `keys`.\n"]
+    pub fn set_keys(
+        mut self,
+        v: impl std::convert::Into<terrars::ListField<terrars::PrimField<std::string::String>>>,
+    ) -> Self {
+        self.keys = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl ToListMappable for GluePartitionIndexPartitionIndexEl {
-    type O = BlockAssignable<GluePartitionIndexPartitionIndexEl>;
+impl terrars::ToListMappable for GluePartitionIndexPartitionIndexEl {
+    type O = terrars::BlockAssignable<GluePartitionIndexPartitionIndexEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -322,12 +366,12 @@ impl BuildGluePartitionIndexPartitionIndexEl {
 }
 
 pub struct GluePartitionIndexPartitionIndexElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for GluePartitionIndexPartitionIndexElRef {
-    fn new(shared: StackShared, base: String) -> GluePartitionIndexPartitionIndexElRef {
+impl terrars::Ref for GluePartitionIndexPartitionIndexElRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> GluePartitionIndexPartitionIndexElRef {
         GluePartitionIndexPartitionIndexElRef {
             shared: shared,
             base: base.to_string(),
@@ -336,53 +380,53 @@ impl Ref for GluePartitionIndexPartitionIndexElRef {
 }
 
 impl GluePartitionIndexPartitionIndexElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `index_name` after provisioning.\n"]
-    pub fn index_name(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.index_name", self.base))
+    #[doc = "Get a reference to the value of field `index_name` after provisioning.\n"]
+    pub fn index_name(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.index_name", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `index_status` after provisioning.\n"]
-    pub fn index_status(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.index_status", self.base))
+    #[doc = "Get a reference to the value of field `index_status` after provisioning.\n"]
+    pub fn index_status(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.index_status", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `keys` after provisioning.\n"]
-    pub fn keys(&self) -> ListRef<PrimExpr<String>> {
-        ListRef::new(self.shared().clone(), format!("{}.keys", self.base))
+    #[doc = "Get a reference to the value of field `keys` after provisioning.\n"]
+    pub fn keys(&self) -> terrars::ListRef<terrars::PrimExpr<std::string::String>> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.keys", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct GluePartitionIndexTimeoutsEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    create: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    delete: Option<PrimField<String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    create: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    delete: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
 impl GluePartitionIndexTimeoutsEl {
-    #[doc= "Set the field `create`.\n"]
-    pub fn set_create(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.create = Some(v.into());
+    #[doc = "Set the field `create`.\n"]
+    pub fn set_create(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.create = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `delete`.\n"]
-    pub fn set_delete(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.delete = Some(v.into());
+    #[doc = "Set the field `delete`.\n"]
+    pub fn set_delete(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.delete = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl ToListMappable for GluePartitionIndexTimeoutsEl {
-    type O = BlockAssignable<GluePartitionIndexTimeoutsEl>;
+impl terrars::ToListMappable for GluePartitionIndexTimeoutsEl {
+    type O = terrars::BlockAssignable<GluePartitionIndexTimeoutsEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -402,12 +446,12 @@ impl BuildGluePartitionIndexTimeoutsEl {
 }
 
 pub struct GluePartitionIndexTimeoutsElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for GluePartitionIndexTimeoutsElRef {
-    fn new(shared: StackShared, base: String) -> GluePartitionIndexTimeoutsElRef {
+impl terrars::Ref for GluePartitionIndexTimeoutsElRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> GluePartitionIndexTimeoutsElRef {
         GluePartitionIndexTimeoutsElRef {
             shared: shared,
             base: base.to_string(),
@@ -416,22 +460,22 @@ impl Ref for GluePartitionIndexTimeoutsElRef {
 }
 
 impl GluePartitionIndexTimeoutsElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `create` after provisioning.\n"]
-    pub fn create(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.create", self.base))
+    #[doc = "Get a reference to the value of field `create` after provisioning.\n"]
+    pub fn create(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.create", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `delete` after provisioning.\n"]
-    pub fn delete(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.delete", self.base))
+    #[doc = "Get a reference to the value of field `delete` after provisioning.\n"]
+    pub fn delete(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.delete", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
 struct GluePartitionIndexDynamic {
-    partition_index: Option<DynamicBlock<GluePartitionIndexPartitionIndexEl>>,
+    partition_index: std::option::Option<terrars::DynamicBlock<GluePartitionIndexPartitionIndexEl>>,
 }

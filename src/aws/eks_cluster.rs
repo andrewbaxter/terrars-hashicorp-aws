@@ -1,65 +1,69 @@
 use serde::Serialize;
-use std::cell::RefCell;
-use std::rc::Rc;
-use terrars::*;
+use terrars::{
+    Referable as _,
+    Resource_ as _,
+    Ref as _,
+};
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
 struct EksClusterData {
-    #[serde(skip_serializing_if = "Vec::is_empty")]
-    depends_on: Vec<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    provider: Option<String>,
-    #[serde(skip_serializing_if = "SerdeSkipDefault::is_default")]
-    lifecycle: ResourceLifecycle,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    for_each: Option<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    enabled_cluster_log_types: Option<SetField<PrimField<String>>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    id: Option<PrimField<String>>,
-    name: PrimField<String>,
-    role_arn: PrimField<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    tags: Option<RecField<PrimField<String>>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    tags_all: Option<RecField<PrimField<String>>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    version: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    encryption_config: Option<Vec<EksClusterEncryptionConfigEl>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    kubernetes_network_config: Option<Vec<EksClusterKubernetesNetworkConfigEl>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    outpost_config: Option<Vec<EksClusterOutpostConfigEl>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    timeouts: Option<EksClusterTimeoutsEl>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    vpc_config: Option<Vec<EksClusterVpcConfigEl>>,
+    #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
+    depends_on: std::vec::Vec<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    provider: std::option::Option<std::string::String>,
+    #[serde(skip_serializing_if = "terrars::SerdeSkipDefault::is_default")]
+    lifecycle: terrars::ResourceLifecycle,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    for_each: std::option::Option<std::string::String>,
+    #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
+    provisioner: std::vec::Vec<terrars::Provisioner>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    enabled_cluster_log_types: std::option::Option<terrars::SetField<terrars::PrimField<std::string::String>>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    id: std::option::Option<terrars::PrimField<std::string::String>>,
+    name: terrars::PrimField<std::string::String>,
+    role_arn: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    tags: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    tags_all: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    version: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    encryption_config: std::option::Option<std::vec::Vec<EksClusterEncryptionConfigEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    kubernetes_network_config: std::option::Option<std::vec::Vec<EksClusterKubernetesNetworkConfigEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    outpost_config: std::option::Option<std::vec::Vec<EksClusterOutpostConfigEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    timeouts: std::option::Option<EksClusterTimeoutsEl>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    vpc_config: std::option::Option<std::vec::Vec<EksClusterVpcConfigEl>>,
     dynamic: EksClusterDynamic,
 }
 
 struct EksCluster_ {
-    shared: StackShared,
-    tf_id: String,
-    data: RefCell<EksClusterData>,
+    shared: terrars::StackShared,
+    tf_id: std::string::String,
+    data: std::cell::RefCell<EksClusterData>,
 }
 
 #[derive(Clone)]
-pub struct EksCluster(Rc<EksCluster_>);
+pub struct EksCluster(std::rc::Rc<EksCluster_>);
 
 impl EksCluster {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.0.shared
     }
 
-    pub fn depends_on(self, dep: &impl Referable) -> Self {
+    pub fn depends_on(self, dep: &impl terrars::Referable) -> Self {
         self.0.data.borrow_mut().depends_on.push(dep.extract_ref());
         self
     }
 
     pub fn set_provider(self, provider: &ProviderAws) -> Self {
-        self.0.data.borrow_mut().provider = Some(provider.provider_ref());
+        self.0.data.borrow_mut().provider = std::option::Option::Some(provider.provider_ref());
         self
     }
 
@@ -74,256 +78,304 @@ impl EksCluster {
     }
 
     pub fn ignore_changes_to_all(self) -> Self {
-        self.0.data.borrow_mut().lifecycle.ignore_changes = Some(IgnoreChanges::All(IgnoreChangesAll::All));
+        self.0.data.borrow_mut().lifecycle.ignore_changes =
+            std::option::Option::Some(terrars::IgnoreChanges::All(terrars::IgnoreChangesAll::All));
         self
     }
 
-    pub fn ignore_changes_to_attr(self, attr: impl ToString) -> Self {
+    pub fn ignore_changes_to_attr(self, attr: impl std::string::ToString) -> Self {
         {
             let mut d = self.0.data.borrow_mut();
             if match &mut d.lifecycle.ignore_changes {
-                Some(i) => match i {
-                    IgnoreChanges::All(_) => {
+                std::option::Option::Some(i) => match i {
+                    terrars::IgnoreChanges::All(_) => {
                         true
                     },
-                    IgnoreChanges::Refs(r) => {
+                    terrars::IgnoreChanges::Refs(r) => {
                         r.push(attr.to_string());
                         false
                     },
                 },
-                None => true,
+                std::option::Option::None => true,
             } {
-                d.lifecycle.ignore_changes = Some(IgnoreChanges::Refs(vec![attr.to_string()]));
+                d.lifecycle.ignore_changes =
+                    std::option::Option::Some(terrars::IgnoreChanges::Refs(vec![attr.to_string()]));
             }
         }
         self
     }
 
-    pub fn replace_triggered_by_resource(self, r: &impl Resource) -> Self {
+    pub fn replace_triggered_by_resource(self, r: &impl terrars::Resource) -> Self {
         self.0.data.borrow_mut().lifecycle.replace_triggered_by.push(r.extract_ref());
         self
     }
 
-    pub fn replace_triggered_by_attr(self, attr: impl ToString) -> Self {
+    pub fn replace_triggered_by_attr(self, attr: impl std::string::ToString) -> Self {
         self.0.data.borrow_mut().lifecycle.replace_triggered_by.push(attr.to_string());
         self
     }
 
-    #[doc= "Set the field `enabled_cluster_log_types`.\n"]
-    pub fn set_enabled_cluster_log_types(self, v: impl Into<SetField<PrimField<String>>>) -> Self {
-        self.0.data.borrow_mut().enabled_cluster_log_types = Some(v.into());
+    #[doc = r" Add a provisioner (ex: `local-exec`, `remote-exec`, `file`) to this resource."]
+    #[doc = r" Provisioners run in the order they're added."]
+    pub fn add_provisioner(self, v: impl std::convert::Into<terrars::Provisioner>) -> Self {
+        self.0.data.borrow_mut().provisioner.push(v.into());
         self
     }
 
-    #[doc= "Set the field `id`.\n"]
-    pub fn set_id(self, v: impl Into<PrimField<String>>) -> Self {
-        self.0.data.borrow_mut().id = Some(v.into());
-        self
-    }
-
-    #[doc= "Set the field `tags`.\n"]
-    pub fn set_tags(self, v: impl Into<RecField<PrimField<String>>>) -> Self {
-        self.0.data.borrow_mut().tags = Some(v.into());
-        self
-    }
-
-    #[doc= "Set the field `tags_all`.\n"]
-    pub fn set_tags_all(self, v: impl Into<RecField<PrimField<String>>>) -> Self {
-        self.0.data.borrow_mut().tags_all = Some(v.into());
-        self
-    }
-
-    #[doc= "Set the field `version`.\n"]
-    pub fn set_version(self, v: impl Into<PrimField<String>>) -> Self {
-        self.0.data.borrow_mut().version = Some(v.into());
-        self
-    }
-
-    #[doc= "Set the field `encryption_config`.\n"]
-    pub fn set_encryption_config(self, v: impl Into<BlockAssignable<EksClusterEncryptionConfigEl>>) -> Self {
-        match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.0.data.borrow_mut().encryption_config = Some(v);
-            },
-            BlockAssignable::Dynamic(d) => {
-                self.0.data.borrow_mut().dynamic.encryption_config = Some(d);
-            },
-        }
-        self
-    }
-
-    #[doc= "Set the field `kubernetes_network_config`.\n"]
-    pub fn set_kubernetes_network_config(
+    pub fn add_lifecycle_precondition(
         self,
-        v: impl Into<BlockAssignable<EksClusterKubernetesNetworkConfigEl>>,
+        condition: impl std::convert::Into<terrars::PrimField<bool>>,
+        error_message: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.0.data.borrow_mut().lifecycle.precondition.push(terrars::LifecycleCondition {
+            condition: condition.into(),
+            error_message: error_message.into(),
+        });
+        self
+    }
+
+    pub fn add_lifecycle_postcondition(
+        self,
+        condition: impl std::convert::Into<terrars::PrimField<bool>>,
+        error_message: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.0.data.borrow_mut().lifecycle.postcondition.push(terrars::LifecycleCondition {
+            condition: condition.into(),
+            error_message: error_message.into(),
+        });
+        self
+    }
+
+    #[doc = "Set the field `enabled_cluster_log_types`.\n"]
+    pub fn set_enabled_cluster_log_types(
+        self,
+        v: impl std::convert::Into<terrars::SetField<terrars::PrimField<std::string::String>>>,
+    ) -> Self {
+        self.0.data.borrow_mut().enabled_cluster_log_types = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `id`.\n"]
+    pub fn set_id(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().id = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `tags`.\n"]
+    pub fn set_tags(
+        self,
+        v: impl std::convert::Into<terrars::RecField<terrars::PrimField<std::string::String>>>,
+    ) -> Self {
+        self.0.data.borrow_mut().tags = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `tags_all`.\n"]
+    pub fn set_tags_all(
+        self,
+        v: impl std::convert::Into<terrars::RecField<terrars::PrimField<std::string::String>>>,
+    ) -> Self {
+        self.0.data.borrow_mut().tags_all = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `version`.\n"]
+    pub fn set_version(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().version = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `encryption_config`.\n"]
+    pub fn set_encryption_config(
+        self,
+        v: impl std::convert::Into<terrars::BlockAssignable<EksClusterEncryptionConfigEl>>,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.0.data.borrow_mut().kubernetes_network_config = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.0.data.borrow_mut().encryption_config = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.0.data.borrow_mut().dynamic.kubernetes_network_config = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.0.data.borrow_mut().dynamic.encryption_config = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Set the field `outpost_config`.\n"]
-    pub fn set_outpost_config(self, v: impl Into<BlockAssignable<EksClusterOutpostConfigEl>>) -> Self {
+    #[doc = "Set the field `kubernetes_network_config`.\n"]
+    pub fn set_kubernetes_network_config(
+        self,
+        v: impl std::convert::Into<terrars::BlockAssignable<EksClusterKubernetesNetworkConfigEl>>,
+    ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.0.data.borrow_mut().outpost_config = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.0.data.borrow_mut().kubernetes_network_config = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.0.data.borrow_mut().dynamic.outpost_config = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.0.data.borrow_mut().dynamic.kubernetes_network_config = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Set the field `timeouts`.\n"]
-    pub fn set_timeouts(self, v: impl Into<EksClusterTimeoutsEl>) -> Self {
-        self.0.data.borrow_mut().timeouts = Some(v.into());
-        self
-    }
-
-    #[doc= "Set the field `vpc_config`.\n"]
-    pub fn set_vpc_config(self, v: impl Into<BlockAssignable<EksClusterVpcConfigEl>>) -> Self {
+    #[doc = "Set the field `outpost_config`.\n"]
+    pub fn set_outpost_config(
+        self,
+        v: impl std::convert::Into<terrars::BlockAssignable<EksClusterOutpostConfigEl>>,
+    ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.0.data.borrow_mut().vpc_config = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.0.data.borrow_mut().outpost_config = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.0.data.borrow_mut().dynamic.vpc_config = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.0.data.borrow_mut().dynamic.outpost_config = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Get a reference to the value of field `arn` after provisioning.\n"]
-    pub fn arn(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.arn", self.extract_ref()))
+    #[doc = "Set the field `timeouts`.\n"]
+    pub fn set_timeouts(self, v: impl std::convert::Into<EksClusterTimeoutsEl>) -> Self {
+        self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
+        self
     }
 
-    #[doc= "Get a reference to the value of field `certificate_authority` after provisioning.\n"]
-    pub fn certificate_authority(&self) -> ListRef<EksClusterCertificateAuthorityElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.certificate_authority", self.extract_ref()))
+    #[doc = "Set the field `vpc_config`.\n"]
+    pub fn set_vpc_config(self, v: impl std::convert::Into<terrars::BlockAssignable<EksClusterVpcConfigEl>>) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.0.data.borrow_mut().vpc_config = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.0.data.borrow_mut().dynamic.vpc_config = std::option::Option::Some(d);
+            },
+        }
+        self
     }
 
-    #[doc= "Get a reference to the value of field `cluster_id` after provisioning.\n"]
-    pub fn cluster_id(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.cluster_id", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `arn` after provisioning.\n"]
+    pub fn arn(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.arn", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `created_at` after provisioning.\n"]
-    pub fn created_at(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.created_at", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `certificate_authority` after provisioning.\n"]
+    pub fn certificate_authority(&self) -> terrars::ListRef<EksClusterCertificateAuthorityElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.certificate_authority", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `enabled_cluster_log_types` after provisioning.\n"]
-    pub fn enabled_cluster_log_types(&self) -> SetRef<PrimExpr<String>> {
-        SetRef::new(self.shared().clone(), format!("{}.enabled_cluster_log_types", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `cluster_id` after provisioning.\n"]
+    pub fn cluster_id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.cluster_id", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `endpoint` after provisioning.\n"]
-    pub fn endpoint(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.endpoint", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `created_at` after provisioning.\n"]
+    pub fn created_at(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.created_at", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `id` after provisioning.\n"]
-    pub fn id(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `enabled_cluster_log_types` after provisioning.\n"]
+    pub fn enabled_cluster_log_types(&self) -> terrars::SetRef<terrars::PrimExpr<std::string::String>> {
+        terrars::SetRef::new(self.shared().clone(), format!("{}.enabled_cluster_log_types", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `identity` after provisioning.\n"]
-    pub fn identity(&self) -> ListRef<EksClusterIdentityElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.identity", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `endpoint` after provisioning.\n"]
+    pub fn endpoint(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.endpoint", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `name` after provisioning.\n"]
-    pub fn name(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
+    pub fn id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `platform_version` after provisioning.\n"]
-    pub fn platform_version(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.platform_version", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `identity` after provisioning.\n"]
+    pub fn identity(&self) -> terrars::ListRef<EksClusterIdentityElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.identity", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `role_arn` after provisioning.\n"]
-    pub fn role_arn(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.role_arn", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `name` after provisioning.\n"]
+    pub fn name(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `status` after provisioning.\n"]
-    pub fn status(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.status", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `platform_version` after provisioning.\n"]
+    pub fn platform_version(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.platform_version", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `tags` after provisioning.\n"]
-    pub fn tags(&self) -> RecRef<PrimExpr<String>> {
-        RecRef::new(self.shared().clone(), format!("{}.tags", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `role_arn` after provisioning.\n"]
+    pub fn role_arn(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.role_arn", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `tags_all` after provisioning.\n"]
-    pub fn tags_all(&self) -> RecRef<PrimExpr<String>> {
-        RecRef::new(self.shared().clone(), format!("{}.tags_all", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `status` after provisioning.\n"]
+    pub fn status(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.status", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `version` after provisioning.\n"]
-    pub fn version(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.version", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `tags` after provisioning.\n"]
+    pub fn tags(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
+        terrars::RecRef::new(self.shared().clone(), format!("{}.tags", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `encryption_config` after provisioning.\n"]
-    pub fn encryption_config(&self) -> ListRef<EksClusterEncryptionConfigElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.encryption_config", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `tags_all` after provisioning.\n"]
+    pub fn tags_all(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
+        terrars::RecRef::new(self.shared().clone(), format!("{}.tags_all", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `kubernetes_network_config` after provisioning.\n"]
-    pub fn kubernetes_network_config(&self) -> ListRef<EksClusterKubernetesNetworkConfigElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.kubernetes_network_config", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `version` after provisioning.\n"]
+    pub fn version(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.version", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `outpost_config` after provisioning.\n"]
-    pub fn outpost_config(&self) -> ListRef<EksClusterOutpostConfigElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.outpost_config", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `encryption_config` after provisioning.\n"]
+    pub fn encryption_config(&self) -> terrars::ListRef<EksClusterEncryptionConfigElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.encryption_config", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `timeouts` after provisioning.\n"]
+    #[doc = "Get a reference to the value of field `kubernetes_network_config` after provisioning.\n"]
+    pub fn kubernetes_network_config(&self) -> terrars::ListRef<EksClusterKubernetesNetworkConfigElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.kubernetes_network_config", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `outpost_config` after provisioning.\n"]
+    pub fn outpost_config(&self) -> terrars::ListRef<EksClusterOutpostConfigElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.outpost_config", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
     pub fn timeouts(&self) -> EksClusterTimeoutsElRef {
         EksClusterTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `vpc_config` after provisioning.\n"]
-    pub fn vpc_config(&self) -> ListRef<EksClusterVpcConfigElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.vpc_config", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `vpc_config` after provisioning.\n"]
+    pub fn vpc_config(&self) -> terrars::ListRef<EksClusterVpcConfigElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.vpc_config", self.extract_ref()))
     }
 }
 
-impl Referable for EksCluster {
-    fn extract_ref(&self) -> String {
+impl terrars::Referable for EksCluster {
+    fn extract_ref(&self) -> std::string::String {
         format!("{}.{}", self.0.extract_resource_type(), self.0.extract_tf_id())
     }
 }
 
-impl Resource for EksCluster { }
+impl terrars::Resource for EksCluster { }
 
-impl ToListMappable for EksCluster {
-    type O = ListRef<EksClusterRef>;
+impl terrars::ToListMappable for EksCluster {
+    type O = terrars::ListRef<EksClusterRef>;
 
-    fn do_map(self, base: String) -> Self::O {
-        self.0.data.borrow_mut().for_each = Some(format!("${{{}}}", base));
-        ListRef::new(self.0.shared.clone(), self.extract_ref())
+    fn do_map(self, base: std::string::String) -> Self::O {
+        self.0.data.borrow_mut().for_each = std::option::Option::Some(format!("${{{}}}", base));
+        terrars::ListRef::new(self.0.shared.clone(), self.extract_ref())
     }
 }
 
-impl Resource_ for EksCluster_ {
-    fn extract_resource_type(&self) -> String {
+impl terrars::Resource_ for EksCluster_ {
+    fn extract_resource_type(&self) -> std::string::String {
         "aws_eks_cluster".into()
     }
 
-    fn extract_tf_id(&self) -> String {
+    fn extract_tf_id(&self) -> std::string::String {
         self.tf_id.clone()
     }
 
@@ -333,23 +385,24 @@ impl Resource_ for EksCluster_ {
 }
 
 pub struct BuildEksCluster {
-    pub tf_id: String,
-    #[doc= ""]
-    pub name: PrimField<String>,
-    #[doc= ""]
-    pub role_arn: PrimField<String>,
+    pub tf_id: std::string::String,
+    #[doc = ""]
+    pub name: terrars::PrimField<std::string::String>,
+    #[doc = ""]
+    pub role_arn: terrars::PrimField<std::string::String>,
 }
 
 impl BuildEksCluster {
-    pub fn build(self, stack: &mut Stack) -> EksCluster {
-        let out = EksCluster(Rc::new(EksCluster_ {
+    pub fn build(self, stack: &mut terrars::Stack) -> EksCluster {
+        let out = EksCluster(std::rc::Rc::new(EksCluster_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: RefCell::new(EksClusterData {
+            data: std::cell::RefCell::new(EksClusterData {
                 depends_on: core::default::Default::default(),
-                provider: None,
+                provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
-                for_each: None,
+                for_each: std::option::Option::None,
+                provisioner: core::default::Default::default(),
                 enabled_cluster_log_types: core::default::Default::default(),
                 id: core::default::Default::default(),
                 name: self.name,
@@ -362,7 +415,7 @@ impl BuildEksCluster {
                 outpost_config: core::default::Default::default(),
                 timeouts: core::default::Default::default(),
                 vpc_config: core::default::Default::default(),
-                dynamic: Default::default(),
+                dynamic: core::default::Default::default(),
             }),
         }));
         stack.add_resource(out.0.clone());
@@ -371,12 +424,12 @@ impl BuildEksCluster {
 }
 
 pub struct EksClusterRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for EksClusterRef {
-    fn new(shared: StackShared, base: String) -> Self {
+impl terrars::Ref for EksClusterRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> Self {
         Self {
             shared: shared,
             base: base,
@@ -385,134 +438,134 @@ impl Ref for EksClusterRef {
 }
 
 impl EksClusterRef {
-    fn extract_ref(&self) -> String {
+    fn extract_ref(&self) -> std::string::String {
         self.base.clone()
     }
 
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `arn` after provisioning.\n"]
-    pub fn arn(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.arn", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `arn` after provisioning.\n"]
+    pub fn arn(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.arn", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `certificate_authority` after provisioning.\n"]
-    pub fn certificate_authority(&self) -> ListRef<EksClusterCertificateAuthorityElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.certificate_authority", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `certificate_authority` after provisioning.\n"]
+    pub fn certificate_authority(&self) -> terrars::ListRef<EksClusterCertificateAuthorityElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.certificate_authority", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `cluster_id` after provisioning.\n"]
-    pub fn cluster_id(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.cluster_id", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `cluster_id` after provisioning.\n"]
+    pub fn cluster_id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.cluster_id", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `created_at` after provisioning.\n"]
-    pub fn created_at(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.created_at", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `created_at` after provisioning.\n"]
+    pub fn created_at(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.created_at", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `enabled_cluster_log_types` after provisioning.\n"]
-    pub fn enabled_cluster_log_types(&self) -> SetRef<PrimExpr<String>> {
-        SetRef::new(self.shared().clone(), format!("{}.enabled_cluster_log_types", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `enabled_cluster_log_types` after provisioning.\n"]
+    pub fn enabled_cluster_log_types(&self) -> terrars::SetRef<terrars::PrimExpr<std::string::String>> {
+        terrars::SetRef::new(self.shared().clone(), format!("{}.enabled_cluster_log_types", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `endpoint` after provisioning.\n"]
-    pub fn endpoint(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.endpoint", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `endpoint` after provisioning.\n"]
+    pub fn endpoint(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.endpoint", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `id` after provisioning.\n"]
-    pub fn id(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
+    pub fn id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `identity` after provisioning.\n"]
-    pub fn identity(&self) -> ListRef<EksClusterIdentityElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.identity", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `identity` after provisioning.\n"]
+    pub fn identity(&self) -> terrars::ListRef<EksClusterIdentityElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.identity", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `name` after provisioning.\n"]
-    pub fn name(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `name` after provisioning.\n"]
+    pub fn name(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `platform_version` after provisioning.\n"]
-    pub fn platform_version(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.platform_version", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `platform_version` after provisioning.\n"]
+    pub fn platform_version(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.platform_version", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `role_arn` after provisioning.\n"]
-    pub fn role_arn(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.role_arn", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `role_arn` after provisioning.\n"]
+    pub fn role_arn(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.role_arn", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `status` after provisioning.\n"]
-    pub fn status(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.status", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `status` after provisioning.\n"]
+    pub fn status(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.status", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `tags` after provisioning.\n"]
-    pub fn tags(&self) -> RecRef<PrimExpr<String>> {
-        RecRef::new(self.shared().clone(), format!("{}.tags", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `tags` after provisioning.\n"]
+    pub fn tags(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
+        terrars::RecRef::new(self.shared().clone(), format!("{}.tags", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `tags_all` after provisioning.\n"]
-    pub fn tags_all(&self) -> RecRef<PrimExpr<String>> {
-        RecRef::new(self.shared().clone(), format!("{}.tags_all", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `tags_all` after provisioning.\n"]
+    pub fn tags_all(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
+        terrars::RecRef::new(self.shared().clone(), format!("{}.tags_all", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `version` after provisioning.\n"]
-    pub fn version(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.version", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `version` after provisioning.\n"]
+    pub fn version(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.version", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `encryption_config` after provisioning.\n"]
-    pub fn encryption_config(&self) -> ListRef<EksClusterEncryptionConfigElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.encryption_config", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `encryption_config` after provisioning.\n"]
+    pub fn encryption_config(&self) -> terrars::ListRef<EksClusterEncryptionConfigElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.encryption_config", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `kubernetes_network_config` after provisioning.\n"]
-    pub fn kubernetes_network_config(&self) -> ListRef<EksClusterKubernetesNetworkConfigElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.kubernetes_network_config", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `kubernetes_network_config` after provisioning.\n"]
+    pub fn kubernetes_network_config(&self) -> terrars::ListRef<EksClusterKubernetesNetworkConfigElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.kubernetes_network_config", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `outpost_config` after provisioning.\n"]
-    pub fn outpost_config(&self) -> ListRef<EksClusterOutpostConfigElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.outpost_config", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `outpost_config` after provisioning.\n"]
+    pub fn outpost_config(&self) -> terrars::ListRef<EksClusterOutpostConfigElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.outpost_config", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `timeouts` after provisioning.\n"]
+    #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
     pub fn timeouts(&self) -> EksClusterTimeoutsElRef {
         EksClusterTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `vpc_config` after provisioning.\n"]
-    pub fn vpc_config(&self) -> ListRef<EksClusterVpcConfigElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.vpc_config", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `vpc_config` after provisioning.\n"]
+    pub fn vpc_config(&self) -> terrars::ListRef<EksClusterVpcConfigElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.vpc_config", self.extract_ref()))
     }
 }
 
 #[derive(Serialize)]
 pub struct EksClusterCertificateAuthorityEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    data: Option<PrimField<String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    data: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
 impl EksClusterCertificateAuthorityEl {
-    #[doc= "Set the field `data`.\n"]
-    pub fn set_data(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.data = Some(v.into());
+    #[doc = "Set the field `data`.\n"]
+    pub fn set_data(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.data = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl ToListMappable for EksClusterCertificateAuthorityEl {
-    type O = BlockAssignable<EksClusterCertificateAuthorityEl>;
+impl terrars::ToListMappable for EksClusterCertificateAuthorityEl {
+    type O = terrars::BlockAssignable<EksClusterCertificateAuthorityEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -529,12 +582,12 @@ impl BuildEksClusterCertificateAuthorityEl {
 }
 
 pub struct EksClusterCertificateAuthorityElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for EksClusterCertificateAuthorityElRef {
-    fn new(shared: StackShared, base: String) -> EksClusterCertificateAuthorityElRef {
+impl terrars::Ref for EksClusterCertificateAuthorityElRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> EksClusterCertificateAuthorityElRef {
         EksClusterCertificateAuthorityElRef {
             shared: shared,
             base: base.to_string(),
@@ -543,35 +596,35 @@ impl Ref for EksClusterCertificateAuthorityElRef {
 }
 
 impl EksClusterCertificateAuthorityElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `data` after provisioning.\n"]
-    pub fn data(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.data", self.base))
+    #[doc = "Get a reference to the value of field `data` after provisioning.\n"]
+    pub fn data(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.data", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct EksClusterIdentityElOidcEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    issuer: Option<PrimField<String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    issuer: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
 impl EksClusterIdentityElOidcEl {
-    #[doc= "Set the field `issuer`.\n"]
-    pub fn set_issuer(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.issuer = Some(v.into());
+    #[doc = "Set the field `issuer`.\n"]
+    pub fn set_issuer(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.issuer = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl ToListMappable for EksClusterIdentityElOidcEl {
-    type O = BlockAssignable<EksClusterIdentityElOidcEl>;
+impl terrars::ToListMappable for EksClusterIdentityElOidcEl {
+    type O = terrars::BlockAssignable<EksClusterIdentityElOidcEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -588,12 +641,12 @@ impl BuildEksClusterIdentityElOidcEl {
 }
 
 pub struct EksClusterIdentityElOidcElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for EksClusterIdentityElOidcElRef {
-    fn new(shared: StackShared, base: String) -> EksClusterIdentityElOidcElRef {
+impl terrars::Ref for EksClusterIdentityElOidcElRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> EksClusterIdentityElOidcElRef {
         EksClusterIdentityElOidcElRef {
             shared: shared,
             base: base.to_string(),
@@ -602,35 +655,35 @@ impl Ref for EksClusterIdentityElOidcElRef {
 }
 
 impl EksClusterIdentityElOidcElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `issuer` after provisioning.\n"]
-    pub fn issuer(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.issuer", self.base))
+    #[doc = "Get a reference to the value of field `issuer` after provisioning.\n"]
+    pub fn issuer(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.issuer", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct EksClusterIdentityEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    oidc: Option<ListField<EksClusterIdentityElOidcEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    oidc: std::option::Option<terrars::ListField<EksClusterIdentityElOidcEl>>,
 }
 
 impl EksClusterIdentityEl {
-    #[doc= "Set the field `oidc`.\n"]
-    pub fn set_oidc(mut self, v: impl Into<ListField<EksClusterIdentityElOidcEl>>) -> Self {
-        self.oidc = Some(v.into());
+    #[doc = "Set the field `oidc`.\n"]
+    pub fn set_oidc(mut self, v: impl std::convert::Into<terrars::ListField<EksClusterIdentityElOidcEl>>) -> Self {
+        self.oidc = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl ToListMappable for EksClusterIdentityEl {
-    type O = BlockAssignable<EksClusterIdentityEl>;
+impl terrars::ToListMappable for EksClusterIdentityEl {
+    type O = terrars::BlockAssignable<EksClusterIdentityEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -647,12 +700,12 @@ impl BuildEksClusterIdentityEl {
 }
 
 pub struct EksClusterIdentityElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for EksClusterIdentityElRef {
-    fn new(shared: StackShared, base: String) -> EksClusterIdentityElRef {
+impl terrars::Ref for EksClusterIdentityElRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> EksClusterIdentityElRef {
         EksClusterIdentityElRef {
             shared: shared,
             base: base.to_string(),
@@ -661,28 +714,28 @@ impl Ref for EksClusterIdentityElRef {
 }
 
 impl EksClusterIdentityElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `oidc` after provisioning.\n"]
-    pub fn oidc(&self) -> ListRef<EksClusterIdentityElOidcElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.oidc", self.base))
+    #[doc = "Get a reference to the value of field `oidc` after provisioning.\n"]
+    pub fn oidc(&self) -> terrars::ListRef<EksClusterIdentityElOidcElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.oidc", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct EksClusterEncryptionConfigElProviderEl {
-    key_arn: PrimField<String>,
+    key_arn: terrars::PrimField<std::string::String>,
 }
 
 impl EksClusterEncryptionConfigElProviderEl { }
 
-impl ToListMappable for EksClusterEncryptionConfigElProviderEl {
-    type O = BlockAssignable<EksClusterEncryptionConfigElProviderEl>;
+impl terrars::ToListMappable for EksClusterEncryptionConfigElProviderEl {
+    type O = terrars::BlockAssignable<EksClusterEncryptionConfigElProviderEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -691,8 +744,8 @@ impl ToListMappable for EksClusterEncryptionConfigElProviderEl {
 }
 
 pub struct BuildEksClusterEncryptionConfigElProviderEl {
-    #[doc= ""]
-    pub key_arn: PrimField<String>,
+    #[doc = ""]
+    pub key_arn: terrars::PrimField<std::string::String>,
 }
 
 impl BuildEksClusterEncryptionConfigElProviderEl {
@@ -702,12 +755,12 @@ impl BuildEksClusterEncryptionConfigElProviderEl {
 }
 
 pub struct EksClusterEncryptionConfigElProviderElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for EksClusterEncryptionConfigElProviderElRef {
-    fn new(shared: StackShared, base: String) -> EksClusterEncryptionConfigElProviderElRef {
+impl terrars::Ref for EksClusterEncryptionConfigElProviderElRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> EksClusterEncryptionConfigElProviderElRef {
         EksClusterEncryptionConfigElProviderElRef {
             shared: shared,
             base: base.to_string(),
@@ -716,49 +769,52 @@ impl Ref for EksClusterEncryptionConfigElProviderElRef {
 }
 
 impl EksClusterEncryptionConfigElProviderElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `key_arn` after provisioning.\n"]
-    pub fn key_arn(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.key_arn", self.base))
+    #[doc = "Get a reference to the value of field `key_arn` after provisioning.\n"]
+    pub fn key_arn(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.key_arn", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
 struct EksClusterEncryptionConfigElDynamic {
-    provider: Option<DynamicBlock<EksClusterEncryptionConfigElProviderEl>>,
+    provider: std::option::Option<terrars::DynamicBlock<EksClusterEncryptionConfigElProviderEl>>,
 }
 
 #[derive(Serialize)]
 pub struct EksClusterEncryptionConfigEl {
-    resources: SetField<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    provider: Option<Vec<EksClusterEncryptionConfigElProviderEl>>,
+    resources: terrars::SetField<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    provider: std::option::Option<std::vec::Vec<EksClusterEncryptionConfigElProviderEl>>,
     dynamic: EksClusterEncryptionConfigElDynamic,
 }
 
 impl EksClusterEncryptionConfigEl {
-    #[doc= "Set the field `provider`.\n"]
-    pub fn set_provider(mut self, v: impl Into<BlockAssignable<EksClusterEncryptionConfigElProviderEl>>) -> Self {
+    #[doc = "Set the field `provider`.\n"]
+    pub fn set_provider(
+        mut self,
+        v: impl std::convert::Into<terrars::BlockAssignable<EksClusterEncryptionConfigElProviderEl>>,
+    ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.provider = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.provider = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.provider = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.provider = std::option::Option::Some(d);
             },
         }
         self
     }
 }
 
-impl ToListMappable for EksClusterEncryptionConfigEl {
-    type O = BlockAssignable<EksClusterEncryptionConfigEl>;
+impl terrars::ToListMappable for EksClusterEncryptionConfigEl {
+    type O = terrars::BlockAssignable<EksClusterEncryptionConfigEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -767,8 +823,8 @@ impl ToListMappable for EksClusterEncryptionConfigEl {
 }
 
 pub struct BuildEksClusterEncryptionConfigEl {
-    #[doc= ""]
-    pub resources: SetField<PrimField<String>>,
+    #[doc = ""]
+    pub resources: terrars::SetField<terrars::PrimField<std::string::String>>,
 }
 
 impl BuildEksClusterEncryptionConfigEl {
@@ -776,18 +832,18 @@ impl BuildEksClusterEncryptionConfigEl {
         EksClusterEncryptionConfigEl {
             resources: self.resources,
             provider: core::default::Default::default(),
-            dynamic: Default::default(),
+            dynamic: core::default::Default::default(),
         }
     }
 }
 
 pub struct EksClusterEncryptionConfigElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for EksClusterEncryptionConfigElRef {
-    fn new(shared: StackShared, base: String) -> EksClusterEncryptionConfigElRef {
+impl terrars::Ref for EksClusterEncryptionConfigElRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> EksClusterEncryptionConfigElRef {
         EksClusterEncryptionConfigElRef {
             shared: shared,
             base: base.to_string(),
@@ -796,48 +852,48 @@ impl Ref for EksClusterEncryptionConfigElRef {
 }
 
 impl EksClusterEncryptionConfigElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `resources` after provisioning.\n"]
-    pub fn resources(&self) -> SetRef<PrimExpr<String>> {
-        SetRef::new(self.shared().clone(), format!("{}.resources", self.base))
+    #[doc = "Get a reference to the value of field `resources` after provisioning.\n"]
+    pub fn resources(&self) -> terrars::SetRef<terrars::PrimExpr<std::string::String>> {
+        terrars::SetRef::new(self.shared().clone(), format!("{}.resources", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `provider` after provisioning.\n"]
-    pub fn provider(&self) -> ListRef<EksClusterEncryptionConfigElProviderElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.provider", self.base))
+    #[doc = "Get a reference to the value of field `provider` after provisioning.\n"]
+    pub fn provider(&self) -> terrars::ListRef<EksClusterEncryptionConfigElProviderElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.provider", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct EksClusterKubernetesNetworkConfigEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    ip_family: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    service_ipv4_cidr: Option<PrimField<String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    ip_family: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    service_ipv4_cidr: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
 impl EksClusterKubernetesNetworkConfigEl {
-    #[doc= "Set the field `ip_family`.\n"]
-    pub fn set_ip_family(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.ip_family = Some(v.into());
+    #[doc = "Set the field `ip_family`.\n"]
+    pub fn set_ip_family(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.ip_family = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `service_ipv4_cidr`.\n"]
-    pub fn set_service_ipv4_cidr(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.service_ipv4_cidr = Some(v.into());
+    #[doc = "Set the field `service_ipv4_cidr`.\n"]
+    pub fn set_service_ipv4_cidr(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.service_ipv4_cidr = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl ToListMappable for EksClusterKubernetesNetworkConfigEl {
-    type O = BlockAssignable<EksClusterKubernetesNetworkConfigEl>;
+impl terrars::ToListMappable for EksClusterKubernetesNetworkConfigEl {
+    type O = terrars::BlockAssignable<EksClusterKubernetesNetworkConfigEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -857,12 +913,12 @@ impl BuildEksClusterKubernetesNetworkConfigEl {
 }
 
 pub struct EksClusterKubernetesNetworkConfigElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for EksClusterKubernetesNetworkConfigElRef {
-    fn new(shared: StackShared, base: String) -> EksClusterKubernetesNetworkConfigElRef {
+impl terrars::Ref for EksClusterKubernetesNetworkConfigElRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> EksClusterKubernetesNetworkConfigElRef {
         EksClusterKubernetesNetworkConfigElRef {
             shared: shared,
             base: base.to_string(),
@@ -871,38 +927,38 @@ impl Ref for EksClusterKubernetesNetworkConfigElRef {
 }
 
 impl EksClusterKubernetesNetworkConfigElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `ip_family` after provisioning.\n"]
-    pub fn ip_family(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.ip_family", self.base))
+    #[doc = "Get a reference to the value of field `ip_family` after provisioning.\n"]
+    pub fn ip_family(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.ip_family", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `service_ipv4_cidr` after provisioning.\n"]
-    pub fn service_ipv4_cidr(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.service_ipv4_cidr", self.base))
+    #[doc = "Get a reference to the value of field `service_ipv4_cidr` after provisioning.\n"]
+    pub fn service_ipv4_cidr(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.service_ipv4_cidr", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `service_ipv6_cidr` after provisioning.\n"]
-    pub fn service_ipv6_cidr(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.service_ipv6_cidr", self.base))
+    #[doc = "Get a reference to the value of field `service_ipv6_cidr` after provisioning.\n"]
+    pub fn service_ipv6_cidr(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.service_ipv6_cidr", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct EksClusterOutpostConfigElControlPlanePlacementEl {
-    group_name: PrimField<String>,
+    group_name: terrars::PrimField<std::string::String>,
 }
 
 impl EksClusterOutpostConfigElControlPlanePlacementEl { }
 
-impl ToListMappable for EksClusterOutpostConfigElControlPlanePlacementEl {
-    type O = BlockAssignable<EksClusterOutpostConfigElControlPlanePlacementEl>;
+impl terrars::ToListMappable for EksClusterOutpostConfigElControlPlanePlacementEl {
+    type O = terrars::BlockAssignable<EksClusterOutpostConfigElControlPlanePlacementEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -911,8 +967,8 @@ impl ToListMappable for EksClusterOutpostConfigElControlPlanePlacementEl {
 }
 
 pub struct BuildEksClusterOutpostConfigElControlPlanePlacementEl {
-    #[doc= ""]
-    pub group_name: PrimField<String>,
+    #[doc = ""]
+    pub group_name: terrars::PrimField<std::string::String>,
 }
 
 impl BuildEksClusterOutpostConfigElControlPlanePlacementEl {
@@ -922,12 +978,15 @@ impl BuildEksClusterOutpostConfigElControlPlanePlacementEl {
 }
 
 pub struct EksClusterOutpostConfigElControlPlanePlacementElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for EksClusterOutpostConfigElControlPlanePlacementElRef {
-    fn new(shared: StackShared, base: String) -> EksClusterOutpostConfigElControlPlanePlacementElRef {
+impl terrars::Ref for EksClusterOutpostConfigElControlPlanePlacementElRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> EksClusterOutpostConfigElControlPlanePlacementElRef {
         EksClusterOutpostConfigElControlPlanePlacementElRef {
             shared: shared,
             base: base.to_string(),
@@ -936,53 +995,55 @@ impl Ref for EksClusterOutpostConfigElControlPlanePlacementElRef {
 }
 
 impl EksClusterOutpostConfigElControlPlanePlacementElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `group_name` after provisioning.\n"]
-    pub fn group_name(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.group_name", self.base))
+    #[doc = "Get a reference to the value of field `group_name` after provisioning.\n"]
+    pub fn group_name(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.group_name", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
 struct EksClusterOutpostConfigElDynamic {
-    control_plane_placement: Option<DynamicBlock<EksClusterOutpostConfigElControlPlanePlacementEl>>,
+    control_plane_placement: std
+    ::option
+    ::Option<terrars::DynamicBlock<EksClusterOutpostConfigElControlPlanePlacementEl>>,
 }
 
 #[derive(Serialize)]
 pub struct EksClusterOutpostConfigEl {
-    control_plane_instance_type: PrimField<String>,
-    outpost_arns: SetField<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    control_plane_placement: Option<Vec<EksClusterOutpostConfigElControlPlanePlacementEl>>,
+    control_plane_instance_type: terrars::PrimField<std::string::String>,
+    outpost_arns: terrars::SetField<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    control_plane_placement: std::option::Option<std::vec::Vec<EksClusterOutpostConfigElControlPlanePlacementEl>>,
     dynamic: EksClusterOutpostConfigElDynamic,
 }
 
 impl EksClusterOutpostConfigEl {
-    #[doc= "Set the field `control_plane_placement`.\n"]
+    #[doc = "Set the field `control_plane_placement`.\n"]
     pub fn set_control_plane_placement(
         mut self,
-        v: impl Into<BlockAssignable<EksClusterOutpostConfigElControlPlanePlacementEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<EksClusterOutpostConfigElControlPlanePlacementEl>>,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.control_plane_placement = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.control_plane_placement = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.control_plane_placement = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.control_plane_placement = std::option::Option::Some(d);
             },
         }
         self
     }
 }
 
-impl ToListMappable for EksClusterOutpostConfigEl {
-    type O = BlockAssignable<EksClusterOutpostConfigEl>;
+impl terrars::ToListMappable for EksClusterOutpostConfigEl {
+    type O = terrars::BlockAssignable<EksClusterOutpostConfigEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -991,10 +1052,10 @@ impl ToListMappable for EksClusterOutpostConfigEl {
 }
 
 pub struct BuildEksClusterOutpostConfigEl {
-    #[doc= ""]
-    pub control_plane_instance_type: PrimField<String>,
-    #[doc= ""]
-    pub outpost_arns: SetField<PrimField<String>>,
+    #[doc = ""]
+    pub control_plane_instance_type: terrars::PrimField<std::string::String>,
+    #[doc = ""]
+    pub outpost_arns: terrars::SetField<terrars::PrimField<std::string::String>>,
 }
 
 impl BuildEksClusterOutpostConfigEl {
@@ -1003,18 +1064,18 @@ impl BuildEksClusterOutpostConfigEl {
             control_plane_instance_type: self.control_plane_instance_type,
             outpost_arns: self.outpost_arns,
             control_plane_placement: core::default::Default::default(),
-            dynamic: Default::default(),
+            dynamic: core::default::Default::default(),
         }
     }
 }
 
 pub struct EksClusterOutpostConfigElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for EksClusterOutpostConfigElRef {
-    fn new(shared: StackShared, base: String) -> EksClusterOutpostConfigElRef {
+impl terrars::Ref for EksClusterOutpostConfigElRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> EksClusterOutpostConfigElRef {
         EksClusterOutpostConfigElRef {
             shared: shared,
             base: base.to_string(),
@@ -1023,61 +1084,61 @@ impl Ref for EksClusterOutpostConfigElRef {
 }
 
 impl EksClusterOutpostConfigElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `control_plane_instance_type` after provisioning.\n"]
-    pub fn control_plane_instance_type(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.control_plane_instance_type", self.base))
+    #[doc = "Get a reference to the value of field `control_plane_instance_type` after provisioning.\n"]
+    pub fn control_plane_instance_type(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.control_plane_instance_type", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `outpost_arns` after provisioning.\n"]
-    pub fn outpost_arns(&self) -> SetRef<PrimExpr<String>> {
-        SetRef::new(self.shared().clone(), format!("{}.outpost_arns", self.base))
+    #[doc = "Get a reference to the value of field `outpost_arns` after provisioning.\n"]
+    pub fn outpost_arns(&self) -> terrars::SetRef<terrars::PrimExpr<std::string::String>> {
+        terrars::SetRef::new(self.shared().clone(), format!("{}.outpost_arns", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `control_plane_placement` after provisioning.\n"]
-    pub fn control_plane_placement(&self) -> ListRef<EksClusterOutpostConfigElControlPlanePlacementElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.control_plane_placement", self.base))
+    #[doc = "Get a reference to the value of field `control_plane_placement` after provisioning.\n"]
+    pub fn control_plane_placement(&self) -> terrars::ListRef<EksClusterOutpostConfigElControlPlanePlacementElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.control_plane_placement", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct EksClusterTimeoutsEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    create: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    delete: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    update: Option<PrimField<String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    create: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    delete: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    update: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
 impl EksClusterTimeoutsEl {
-    #[doc= "Set the field `create`.\n"]
-    pub fn set_create(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.create = Some(v.into());
+    #[doc = "Set the field `create`.\n"]
+    pub fn set_create(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.create = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `delete`.\n"]
-    pub fn set_delete(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.delete = Some(v.into());
+    #[doc = "Set the field `delete`.\n"]
+    pub fn set_delete(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.delete = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `update`.\n"]
-    pub fn set_update(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.update = Some(v.into());
+    #[doc = "Set the field `update`.\n"]
+    pub fn set_update(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.update = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl ToListMappable for EksClusterTimeoutsEl {
-    type O = BlockAssignable<EksClusterTimeoutsEl>;
+impl terrars::ToListMappable for EksClusterTimeoutsEl {
+    type O = terrars::BlockAssignable<EksClusterTimeoutsEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -1098,12 +1159,12 @@ impl BuildEksClusterTimeoutsEl {
 }
 
 pub struct EksClusterTimeoutsElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for EksClusterTimeoutsElRef {
-    fn new(shared: StackShared, base: String) -> EksClusterTimeoutsElRef {
+impl terrars::Ref for EksClusterTimeoutsElRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> EksClusterTimeoutsElRef {
         EksClusterTimeoutsElRef {
             shared: shared,
             base: base.to_string(),
@@ -1112,70 +1173,76 @@ impl Ref for EksClusterTimeoutsElRef {
 }
 
 impl EksClusterTimeoutsElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `create` after provisioning.\n"]
-    pub fn create(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.create", self.base))
+    #[doc = "Get a reference to the value of field `create` after provisioning.\n"]
+    pub fn create(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.create", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `delete` after provisioning.\n"]
-    pub fn delete(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.delete", self.base))
+    #[doc = "Get a reference to the value of field `delete` after provisioning.\n"]
+    pub fn delete(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.delete", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `update` after provisioning.\n"]
-    pub fn update(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.update", self.base))
+    #[doc = "Get a reference to the value of field `update` after provisioning.\n"]
+    pub fn update(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.update", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct EksClusterVpcConfigEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    endpoint_private_access: Option<PrimField<bool>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    endpoint_public_access: Option<PrimField<bool>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    public_access_cidrs: Option<SetField<PrimField<String>>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    security_group_ids: Option<SetField<PrimField<String>>>,
-    subnet_ids: SetField<PrimField<String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    endpoint_private_access: std::option::Option<terrars::PrimField<bool>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    endpoint_public_access: std::option::Option<terrars::PrimField<bool>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    public_access_cidrs: std::option::Option<terrars::SetField<terrars::PrimField<std::string::String>>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    security_group_ids: std::option::Option<terrars::SetField<terrars::PrimField<std::string::String>>>,
+    subnet_ids: terrars::SetField<terrars::PrimField<std::string::String>>,
 }
 
 impl EksClusterVpcConfigEl {
-    #[doc= "Set the field `endpoint_private_access`.\n"]
-    pub fn set_endpoint_private_access(mut self, v: impl Into<PrimField<bool>>) -> Self {
-        self.endpoint_private_access = Some(v.into());
+    #[doc = "Set the field `endpoint_private_access`.\n"]
+    pub fn set_endpoint_private_access(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
+        self.endpoint_private_access = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `endpoint_public_access`.\n"]
-    pub fn set_endpoint_public_access(mut self, v: impl Into<PrimField<bool>>) -> Self {
-        self.endpoint_public_access = Some(v.into());
+    #[doc = "Set the field `endpoint_public_access`.\n"]
+    pub fn set_endpoint_public_access(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
+        self.endpoint_public_access = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `public_access_cidrs`.\n"]
-    pub fn set_public_access_cidrs(mut self, v: impl Into<SetField<PrimField<String>>>) -> Self {
-        self.public_access_cidrs = Some(v.into());
+    #[doc = "Set the field `public_access_cidrs`.\n"]
+    pub fn set_public_access_cidrs(
+        mut self,
+        v: impl std::convert::Into<terrars::SetField<terrars::PrimField<std::string::String>>>,
+    ) -> Self {
+        self.public_access_cidrs = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `security_group_ids`.\n"]
-    pub fn set_security_group_ids(mut self, v: impl Into<SetField<PrimField<String>>>) -> Self {
-        self.security_group_ids = Some(v.into());
+    #[doc = "Set the field `security_group_ids`.\n"]
+    pub fn set_security_group_ids(
+        mut self,
+        v: impl std::convert::Into<terrars::SetField<terrars::PrimField<std::string::String>>>,
+    ) -> Self {
+        self.security_group_ids = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl ToListMappable for EksClusterVpcConfigEl {
-    type O = BlockAssignable<EksClusterVpcConfigEl>;
+impl terrars::ToListMappable for EksClusterVpcConfigEl {
+    type O = terrars::BlockAssignable<EksClusterVpcConfigEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -1184,8 +1251,8 @@ impl ToListMappable for EksClusterVpcConfigEl {
 }
 
 pub struct BuildEksClusterVpcConfigEl {
-    #[doc= ""]
-    pub subnet_ids: SetField<PrimField<String>>,
+    #[doc = ""]
+    pub subnet_ids: terrars::SetField<terrars::PrimField<std::string::String>>,
 }
 
 impl BuildEksClusterVpcConfigEl {
@@ -1201,12 +1268,12 @@ impl BuildEksClusterVpcConfigEl {
 }
 
 pub struct EksClusterVpcConfigElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for EksClusterVpcConfigElRef {
-    fn new(shared: StackShared, base: String) -> EksClusterVpcConfigElRef {
+impl terrars::Ref for EksClusterVpcConfigElRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> EksClusterVpcConfigElRef {
         EksClusterVpcConfigElRef {
             shared: shared,
             base: base.to_string(),
@@ -1215,50 +1282,50 @@ impl Ref for EksClusterVpcConfigElRef {
 }
 
 impl EksClusterVpcConfigElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `cluster_security_group_id` after provisioning.\n"]
-    pub fn cluster_security_group_id(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.cluster_security_group_id", self.base))
+    #[doc = "Get a reference to the value of field `cluster_security_group_id` after provisioning.\n"]
+    pub fn cluster_security_group_id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.cluster_security_group_id", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `endpoint_private_access` after provisioning.\n"]
-    pub fn endpoint_private_access(&self) -> PrimExpr<bool> {
-        PrimExpr::new(self.shared().clone(), format!("{}.endpoint_private_access", self.base))
+    #[doc = "Get a reference to the value of field `endpoint_private_access` after provisioning.\n"]
+    pub fn endpoint_private_access(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.endpoint_private_access", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `endpoint_public_access` after provisioning.\n"]
-    pub fn endpoint_public_access(&self) -> PrimExpr<bool> {
-        PrimExpr::new(self.shared().clone(), format!("{}.endpoint_public_access", self.base))
+    #[doc = "Get a reference to the value of field `endpoint_public_access` after provisioning.\n"]
+    pub fn endpoint_public_access(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.endpoint_public_access", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `public_access_cidrs` after provisioning.\n"]
-    pub fn public_access_cidrs(&self) -> SetRef<PrimExpr<String>> {
-        SetRef::new(self.shared().clone(), format!("{}.public_access_cidrs", self.base))
+    #[doc = "Get a reference to the value of field `public_access_cidrs` after provisioning.\n"]
+    pub fn public_access_cidrs(&self) -> terrars::SetRef<terrars::PrimExpr<std::string::String>> {
+        terrars::SetRef::new(self.shared().clone(), format!("{}.public_access_cidrs", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `security_group_ids` after provisioning.\n"]
-    pub fn security_group_ids(&self) -> SetRef<PrimExpr<String>> {
-        SetRef::new(self.shared().clone(), format!("{}.security_group_ids", self.base))
+    #[doc = "Get a reference to the value of field `security_group_ids` after provisioning.\n"]
+    pub fn security_group_ids(&self) -> terrars::SetRef<terrars::PrimExpr<std::string::String>> {
+        terrars::SetRef::new(self.shared().clone(), format!("{}.security_group_ids", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `subnet_ids` after provisioning.\n"]
-    pub fn subnet_ids(&self) -> SetRef<PrimExpr<String>> {
-        SetRef::new(self.shared().clone(), format!("{}.subnet_ids", self.base))
+    #[doc = "Get a reference to the value of field `subnet_ids` after provisioning.\n"]
+    pub fn subnet_ids(&self) -> terrars::SetRef<terrars::PrimExpr<std::string::String>> {
+        terrars::SetRef::new(self.shared().clone(), format!("{}.subnet_ids", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `vpc_id` after provisioning.\n"]
-    pub fn vpc_id(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.vpc_id", self.base))
+    #[doc = "Get a reference to the value of field `vpc_id` after provisioning.\n"]
+    pub fn vpc_id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.vpc_id", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
 struct EksClusterDynamic {
-    encryption_config: Option<DynamicBlock<EksClusterEncryptionConfigEl>>,
-    kubernetes_network_config: Option<DynamicBlock<EksClusterKubernetesNetworkConfigEl>>,
-    outpost_config: Option<DynamicBlock<EksClusterOutpostConfigEl>>,
-    vpc_config: Option<DynamicBlock<EksClusterVpcConfigEl>>,
+    encryption_config: std::option::Option<terrars::DynamicBlock<EksClusterEncryptionConfigEl>>,
+    kubernetes_network_config: std::option::Option<terrars::DynamicBlock<EksClusterKubernetesNetworkConfigEl>>,
+    outpost_config: std::option::Option<terrars::DynamicBlock<EksClusterOutpostConfigEl>>,
+    vpc_config: std::option::Option<terrars::DynamicBlock<EksClusterVpcConfigEl>>,
 }

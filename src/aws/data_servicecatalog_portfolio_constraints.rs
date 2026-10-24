@@ -1,102 +1,130 @@
 use serde::Serialize;
-use std::cell::RefCell;
-use std::rc::Rc;
-use terrars::*;
+use terrars::{
+    Referable as _,
+    Datasource_ as _,
+    Ref as _,
+};
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
 struct DataServicecatalogPortfolioConstraintsData {
-    #[serde(skip_serializing_if = "Vec::is_empty")]
-    depends_on: Vec<String>,
-    #[serde(skip_serializing_if = "SerdeSkipDefault::is_default")]
-    provider: Option<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    for_each: Option<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    accept_language: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    id: Option<PrimField<String>>,
-    portfolio_id: PrimField<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    product_id: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    timeouts: Option<DataServicecatalogPortfolioConstraintsTimeoutsEl>,
+    #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
+    depends_on: std::vec::Vec<std::string::String>,
+    #[serde(skip_serializing_if = "terrars::SerdeSkipDefault::is_default")]
+    provider: std::option::Option<std::string::String>,
+    #[serde(skip_serializing_if = "terrars::SerdeSkipDefault::is_default")]
+    lifecycle: terrars::DatasourceLifecycle,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    for_each: std::option::Option<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    accept_language: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    id: std::option::Option<terrars::PrimField<std::string::String>>,
+    portfolio_id: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    product_id: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    timeouts: std::option::Option<DataServicecatalogPortfolioConstraintsTimeoutsEl>,
 }
 
 struct DataServicecatalogPortfolioConstraints_ {
-    shared: StackShared,
-    tf_id: String,
-    data: RefCell<DataServicecatalogPortfolioConstraintsData>,
+    shared: terrars::StackShared,
+    tf_id: std::string::String,
+    data: std::cell::RefCell<DataServicecatalogPortfolioConstraintsData>,
 }
 
 #[derive(Clone)]
-pub struct DataServicecatalogPortfolioConstraints(Rc<DataServicecatalogPortfolioConstraints_>);
+pub struct DataServicecatalogPortfolioConstraints(std::rc::Rc<DataServicecatalogPortfolioConstraints_>);
 
 impl DataServicecatalogPortfolioConstraints {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.0.shared
     }
 
-    pub fn depends_on(self, dep: &impl Referable) -> Self {
+    pub fn depends_on(self, dep: &impl terrars::Referable) -> Self {
         self.0.data.borrow_mut().depends_on.push(dep.extract_ref());
         self
     }
 
     pub fn set_provider(&self, provider: &ProviderAws) -> &Self {
-        self.0.data.borrow_mut().provider = Some(provider.provider_ref());
+        self.0.data.borrow_mut().provider = std::option::Option::Some(provider.provider_ref());
         self
     }
 
-    #[doc= "Set the field `accept_language`.\n"]
-    pub fn set_accept_language(self, v: impl Into<PrimField<String>>) -> Self {
-        self.0.data.borrow_mut().accept_language = Some(v.into());
+    pub fn add_lifecycle_precondition(
+        self,
+        condition: impl std::convert::Into<terrars::PrimField<bool>>,
+        error_message: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.0.data.borrow_mut().lifecycle.precondition.push(terrars::LifecycleCondition {
+            condition: condition.into(),
+            error_message: error_message.into(),
+        });
         self
     }
 
-    #[doc= "Set the field `id`.\n"]
-    pub fn set_id(self, v: impl Into<PrimField<String>>) -> Self {
-        self.0.data.borrow_mut().id = Some(v.into());
+    pub fn add_lifecycle_postcondition(
+        self,
+        condition: impl std::convert::Into<terrars::PrimField<bool>>,
+        error_message: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.0.data.borrow_mut().lifecycle.postcondition.push(terrars::LifecycleCondition {
+            condition: condition.into(),
+            error_message: error_message.into(),
+        });
         self
     }
 
-    #[doc= "Set the field `product_id`.\n"]
-    pub fn set_product_id(self, v: impl Into<PrimField<String>>) -> Self {
-        self.0.data.borrow_mut().product_id = Some(v.into());
+    #[doc = "Set the field `accept_language`.\n"]
+    pub fn set_accept_language(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().accept_language = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `timeouts`.\n"]
-    pub fn set_timeouts(self, v: impl Into<DataServicecatalogPortfolioConstraintsTimeoutsEl>) -> Self {
-        self.0.data.borrow_mut().timeouts = Some(v.into());
+    #[doc = "Set the field `id`.\n"]
+    pub fn set_id(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().id = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Get a reference to the value of field `accept_language` after provisioning.\n"]
-    pub fn accept_language(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.accept_language", self.extract_ref()))
+    #[doc = "Set the field `product_id`.\n"]
+    pub fn set_product_id(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().product_id = std::option::Option::Some(v.into());
+        self
     }
 
-    #[doc= "Get a reference to the value of field `details` after provisioning.\n"]
-    pub fn details(&self) -> ListRef<DataServicecatalogPortfolioConstraintsDetailsElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.details", self.extract_ref()))
+    #[doc = "Set the field `timeouts`.\n"]
+    pub fn set_timeouts(self, v: impl std::convert::Into<DataServicecatalogPortfolioConstraintsTimeoutsEl>) -> Self {
+        self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
+        self
     }
 
-    #[doc= "Get a reference to the value of field `id` after provisioning.\n"]
-    pub fn id(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `accept_language` after provisioning.\n"]
+    pub fn accept_language(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.accept_language", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `portfolio_id` after provisioning.\n"]
-    pub fn portfolio_id(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.portfolio_id", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `details` after provisioning.\n"]
+    pub fn details(&self) -> terrars::ListRef<DataServicecatalogPortfolioConstraintsDetailsElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.details", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `product_id` after provisioning.\n"]
-    pub fn product_id(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.product_id", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
+    pub fn id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `timeouts` after provisioning.\n"]
+    #[doc = "Get a reference to the value of field `portfolio_id` after provisioning.\n"]
+    pub fn portfolio_id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.portfolio_id", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `product_id` after provisioning.\n"]
+    pub fn product_id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.product_id", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
     pub fn timeouts(&self) -> DataServicecatalogPortfolioConstraintsTimeoutsElRef {
         DataServicecatalogPortfolioConstraintsTimeoutsElRef::new(
             self.shared().clone(),
@@ -105,29 +133,29 @@ impl DataServicecatalogPortfolioConstraints {
     }
 }
 
-impl Referable for DataServicecatalogPortfolioConstraints {
-    fn extract_ref(&self) -> String {
+impl terrars::Referable for DataServicecatalogPortfolioConstraints {
+    fn extract_ref(&self) -> std::string::String {
         format!("data.{}.{}", self.0.extract_datasource_type(), self.0.extract_tf_id())
     }
 }
 
-impl Datasource for DataServicecatalogPortfolioConstraints { }
+impl terrars::Datasource for DataServicecatalogPortfolioConstraints { }
 
-impl ToListMappable for DataServicecatalogPortfolioConstraints {
-    type O = ListRef<DataServicecatalogPortfolioConstraintsRef>;
+impl terrars::ToListMappable for DataServicecatalogPortfolioConstraints {
+    type O = terrars::ListRef<DataServicecatalogPortfolioConstraintsRef>;
 
-    fn do_map(self, base: String) -> Self::O {
-        self.0.data.borrow_mut().for_each = Some(format!("${{{}}}", base));
-        ListRef::new(self.0.shared.clone(), self.extract_ref())
+    fn do_map(self, base: std::string::String) -> Self::O {
+        self.0.data.borrow_mut().for_each = std::option::Option::Some(format!("${{{}}}", base));
+        terrars::ListRef::new(self.0.shared.clone(), self.extract_ref())
     }
 }
 
-impl Datasource_ for DataServicecatalogPortfolioConstraints_ {
-    fn extract_datasource_type(&self) -> String {
+impl terrars::Datasource_ for DataServicecatalogPortfolioConstraints_ {
+    fn extract_datasource_type(&self) -> std::string::String {
         "aws_servicecatalog_portfolio_constraints".into()
     }
 
-    fn extract_tf_id(&self) -> String {
+    fn extract_tf_id(&self) -> std::string::String {
         self.tf_id.clone()
     }
 
@@ -137,20 +165,21 @@ impl Datasource_ for DataServicecatalogPortfolioConstraints_ {
 }
 
 pub struct BuildDataServicecatalogPortfolioConstraints {
-    pub tf_id: String,
-    #[doc= ""]
-    pub portfolio_id: PrimField<String>,
+    pub tf_id: std::string::String,
+    #[doc = ""]
+    pub portfolio_id: terrars::PrimField<std::string::String>,
 }
 
 impl BuildDataServicecatalogPortfolioConstraints {
-    pub fn build(self, stack: &mut Stack) -> DataServicecatalogPortfolioConstraints {
-        let out = DataServicecatalogPortfolioConstraints(Rc::new(DataServicecatalogPortfolioConstraints_ {
+    pub fn build(self, stack: &mut terrars::Stack) -> DataServicecatalogPortfolioConstraints {
+        let out = DataServicecatalogPortfolioConstraints(std::rc::Rc::new(DataServicecatalogPortfolioConstraints_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: RefCell::new(DataServicecatalogPortfolioConstraintsData {
+            data: std::cell::RefCell::new(DataServicecatalogPortfolioConstraintsData {
                 depends_on: core::default::Default::default(),
-                provider: None,
-                for_each: None,
+                provider: std::option::Option::None,
+                lifecycle: core::default::Default::default(),
+                for_each: std::option::Option::None,
                 accept_language: core::default::Default::default(),
                 id: core::default::Default::default(),
                 portfolio_id: self.portfolio_id,
@@ -164,12 +193,12 @@ impl BuildDataServicecatalogPortfolioConstraints {
 }
 
 pub struct DataServicecatalogPortfolioConstraintsRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for DataServicecatalogPortfolioConstraintsRef {
-    fn new(shared: StackShared, base: String) -> Self {
+impl terrars::Ref for DataServicecatalogPortfolioConstraintsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> Self {
         Self {
             shared: shared,
             base: base,
@@ -178,40 +207,40 @@ impl Ref for DataServicecatalogPortfolioConstraintsRef {
 }
 
 impl DataServicecatalogPortfolioConstraintsRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    fn extract_ref(&self) -> String {
+    fn extract_ref(&self) -> std::string::String {
         self.base.clone()
     }
 
-    #[doc= "Get a reference to the value of field `accept_language` after provisioning.\n"]
-    pub fn accept_language(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.accept_language", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `accept_language` after provisioning.\n"]
+    pub fn accept_language(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.accept_language", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `details` after provisioning.\n"]
-    pub fn details(&self) -> ListRef<DataServicecatalogPortfolioConstraintsDetailsElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.details", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `details` after provisioning.\n"]
+    pub fn details(&self) -> terrars::ListRef<DataServicecatalogPortfolioConstraintsDetailsElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.details", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `id` after provisioning.\n"]
-    pub fn id(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
+    pub fn id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `portfolio_id` after provisioning.\n"]
-    pub fn portfolio_id(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.portfolio_id", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `portfolio_id` after provisioning.\n"]
+    pub fn portfolio_id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.portfolio_id", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `product_id` after provisioning.\n"]
-    pub fn product_id(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.product_id", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `product_id` after provisioning.\n"]
+    pub fn product_id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.product_id", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `timeouts` after provisioning.\n"]
+    #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
     pub fn timeouts(&self) -> DataServicecatalogPortfolioConstraintsTimeoutsElRef {
         DataServicecatalogPortfolioConstraintsTimeoutsElRef::new(
             self.shared().clone(),
@@ -222,63 +251,63 @@ impl DataServicecatalogPortfolioConstraintsRef {
 
 #[derive(Serialize)]
 pub struct DataServicecatalogPortfolioConstraintsDetailsEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    constraint_id: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    description: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    owner: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    portfolio_id: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    product_id: Option<PrimField<String>>,
-    #[serde(rename = "type", skip_serializing_if = "Option::is_none")]
-    type_: Option<PrimField<String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    constraint_id: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    description: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    owner: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    portfolio_id: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    product_id: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(rename = "type", skip_serializing_if = "std::option::Option::is_none")]
+    type_: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
 impl DataServicecatalogPortfolioConstraintsDetailsEl {
-    #[doc= "Set the field `constraint_id`.\n"]
-    pub fn set_constraint_id(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.constraint_id = Some(v.into());
+    #[doc = "Set the field `constraint_id`.\n"]
+    pub fn set_constraint_id(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.constraint_id = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `description`.\n"]
-    pub fn set_description(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.description = Some(v.into());
+    #[doc = "Set the field `description`.\n"]
+    pub fn set_description(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.description = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `owner`.\n"]
-    pub fn set_owner(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.owner = Some(v.into());
+    #[doc = "Set the field `owner`.\n"]
+    pub fn set_owner(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.owner = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `portfolio_id`.\n"]
-    pub fn set_portfolio_id(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.portfolio_id = Some(v.into());
+    #[doc = "Set the field `portfolio_id`.\n"]
+    pub fn set_portfolio_id(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.portfolio_id = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `product_id`.\n"]
-    pub fn set_product_id(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.product_id = Some(v.into());
+    #[doc = "Set the field `product_id`.\n"]
+    pub fn set_product_id(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.product_id = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `type_`.\n"]
-    pub fn set_type(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.type_ = Some(v.into());
+    #[doc = "Set the field `type_`.\n"]
+    pub fn set_type(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.type_ = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl ToListMappable for DataServicecatalogPortfolioConstraintsDetailsEl {
-    type O = BlockAssignable<DataServicecatalogPortfolioConstraintsDetailsEl>;
+impl terrars::ToListMappable for DataServicecatalogPortfolioConstraintsDetailsEl {
+    type O = terrars::BlockAssignable<DataServicecatalogPortfolioConstraintsDetailsEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -302,12 +331,15 @@ impl BuildDataServicecatalogPortfolioConstraintsDetailsEl {
 }
 
 pub struct DataServicecatalogPortfolioConstraintsDetailsElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for DataServicecatalogPortfolioConstraintsDetailsElRef {
-    fn new(shared: StackShared, base: String) -> DataServicecatalogPortfolioConstraintsDetailsElRef {
+impl terrars::Ref for DataServicecatalogPortfolioConstraintsDetailsElRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> DataServicecatalogPortfolioConstraintsDetailsElRef {
         DataServicecatalogPortfolioConstraintsDetailsElRef {
             shared: shared,
             base: base.to_string(),
@@ -316,60 +348,60 @@ impl Ref for DataServicecatalogPortfolioConstraintsDetailsElRef {
 }
 
 impl DataServicecatalogPortfolioConstraintsDetailsElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `constraint_id` after provisioning.\n"]
-    pub fn constraint_id(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.constraint_id", self.base))
+    #[doc = "Get a reference to the value of field `constraint_id` after provisioning.\n"]
+    pub fn constraint_id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.constraint_id", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `description` after provisioning.\n"]
-    pub fn description(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.description", self.base))
+    #[doc = "Get a reference to the value of field `description` after provisioning.\n"]
+    pub fn description(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.description", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `owner` after provisioning.\n"]
-    pub fn owner(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.owner", self.base))
+    #[doc = "Get a reference to the value of field `owner` after provisioning.\n"]
+    pub fn owner(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.owner", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `portfolio_id` after provisioning.\n"]
-    pub fn portfolio_id(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.portfolio_id", self.base))
+    #[doc = "Get a reference to the value of field `portfolio_id` after provisioning.\n"]
+    pub fn portfolio_id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.portfolio_id", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `product_id` after provisioning.\n"]
-    pub fn product_id(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.product_id", self.base))
+    #[doc = "Get a reference to the value of field `product_id` after provisioning.\n"]
+    pub fn product_id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.product_id", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `type_` after provisioning.\n"]
-    pub fn type_(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.type", self.base))
+    #[doc = "Get a reference to the value of field `type_` after provisioning.\n"]
+    pub fn type_(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.type", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct DataServicecatalogPortfolioConstraintsTimeoutsEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    read: Option<PrimField<String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    read: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
 impl DataServicecatalogPortfolioConstraintsTimeoutsEl {
-    #[doc= "Set the field `read`.\n"]
-    pub fn set_read(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.read = Some(v.into());
+    #[doc = "Set the field `read`.\n"]
+    pub fn set_read(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.read = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl ToListMappable for DataServicecatalogPortfolioConstraintsTimeoutsEl {
-    type O = BlockAssignable<DataServicecatalogPortfolioConstraintsTimeoutsEl>;
+impl terrars::ToListMappable for DataServicecatalogPortfolioConstraintsTimeoutsEl {
+    type O = terrars::BlockAssignable<DataServicecatalogPortfolioConstraintsTimeoutsEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -386,12 +418,15 @@ impl BuildDataServicecatalogPortfolioConstraintsTimeoutsEl {
 }
 
 pub struct DataServicecatalogPortfolioConstraintsTimeoutsElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for DataServicecatalogPortfolioConstraintsTimeoutsElRef {
-    fn new(shared: StackShared, base: String) -> DataServicecatalogPortfolioConstraintsTimeoutsElRef {
+impl terrars::Ref for DataServicecatalogPortfolioConstraintsTimeoutsElRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> DataServicecatalogPortfolioConstraintsTimeoutsElRef {
         DataServicecatalogPortfolioConstraintsTimeoutsElRef {
             shared: shared,
             base: base.to_string(),
@@ -400,12 +435,12 @@ impl Ref for DataServicecatalogPortfolioConstraintsTimeoutsElRef {
 }
 
 impl DataServicecatalogPortfolioConstraintsTimeoutsElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `read` after provisioning.\n"]
-    pub fn read(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.read", self.base))
+    #[doc = "Get a reference to the value of field `read` after provisioning.\n"]
+    pub fn read(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.read", self.base))
     }
 }

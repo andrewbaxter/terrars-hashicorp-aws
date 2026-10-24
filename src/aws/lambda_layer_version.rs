@@ -1,65 +1,69 @@
 use serde::Serialize;
-use std::cell::RefCell;
-use std::rc::Rc;
-use terrars::*;
+use terrars::{
+    Referable as _,
+    Resource_ as _,
+    Ref as _,
+};
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
 struct LambdaLayerVersionData {
-    #[serde(skip_serializing_if = "Vec::is_empty")]
-    depends_on: Vec<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    provider: Option<String>,
-    #[serde(skip_serializing_if = "SerdeSkipDefault::is_default")]
-    lifecycle: ResourceLifecycle,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    for_each: Option<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    compatible_architectures: Option<SetField<PrimField<String>>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    compatible_runtimes: Option<SetField<PrimField<String>>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    description: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    filename: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    id: Option<PrimField<String>>,
-    layer_name: PrimField<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    license_info: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    s3_bucket: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    s3_key: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    s3_object_version: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    skip_destroy: Option<PrimField<bool>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    source_code_hash: Option<PrimField<String>>,
+    #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
+    depends_on: std::vec::Vec<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    provider: std::option::Option<std::string::String>,
+    #[serde(skip_serializing_if = "terrars::SerdeSkipDefault::is_default")]
+    lifecycle: terrars::ResourceLifecycle,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    for_each: std::option::Option<std::string::String>,
+    #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
+    provisioner: std::vec::Vec<terrars::Provisioner>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    compatible_architectures: std::option::Option<terrars::SetField<terrars::PrimField<std::string::String>>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    compatible_runtimes: std::option::Option<terrars::SetField<terrars::PrimField<std::string::String>>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    description: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    filename: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    id: std::option::Option<terrars::PrimField<std::string::String>>,
+    layer_name: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    license_info: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    s3_bucket: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    s3_key: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    s3_object_version: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    skip_destroy: std::option::Option<terrars::PrimField<bool>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    source_code_hash: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
 struct LambdaLayerVersion_ {
-    shared: StackShared,
-    tf_id: String,
-    data: RefCell<LambdaLayerVersionData>,
+    shared: terrars::StackShared,
+    tf_id: std::string::String,
+    data: std::cell::RefCell<LambdaLayerVersionData>,
 }
 
 #[derive(Clone)]
-pub struct LambdaLayerVersion(Rc<LambdaLayerVersion_>);
+pub struct LambdaLayerVersion(std::rc::Rc<LambdaLayerVersion_>);
 
 impl LambdaLayerVersion {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.0.shared
     }
 
-    pub fn depends_on(self, dep: &impl Referable) -> Self {
+    pub fn depends_on(self, dep: &impl terrars::Referable) -> Self {
         self.0.data.borrow_mut().depends_on.push(dep.extract_ref());
         self
     }
 
     pub fn set_provider(self, provider: &ProviderAws) -> Self {
-        self.0.data.borrow_mut().provider = Some(provider.provider_ref());
+        self.0.data.borrow_mut().provider = std::option::Option::Some(provider.provider_ref());
         self
     }
 
@@ -74,226 +78,265 @@ impl LambdaLayerVersion {
     }
 
     pub fn ignore_changes_to_all(self) -> Self {
-        self.0.data.borrow_mut().lifecycle.ignore_changes = Some(IgnoreChanges::All(IgnoreChangesAll::All));
+        self.0.data.borrow_mut().lifecycle.ignore_changes =
+            std::option::Option::Some(terrars::IgnoreChanges::All(terrars::IgnoreChangesAll::All));
         self
     }
 
-    pub fn ignore_changes_to_attr(self, attr: impl ToString) -> Self {
+    pub fn ignore_changes_to_attr(self, attr: impl std::string::ToString) -> Self {
         {
             let mut d = self.0.data.borrow_mut();
             if match &mut d.lifecycle.ignore_changes {
-                Some(i) => match i {
-                    IgnoreChanges::All(_) => {
+                std::option::Option::Some(i) => match i {
+                    terrars::IgnoreChanges::All(_) => {
                         true
                     },
-                    IgnoreChanges::Refs(r) => {
+                    terrars::IgnoreChanges::Refs(r) => {
                         r.push(attr.to_string());
                         false
                     },
                 },
-                None => true,
+                std::option::Option::None => true,
             } {
-                d.lifecycle.ignore_changes = Some(IgnoreChanges::Refs(vec![attr.to_string()]));
+                d.lifecycle.ignore_changes =
+                    std::option::Option::Some(terrars::IgnoreChanges::Refs(vec![attr.to_string()]));
             }
         }
         self
     }
 
-    pub fn replace_triggered_by_resource(self, r: &impl Resource) -> Self {
+    pub fn replace_triggered_by_resource(self, r: &impl terrars::Resource) -> Self {
         self.0.data.borrow_mut().lifecycle.replace_triggered_by.push(r.extract_ref());
         self
     }
 
-    pub fn replace_triggered_by_attr(self, attr: impl ToString) -> Self {
+    pub fn replace_triggered_by_attr(self, attr: impl std::string::ToString) -> Self {
         self.0.data.borrow_mut().lifecycle.replace_triggered_by.push(attr.to_string());
         self
     }
 
-    #[doc= "Set the field `compatible_architectures`.\n"]
-    pub fn set_compatible_architectures(self, v: impl Into<SetField<PrimField<String>>>) -> Self {
-        self.0.data.borrow_mut().compatible_architectures = Some(v.into());
+    #[doc = r" Add a provisioner (ex: `local-exec`, `remote-exec`, `file`) to this resource."]
+    #[doc = r" Provisioners run in the order they're added."]
+    pub fn add_provisioner(self, v: impl std::convert::Into<terrars::Provisioner>) -> Self {
+        self.0.data.borrow_mut().provisioner.push(v.into());
         self
     }
 
-    #[doc= "Set the field `compatible_runtimes`.\n"]
-    pub fn set_compatible_runtimes(self, v: impl Into<SetField<PrimField<String>>>) -> Self {
-        self.0.data.borrow_mut().compatible_runtimes = Some(v.into());
+    pub fn add_lifecycle_precondition(
+        self,
+        condition: impl std::convert::Into<terrars::PrimField<bool>>,
+        error_message: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.0.data.borrow_mut().lifecycle.precondition.push(terrars::LifecycleCondition {
+            condition: condition.into(),
+            error_message: error_message.into(),
+        });
         self
     }
 
-    #[doc= "Set the field `description`.\n"]
-    pub fn set_description(self, v: impl Into<PrimField<String>>) -> Self {
-        self.0.data.borrow_mut().description = Some(v.into());
+    pub fn add_lifecycle_postcondition(
+        self,
+        condition: impl std::convert::Into<terrars::PrimField<bool>>,
+        error_message: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.0.data.borrow_mut().lifecycle.postcondition.push(terrars::LifecycleCondition {
+            condition: condition.into(),
+            error_message: error_message.into(),
+        });
         self
     }
 
-    #[doc= "Set the field `filename`.\n"]
-    pub fn set_filename(self, v: impl Into<PrimField<String>>) -> Self {
-        self.0.data.borrow_mut().filename = Some(v.into());
+    #[doc = "Set the field `compatible_architectures`.\n"]
+    pub fn set_compatible_architectures(
+        self,
+        v: impl std::convert::Into<terrars::SetField<terrars::PrimField<std::string::String>>>,
+    ) -> Self {
+        self.0.data.borrow_mut().compatible_architectures = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `id`.\n"]
-    pub fn set_id(self, v: impl Into<PrimField<String>>) -> Self {
-        self.0.data.borrow_mut().id = Some(v.into());
+    #[doc = "Set the field `compatible_runtimes`.\n"]
+    pub fn set_compatible_runtimes(
+        self,
+        v: impl std::convert::Into<terrars::SetField<terrars::PrimField<std::string::String>>>,
+    ) -> Self {
+        self.0.data.borrow_mut().compatible_runtimes = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `license_info`.\n"]
-    pub fn set_license_info(self, v: impl Into<PrimField<String>>) -> Self {
-        self.0.data.borrow_mut().license_info = Some(v.into());
+    #[doc = "Set the field `description`.\n"]
+    pub fn set_description(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().description = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `s3_bucket`.\n"]
-    pub fn set_s3_bucket(self, v: impl Into<PrimField<String>>) -> Self {
-        self.0.data.borrow_mut().s3_bucket = Some(v.into());
+    #[doc = "Set the field `filename`.\n"]
+    pub fn set_filename(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().filename = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `s3_key`.\n"]
-    pub fn set_s3_key(self, v: impl Into<PrimField<String>>) -> Self {
-        self.0.data.borrow_mut().s3_key = Some(v.into());
+    #[doc = "Set the field `id`.\n"]
+    pub fn set_id(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().id = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `s3_object_version`.\n"]
-    pub fn set_s3_object_version(self, v: impl Into<PrimField<String>>) -> Self {
-        self.0.data.borrow_mut().s3_object_version = Some(v.into());
+    #[doc = "Set the field `license_info`.\n"]
+    pub fn set_license_info(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().license_info = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `skip_destroy`.\n"]
-    pub fn set_skip_destroy(self, v: impl Into<PrimField<bool>>) -> Self {
-        self.0.data.borrow_mut().skip_destroy = Some(v.into());
+    #[doc = "Set the field `s3_bucket`.\n"]
+    pub fn set_s3_bucket(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().s3_bucket = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `source_code_hash`.\n"]
-    pub fn set_source_code_hash(self, v: impl Into<PrimField<String>>) -> Self {
-        self.0.data.borrow_mut().source_code_hash = Some(v.into());
+    #[doc = "Set the field `s3_key`.\n"]
+    pub fn set_s3_key(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().s3_key = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Get a reference to the value of field `arn` after provisioning.\n"]
-    pub fn arn(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.arn", self.extract_ref()))
+    #[doc = "Set the field `s3_object_version`.\n"]
+    pub fn set_s3_object_version(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().s3_object_version = std::option::Option::Some(v.into());
+        self
     }
 
-    #[doc= "Get a reference to the value of field `compatible_architectures` after provisioning.\n"]
-    pub fn compatible_architectures(&self) -> SetRef<PrimExpr<String>> {
-        SetRef::new(self.shared().clone(), format!("{}.compatible_architectures", self.extract_ref()))
+    #[doc = "Set the field `skip_destroy`.\n"]
+    pub fn set_skip_destroy(self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
+        self.0.data.borrow_mut().skip_destroy = std::option::Option::Some(v.into());
+        self
     }
 
-    #[doc= "Get a reference to the value of field `compatible_runtimes` after provisioning.\n"]
-    pub fn compatible_runtimes(&self) -> SetRef<PrimExpr<String>> {
-        SetRef::new(self.shared().clone(), format!("{}.compatible_runtimes", self.extract_ref()))
+    #[doc = "Set the field `source_code_hash`.\n"]
+    pub fn set_source_code_hash(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().source_code_hash = std::option::Option::Some(v.into());
+        self
     }
 
-    #[doc= "Get a reference to the value of field `created_date` after provisioning.\n"]
-    pub fn created_date(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.created_date", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `arn` after provisioning.\n"]
+    pub fn arn(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.arn", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `description` after provisioning.\n"]
-    pub fn description(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.description", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `compatible_architectures` after provisioning.\n"]
+    pub fn compatible_architectures(&self) -> terrars::SetRef<terrars::PrimExpr<std::string::String>> {
+        terrars::SetRef::new(self.shared().clone(), format!("{}.compatible_architectures", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `filename` after provisioning.\n"]
-    pub fn filename(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.filename", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `compatible_runtimes` after provisioning.\n"]
+    pub fn compatible_runtimes(&self) -> terrars::SetRef<terrars::PrimExpr<std::string::String>> {
+        terrars::SetRef::new(self.shared().clone(), format!("{}.compatible_runtimes", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `id` after provisioning.\n"]
-    pub fn id(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `created_date` after provisioning.\n"]
+    pub fn created_date(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.created_date", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `layer_arn` after provisioning.\n"]
-    pub fn layer_arn(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.layer_arn", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `description` after provisioning.\n"]
+    pub fn description(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.description", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `layer_name` after provisioning.\n"]
-    pub fn layer_name(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.layer_name", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `filename` after provisioning.\n"]
+    pub fn filename(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.filename", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `license_info` after provisioning.\n"]
-    pub fn license_info(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.license_info", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
+    pub fn id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `s3_bucket` after provisioning.\n"]
-    pub fn s3_bucket(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.s3_bucket", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `layer_arn` after provisioning.\n"]
+    pub fn layer_arn(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.layer_arn", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `s3_key` after provisioning.\n"]
-    pub fn s3_key(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.s3_key", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `layer_name` after provisioning.\n"]
+    pub fn layer_name(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.layer_name", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `s3_object_version` after provisioning.\n"]
-    pub fn s3_object_version(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.s3_object_version", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `license_info` after provisioning.\n"]
+    pub fn license_info(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.license_info", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `signing_job_arn` after provisioning.\n"]
-    pub fn signing_job_arn(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.signing_job_arn", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `s3_bucket` after provisioning.\n"]
+    pub fn s3_bucket(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.s3_bucket", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `signing_profile_version_arn` after provisioning.\n"]
-    pub fn signing_profile_version_arn(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.signing_profile_version_arn", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `s3_key` after provisioning.\n"]
+    pub fn s3_key(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.s3_key", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `skip_destroy` after provisioning.\n"]
-    pub fn skip_destroy(&self) -> PrimExpr<bool> {
-        PrimExpr::new(self.shared().clone(), format!("{}.skip_destroy", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `s3_object_version` after provisioning.\n"]
+    pub fn s3_object_version(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.s3_object_version", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `source_code_hash` after provisioning.\n"]
-    pub fn source_code_hash(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.source_code_hash", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `signing_job_arn` after provisioning.\n"]
+    pub fn signing_job_arn(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.signing_job_arn", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `source_code_size` after provisioning.\n"]
-    pub fn source_code_size(&self) -> PrimExpr<f64> {
-        PrimExpr::new(self.shared().clone(), format!("{}.source_code_size", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `signing_profile_version_arn` after provisioning.\n"]
+    pub fn signing_profile_version_arn(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.signing_profile_version_arn", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `version` after provisioning.\n"]
-    pub fn version(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.version", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `skip_destroy` after provisioning.\n"]
+    pub fn skip_destroy(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.skip_destroy", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `source_code_hash` after provisioning.\n"]
+    pub fn source_code_hash(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.source_code_hash", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `source_code_size` after provisioning.\n"]
+    pub fn source_code_size(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.source_code_size", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `version` after provisioning.\n"]
+    pub fn version(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.version", self.extract_ref()))
     }
 }
 
-impl Referable for LambdaLayerVersion {
-    fn extract_ref(&self) -> String {
+impl terrars::Referable for LambdaLayerVersion {
+    fn extract_ref(&self) -> std::string::String {
         format!("{}.{}", self.0.extract_resource_type(), self.0.extract_tf_id())
     }
 }
 
-impl Resource for LambdaLayerVersion { }
+impl terrars::Resource for LambdaLayerVersion { }
 
-impl ToListMappable for LambdaLayerVersion {
-    type O = ListRef<LambdaLayerVersionRef>;
+impl terrars::ToListMappable for LambdaLayerVersion {
+    type O = terrars::ListRef<LambdaLayerVersionRef>;
 
-    fn do_map(self, base: String) -> Self::O {
-        self.0.data.borrow_mut().for_each = Some(format!("${{{}}}", base));
-        ListRef::new(self.0.shared.clone(), self.extract_ref())
+    fn do_map(self, base: std::string::String) -> Self::O {
+        self.0.data.borrow_mut().for_each = std::option::Option::Some(format!("${{{}}}", base));
+        terrars::ListRef::new(self.0.shared.clone(), self.extract_ref())
     }
 }
 
-impl Resource_ for LambdaLayerVersion_ {
-    fn extract_resource_type(&self) -> String {
+impl terrars::Resource_ for LambdaLayerVersion_ {
+    fn extract_resource_type(&self) -> std::string::String {
         "aws_lambda_layer_version".into()
     }
 
-    fn extract_tf_id(&self) -> String {
+    fn extract_tf_id(&self) -> std::string::String {
         self.tf_id.clone()
     }
 
@@ -303,21 +346,22 @@ impl Resource_ for LambdaLayerVersion_ {
 }
 
 pub struct BuildLambdaLayerVersion {
-    pub tf_id: String,
-    #[doc= ""]
-    pub layer_name: PrimField<String>,
+    pub tf_id: std::string::String,
+    #[doc = ""]
+    pub layer_name: terrars::PrimField<std::string::String>,
 }
 
 impl BuildLambdaLayerVersion {
-    pub fn build(self, stack: &mut Stack) -> LambdaLayerVersion {
-        let out = LambdaLayerVersion(Rc::new(LambdaLayerVersion_ {
+    pub fn build(self, stack: &mut terrars::Stack) -> LambdaLayerVersion {
+        let out = LambdaLayerVersion(std::rc::Rc::new(LambdaLayerVersion_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: RefCell::new(LambdaLayerVersionData {
+            data: std::cell::RefCell::new(LambdaLayerVersionData {
                 depends_on: core::default::Default::default(),
-                provider: None,
+                provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
-                for_each: None,
+                for_each: std::option::Option::None,
+                provisioner: core::default::Default::default(),
                 compatible_architectures: core::default::Default::default(),
                 compatible_runtimes: core::default::Default::default(),
                 description: core::default::Default::default(),
@@ -338,12 +382,12 @@ impl BuildLambdaLayerVersion {
 }
 
 pub struct LambdaLayerVersionRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for LambdaLayerVersionRef {
-    fn new(shared: StackShared, base: String) -> Self {
+impl terrars::Ref for LambdaLayerVersionRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> Self {
         Self {
             shared: shared,
             base: base,
@@ -352,106 +396,106 @@ impl Ref for LambdaLayerVersionRef {
 }
 
 impl LambdaLayerVersionRef {
-    fn extract_ref(&self) -> String {
+    fn extract_ref(&self) -> std::string::String {
         self.base.clone()
     }
 
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `arn` after provisioning.\n"]
-    pub fn arn(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.arn", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `arn` after provisioning.\n"]
+    pub fn arn(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.arn", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `compatible_architectures` after provisioning.\n"]
-    pub fn compatible_architectures(&self) -> SetRef<PrimExpr<String>> {
-        SetRef::new(self.shared().clone(), format!("{}.compatible_architectures", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `compatible_architectures` after provisioning.\n"]
+    pub fn compatible_architectures(&self) -> terrars::SetRef<terrars::PrimExpr<std::string::String>> {
+        terrars::SetRef::new(self.shared().clone(), format!("{}.compatible_architectures", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `compatible_runtimes` after provisioning.\n"]
-    pub fn compatible_runtimes(&self) -> SetRef<PrimExpr<String>> {
-        SetRef::new(self.shared().clone(), format!("{}.compatible_runtimes", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `compatible_runtimes` after provisioning.\n"]
+    pub fn compatible_runtimes(&self) -> terrars::SetRef<terrars::PrimExpr<std::string::String>> {
+        terrars::SetRef::new(self.shared().clone(), format!("{}.compatible_runtimes", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `created_date` after provisioning.\n"]
-    pub fn created_date(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.created_date", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `created_date` after provisioning.\n"]
+    pub fn created_date(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.created_date", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `description` after provisioning.\n"]
-    pub fn description(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.description", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `description` after provisioning.\n"]
+    pub fn description(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.description", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `filename` after provisioning.\n"]
-    pub fn filename(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.filename", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `filename` after provisioning.\n"]
+    pub fn filename(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.filename", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `id` after provisioning.\n"]
-    pub fn id(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
+    pub fn id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `layer_arn` after provisioning.\n"]
-    pub fn layer_arn(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.layer_arn", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `layer_arn` after provisioning.\n"]
+    pub fn layer_arn(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.layer_arn", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `layer_name` after provisioning.\n"]
-    pub fn layer_name(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.layer_name", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `layer_name` after provisioning.\n"]
+    pub fn layer_name(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.layer_name", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `license_info` after provisioning.\n"]
-    pub fn license_info(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.license_info", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `license_info` after provisioning.\n"]
+    pub fn license_info(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.license_info", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `s3_bucket` after provisioning.\n"]
-    pub fn s3_bucket(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.s3_bucket", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `s3_bucket` after provisioning.\n"]
+    pub fn s3_bucket(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.s3_bucket", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `s3_key` after provisioning.\n"]
-    pub fn s3_key(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.s3_key", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `s3_key` after provisioning.\n"]
+    pub fn s3_key(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.s3_key", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `s3_object_version` after provisioning.\n"]
-    pub fn s3_object_version(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.s3_object_version", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `s3_object_version` after provisioning.\n"]
+    pub fn s3_object_version(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.s3_object_version", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `signing_job_arn` after provisioning.\n"]
-    pub fn signing_job_arn(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.signing_job_arn", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `signing_job_arn` after provisioning.\n"]
+    pub fn signing_job_arn(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.signing_job_arn", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `signing_profile_version_arn` after provisioning.\n"]
-    pub fn signing_profile_version_arn(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.signing_profile_version_arn", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `signing_profile_version_arn` after provisioning.\n"]
+    pub fn signing_profile_version_arn(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.signing_profile_version_arn", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `skip_destroy` after provisioning.\n"]
-    pub fn skip_destroy(&self) -> PrimExpr<bool> {
-        PrimExpr::new(self.shared().clone(), format!("{}.skip_destroy", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `skip_destroy` after provisioning.\n"]
+    pub fn skip_destroy(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.skip_destroy", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `source_code_hash` after provisioning.\n"]
-    pub fn source_code_hash(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.source_code_hash", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `source_code_hash` after provisioning.\n"]
+    pub fn source_code_hash(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.source_code_hash", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `source_code_size` after provisioning.\n"]
-    pub fn source_code_size(&self) -> PrimExpr<f64> {
-        PrimExpr::new(self.shared().clone(), format!("{}.source_code_size", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `source_code_size` after provisioning.\n"]
+    pub fn source_code_size(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.source_code_size", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `version` after provisioning.\n"]
-    pub fn version(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.version", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `version` after provisioning.\n"]
+    pub fn version(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.version", self.extract_ref()))
     }
 }

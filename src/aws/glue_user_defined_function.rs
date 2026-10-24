@@ -1,54 +1,58 @@
 use serde::Serialize;
-use std::cell::RefCell;
-use std::rc::Rc;
-use terrars::*;
+use terrars::{
+    Referable as _,
+    Resource_ as _,
+    Ref as _,
+};
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
 struct GlueUserDefinedFunctionData {
-    #[serde(skip_serializing_if = "Vec::is_empty")]
-    depends_on: Vec<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    provider: Option<String>,
-    #[serde(skip_serializing_if = "SerdeSkipDefault::is_default")]
-    lifecycle: ResourceLifecycle,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    for_each: Option<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    catalog_id: Option<PrimField<String>>,
-    class_name: PrimField<String>,
-    database_name: PrimField<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    id: Option<PrimField<String>>,
-    name: PrimField<String>,
-    owner_name: PrimField<String>,
-    owner_type: PrimField<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    resource_uris: Option<Vec<GlueUserDefinedFunctionResourceUrisEl>>,
+    #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
+    depends_on: std::vec::Vec<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    provider: std::option::Option<std::string::String>,
+    #[serde(skip_serializing_if = "terrars::SerdeSkipDefault::is_default")]
+    lifecycle: terrars::ResourceLifecycle,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    for_each: std::option::Option<std::string::String>,
+    #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
+    provisioner: std::vec::Vec<terrars::Provisioner>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    catalog_id: std::option::Option<terrars::PrimField<std::string::String>>,
+    class_name: terrars::PrimField<std::string::String>,
+    database_name: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    id: std::option::Option<terrars::PrimField<std::string::String>>,
+    name: terrars::PrimField<std::string::String>,
+    owner_name: terrars::PrimField<std::string::String>,
+    owner_type: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    resource_uris: std::option::Option<std::vec::Vec<GlueUserDefinedFunctionResourceUrisEl>>,
     dynamic: GlueUserDefinedFunctionDynamic,
 }
 
 struct GlueUserDefinedFunction_ {
-    shared: StackShared,
-    tf_id: String,
-    data: RefCell<GlueUserDefinedFunctionData>,
+    shared: terrars::StackShared,
+    tf_id: std::string::String,
+    data: std::cell::RefCell<GlueUserDefinedFunctionData>,
 }
 
 #[derive(Clone)]
-pub struct GlueUserDefinedFunction(Rc<GlueUserDefinedFunction_>);
+pub struct GlueUserDefinedFunction(std::rc::Rc<GlueUserDefinedFunction_>);
 
 impl GlueUserDefinedFunction {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.0.shared
     }
 
-    pub fn depends_on(self, dep: &impl Referable) -> Self {
+    pub fn depends_on(self, dep: &impl terrars::Referable) -> Self {
         self.0.data.borrow_mut().depends_on.push(dep.extract_ref());
         self
     }
 
     pub fn set_provider(self, provider: &ProviderAws) -> Self {
-        self.0.data.borrow_mut().provider = Some(provider.provider_ref());
+        self.0.data.borrow_mut().provider = std::option::Option::Some(provider.provider_ref());
         self
     }
 
@@ -63,135 +67,171 @@ impl GlueUserDefinedFunction {
     }
 
     pub fn ignore_changes_to_all(self) -> Self {
-        self.0.data.borrow_mut().lifecycle.ignore_changes = Some(IgnoreChanges::All(IgnoreChangesAll::All));
+        self.0.data.borrow_mut().lifecycle.ignore_changes =
+            std::option::Option::Some(terrars::IgnoreChanges::All(terrars::IgnoreChangesAll::All));
         self
     }
 
-    pub fn ignore_changes_to_attr(self, attr: impl ToString) -> Self {
+    pub fn ignore_changes_to_attr(self, attr: impl std::string::ToString) -> Self {
         {
             let mut d = self.0.data.borrow_mut();
             if match &mut d.lifecycle.ignore_changes {
-                Some(i) => match i {
-                    IgnoreChanges::All(_) => {
+                std::option::Option::Some(i) => match i {
+                    terrars::IgnoreChanges::All(_) => {
                         true
                     },
-                    IgnoreChanges::Refs(r) => {
+                    terrars::IgnoreChanges::Refs(r) => {
                         r.push(attr.to_string());
                         false
                     },
                 },
-                None => true,
+                std::option::Option::None => true,
             } {
-                d.lifecycle.ignore_changes = Some(IgnoreChanges::Refs(vec![attr.to_string()]));
+                d.lifecycle.ignore_changes =
+                    std::option::Option::Some(terrars::IgnoreChanges::Refs(vec![attr.to_string()]));
             }
         }
         self
     }
 
-    pub fn replace_triggered_by_resource(self, r: &impl Resource) -> Self {
+    pub fn replace_triggered_by_resource(self, r: &impl terrars::Resource) -> Self {
         self.0.data.borrow_mut().lifecycle.replace_triggered_by.push(r.extract_ref());
         self
     }
 
-    pub fn replace_triggered_by_attr(self, attr: impl ToString) -> Self {
+    pub fn replace_triggered_by_attr(self, attr: impl std::string::ToString) -> Self {
         self.0.data.borrow_mut().lifecycle.replace_triggered_by.push(attr.to_string());
         self
     }
 
-    #[doc= "Set the field `catalog_id`.\n"]
-    pub fn set_catalog_id(self, v: impl Into<PrimField<String>>) -> Self {
-        self.0.data.borrow_mut().catalog_id = Some(v.into());
+    #[doc = r" Add a provisioner (ex: `local-exec`, `remote-exec`, `file`) to this resource."]
+    #[doc = r" Provisioners run in the order they're added."]
+    pub fn add_provisioner(self, v: impl std::convert::Into<terrars::Provisioner>) -> Self {
+        self.0.data.borrow_mut().provisioner.push(v.into());
         self
     }
 
-    #[doc= "Set the field `id`.\n"]
-    pub fn set_id(self, v: impl Into<PrimField<String>>) -> Self {
-        self.0.data.borrow_mut().id = Some(v.into());
+    pub fn add_lifecycle_precondition(
+        self,
+        condition: impl std::convert::Into<terrars::PrimField<bool>>,
+        error_message: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.0.data.borrow_mut().lifecycle.precondition.push(terrars::LifecycleCondition {
+            condition: condition.into(),
+            error_message: error_message.into(),
+        });
         self
     }
 
-    #[doc= "Set the field `resource_uris`.\n"]
-    pub fn set_resource_uris(self, v: impl Into<BlockAssignable<GlueUserDefinedFunctionResourceUrisEl>>) -> Self {
+    pub fn add_lifecycle_postcondition(
+        self,
+        condition: impl std::convert::Into<terrars::PrimField<bool>>,
+        error_message: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.0.data.borrow_mut().lifecycle.postcondition.push(terrars::LifecycleCondition {
+            condition: condition.into(),
+            error_message: error_message.into(),
+        });
+        self
+    }
+
+    #[doc = "Set the field `catalog_id`.\n"]
+    pub fn set_catalog_id(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().catalog_id = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `id`.\n"]
+    pub fn set_id(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().id = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `resource_uris`.\n"]
+    pub fn set_resource_uris(
+        self,
+        v: impl std::convert::Into<terrars::BlockAssignable<GlueUserDefinedFunctionResourceUrisEl>>,
+    ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.0.data.borrow_mut().resource_uris = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.0.data.borrow_mut().resource_uris = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.0.data.borrow_mut().dynamic.resource_uris = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.0.data.borrow_mut().dynamic.resource_uris = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Get a reference to the value of field `arn` after provisioning.\n"]
-    pub fn arn(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.arn", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `arn` after provisioning.\n"]
+    pub fn arn(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.arn", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `catalog_id` after provisioning.\n"]
-    pub fn catalog_id(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.catalog_id", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `catalog_id` after provisioning.\n"]
+    pub fn catalog_id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.catalog_id", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `class_name` after provisioning.\n"]
-    pub fn class_name(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.class_name", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `class_name` after provisioning.\n"]
+    pub fn class_name(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.class_name", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `create_time` after provisioning.\n"]
-    pub fn create_time(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.create_time", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `create_time` after provisioning.\n"]
+    pub fn create_time(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.create_time", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `database_name` after provisioning.\n"]
-    pub fn database_name(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.database_name", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `database_name` after provisioning.\n"]
+    pub fn database_name(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.database_name", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `id` after provisioning.\n"]
-    pub fn id(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
+    pub fn id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `name` after provisioning.\n"]
-    pub fn name(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `name` after provisioning.\n"]
+    pub fn name(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `owner_name` after provisioning.\n"]
-    pub fn owner_name(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.owner_name", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `owner_name` after provisioning.\n"]
+    pub fn owner_name(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.owner_name", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `owner_type` after provisioning.\n"]
-    pub fn owner_type(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.owner_type", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `owner_type` after provisioning.\n"]
+    pub fn owner_type(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.owner_type", self.extract_ref()))
     }
 }
 
-impl Referable for GlueUserDefinedFunction {
-    fn extract_ref(&self) -> String {
+impl terrars::Referable for GlueUserDefinedFunction {
+    fn extract_ref(&self) -> std::string::String {
         format!("{}.{}", self.0.extract_resource_type(), self.0.extract_tf_id())
     }
 }
 
-impl Resource for GlueUserDefinedFunction { }
+impl terrars::Resource for GlueUserDefinedFunction { }
 
-impl ToListMappable for GlueUserDefinedFunction {
-    type O = ListRef<GlueUserDefinedFunctionRef>;
+impl terrars::ToListMappable for GlueUserDefinedFunction {
+    type O = terrars::ListRef<GlueUserDefinedFunctionRef>;
 
-    fn do_map(self, base: String) -> Self::O {
-        self.0.data.borrow_mut().for_each = Some(format!("${{{}}}", base));
-        ListRef::new(self.0.shared.clone(), self.extract_ref())
+    fn do_map(self, base: std::string::String) -> Self::O {
+        self.0.data.borrow_mut().for_each = std::option::Option::Some(format!("${{{}}}", base));
+        terrars::ListRef::new(self.0.shared.clone(), self.extract_ref())
     }
 }
 
-impl Resource_ for GlueUserDefinedFunction_ {
-    fn extract_resource_type(&self) -> String {
+impl terrars::Resource_ for GlueUserDefinedFunction_ {
+    fn extract_resource_type(&self) -> std::string::String {
         "aws_glue_user_defined_function".into()
     }
 
-    fn extract_tf_id(&self) -> String {
+    fn extract_tf_id(&self) -> std::string::String {
         self.tf_id.clone()
     }
 
@@ -201,29 +241,30 @@ impl Resource_ for GlueUserDefinedFunction_ {
 }
 
 pub struct BuildGlueUserDefinedFunction {
-    pub tf_id: String,
-    #[doc= ""]
-    pub class_name: PrimField<String>,
-    #[doc= ""]
-    pub database_name: PrimField<String>,
-    #[doc= ""]
-    pub name: PrimField<String>,
-    #[doc= ""]
-    pub owner_name: PrimField<String>,
-    #[doc= ""]
-    pub owner_type: PrimField<String>,
+    pub tf_id: std::string::String,
+    #[doc = ""]
+    pub class_name: terrars::PrimField<std::string::String>,
+    #[doc = ""]
+    pub database_name: terrars::PrimField<std::string::String>,
+    #[doc = ""]
+    pub name: terrars::PrimField<std::string::String>,
+    #[doc = ""]
+    pub owner_name: terrars::PrimField<std::string::String>,
+    #[doc = ""]
+    pub owner_type: terrars::PrimField<std::string::String>,
 }
 
 impl BuildGlueUserDefinedFunction {
-    pub fn build(self, stack: &mut Stack) -> GlueUserDefinedFunction {
-        let out = GlueUserDefinedFunction(Rc::new(GlueUserDefinedFunction_ {
+    pub fn build(self, stack: &mut terrars::Stack) -> GlueUserDefinedFunction {
+        let out = GlueUserDefinedFunction(std::rc::Rc::new(GlueUserDefinedFunction_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: RefCell::new(GlueUserDefinedFunctionData {
+            data: std::cell::RefCell::new(GlueUserDefinedFunctionData {
                 depends_on: core::default::Default::default(),
-                provider: None,
+                provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
-                for_each: None,
+                for_each: std::option::Option::None,
+                provisioner: core::default::Default::default(),
                 catalog_id: core::default::Default::default(),
                 class_name: self.class_name,
                 database_name: self.database_name,
@@ -232,7 +273,7 @@ impl BuildGlueUserDefinedFunction {
                 owner_name: self.owner_name,
                 owner_type: self.owner_type,
                 resource_uris: core::default::Default::default(),
-                dynamic: Default::default(),
+                dynamic: core::default::Default::default(),
             }),
         }));
         stack.add_resource(out.0.clone());
@@ -241,12 +282,12 @@ impl BuildGlueUserDefinedFunction {
 }
 
 pub struct GlueUserDefinedFunctionRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for GlueUserDefinedFunctionRef {
-    fn new(shared: StackShared, base: String) -> Self {
+impl terrars::Ref for GlueUserDefinedFunctionRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> Self {
         Self {
             shared: shared,
             base: base,
@@ -255,73 +296,73 @@ impl Ref for GlueUserDefinedFunctionRef {
 }
 
 impl GlueUserDefinedFunctionRef {
-    fn extract_ref(&self) -> String {
+    fn extract_ref(&self) -> std::string::String {
         self.base.clone()
     }
 
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `arn` after provisioning.\n"]
-    pub fn arn(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.arn", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `arn` after provisioning.\n"]
+    pub fn arn(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.arn", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `catalog_id` after provisioning.\n"]
-    pub fn catalog_id(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.catalog_id", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `catalog_id` after provisioning.\n"]
+    pub fn catalog_id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.catalog_id", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `class_name` after provisioning.\n"]
-    pub fn class_name(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.class_name", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `class_name` after provisioning.\n"]
+    pub fn class_name(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.class_name", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `create_time` after provisioning.\n"]
-    pub fn create_time(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.create_time", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `create_time` after provisioning.\n"]
+    pub fn create_time(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.create_time", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `database_name` after provisioning.\n"]
-    pub fn database_name(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.database_name", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `database_name` after provisioning.\n"]
+    pub fn database_name(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.database_name", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `id` after provisioning.\n"]
-    pub fn id(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
+    pub fn id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `name` after provisioning.\n"]
-    pub fn name(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `name` after provisioning.\n"]
+    pub fn name(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `owner_name` after provisioning.\n"]
-    pub fn owner_name(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.owner_name", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `owner_name` after provisioning.\n"]
+    pub fn owner_name(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.owner_name", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `owner_type` after provisioning.\n"]
-    pub fn owner_type(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.owner_type", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `owner_type` after provisioning.\n"]
+    pub fn owner_type(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.owner_type", self.extract_ref()))
     }
 }
 
 #[derive(Serialize)]
 pub struct GlueUserDefinedFunctionResourceUrisEl {
-    resource_type: PrimField<String>,
-    uri: PrimField<String>,
+    resource_type: terrars::PrimField<std::string::String>,
+    uri: terrars::PrimField<std::string::String>,
 }
 
 impl GlueUserDefinedFunctionResourceUrisEl { }
 
-impl ToListMappable for GlueUserDefinedFunctionResourceUrisEl {
-    type O = BlockAssignable<GlueUserDefinedFunctionResourceUrisEl>;
+impl terrars::ToListMappable for GlueUserDefinedFunctionResourceUrisEl {
+    type O = terrars::BlockAssignable<GlueUserDefinedFunctionResourceUrisEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -330,10 +371,10 @@ impl ToListMappable for GlueUserDefinedFunctionResourceUrisEl {
 }
 
 pub struct BuildGlueUserDefinedFunctionResourceUrisEl {
-    #[doc= ""]
-    pub resource_type: PrimField<String>,
-    #[doc= ""]
-    pub uri: PrimField<String>,
+    #[doc = ""]
+    pub resource_type: terrars::PrimField<std::string::String>,
+    #[doc = ""]
+    pub uri: terrars::PrimField<std::string::String>,
 }
 
 impl BuildGlueUserDefinedFunctionResourceUrisEl {
@@ -346,12 +387,12 @@ impl BuildGlueUserDefinedFunctionResourceUrisEl {
 }
 
 pub struct GlueUserDefinedFunctionResourceUrisElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for GlueUserDefinedFunctionResourceUrisElRef {
-    fn new(shared: StackShared, base: String) -> GlueUserDefinedFunctionResourceUrisElRef {
+impl terrars::Ref for GlueUserDefinedFunctionResourceUrisElRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> GlueUserDefinedFunctionResourceUrisElRef {
         GlueUserDefinedFunctionResourceUrisElRef {
             shared: shared,
             base: base.to_string(),
@@ -360,22 +401,22 @@ impl Ref for GlueUserDefinedFunctionResourceUrisElRef {
 }
 
 impl GlueUserDefinedFunctionResourceUrisElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `resource_type` after provisioning.\n"]
-    pub fn resource_type(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.resource_type", self.base))
+    #[doc = "Get a reference to the value of field `resource_type` after provisioning.\n"]
+    pub fn resource_type(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.resource_type", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `uri` after provisioning.\n"]
-    pub fn uri(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.uri", self.base))
+    #[doc = "Get a reference to the value of field `uri` after provisioning.\n"]
+    pub fn uri(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.uri", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
 struct GlueUserDefinedFunctionDynamic {
-    resource_uris: Option<DynamicBlock<GlueUserDefinedFunctionResourceUrisEl>>,
+    resource_uris: std::option::Option<terrars::DynamicBlock<GlueUserDefinedFunctionResourceUrisEl>>,
 }

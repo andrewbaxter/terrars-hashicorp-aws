@@ -1,49 +1,53 @@
 use serde::Serialize;
-use std::cell::RefCell;
-use std::rc::Rc;
-use terrars::*;
+use terrars::{
+    Referable as _,
+    Resource_ as _,
+    Ref as _,
+};
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
 struct CognitoIdentityPoolRolesAttachmentData {
-    #[serde(skip_serializing_if = "Vec::is_empty")]
-    depends_on: Vec<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    provider: Option<String>,
-    #[serde(skip_serializing_if = "SerdeSkipDefault::is_default")]
-    lifecycle: ResourceLifecycle,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    for_each: Option<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    id: Option<PrimField<String>>,
-    identity_pool_id: PrimField<String>,
-    roles: RecField<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    role_mapping: Option<Vec<CognitoIdentityPoolRolesAttachmentRoleMappingEl>>,
+    #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
+    depends_on: std::vec::Vec<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    provider: std::option::Option<std::string::String>,
+    #[serde(skip_serializing_if = "terrars::SerdeSkipDefault::is_default")]
+    lifecycle: terrars::ResourceLifecycle,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    for_each: std::option::Option<std::string::String>,
+    #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
+    provisioner: std::vec::Vec<terrars::Provisioner>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    id: std::option::Option<terrars::PrimField<std::string::String>>,
+    identity_pool_id: terrars::PrimField<std::string::String>,
+    roles: terrars::RecField<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    role_mapping: std::option::Option<std::vec::Vec<CognitoIdentityPoolRolesAttachmentRoleMappingEl>>,
     dynamic: CognitoIdentityPoolRolesAttachmentDynamic,
 }
 
 struct CognitoIdentityPoolRolesAttachment_ {
-    shared: StackShared,
-    tf_id: String,
-    data: RefCell<CognitoIdentityPoolRolesAttachmentData>,
+    shared: terrars::StackShared,
+    tf_id: std::string::String,
+    data: std::cell::RefCell<CognitoIdentityPoolRolesAttachmentData>,
 }
 
 #[derive(Clone)]
-pub struct CognitoIdentityPoolRolesAttachment(Rc<CognitoIdentityPoolRolesAttachment_>);
+pub struct CognitoIdentityPoolRolesAttachment(std::rc::Rc<CognitoIdentityPoolRolesAttachment_>);
 
 impl CognitoIdentityPoolRolesAttachment {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.0.shared
     }
 
-    pub fn depends_on(self, dep: &impl Referable) -> Self {
+    pub fn depends_on(self, dep: &impl terrars::Referable) -> Self {
         self.0.data.borrow_mut().depends_on.push(dep.extract_ref());
         self
     }
 
     pub fn set_provider(self, provider: &ProviderAws) -> Self {
-        self.0.data.borrow_mut().provider = Some(provider.provider_ref());
+        self.0.data.borrow_mut().provider = std::option::Option::Some(provider.provider_ref());
         self
     }
 
@@ -58,102 +62,135 @@ impl CognitoIdentityPoolRolesAttachment {
     }
 
     pub fn ignore_changes_to_all(self) -> Self {
-        self.0.data.borrow_mut().lifecycle.ignore_changes = Some(IgnoreChanges::All(IgnoreChangesAll::All));
+        self.0.data.borrow_mut().lifecycle.ignore_changes =
+            std::option::Option::Some(terrars::IgnoreChanges::All(terrars::IgnoreChangesAll::All));
         self
     }
 
-    pub fn ignore_changes_to_attr(self, attr: impl ToString) -> Self {
+    pub fn ignore_changes_to_attr(self, attr: impl std::string::ToString) -> Self {
         {
             let mut d = self.0.data.borrow_mut();
             if match &mut d.lifecycle.ignore_changes {
-                Some(i) => match i {
-                    IgnoreChanges::All(_) => {
+                std::option::Option::Some(i) => match i {
+                    terrars::IgnoreChanges::All(_) => {
                         true
                     },
-                    IgnoreChanges::Refs(r) => {
+                    terrars::IgnoreChanges::Refs(r) => {
                         r.push(attr.to_string());
                         false
                     },
                 },
-                None => true,
+                std::option::Option::None => true,
             } {
-                d.lifecycle.ignore_changes = Some(IgnoreChanges::Refs(vec![attr.to_string()]));
+                d.lifecycle.ignore_changes =
+                    std::option::Option::Some(terrars::IgnoreChanges::Refs(vec![attr.to_string()]));
             }
         }
         self
     }
 
-    pub fn replace_triggered_by_resource(self, r: &impl Resource) -> Self {
+    pub fn replace_triggered_by_resource(self, r: &impl terrars::Resource) -> Self {
         self.0.data.borrow_mut().lifecycle.replace_triggered_by.push(r.extract_ref());
         self
     }
 
-    pub fn replace_triggered_by_attr(self, attr: impl ToString) -> Self {
+    pub fn replace_triggered_by_attr(self, attr: impl std::string::ToString) -> Self {
         self.0.data.borrow_mut().lifecycle.replace_triggered_by.push(attr.to_string());
         self
     }
 
-    #[doc= "Set the field `id`.\n"]
-    pub fn set_id(self, v: impl Into<PrimField<String>>) -> Self {
-        self.0.data.borrow_mut().id = Some(v.into());
+    #[doc = r" Add a provisioner (ex: `local-exec`, `remote-exec`, `file`) to this resource."]
+    #[doc = r" Provisioners run in the order they're added."]
+    pub fn add_provisioner(self, v: impl std::convert::Into<terrars::Provisioner>) -> Self {
+        self.0.data.borrow_mut().provisioner.push(v.into());
         self
     }
 
-    #[doc= "Set the field `role_mapping`.\n"]
+    pub fn add_lifecycle_precondition(
+        self,
+        condition: impl std::convert::Into<terrars::PrimField<bool>>,
+        error_message: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.0.data.borrow_mut().lifecycle.precondition.push(terrars::LifecycleCondition {
+            condition: condition.into(),
+            error_message: error_message.into(),
+        });
+        self
+    }
+
+    pub fn add_lifecycle_postcondition(
+        self,
+        condition: impl std::convert::Into<terrars::PrimField<bool>>,
+        error_message: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.0.data.borrow_mut().lifecycle.postcondition.push(terrars::LifecycleCondition {
+            condition: condition.into(),
+            error_message: error_message.into(),
+        });
+        self
+    }
+
+    #[doc = "Set the field `id`.\n"]
+    pub fn set_id(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().id = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `role_mapping`.\n"]
     pub fn set_role_mapping(
         self,
-        v: impl Into<BlockAssignable<CognitoIdentityPoolRolesAttachmentRoleMappingEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<CognitoIdentityPoolRolesAttachmentRoleMappingEl>>,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.0.data.borrow_mut().role_mapping = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.0.data.borrow_mut().role_mapping = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.0.data.borrow_mut().dynamic.role_mapping = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.0.data.borrow_mut().dynamic.role_mapping = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Get a reference to the value of field `id` after provisioning.\n"]
-    pub fn id(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
+    pub fn id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `identity_pool_id` after provisioning.\n"]
-    pub fn identity_pool_id(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.identity_pool_id", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `identity_pool_id` after provisioning.\n"]
+    pub fn identity_pool_id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.identity_pool_id", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `roles` after provisioning.\n"]
-    pub fn roles(&self) -> RecRef<PrimExpr<String>> {
-        RecRef::new(self.shared().clone(), format!("{}.roles", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `roles` after provisioning.\n"]
+    pub fn roles(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
+        terrars::RecRef::new(self.shared().clone(), format!("{}.roles", self.extract_ref()))
     }
 }
 
-impl Referable for CognitoIdentityPoolRolesAttachment {
-    fn extract_ref(&self) -> String {
+impl terrars::Referable for CognitoIdentityPoolRolesAttachment {
+    fn extract_ref(&self) -> std::string::String {
         format!("{}.{}", self.0.extract_resource_type(), self.0.extract_tf_id())
     }
 }
 
-impl Resource for CognitoIdentityPoolRolesAttachment { }
+impl terrars::Resource for CognitoIdentityPoolRolesAttachment { }
 
-impl ToListMappable for CognitoIdentityPoolRolesAttachment {
-    type O = ListRef<CognitoIdentityPoolRolesAttachmentRef>;
+impl terrars::ToListMappable for CognitoIdentityPoolRolesAttachment {
+    type O = terrars::ListRef<CognitoIdentityPoolRolesAttachmentRef>;
 
-    fn do_map(self, base: String) -> Self::O {
-        self.0.data.borrow_mut().for_each = Some(format!("${{{}}}", base));
-        ListRef::new(self.0.shared.clone(), self.extract_ref())
+    fn do_map(self, base: std::string::String) -> Self::O {
+        self.0.data.borrow_mut().for_each = std::option::Option::Some(format!("${{{}}}", base));
+        terrars::ListRef::new(self.0.shared.clone(), self.extract_ref())
     }
 }
 
-impl Resource_ for CognitoIdentityPoolRolesAttachment_ {
-    fn extract_resource_type(&self) -> String {
+impl terrars::Resource_ for CognitoIdentityPoolRolesAttachment_ {
+    fn extract_resource_type(&self) -> std::string::String {
         "aws_cognito_identity_pool_roles_attachment".into()
     }
 
-    fn extract_tf_id(&self) -> String {
+    fn extract_tf_id(&self) -> std::string::String {
         self.tf_id.clone()
     }
 
@@ -163,28 +200,29 @@ impl Resource_ for CognitoIdentityPoolRolesAttachment_ {
 }
 
 pub struct BuildCognitoIdentityPoolRolesAttachment {
-    pub tf_id: String,
-    #[doc= ""]
-    pub identity_pool_id: PrimField<String>,
-    #[doc= ""]
-    pub roles: RecField<PrimField<String>>,
+    pub tf_id: std::string::String,
+    #[doc = ""]
+    pub identity_pool_id: terrars::PrimField<std::string::String>,
+    #[doc = ""]
+    pub roles: terrars::RecField<terrars::PrimField<std::string::String>>,
 }
 
 impl BuildCognitoIdentityPoolRolesAttachment {
-    pub fn build(self, stack: &mut Stack) -> CognitoIdentityPoolRolesAttachment {
-        let out = CognitoIdentityPoolRolesAttachment(Rc::new(CognitoIdentityPoolRolesAttachment_ {
+    pub fn build(self, stack: &mut terrars::Stack) -> CognitoIdentityPoolRolesAttachment {
+        let out = CognitoIdentityPoolRolesAttachment(std::rc::Rc::new(CognitoIdentityPoolRolesAttachment_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: RefCell::new(CognitoIdentityPoolRolesAttachmentData {
+            data: std::cell::RefCell::new(CognitoIdentityPoolRolesAttachmentData {
                 depends_on: core::default::Default::default(),
-                provider: None,
+                provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
-                for_each: None,
+                for_each: std::option::Option::None,
+                provisioner: core::default::Default::default(),
                 id: core::default::Default::default(),
                 identity_pool_id: self.identity_pool_id,
                 roles: self.roles,
                 role_mapping: core::default::Default::default(),
-                dynamic: Default::default(),
+                dynamic: core::default::Default::default(),
             }),
         }));
         stack.add_resource(out.0.clone());
@@ -193,12 +231,12 @@ impl BuildCognitoIdentityPoolRolesAttachment {
 }
 
 pub struct CognitoIdentityPoolRolesAttachmentRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for CognitoIdentityPoolRolesAttachmentRef {
-    fn new(shared: StackShared, base: String) -> Self {
+impl terrars::Ref for CognitoIdentityPoolRolesAttachmentRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> Self {
         Self {
             shared: shared,
             base: base,
@@ -207,45 +245,45 @@ impl Ref for CognitoIdentityPoolRolesAttachmentRef {
 }
 
 impl CognitoIdentityPoolRolesAttachmentRef {
-    fn extract_ref(&self) -> String {
+    fn extract_ref(&self) -> std::string::String {
         self.base.clone()
     }
 
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `id` after provisioning.\n"]
-    pub fn id(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
+    pub fn id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `identity_pool_id` after provisioning.\n"]
-    pub fn identity_pool_id(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.identity_pool_id", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `identity_pool_id` after provisioning.\n"]
+    pub fn identity_pool_id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.identity_pool_id", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `roles` after provisioning.\n"]
-    pub fn roles(&self) -> RecRef<PrimExpr<String>> {
-        RecRef::new(self.shared().clone(), format!("{}.roles", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `roles` after provisioning.\n"]
+    pub fn roles(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
+        terrars::RecRef::new(self.shared().clone(), format!("{}.roles", self.extract_ref()))
     }
 }
 
 #[derive(Serialize)]
 pub struct CognitoIdentityPoolRolesAttachmentRoleMappingElMappingRuleEl {
-    claim: PrimField<String>,
-    match_type: PrimField<String>,
-    role_arn: PrimField<String>,
-    value: PrimField<String>,
+    claim: terrars::PrimField<std::string::String>,
+    match_type: terrars::PrimField<std::string::String>,
+    role_arn: terrars::PrimField<std::string::String>,
+    value: terrars::PrimField<std::string::String>,
 }
 
 impl CognitoIdentityPoolRolesAttachmentRoleMappingElMappingRuleEl { }
 
-impl ToListMappable for CognitoIdentityPoolRolesAttachmentRoleMappingElMappingRuleEl {
-    type O = BlockAssignable<CognitoIdentityPoolRolesAttachmentRoleMappingElMappingRuleEl>;
+impl terrars::ToListMappable for CognitoIdentityPoolRolesAttachmentRoleMappingElMappingRuleEl {
+    type O = terrars::BlockAssignable<CognitoIdentityPoolRolesAttachmentRoleMappingElMappingRuleEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -254,14 +292,14 @@ impl ToListMappable for CognitoIdentityPoolRolesAttachmentRoleMappingElMappingRu
 }
 
 pub struct BuildCognitoIdentityPoolRolesAttachmentRoleMappingElMappingRuleEl {
-    #[doc= ""]
-    pub claim: PrimField<String>,
-    #[doc= ""]
-    pub match_type: PrimField<String>,
-    #[doc= ""]
-    pub role_arn: PrimField<String>,
-    #[doc= ""]
-    pub value: PrimField<String>,
+    #[doc = ""]
+    pub claim: terrars::PrimField<std::string::String>,
+    #[doc = ""]
+    pub match_type: terrars::PrimField<std::string::String>,
+    #[doc = ""]
+    pub role_arn: terrars::PrimField<std::string::String>,
+    #[doc = ""]
+    pub value: terrars::PrimField<std::string::String>,
 }
 
 impl BuildCognitoIdentityPoolRolesAttachmentRoleMappingElMappingRuleEl {
@@ -276,12 +314,15 @@ impl BuildCognitoIdentityPoolRolesAttachmentRoleMappingElMappingRuleEl {
 }
 
 pub struct CognitoIdentityPoolRolesAttachmentRoleMappingElMappingRuleElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for CognitoIdentityPoolRolesAttachmentRoleMappingElMappingRuleElRef {
-    fn new(shared: StackShared, base: String) -> CognitoIdentityPoolRolesAttachmentRoleMappingElMappingRuleElRef {
+impl terrars::Ref for CognitoIdentityPoolRolesAttachmentRoleMappingElMappingRuleElRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> CognitoIdentityPoolRolesAttachmentRoleMappingElMappingRuleElRef {
         CognitoIdentityPoolRolesAttachmentRoleMappingElMappingRuleElRef {
             shared: shared,
             base: base.to_string(),
@@ -290,77 +331,87 @@ impl Ref for CognitoIdentityPoolRolesAttachmentRoleMappingElMappingRuleElRef {
 }
 
 impl CognitoIdentityPoolRolesAttachmentRoleMappingElMappingRuleElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `claim` after provisioning.\n"]
-    pub fn claim(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.claim", self.base))
+    #[doc = "Get a reference to the value of field `claim` after provisioning.\n"]
+    pub fn claim(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.claim", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `match_type` after provisioning.\n"]
-    pub fn match_type(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.match_type", self.base))
+    #[doc = "Get a reference to the value of field `match_type` after provisioning.\n"]
+    pub fn match_type(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.match_type", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `role_arn` after provisioning.\n"]
-    pub fn role_arn(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.role_arn", self.base))
+    #[doc = "Get a reference to the value of field `role_arn` after provisioning.\n"]
+    pub fn role_arn(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.role_arn", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `value` after provisioning.\n"]
-    pub fn value(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.value", self.base))
+    #[doc = "Get a reference to the value of field `value` after provisioning.\n"]
+    pub fn value(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.value", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
 struct CognitoIdentityPoolRolesAttachmentRoleMappingElDynamic {
-    mapping_rule: Option<DynamicBlock<CognitoIdentityPoolRolesAttachmentRoleMappingElMappingRuleEl>>,
+    mapping_rule: std
+    ::option
+    ::Option<terrars::DynamicBlock<CognitoIdentityPoolRolesAttachmentRoleMappingElMappingRuleEl>>,
 }
 
 #[derive(Serialize)]
 pub struct CognitoIdentityPoolRolesAttachmentRoleMappingEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    ambiguous_role_resolution: Option<PrimField<String>>,
-    identity_provider: PrimField<String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    ambiguous_role_resolution: std::option::Option<terrars::PrimField<std::string::String>>,
+    identity_provider: terrars::PrimField<std::string::String>,
     #[serde(rename = "type")]
-    type_: PrimField<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    mapping_rule: Option<Vec<CognitoIdentityPoolRolesAttachmentRoleMappingElMappingRuleEl>>,
+    type_: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    mapping_rule: std::option::Option<std::vec::Vec<CognitoIdentityPoolRolesAttachmentRoleMappingElMappingRuleEl>>,
     dynamic: CognitoIdentityPoolRolesAttachmentRoleMappingElDynamic,
 }
 
 impl CognitoIdentityPoolRolesAttachmentRoleMappingEl {
-    #[doc= "Set the field `ambiguous_role_resolution`.\n"]
-    pub fn set_ambiguous_role_resolution(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.ambiguous_role_resolution = Some(v.into());
+    #[doc = "Set the field `ambiguous_role_resolution`.\n"]
+    pub fn set_ambiguous_role_resolution(
+        mut self,
+        v: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.ambiguous_role_resolution = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `mapping_rule`.\n"]
+    #[doc = "Set the field `mapping_rule`.\n"]
     pub fn set_mapping_rule(
         mut self,
-        v: impl Into<BlockAssignable<CognitoIdentityPoolRolesAttachmentRoleMappingElMappingRuleEl>>,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<terrars::BlockAssignable<CognitoIdentityPoolRolesAttachmentRoleMappingElMappingRuleEl>>,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.mapping_rule = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.mapping_rule = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.mapping_rule = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.mapping_rule = std::option::Option::Some(d);
             },
         }
         self
     }
 }
 
-impl ToListMappable for CognitoIdentityPoolRolesAttachmentRoleMappingEl {
-    type O = BlockAssignable<CognitoIdentityPoolRolesAttachmentRoleMappingEl>;
+impl terrars::ToListMappable for CognitoIdentityPoolRolesAttachmentRoleMappingEl {
+    type O = terrars::BlockAssignable<CognitoIdentityPoolRolesAttachmentRoleMappingEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -369,10 +420,10 @@ impl ToListMappable for CognitoIdentityPoolRolesAttachmentRoleMappingEl {
 }
 
 pub struct BuildCognitoIdentityPoolRolesAttachmentRoleMappingEl {
-    #[doc= ""]
-    pub identity_provider: PrimField<String>,
-    #[doc= ""]
-    pub type_: PrimField<String>,
+    #[doc = ""]
+    pub identity_provider: terrars::PrimField<std::string::String>,
+    #[doc = ""]
+    pub type_: terrars::PrimField<std::string::String>,
 }
 
 impl BuildCognitoIdentityPoolRolesAttachmentRoleMappingEl {
@@ -382,18 +433,21 @@ impl BuildCognitoIdentityPoolRolesAttachmentRoleMappingEl {
             identity_provider: self.identity_provider,
             type_: self.type_,
             mapping_rule: core::default::Default::default(),
-            dynamic: Default::default(),
+            dynamic: core::default::Default::default(),
         }
     }
 }
 
 pub struct CognitoIdentityPoolRolesAttachmentRoleMappingElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for CognitoIdentityPoolRolesAttachmentRoleMappingElRef {
-    fn new(shared: StackShared, base: String) -> CognitoIdentityPoolRolesAttachmentRoleMappingElRef {
+impl terrars::Ref for CognitoIdentityPoolRolesAttachmentRoleMappingElRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> CognitoIdentityPoolRolesAttachmentRoleMappingElRef {
         CognitoIdentityPoolRolesAttachmentRoleMappingElRef {
             shared: shared,
             base: base.to_string(),
@@ -402,32 +456,32 @@ impl Ref for CognitoIdentityPoolRolesAttachmentRoleMappingElRef {
 }
 
 impl CognitoIdentityPoolRolesAttachmentRoleMappingElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `ambiguous_role_resolution` after provisioning.\n"]
-    pub fn ambiguous_role_resolution(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.ambiguous_role_resolution", self.base))
+    #[doc = "Get a reference to the value of field `ambiguous_role_resolution` after provisioning.\n"]
+    pub fn ambiguous_role_resolution(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.ambiguous_role_resolution", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `identity_provider` after provisioning.\n"]
-    pub fn identity_provider(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.identity_provider", self.base))
+    #[doc = "Get a reference to the value of field `identity_provider` after provisioning.\n"]
+    pub fn identity_provider(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.identity_provider", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `type_` after provisioning.\n"]
-    pub fn type_(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.type", self.base))
+    #[doc = "Get a reference to the value of field `type_` after provisioning.\n"]
+    pub fn type_(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.type", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `mapping_rule` after provisioning.\n"]
-    pub fn mapping_rule(&self) -> ListRef<CognitoIdentityPoolRolesAttachmentRoleMappingElMappingRuleElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.mapping_rule", self.base))
+    #[doc = "Get a reference to the value of field `mapping_rule` after provisioning.\n"]
+    pub fn mapping_rule(&self) -> terrars::ListRef<CognitoIdentityPoolRolesAttachmentRoleMappingElMappingRuleElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.mapping_rule", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
 struct CognitoIdentityPoolRolesAttachmentDynamic {
-    role_mapping: Option<DynamicBlock<CognitoIdentityPoolRolesAttachmentRoleMappingEl>>,
+    role_mapping: std::option::Option<terrars::DynamicBlock<CognitoIdentityPoolRolesAttachmentRoleMappingEl>>,
 }

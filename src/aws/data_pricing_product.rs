@@ -1,112 +1,140 @@
 use serde::Serialize;
-use std::cell::RefCell;
-use std::rc::Rc;
-use terrars::*;
+use terrars::{
+    Referable as _,
+    Datasource_ as _,
+    Ref as _,
+};
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
 struct DataPricingProductData {
-    #[serde(skip_serializing_if = "Vec::is_empty")]
-    depends_on: Vec<String>,
-    #[serde(skip_serializing_if = "SerdeSkipDefault::is_default")]
-    provider: Option<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    for_each: Option<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    id: Option<PrimField<String>>,
-    service_code: PrimField<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    filters: Option<Vec<DataPricingProductFiltersEl>>,
+    #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
+    depends_on: std::vec::Vec<std::string::String>,
+    #[serde(skip_serializing_if = "terrars::SerdeSkipDefault::is_default")]
+    provider: std::option::Option<std::string::String>,
+    #[serde(skip_serializing_if = "terrars::SerdeSkipDefault::is_default")]
+    lifecycle: terrars::DatasourceLifecycle,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    for_each: std::option::Option<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    id: std::option::Option<terrars::PrimField<std::string::String>>,
+    service_code: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    filters: std::option::Option<std::vec::Vec<DataPricingProductFiltersEl>>,
     dynamic: DataPricingProductDynamic,
 }
 
 struct DataPricingProduct_ {
-    shared: StackShared,
-    tf_id: String,
-    data: RefCell<DataPricingProductData>,
+    shared: terrars::StackShared,
+    tf_id: std::string::String,
+    data: std::cell::RefCell<DataPricingProductData>,
 }
 
 #[derive(Clone)]
-pub struct DataPricingProduct(Rc<DataPricingProduct_>);
+pub struct DataPricingProduct(std::rc::Rc<DataPricingProduct_>);
 
 impl DataPricingProduct {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.0.shared
     }
 
-    pub fn depends_on(self, dep: &impl Referable) -> Self {
+    pub fn depends_on(self, dep: &impl terrars::Referable) -> Self {
         self.0.data.borrow_mut().depends_on.push(dep.extract_ref());
         self
     }
 
     pub fn set_provider(&self, provider: &ProviderAws) -> &Self {
-        self.0.data.borrow_mut().provider = Some(provider.provider_ref());
+        self.0.data.borrow_mut().provider = std::option::Option::Some(provider.provider_ref());
         self
     }
 
-    #[doc= "Set the field `id`.\n"]
-    pub fn set_id(self, v: impl Into<PrimField<String>>) -> Self {
-        self.0.data.borrow_mut().id = Some(v.into());
+    pub fn add_lifecycle_precondition(
+        self,
+        condition: impl std::convert::Into<terrars::PrimField<bool>>,
+        error_message: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.0.data.borrow_mut().lifecycle.precondition.push(terrars::LifecycleCondition {
+            condition: condition.into(),
+            error_message: error_message.into(),
+        });
         self
     }
 
-    #[doc= "Set the field `filters`.\n"]
-    pub fn set_filters(self, v: impl Into<BlockAssignable<DataPricingProductFiltersEl>>) -> Self {
+    pub fn add_lifecycle_postcondition(
+        self,
+        condition: impl std::convert::Into<terrars::PrimField<bool>>,
+        error_message: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.0.data.borrow_mut().lifecycle.postcondition.push(terrars::LifecycleCondition {
+            condition: condition.into(),
+            error_message: error_message.into(),
+        });
+        self
+    }
+
+    #[doc = "Set the field `id`.\n"]
+    pub fn set_id(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().id = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `filters`.\n"]
+    pub fn set_filters(self, v: impl std::convert::Into<terrars::BlockAssignable<DataPricingProductFiltersEl>>) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.0.data.borrow_mut().filters = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.0.data.borrow_mut().filters = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.0.data.borrow_mut().dynamic.filters = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.0.data.borrow_mut().dynamic.filters = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Get a reference to the value of field `id` after provisioning.\n"]
-    pub fn id(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
+    pub fn id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `result` after provisioning.\n"]
-    pub fn result(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.result", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `result` after provisioning.\n"]
+    pub fn result(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.result", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `service_code` after provisioning.\n"]
-    pub fn service_code(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.service_code", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `service_code` after provisioning.\n"]
+    pub fn service_code(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.service_code", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `filters` after provisioning.\n"]
-    pub fn filters(&self) -> ListRef<DataPricingProductFiltersElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.filters", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `filters` after provisioning.\n"]
+    pub fn filters(&self) -> terrars::ListRef<DataPricingProductFiltersElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.filters", self.extract_ref()))
     }
 }
 
-impl Referable for DataPricingProduct {
-    fn extract_ref(&self) -> String {
+impl terrars::Referable for DataPricingProduct {
+    fn extract_ref(&self) -> std::string::String {
         format!("data.{}.{}", self.0.extract_datasource_type(), self.0.extract_tf_id())
     }
 }
 
-impl Datasource for DataPricingProduct { }
+impl terrars::Datasource for DataPricingProduct { }
 
-impl ToListMappable for DataPricingProduct {
-    type O = ListRef<DataPricingProductRef>;
+impl terrars::ToListMappable for DataPricingProduct {
+    type O = terrars::ListRef<DataPricingProductRef>;
 
-    fn do_map(self, base: String) -> Self::O {
-        self.0.data.borrow_mut().for_each = Some(format!("${{{}}}", base));
-        ListRef::new(self.0.shared.clone(), self.extract_ref())
+    fn do_map(self, base: std::string::String) -> Self::O {
+        self.0.data.borrow_mut().for_each = std::option::Option::Some(format!("${{{}}}", base));
+        terrars::ListRef::new(self.0.shared.clone(), self.extract_ref())
     }
 }
 
-impl Datasource_ for DataPricingProduct_ {
-    fn extract_datasource_type(&self) -> String {
+impl terrars::Datasource_ for DataPricingProduct_ {
+    fn extract_datasource_type(&self) -> std::string::String {
         "aws_pricing_product".into()
     }
 
-    fn extract_tf_id(&self) -> String {
+    fn extract_tf_id(&self) -> std::string::String {
         self.tf_id.clone()
     }
 
@@ -116,24 +144,25 @@ impl Datasource_ for DataPricingProduct_ {
 }
 
 pub struct BuildDataPricingProduct {
-    pub tf_id: String,
-    #[doc= ""]
-    pub service_code: PrimField<String>,
+    pub tf_id: std::string::String,
+    #[doc = ""]
+    pub service_code: terrars::PrimField<std::string::String>,
 }
 
 impl BuildDataPricingProduct {
-    pub fn build(self, stack: &mut Stack) -> DataPricingProduct {
-        let out = DataPricingProduct(Rc::new(DataPricingProduct_ {
+    pub fn build(self, stack: &mut terrars::Stack) -> DataPricingProduct {
+        let out = DataPricingProduct(std::rc::Rc::new(DataPricingProduct_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: RefCell::new(DataPricingProductData {
+            data: std::cell::RefCell::new(DataPricingProductData {
                 depends_on: core::default::Default::default(),
-                provider: None,
-                for_each: None,
+                provider: std::option::Option::None,
+                lifecycle: core::default::Default::default(),
+                for_each: std::option::Option::None,
                 id: core::default::Default::default(),
                 service_code: self.service_code,
                 filters: core::default::Default::default(),
-                dynamic: Default::default(),
+                dynamic: core::default::Default::default(),
             }),
         }));
         stack.add_datasource(out.0.clone());
@@ -142,12 +171,12 @@ impl BuildDataPricingProduct {
 }
 
 pub struct DataPricingProductRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for DataPricingProductRef {
-    fn new(shared: StackShared, base: String) -> Self {
+impl terrars::Ref for DataPricingProductRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> Self {
         Self {
             shared: shared,
             base: base,
@@ -156,48 +185,48 @@ impl Ref for DataPricingProductRef {
 }
 
 impl DataPricingProductRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    fn extract_ref(&self) -> String {
+    fn extract_ref(&self) -> std::string::String {
         self.base.clone()
     }
 
-    #[doc= "Get a reference to the value of field `id` after provisioning.\n"]
-    pub fn id(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
+    pub fn id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `result` after provisioning.\n"]
-    pub fn result(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.result", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `result` after provisioning.\n"]
+    pub fn result(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.result", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `service_code` after provisioning.\n"]
-    pub fn service_code(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.service_code", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `service_code` after provisioning.\n"]
+    pub fn service_code(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.service_code", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `filters` after provisioning.\n"]
-    pub fn filters(&self) -> ListRef<DataPricingProductFiltersElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.filters", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `filters` after provisioning.\n"]
+    pub fn filters(&self) -> terrars::ListRef<DataPricingProductFiltersElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.filters", self.extract_ref()))
     }
 }
 
 #[derive(Serialize)]
 pub struct DataPricingProductFiltersEl {
-    field: PrimField<String>,
-    value: PrimField<String>,
+    field: terrars::PrimField<std::string::String>,
+    value: terrars::PrimField<std::string::String>,
 }
 
 impl DataPricingProductFiltersEl { }
 
-impl ToListMappable for DataPricingProductFiltersEl {
-    type O = BlockAssignable<DataPricingProductFiltersEl>;
+impl terrars::ToListMappable for DataPricingProductFiltersEl {
+    type O = terrars::BlockAssignable<DataPricingProductFiltersEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -206,10 +235,10 @@ impl ToListMappable for DataPricingProductFiltersEl {
 }
 
 pub struct BuildDataPricingProductFiltersEl {
-    #[doc= ""]
-    pub field: PrimField<String>,
-    #[doc= ""]
-    pub value: PrimField<String>,
+    #[doc = ""]
+    pub field: terrars::PrimField<std::string::String>,
+    #[doc = ""]
+    pub value: terrars::PrimField<std::string::String>,
 }
 
 impl BuildDataPricingProductFiltersEl {
@@ -222,12 +251,12 @@ impl BuildDataPricingProductFiltersEl {
 }
 
 pub struct DataPricingProductFiltersElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for DataPricingProductFiltersElRef {
-    fn new(shared: StackShared, base: String) -> DataPricingProductFiltersElRef {
+impl terrars::Ref for DataPricingProductFiltersElRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataPricingProductFiltersElRef {
         DataPricingProductFiltersElRef {
             shared: shared,
             base: base.to_string(),
@@ -236,22 +265,22 @@ impl Ref for DataPricingProductFiltersElRef {
 }
 
 impl DataPricingProductFiltersElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `field` after provisioning.\n"]
-    pub fn field(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.field", self.base))
+    #[doc = "Get a reference to the value of field `field` after provisioning.\n"]
+    pub fn field(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.field", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `value` after provisioning.\n"]
-    pub fn value(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.value", self.base))
+    #[doc = "Get a reference to the value of field `value` after provisioning.\n"]
+    pub fn value(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.value", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
 struct DataPricingProductDynamic {
-    filters: Option<DynamicBlock<DataPricingProductFiltersEl>>,
+    filters: std::option::Option<terrars::DynamicBlock<DataPricingProductFiltersEl>>,
 }

@@ -1,61 +1,67 @@
 use serde::Serialize;
-use std::cell::RefCell;
-use std::rc::Rc;
-use terrars::*;
+use terrars::{
+    Referable as _,
+    Resource_ as _,
+    Ref as _,
+};
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
 struct SagemakerEndpointConfigurationData {
-    #[serde(skip_serializing_if = "Vec::is_empty")]
-    depends_on: Vec<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    provider: Option<String>,
-    #[serde(skip_serializing_if = "SerdeSkipDefault::is_default")]
-    lifecycle: ResourceLifecycle,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    for_each: Option<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    id: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    kms_key_arn: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    name: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    tags: Option<RecField<PrimField<String>>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    tags_all: Option<RecField<PrimField<String>>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    async_inference_config: Option<Vec<SagemakerEndpointConfigurationAsyncInferenceConfigEl>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    data_capture_config: Option<Vec<SagemakerEndpointConfigurationDataCaptureConfigEl>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    production_variants: Option<Vec<SagemakerEndpointConfigurationProductionVariantsEl>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    shadow_production_variants: Option<Vec<SagemakerEndpointConfigurationShadowProductionVariantsEl>>,
+    #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
+    depends_on: std::vec::Vec<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    provider: std::option::Option<std::string::String>,
+    #[serde(skip_serializing_if = "terrars::SerdeSkipDefault::is_default")]
+    lifecycle: terrars::ResourceLifecycle,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    for_each: std::option::Option<std::string::String>,
+    #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
+    provisioner: std::vec::Vec<terrars::Provisioner>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    id: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    kms_key_arn: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    name: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    tags: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    tags_all: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    async_inference_config: std::option::Option<std::vec::Vec<SagemakerEndpointConfigurationAsyncInferenceConfigEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    data_capture_config: std::option::Option<std::vec::Vec<SagemakerEndpointConfigurationDataCaptureConfigEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    production_variants: std::option::Option<std::vec::Vec<SagemakerEndpointConfigurationProductionVariantsEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    shadow_production_variants: std
+    ::option
+    ::Option<std::vec::Vec<SagemakerEndpointConfigurationShadowProductionVariantsEl>>,
     dynamic: SagemakerEndpointConfigurationDynamic,
 }
 
 struct SagemakerEndpointConfiguration_ {
-    shared: StackShared,
-    tf_id: String,
-    data: RefCell<SagemakerEndpointConfigurationData>,
+    shared: terrars::StackShared,
+    tf_id: std::string::String,
+    data: std::cell::RefCell<SagemakerEndpointConfigurationData>,
 }
 
 #[derive(Clone)]
-pub struct SagemakerEndpointConfiguration(Rc<SagemakerEndpointConfiguration_>);
+pub struct SagemakerEndpointConfiguration(std::rc::Rc<SagemakerEndpointConfiguration_>);
 
 impl SagemakerEndpointConfiguration {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.0.shared
     }
 
-    pub fn depends_on(self, dep: &impl Referable) -> Self {
+    pub fn depends_on(self, dep: &impl terrars::Referable) -> Self {
         self.0.data.borrow_mut().depends_on.push(dep.extract_ref());
         self
     }
 
     pub fn set_provider(self, provider: &ProviderAws) -> Self {
-        self.0.data.borrow_mut().provider = Some(provider.provider_ref());
+        self.0.data.borrow_mut().provider = std::option::Option::Some(provider.provider_ref());
         self
     }
 
@@ -70,209 +76,255 @@ impl SagemakerEndpointConfiguration {
     }
 
     pub fn ignore_changes_to_all(self) -> Self {
-        self.0.data.borrow_mut().lifecycle.ignore_changes = Some(IgnoreChanges::All(IgnoreChangesAll::All));
+        self.0.data.borrow_mut().lifecycle.ignore_changes =
+            std::option::Option::Some(terrars::IgnoreChanges::All(terrars::IgnoreChangesAll::All));
         self
     }
 
-    pub fn ignore_changes_to_attr(self, attr: impl ToString) -> Self {
+    pub fn ignore_changes_to_attr(self, attr: impl std::string::ToString) -> Self {
         {
             let mut d = self.0.data.borrow_mut();
             if match &mut d.lifecycle.ignore_changes {
-                Some(i) => match i {
-                    IgnoreChanges::All(_) => {
+                std::option::Option::Some(i) => match i {
+                    terrars::IgnoreChanges::All(_) => {
                         true
                     },
-                    IgnoreChanges::Refs(r) => {
+                    terrars::IgnoreChanges::Refs(r) => {
                         r.push(attr.to_string());
                         false
                     },
                 },
-                None => true,
+                std::option::Option::None => true,
             } {
-                d.lifecycle.ignore_changes = Some(IgnoreChanges::Refs(vec![attr.to_string()]));
+                d.lifecycle.ignore_changes =
+                    std::option::Option::Some(terrars::IgnoreChanges::Refs(vec![attr.to_string()]));
             }
         }
         self
     }
 
-    pub fn replace_triggered_by_resource(self, r: &impl Resource) -> Self {
+    pub fn replace_triggered_by_resource(self, r: &impl terrars::Resource) -> Self {
         self.0.data.borrow_mut().lifecycle.replace_triggered_by.push(r.extract_ref());
         self
     }
 
-    pub fn replace_triggered_by_attr(self, attr: impl ToString) -> Self {
+    pub fn replace_triggered_by_attr(self, attr: impl std::string::ToString) -> Self {
         self.0.data.borrow_mut().lifecycle.replace_triggered_by.push(attr.to_string());
         self
     }
 
-    #[doc= "Set the field `id`.\n"]
-    pub fn set_id(self, v: impl Into<PrimField<String>>) -> Self {
-        self.0.data.borrow_mut().id = Some(v.into());
+    #[doc = r" Add a provisioner (ex: `local-exec`, `remote-exec`, `file`) to this resource."]
+    #[doc = r" Provisioners run in the order they're added."]
+    pub fn add_provisioner(self, v: impl std::convert::Into<terrars::Provisioner>) -> Self {
+        self.0.data.borrow_mut().provisioner.push(v.into());
         self
     }
 
-    #[doc= "Set the field `kms_key_arn`.\n"]
-    pub fn set_kms_key_arn(self, v: impl Into<PrimField<String>>) -> Self {
-        self.0.data.borrow_mut().kms_key_arn = Some(v.into());
+    pub fn add_lifecycle_precondition(
+        self,
+        condition: impl std::convert::Into<terrars::PrimField<bool>>,
+        error_message: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.0.data.borrow_mut().lifecycle.precondition.push(terrars::LifecycleCondition {
+            condition: condition.into(),
+            error_message: error_message.into(),
+        });
         self
     }
 
-    #[doc= "Set the field `name`.\n"]
-    pub fn set_name(self, v: impl Into<PrimField<String>>) -> Self {
-        self.0.data.borrow_mut().name = Some(v.into());
+    pub fn add_lifecycle_postcondition(
+        self,
+        condition: impl std::convert::Into<terrars::PrimField<bool>>,
+        error_message: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.0.data.borrow_mut().lifecycle.postcondition.push(terrars::LifecycleCondition {
+            condition: condition.into(),
+            error_message: error_message.into(),
+        });
         self
     }
 
-    #[doc= "Set the field `tags`.\n"]
-    pub fn set_tags(self, v: impl Into<RecField<PrimField<String>>>) -> Self {
-        self.0.data.borrow_mut().tags = Some(v.into());
+    #[doc = "Set the field `id`.\n"]
+    pub fn set_id(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().id = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `tags_all`.\n"]
-    pub fn set_tags_all(self, v: impl Into<RecField<PrimField<String>>>) -> Self {
-        self.0.data.borrow_mut().tags_all = Some(v.into());
+    #[doc = "Set the field `kms_key_arn`.\n"]
+    pub fn set_kms_key_arn(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().kms_key_arn = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `async_inference_config`.\n"]
+    #[doc = "Set the field `name`.\n"]
+    pub fn set_name(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().name = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `tags`.\n"]
+    pub fn set_tags(
+        self,
+        v: impl std::convert::Into<terrars::RecField<terrars::PrimField<std::string::String>>>,
+    ) -> Self {
+        self.0.data.borrow_mut().tags = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `tags_all`.\n"]
+    pub fn set_tags_all(
+        self,
+        v: impl std::convert::Into<terrars::RecField<terrars::PrimField<std::string::String>>>,
+    ) -> Self {
+        self.0.data.borrow_mut().tags_all = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `async_inference_config`.\n"]
     pub fn set_async_inference_config(
         self,
-        v: impl Into<BlockAssignable<SagemakerEndpointConfigurationAsyncInferenceConfigEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<SagemakerEndpointConfigurationAsyncInferenceConfigEl>>,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.0.data.borrow_mut().async_inference_config = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.0.data.borrow_mut().async_inference_config = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.0.data.borrow_mut().dynamic.async_inference_config = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.0.data.borrow_mut().dynamic.async_inference_config = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Set the field `data_capture_config`.\n"]
+    #[doc = "Set the field `data_capture_config`.\n"]
     pub fn set_data_capture_config(
         self,
-        v: impl Into<BlockAssignable<SagemakerEndpointConfigurationDataCaptureConfigEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<SagemakerEndpointConfigurationDataCaptureConfigEl>>,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.0.data.borrow_mut().data_capture_config = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.0.data.borrow_mut().data_capture_config = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.0.data.borrow_mut().dynamic.data_capture_config = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.0.data.borrow_mut().dynamic.data_capture_config = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Set the field `production_variants`.\n"]
+    #[doc = "Set the field `production_variants`.\n"]
     pub fn set_production_variants(
         self,
-        v: impl Into<BlockAssignable<SagemakerEndpointConfigurationProductionVariantsEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<SagemakerEndpointConfigurationProductionVariantsEl>>,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.0.data.borrow_mut().production_variants = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.0.data.borrow_mut().production_variants = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.0.data.borrow_mut().dynamic.production_variants = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.0.data.borrow_mut().dynamic.production_variants = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Set the field `shadow_production_variants`.\n"]
+    #[doc = "Set the field `shadow_production_variants`.\n"]
     pub fn set_shadow_production_variants(
         self,
-        v: impl Into<BlockAssignable<SagemakerEndpointConfigurationShadowProductionVariantsEl>>,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<terrars::BlockAssignable<SagemakerEndpointConfigurationShadowProductionVariantsEl>>,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.0.data.borrow_mut().shadow_production_variants = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.0.data.borrow_mut().shadow_production_variants = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.0.data.borrow_mut().dynamic.shadow_production_variants = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.0.data.borrow_mut().dynamic.shadow_production_variants = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Get a reference to the value of field `arn` after provisioning.\n"]
-    pub fn arn(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.arn", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `arn` after provisioning.\n"]
+    pub fn arn(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.arn", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `id` after provisioning.\n"]
-    pub fn id(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
+    pub fn id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `kms_key_arn` after provisioning.\n"]
-    pub fn kms_key_arn(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.kms_key_arn", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `kms_key_arn` after provisioning.\n"]
+    pub fn kms_key_arn(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.kms_key_arn", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `name` after provisioning.\n"]
-    pub fn name(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `name` after provisioning.\n"]
+    pub fn name(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `tags` after provisioning.\n"]
-    pub fn tags(&self) -> RecRef<PrimExpr<String>> {
-        RecRef::new(self.shared().clone(), format!("{}.tags", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `tags` after provisioning.\n"]
+    pub fn tags(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
+        terrars::RecRef::new(self.shared().clone(), format!("{}.tags", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `tags_all` after provisioning.\n"]
-    pub fn tags_all(&self) -> RecRef<PrimExpr<String>> {
-        RecRef::new(self.shared().clone(), format!("{}.tags_all", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `tags_all` after provisioning.\n"]
+    pub fn tags_all(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
+        terrars::RecRef::new(self.shared().clone(), format!("{}.tags_all", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `async_inference_config` after provisioning.\n"]
-    pub fn async_inference_config(&self) -> ListRef<SagemakerEndpointConfigurationAsyncInferenceConfigElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.async_inference_config", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `async_inference_config` after provisioning.\n"]
+    pub fn async_inference_config(&self) -> terrars::ListRef<SagemakerEndpointConfigurationAsyncInferenceConfigElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.async_inference_config", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `data_capture_config` after provisioning.\n"]
-    pub fn data_capture_config(&self) -> ListRef<SagemakerEndpointConfigurationDataCaptureConfigElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.data_capture_config", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `data_capture_config` after provisioning.\n"]
+    pub fn data_capture_config(&self) -> terrars::ListRef<SagemakerEndpointConfigurationDataCaptureConfigElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.data_capture_config", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `production_variants` after provisioning.\n"]
-    pub fn production_variants(&self) -> ListRef<SagemakerEndpointConfigurationProductionVariantsElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.production_variants", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `production_variants` after provisioning.\n"]
+    pub fn production_variants(&self) -> terrars::ListRef<SagemakerEndpointConfigurationProductionVariantsElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.production_variants", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `shadow_production_variants` after provisioning.\n"]
-    pub fn shadow_production_variants(&self) -> ListRef<SagemakerEndpointConfigurationShadowProductionVariantsElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.shadow_production_variants", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `shadow_production_variants` after provisioning.\n"]
+    pub fn shadow_production_variants(
+        &self,
+    ) -> terrars::ListRef<SagemakerEndpointConfigurationShadowProductionVariantsElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.shadow_production_variants", self.extract_ref()))
     }
 }
 
-impl Referable for SagemakerEndpointConfiguration {
-    fn extract_ref(&self) -> String {
+impl terrars::Referable for SagemakerEndpointConfiguration {
+    fn extract_ref(&self) -> std::string::String {
         format!("{}.{}", self.0.extract_resource_type(), self.0.extract_tf_id())
     }
 }
 
-impl Resource for SagemakerEndpointConfiguration { }
+impl terrars::Resource for SagemakerEndpointConfiguration { }
 
-impl ToListMappable for SagemakerEndpointConfiguration {
-    type O = ListRef<SagemakerEndpointConfigurationRef>;
+impl terrars::ToListMappable for SagemakerEndpointConfiguration {
+    type O = terrars::ListRef<SagemakerEndpointConfigurationRef>;
 
-    fn do_map(self, base: String) -> Self::O {
-        self.0.data.borrow_mut().for_each = Some(format!("${{{}}}", base));
-        ListRef::new(self.0.shared.clone(), self.extract_ref())
+    fn do_map(self, base: std::string::String) -> Self::O {
+        self.0.data.borrow_mut().for_each = std::option::Option::Some(format!("${{{}}}", base));
+        terrars::ListRef::new(self.0.shared.clone(), self.extract_ref())
     }
 }
 
-impl Resource_ for SagemakerEndpointConfiguration_ {
-    fn extract_resource_type(&self) -> String {
+impl terrars::Resource_ for SagemakerEndpointConfiguration_ {
+    fn extract_resource_type(&self) -> std::string::String {
         "aws_sagemaker_endpoint_configuration".into()
     }
 
-    fn extract_tf_id(&self) -> String {
+    fn extract_tf_id(&self) -> std::string::String {
         self.tf_id.clone()
     }
 
@@ -282,19 +334,20 @@ impl Resource_ for SagemakerEndpointConfiguration_ {
 }
 
 pub struct BuildSagemakerEndpointConfiguration {
-    pub tf_id: String,
+    pub tf_id: std::string::String,
 }
 
 impl BuildSagemakerEndpointConfiguration {
-    pub fn build(self, stack: &mut Stack) -> SagemakerEndpointConfiguration {
-        let out = SagemakerEndpointConfiguration(Rc::new(SagemakerEndpointConfiguration_ {
+    pub fn build(self, stack: &mut terrars::Stack) -> SagemakerEndpointConfiguration {
+        let out = SagemakerEndpointConfiguration(std::rc::Rc::new(SagemakerEndpointConfiguration_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: RefCell::new(SagemakerEndpointConfigurationData {
+            data: std::cell::RefCell::new(SagemakerEndpointConfigurationData {
                 depends_on: core::default::Default::default(),
-                provider: None,
+                provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
-                for_each: None,
+                for_each: std::option::Option::None,
+                provisioner: core::default::Default::default(),
                 id: core::default::Default::default(),
                 kms_key_arn: core::default::Default::default(),
                 name: core::default::Default::default(),
@@ -304,7 +357,7 @@ impl BuildSagemakerEndpointConfiguration {
                 data_capture_config: core::default::Default::default(),
                 production_variants: core::default::Default::default(),
                 shadow_production_variants: core::default::Default::default(),
-                dynamic: Default::default(),
+                dynamic: core::default::Default::default(),
             }),
         }));
         stack.add_resource(out.0.clone());
@@ -313,12 +366,12 @@ impl BuildSagemakerEndpointConfiguration {
 }
 
 pub struct SagemakerEndpointConfigurationRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for SagemakerEndpointConfigurationRef {
-    fn new(shared: StackShared, base: String) -> Self {
+impl terrars::Ref for SagemakerEndpointConfigurationRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> Self {
         Self {
             shared: shared,
             base: base,
@@ -327,84 +380,89 @@ impl Ref for SagemakerEndpointConfigurationRef {
 }
 
 impl SagemakerEndpointConfigurationRef {
-    fn extract_ref(&self) -> String {
+    fn extract_ref(&self) -> std::string::String {
         self.base.clone()
     }
 
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `arn` after provisioning.\n"]
-    pub fn arn(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.arn", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `arn` after provisioning.\n"]
+    pub fn arn(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.arn", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `id` after provisioning.\n"]
-    pub fn id(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
+    pub fn id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `kms_key_arn` after provisioning.\n"]
-    pub fn kms_key_arn(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.kms_key_arn", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `kms_key_arn` after provisioning.\n"]
+    pub fn kms_key_arn(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.kms_key_arn", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `name` after provisioning.\n"]
-    pub fn name(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `name` after provisioning.\n"]
+    pub fn name(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `tags` after provisioning.\n"]
-    pub fn tags(&self) -> RecRef<PrimExpr<String>> {
-        RecRef::new(self.shared().clone(), format!("{}.tags", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `tags` after provisioning.\n"]
+    pub fn tags(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
+        terrars::RecRef::new(self.shared().clone(), format!("{}.tags", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `tags_all` after provisioning.\n"]
-    pub fn tags_all(&self) -> RecRef<PrimExpr<String>> {
-        RecRef::new(self.shared().clone(), format!("{}.tags_all", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `tags_all` after provisioning.\n"]
+    pub fn tags_all(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
+        terrars::RecRef::new(self.shared().clone(), format!("{}.tags_all", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `async_inference_config` after provisioning.\n"]
-    pub fn async_inference_config(&self) -> ListRef<SagemakerEndpointConfigurationAsyncInferenceConfigElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.async_inference_config", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `async_inference_config` after provisioning.\n"]
+    pub fn async_inference_config(&self) -> terrars::ListRef<SagemakerEndpointConfigurationAsyncInferenceConfigElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.async_inference_config", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `data_capture_config` after provisioning.\n"]
-    pub fn data_capture_config(&self) -> ListRef<SagemakerEndpointConfigurationDataCaptureConfigElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.data_capture_config", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `data_capture_config` after provisioning.\n"]
+    pub fn data_capture_config(&self) -> terrars::ListRef<SagemakerEndpointConfigurationDataCaptureConfigElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.data_capture_config", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `production_variants` after provisioning.\n"]
-    pub fn production_variants(&self) -> ListRef<SagemakerEndpointConfigurationProductionVariantsElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.production_variants", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `production_variants` after provisioning.\n"]
+    pub fn production_variants(&self) -> terrars::ListRef<SagemakerEndpointConfigurationProductionVariantsElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.production_variants", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `shadow_production_variants` after provisioning.\n"]
-    pub fn shadow_production_variants(&self) -> ListRef<SagemakerEndpointConfigurationShadowProductionVariantsElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.shadow_production_variants", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `shadow_production_variants` after provisioning.\n"]
+    pub fn shadow_production_variants(
+        &self,
+    ) -> terrars::ListRef<SagemakerEndpointConfigurationShadowProductionVariantsElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.shadow_production_variants", self.extract_ref()))
     }
 }
 
 #[derive(Serialize)]
 pub struct SagemakerEndpointConfigurationAsyncInferenceConfigElClientConfigEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    max_concurrent_invocations_per_instance: Option<PrimField<f64>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    max_concurrent_invocations_per_instance: std::option::Option<terrars::PrimField<f64>>,
 }
 
 impl SagemakerEndpointConfigurationAsyncInferenceConfigElClientConfigEl {
-    #[doc= "Set the field `max_concurrent_invocations_per_instance`.\n"]
-    pub fn set_max_concurrent_invocations_per_instance(mut self, v: impl Into<PrimField<f64>>) -> Self {
-        self.max_concurrent_invocations_per_instance = Some(v.into());
+    #[doc = "Set the field `max_concurrent_invocations_per_instance`.\n"]
+    pub fn set_max_concurrent_invocations_per_instance(
+        mut self,
+        v: impl std::convert::Into<terrars::PrimField<f64>>,
+    ) -> Self {
+        self.max_concurrent_invocations_per_instance = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl ToListMappable for SagemakerEndpointConfigurationAsyncInferenceConfigElClientConfigEl {
-    type O = BlockAssignable<SagemakerEndpointConfigurationAsyncInferenceConfigElClientConfigEl>;
+impl terrars::ToListMappable for SagemakerEndpointConfigurationAsyncInferenceConfigElClientConfigEl {
+    type O = terrars::BlockAssignable<SagemakerEndpointConfigurationAsyncInferenceConfigElClientConfigEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -423,14 +481,14 @@ impl BuildSagemakerEndpointConfigurationAsyncInferenceConfigElClientConfigEl {
 }
 
 pub struct SagemakerEndpointConfigurationAsyncInferenceConfigElClientConfigElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for SagemakerEndpointConfigurationAsyncInferenceConfigElClientConfigElRef {
+impl terrars::Ref for SagemakerEndpointConfigurationAsyncInferenceConfigElClientConfigElRef {
     fn new(
-        shared: StackShared,
-        base: String,
+        shared: terrars::StackShared,
+        base: std::string::String,
     ) -> SagemakerEndpointConfigurationAsyncInferenceConfigElClientConfigElRef {
         SagemakerEndpointConfigurationAsyncInferenceConfigElClientConfigElRef {
             shared: shared,
@@ -440,43 +498,49 @@ impl Ref for SagemakerEndpointConfigurationAsyncInferenceConfigElClientConfigElR
 }
 
 impl SagemakerEndpointConfigurationAsyncInferenceConfigElClientConfigElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `max_concurrent_invocations_per_instance` after provisioning.\n"]
-    pub fn max_concurrent_invocations_per_instance(&self) -> PrimExpr<f64> {
-        PrimExpr::new(self.shared().clone(), format!("{}.max_concurrent_invocations_per_instance", self.base))
+    #[doc = "Get a reference to the value of field `max_concurrent_invocations_per_instance` after provisioning.\n"]
+    pub fn max_concurrent_invocations_per_instance(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(
+            self.shared().clone(),
+            format!("{}.max_concurrent_invocations_per_instance", self.base),
+        )
     }
 }
 
 #[derive(Serialize)]
 pub struct SagemakerEndpointConfigurationAsyncInferenceConfigElOutputConfigElNotificationConfigEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    error_topic: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    success_topic: Option<PrimField<String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    error_topic: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    success_topic: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
 impl SagemakerEndpointConfigurationAsyncInferenceConfigElOutputConfigElNotificationConfigEl {
-    #[doc= "Set the field `error_topic`.\n"]
-    pub fn set_error_topic(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.error_topic = Some(v.into());
+    #[doc = "Set the field `error_topic`.\n"]
+    pub fn set_error_topic(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.error_topic = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `success_topic`.\n"]
-    pub fn set_success_topic(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.success_topic = Some(v.into());
+    #[doc = "Set the field `success_topic`.\n"]
+    pub fn set_success_topic(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.success_topic = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl ToListMappable for SagemakerEndpointConfigurationAsyncInferenceConfigElOutputConfigElNotificationConfigEl {
-    type O = BlockAssignable<SagemakerEndpointConfigurationAsyncInferenceConfigElOutputConfigElNotificationConfigEl>;
+impl terrars
+::ToListMappable for SagemakerEndpointConfigurationAsyncInferenceConfigElOutputConfigElNotificationConfigEl {
+    type O =
+        terrars
+        ::BlockAssignable<SagemakerEndpointConfigurationAsyncInferenceConfigElOutputConfigElNotificationConfigEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -496,14 +560,14 @@ impl BuildSagemakerEndpointConfigurationAsyncInferenceConfigElOutputConfigElNoti
 }
 
 pub struct SagemakerEndpointConfigurationAsyncInferenceConfigElOutputConfigElNotificationConfigElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for SagemakerEndpointConfigurationAsyncInferenceConfigElOutputConfigElNotificationConfigElRef {
+impl terrars::Ref for SagemakerEndpointConfigurationAsyncInferenceConfigElOutputConfigElNotificationConfigElRef {
     fn new(
-        shared: StackShared,
-        base: String,
+        shared: terrars::StackShared,
+        base: std::string::String,
     ) -> SagemakerEndpointConfigurationAsyncInferenceConfigElOutputConfigElNotificationConfigElRef {
         SagemakerEndpointConfigurationAsyncInferenceConfigElOutputConfigElNotificationConfigElRef {
             shared: shared,
@@ -513,76 +577,81 @@ impl Ref for SagemakerEndpointConfigurationAsyncInferenceConfigElOutputConfigElN
 }
 
 impl SagemakerEndpointConfigurationAsyncInferenceConfigElOutputConfigElNotificationConfigElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `error_topic` after provisioning.\n"]
-    pub fn error_topic(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.error_topic", self.base))
+    #[doc = "Get a reference to the value of field `error_topic` after provisioning.\n"]
+    pub fn error_topic(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.error_topic", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `success_topic` after provisioning.\n"]
-    pub fn success_topic(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.success_topic", self.base))
+    #[doc = "Get a reference to the value of field `success_topic` after provisioning.\n"]
+    pub fn success_topic(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.success_topic", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
 struct SagemakerEndpointConfigurationAsyncInferenceConfigElOutputConfigElDynamic {
-    notification_config: Option<
-        DynamicBlock<SagemakerEndpointConfigurationAsyncInferenceConfigElOutputConfigElNotificationConfigEl>,
+    notification_config: std
+    ::option
+    ::Option<
+        terrars::DynamicBlock<SagemakerEndpointConfigurationAsyncInferenceConfigElOutputConfigElNotificationConfigEl>,
     >,
 }
 
 #[derive(Serialize)]
 pub struct SagemakerEndpointConfigurationAsyncInferenceConfigElOutputConfigEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    kms_key_id: Option<PrimField<String>>,
-    s3_output_path: PrimField<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    notification_config: Option<
-        Vec<SagemakerEndpointConfigurationAsyncInferenceConfigElOutputConfigElNotificationConfigEl>,
-    >,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    kms_key_id: std::option::Option<terrars::PrimField<std::string::String>>,
+    s3_output_path: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    notification_config: std
+    ::option
+    ::Option<std::vec::Vec<SagemakerEndpointConfigurationAsyncInferenceConfigElOutputConfigElNotificationConfigEl>>,
     dynamic: SagemakerEndpointConfigurationAsyncInferenceConfigElOutputConfigElDynamic,
 }
 
 impl SagemakerEndpointConfigurationAsyncInferenceConfigElOutputConfigEl {
-    #[doc= "Set the field `kms_key_id`.\n"]
-    pub fn set_kms_key_id(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.kms_key_id = Some(v.into());
+    #[doc = "Set the field `kms_key_id`.\n"]
+    pub fn set_kms_key_id(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.kms_key_id = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `notification_config`.\n"]
+    #[doc = "Set the field `notification_config`.\n"]
     pub fn set_notification_config(
         mut self,
         v:
             impl
 
-                    Into<
-                        BlockAssignable<
+                    std
+                    ::convert
+                    ::Into<
+                        terrars
+                        ::BlockAssignable<
                             SagemakerEndpointConfigurationAsyncInferenceConfigElOutputConfigElNotificationConfigEl,
                         >,
                     >,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.notification_config = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.notification_config = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.notification_config = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.notification_config = std::option::Option::Some(d);
             },
         }
         self
     }
 }
 
-impl ToListMappable for SagemakerEndpointConfigurationAsyncInferenceConfigElOutputConfigEl {
-    type O = BlockAssignable<SagemakerEndpointConfigurationAsyncInferenceConfigElOutputConfigEl>;
+impl terrars::ToListMappable for SagemakerEndpointConfigurationAsyncInferenceConfigElOutputConfigEl {
+    type O = terrars::BlockAssignable<SagemakerEndpointConfigurationAsyncInferenceConfigElOutputConfigEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -591,8 +660,8 @@ impl ToListMappable for SagemakerEndpointConfigurationAsyncInferenceConfigElOutp
 }
 
 pub struct BuildSagemakerEndpointConfigurationAsyncInferenceConfigElOutputConfigEl {
-    #[doc= ""]
-    pub s3_output_path: PrimField<String>,
+    #[doc = ""]
+    pub s3_output_path: terrars::PrimField<std::string::String>,
 }
 
 impl BuildSagemakerEndpointConfigurationAsyncInferenceConfigElOutputConfigEl {
@@ -601,20 +670,20 @@ impl BuildSagemakerEndpointConfigurationAsyncInferenceConfigElOutputConfigEl {
             kms_key_id: core::default::Default::default(),
             s3_output_path: self.s3_output_path,
             notification_config: core::default::Default::default(),
-            dynamic: Default::default(),
+            dynamic: core::default::Default::default(),
         }
     }
 }
 
 pub struct SagemakerEndpointConfigurationAsyncInferenceConfigElOutputConfigElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for SagemakerEndpointConfigurationAsyncInferenceConfigElOutputConfigElRef {
+impl terrars::Ref for SagemakerEndpointConfigurationAsyncInferenceConfigElOutputConfigElRef {
     fn new(
-        shared: StackShared,
-        base: String,
+        shared: terrars::StackShared,
+        base: std::string::String,
     ) -> SagemakerEndpointConfigurationAsyncInferenceConfigElOutputConfigElRef {
         SagemakerEndpointConfigurationAsyncInferenceConfigElOutputConfigElRef {
             shared: shared,
@@ -624,82 +693,100 @@ impl Ref for SagemakerEndpointConfigurationAsyncInferenceConfigElOutputConfigElR
 }
 
 impl SagemakerEndpointConfigurationAsyncInferenceConfigElOutputConfigElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `kms_key_id` after provisioning.\n"]
-    pub fn kms_key_id(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.kms_key_id", self.base))
+    #[doc = "Get a reference to the value of field `kms_key_id` after provisioning.\n"]
+    pub fn kms_key_id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.kms_key_id", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `s3_output_path` after provisioning.\n"]
-    pub fn s3_output_path(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.s3_output_path", self.base))
+    #[doc = "Get a reference to the value of field `s3_output_path` after provisioning.\n"]
+    pub fn s3_output_path(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.s3_output_path", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `notification_config` after provisioning.\n"]
+    #[doc = "Get a reference to the value of field `notification_config` after provisioning.\n"]
     pub fn notification_config(
         &self,
-    ) -> ListRef<SagemakerEndpointConfigurationAsyncInferenceConfigElOutputConfigElNotificationConfigElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.notification_config", self.base))
+    ) -> terrars::ListRef<SagemakerEndpointConfigurationAsyncInferenceConfigElOutputConfigElNotificationConfigElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.notification_config", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
 struct SagemakerEndpointConfigurationAsyncInferenceConfigElDynamic {
-    client_config: Option<DynamicBlock<SagemakerEndpointConfigurationAsyncInferenceConfigElClientConfigEl>>,
-    output_config: Option<DynamicBlock<SagemakerEndpointConfigurationAsyncInferenceConfigElOutputConfigEl>>,
+    client_config: std
+    ::option
+    ::Option<terrars::DynamicBlock<SagemakerEndpointConfigurationAsyncInferenceConfigElClientConfigEl>>,
+    output_config: std
+    ::option
+    ::Option<terrars::DynamicBlock<SagemakerEndpointConfigurationAsyncInferenceConfigElOutputConfigEl>>,
 }
 
 #[derive(Serialize)]
 pub struct SagemakerEndpointConfigurationAsyncInferenceConfigEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    client_config: Option<Vec<SagemakerEndpointConfigurationAsyncInferenceConfigElClientConfigEl>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    output_config: Option<Vec<SagemakerEndpointConfigurationAsyncInferenceConfigElOutputConfigEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    client_config: std::option::Option<std::vec::Vec<SagemakerEndpointConfigurationAsyncInferenceConfigElClientConfigEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    output_config: std::option::Option<std::vec::Vec<SagemakerEndpointConfigurationAsyncInferenceConfigElOutputConfigEl>>,
     dynamic: SagemakerEndpointConfigurationAsyncInferenceConfigElDynamic,
 }
 
 impl SagemakerEndpointConfigurationAsyncInferenceConfigEl {
-    #[doc= "Set the field `client_config`.\n"]
+    #[doc = "Set the field `client_config`.\n"]
     pub fn set_client_config(
         mut self,
-        v: impl Into<BlockAssignable<SagemakerEndpointConfigurationAsyncInferenceConfigElClientConfigEl>>,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<
+                        terrars::BlockAssignable<SagemakerEndpointConfigurationAsyncInferenceConfigElClientConfigEl>,
+                    >,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.client_config = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.client_config = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.client_config = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.client_config = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Set the field `output_config`.\n"]
+    #[doc = "Set the field `output_config`.\n"]
     pub fn set_output_config(
         mut self,
-        v: impl Into<BlockAssignable<SagemakerEndpointConfigurationAsyncInferenceConfigElOutputConfigEl>>,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<
+                        terrars::BlockAssignable<SagemakerEndpointConfigurationAsyncInferenceConfigElOutputConfigEl>,
+                    >,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.output_config = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.output_config = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.output_config = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.output_config = std::option::Option::Some(d);
             },
         }
         self
     }
 }
 
-impl ToListMappable for SagemakerEndpointConfigurationAsyncInferenceConfigEl {
-    type O = BlockAssignable<SagemakerEndpointConfigurationAsyncInferenceConfigEl>;
+impl terrars::ToListMappable for SagemakerEndpointConfigurationAsyncInferenceConfigEl {
+    type O = terrars::BlockAssignable<SagemakerEndpointConfigurationAsyncInferenceConfigEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -714,18 +801,21 @@ impl BuildSagemakerEndpointConfigurationAsyncInferenceConfigEl {
         SagemakerEndpointConfigurationAsyncInferenceConfigEl {
             client_config: core::default::Default::default(),
             output_config: core::default::Default::default(),
-            dynamic: Default::default(),
+            dynamic: core::default::Default::default(),
         }
     }
 }
 
 pub struct SagemakerEndpointConfigurationAsyncInferenceConfigElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for SagemakerEndpointConfigurationAsyncInferenceConfigElRef {
-    fn new(shared: StackShared, base: String) -> SagemakerEndpointConfigurationAsyncInferenceConfigElRef {
+impl terrars::Ref for SagemakerEndpointConfigurationAsyncInferenceConfigElRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> SagemakerEndpointConfigurationAsyncInferenceConfigElRef {
         SagemakerEndpointConfigurationAsyncInferenceConfigElRef {
             shared: shared,
             base: base.to_string(),
@@ -734,48 +824,58 @@ impl Ref for SagemakerEndpointConfigurationAsyncInferenceConfigElRef {
 }
 
 impl SagemakerEndpointConfigurationAsyncInferenceConfigElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `client_config` after provisioning.\n"]
-    pub fn client_config(&self) -> ListRef<SagemakerEndpointConfigurationAsyncInferenceConfigElClientConfigElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.client_config", self.base))
+    #[doc = "Get a reference to the value of field `client_config` after provisioning.\n"]
+    pub fn client_config(
+        &self,
+    ) -> terrars::ListRef<SagemakerEndpointConfigurationAsyncInferenceConfigElClientConfigElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.client_config", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `output_config` after provisioning.\n"]
-    pub fn output_config(&self) -> ListRef<SagemakerEndpointConfigurationAsyncInferenceConfigElOutputConfigElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.output_config", self.base))
+    #[doc = "Get a reference to the value of field `output_config` after provisioning.\n"]
+    pub fn output_config(
+        &self,
+    ) -> terrars::ListRef<SagemakerEndpointConfigurationAsyncInferenceConfigElOutputConfigElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.output_config", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct SagemakerEndpointConfigurationDataCaptureConfigElCaptureContentTypeHeaderEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    csv_content_types: Option<SetField<PrimField<String>>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    json_content_types: Option<SetField<PrimField<String>>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    csv_content_types: std::option::Option<terrars::SetField<terrars::PrimField<std::string::String>>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    json_content_types: std::option::Option<terrars::SetField<terrars::PrimField<std::string::String>>>,
 }
 
 impl SagemakerEndpointConfigurationDataCaptureConfigElCaptureContentTypeHeaderEl {
-    #[doc= "Set the field `csv_content_types`.\n"]
-    pub fn set_csv_content_types(mut self, v: impl Into<SetField<PrimField<String>>>) -> Self {
-        self.csv_content_types = Some(v.into());
+    #[doc = "Set the field `csv_content_types`.\n"]
+    pub fn set_csv_content_types(
+        mut self,
+        v: impl std::convert::Into<terrars::SetField<terrars::PrimField<std::string::String>>>,
+    ) -> Self {
+        self.csv_content_types = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `json_content_types`.\n"]
-    pub fn set_json_content_types(mut self, v: impl Into<SetField<PrimField<String>>>) -> Self {
-        self.json_content_types = Some(v.into());
+    #[doc = "Set the field `json_content_types`.\n"]
+    pub fn set_json_content_types(
+        mut self,
+        v: impl std::convert::Into<terrars::SetField<terrars::PrimField<std::string::String>>>,
+    ) -> Self {
+        self.json_content_types = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl ToListMappable for SagemakerEndpointConfigurationDataCaptureConfigElCaptureContentTypeHeaderEl {
-    type O = BlockAssignable<SagemakerEndpointConfigurationDataCaptureConfigElCaptureContentTypeHeaderEl>;
+impl terrars::ToListMappable for SagemakerEndpointConfigurationDataCaptureConfigElCaptureContentTypeHeaderEl {
+    type O = terrars::BlockAssignable<SagemakerEndpointConfigurationDataCaptureConfigElCaptureContentTypeHeaderEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -795,14 +895,14 @@ impl BuildSagemakerEndpointConfigurationDataCaptureConfigElCaptureContentTypeHea
 }
 
 pub struct SagemakerEndpointConfigurationDataCaptureConfigElCaptureContentTypeHeaderElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for SagemakerEndpointConfigurationDataCaptureConfigElCaptureContentTypeHeaderElRef {
+impl terrars::Ref for SagemakerEndpointConfigurationDataCaptureConfigElCaptureContentTypeHeaderElRef {
     fn new(
-        shared: StackShared,
-        base: String,
+        shared: terrars::StackShared,
+        base: std::string::String,
     ) -> SagemakerEndpointConfigurationDataCaptureConfigElCaptureContentTypeHeaderElRef {
         SagemakerEndpointConfigurationDataCaptureConfigElCaptureContentTypeHeaderElRef {
             shared: shared,
@@ -812,33 +912,33 @@ impl Ref for SagemakerEndpointConfigurationDataCaptureConfigElCaptureContentType
 }
 
 impl SagemakerEndpointConfigurationDataCaptureConfigElCaptureContentTypeHeaderElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `csv_content_types` after provisioning.\n"]
-    pub fn csv_content_types(&self) -> SetRef<PrimExpr<String>> {
-        SetRef::new(self.shared().clone(), format!("{}.csv_content_types", self.base))
+    #[doc = "Get a reference to the value of field `csv_content_types` after provisioning.\n"]
+    pub fn csv_content_types(&self) -> terrars::SetRef<terrars::PrimExpr<std::string::String>> {
+        terrars::SetRef::new(self.shared().clone(), format!("{}.csv_content_types", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `json_content_types` after provisioning.\n"]
-    pub fn json_content_types(&self) -> SetRef<PrimExpr<String>> {
-        SetRef::new(self.shared().clone(), format!("{}.json_content_types", self.base))
+    #[doc = "Get a reference to the value of field `json_content_types` after provisioning.\n"]
+    pub fn json_content_types(&self) -> terrars::SetRef<terrars::PrimExpr<std::string::String>> {
+        terrars::SetRef::new(self.shared().clone(), format!("{}.json_content_types", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct SagemakerEndpointConfigurationDataCaptureConfigElCaptureOptionsEl {
-    capture_mode: PrimField<String>,
+    capture_mode: terrars::PrimField<std::string::String>,
 }
 
 impl SagemakerEndpointConfigurationDataCaptureConfigElCaptureOptionsEl { }
 
-impl ToListMappable for SagemakerEndpointConfigurationDataCaptureConfigElCaptureOptionsEl {
-    type O = BlockAssignable<SagemakerEndpointConfigurationDataCaptureConfigElCaptureOptionsEl>;
+impl terrars::ToListMappable for SagemakerEndpointConfigurationDataCaptureConfigElCaptureOptionsEl {
+    type O = terrars::BlockAssignable<SagemakerEndpointConfigurationDataCaptureConfigElCaptureOptionsEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -847,8 +947,8 @@ impl ToListMappable for SagemakerEndpointConfigurationDataCaptureConfigElCapture
 }
 
 pub struct BuildSagemakerEndpointConfigurationDataCaptureConfigElCaptureOptionsEl {
-    #[doc= ""]
-    pub capture_mode: PrimField<String>,
+    #[doc = ""]
+    pub capture_mode: terrars::PrimField<std::string::String>,
 }
 
 impl BuildSagemakerEndpointConfigurationDataCaptureConfigElCaptureOptionsEl {
@@ -858,14 +958,14 @@ impl BuildSagemakerEndpointConfigurationDataCaptureConfigElCaptureOptionsEl {
 }
 
 pub struct SagemakerEndpointConfigurationDataCaptureConfigElCaptureOptionsElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for SagemakerEndpointConfigurationDataCaptureConfigElCaptureOptionsElRef {
+impl terrars::Ref for SagemakerEndpointConfigurationDataCaptureConfigElCaptureOptionsElRef {
     fn new(
-        shared: StackShared,
-        base: String,
+        shared: terrars::StackShared,
+        base: std::string::String,
     ) -> SagemakerEndpointConfigurationDataCaptureConfigElCaptureOptionsElRef {
         SagemakerEndpointConfigurationDataCaptureConfigElCaptureOptionsElRef {
             shared: shared,
@@ -875,90 +975,111 @@ impl Ref for SagemakerEndpointConfigurationDataCaptureConfigElCaptureOptionsElRe
 }
 
 impl SagemakerEndpointConfigurationDataCaptureConfigElCaptureOptionsElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `capture_mode` after provisioning.\n"]
-    pub fn capture_mode(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.capture_mode", self.base))
+    #[doc = "Get a reference to the value of field `capture_mode` after provisioning.\n"]
+    pub fn capture_mode(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.capture_mode", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
 struct SagemakerEndpointConfigurationDataCaptureConfigElDynamic {
-    capture_content_type_header: Option<
-        DynamicBlock<SagemakerEndpointConfigurationDataCaptureConfigElCaptureContentTypeHeaderEl>,
-    >,
-    capture_options: Option<DynamicBlock<SagemakerEndpointConfigurationDataCaptureConfigElCaptureOptionsEl>>,
+    capture_content_type_header: std
+    ::option
+    ::Option<terrars::DynamicBlock<SagemakerEndpointConfigurationDataCaptureConfigElCaptureContentTypeHeaderEl>>,
+    capture_options: std
+    ::option
+    ::Option<terrars::DynamicBlock<SagemakerEndpointConfigurationDataCaptureConfigElCaptureOptionsEl>>,
 }
 
 #[derive(Serialize)]
 pub struct SagemakerEndpointConfigurationDataCaptureConfigEl {
-    destination_s3_uri: PrimField<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    enable_capture: Option<PrimField<bool>>,
-    initial_sampling_percentage: PrimField<f64>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    kms_key_id: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    capture_content_type_header: Option<Vec<SagemakerEndpointConfigurationDataCaptureConfigElCaptureContentTypeHeaderEl>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    capture_options: Option<Vec<SagemakerEndpointConfigurationDataCaptureConfigElCaptureOptionsEl>>,
+    destination_s3_uri: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    enable_capture: std::option::Option<terrars::PrimField<bool>>,
+    initial_sampling_percentage: terrars::PrimField<f64>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    kms_key_id: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    capture_content_type_header: std
+    ::option
+    ::Option<std::vec::Vec<SagemakerEndpointConfigurationDataCaptureConfigElCaptureContentTypeHeaderEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    capture_options: std
+    ::option
+    ::Option<std::vec::Vec<SagemakerEndpointConfigurationDataCaptureConfigElCaptureOptionsEl>>,
     dynamic: SagemakerEndpointConfigurationDataCaptureConfigElDynamic,
 }
 
 impl SagemakerEndpointConfigurationDataCaptureConfigEl {
-    #[doc= "Set the field `enable_capture`.\n"]
-    pub fn set_enable_capture(mut self, v: impl Into<PrimField<bool>>) -> Self {
-        self.enable_capture = Some(v.into());
+    #[doc = "Set the field `enable_capture`.\n"]
+    pub fn set_enable_capture(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
+        self.enable_capture = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `kms_key_id`.\n"]
-    pub fn set_kms_key_id(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.kms_key_id = Some(v.into());
+    #[doc = "Set the field `kms_key_id`.\n"]
+    pub fn set_kms_key_id(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.kms_key_id = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `capture_content_type_header`.\n"]
+    #[doc = "Set the field `capture_content_type_header`.\n"]
     pub fn set_capture_content_type_header(
         mut self,
-        v: impl Into<BlockAssignable<SagemakerEndpointConfigurationDataCaptureConfigElCaptureContentTypeHeaderEl>>,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<
+                        terrars
+                        ::BlockAssignable<SagemakerEndpointConfigurationDataCaptureConfigElCaptureContentTypeHeaderEl>,
+                    >,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.capture_content_type_header = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.capture_content_type_header = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.capture_content_type_header = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.capture_content_type_header = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Set the field `capture_options`.\n"]
+    #[doc = "Set the field `capture_options`.\n"]
     pub fn set_capture_options(
         mut self,
-        v: impl Into<BlockAssignable<SagemakerEndpointConfigurationDataCaptureConfigElCaptureOptionsEl>>,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<
+                        terrars::BlockAssignable<SagemakerEndpointConfigurationDataCaptureConfigElCaptureOptionsEl>,
+                    >,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.capture_options = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.capture_options = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.capture_options = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.capture_options = std::option::Option::Some(d);
             },
         }
         self
     }
 }
 
-impl ToListMappable for SagemakerEndpointConfigurationDataCaptureConfigEl {
-    type O = BlockAssignable<SagemakerEndpointConfigurationDataCaptureConfigEl>;
+impl terrars::ToListMappable for SagemakerEndpointConfigurationDataCaptureConfigEl {
+    type O = terrars::BlockAssignable<SagemakerEndpointConfigurationDataCaptureConfigEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -967,10 +1088,10 @@ impl ToListMappable for SagemakerEndpointConfigurationDataCaptureConfigEl {
 }
 
 pub struct BuildSagemakerEndpointConfigurationDataCaptureConfigEl {
-    #[doc= ""]
-    pub destination_s3_uri: PrimField<String>,
-    #[doc= ""]
-    pub initial_sampling_percentage: PrimField<f64>,
+    #[doc = ""]
+    pub destination_s3_uri: terrars::PrimField<std::string::String>,
+    #[doc = ""]
+    pub initial_sampling_percentage: terrars::PrimField<f64>,
 }
 
 impl BuildSagemakerEndpointConfigurationDataCaptureConfigEl {
@@ -982,18 +1103,21 @@ impl BuildSagemakerEndpointConfigurationDataCaptureConfigEl {
             kms_key_id: core::default::Default::default(),
             capture_content_type_header: core::default::Default::default(),
             capture_options: core::default::Default::default(),
-            dynamic: Default::default(),
+            dynamic: core::default::Default::default(),
         }
     }
 }
 
 pub struct SagemakerEndpointConfigurationDataCaptureConfigElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for SagemakerEndpointConfigurationDataCaptureConfigElRef {
-    fn new(shared: StackShared, base: String) -> SagemakerEndpointConfigurationDataCaptureConfigElRef {
+impl terrars::Ref for SagemakerEndpointConfigurationDataCaptureConfigElRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> SagemakerEndpointConfigurationDataCaptureConfigElRef {
         SagemakerEndpointConfigurationDataCaptureConfigElRef {
             shared: shared,
             base: base.to_string(),
@@ -1002,63 +1126,65 @@ impl Ref for SagemakerEndpointConfigurationDataCaptureConfigElRef {
 }
 
 impl SagemakerEndpointConfigurationDataCaptureConfigElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `destination_s3_uri` after provisioning.\n"]
-    pub fn destination_s3_uri(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.destination_s3_uri", self.base))
+    #[doc = "Get a reference to the value of field `destination_s3_uri` after provisioning.\n"]
+    pub fn destination_s3_uri(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.destination_s3_uri", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `enable_capture` after provisioning.\n"]
-    pub fn enable_capture(&self) -> PrimExpr<bool> {
-        PrimExpr::new(self.shared().clone(), format!("{}.enable_capture", self.base))
+    #[doc = "Get a reference to the value of field `enable_capture` after provisioning.\n"]
+    pub fn enable_capture(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.enable_capture", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `initial_sampling_percentage` after provisioning.\n"]
-    pub fn initial_sampling_percentage(&self) -> PrimExpr<f64> {
-        PrimExpr::new(self.shared().clone(), format!("{}.initial_sampling_percentage", self.base))
+    #[doc = "Get a reference to the value of field `initial_sampling_percentage` after provisioning.\n"]
+    pub fn initial_sampling_percentage(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.initial_sampling_percentage", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `kms_key_id` after provisioning.\n"]
-    pub fn kms_key_id(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.kms_key_id", self.base))
+    #[doc = "Get a reference to the value of field `kms_key_id` after provisioning.\n"]
+    pub fn kms_key_id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.kms_key_id", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `capture_content_type_header` after provisioning.\n"]
+    #[doc = "Get a reference to the value of field `capture_content_type_header` after provisioning.\n"]
     pub fn capture_content_type_header(
         &self,
-    ) -> ListRef<SagemakerEndpointConfigurationDataCaptureConfigElCaptureContentTypeHeaderElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.capture_content_type_header", self.base))
+    ) -> terrars::ListRef<SagemakerEndpointConfigurationDataCaptureConfigElCaptureContentTypeHeaderElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.capture_content_type_header", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `capture_options` after provisioning.\n"]
-    pub fn capture_options(&self) -> ListRef<SagemakerEndpointConfigurationDataCaptureConfigElCaptureOptionsElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.capture_options", self.base))
+    #[doc = "Get a reference to the value of field `capture_options` after provisioning.\n"]
+    pub fn capture_options(
+        &self,
+    ) -> terrars::ListRef<SagemakerEndpointConfigurationDataCaptureConfigElCaptureOptionsElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.capture_options", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct SagemakerEndpointConfigurationProductionVariantsElCoreDumpConfigEl {
-    destination_s3_uri: PrimField<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    kms_key_id: Option<PrimField<String>>,
+    destination_s3_uri: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    kms_key_id: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
 impl SagemakerEndpointConfigurationProductionVariantsElCoreDumpConfigEl {
-    #[doc= "Set the field `kms_key_id`.\n"]
-    pub fn set_kms_key_id(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.kms_key_id = Some(v.into());
+    #[doc = "Set the field `kms_key_id`.\n"]
+    pub fn set_kms_key_id(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.kms_key_id = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl ToListMappable for SagemakerEndpointConfigurationProductionVariantsElCoreDumpConfigEl {
-    type O = BlockAssignable<SagemakerEndpointConfigurationProductionVariantsElCoreDumpConfigEl>;
+impl terrars::ToListMappable for SagemakerEndpointConfigurationProductionVariantsElCoreDumpConfigEl {
+    type O = terrars::BlockAssignable<SagemakerEndpointConfigurationProductionVariantsElCoreDumpConfigEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -1067,8 +1193,8 @@ impl ToListMappable for SagemakerEndpointConfigurationProductionVariantsElCoreDu
 }
 
 pub struct BuildSagemakerEndpointConfigurationProductionVariantsElCoreDumpConfigEl {
-    #[doc= ""]
-    pub destination_s3_uri: PrimField<String>,
+    #[doc = ""]
+    pub destination_s3_uri: terrars::PrimField<std::string::String>,
 }
 
 impl BuildSagemakerEndpointConfigurationProductionVariantsElCoreDumpConfigEl {
@@ -1081,14 +1207,14 @@ impl BuildSagemakerEndpointConfigurationProductionVariantsElCoreDumpConfigEl {
 }
 
 pub struct SagemakerEndpointConfigurationProductionVariantsElCoreDumpConfigElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for SagemakerEndpointConfigurationProductionVariantsElCoreDumpConfigElRef {
+impl terrars::Ref for SagemakerEndpointConfigurationProductionVariantsElCoreDumpConfigElRef {
     fn new(
-        shared: StackShared,
-        base: String,
+        shared: terrars::StackShared,
+        base: std::string::String,
     ) -> SagemakerEndpointConfigurationProductionVariantsElCoreDumpConfigElRef {
         SagemakerEndpointConfigurationProductionVariantsElCoreDumpConfigElRef {
             shared: shared,
@@ -1098,34 +1224,34 @@ impl Ref for SagemakerEndpointConfigurationProductionVariantsElCoreDumpConfigElR
 }
 
 impl SagemakerEndpointConfigurationProductionVariantsElCoreDumpConfigElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `destination_s3_uri` after provisioning.\n"]
-    pub fn destination_s3_uri(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.destination_s3_uri", self.base))
+    #[doc = "Get a reference to the value of field `destination_s3_uri` after provisioning.\n"]
+    pub fn destination_s3_uri(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.destination_s3_uri", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `kms_key_id` after provisioning.\n"]
-    pub fn kms_key_id(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.kms_key_id", self.base))
+    #[doc = "Get a reference to the value of field `kms_key_id` after provisioning.\n"]
+    pub fn kms_key_id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.kms_key_id", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct SagemakerEndpointConfigurationProductionVariantsElServerlessConfigEl {
-    max_concurrency: PrimField<f64>,
-    memory_size_in_mb: PrimField<f64>,
+    max_concurrency: terrars::PrimField<f64>,
+    memory_size_in_mb: terrars::PrimField<f64>,
 }
 
 impl SagemakerEndpointConfigurationProductionVariantsElServerlessConfigEl { }
 
-impl ToListMappable for SagemakerEndpointConfigurationProductionVariantsElServerlessConfigEl {
-    type O = BlockAssignable<SagemakerEndpointConfigurationProductionVariantsElServerlessConfigEl>;
+impl terrars::ToListMappable for SagemakerEndpointConfigurationProductionVariantsElServerlessConfigEl {
+    type O = terrars::BlockAssignable<SagemakerEndpointConfigurationProductionVariantsElServerlessConfigEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -1134,10 +1260,10 @@ impl ToListMappable for SagemakerEndpointConfigurationProductionVariantsElServer
 }
 
 pub struct BuildSagemakerEndpointConfigurationProductionVariantsElServerlessConfigEl {
-    #[doc= ""]
-    pub max_concurrency: PrimField<f64>,
-    #[doc= ""]
-    pub memory_size_in_mb: PrimField<f64>,
+    #[doc = ""]
+    pub max_concurrency: terrars::PrimField<f64>,
+    #[doc = ""]
+    pub memory_size_in_mb: terrars::PrimField<f64>,
 }
 
 impl BuildSagemakerEndpointConfigurationProductionVariantsElServerlessConfigEl {
@@ -1150,14 +1276,14 @@ impl BuildSagemakerEndpointConfigurationProductionVariantsElServerlessConfigEl {
 }
 
 pub struct SagemakerEndpointConfigurationProductionVariantsElServerlessConfigElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for SagemakerEndpointConfigurationProductionVariantsElServerlessConfigElRef {
+impl terrars::Ref for SagemakerEndpointConfigurationProductionVariantsElServerlessConfigElRef {
     fn new(
-        shared: StackShared,
-        base: String,
+        shared: terrars::StackShared,
+        base: std::string::String,
     ) -> SagemakerEndpointConfigurationProductionVariantsElServerlessConfigElRef {
         SagemakerEndpointConfigurationProductionVariantsElServerlessConfigElRef {
             shared: shared,
@@ -1167,140 +1293,168 @@ impl Ref for SagemakerEndpointConfigurationProductionVariantsElServerlessConfigE
 }
 
 impl SagemakerEndpointConfigurationProductionVariantsElServerlessConfigElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `max_concurrency` after provisioning.\n"]
-    pub fn max_concurrency(&self) -> PrimExpr<f64> {
-        PrimExpr::new(self.shared().clone(), format!("{}.max_concurrency", self.base))
+    #[doc = "Get a reference to the value of field `max_concurrency` after provisioning.\n"]
+    pub fn max_concurrency(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.max_concurrency", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `memory_size_in_mb` after provisioning.\n"]
-    pub fn memory_size_in_mb(&self) -> PrimExpr<f64> {
-        PrimExpr::new(self.shared().clone(), format!("{}.memory_size_in_mb", self.base))
+    #[doc = "Get a reference to the value of field `memory_size_in_mb` after provisioning.\n"]
+    pub fn memory_size_in_mb(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.memory_size_in_mb", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
 struct SagemakerEndpointConfigurationProductionVariantsElDynamic {
-    core_dump_config: Option<DynamicBlock<SagemakerEndpointConfigurationProductionVariantsElCoreDumpConfigEl>>,
-    serverless_config: Option<DynamicBlock<SagemakerEndpointConfigurationProductionVariantsElServerlessConfigEl>>,
+    core_dump_config: std
+    ::option
+    ::Option<terrars::DynamicBlock<SagemakerEndpointConfigurationProductionVariantsElCoreDumpConfigEl>>,
+    serverless_config: std
+    ::option
+    ::Option<terrars::DynamicBlock<SagemakerEndpointConfigurationProductionVariantsElServerlessConfigEl>>,
 }
 
 #[derive(Serialize)]
 pub struct SagemakerEndpointConfigurationProductionVariantsEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    accelerator_type: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    container_startup_health_check_timeout_in_seconds: Option<PrimField<f64>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    initial_instance_count: Option<PrimField<f64>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    initial_variant_weight: Option<PrimField<f64>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    instance_type: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    model_data_download_timeout_in_seconds: Option<PrimField<f64>>,
-    model_name: PrimField<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    variant_name: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    volume_size_in_gb: Option<PrimField<f64>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    core_dump_config: Option<Vec<SagemakerEndpointConfigurationProductionVariantsElCoreDumpConfigEl>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    serverless_config: Option<Vec<SagemakerEndpointConfigurationProductionVariantsElServerlessConfigEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    accelerator_type: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    container_startup_health_check_timeout_in_seconds: std::option::Option<terrars::PrimField<f64>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    initial_instance_count: std::option::Option<terrars::PrimField<f64>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    initial_variant_weight: std::option::Option<terrars::PrimField<f64>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    instance_type: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    model_data_download_timeout_in_seconds: std::option::Option<terrars::PrimField<f64>>,
+    model_name: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    variant_name: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    volume_size_in_gb: std::option::Option<terrars::PrimField<f64>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    core_dump_config: std
+    ::option
+    ::Option<std::vec::Vec<SagemakerEndpointConfigurationProductionVariantsElCoreDumpConfigEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    serverless_config: std
+    ::option
+    ::Option<std::vec::Vec<SagemakerEndpointConfigurationProductionVariantsElServerlessConfigEl>>,
     dynamic: SagemakerEndpointConfigurationProductionVariantsElDynamic,
 }
 
 impl SagemakerEndpointConfigurationProductionVariantsEl {
-    #[doc= "Set the field `accelerator_type`.\n"]
-    pub fn set_accelerator_type(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.accelerator_type = Some(v.into());
+    #[doc = "Set the field `accelerator_type`.\n"]
+    pub fn set_accelerator_type(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.accelerator_type = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `container_startup_health_check_timeout_in_seconds`.\n"]
-    pub fn set_container_startup_health_check_timeout_in_seconds(mut self, v: impl Into<PrimField<f64>>) -> Self {
-        self.container_startup_health_check_timeout_in_seconds = Some(v.into());
+    #[doc = "Set the field `container_startup_health_check_timeout_in_seconds`.\n"]
+    pub fn set_container_startup_health_check_timeout_in_seconds(
+        mut self,
+        v: impl std::convert::Into<terrars::PrimField<f64>>,
+    ) -> Self {
+        self.container_startup_health_check_timeout_in_seconds = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `initial_instance_count`.\n"]
-    pub fn set_initial_instance_count(mut self, v: impl Into<PrimField<f64>>) -> Self {
-        self.initial_instance_count = Some(v.into());
+    #[doc = "Set the field `initial_instance_count`.\n"]
+    pub fn set_initial_instance_count(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.initial_instance_count = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `initial_variant_weight`.\n"]
-    pub fn set_initial_variant_weight(mut self, v: impl Into<PrimField<f64>>) -> Self {
-        self.initial_variant_weight = Some(v.into());
+    #[doc = "Set the field `initial_variant_weight`.\n"]
+    pub fn set_initial_variant_weight(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.initial_variant_weight = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `instance_type`.\n"]
-    pub fn set_instance_type(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.instance_type = Some(v.into());
+    #[doc = "Set the field `instance_type`.\n"]
+    pub fn set_instance_type(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.instance_type = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `model_data_download_timeout_in_seconds`.\n"]
-    pub fn set_model_data_download_timeout_in_seconds(mut self, v: impl Into<PrimField<f64>>) -> Self {
-        self.model_data_download_timeout_in_seconds = Some(v.into());
+    #[doc = "Set the field `model_data_download_timeout_in_seconds`.\n"]
+    pub fn set_model_data_download_timeout_in_seconds(
+        mut self,
+        v: impl std::convert::Into<terrars::PrimField<f64>>,
+    ) -> Self {
+        self.model_data_download_timeout_in_seconds = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `variant_name`.\n"]
-    pub fn set_variant_name(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.variant_name = Some(v.into());
+    #[doc = "Set the field `variant_name`.\n"]
+    pub fn set_variant_name(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.variant_name = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `volume_size_in_gb`.\n"]
-    pub fn set_volume_size_in_gb(mut self, v: impl Into<PrimField<f64>>) -> Self {
-        self.volume_size_in_gb = Some(v.into());
+    #[doc = "Set the field `volume_size_in_gb`.\n"]
+    pub fn set_volume_size_in_gb(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.volume_size_in_gb = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `core_dump_config`.\n"]
+    #[doc = "Set the field `core_dump_config`.\n"]
     pub fn set_core_dump_config(
         mut self,
-        v: impl Into<BlockAssignable<SagemakerEndpointConfigurationProductionVariantsElCoreDumpConfigEl>>,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<
+                        terrars::BlockAssignable<SagemakerEndpointConfigurationProductionVariantsElCoreDumpConfigEl>,
+                    >,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.core_dump_config = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.core_dump_config = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.core_dump_config = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.core_dump_config = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Set the field `serverless_config`.\n"]
+    #[doc = "Set the field `serverless_config`.\n"]
     pub fn set_serverless_config(
         mut self,
-        v: impl Into<BlockAssignable<SagemakerEndpointConfigurationProductionVariantsElServerlessConfigEl>>,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<
+                        terrars::BlockAssignable<SagemakerEndpointConfigurationProductionVariantsElServerlessConfigEl>,
+                    >,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.serverless_config = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.serverless_config = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.serverless_config = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.serverless_config = std::option::Option::Some(d);
             },
         }
         self
     }
 }
 
-impl ToListMappable for SagemakerEndpointConfigurationProductionVariantsEl {
-    type O = BlockAssignable<SagemakerEndpointConfigurationProductionVariantsEl>;
+impl terrars::ToListMappable for SagemakerEndpointConfigurationProductionVariantsEl {
+    type O = terrars::BlockAssignable<SagemakerEndpointConfigurationProductionVariantsEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -1309,8 +1463,8 @@ impl ToListMappable for SagemakerEndpointConfigurationProductionVariantsEl {
 }
 
 pub struct BuildSagemakerEndpointConfigurationProductionVariantsEl {
-    #[doc= ""]
-    pub model_name: PrimField<String>,
+    #[doc = ""]
+    pub model_name: terrars::PrimField<std::string::String>,
 }
 
 impl BuildSagemakerEndpointConfigurationProductionVariantsEl {
@@ -1327,18 +1481,21 @@ impl BuildSagemakerEndpointConfigurationProductionVariantsEl {
             volume_size_in_gb: core::default::Default::default(),
             core_dump_config: core::default::Default::default(),
             serverless_config: core::default::Default::default(),
-            dynamic: Default::default(),
+            dynamic: core::default::Default::default(),
         }
     }
 }
 
 pub struct SagemakerEndpointConfigurationProductionVariantsElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for SagemakerEndpointConfigurationProductionVariantsElRef {
-    fn new(shared: StackShared, base: String) -> SagemakerEndpointConfigurationProductionVariantsElRef {
+impl terrars::Ref for SagemakerEndpointConfigurationProductionVariantsElRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> SagemakerEndpointConfigurationProductionVariantsElRef {
         SagemakerEndpointConfigurationProductionVariantsElRef {
             shared: shared,
             base: base.to_string(),
@@ -1347,82 +1504,90 @@ impl Ref for SagemakerEndpointConfigurationProductionVariantsElRef {
 }
 
 impl SagemakerEndpointConfigurationProductionVariantsElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `accelerator_type` after provisioning.\n"]
-    pub fn accelerator_type(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.accelerator_type", self.base))
+    #[doc = "Get a reference to the value of field `accelerator_type` after provisioning.\n"]
+    pub fn accelerator_type(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.accelerator_type", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `container_startup_health_check_timeout_in_seconds` after provisioning.\n"]
-    pub fn container_startup_health_check_timeout_in_seconds(&self) -> PrimExpr<f64> {
-        PrimExpr::new(
+    #[doc =
+        "Get a reference to the value of field `container_startup_health_check_timeout_in_seconds` after provisioning.\n"]
+    pub fn container_startup_health_check_timeout_in_seconds(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(
             self.shared().clone(),
             format!("{}.container_startup_health_check_timeout_in_seconds", self.base),
         )
     }
 
-    #[doc= "Get a reference to the value of field `initial_instance_count` after provisioning.\n"]
-    pub fn initial_instance_count(&self) -> PrimExpr<f64> {
-        PrimExpr::new(self.shared().clone(), format!("{}.initial_instance_count", self.base))
+    #[doc = "Get a reference to the value of field `initial_instance_count` after provisioning.\n"]
+    pub fn initial_instance_count(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.initial_instance_count", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `initial_variant_weight` after provisioning.\n"]
-    pub fn initial_variant_weight(&self) -> PrimExpr<f64> {
-        PrimExpr::new(self.shared().clone(), format!("{}.initial_variant_weight", self.base))
+    #[doc = "Get a reference to the value of field `initial_variant_weight` after provisioning.\n"]
+    pub fn initial_variant_weight(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.initial_variant_weight", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `instance_type` after provisioning.\n"]
-    pub fn instance_type(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.instance_type", self.base))
+    #[doc = "Get a reference to the value of field `instance_type` after provisioning.\n"]
+    pub fn instance_type(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.instance_type", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `model_data_download_timeout_in_seconds` after provisioning.\n"]
-    pub fn model_data_download_timeout_in_seconds(&self) -> PrimExpr<f64> {
-        PrimExpr::new(self.shared().clone(), format!("{}.model_data_download_timeout_in_seconds", self.base))
+    #[doc = "Get a reference to the value of field `model_data_download_timeout_in_seconds` after provisioning.\n"]
+    pub fn model_data_download_timeout_in_seconds(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(
+            self.shared().clone(),
+            format!("{}.model_data_download_timeout_in_seconds", self.base),
+        )
     }
 
-    #[doc= "Get a reference to the value of field `model_name` after provisioning.\n"]
-    pub fn model_name(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.model_name", self.base))
+    #[doc = "Get a reference to the value of field `model_name` after provisioning.\n"]
+    pub fn model_name(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.model_name", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `variant_name` after provisioning.\n"]
-    pub fn variant_name(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.variant_name", self.base))
+    #[doc = "Get a reference to the value of field `variant_name` after provisioning.\n"]
+    pub fn variant_name(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.variant_name", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `volume_size_in_gb` after provisioning.\n"]
-    pub fn volume_size_in_gb(&self) -> PrimExpr<f64> {
-        PrimExpr::new(self.shared().clone(), format!("{}.volume_size_in_gb", self.base))
+    #[doc = "Get a reference to the value of field `volume_size_in_gb` after provisioning.\n"]
+    pub fn volume_size_in_gb(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.volume_size_in_gb", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `core_dump_config` after provisioning.\n"]
-    pub fn core_dump_config(&self) -> ListRef<SagemakerEndpointConfigurationProductionVariantsElCoreDumpConfigElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.core_dump_config", self.base))
+    #[doc = "Get a reference to the value of field `core_dump_config` after provisioning.\n"]
+    pub fn core_dump_config(
+        &self,
+    ) -> terrars::ListRef<SagemakerEndpointConfigurationProductionVariantsElCoreDumpConfigElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.core_dump_config", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `serverless_config` after provisioning.\n"]
-    pub fn serverless_config(&self) -> ListRef<SagemakerEndpointConfigurationProductionVariantsElServerlessConfigElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.serverless_config", self.base))
+    #[doc = "Get a reference to the value of field `serverless_config` after provisioning.\n"]
+    pub fn serverless_config(
+        &self,
+    ) -> terrars::ListRef<SagemakerEndpointConfigurationProductionVariantsElServerlessConfigElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.serverless_config", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct SagemakerEndpointConfigurationShadowProductionVariantsElCoreDumpConfigEl {
-    destination_s3_uri: PrimField<String>,
-    kms_key_id: PrimField<String>,
+    destination_s3_uri: terrars::PrimField<std::string::String>,
+    kms_key_id: terrars::PrimField<std::string::String>,
 }
 
 impl SagemakerEndpointConfigurationShadowProductionVariantsElCoreDumpConfigEl { }
 
-impl ToListMappable for SagemakerEndpointConfigurationShadowProductionVariantsElCoreDumpConfigEl {
-    type O = BlockAssignable<SagemakerEndpointConfigurationShadowProductionVariantsElCoreDumpConfigEl>;
+impl terrars::ToListMappable for SagemakerEndpointConfigurationShadowProductionVariantsElCoreDumpConfigEl {
+    type O = terrars::BlockAssignable<SagemakerEndpointConfigurationShadowProductionVariantsElCoreDumpConfigEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -1431,10 +1596,10 @@ impl ToListMappable for SagemakerEndpointConfigurationShadowProductionVariantsEl
 }
 
 pub struct BuildSagemakerEndpointConfigurationShadowProductionVariantsElCoreDumpConfigEl {
-    #[doc= ""]
-    pub destination_s3_uri: PrimField<String>,
-    #[doc= ""]
-    pub kms_key_id: PrimField<String>,
+    #[doc = ""]
+    pub destination_s3_uri: terrars::PrimField<std::string::String>,
+    #[doc = ""]
+    pub kms_key_id: terrars::PrimField<std::string::String>,
 }
 
 impl BuildSagemakerEndpointConfigurationShadowProductionVariantsElCoreDumpConfigEl {
@@ -1447,14 +1612,14 @@ impl BuildSagemakerEndpointConfigurationShadowProductionVariantsElCoreDumpConfig
 }
 
 pub struct SagemakerEndpointConfigurationShadowProductionVariantsElCoreDumpConfigElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for SagemakerEndpointConfigurationShadowProductionVariantsElCoreDumpConfigElRef {
+impl terrars::Ref for SagemakerEndpointConfigurationShadowProductionVariantsElCoreDumpConfigElRef {
     fn new(
-        shared: StackShared,
-        base: String,
+        shared: terrars::StackShared,
+        base: std::string::String,
     ) -> SagemakerEndpointConfigurationShadowProductionVariantsElCoreDumpConfigElRef {
         SagemakerEndpointConfigurationShadowProductionVariantsElCoreDumpConfigElRef {
             shared: shared,
@@ -1464,34 +1629,34 @@ impl Ref for SagemakerEndpointConfigurationShadowProductionVariantsElCoreDumpCon
 }
 
 impl SagemakerEndpointConfigurationShadowProductionVariantsElCoreDumpConfigElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `destination_s3_uri` after provisioning.\n"]
-    pub fn destination_s3_uri(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.destination_s3_uri", self.base))
+    #[doc = "Get a reference to the value of field `destination_s3_uri` after provisioning.\n"]
+    pub fn destination_s3_uri(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.destination_s3_uri", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `kms_key_id` after provisioning.\n"]
-    pub fn kms_key_id(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.kms_key_id", self.base))
+    #[doc = "Get a reference to the value of field `kms_key_id` after provisioning.\n"]
+    pub fn kms_key_id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.kms_key_id", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct SagemakerEndpointConfigurationShadowProductionVariantsElServerlessConfigEl {
-    max_concurrency: PrimField<f64>,
-    memory_size_in_mb: PrimField<f64>,
+    max_concurrency: terrars::PrimField<f64>,
+    memory_size_in_mb: terrars::PrimField<f64>,
 }
 
 impl SagemakerEndpointConfigurationShadowProductionVariantsElServerlessConfigEl { }
 
-impl ToListMappable for SagemakerEndpointConfigurationShadowProductionVariantsElServerlessConfigEl {
-    type O = BlockAssignable<SagemakerEndpointConfigurationShadowProductionVariantsElServerlessConfigEl>;
+impl terrars::ToListMappable for SagemakerEndpointConfigurationShadowProductionVariantsElServerlessConfigEl {
+    type O = terrars::BlockAssignable<SagemakerEndpointConfigurationShadowProductionVariantsElServerlessConfigEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -1500,10 +1665,10 @@ impl ToListMappable for SagemakerEndpointConfigurationShadowProductionVariantsEl
 }
 
 pub struct BuildSagemakerEndpointConfigurationShadowProductionVariantsElServerlessConfigEl {
-    #[doc= ""]
-    pub max_concurrency: PrimField<f64>,
-    #[doc= ""]
-    pub memory_size_in_mb: PrimField<f64>,
+    #[doc = ""]
+    pub max_concurrency: terrars::PrimField<f64>,
+    #[doc = ""]
+    pub memory_size_in_mb: terrars::PrimField<f64>,
 }
 
 impl BuildSagemakerEndpointConfigurationShadowProductionVariantsElServerlessConfigEl {
@@ -1516,14 +1681,14 @@ impl BuildSagemakerEndpointConfigurationShadowProductionVariantsElServerlessConf
 }
 
 pub struct SagemakerEndpointConfigurationShadowProductionVariantsElServerlessConfigElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for SagemakerEndpointConfigurationShadowProductionVariantsElServerlessConfigElRef {
+impl terrars::Ref for SagemakerEndpointConfigurationShadowProductionVariantsElServerlessConfigElRef {
     fn new(
-        shared: StackShared,
-        base: String,
+        shared: terrars::StackShared,
+        base: std::string::String,
     ) -> SagemakerEndpointConfigurationShadowProductionVariantsElServerlessConfigElRef {
         SagemakerEndpointConfigurationShadowProductionVariantsElServerlessConfigElRef {
             shared: shared,
@@ -1533,142 +1698,170 @@ impl Ref for SagemakerEndpointConfigurationShadowProductionVariantsElServerlessC
 }
 
 impl SagemakerEndpointConfigurationShadowProductionVariantsElServerlessConfigElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `max_concurrency` after provisioning.\n"]
-    pub fn max_concurrency(&self) -> PrimExpr<f64> {
-        PrimExpr::new(self.shared().clone(), format!("{}.max_concurrency", self.base))
+    #[doc = "Get a reference to the value of field `max_concurrency` after provisioning.\n"]
+    pub fn max_concurrency(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.max_concurrency", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `memory_size_in_mb` after provisioning.\n"]
-    pub fn memory_size_in_mb(&self) -> PrimExpr<f64> {
-        PrimExpr::new(self.shared().clone(), format!("{}.memory_size_in_mb", self.base))
+    #[doc = "Get a reference to the value of field `memory_size_in_mb` after provisioning.\n"]
+    pub fn memory_size_in_mb(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.memory_size_in_mb", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
 struct SagemakerEndpointConfigurationShadowProductionVariantsElDynamic {
-    core_dump_config: Option<DynamicBlock<SagemakerEndpointConfigurationShadowProductionVariantsElCoreDumpConfigEl>>,
-    serverless_config: Option<
-        DynamicBlock<SagemakerEndpointConfigurationShadowProductionVariantsElServerlessConfigEl>,
-    >,
+    core_dump_config: std
+    ::option
+    ::Option<terrars::DynamicBlock<SagemakerEndpointConfigurationShadowProductionVariantsElCoreDumpConfigEl>>,
+    serverless_config: std
+    ::option
+    ::Option<terrars::DynamicBlock<SagemakerEndpointConfigurationShadowProductionVariantsElServerlessConfigEl>>,
 }
 
 #[derive(Serialize)]
 pub struct SagemakerEndpointConfigurationShadowProductionVariantsEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    accelerator_type: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    container_startup_health_check_timeout_in_seconds: Option<PrimField<f64>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    initial_instance_count: Option<PrimField<f64>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    initial_variant_weight: Option<PrimField<f64>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    instance_type: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    model_data_download_timeout_in_seconds: Option<PrimField<f64>>,
-    model_name: PrimField<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    variant_name: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    volume_size_in_gb: Option<PrimField<f64>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    core_dump_config: Option<Vec<SagemakerEndpointConfigurationShadowProductionVariantsElCoreDumpConfigEl>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    serverless_config: Option<Vec<SagemakerEndpointConfigurationShadowProductionVariantsElServerlessConfigEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    accelerator_type: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    container_startup_health_check_timeout_in_seconds: std::option::Option<terrars::PrimField<f64>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    initial_instance_count: std::option::Option<terrars::PrimField<f64>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    initial_variant_weight: std::option::Option<terrars::PrimField<f64>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    instance_type: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    model_data_download_timeout_in_seconds: std::option::Option<terrars::PrimField<f64>>,
+    model_name: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    variant_name: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    volume_size_in_gb: std::option::Option<terrars::PrimField<f64>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    core_dump_config: std
+    ::option
+    ::Option<std::vec::Vec<SagemakerEndpointConfigurationShadowProductionVariantsElCoreDumpConfigEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    serverless_config: std
+    ::option
+    ::Option<std::vec::Vec<SagemakerEndpointConfigurationShadowProductionVariantsElServerlessConfigEl>>,
     dynamic: SagemakerEndpointConfigurationShadowProductionVariantsElDynamic,
 }
 
 impl SagemakerEndpointConfigurationShadowProductionVariantsEl {
-    #[doc= "Set the field `accelerator_type`.\n"]
-    pub fn set_accelerator_type(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.accelerator_type = Some(v.into());
+    #[doc = "Set the field `accelerator_type`.\n"]
+    pub fn set_accelerator_type(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.accelerator_type = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `container_startup_health_check_timeout_in_seconds`.\n"]
-    pub fn set_container_startup_health_check_timeout_in_seconds(mut self, v: impl Into<PrimField<f64>>) -> Self {
-        self.container_startup_health_check_timeout_in_seconds = Some(v.into());
+    #[doc = "Set the field `container_startup_health_check_timeout_in_seconds`.\n"]
+    pub fn set_container_startup_health_check_timeout_in_seconds(
+        mut self,
+        v: impl std::convert::Into<terrars::PrimField<f64>>,
+    ) -> Self {
+        self.container_startup_health_check_timeout_in_seconds = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `initial_instance_count`.\n"]
-    pub fn set_initial_instance_count(mut self, v: impl Into<PrimField<f64>>) -> Self {
-        self.initial_instance_count = Some(v.into());
+    #[doc = "Set the field `initial_instance_count`.\n"]
+    pub fn set_initial_instance_count(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.initial_instance_count = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `initial_variant_weight`.\n"]
-    pub fn set_initial_variant_weight(mut self, v: impl Into<PrimField<f64>>) -> Self {
-        self.initial_variant_weight = Some(v.into());
+    #[doc = "Set the field `initial_variant_weight`.\n"]
+    pub fn set_initial_variant_weight(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.initial_variant_weight = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `instance_type`.\n"]
-    pub fn set_instance_type(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.instance_type = Some(v.into());
+    #[doc = "Set the field `instance_type`.\n"]
+    pub fn set_instance_type(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.instance_type = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `model_data_download_timeout_in_seconds`.\n"]
-    pub fn set_model_data_download_timeout_in_seconds(mut self, v: impl Into<PrimField<f64>>) -> Self {
-        self.model_data_download_timeout_in_seconds = Some(v.into());
+    #[doc = "Set the field `model_data_download_timeout_in_seconds`.\n"]
+    pub fn set_model_data_download_timeout_in_seconds(
+        mut self,
+        v: impl std::convert::Into<terrars::PrimField<f64>>,
+    ) -> Self {
+        self.model_data_download_timeout_in_seconds = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `variant_name`.\n"]
-    pub fn set_variant_name(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.variant_name = Some(v.into());
+    #[doc = "Set the field `variant_name`.\n"]
+    pub fn set_variant_name(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.variant_name = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `volume_size_in_gb`.\n"]
-    pub fn set_volume_size_in_gb(mut self, v: impl Into<PrimField<f64>>) -> Self {
-        self.volume_size_in_gb = Some(v.into());
+    #[doc = "Set the field `volume_size_in_gb`.\n"]
+    pub fn set_volume_size_in_gb(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.volume_size_in_gb = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `core_dump_config`.\n"]
+    #[doc = "Set the field `core_dump_config`.\n"]
     pub fn set_core_dump_config(
         mut self,
-        v: impl Into<BlockAssignable<SagemakerEndpointConfigurationShadowProductionVariantsElCoreDumpConfigEl>>,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<
+                        terrars
+                        ::BlockAssignable<SagemakerEndpointConfigurationShadowProductionVariantsElCoreDumpConfigEl>,
+                    >,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.core_dump_config = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.core_dump_config = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.core_dump_config = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.core_dump_config = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Set the field `serverless_config`.\n"]
+    #[doc = "Set the field `serverless_config`.\n"]
     pub fn set_serverless_config(
         mut self,
-        v: impl Into<BlockAssignable<SagemakerEndpointConfigurationShadowProductionVariantsElServerlessConfigEl>>,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<
+                        terrars
+                        ::BlockAssignable<SagemakerEndpointConfigurationShadowProductionVariantsElServerlessConfigEl>,
+                    >,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.serverless_config = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.serverless_config = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.serverless_config = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.serverless_config = std::option::Option::Some(d);
             },
         }
         self
     }
 }
 
-impl ToListMappable for SagemakerEndpointConfigurationShadowProductionVariantsEl {
-    type O = BlockAssignable<SagemakerEndpointConfigurationShadowProductionVariantsEl>;
+impl terrars::ToListMappable for SagemakerEndpointConfigurationShadowProductionVariantsEl {
+    type O = terrars::BlockAssignable<SagemakerEndpointConfigurationShadowProductionVariantsEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -1677,8 +1870,8 @@ impl ToListMappable for SagemakerEndpointConfigurationShadowProductionVariantsEl
 }
 
 pub struct BuildSagemakerEndpointConfigurationShadowProductionVariantsEl {
-    #[doc= ""]
-    pub model_name: PrimField<String>,
+    #[doc = ""]
+    pub model_name: terrars::PrimField<std::string::String>,
 }
 
 impl BuildSagemakerEndpointConfigurationShadowProductionVariantsEl {
@@ -1695,18 +1888,21 @@ impl BuildSagemakerEndpointConfigurationShadowProductionVariantsEl {
             volume_size_in_gb: core::default::Default::default(),
             core_dump_config: core::default::Default::default(),
             serverless_config: core::default::Default::default(),
-            dynamic: Default::default(),
+            dynamic: core::default::Default::default(),
         }
     }
 }
 
 pub struct SagemakerEndpointConfigurationShadowProductionVariantsElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for SagemakerEndpointConfigurationShadowProductionVariantsElRef {
-    fn new(shared: StackShared, base: String) -> SagemakerEndpointConfigurationShadowProductionVariantsElRef {
+impl terrars::Ref for SagemakerEndpointConfigurationShadowProductionVariantsElRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> SagemakerEndpointConfigurationShadowProductionVariantsElRef {
         SagemakerEndpointConfigurationShadowProductionVariantsElRef {
             shared: shared,
             base: base.to_string(),
@@ -1715,77 +1911,89 @@ impl Ref for SagemakerEndpointConfigurationShadowProductionVariantsElRef {
 }
 
 impl SagemakerEndpointConfigurationShadowProductionVariantsElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `accelerator_type` after provisioning.\n"]
-    pub fn accelerator_type(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.accelerator_type", self.base))
+    #[doc = "Get a reference to the value of field `accelerator_type` after provisioning.\n"]
+    pub fn accelerator_type(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.accelerator_type", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `container_startup_health_check_timeout_in_seconds` after provisioning.\n"]
-    pub fn container_startup_health_check_timeout_in_seconds(&self) -> PrimExpr<f64> {
-        PrimExpr::new(
+    #[doc =
+        "Get a reference to the value of field `container_startup_health_check_timeout_in_seconds` after provisioning.\n"]
+    pub fn container_startup_health_check_timeout_in_seconds(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(
             self.shared().clone(),
             format!("{}.container_startup_health_check_timeout_in_seconds", self.base),
         )
     }
 
-    #[doc= "Get a reference to the value of field `initial_instance_count` after provisioning.\n"]
-    pub fn initial_instance_count(&self) -> PrimExpr<f64> {
-        PrimExpr::new(self.shared().clone(), format!("{}.initial_instance_count", self.base))
+    #[doc = "Get a reference to the value of field `initial_instance_count` after provisioning.\n"]
+    pub fn initial_instance_count(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.initial_instance_count", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `initial_variant_weight` after provisioning.\n"]
-    pub fn initial_variant_weight(&self) -> PrimExpr<f64> {
-        PrimExpr::new(self.shared().clone(), format!("{}.initial_variant_weight", self.base))
+    #[doc = "Get a reference to the value of field `initial_variant_weight` after provisioning.\n"]
+    pub fn initial_variant_weight(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.initial_variant_weight", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `instance_type` after provisioning.\n"]
-    pub fn instance_type(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.instance_type", self.base))
+    #[doc = "Get a reference to the value of field `instance_type` after provisioning.\n"]
+    pub fn instance_type(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.instance_type", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `model_data_download_timeout_in_seconds` after provisioning.\n"]
-    pub fn model_data_download_timeout_in_seconds(&self) -> PrimExpr<f64> {
-        PrimExpr::new(self.shared().clone(), format!("{}.model_data_download_timeout_in_seconds", self.base))
+    #[doc = "Get a reference to the value of field `model_data_download_timeout_in_seconds` after provisioning.\n"]
+    pub fn model_data_download_timeout_in_seconds(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(
+            self.shared().clone(),
+            format!("{}.model_data_download_timeout_in_seconds", self.base),
+        )
     }
 
-    #[doc= "Get a reference to the value of field `model_name` after provisioning.\n"]
-    pub fn model_name(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.model_name", self.base))
+    #[doc = "Get a reference to the value of field `model_name` after provisioning.\n"]
+    pub fn model_name(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.model_name", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `variant_name` after provisioning.\n"]
-    pub fn variant_name(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.variant_name", self.base))
+    #[doc = "Get a reference to the value of field `variant_name` after provisioning.\n"]
+    pub fn variant_name(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.variant_name", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `volume_size_in_gb` after provisioning.\n"]
-    pub fn volume_size_in_gb(&self) -> PrimExpr<f64> {
-        PrimExpr::new(self.shared().clone(), format!("{}.volume_size_in_gb", self.base))
+    #[doc = "Get a reference to the value of field `volume_size_in_gb` after provisioning.\n"]
+    pub fn volume_size_in_gb(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.volume_size_in_gb", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `core_dump_config` after provisioning.\n"]
+    #[doc = "Get a reference to the value of field `core_dump_config` after provisioning.\n"]
     pub fn core_dump_config(
         &self,
-    ) -> ListRef<SagemakerEndpointConfigurationShadowProductionVariantsElCoreDumpConfigElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.core_dump_config", self.base))
+    ) -> terrars::ListRef<SagemakerEndpointConfigurationShadowProductionVariantsElCoreDumpConfigElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.core_dump_config", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `serverless_config` after provisioning.\n"]
+    #[doc = "Get a reference to the value of field `serverless_config` after provisioning.\n"]
     pub fn serverless_config(
         &self,
-    ) -> ListRef<SagemakerEndpointConfigurationShadowProductionVariantsElServerlessConfigElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.serverless_config", self.base))
+    ) -> terrars::ListRef<SagemakerEndpointConfigurationShadowProductionVariantsElServerlessConfigElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.serverless_config", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
 struct SagemakerEndpointConfigurationDynamic {
-    async_inference_config: Option<DynamicBlock<SagemakerEndpointConfigurationAsyncInferenceConfigEl>>,
-    data_capture_config: Option<DynamicBlock<SagemakerEndpointConfigurationDataCaptureConfigEl>>,
-    production_variants: Option<DynamicBlock<SagemakerEndpointConfigurationProductionVariantsEl>>,
-    shadow_production_variants: Option<DynamicBlock<SagemakerEndpointConfigurationShadowProductionVariantsEl>>,
+    async_inference_config: std
+    ::option
+    ::Option<terrars::DynamicBlock<SagemakerEndpointConfigurationAsyncInferenceConfigEl>>,
+    data_capture_config: std
+    ::option
+    ::Option<terrars::DynamicBlock<SagemakerEndpointConfigurationDataCaptureConfigEl>>,
+    production_variants: std
+    ::option
+    ::Option<terrars::DynamicBlock<SagemakerEndpointConfigurationProductionVariantsEl>>,
+    shadow_production_variants: std
+    ::option
+    ::Option<terrars::DynamicBlock<SagemakerEndpointConfigurationShadowProductionVariantsEl>>,
 }

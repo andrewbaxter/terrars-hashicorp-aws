@@ -1,48 +1,52 @@
 use serde::Serialize;
-use std::cell::RefCell;
-use std::rc::Rc;
-use terrars::*;
+use terrars::{
+    Referable as _,
+    Resource_ as _,
+    Ref as _,
+};
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
 struct WafregionalXssMatchSetData {
-    #[serde(skip_serializing_if = "Vec::is_empty")]
-    depends_on: Vec<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    provider: Option<String>,
-    #[serde(skip_serializing_if = "SerdeSkipDefault::is_default")]
-    lifecycle: ResourceLifecycle,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    for_each: Option<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    id: Option<PrimField<String>>,
-    name: PrimField<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    xss_match_tuple: Option<Vec<WafregionalXssMatchSetXssMatchTupleEl>>,
+    #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
+    depends_on: std::vec::Vec<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    provider: std::option::Option<std::string::String>,
+    #[serde(skip_serializing_if = "terrars::SerdeSkipDefault::is_default")]
+    lifecycle: terrars::ResourceLifecycle,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    for_each: std::option::Option<std::string::String>,
+    #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
+    provisioner: std::vec::Vec<terrars::Provisioner>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    id: std::option::Option<terrars::PrimField<std::string::String>>,
+    name: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    xss_match_tuple: std::option::Option<std::vec::Vec<WafregionalXssMatchSetXssMatchTupleEl>>,
     dynamic: WafregionalXssMatchSetDynamic,
 }
 
 struct WafregionalXssMatchSet_ {
-    shared: StackShared,
-    tf_id: String,
-    data: RefCell<WafregionalXssMatchSetData>,
+    shared: terrars::StackShared,
+    tf_id: std::string::String,
+    data: std::cell::RefCell<WafregionalXssMatchSetData>,
 }
 
 #[derive(Clone)]
-pub struct WafregionalXssMatchSet(Rc<WafregionalXssMatchSet_>);
+pub struct WafregionalXssMatchSet(std::rc::Rc<WafregionalXssMatchSet_>);
 
 impl WafregionalXssMatchSet {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.0.shared
     }
 
-    pub fn depends_on(self, dep: &impl Referable) -> Self {
+    pub fn depends_on(self, dep: &impl terrars::Referable) -> Self {
         self.0.data.borrow_mut().depends_on.push(dep.extract_ref());
         self
     }
 
     pub fn set_provider(self, provider: &ProviderAws) -> Self {
-        self.0.data.borrow_mut().provider = Some(provider.provider_ref());
+        self.0.data.borrow_mut().provider = std::option::Option::Some(provider.provider_ref());
         self
     }
 
@@ -57,94 +61,130 @@ impl WafregionalXssMatchSet {
     }
 
     pub fn ignore_changes_to_all(self) -> Self {
-        self.0.data.borrow_mut().lifecycle.ignore_changes = Some(IgnoreChanges::All(IgnoreChangesAll::All));
+        self.0.data.borrow_mut().lifecycle.ignore_changes =
+            std::option::Option::Some(terrars::IgnoreChanges::All(terrars::IgnoreChangesAll::All));
         self
     }
 
-    pub fn ignore_changes_to_attr(self, attr: impl ToString) -> Self {
+    pub fn ignore_changes_to_attr(self, attr: impl std::string::ToString) -> Self {
         {
             let mut d = self.0.data.borrow_mut();
             if match &mut d.lifecycle.ignore_changes {
-                Some(i) => match i {
-                    IgnoreChanges::All(_) => {
+                std::option::Option::Some(i) => match i {
+                    terrars::IgnoreChanges::All(_) => {
                         true
                     },
-                    IgnoreChanges::Refs(r) => {
+                    terrars::IgnoreChanges::Refs(r) => {
                         r.push(attr.to_string());
                         false
                     },
                 },
-                None => true,
+                std::option::Option::None => true,
             } {
-                d.lifecycle.ignore_changes = Some(IgnoreChanges::Refs(vec![attr.to_string()]));
+                d.lifecycle.ignore_changes =
+                    std::option::Option::Some(terrars::IgnoreChanges::Refs(vec![attr.to_string()]));
             }
         }
         self
     }
 
-    pub fn replace_triggered_by_resource(self, r: &impl Resource) -> Self {
+    pub fn replace_triggered_by_resource(self, r: &impl terrars::Resource) -> Self {
         self.0.data.borrow_mut().lifecycle.replace_triggered_by.push(r.extract_ref());
         self
     }
 
-    pub fn replace_triggered_by_attr(self, attr: impl ToString) -> Self {
+    pub fn replace_triggered_by_attr(self, attr: impl std::string::ToString) -> Self {
         self.0.data.borrow_mut().lifecycle.replace_triggered_by.push(attr.to_string());
         self
     }
 
-    #[doc= "Set the field `id`.\n"]
-    pub fn set_id(self, v: impl Into<PrimField<String>>) -> Self {
-        self.0.data.borrow_mut().id = Some(v.into());
+    #[doc = r" Add a provisioner (ex: `local-exec`, `remote-exec`, `file`) to this resource."]
+    #[doc = r" Provisioners run in the order they're added."]
+    pub fn add_provisioner(self, v: impl std::convert::Into<terrars::Provisioner>) -> Self {
+        self.0.data.borrow_mut().provisioner.push(v.into());
         self
     }
 
-    #[doc= "Set the field `xss_match_tuple`.\n"]
-    pub fn set_xss_match_tuple(self, v: impl Into<BlockAssignable<WafregionalXssMatchSetXssMatchTupleEl>>) -> Self {
+    pub fn add_lifecycle_precondition(
+        self,
+        condition: impl std::convert::Into<terrars::PrimField<bool>>,
+        error_message: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.0.data.borrow_mut().lifecycle.precondition.push(terrars::LifecycleCondition {
+            condition: condition.into(),
+            error_message: error_message.into(),
+        });
+        self
+    }
+
+    pub fn add_lifecycle_postcondition(
+        self,
+        condition: impl std::convert::Into<terrars::PrimField<bool>>,
+        error_message: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.0.data.borrow_mut().lifecycle.postcondition.push(terrars::LifecycleCondition {
+            condition: condition.into(),
+            error_message: error_message.into(),
+        });
+        self
+    }
+
+    #[doc = "Set the field `id`.\n"]
+    pub fn set_id(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().id = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `xss_match_tuple`.\n"]
+    pub fn set_xss_match_tuple(
+        self,
+        v: impl std::convert::Into<terrars::BlockAssignable<WafregionalXssMatchSetXssMatchTupleEl>>,
+    ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.0.data.borrow_mut().xss_match_tuple = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.0.data.borrow_mut().xss_match_tuple = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.0.data.borrow_mut().dynamic.xss_match_tuple = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.0.data.borrow_mut().dynamic.xss_match_tuple = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Get a reference to the value of field `id` after provisioning.\n"]
-    pub fn id(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
+    pub fn id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `name` after provisioning.\n"]
-    pub fn name(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `name` after provisioning.\n"]
+    pub fn name(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
     }
 }
 
-impl Referable for WafregionalXssMatchSet {
-    fn extract_ref(&self) -> String {
+impl terrars::Referable for WafregionalXssMatchSet {
+    fn extract_ref(&self) -> std::string::String {
         format!("{}.{}", self.0.extract_resource_type(), self.0.extract_tf_id())
     }
 }
 
-impl Resource for WafregionalXssMatchSet { }
+impl terrars::Resource for WafregionalXssMatchSet { }
 
-impl ToListMappable for WafregionalXssMatchSet {
-    type O = ListRef<WafregionalXssMatchSetRef>;
+impl terrars::ToListMappable for WafregionalXssMatchSet {
+    type O = terrars::ListRef<WafregionalXssMatchSetRef>;
 
-    fn do_map(self, base: String) -> Self::O {
-        self.0.data.borrow_mut().for_each = Some(format!("${{{}}}", base));
-        ListRef::new(self.0.shared.clone(), self.extract_ref())
+    fn do_map(self, base: std::string::String) -> Self::O {
+        self.0.data.borrow_mut().for_each = std::option::Option::Some(format!("${{{}}}", base));
+        terrars::ListRef::new(self.0.shared.clone(), self.extract_ref())
     }
 }
 
-impl Resource_ for WafregionalXssMatchSet_ {
-    fn extract_resource_type(&self) -> String {
+impl terrars::Resource_ for WafregionalXssMatchSet_ {
+    fn extract_resource_type(&self) -> std::string::String {
         "aws_wafregional_xss_match_set".into()
     }
 
-    fn extract_tf_id(&self) -> String {
+    fn extract_tf_id(&self) -> std::string::String {
         self.tf_id.clone()
     }
 
@@ -154,25 +194,26 @@ impl Resource_ for WafregionalXssMatchSet_ {
 }
 
 pub struct BuildWafregionalXssMatchSet {
-    pub tf_id: String,
-    #[doc= ""]
-    pub name: PrimField<String>,
+    pub tf_id: std::string::String,
+    #[doc = ""]
+    pub name: terrars::PrimField<std::string::String>,
 }
 
 impl BuildWafregionalXssMatchSet {
-    pub fn build(self, stack: &mut Stack) -> WafregionalXssMatchSet {
-        let out = WafregionalXssMatchSet(Rc::new(WafregionalXssMatchSet_ {
+    pub fn build(self, stack: &mut terrars::Stack) -> WafregionalXssMatchSet {
+        let out = WafregionalXssMatchSet(std::rc::Rc::new(WafregionalXssMatchSet_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: RefCell::new(WafregionalXssMatchSetData {
+            data: std::cell::RefCell::new(WafregionalXssMatchSetData {
                 depends_on: core::default::Default::default(),
-                provider: None,
+                provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
-                for_each: None,
+                for_each: std::option::Option::None,
+                provisioner: core::default::Default::default(),
                 id: core::default::Default::default(),
                 name: self.name,
                 xss_match_tuple: core::default::Default::default(),
-                dynamic: Default::default(),
+                dynamic: core::default::Default::default(),
             }),
         }));
         stack.add_resource(out.0.clone());
@@ -181,12 +222,12 @@ impl BuildWafregionalXssMatchSet {
 }
 
 pub struct WafregionalXssMatchSetRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for WafregionalXssMatchSetRef {
-    fn new(shared: StackShared, base: String) -> Self {
+impl terrars::Ref for WafregionalXssMatchSetRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> Self {
         Self {
             shared: shared,
             base: base,
@@ -195,46 +236,46 @@ impl Ref for WafregionalXssMatchSetRef {
 }
 
 impl WafregionalXssMatchSetRef {
-    fn extract_ref(&self) -> String {
+    fn extract_ref(&self) -> std::string::String {
         self.base.clone()
     }
 
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `id` after provisioning.\n"]
-    pub fn id(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
+    pub fn id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `name` after provisioning.\n"]
-    pub fn name(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `name` after provisioning.\n"]
+    pub fn name(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
     }
 }
 
 #[derive(Serialize)]
 pub struct WafregionalXssMatchSetXssMatchTupleElFieldToMatchEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    data: Option<PrimField<String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    data: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(rename = "type")]
-    type_: PrimField<String>,
+    type_: terrars::PrimField<std::string::String>,
 }
 
 impl WafregionalXssMatchSetXssMatchTupleElFieldToMatchEl {
-    #[doc= "Set the field `data`.\n"]
-    pub fn set_data(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.data = Some(v.into());
+    #[doc = "Set the field `data`.\n"]
+    pub fn set_data(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.data = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl ToListMappable for WafregionalXssMatchSetXssMatchTupleElFieldToMatchEl {
-    type O = BlockAssignable<WafregionalXssMatchSetXssMatchTupleElFieldToMatchEl>;
+impl terrars::ToListMappable for WafregionalXssMatchSetXssMatchTupleElFieldToMatchEl {
+    type O = terrars::BlockAssignable<WafregionalXssMatchSetXssMatchTupleElFieldToMatchEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -243,8 +284,8 @@ impl ToListMappable for WafregionalXssMatchSetXssMatchTupleElFieldToMatchEl {
 }
 
 pub struct BuildWafregionalXssMatchSetXssMatchTupleElFieldToMatchEl {
-    #[doc= ""]
-    pub type_: PrimField<String>,
+    #[doc = ""]
+    pub type_: terrars::PrimField<std::string::String>,
 }
 
 impl BuildWafregionalXssMatchSetXssMatchTupleElFieldToMatchEl {
@@ -257,12 +298,15 @@ impl BuildWafregionalXssMatchSetXssMatchTupleElFieldToMatchEl {
 }
 
 pub struct WafregionalXssMatchSetXssMatchTupleElFieldToMatchElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for WafregionalXssMatchSetXssMatchTupleElFieldToMatchElRef {
-    fn new(shared: StackShared, base: String) -> WafregionalXssMatchSetXssMatchTupleElFieldToMatchElRef {
+impl terrars::Ref for WafregionalXssMatchSetXssMatchTupleElFieldToMatchElRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> WafregionalXssMatchSetXssMatchTupleElFieldToMatchElRef {
         WafregionalXssMatchSetXssMatchTupleElFieldToMatchElRef {
             shared: shared,
             base: base.to_string(),
@@ -271,57 +315,57 @@ impl Ref for WafregionalXssMatchSetXssMatchTupleElFieldToMatchElRef {
 }
 
 impl WafregionalXssMatchSetXssMatchTupleElFieldToMatchElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `data` after provisioning.\n"]
-    pub fn data(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.data", self.base))
+    #[doc = "Get a reference to the value of field `data` after provisioning.\n"]
+    pub fn data(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.data", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `type_` after provisioning.\n"]
-    pub fn type_(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.type", self.base))
+    #[doc = "Get a reference to the value of field `type_` after provisioning.\n"]
+    pub fn type_(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.type", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
 struct WafregionalXssMatchSetXssMatchTupleElDynamic {
-    field_to_match: Option<DynamicBlock<WafregionalXssMatchSetXssMatchTupleElFieldToMatchEl>>,
+    field_to_match: std::option::Option<terrars::DynamicBlock<WafregionalXssMatchSetXssMatchTupleElFieldToMatchEl>>,
 }
 
 #[derive(Serialize)]
 pub struct WafregionalXssMatchSetXssMatchTupleEl {
-    text_transformation: PrimField<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    field_to_match: Option<Vec<WafregionalXssMatchSetXssMatchTupleElFieldToMatchEl>>,
+    text_transformation: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    field_to_match: std::option::Option<std::vec::Vec<WafregionalXssMatchSetXssMatchTupleElFieldToMatchEl>>,
     dynamic: WafregionalXssMatchSetXssMatchTupleElDynamic,
 }
 
 impl WafregionalXssMatchSetXssMatchTupleEl {
-    #[doc= "Set the field `field_to_match`.\n"]
+    #[doc = "Set the field `field_to_match`.\n"]
     pub fn set_field_to_match(
         mut self,
-        v: impl Into<BlockAssignable<WafregionalXssMatchSetXssMatchTupleElFieldToMatchEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<WafregionalXssMatchSetXssMatchTupleElFieldToMatchEl>>,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.field_to_match = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.field_to_match = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.dynamic.field_to_match = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.field_to_match = std::option::Option::Some(d);
             },
         }
         self
     }
 }
 
-impl ToListMappable for WafregionalXssMatchSetXssMatchTupleEl {
-    type O = BlockAssignable<WafregionalXssMatchSetXssMatchTupleEl>;
+impl terrars::ToListMappable for WafregionalXssMatchSetXssMatchTupleEl {
+    type O = terrars::BlockAssignable<WafregionalXssMatchSetXssMatchTupleEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -330,8 +374,8 @@ impl ToListMappable for WafregionalXssMatchSetXssMatchTupleEl {
 }
 
 pub struct BuildWafregionalXssMatchSetXssMatchTupleEl {
-    #[doc= ""]
-    pub text_transformation: PrimField<String>,
+    #[doc = ""]
+    pub text_transformation: terrars::PrimField<std::string::String>,
 }
 
 impl BuildWafregionalXssMatchSetXssMatchTupleEl {
@@ -339,18 +383,18 @@ impl BuildWafregionalXssMatchSetXssMatchTupleEl {
         WafregionalXssMatchSetXssMatchTupleEl {
             text_transformation: self.text_transformation,
             field_to_match: core::default::Default::default(),
-            dynamic: Default::default(),
+            dynamic: core::default::Default::default(),
         }
     }
 }
 
 pub struct WafregionalXssMatchSetXssMatchTupleElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for WafregionalXssMatchSetXssMatchTupleElRef {
-    fn new(shared: StackShared, base: String) -> WafregionalXssMatchSetXssMatchTupleElRef {
+impl terrars::Ref for WafregionalXssMatchSetXssMatchTupleElRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> WafregionalXssMatchSetXssMatchTupleElRef {
         WafregionalXssMatchSetXssMatchTupleElRef {
             shared: shared,
             base: base.to_string(),
@@ -359,22 +403,22 @@ impl Ref for WafregionalXssMatchSetXssMatchTupleElRef {
 }
 
 impl WafregionalXssMatchSetXssMatchTupleElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `text_transformation` after provisioning.\n"]
-    pub fn text_transformation(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.text_transformation", self.base))
+    #[doc = "Get a reference to the value of field `text_transformation` after provisioning.\n"]
+    pub fn text_transformation(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.text_transformation", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `field_to_match` after provisioning.\n"]
-    pub fn field_to_match(&self) -> ListRef<WafregionalXssMatchSetXssMatchTupleElFieldToMatchElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.field_to_match", self.base))
+    #[doc = "Get a reference to the value of field `field_to_match` after provisioning.\n"]
+    pub fn field_to_match(&self) -> terrars::ListRef<WafregionalXssMatchSetXssMatchTupleElFieldToMatchElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.field_to_match", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
 struct WafregionalXssMatchSetDynamic {
-    xss_match_tuple: Option<DynamicBlock<WafregionalXssMatchSetXssMatchTupleEl>>,
+    xss_match_tuple: std::option::Option<terrars::DynamicBlock<WafregionalXssMatchSetXssMatchTupleEl>>,
 }

@@ -1,62 +1,66 @@
 use serde::Serialize;
-use std::cell::RefCell;
-use std::rc::Rc;
-use terrars::*;
+use terrars::{
+    Referable as _,
+    Resource_ as _,
+    Ref as _,
+};
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
 struct Apigatewayv2AuthorizerData {
-    #[serde(skip_serializing_if = "Vec::is_empty")]
-    depends_on: Vec<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    provider: Option<String>,
-    #[serde(skip_serializing_if = "SerdeSkipDefault::is_default")]
-    lifecycle: ResourceLifecycle,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    for_each: Option<String>,
-    api_id: PrimField<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    authorizer_credentials_arn: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    authorizer_payload_format_version: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    authorizer_result_ttl_in_seconds: Option<PrimField<f64>>,
-    authorizer_type: PrimField<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    authorizer_uri: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    enable_simple_responses: Option<PrimField<bool>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    id: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    identity_sources: Option<SetField<PrimField<String>>>,
-    name: PrimField<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    jwt_configuration: Option<Vec<Apigatewayv2AuthorizerJwtConfigurationEl>>,
+    #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
+    depends_on: std::vec::Vec<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    provider: std::option::Option<std::string::String>,
+    #[serde(skip_serializing_if = "terrars::SerdeSkipDefault::is_default")]
+    lifecycle: terrars::ResourceLifecycle,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    for_each: std::option::Option<std::string::String>,
+    #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
+    provisioner: std::vec::Vec<terrars::Provisioner>,
+    api_id: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    authorizer_credentials_arn: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    authorizer_payload_format_version: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    authorizer_result_ttl_in_seconds: std::option::Option<terrars::PrimField<f64>>,
+    authorizer_type: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    authorizer_uri: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    enable_simple_responses: std::option::Option<terrars::PrimField<bool>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    id: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    identity_sources: std::option::Option<terrars::SetField<terrars::PrimField<std::string::String>>>,
+    name: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    jwt_configuration: std::option::Option<std::vec::Vec<Apigatewayv2AuthorizerJwtConfigurationEl>>,
     dynamic: Apigatewayv2AuthorizerDynamic,
 }
 
 struct Apigatewayv2Authorizer_ {
-    shared: StackShared,
-    tf_id: String,
-    data: RefCell<Apigatewayv2AuthorizerData>,
+    shared: terrars::StackShared,
+    tf_id: std::string::String,
+    data: std::cell::RefCell<Apigatewayv2AuthorizerData>,
 }
 
 #[derive(Clone)]
-pub struct Apigatewayv2Authorizer(Rc<Apigatewayv2Authorizer_>);
+pub struct Apigatewayv2Authorizer(std::rc::Rc<Apigatewayv2Authorizer_>);
 
 impl Apigatewayv2Authorizer {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.0.shared
     }
 
-    pub fn depends_on(self, dep: &impl Referable) -> Self {
+    pub fn depends_on(self, dep: &impl terrars::Referable) -> Self {
         self.0.data.borrow_mut().depends_on.push(dep.extract_ref());
         self
     }
 
     pub fn set_provider(self, provider: &ProviderAws) -> Self {
-        self.0.data.borrow_mut().provider = Some(provider.provider_ref());
+        self.0.data.borrow_mut().provider = std::option::Option::Some(provider.provider_ref());
         self
     }
 
@@ -71,175 +75,226 @@ impl Apigatewayv2Authorizer {
     }
 
     pub fn ignore_changes_to_all(self) -> Self {
-        self.0.data.borrow_mut().lifecycle.ignore_changes = Some(IgnoreChanges::All(IgnoreChangesAll::All));
+        self.0.data.borrow_mut().lifecycle.ignore_changes =
+            std::option::Option::Some(terrars::IgnoreChanges::All(terrars::IgnoreChangesAll::All));
         self
     }
 
-    pub fn ignore_changes_to_attr(self, attr: impl ToString) -> Self {
+    pub fn ignore_changes_to_attr(self, attr: impl std::string::ToString) -> Self {
         {
             let mut d = self.0.data.borrow_mut();
             if match &mut d.lifecycle.ignore_changes {
-                Some(i) => match i {
-                    IgnoreChanges::All(_) => {
+                std::option::Option::Some(i) => match i {
+                    terrars::IgnoreChanges::All(_) => {
                         true
                     },
-                    IgnoreChanges::Refs(r) => {
+                    terrars::IgnoreChanges::Refs(r) => {
                         r.push(attr.to_string());
                         false
                     },
                 },
-                None => true,
+                std::option::Option::None => true,
             } {
-                d.lifecycle.ignore_changes = Some(IgnoreChanges::Refs(vec![attr.to_string()]));
+                d.lifecycle.ignore_changes =
+                    std::option::Option::Some(terrars::IgnoreChanges::Refs(vec![attr.to_string()]));
             }
         }
         self
     }
 
-    pub fn replace_triggered_by_resource(self, r: &impl Resource) -> Self {
+    pub fn replace_triggered_by_resource(self, r: &impl terrars::Resource) -> Self {
         self.0.data.borrow_mut().lifecycle.replace_triggered_by.push(r.extract_ref());
         self
     }
 
-    pub fn replace_triggered_by_attr(self, attr: impl ToString) -> Self {
+    pub fn replace_triggered_by_attr(self, attr: impl std::string::ToString) -> Self {
         self.0.data.borrow_mut().lifecycle.replace_triggered_by.push(attr.to_string());
         self
     }
 
-    #[doc= "Set the field `authorizer_credentials_arn`.\n"]
-    pub fn set_authorizer_credentials_arn(self, v: impl Into<PrimField<String>>) -> Self {
-        self.0.data.borrow_mut().authorizer_credentials_arn = Some(v.into());
+    #[doc = r" Add a provisioner (ex: `local-exec`, `remote-exec`, `file`) to this resource."]
+    #[doc = r" Provisioners run in the order they're added."]
+    pub fn add_provisioner(self, v: impl std::convert::Into<terrars::Provisioner>) -> Self {
+        self.0.data.borrow_mut().provisioner.push(v.into());
         self
     }
 
-    #[doc= "Set the field `authorizer_payload_format_version`.\n"]
-    pub fn set_authorizer_payload_format_version(self, v: impl Into<PrimField<String>>) -> Self {
-        self.0.data.borrow_mut().authorizer_payload_format_version = Some(v.into());
+    pub fn add_lifecycle_precondition(
+        self,
+        condition: impl std::convert::Into<terrars::PrimField<bool>>,
+        error_message: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.0.data.borrow_mut().lifecycle.precondition.push(terrars::LifecycleCondition {
+            condition: condition.into(),
+            error_message: error_message.into(),
+        });
         self
     }
 
-    #[doc= "Set the field `authorizer_result_ttl_in_seconds`.\n"]
-    pub fn set_authorizer_result_ttl_in_seconds(self, v: impl Into<PrimField<f64>>) -> Self {
-        self.0.data.borrow_mut().authorizer_result_ttl_in_seconds = Some(v.into());
+    pub fn add_lifecycle_postcondition(
+        self,
+        condition: impl std::convert::Into<terrars::PrimField<bool>>,
+        error_message: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.0.data.borrow_mut().lifecycle.postcondition.push(terrars::LifecycleCondition {
+            condition: condition.into(),
+            error_message: error_message.into(),
+        });
         self
     }
 
-    #[doc= "Set the field `authorizer_uri`.\n"]
-    pub fn set_authorizer_uri(self, v: impl Into<PrimField<String>>) -> Self {
-        self.0.data.borrow_mut().authorizer_uri = Some(v.into());
+    #[doc = "Set the field `authorizer_credentials_arn`.\n"]
+    pub fn set_authorizer_credentials_arn(
+        self,
+        v: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.0.data.borrow_mut().authorizer_credentials_arn = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `enable_simple_responses`.\n"]
-    pub fn set_enable_simple_responses(self, v: impl Into<PrimField<bool>>) -> Self {
-        self.0.data.borrow_mut().enable_simple_responses = Some(v.into());
+    #[doc = "Set the field `authorizer_payload_format_version`.\n"]
+    pub fn set_authorizer_payload_format_version(
+        self,
+        v: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.0.data.borrow_mut().authorizer_payload_format_version = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `id`.\n"]
-    pub fn set_id(self, v: impl Into<PrimField<String>>) -> Self {
-        self.0.data.borrow_mut().id = Some(v.into());
+    #[doc = "Set the field `authorizer_result_ttl_in_seconds`.\n"]
+    pub fn set_authorizer_result_ttl_in_seconds(self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.0.data.borrow_mut().authorizer_result_ttl_in_seconds = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `identity_sources`.\n"]
-    pub fn set_identity_sources(self, v: impl Into<SetField<PrimField<String>>>) -> Self {
-        self.0.data.borrow_mut().identity_sources = Some(v.into());
+    #[doc = "Set the field `authorizer_uri`.\n"]
+    pub fn set_authorizer_uri(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().authorizer_uri = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `jwt_configuration`.\n"]
-    pub fn set_jwt_configuration(self, v: impl Into<BlockAssignable<Apigatewayv2AuthorizerJwtConfigurationEl>>) -> Self {
+    #[doc = "Set the field `enable_simple_responses`.\n"]
+    pub fn set_enable_simple_responses(self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
+        self.0.data.borrow_mut().enable_simple_responses = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `id`.\n"]
+    pub fn set_id(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().id = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `identity_sources`.\n"]
+    pub fn set_identity_sources(
+        self,
+        v: impl std::convert::Into<terrars::SetField<terrars::PrimField<std::string::String>>>,
+    ) -> Self {
+        self.0.data.borrow_mut().identity_sources = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `jwt_configuration`.\n"]
+    pub fn set_jwt_configuration(
+        self,
+        v: impl std::convert::Into<terrars::BlockAssignable<Apigatewayv2AuthorizerJwtConfigurationEl>>,
+    ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.0.data.borrow_mut().jwt_configuration = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.0.data.borrow_mut().jwt_configuration = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.0.data.borrow_mut().dynamic.jwt_configuration = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.0.data.borrow_mut().dynamic.jwt_configuration = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Get a reference to the value of field `api_id` after provisioning.\n"]
-    pub fn api_id(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.api_id", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `api_id` after provisioning.\n"]
+    pub fn api_id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.api_id", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `authorizer_credentials_arn` after provisioning.\n"]
-    pub fn authorizer_credentials_arn(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.authorizer_credentials_arn", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `authorizer_credentials_arn` after provisioning.\n"]
+    pub fn authorizer_credentials_arn(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.authorizer_credentials_arn", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `authorizer_payload_format_version` after provisioning.\n"]
-    pub fn authorizer_payload_format_version(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.authorizer_payload_format_version", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `authorizer_payload_format_version` after provisioning.\n"]
+    pub fn authorizer_payload_format_version(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(
+            self.shared().clone(),
+            format!("{}.authorizer_payload_format_version", self.extract_ref()),
+        )
     }
 
-    #[doc= "Get a reference to the value of field `authorizer_result_ttl_in_seconds` after provisioning.\n"]
-    pub fn authorizer_result_ttl_in_seconds(&self) -> PrimExpr<f64> {
-        PrimExpr::new(self.shared().clone(), format!("{}.authorizer_result_ttl_in_seconds", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `authorizer_result_ttl_in_seconds` after provisioning.\n"]
+    pub fn authorizer_result_ttl_in_seconds(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(
+            self.shared().clone(),
+            format!("{}.authorizer_result_ttl_in_seconds", self.extract_ref()),
+        )
     }
 
-    #[doc= "Get a reference to the value of field `authorizer_type` after provisioning.\n"]
-    pub fn authorizer_type(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.authorizer_type", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `authorizer_type` after provisioning.\n"]
+    pub fn authorizer_type(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.authorizer_type", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `authorizer_uri` after provisioning.\n"]
-    pub fn authorizer_uri(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.authorizer_uri", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `authorizer_uri` after provisioning.\n"]
+    pub fn authorizer_uri(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.authorizer_uri", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `enable_simple_responses` after provisioning.\n"]
-    pub fn enable_simple_responses(&self) -> PrimExpr<bool> {
-        PrimExpr::new(self.shared().clone(), format!("{}.enable_simple_responses", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `enable_simple_responses` after provisioning.\n"]
+    pub fn enable_simple_responses(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.enable_simple_responses", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `id` after provisioning.\n"]
-    pub fn id(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
+    pub fn id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `identity_sources` after provisioning.\n"]
-    pub fn identity_sources(&self) -> SetRef<PrimExpr<String>> {
-        SetRef::new(self.shared().clone(), format!("{}.identity_sources", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `identity_sources` after provisioning.\n"]
+    pub fn identity_sources(&self) -> terrars::SetRef<terrars::PrimExpr<std::string::String>> {
+        terrars::SetRef::new(self.shared().clone(), format!("{}.identity_sources", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `name` after provisioning.\n"]
-    pub fn name(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `name` after provisioning.\n"]
+    pub fn name(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `jwt_configuration` after provisioning.\n"]
-    pub fn jwt_configuration(&self) -> ListRef<Apigatewayv2AuthorizerJwtConfigurationElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.jwt_configuration", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `jwt_configuration` after provisioning.\n"]
+    pub fn jwt_configuration(&self) -> terrars::ListRef<Apigatewayv2AuthorizerJwtConfigurationElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.jwt_configuration", self.extract_ref()))
     }
 }
 
-impl Referable for Apigatewayv2Authorizer {
-    fn extract_ref(&self) -> String {
+impl terrars::Referable for Apigatewayv2Authorizer {
+    fn extract_ref(&self) -> std::string::String {
         format!("{}.{}", self.0.extract_resource_type(), self.0.extract_tf_id())
     }
 }
 
-impl Resource for Apigatewayv2Authorizer { }
+impl terrars::Resource for Apigatewayv2Authorizer { }
 
-impl ToListMappable for Apigatewayv2Authorizer {
-    type O = ListRef<Apigatewayv2AuthorizerRef>;
+impl terrars::ToListMappable for Apigatewayv2Authorizer {
+    type O = terrars::ListRef<Apigatewayv2AuthorizerRef>;
 
-    fn do_map(self, base: String) -> Self::O {
-        self.0.data.borrow_mut().for_each = Some(format!("${{{}}}", base));
-        ListRef::new(self.0.shared.clone(), self.extract_ref())
+    fn do_map(self, base: std::string::String) -> Self::O {
+        self.0.data.borrow_mut().for_each = std::option::Option::Some(format!("${{{}}}", base));
+        terrars::ListRef::new(self.0.shared.clone(), self.extract_ref())
     }
 }
 
-impl Resource_ for Apigatewayv2Authorizer_ {
-    fn extract_resource_type(&self) -> String {
+impl terrars::Resource_ for Apigatewayv2Authorizer_ {
+    fn extract_resource_type(&self) -> std::string::String {
         "aws_apigatewayv2_authorizer".into()
     }
 
-    fn extract_tf_id(&self) -> String {
+    fn extract_tf_id(&self) -> std::string::String {
         self.tf_id.clone()
     }
 
@@ -249,25 +304,26 @@ impl Resource_ for Apigatewayv2Authorizer_ {
 }
 
 pub struct BuildApigatewayv2Authorizer {
-    pub tf_id: String,
-    #[doc= ""]
-    pub api_id: PrimField<String>,
-    #[doc= ""]
-    pub authorizer_type: PrimField<String>,
-    #[doc= ""]
-    pub name: PrimField<String>,
+    pub tf_id: std::string::String,
+    #[doc = ""]
+    pub api_id: terrars::PrimField<std::string::String>,
+    #[doc = ""]
+    pub authorizer_type: terrars::PrimField<std::string::String>,
+    #[doc = ""]
+    pub name: terrars::PrimField<std::string::String>,
 }
 
 impl BuildApigatewayv2Authorizer {
-    pub fn build(self, stack: &mut Stack) -> Apigatewayv2Authorizer {
-        let out = Apigatewayv2Authorizer(Rc::new(Apigatewayv2Authorizer_ {
+    pub fn build(self, stack: &mut terrars::Stack) -> Apigatewayv2Authorizer {
+        let out = Apigatewayv2Authorizer(std::rc::Rc::new(Apigatewayv2Authorizer_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: RefCell::new(Apigatewayv2AuthorizerData {
+            data: std::cell::RefCell::new(Apigatewayv2AuthorizerData {
                 depends_on: core::default::Default::default(),
-                provider: None,
+                provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
-                for_each: None,
+                for_each: std::option::Option::None,
+                provisioner: core::default::Default::default(),
                 api_id: self.api_id,
                 authorizer_credentials_arn: core::default::Default::default(),
                 authorizer_payload_format_version: core::default::Default::default(),
@@ -279,7 +335,7 @@ impl BuildApigatewayv2Authorizer {
                 identity_sources: core::default::Default::default(),
                 name: self.name,
                 jwt_configuration: core::default::Default::default(),
-                dynamic: Default::default(),
+                dynamic: core::default::Default::default(),
             }),
         }));
         stack.add_resource(out.0.clone());
@@ -288,12 +344,12 @@ impl BuildApigatewayv2Authorizer {
 }
 
 pub struct Apigatewayv2AuthorizerRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for Apigatewayv2AuthorizerRef {
-    fn new(shared: StackShared, base: String) -> Self {
+impl terrars::Ref for Apigatewayv2AuthorizerRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> Self {
         Self {
             shared: shared,
             base: base,
@@ -302,97 +358,106 @@ impl Ref for Apigatewayv2AuthorizerRef {
 }
 
 impl Apigatewayv2AuthorizerRef {
-    fn extract_ref(&self) -> String {
+    fn extract_ref(&self) -> std::string::String {
         self.base.clone()
     }
 
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `api_id` after provisioning.\n"]
-    pub fn api_id(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.api_id", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `api_id` after provisioning.\n"]
+    pub fn api_id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.api_id", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `authorizer_credentials_arn` after provisioning.\n"]
-    pub fn authorizer_credentials_arn(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.authorizer_credentials_arn", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `authorizer_credentials_arn` after provisioning.\n"]
+    pub fn authorizer_credentials_arn(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.authorizer_credentials_arn", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `authorizer_payload_format_version` after provisioning.\n"]
-    pub fn authorizer_payload_format_version(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.authorizer_payload_format_version", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `authorizer_payload_format_version` after provisioning.\n"]
+    pub fn authorizer_payload_format_version(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(
+            self.shared().clone(),
+            format!("{}.authorizer_payload_format_version", self.extract_ref()),
+        )
     }
 
-    #[doc= "Get a reference to the value of field `authorizer_result_ttl_in_seconds` after provisioning.\n"]
-    pub fn authorizer_result_ttl_in_seconds(&self) -> PrimExpr<f64> {
-        PrimExpr::new(self.shared().clone(), format!("{}.authorizer_result_ttl_in_seconds", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `authorizer_result_ttl_in_seconds` after provisioning.\n"]
+    pub fn authorizer_result_ttl_in_seconds(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(
+            self.shared().clone(),
+            format!("{}.authorizer_result_ttl_in_seconds", self.extract_ref()),
+        )
     }
 
-    #[doc= "Get a reference to the value of field `authorizer_type` after provisioning.\n"]
-    pub fn authorizer_type(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.authorizer_type", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `authorizer_type` after provisioning.\n"]
+    pub fn authorizer_type(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.authorizer_type", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `authorizer_uri` after provisioning.\n"]
-    pub fn authorizer_uri(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.authorizer_uri", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `authorizer_uri` after provisioning.\n"]
+    pub fn authorizer_uri(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.authorizer_uri", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `enable_simple_responses` after provisioning.\n"]
-    pub fn enable_simple_responses(&self) -> PrimExpr<bool> {
-        PrimExpr::new(self.shared().clone(), format!("{}.enable_simple_responses", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `enable_simple_responses` after provisioning.\n"]
+    pub fn enable_simple_responses(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.enable_simple_responses", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `id` after provisioning.\n"]
-    pub fn id(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
+    pub fn id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `identity_sources` after provisioning.\n"]
-    pub fn identity_sources(&self) -> SetRef<PrimExpr<String>> {
-        SetRef::new(self.shared().clone(), format!("{}.identity_sources", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `identity_sources` after provisioning.\n"]
+    pub fn identity_sources(&self) -> terrars::SetRef<terrars::PrimExpr<std::string::String>> {
+        terrars::SetRef::new(self.shared().clone(), format!("{}.identity_sources", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `name` after provisioning.\n"]
-    pub fn name(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `name` after provisioning.\n"]
+    pub fn name(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `jwt_configuration` after provisioning.\n"]
-    pub fn jwt_configuration(&self) -> ListRef<Apigatewayv2AuthorizerJwtConfigurationElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.jwt_configuration", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `jwt_configuration` after provisioning.\n"]
+    pub fn jwt_configuration(&self) -> terrars::ListRef<Apigatewayv2AuthorizerJwtConfigurationElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.jwt_configuration", self.extract_ref()))
     }
 }
 
 #[derive(Serialize)]
 pub struct Apigatewayv2AuthorizerJwtConfigurationEl {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    audience: Option<SetField<PrimField<String>>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    issuer: Option<PrimField<String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    audience: std::option::Option<terrars::SetField<terrars::PrimField<std::string::String>>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    issuer: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
 impl Apigatewayv2AuthorizerJwtConfigurationEl {
-    #[doc= "Set the field `audience`.\n"]
-    pub fn set_audience(mut self, v: impl Into<SetField<PrimField<String>>>) -> Self {
-        self.audience = Some(v.into());
+    #[doc = "Set the field `audience`.\n"]
+    pub fn set_audience(
+        mut self,
+        v: impl std::convert::Into<terrars::SetField<terrars::PrimField<std::string::String>>>,
+    ) -> Self {
+        self.audience = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `issuer`.\n"]
-    pub fn set_issuer(mut self, v: impl Into<PrimField<String>>) -> Self {
-        self.issuer = Some(v.into());
+    #[doc = "Set the field `issuer`.\n"]
+    pub fn set_issuer(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.issuer = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl ToListMappable for Apigatewayv2AuthorizerJwtConfigurationEl {
-    type O = BlockAssignable<Apigatewayv2AuthorizerJwtConfigurationEl>;
+impl terrars::ToListMappable for Apigatewayv2AuthorizerJwtConfigurationEl {
+    type O = terrars::BlockAssignable<Apigatewayv2AuthorizerJwtConfigurationEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -412,12 +477,12 @@ impl BuildApigatewayv2AuthorizerJwtConfigurationEl {
 }
 
 pub struct Apigatewayv2AuthorizerJwtConfigurationElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for Apigatewayv2AuthorizerJwtConfigurationElRef {
-    fn new(shared: StackShared, base: String) -> Apigatewayv2AuthorizerJwtConfigurationElRef {
+impl terrars::Ref for Apigatewayv2AuthorizerJwtConfigurationElRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> Apigatewayv2AuthorizerJwtConfigurationElRef {
         Apigatewayv2AuthorizerJwtConfigurationElRef {
             shared: shared,
             base: base.to_string(),
@@ -426,22 +491,22 @@ impl Ref for Apigatewayv2AuthorizerJwtConfigurationElRef {
 }
 
 impl Apigatewayv2AuthorizerJwtConfigurationElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `audience` after provisioning.\n"]
-    pub fn audience(&self) -> SetRef<PrimExpr<String>> {
-        SetRef::new(self.shared().clone(), format!("{}.audience", self.base))
+    #[doc = "Get a reference to the value of field `audience` after provisioning.\n"]
+    pub fn audience(&self) -> terrars::SetRef<terrars::PrimExpr<std::string::String>> {
+        terrars::SetRef::new(self.shared().clone(), format!("{}.audience", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `issuer` after provisioning.\n"]
-    pub fn issuer(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.issuer", self.base))
+    #[doc = "Get a reference to the value of field `issuer` after provisioning.\n"]
+    pub fn issuer(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.issuer", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
 struct Apigatewayv2AuthorizerDynamic {
-    jwt_configuration: Option<DynamicBlock<Apigatewayv2AuthorizerJwtConfigurationEl>>,
+    jwt_configuration: std::option::Option<terrars::DynamicBlock<Apigatewayv2AuthorizerJwtConfigurationEl>>,
 }

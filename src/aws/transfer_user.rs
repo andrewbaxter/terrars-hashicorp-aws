@@ -1,62 +1,66 @@
 use serde::Serialize;
-use std::cell::RefCell;
-use std::rc::Rc;
-use terrars::*;
+use terrars::{
+    Referable as _,
+    Resource_ as _,
+    Ref as _,
+};
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
 struct TransferUserData {
-    #[serde(skip_serializing_if = "Vec::is_empty")]
-    depends_on: Vec<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    provider: Option<String>,
-    #[serde(skip_serializing_if = "SerdeSkipDefault::is_default")]
-    lifecycle: ResourceLifecycle,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    for_each: Option<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    home_directory: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    home_directory_type: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    id: Option<PrimField<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    policy: Option<PrimField<String>>,
-    role: PrimField<String>,
-    server_id: PrimField<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    tags: Option<RecField<PrimField<String>>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    tags_all: Option<RecField<PrimField<String>>>,
-    user_name: PrimField<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    home_directory_mappings: Option<Vec<TransferUserHomeDirectoryMappingsEl>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    posix_profile: Option<Vec<TransferUserPosixProfileEl>>,
+    #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
+    depends_on: std::vec::Vec<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    provider: std::option::Option<std::string::String>,
+    #[serde(skip_serializing_if = "terrars::SerdeSkipDefault::is_default")]
+    lifecycle: terrars::ResourceLifecycle,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    for_each: std::option::Option<std::string::String>,
+    #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
+    provisioner: std::vec::Vec<terrars::Provisioner>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    home_directory: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    home_directory_type: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    id: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    policy: std::option::Option<terrars::PrimField<std::string::String>>,
+    role: terrars::PrimField<std::string::String>,
+    server_id: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    tags: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    tags_all: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
+    user_name: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    home_directory_mappings: std::option::Option<std::vec::Vec<TransferUserHomeDirectoryMappingsEl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    posix_profile: std::option::Option<std::vec::Vec<TransferUserPosixProfileEl>>,
     dynamic: TransferUserDynamic,
 }
 
 struct TransferUser_ {
-    shared: StackShared,
-    tf_id: String,
-    data: RefCell<TransferUserData>,
+    shared: terrars::StackShared,
+    tf_id: std::string::String,
+    data: std::cell::RefCell<TransferUserData>,
 }
 
 #[derive(Clone)]
-pub struct TransferUser(Rc<TransferUser_>);
+pub struct TransferUser(std::rc::Rc<TransferUser_>);
 
 impl TransferUser {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.0.shared
     }
 
-    pub fn depends_on(self, dep: &impl Referable) -> Self {
+    pub fn depends_on(self, dep: &impl terrars::Referable) -> Self {
         self.0.data.borrow_mut().depends_on.push(dep.extract_ref());
         self
     }
 
     pub fn set_provider(self, provider: &ProviderAws) -> Self {
-        self.0.data.borrow_mut().provider = Some(provider.provider_ref());
+        self.0.data.borrow_mut().provider = std::option::Option::Some(provider.provider_ref());
         self
     }
 
@@ -71,190 +75,232 @@ impl TransferUser {
     }
 
     pub fn ignore_changes_to_all(self) -> Self {
-        self.0.data.borrow_mut().lifecycle.ignore_changes = Some(IgnoreChanges::All(IgnoreChangesAll::All));
+        self.0.data.borrow_mut().lifecycle.ignore_changes =
+            std::option::Option::Some(terrars::IgnoreChanges::All(terrars::IgnoreChangesAll::All));
         self
     }
 
-    pub fn ignore_changes_to_attr(self, attr: impl ToString) -> Self {
+    pub fn ignore_changes_to_attr(self, attr: impl std::string::ToString) -> Self {
         {
             let mut d = self.0.data.borrow_mut();
             if match &mut d.lifecycle.ignore_changes {
-                Some(i) => match i {
-                    IgnoreChanges::All(_) => {
+                std::option::Option::Some(i) => match i {
+                    terrars::IgnoreChanges::All(_) => {
                         true
                     },
-                    IgnoreChanges::Refs(r) => {
+                    terrars::IgnoreChanges::Refs(r) => {
                         r.push(attr.to_string());
                         false
                     },
                 },
-                None => true,
+                std::option::Option::None => true,
             } {
-                d.lifecycle.ignore_changes = Some(IgnoreChanges::Refs(vec![attr.to_string()]));
+                d.lifecycle.ignore_changes =
+                    std::option::Option::Some(terrars::IgnoreChanges::Refs(vec![attr.to_string()]));
             }
         }
         self
     }
 
-    pub fn replace_triggered_by_resource(self, r: &impl Resource) -> Self {
+    pub fn replace_triggered_by_resource(self, r: &impl terrars::Resource) -> Self {
         self.0.data.borrow_mut().lifecycle.replace_triggered_by.push(r.extract_ref());
         self
     }
 
-    pub fn replace_triggered_by_attr(self, attr: impl ToString) -> Self {
+    pub fn replace_triggered_by_attr(self, attr: impl std::string::ToString) -> Self {
         self.0.data.borrow_mut().lifecycle.replace_triggered_by.push(attr.to_string());
         self
     }
 
-    #[doc= "Set the field `home_directory`.\n"]
-    pub fn set_home_directory(self, v: impl Into<PrimField<String>>) -> Self {
-        self.0.data.borrow_mut().home_directory = Some(v.into());
+    #[doc = r" Add a provisioner (ex: `local-exec`, `remote-exec`, `file`) to this resource."]
+    #[doc = r" Provisioners run in the order they're added."]
+    pub fn add_provisioner(self, v: impl std::convert::Into<terrars::Provisioner>) -> Self {
+        self.0.data.borrow_mut().provisioner.push(v.into());
         self
     }
 
-    #[doc= "Set the field `home_directory_type`.\n"]
-    pub fn set_home_directory_type(self, v: impl Into<PrimField<String>>) -> Self {
-        self.0.data.borrow_mut().home_directory_type = Some(v.into());
+    pub fn add_lifecycle_precondition(
+        self,
+        condition: impl std::convert::Into<terrars::PrimField<bool>>,
+        error_message: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.0.data.borrow_mut().lifecycle.precondition.push(terrars::LifecycleCondition {
+            condition: condition.into(),
+            error_message: error_message.into(),
+        });
         self
     }
 
-    #[doc= "Set the field `id`.\n"]
-    pub fn set_id(self, v: impl Into<PrimField<String>>) -> Self {
-        self.0.data.borrow_mut().id = Some(v.into());
+    pub fn add_lifecycle_postcondition(
+        self,
+        condition: impl std::convert::Into<terrars::PrimField<bool>>,
+        error_message: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.0.data.borrow_mut().lifecycle.postcondition.push(terrars::LifecycleCondition {
+            condition: condition.into(),
+            error_message: error_message.into(),
+        });
         self
     }
 
-    #[doc= "Set the field `policy`.\n"]
-    pub fn set_policy(self, v: impl Into<PrimField<String>>) -> Self {
-        self.0.data.borrow_mut().policy = Some(v.into());
+    #[doc = "Set the field `home_directory`.\n"]
+    pub fn set_home_directory(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().home_directory = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `tags`.\n"]
-    pub fn set_tags(self, v: impl Into<RecField<PrimField<String>>>) -> Self {
-        self.0.data.borrow_mut().tags = Some(v.into());
+    #[doc = "Set the field `home_directory_type`.\n"]
+    pub fn set_home_directory_type(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().home_directory_type = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `tags_all`.\n"]
-    pub fn set_tags_all(self, v: impl Into<RecField<PrimField<String>>>) -> Self {
-        self.0.data.borrow_mut().tags_all = Some(v.into());
+    #[doc = "Set the field `id`.\n"]
+    pub fn set_id(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().id = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc= "Set the field `home_directory_mappings`.\n"]
+    #[doc = "Set the field `policy`.\n"]
+    pub fn set_policy(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().policy = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `tags`.\n"]
+    pub fn set_tags(
+        self,
+        v: impl std::convert::Into<terrars::RecField<terrars::PrimField<std::string::String>>>,
+    ) -> Self {
+        self.0.data.borrow_mut().tags = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `tags_all`.\n"]
+    pub fn set_tags_all(
+        self,
+        v: impl std::convert::Into<terrars::RecField<terrars::PrimField<std::string::String>>>,
+    ) -> Self {
+        self.0.data.borrow_mut().tags_all = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `home_directory_mappings`.\n"]
     pub fn set_home_directory_mappings(
         self,
-        v: impl Into<BlockAssignable<TransferUserHomeDirectoryMappingsEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<TransferUserHomeDirectoryMappingsEl>>,
     ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.0.data.borrow_mut().home_directory_mappings = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.0.data.borrow_mut().home_directory_mappings = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.0.data.borrow_mut().dynamic.home_directory_mappings = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.0.data.borrow_mut().dynamic.home_directory_mappings = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Set the field `posix_profile`.\n"]
-    pub fn set_posix_profile(self, v: impl Into<BlockAssignable<TransferUserPosixProfileEl>>) -> Self {
+    #[doc = "Set the field `posix_profile`.\n"]
+    pub fn set_posix_profile(
+        self,
+        v: impl std::convert::Into<terrars::BlockAssignable<TransferUserPosixProfileEl>>,
+    ) -> Self {
         match v.into() {
-            BlockAssignable::Literal(v) => {
-                self.0.data.borrow_mut().posix_profile = Some(v);
+            terrars::BlockAssignable::Literal(v) => {
+                self.0.data.borrow_mut().posix_profile = std::option::Option::Some(v);
             },
-            BlockAssignable::Dynamic(d) => {
-                self.0.data.borrow_mut().dynamic.posix_profile = Some(d);
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.0.data.borrow_mut().dynamic.posix_profile = std::option::Option::Some(d);
             },
         }
         self
     }
 
-    #[doc= "Get a reference to the value of field `arn` after provisioning.\n"]
-    pub fn arn(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.arn", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `arn` after provisioning.\n"]
+    pub fn arn(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.arn", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `home_directory` after provisioning.\n"]
-    pub fn home_directory(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.home_directory", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `home_directory` after provisioning.\n"]
+    pub fn home_directory(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.home_directory", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `home_directory_type` after provisioning.\n"]
-    pub fn home_directory_type(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.home_directory_type", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `home_directory_type` after provisioning.\n"]
+    pub fn home_directory_type(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.home_directory_type", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `id` after provisioning.\n"]
-    pub fn id(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
+    pub fn id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `policy` after provisioning.\n"]
-    pub fn policy(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.policy", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `policy` after provisioning.\n"]
+    pub fn policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.policy", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `role` after provisioning.\n"]
-    pub fn role(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.role", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `role` after provisioning.\n"]
+    pub fn role(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.role", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `server_id` after provisioning.\n"]
-    pub fn server_id(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.server_id", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `server_id` after provisioning.\n"]
+    pub fn server_id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.server_id", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `tags` after provisioning.\n"]
-    pub fn tags(&self) -> RecRef<PrimExpr<String>> {
-        RecRef::new(self.shared().clone(), format!("{}.tags", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `tags` after provisioning.\n"]
+    pub fn tags(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
+        terrars::RecRef::new(self.shared().clone(), format!("{}.tags", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `tags_all` after provisioning.\n"]
-    pub fn tags_all(&self) -> RecRef<PrimExpr<String>> {
-        RecRef::new(self.shared().clone(), format!("{}.tags_all", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `tags_all` after provisioning.\n"]
+    pub fn tags_all(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
+        terrars::RecRef::new(self.shared().clone(), format!("{}.tags_all", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `user_name` after provisioning.\n"]
-    pub fn user_name(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.user_name", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `user_name` after provisioning.\n"]
+    pub fn user_name(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.user_name", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `home_directory_mappings` after provisioning.\n"]
-    pub fn home_directory_mappings(&self) -> ListRef<TransferUserHomeDirectoryMappingsElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.home_directory_mappings", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `home_directory_mappings` after provisioning.\n"]
+    pub fn home_directory_mappings(&self) -> terrars::ListRef<TransferUserHomeDirectoryMappingsElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.home_directory_mappings", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `posix_profile` after provisioning.\n"]
-    pub fn posix_profile(&self) -> ListRef<TransferUserPosixProfileElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.posix_profile", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `posix_profile` after provisioning.\n"]
+    pub fn posix_profile(&self) -> terrars::ListRef<TransferUserPosixProfileElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.posix_profile", self.extract_ref()))
     }
 }
 
-impl Referable for TransferUser {
-    fn extract_ref(&self) -> String {
+impl terrars::Referable for TransferUser {
+    fn extract_ref(&self) -> std::string::String {
         format!("{}.{}", self.0.extract_resource_type(), self.0.extract_tf_id())
     }
 }
 
-impl Resource for TransferUser { }
+impl terrars::Resource for TransferUser { }
 
-impl ToListMappable for TransferUser {
-    type O = ListRef<TransferUserRef>;
+impl terrars::ToListMappable for TransferUser {
+    type O = terrars::ListRef<TransferUserRef>;
 
-    fn do_map(self, base: String) -> Self::O {
-        self.0.data.borrow_mut().for_each = Some(format!("${{{}}}", base));
-        ListRef::new(self.0.shared.clone(), self.extract_ref())
+    fn do_map(self, base: std::string::String) -> Self::O {
+        self.0.data.borrow_mut().for_each = std::option::Option::Some(format!("${{{}}}", base));
+        terrars::ListRef::new(self.0.shared.clone(), self.extract_ref())
     }
 }
 
-impl Resource_ for TransferUser_ {
-    fn extract_resource_type(&self) -> String {
+impl terrars::Resource_ for TransferUser_ {
+    fn extract_resource_type(&self) -> std::string::String {
         "aws_transfer_user".into()
     }
 
-    fn extract_tf_id(&self) -> String {
+    fn extract_tf_id(&self) -> std::string::String {
         self.tf_id.clone()
     }
 
@@ -264,25 +310,26 @@ impl Resource_ for TransferUser_ {
 }
 
 pub struct BuildTransferUser {
-    pub tf_id: String,
-    #[doc= ""]
-    pub role: PrimField<String>,
-    #[doc= ""]
-    pub server_id: PrimField<String>,
-    #[doc= ""]
-    pub user_name: PrimField<String>,
+    pub tf_id: std::string::String,
+    #[doc = ""]
+    pub role: terrars::PrimField<std::string::String>,
+    #[doc = ""]
+    pub server_id: terrars::PrimField<std::string::String>,
+    #[doc = ""]
+    pub user_name: terrars::PrimField<std::string::String>,
 }
 
 impl BuildTransferUser {
-    pub fn build(self, stack: &mut Stack) -> TransferUser {
-        let out = TransferUser(Rc::new(TransferUser_ {
+    pub fn build(self, stack: &mut terrars::Stack) -> TransferUser {
+        let out = TransferUser(std::rc::Rc::new(TransferUser_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: RefCell::new(TransferUserData {
+            data: std::cell::RefCell::new(TransferUserData {
                 depends_on: core::default::Default::default(),
-                provider: None,
+                provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
-                for_each: None,
+                for_each: std::option::Option::None,
+                provisioner: core::default::Default::default(),
                 home_directory: core::default::Default::default(),
                 home_directory_type: core::default::Default::default(),
                 id: core::default::Default::default(),
@@ -294,7 +341,7 @@ impl BuildTransferUser {
                 user_name: self.user_name,
                 home_directory_mappings: core::default::Default::default(),
                 posix_profile: core::default::Default::default(),
-                dynamic: Default::default(),
+                dynamic: core::default::Default::default(),
             }),
         }));
         stack.add_resource(out.0.clone());
@@ -303,12 +350,12 @@ impl BuildTransferUser {
 }
 
 pub struct TransferUserRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for TransferUserRef {
-    fn new(shared: StackShared, base: String) -> Self {
+impl terrars::Ref for TransferUserRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> Self {
         Self {
             shared: shared,
             base: base,
@@ -317,88 +364,88 @@ impl Ref for TransferUserRef {
 }
 
 impl TransferUserRef {
-    fn extract_ref(&self) -> String {
+    fn extract_ref(&self) -> std::string::String {
         self.base.clone()
     }
 
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `arn` after provisioning.\n"]
-    pub fn arn(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.arn", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `arn` after provisioning.\n"]
+    pub fn arn(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.arn", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `home_directory` after provisioning.\n"]
-    pub fn home_directory(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.home_directory", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `home_directory` after provisioning.\n"]
+    pub fn home_directory(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.home_directory", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `home_directory_type` after provisioning.\n"]
-    pub fn home_directory_type(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.home_directory_type", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `home_directory_type` after provisioning.\n"]
+    pub fn home_directory_type(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.home_directory_type", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `id` after provisioning.\n"]
-    pub fn id(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
+    pub fn id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `policy` after provisioning.\n"]
-    pub fn policy(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.policy", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `policy` after provisioning.\n"]
+    pub fn policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.policy", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `role` after provisioning.\n"]
-    pub fn role(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.role", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `role` after provisioning.\n"]
+    pub fn role(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.role", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `server_id` after provisioning.\n"]
-    pub fn server_id(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.server_id", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `server_id` after provisioning.\n"]
+    pub fn server_id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.server_id", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `tags` after provisioning.\n"]
-    pub fn tags(&self) -> RecRef<PrimExpr<String>> {
-        RecRef::new(self.shared().clone(), format!("{}.tags", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `tags` after provisioning.\n"]
+    pub fn tags(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
+        terrars::RecRef::new(self.shared().clone(), format!("{}.tags", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `tags_all` after provisioning.\n"]
-    pub fn tags_all(&self) -> RecRef<PrimExpr<String>> {
-        RecRef::new(self.shared().clone(), format!("{}.tags_all", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `tags_all` after provisioning.\n"]
+    pub fn tags_all(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
+        terrars::RecRef::new(self.shared().clone(), format!("{}.tags_all", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `user_name` after provisioning.\n"]
-    pub fn user_name(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.user_name", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `user_name` after provisioning.\n"]
+    pub fn user_name(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.user_name", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `home_directory_mappings` after provisioning.\n"]
-    pub fn home_directory_mappings(&self) -> ListRef<TransferUserHomeDirectoryMappingsElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.home_directory_mappings", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `home_directory_mappings` after provisioning.\n"]
+    pub fn home_directory_mappings(&self) -> terrars::ListRef<TransferUserHomeDirectoryMappingsElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.home_directory_mappings", self.extract_ref()))
     }
 
-    #[doc= "Get a reference to the value of field `posix_profile` after provisioning.\n"]
-    pub fn posix_profile(&self) -> ListRef<TransferUserPosixProfileElRef> {
-        ListRef::new(self.shared().clone(), format!("{}.posix_profile", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `posix_profile` after provisioning.\n"]
+    pub fn posix_profile(&self) -> terrars::ListRef<TransferUserPosixProfileElRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.posix_profile", self.extract_ref()))
     }
 }
 
 #[derive(Serialize)]
 pub struct TransferUserHomeDirectoryMappingsEl {
-    entry: PrimField<String>,
-    target: PrimField<String>,
+    entry: terrars::PrimField<std::string::String>,
+    target: terrars::PrimField<std::string::String>,
 }
 
 impl TransferUserHomeDirectoryMappingsEl { }
 
-impl ToListMappable for TransferUserHomeDirectoryMappingsEl {
-    type O = BlockAssignable<TransferUserHomeDirectoryMappingsEl>;
+impl terrars::ToListMappable for TransferUserHomeDirectoryMappingsEl {
+    type O = terrars::BlockAssignable<TransferUserHomeDirectoryMappingsEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -407,10 +454,10 @@ impl ToListMappable for TransferUserHomeDirectoryMappingsEl {
 }
 
 pub struct BuildTransferUserHomeDirectoryMappingsEl {
-    #[doc= ""]
-    pub entry: PrimField<String>,
-    #[doc= ""]
-    pub target: PrimField<String>,
+    #[doc = ""]
+    pub entry: terrars::PrimField<std::string::String>,
+    #[doc = ""]
+    pub target: terrars::PrimField<std::string::String>,
 }
 
 impl BuildTransferUserHomeDirectoryMappingsEl {
@@ -423,12 +470,12 @@ impl BuildTransferUserHomeDirectoryMappingsEl {
 }
 
 pub struct TransferUserHomeDirectoryMappingsElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for TransferUserHomeDirectoryMappingsElRef {
-    fn new(shared: StackShared, base: String) -> TransferUserHomeDirectoryMappingsElRef {
+impl terrars::Ref for TransferUserHomeDirectoryMappingsElRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> TransferUserHomeDirectoryMappingsElRef {
         TransferUserHomeDirectoryMappingsElRef {
             shared: shared,
             base: base.to_string(),
@@ -437,42 +484,45 @@ impl Ref for TransferUserHomeDirectoryMappingsElRef {
 }
 
 impl TransferUserHomeDirectoryMappingsElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `entry` after provisioning.\n"]
-    pub fn entry(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.entry", self.base))
+    #[doc = "Get a reference to the value of field `entry` after provisioning.\n"]
+    pub fn entry(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.entry", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `target` after provisioning.\n"]
-    pub fn target(&self) -> PrimExpr<String> {
-        PrimExpr::new(self.shared().clone(), format!("{}.target", self.base))
+    #[doc = "Get a reference to the value of field `target` after provisioning.\n"]
+    pub fn target(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.target", self.base))
     }
 }
 
 #[derive(Serialize)]
 pub struct TransferUserPosixProfileEl {
-    gid: PrimField<f64>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    secondary_gids: Option<SetField<PrimField<f64>>>,
-    uid: PrimField<f64>,
+    gid: terrars::PrimField<f64>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    secondary_gids: std::option::Option<terrars::SetField<terrars::PrimField<f64>>>,
+    uid: terrars::PrimField<f64>,
 }
 
 impl TransferUserPosixProfileEl {
-    #[doc= "Set the field `secondary_gids`.\n"]
-    pub fn set_secondary_gids(mut self, v: impl Into<SetField<PrimField<f64>>>) -> Self {
-        self.secondary_gids = Some(v.into());
+    #[doc = "Set the field `secondary_gids`.\n"]
+    pub fn set_secondary_gids(
+        mut self,
+        v: impl std::convert::Into<terrars::SetField<terrars::PrimField<f64>>>,
+    ) -> Self {
+        self.secondary_gids = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl ToListMappable for TransferUserPosixProfileEl {
-    type O = BlockAssignable<TransferUserPosixProfileEl>;
+impl terrars::ToListMappable for TransferUserPosixProfileEl {
+    type O = terrars::BlockAssignable<TransferUserPosixProfileEl>;
 
-    fn do_map(self, base: String) -> Self::O {
-        BlockAssignable::Dynamic(DynamicBlock {
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
             for_each: format!("${{{}}}", base),
             iterator: "each".into(),
             content: self,
@@ -481,10 +531,10 @@ impl ToListMappable for TransferUserPosixProfileEl {
 }
 
 pub struct BuildTransferUserPosixProfileEl {
-    #[doc= ""]
-    pub gid: PrimField<f64>,
-    #[doc= ""]
-    pub uid: PrimField<f64>,
+    #[doc = ""]
+    pub gid: terrars::PrimField<f64>,
+    #[doc = ""]
+    pub uid: terrars::PrimField<f64>,
 }
 
 impl BuildTransferUserPosixProfileEl {
@@ -498,12 +548,12 @@ impl BuildTransferUserPosixProfileEl {
 }
 
 pub struct TransferUserPosixProfileElRef {
-    shared: StackShared,
-    base: String,
+    shared: terrars::StackShared,
+    base: std::string::String,
 }
 
-impl Ref for TransferUserPosixProfileElRef {
-    fn new(shared: StackShared, base: String) -> TransferUserPosixProfileElRef {
+impl terrars::Ref for TransferUserPosixProfileElRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> TransferUserPosixProfileElRef {
         TransferUserPosixProfileElRef {
             shared: shared,
             base: base.to_string(),
@@ -512,28 +562,28 @@ impl Ref for TransferUserPosixProfileElRef {
 }
 
 impl TransferUserPosixProfileElRef {
-    fn shared(&self) -> &StackShared {
+    fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc= "Get a reference to the value of field `gid` after provisioning.\n"]
-    pub fn gid(&self) -> PrimExpr<f64> {
-        PrimExpr::new(self.shared().clone(), format!("{}.gid", self.base))
+    #[doc = "Get a reference to the value of field `gid` after provisioning.\n"]
+    pub fn gid(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.gid", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `secondary_gids` after provisioning.\n"]
-    pub fn secondary_gids(&self) -> SetRef<PrimExpr<f64>> {
-        SetRef::new(self.shared().clone(), format!("{}.secondary_gids", self.base))
+    #[doc = "Get a reference to the value of field `secondary_gids` after provisioning.\n"]
+    pub fn secondary_gids(&self) -> terrars::SetRef<terrars::PrimExpr<f64>> {
+        terrars::SetRef::new(self.shared().clone(), format!("{}.secondary_gids", self.base))
     }
 
-    #[doc= "Get a reference to the value of field `uid` after provisioning.\n"]
-    pub fn uid(&self) -> PrimExpr<f64> {
-        PrimExpr::new(self.shared().clone(), format!("{}.uid", self.base))
+    #[doc = "Get a reference to the value of field `uid` after provisioning.\n"]
+    pub fn uid(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.uid", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
 struct TransferUserDynamic {
-    home_directory_mappings: Option<DynamicBlock<TransferUserHomeDirectoryMappingsEl>>,
-    posix_profile: Option<DynamicBlock<TransferUserPosixProfileEl>>,
+    home_directory_mappings: std::option::Option<terrars::DynamicBlock<TransferUserHomeDirectoryMappingsEl>>,
+    posix_profile: std::option::Option<terrars::DynamicBlock<TransferUserPosixProfileEl>>,
 }

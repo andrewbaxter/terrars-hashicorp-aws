@@ -1,6 +1,6 @@
 [package]
 name = "terrars-hashicorp-aws"
-version = "0.1.9"
+version = "0.2.0"
 edition = "2021"
 description = "Pre-generated Terrars AWS bindings"
 readme = "readme.md"
